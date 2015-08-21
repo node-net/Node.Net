@@ -1,0 +1,10 @@
+{
+    "Sunlight": { "Type": "Sunlight" }
+    "Room": {
+        "Floor": { "Type": "Cube.Top", "Length": "10 ft", "Width": "10 ft", "Height": "1 in" },
+        "Pyramid": { "Type": "Pyramid", "Material": "Yellow", "X": "5 ft", "Length": "1 ft", "Width": "1 ft", "Height": "1 ft" },
+        "Post": { "Type": "Cube.Bottom", "Material": "Gray", "X": "10 ft", "Height": "15 ft", "Length": "1 ft", "Width": "2 ft" 
+                      "Arm" : {"Type": "Cube", "Width": "5 ft","Length": "1 ft","Height": "2 in","Z": "5 ft"}
+        }
+    }
+}
