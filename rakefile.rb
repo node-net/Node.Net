@@ -1,6 +1,6 @@
 require 'dev'
 
-VERSION='0.0.217'
+VERSION='0.0.218'
 
 CLOBBER.include('lib')
 CLOBBER.include('*.{zip,nupkg}')
