@@ -1,4 +1,5 @@
-﻿namespace Node.Net.Json
+﻿using System;
+namespace Node.Net.Json
 {
     public class Hash : HashBase,System.ComponentModel.ICustomTypeDescriptor,System.Collections.IDictionary
     {
@@ -21,6 +22,26 @@
         {
             return HashBase.GetHashCode(value);
         }*/
+
+        public static Hash Parse(string[] args)
+        {
+            Hash hash = new Hash();
+            foreach (string arg in args)
+            {
+                if (arg.IndexOf('=') > -1)
+                {
+                    char[] delimiters = { '=' };
+                    string[] words = arg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                    string key = words[0].Trim();
+                    string value = words[1].Trim().Replace("\"", "");
+                    if (key.Length > 0 && value.Length > 0)
+                    {
+                        hash[key] = value;
+                    }
+                }
+            }
+            return hash;
+        }
 
         public new static System.Collections.IList GetChildren(System.Collections.IDictionary value)
         {
