@@ -2,11 +2,7 @@
 <package >
   <metadata>
     <id>Node.Net</id>
-<<<<<<< HEAD
-    <version>0.0.216</version>
-=======
     <version>0.0.220</version>
->>>>>>> 6884a347d7cb704e0e95aef2c1050a18b1af981b
     <authors>Lou Parslow</authors>
     <owners>Lou Parslow</owners>
     <licenseUrl>http://http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
