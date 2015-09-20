@@ -18,6 +18,10 @@ namespace Node.Net
             ImageSource imgSrc = ImageSourceExtension.FromFile("http://maps.google.com/maps/api/staticmap?center=38.997934%2C-105.550567&zoom=12&size=640x480&maptype=hybrid&sensor=false");
             imgSrc.Save(filename);
             Assert.True(File.Exists(filename));
+
+            imgSrc = imgSrc.Crop(400, 200);
+            Assert.AreEqual(400,(int)Math.Round(imgSrc.Width));
+            Assert.AreEqual(200, (int)Math.Round(imgSrc.Height));
         }
     }
 }

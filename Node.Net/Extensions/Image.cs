@@ -22,6 +22,7 @@ namespace Node.Net
 
                 bitmapImage.StreamSource = memory;
                 bitmapImage.EndInit();
+                memory = null;
                 return bitmapImage;
             }
         }

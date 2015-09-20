@@ -69,6 +69,17 @@ namespace Node.Net
                 }
                 return result;
             }
+
+            public static ImageSource Crop(ImageSource source, int width, int height) => Crop(source as BitmapSource, width, height);
+            public static ImageSource Crop(BitmapSource source,int width,int height)
+            {
+                int x = (int)(source.Width / 2 - width / 2);
+                int y = (int)(source.Height / 2 - height / 2);
+                if (x < 0) x = 0;
+                if (y < 0) y = 0;
+                return new CroppedBitmap(source, new System.Windows.Int32Rect(x, y, width, height));
+                
+            }
         }
     }
 }
