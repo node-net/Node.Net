@@ -14,13 +14,7 @@
 
         public Plugins() { Load(); }
 
-        public string PluginsDirectory
-        {
-            get
-            {
-                return GetAssemblyDirectory(System.Reflection.Assembly.GetAssembly(typeof(Plugins))) + @"\Plugins";
-            }
-        }
+        public string PluginsDirectory => GetAssemblyDirectory(System.Reflection.Assembly.GetAssembly(typeof(Plugins))) + @"\Plugins";
         private void Load()
         {
             // scan Plugins Directory for Plugin Folders

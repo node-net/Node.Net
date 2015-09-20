@@ -27,10 +27,7 @@
             return assembly.GetManifestResourceStream(name);
         }
 
-        public static System.IO.Stream GetStream(System.Type type,string name)
-        {
-            return GetStream(System.Reflection.Assembly.GetAssembly(type), name);
-        }
+        public static System.IO.Stream GetStream(System.Type type, string name) => GetStream(System.Reflection.Assembly.GetAssembly(type), name);
 
         public static System.Reflection.Assembly FindAssemblyByManifestResourceName(string name)
         {

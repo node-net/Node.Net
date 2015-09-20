@@ -35,8 +35,8 @@
             private set { this["Name"] = value; }
         }
 
-        private string getString(string key){return ContainsKey(key) ? this[key].ToString() : "";}
-        
+        private string getString(string key) => ContainsKey(key) ? this[key].ToString() : "";
+
         public string FileName
         {
             get 
@@ -169,14 +169,8 @@
             }
         }
 
-        public System.TimeSpan Duration
-        {
-            get
-            {
-                return EndTime-StartTime;
-            }
-        }
-        
+        public System.TimeSpan Duration => EndTime - StartTime;
+
         public string Output
         {
             get
@@ -285,10 +279,7 @@
             }
         }
 
-        public override int GetHashCode()
-        {
-            return GetHashCode(this);
-        }
+        public override int GetHashCode() => GetHashCode(this);
 
         public static int GetHashCode(object value)
         {

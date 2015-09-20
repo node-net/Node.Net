@@ -23,14 +23,8 @@ namespace Node.Net.Json
             includePatterns.Add(ip4);
         }
 
-        public System.Collections.Generic.List<string> IncludePatterns
-        {
-            get { return includePatterns; }
-        }
-        public System.Collections.Generic.List<string> ExcludePatterns
-        {
-            get { return excludePatterns; }
-        }
+        public System.Collections.Generic.List<string> IncludePatterns => includePatterns;
+        public System.Collections.Generic.List<string> ExcludePatterns => excludePatterns;
 
         public bool Include(object item)
         {

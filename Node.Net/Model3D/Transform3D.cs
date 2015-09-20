@@ -75,14 +75,8 @@
             }
         }
 
-        public System.Windows.Media.Media3D.Point3D WorldRotationOTS
-        {
-            get
-            {
-                return new System.Windows.Media.Media3D.Point3D(GetWorldOrientation(),
-                    GetWorldTilt(), GetWorldSpin());
-            }
-        }
+        public System.Windows.Media.Media3D.Point3D WorldRotationOTS => new System.Windows.Media.Media3D.Point3D(GetWorldOrientation(),
+    GetWorldTilt(), GetWorldSpin());
         private System.Windows.Media.Media3D.Vector3D[] GetWorldDirectionVectors()
         {
             System.Collections.Generic.List<System.Windows.Media.Media3D.Vector3D>
@@ -401,13 +395,9 @@
         #endregion
 
         public static System.Windows.Media.Media3D.Point3D ProjectPointToPlane(
-            System.Windows.Media.Media3D.Point3D point,
-            System.Windows.Media.Media3D.Point3D pointOnPlane,
-            System.Windows.Media.Media3D.Vector3D planeNormal)
-        {
-            return point - System.Windows.Media.Media3D.Vector3D.DotProduct(
-                     point - pointOnPlane, planeNormal) * planeNormal;
-            
-        }
+System.Windows.Media.Media3D.Point3D point,
+System.Windows.Media.Media3D.Point3D pointOnPlane,
+System.Windows.Media.Media3D.Vector3D planeNormal) => point - System.Windows.Media.Media3D.Vector3D.DotProduct(
+         point - pointOnPlane, planeNormal) * planeNormal;
     }
 }

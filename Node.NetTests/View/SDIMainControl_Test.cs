@@ -57,10 +57,7 @@ namespace Node.Net.View
         {
             public CustomTreeViewItem() :base(null){ }
             public CustomTreeViewItem(object value) : base(value) { }
-            protected override object GetHeader()
-            {
-                return "<Custom> " + base.GetHeader();
-            }
+            protected override object GetHeader() => "<Custom> " + base.GetHeader();
         }
         [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
         public void SDIMainControl_Usage_CustomTreeViewItem()

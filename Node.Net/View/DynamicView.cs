@@ -14,14 +14,11 @@
             DataContextChanged += DynamicView_DataContextChanged;
         }
         private FrameworkElements frameworkElements = new FrameworkElements();
-        public FrameworkElements Elements { get { return frameworkElements; } }
+        public FrameworkElements Elements => frameworkElements;
 
         private System.Collections.Generic.Dictionary<System.Type, string> typeNames
             = new System.Collections.Generic.Dictionary<System.Type, string>();
-        public System.Collections.Generic.Dictionary<System.Type,string> TypeNames
-        {
-            get { return typeNames; }
-        }
+        public System.Collections.Generic.Dictionary<System.Type, string> TypeNames => typeNames;
         void DynamicView_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
             Update();

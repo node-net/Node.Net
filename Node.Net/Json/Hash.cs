@@ -13,10 +13,7 @@ namespace Node.Net.Json
         {
             HashBase.Copy(source, destination, filter);
         }
-        public new static string ToJson(System.Collections.IDictionary source)
-        {
-            return HashBase.ToJson(source);
-        }
+        public new static string ToJson(System.Collections.IDictionary source) => HashBase.ToJson(source);
         /*
         public new static int GetHashCode(object value)
         {
@@ -43,11 +40,8 @@ namespace Node.Net.Json
             return hash;
         }
 
-        public new static System.Collections.IList GetChildren(System.Collections.IDictionary value)
-        {
-            return HashBase.GetChildren(value);
-        }
-   
+        public new static System.Collections.IList GetChildren(System.Collections.IDictionary value) => HashBase.GetChildren(value);
+
         public static System.ComponentModel.PropertyDescriptorCollection GetProperties(System.Collections.IDictionary dictionary, System.Attribute[] attributes)
         {
             System.Collections.Generic.List<System.ComponentModel.PropertyDescriptor> descriptors
@@ -60,28 +54,22 @@ namespace Node.Net.Json
             return new System.ComponentModel.PropertyDescriptorCollection(descriptors.ToArray());
         }
 
-        public new static System.Collections.IDictionary Convert(System.Collections.IDictionary source,System.Collections.IDictionary typeConversions)
-        {
-            return HashBase.Convert(source, typeConversions);
-        }
-        
+        public new static System.Collections.IDictionary Convert(System.Collections.IDictionary source, System.Collections.IDictionary typeConversions) => HashBase.Convert(source, typeConversions);
+
 
         #region ICustomTypeDescriptor interface
-        public System.ComponentModel.PropertyDescriptorCollection GetProperties(System.Attribute[] attributes)
-        {
-            return GetProperties(this, attributes);
-        }
-        public object GetPropertyOwner(System.ComponentModel.PropertyDescriptor pd) { return this; }
-        public string GetClassName() { return System.ComponentModel.TypeDescriptor.GetClassName(this, true); }
-        public System.ComponentModel.AttributeCollection GetAttributes() { return System.ComponentModel.TypeDescriptor.GetAttributes(this, true); }
-        public System.ComponentModel.PropertyDescriptorCollection GetProperties() { return GetProperties(null); }
-        public System.ComponentModel.EventDescriptorCollection GetEvents() { return System.ComponentModel.TypeDescriptor.GetEvents(this, true); }
-        public System.ComponentModel.EventDescriptorCollection GetEvents(System.Attribute[] attributes) { return System.ComponentModel.TypeDescriptor.GetEvents(this, attributes, true); }
-        public object GetEditor(System.Type editorBaseType) { return null; }
-        public System.ComponentModel.PropertyDescriptor GetDefaultProperty() { return System.ComponentModel.TypeDescriptor.GetDefaultProperty(this, true); }
-        public System.ComponentModel.EventDescriptor GetDefaultEvent() { return System.ComponentModel.TypeDescriptor.GetDefaultEvent(this, true); }
-        public System.ComponentModel.TypeConverter GetConverter() { return System.ComponentModel.TypeDescriptor.GetConverter(this, true); }
-        public string GetComponentName() { return System.ComponentModel.TypeDescriptor.GetComponentName(this, true); }
+        public System.ComponentModel.PropertyDescriptorCollection GetProperties(System.Attribute[] attributes) => GetProperties(this, attributes);
+        public object GetPropertyOwner(System.ComponentModel.PropertyDescriptor pd) => this;
+        public string GetClassName() => System.ComponentModel.TypeDescriptor.GetClassName(this, true);
+        public System.ComponentModel.AttributeCollection GetAttributes() => System.ComponentModel.TypeDescriptor.GetAttributes(this, true);
+        public System.ComponentModel.PropertyDescriptorCollection GetProperties() => GetProperties(null);
+        public System.ComponentModel.EventDescriptorCollection GetEvents() => System.ComponentModel.TypeDescriptor.GetEvents(this, true);
+        public System.ComponentModel.EventDescriptorCollection GetEvents(System.Attribute[] attributes) => System.ComponentModel.TypeDescriptor.GetEvents(this, attributes, true);
+        public object GetEditor(System.Type editorBaseType) => null;
+        public System.ComponentModel.PropertyDescriptor GetDefaultProperty() => System.ComponentModel.TypeDescriptor.GetDefaultProperty(this, true);
+        public System.ComponentModel.EventDescriptor GetDefaultEvent() => System.ComponentModel.TypeDescriptor.GetDefaultEvent(this, true);
+        public System.ComponentModel.TypeConverter GetConverter() => System.ComponentModel.TypeDescriptor.GetConverter(this, true);
+        public string GetComponentName() => System.ComponentModel.TypeDescriptor.GetComponentName(this, true);
         #endregion
     }
 }

@@ -17,10 +17,7 @@
             DataContextChanged += DynamicViewSelector_DataContextChanged;
         }
 
-        public DynamicView DynamicView
-        {
-            get { return dynamicView; }
-        }
+        public DynamicView DynamicView => dynamicView;
         void DynamicViewSelector_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
             Update();

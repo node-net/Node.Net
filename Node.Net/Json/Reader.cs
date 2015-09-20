@@ -80,7 +80,7 @@
         private System.Type arrayType = typeof(Array);
         private System.Collections.Generic.Dictionary<string, System.Type> types = new System.Collections.Generic.Dictionary<string, System.Type>();
 
-        public System.Collections.Generic.Dictionary<string, System.Type> Types { get { return types; } }
+        public System.Collections.Generic.Dictionary<string, System.Type> Types => types;
 
         public System.IO.StreamReader StreamReader
         {
@@ -197,14 +197,8 @@
             }
         }
 
-        private System.Collections.IDictionary CreateHash()
-        {
-            return System.Activator.CreateInstance(dictionaryType) as System.Collections.IDictionary;
-        }
-        private System.Collections.IList CreateArray()
-        {
-            return System.Activator.CreateInstance(arrayType) as System.Collections.IList;
-        }
+        private System.Collections.IDictionary CreateHash() => System.Activator.CreateInstance(dictionaryType) as System.Collections.IDictionary;
+        private System.Collections.IList CreateArray() => System.Activator.CreateInstance(arrayType) as System.Collections.IList;
         private object ReadNext()
         {
             EatWhiteSpace();
@@ -256,22 +250,10 @@
             return null;
         }
 
-        private long Position
-        {
-            get
-            {
-                return streamReader.BaseStream.Position;
-            }
-        }
-        private int Peek() { return streamReader.Peek(); }
+        private long Position => streamReader.BaseStream.Position;
+        private int Peek() => streamReader.Peek();
 
-        private string Buffer
-        {
-            get
-            {
-                return new System.String(buffer.ToArray());
-            }
-        }
+        private string Buffer => new System.String(buffer.ToArray());
         private System.Collections.Generic.Queue<char> buffer =
             new System.Collections.Generic.Queue<char>();
         private int Read()

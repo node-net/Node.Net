@@ -9,7 +9,7 @@ namespace Node.Net
 {
     namespace Extensions
     {
-        class Image
+        class ImageExtension
         {
             public static ImageSource GetImageSource(System.Drawing.Image image)
             {

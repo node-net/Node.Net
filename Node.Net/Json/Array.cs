@@ -18,10 +18,7 @@ namespace Node.Net.Json
         }
 
 
-        public override int GetHashCode()
-        {
-            return Hash.GetHashCode(this);
-        }
+        public override int GetHashCode() => Hash.GetHashCode(this);
 
         public override bool Equals(object obj)
         {

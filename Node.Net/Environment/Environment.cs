@@ -22,10 +22,7 @@
             string[] parts = assembly.FullName.Split(',');
             return parts[0];
         }
-        public static string GetWorkingDirectory(System.Type type)
-        {
-            return GetWorkingDirectory(System.Reflection.Assembly.GetAssembly(type));
-        }
+        public static string GetWorkingDirectory(System.Type type) => GetWorkingDirectory(System.Reflection.Assembly.GetAssembly(type));
         public static string GetWorkingDirectory(System.Reflection.Assembly assembly)
         {
             string working_dir = ComputeWorkingDirectory(assembly);
@@ -73,14 +70,8 @@
 
             return workingDirectories;
         }
-        private static string WorkingDirectoriesFilename
-        {
-            get
-            {
-                return System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData)
-                    + @"\WorkingDirectories.xaml";
-            }
-        }
+        private static string WorkingDirectoriesFilename => System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData)
+    + @"\WorkingDirectories.xaml";
         private static void SaveWorkingDirectories()
         {
             using(System.IO.FileStream fs = new System.IO.FileStream(WorkingDirectoriesFilename,System.IO.FileMode.Create))

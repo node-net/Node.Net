@@ -5,15 +5,9 @@
         public MatrixTransform3DRenderer(IRenderer renderer) : base(renderer)
         { }
         public System.Windows.Media.Media3D.MatrixTransform3D GetMatrixTransform3D_NoScale(System.Collections.IDictionary value,
-                                                 Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter)
-        {
-            return new System.Windows.Media.Media3D.MatrixTransform3D(GetTransform3D_NoScale(value,units).LocalToParent);
-        }
+                                     Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter) => new System.Windows.Media.Media3D.MatrixTransform3D(GetTransform3D_NoScale(value, units).LocalToParent);
         public System.Windows.Media.Media3D.MatrixTransform3D GetMatrixTransform3D_ScaleOnly(System.Collections.IDictionary value,
-                                                 Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter)
-        {
-            return new System.Windows.Media.Media3D.MatrixTransform3D(GetTransform3D_ScaleOnly(value, units).LocalToParent);
-        }
+                                     Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter) => new System.Windows.Media.Media3D.MatrixTransform3D(GetTransform3D_ScaleOnly(value, units).LocalToParent);
 
         private Node.Net.Model3D.Transform3D GetTransform3D(System.Collections.IDictionary value,
                                                  Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter)
