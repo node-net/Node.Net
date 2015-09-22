@@ -40,6 +40,11 @@ namespace Node.Net
                 en.Save(stream);
             }
 
+            public static ImageSource FromStream(Stream stream)
+            {
+                return Image.FromStream(stream).GetImageSource();
+            }
+
             public static ImageSource FromFile(string url)
             {
                 ImageSource result = null;
