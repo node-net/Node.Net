@@ -12,7 +12,7 @@
         private System.Collections.Generic.List<System.Type> ignoreTypes 
             = new System.Collections.Generic.List<System.Type>();
 
-        public System.Collections.Generic.List<System.Type> IgnoreTypes { get { return ignoreTypes; } }
+        public System.Collections.Generic.List<System.Type> IgnoreTypes => ignoreTypes;
 
         public void Dispose()
         {
@@ -232,10 +232,7 @@
             }
             return result;
         }
-        private static string EscapeBackslashes(string input)
-        {
-            return input.Replace("\\", "\\\\");
-        }
+        private static string EscapeBackslashes(string input) => input.Replace("\\", "\\\\");
         private JsonFormat format = JsonFormat.Indented;
 
         public JsonFormat Format

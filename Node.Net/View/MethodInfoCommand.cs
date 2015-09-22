@@ -12,10 +12,7 @@
             methodInfo = methodInfoValue;
         }
 
-        public bool CanExecute(System.Object parameter)
-        {
-            return true;
-        }
+        public bool CanExecute(System.Object parameter) => true;
 
         public void Execute(System.Object parameter)
         {
@@ -28,7 +25,7 @@
         public event System.EventHandler CanExecuteChanged;
 
         private static MethodInfoCommand _default = new MethodInfoCommand();
-        public static MethodInfoCommand Default { get { return _default; } }
+        public static MethodInfoCommand Default => _default;
         private bool methodExecuting = false;
         public event System.EventHandler PreMethodInvoke;
         public void OnPreMethodInvoke()

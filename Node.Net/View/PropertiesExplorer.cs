@@ -12,10 +12,7 @@
             DataContextChanged += Explorer_DataContextChanged;
         }
 
-        public System.Windows.Controls.TreeView TreeView
-        {
-            get { return treeView; }
-        }
+        public System.Windows.Controls.TreeView TreeView => treeView;
         public PropertiesExplorer(System.Windows.Controls.TreeView tree_view, System.Windows.FrameworkElement selection_view, System.Windows.Controls.Orientation orientation = System.Windows.Controls.Orientation.Horizontal)
         {
             Orientation = orientation;

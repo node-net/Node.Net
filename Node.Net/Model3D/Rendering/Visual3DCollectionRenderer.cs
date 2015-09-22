@@ -23,10 +23,7 @@
         }*/
 
         public System.Windows.Media.Media3D.Visual3D[] GetVisual3DCollection(object value,
-                    Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter)
-        {
-            return GetVisual3DCollection(value as System.Collections.IDictionary, units);
-        }
+        Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter) => GetVisual3DCollection(value as System.Collections.IDictionary, units);
         protected virtual System.Windows.Media.Media3D.Visual3D[] GetVisual3DCollection(System.Collections.IDictionary value,
                     Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter)
         {

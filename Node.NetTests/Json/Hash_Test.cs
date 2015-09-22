@@ -182,5 +182,14 @@ namespace Node.Net.Json
             //NUnit.Framework.Assert.AreEqual('b', sorted[0]);
             //NUnit.Framework.Assert.AreEqual('a', sorted.Keys[1]);
         }
+
+        [TestCase]
+        public void Hash_Parse()
+        {
+            string[] args = { "filename=Z:/wrk/test.json", "enabled=true" };
+            Hash hash = Hash.Parse(args);
+            Assert.AreEqual("Z:/wrk/test.json", hash["filename"]);
+            Assert.AreEqual("true", hash["enabled"]);
+        }
     }
 }

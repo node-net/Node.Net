@@ -13,10 +13,7 @@
             abbreviations.Add(AngularUnit.Degrees, "deg");
             abbreviations.Add(AngularUnit.Radians, "rad");
         }
-        public static double Convert(double value, AngularUnit valueUnits, AngularUnit desiredUnits)
-        {
-            return value * conversionToRadians[valueUnits] / conversionToRadians[desiredUnits];
-        }
+        public static double Convert(double value, AngularUnit valueUnits, AngularUnit desiredUnits) => value * conversionToRadians[valueUnits] / conversionToRadians[desiredUnits];
 
         public static Angle Parse(string value)
         {
@@ -97,10 +94,7 @@
             return GetType().FullName.CompareTo(instance.GetType().FullName);
         }
 
-        public override int GetHashCode()
-        {
-            return this[AngularUnit.Degrees].GetHashCode();
-        }
+        public override int GetHashCode() => this[AngularUnit.Degrees].GetHashCode();
 
         public override bool Equals(object obj)
         {
@@ -121,9 +115,6 @@
             }
         }
 
-        public override string ToString()
-        {
-            return angleValue.ToString() + " " + abbreviations[angularUnit];
-        }
+        public override string ToString() => angleValue.ToString() + " " + abbreviations[angularUnit];
     }
 }

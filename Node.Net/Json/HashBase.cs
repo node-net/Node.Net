@@ -22,18 +22,9 @@
        
 
         protected virtual void Initialize(){}
-        protected virtual Reader GetReader()
-        {
-            return new Reader();
-        }
-        protected virtual Writer GetWriter()
-        {
-            return new Writer();
-        }
-        public override int GetHashCode()
-        {
-            return GetHashCode(this);
-        }
+        protected virtual Reader GetReader() => new Reader();
+        protected virtual Writer GetWriter() => new Writer();
+        public override int GetHashCode() => GetHashCode(this);
 
         public override bool Equals(object obj)
         {
@@ -55,12 +46,9 @@
         {
             Copier.Copy(source, destination, filter);
         }
-        public static string ToJson(System.Collections.IDictionary source)
-        {
-            return Writer.ToString(source);
-        }
+        public static string ToJson(System.Collections.IDictionary source) => Writer.ToString(source);
 
-        public string ToJson() { return ToJson(this); }
+        public string ToJson() => ToJson(this);
 
         public static int GetHashCode(object value)
         {
@@ -229,25 +217,16 @@
         }
 
         [System.ComponentModel.Browsable(false)]
-        public new System.Collections.Generic.Dictionary<string, object>.KeyCollection Keys
-        {
-            get { return base.Keys; }
-        }
+        public new System.Collections.Generic.Dictionary<string, object>.KeyCollection Keys => base.Keys;
 
         [System.ComponentModel.Browsable(false)]
-        public new System.Collections.Generic.Dictionary<string, object>.ValueCollection Values
-        {
-            get { return base.Values; }
-        }
+        public new System.Collections.Generic.Dictionary<string, object>.ValueCollection Values => base.Values;
 
         [System.ComponentModel.Browsable(false)]
-        public new System.Collections.Generic.IEqualityComparer<string> Comparer
-        {
-            get { return base.Comparer; }
-        }
+        public new System.Collections.Generic.IEqualityComparer<string> Comparer => base.Comparer;
 
         [System.ComponentModel.Browsable(false)]
-        public new int Count { get { return base.Count; } }
+        public new int Count => base.Count;
 
         public int GetCount(System.Type type)
         {
@@ -262,13 +241,13 @@
             return count;
         }
 
-        public int GetCount<T>() { return GetCount(typeof(T)); }
-        public int GetDeepCount<T>() { return Traverser.DeepCount<T>(this); }
-        public string[] CollectKeys<T>(){return Traverser.CollectKeys<T>(this);}
+        public int GetCount<T>() => GetCount(typeof(T));
+        public int GetDeepCount<T>() => Traverser.DeepCount<T>(this);
+        public string[] CollectKeys<T>() => Traverser.CollectKeys<T>(this);
 
-        public T[] Collect<T>(){return Traverser.Collect<T>(this);}
- 
-        public T[] DeepCollect<T>(){return Traverser.DeepCollect<T>(this);}
+        public T[] Collect<T>() => Traverser.Collect<T>(this);
+
+        public T[] DeepCollect<T>() => Traverser.DeepCollect<T>(this);
 
         public virtual void Update(bool deep = true) { if (deep) { Traverser.Update(this); } }
 
@@ -320,14 +299,8 @@
             return items.ToArray();
         }
 
-        [System.ComponentModel.Browsable(false)]
-        public virtual string Key
-        {
-            get
-            {
 
-                return "";
-            }
-        }
+        [System.ComponentModel.Browsable(false)]
+        public virtual string Key => "";
     }
 }

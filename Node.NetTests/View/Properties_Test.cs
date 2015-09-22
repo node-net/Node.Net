@@ -4,16 +4,10 @@ namespace Node.Net.View
 {
     class TreeConverter : System.ComponentModel.StringConverter
     {
-        public override StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context)
-        {
-            return new StandardValuesCollection(new string[]{"aspen", 
-                                                     "maple", 
+        public override StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context) => new StandardValuesCollection(new string[]{"aspen",
+                                                     "maple",
                                                      "oak"});
-        }
-        public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context)
-        {
-            return true;
-        }
+        public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context) => true;
     }
     class Widget
     {
@@ -23,10 +17,7 @@ namespace Node.Net.View
             get { return integerValue; }
             set { integerValue = value; }
         }
-        public int IntegerCopy
-        {
-            get { return integerValue; }
-        }
+        public int IntegerCopy => integerValue;
 
         private string tree = "aspen";
         [System.ComponentModel.TypeConverter(typeof(TreeConverter))]

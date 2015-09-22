@@ -68,10 +68,7 @@
             }
         }
 
-        public virtual System.Collections.IList GetChildren()
-        {
-            return GetChildren(DataContext);
-        }
+        public virtual System.Collections.IList GetChildren() => GetChildren(DataContext);
 
         protected virtual object GetHeader()
         {

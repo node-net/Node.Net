@@ -31,7 +31,7 @@
             }
         }
 
-        public string FullName { get { return fullName; } }
+        public string FullName => fullName;
         public string GetFileName(string name)
         {
             string fileName = fullName + @"\" + name;

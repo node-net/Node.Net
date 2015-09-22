@@ -17,15 +17,12 @@
         private System.Collections.IDictionary idictionary = null;
         public PropertyDescriptor(string name,System.Attribute[] attributes) : base(name,attributes) { }
         public PropertyDescriptor(System.Collections.IDictionary dictionary, string name, System.Attribute[] attributes) : base(name, attributes) { idictionary = dictionary; }
-        public override bool CanResetValue(object component) { return true; }
+        public override bool CanResetValue(object component) => true;
         public override void ResetValue(object component)
         {
             idictionary = component as System.Collections.IDictionary;
         }
-        public override bool ShouldSerializeValue(object component)
-        {
-            return false;
-        }
+        public override bool ShouldSerializeValue(object component) => false;
         public override void SetValue(object component, object value)
         {
             System.Collections.IDictionary dictionary = component as System.Collections.IDictionary;
@@ -34,13 +31,7 @@
                 dictionary[Name] = value;
             }
         }
-        public override System.Type PropertyType
-        {
-            get
-            {
-                return idictionary[Name].GetType();
-            }
-        }
+        public override System.Type PropertyType => idictionary[Name].GetType();
 
         public override object GetValue(object component)
         {
@@ -52,10 +43,7 @@
             return null;
         }
 
-        public override System.Type ComponentType { get { return null; } }
-        public override bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public override System.Type ComponentType => null;
+        public override bool IsReadOnly => false;
     }
 }

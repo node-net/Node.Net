@@ -6,10 +6,7 @@ namespace Node.Net.Model3D
         private Renderer primaryRenderer = new Renderer();
         private System.Collections.ObjectModel.ObservableCollection<IRenderer> renderers = null;
 
-        public System.Collections.ObjectModel.ObservableCollection<IRenderer> Renderers
-        {
-            get { return renderers; }
-        }
+        public System.Collections.ObjectModel.ObservableCollection<IRenderer> Renderers => renderers;
         public CompositeRenderer()
         {
             renderers = new System.Collections.ObjectModel.ObservableCollection<IRenderer>();
@@ -34,10 +31,7 @@ namespace Node.Net.Model3D
             }
         }
 
-        System.Windows.Media.Media3D.Model3D renderer_Model3DRequested(object value, Measurement.LengthUnit units)
-        {
-            return GetModel3D(value);
-        }
+        System.Windows.Media.Media3D.Model3D renderer_Model3DRequested(object value, Measurement.LengthUnit units) => GetModel3D(value);
 
         public event Model3DRequestedEventHandler Model3DRequested;
         System.Windows.Media.Media3D.Model3D Model3DRenderer_Model3DRequested(object value, Measurement.LengthUnit units)
@@ -50,14 +44,8 @@ namespace Node.Net.Model3D
             return null;
         }
 
-        public System.Windows.Controls.Viewport3D GetViewport3D(object value)
-        {
-            return primaryRenderer.GetViewport3D(value);
-        }
-        public System.Windows.ResourceDictionary Resources
-        {
-            get { return primaryRenderer.Resources; }
-        }
+        public System.Windows.Controls.Viewport3D GetViewport3D(object value) => primaryRenderer.GetViewport3D(value);
+        public System.Windows.ResourceDictionary Resources => primaryRenderer.Resources;
         public virtual System.Windows.Media.Media3D.Model3D GetModel3D(object value)
         {
             System.Windows.Media.Media3D.Model3D model = null;

@@ -55,10 +55,7 @@
             return GetType().FullName.CompareTo(instance.GetType().FullName);
         }
 
-        public override int GetHashCode()
-        {
-            return this[LengthUnit.Meters].GetHashCode();
-        }
+        public override int GetHashCode() => this[LengthUnit.Meters].GetHashCode();
 
         public override bool Equals(object obj)
         {
@@ -79,10 +76,7 @@
             }
         }
 
-        public override string ToString()
-        {
-            return lengthValue.ToString() + " " + abbreviations[lengthUnit];
-        }
+        public override string ToString() => lengthValue.ToString() + " " + abbreviations[lengthUnit];
         private static System.Collections.Generic.Dictionary<LengthUnit, double> conversionToMeters = new System.Collections.Generic.Dictionary<LengthUnit, double>();
         private static System.Collections.Generic.Dictionary<LengthUnit, string> abbreviations = new System.Collections.Generic.Dictionary<LengthUnit, string>();
         static Length()
@@ -105,10 +99,7 @@
             abbreviations.Add(LengthUnit.Kilometers, "km");
             abbreviations.Add(LengthUnit.Miles, "mi");
         }
-        public static double Convert(double value, LengthUnit valueUnits, LengthUnit desiredUnits)
-        {
-            return value * conversionToMeters[valueUnits] / conversionToMeters[desiredUnits];
-        }
+        public static double Convert(double value, LengthUnit valueUnits, LengthUnit desiredUnits) => value * conversionToMeters[valueUnits] / conversionToMeters[desiredUnits];
         public static Length Parse(string value)
         {
             if (value.Length == 0) return new Length();
