@@ -308,7 +308,7 @@ namespace Node.Net.Json
                     {
                         if(value.GetType() == current_value.GetType())
                         {
-                            if (value != current_value) notify = true;
+                            if (!value.Equals(current_value)) notify = true;
                         }
                         else { notify = true; }
                     }
