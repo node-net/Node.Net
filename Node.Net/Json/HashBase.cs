@@ -284,7 +284,11 @@ namespace Node.Net.Json
         public new dynamic this[string key]
 #endif
         {
-            get { return base[key]; }
+            get
+            {
+                if (!ContainsKey(key)) return null;
+                return base[key];
+            }
             set
             {
                 bool notify = false;

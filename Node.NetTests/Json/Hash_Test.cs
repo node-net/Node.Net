@@ -223,5 +223,12 @@ namespace Node.Net.Json
             hash["Name"] = "b";
             Assert.AreEqual(1, watcher.PropertyChangeCounts["Name"]);
         }
+
+        [TestCase]
+        public void Hash_NonExistantAccessor()
+        {
+            Hash hash = new Hash();
+            Assert.AreNotEqual("a", hash["Name"]);
+        }
     }
 }
