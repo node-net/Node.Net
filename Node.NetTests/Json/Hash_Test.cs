@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
 using System.ComponentModel;
@@ -190,6 +191,37 @@ namespace Node.Net.Json
             Hash hash = Hash.Parse(args);
             Assert.AreEqual("Z:/wrk/test.json", hash["filename"]);
             Assert.AreEqual("true", hash["enabled"]);
+        }
+
+        class HashPropertyChangeWatcher
+        {
+            public Dictionary<string, int> PropertyChangeCounts = new Dictionary<string, int>();
+            public HashPropertyChangeWatcher(Hash hash)
+            {
+                hash.PropertyChanged += Hash_PropertyChanged;
+            }
+
+            private void Hash_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                if(!PropertyChangeCounts.ContainsKey(e.PropertyName))
+                {
+                    PropertyChangeCounts.Add(e.PropertyName, 1);
+                }
+                else
+                {
+                    PropertyChangeCounts[e.PropertyName] = PropertyChangeCounts[e.PropertyName] + 1;
+                }
+            }
+        }
+
+        [TestCase]
+        public void Hash_NotifyPropertyChanged()
+        {
+            Hash hash = new Hash();
+            hash["Name"] = "a";
+            HashPropertyChangeWatcher watcher = new HashPropertyChangeWatcher(hash);
+            hash["Name"] = "b";
+            Assert.AreEqual(1, watcher.PropertyChangeCounts["Name"]);
         }
     }
 }

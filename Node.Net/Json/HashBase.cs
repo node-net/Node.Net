@@ -1,9 +1,11 @@
-﻿namespace Node.Net.Json
+﻿using System.ComponentModel;
+
+namespace Node.Net.Json
 {
 #if NET35
-    public class HashBase : System.Collections.Generic.Dictionary<string, object>, System.IComparable
+    public class HashBase : System.Collections.Generic.Dictionary<string, object>, System.IComparable, System.ComponentModel.INotifyPropertyChanged
 #else
-    public class HashBase : System.Collections.Generic.Dictionary<string, dynamic>, System.IComparable
+    public class HashBase : System.Collections.Generic.Dictionary<string, dynamic>, System.IComparable, System.ComponentModel.INotifyPropertyChanged
 #endif
     {
         public HashBase() { Initialize(); }
@@ -20,7 +22,6 @@
             Initialize();
         }
        
-
         protected virtual void Initialize(){}
         protected virtual Reader GetReader() => new Reader();
         protected virtual Writer GetWriter() => new Writer();
@@ -267,7 +268,52 @@
             }
             return default(T);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void NotifyPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
         
+#if NET35
+        public new object this[string key]
+#else
+        public new dynamic this[string key]
+#endif
+        {
+            get { return base[key]; }
+            set
+            {
+                bool notify = false;
+                object current_value = null;
+                if(ContainsKey(key))
+                {
+                    current_value = base[key];
+                }
+                if(ReferenceEquals(null, value))
+                {
+                    if (!ReferenceEquals(null, current_value)) notify = true;
+                }
+                else
+                {
+                    if (ReferenceEquals(null, current_value)) notify = true;
+                    else
+                    {
+                        if(value.GetType() == current_value.GetType())
+                        {
+                            if (value != current_value) notify = true;
+                        }
+                        else { notify = true; }
+                    }
+                }
+                base[key] = value;
+                if (notify) NotifyPropertyChanged(key);
+            }
+        }
+
 #if NET35
         public object this[int index]
 #else
