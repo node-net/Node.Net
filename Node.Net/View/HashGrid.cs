@@ -10,6 +10,7 @@ namespace Node.Net.View
         public HashGrid(Node.Net.Json.Hash hash,string[] ordered_keys= null)
         {
             DataContext = hash;
+            if(!ReferenceEquals(null, hash)) { hash.PropertyChanged += Hash_PropertyChanged; }
             if (!ReferenceEquals(null, ordered_keys))
             {
                 orderedKeys = new System.Collections.Generic.List<string>(ordered_keys);
