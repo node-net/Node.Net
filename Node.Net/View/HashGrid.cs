@@ -5,10 +5,15 @@ namespace Node.Net.View
 {
     public class HashGrid : System.Windows.Controls.Grid
     {
+        private System.Collections.Generic.List<string> orderedKeys = null;
         public HashGrid() { }
-        public HashGrid(Node.Net.Json.Hash hash)
+        public HashGrid(Node.Net.Json.Hash hash,string[] ordered_keys= null)
         {
             this.DataContextChanged += HashGrid_DataContextChanged;
+            if(!ReferenceEquals(null,ordered_keys))
+            {
+                orderedKeys = new System.Collections.Generic.List<string>(ordered_keys);
+            }
             DataContext = hash;
         }
 
@@ -48,6 +53,7 @@ namespace Node.Net.View
 
         private string[] GetKeys()
         {
+            if (!ReferenceEquals(null, orderedKeys)) return orderedKeys.ToArray();
             Node.Net.Json.Hash hash = DataContext as Node.Net.Json.Hash;
             if (!ReferenceEquals(null, hash)) return new System.Collections.Generic.List<string>(hash.Keys).ToArray();
             return null;
