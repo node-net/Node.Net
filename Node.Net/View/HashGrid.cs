@@ -27,6 +27,21 @@ namespace Node.Net.View
 
         private void HashGrid_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
+            Node.Net.Json.Hash oldHash = e.OldValue as Node.Net.Json.Hash;
+            if(!ReferenceEquals(null, oldHash))
+            {
+                oldHash.PropertyChanged -= Hash_PropertyChanged;
+            }
+            Node.Net.Json.Hash hash = DataContext as Node.Net.Json.Hash;
+            if(!ReferenceEquals(null, hash))
+            {
+                hash.PropertyChanged += Hash_PropertyChanged;
+            }
+            Update();
+        }
+
+        private void Hash_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
             Update();
         }
 
