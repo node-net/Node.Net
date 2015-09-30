@@ -46,13 +46,15 @@ namespace Node.Net.View
             Update();
         }
 
-        private void Update()
-        { 
+        protected virtual void Update()
+        {
+            RowDefinitions.Clear();
+            Children.Clear();
             Node.Net.Json.Hash hash = DataContext as Node.Net.Json.Hash;
             if(ReferenceEquals(null, hash))
             {
-                RowDefinitions.Clear();
-                Children.Clear();
+                
+                
             }
             else
             {
@@ -75,7 +77,7 @@ namespace Node.Net.View
             }
         }
 
-        private string[] GetKeys()
+        protected string[] GetKeys()
         {
             if (!ReferenceEquals(null, orderedKeys)) return orderedKeys.ToArray();
             Node.Net.Json.Hash hash = DataContext as Node.Net.Json.Hash;

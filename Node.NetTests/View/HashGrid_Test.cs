@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Windows.Controls;
 
 namespace Node.Net.View
 {
@@ -15,8 +16,12 @@ namespace Node.Net.View
             hash["Null"] = null;
 
             HashGrid hashGrid = new HashGrid(hash);
+            HashGridEditor hashGridEditor = new HashGridEditor(hash);
+            StackPanel sp = new StackPanel() { Orientation = Orientation.Horizontal };
+            sp.Children.Add(hashGrid);
+            sp.Children.Add(hashGridEditor);
             System.Windows.Window window = new System.Windows.Window();
-            window.Content = hashGrid;
+            window.Content = sp;
             window.Title = "HashGrid_Usage";
             window.ShowDialog();
         }
