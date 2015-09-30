@@ -48,7 +48,9 @@ namespace Node.Net.View
                     Children.Add(nameLabel);
                     Grid.SetColumn(nameLabel, 0);
                     Grid.SetRow(nameLabel, row_index);
-                    Label valueLabel = new Label() { Content = hash[key].ToString() };
+                    string svalue = "null";
+                    if (!ReferenceEquals(null, hash[key])) { svalue = hash[key].ToString(); }
+                    Label valueLabel = new Label() { Content = svalue };
                     Children.Add(valueLabel);
                     Grid.SetColumn(valueLabel, 1);
                     Grid.SetRow(valueLabel, row_index);

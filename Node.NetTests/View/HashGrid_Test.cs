@@ -12,6 +12,7 @@ namespace Node.Net.View
             hash["Name"] = "test";
             hash["Length"] = 35.5;
             hash["Age"] = "2 days";
+            hash["Null"] = null;
 
             HashGrid hashGrid = new HashGrid(hash);
             System.Windows.Window window = new System.Windows.Window();
