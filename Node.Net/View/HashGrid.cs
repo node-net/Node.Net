@@ -9,12 +9,12 @@ namespace Node.Net.View
         public HashGrid() { }
         public HashGrid(Node.Net.Json.Hash hash,string[] ordered_keys= null)
         {
-            this.DataContextChanged += HashGrid_DataContextChanged;
-            if(!ReferenceEquals(null,ordered_keys))
+            DataContext = hash;
+            if (!ReferenceEquals(null, ordered_keys))
             {
                 orderedKeys = new System.Collections.Generic.List<string>(ordered_keys);
             }
-            DataContext = hash;
+            this.DataContextChanged += HashGrid_DataContextChanged;
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -22,10 +22,16 @@ namespace Node.Net.View
             base.OnInitialized(e);
             ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition());
             ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition());
+            Update();
         }
 
         private void HashGrid_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
+            Update();
+        }
+
+        private void Update()
+        { 
             Node.Net.Json.Hash hash = DataContext as Node.Net.Json.Hash;
             if(ReferenceEquals(null, hash))
             {
