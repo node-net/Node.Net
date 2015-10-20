@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.IO;
+using Node.Net.Environment;
 
 namespace Node.Net.Environment
 {
