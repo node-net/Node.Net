@@ -7,7 +7,7 @@ namespace Node.Net.Json.Internal
 {
     public enum Style { Compact, Indented };
 
-    public class JsonWriter
+    class JsonWriter
     {
         public Style Style = Style.Compact;
         public bool AddTypeInfo = true;

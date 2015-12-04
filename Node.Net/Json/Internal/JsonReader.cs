@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Node.Net.Json.Internal
 {
-    public class JsonReader
+    class JsonReader
     {
         private static JsonReader _default = new JsonReader() { AutoResolveTypes = true };
         public static JsonReader Default { get { return _default; } }
