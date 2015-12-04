@@ -23,6 +23,17 @@ namespace Node.Net.Json
             Assert.NotNull(d2);
             Assert.AreEqual(0, d2["a"]);
             Assert.AreEqual(1, d2["b"]);
+
+            // Simplified ussage
+            MemoryStream mem2 = new MemoryStream();
+            JsonFormatter.Save(mem2,d2);
+            mem2.Seek(0, SeekOrigin.Begin);
+            Dictionary<string, dynamic> d3 = new Dictionary<string, dynamic>();
+            JsonFormatter.Load(mem2, d3);
+
+            Assert.NotNull(d3);
+            Assert.AreEqual(0, d3["a"]);
+            Assert.AreEqual(1, d3["b"]);
         }
     }
 }

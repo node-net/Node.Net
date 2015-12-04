@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Runtime.Serialization;
 
@@ -6,6 +7,18 @@ namespace Node.Net.Json
 {
     public class JsonFormatter : IFormatter
     {
+        public static void Save(Stream stream, object graph)
+        {
+            JsonFormatter formatter = new JsonFormatter();
+            formatter.Serialize(stream, graph);
+        }
+        public static void Load(Stream stream, IDictionary dictionary)
+        {
+            JsonFormatter formatter = new JsonFormatter();
+            IDictionary d = (IDictionary)formatter.Deserialize(stream);
+            Copier.Copy(d, dictionary);
+        }
+
         private SerializationBinder binder = new JsonSerializationBinder();
         public SerializationBinder Binder
         {
