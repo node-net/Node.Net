@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using System.IO;
+using Node.Net.Environment;
 
 namespace Node.Net.Environment
 {
@@ -20,5 +22,10 @@ namespace Node.Net.Environment
                 Environment.GetWorkingDirectory(typeof(Node.Net.Environment.Environment_Test))));
         }
         
+        [TestCase]
+        public void Environment_MyDocuments()
+        {
+            Assert.True(Directory.Exists(Environment.MyDocuments));
+        }
     }
 }

@@ -2,6 +2,13 @@
 {
     public class Environment
     {
+        public static string MyDocuments
+        {
+            get
+            {
+                return System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            }
+        }
         public static string DevRoot
         {
             get
