@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E9A264F6-0AD4-4580-AC98-AB57FA540C89}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Node.Net</RootNamespace>
+    <AssemblyName>Node.Net.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Net4.6\Debug\</OutputPath>
+    <IntermediateOutputPath>..\obj\Net4.6\Debug</IntermediateOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Net4.6\Release\</OutputPath>
+    <IntermediateOutputPath>..\obj\Net4.6\Release</IntermediateOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Node.Net\Environment\Environment_Test.Tree.json" />
+    <EmbeddedResource Include="Node.Net\Json\Hash_Test.Sample.json" />
+    <EmbeddedResource Include="Node.Net\Json\Traverser_Test.Tree.2.json" />
+    <EmbeddedResource Include="Node.Net\Json\Traverser_Test.Tree.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Node.Net\Documents\Documents_Test.cs" />
+    <Compile Include="Node.Net\Documents\TextDocument_Test.cs" />
+    <Compile Include="Node.Net\Environment\Command_Test.cs" />
+    <Compile Include="Node.Net\Environment\Environment_Test.cs" />
+    <Compile Include="Node.Net\Environment\MyDocuments_Test.cs" />
+    <Compile Include="Node.Net\Environment\Resources_Test.cs" />
+    <Compile Include="Node.Net\Extensions_Test.cs" />
+    <Compile Include="Node.Net\IO\Directory_Test.cs" />
+    <Compile Include="Node.Net\IO\FileList_Test.cs" />
+    <Compile Include="Node.Net\IO\TemporaryDirectory_Test.cs" />
+    <Compile Include="Node.Net\Json\Array_Test.cs" />
+    <Compile Include="Node.Net\Json\Children_Test.cs" />
+    <Compile Include="Node.Net\Json\Copier_Test.cs" />
+    <Compile Include="Node.Net\Json\Finder_Test.cs" />
+    <Compile Include="Node.Net\Json\HashBase_Test.cs" />
+    <Compile Include="Node.Net\Json\Hash_Test.cs" />
+    <Compile Include="Node.Net\Json\Reader_Test.cs" />
+    <Compile Include="Node.Net\Json\Traverser_Test.cs" />
+    <Compile Include="Node.Net\Json\Writer_Test.cs" />
+    <Compile Include="Node.Net\Measurement\Angle_Test.cs" />
+    <Compile Include="Node.Net\Measurement\LengthConverter_Test.cs" />
+    <Compile Include="Node.Net\Measurement\Length_Test.cs" />
+    <Compile Include="Node.Net\Model2D\Canvas_Test.cs" />
+    <Compile Include="Node.Net\Model2D\Viewer_Test.cs" />
+    <Compile Include="Node.Net\Model3D\CompositeRenderer_Test.cs" />
+    <Compile Include="Node.Net\Model3D\MeshGeometry3D_Test.cs" />
+    <Compile Include="Node.Net\Model3D\Model3D_Test.cs" />
+    <Compile Include="Node.Net\Model3D\PrimitivesRenderer_Test.cs" />
+    <Compile Include="Node.Net\Model3D\Renderer_Test.cs" />
+    <Compile Include="Node.Net\Model3D\Resources_Test.cs" />
+    <Compile Include="Node.Net\Model3D\Transform3D_Test.cs" />
+    <Compile Include="Node.Net\Model3D\Viewport3D_Test.cs" />
+    <Compile Include="Node.Net\Model\Application_Test.cs" />
+    <Compile Include="Node.Net\View\Base_Test.cs" />
+    <Compile Include="Node.Net\View\ComboBox_Test.cs" />
+    <Compile Include="Node.Net\View\DataGridView_Test.cs" />
+    <Compile Include="Node.Net\View\DynamicViewSelector_Test.cs" />
+    <Compile Include="Node.Net\View\DynamicView_Test.cs" />
+    <Compile Include="Node.Net\View\Explorer_Test.cs" />
+    <Compile Include="Node.Net\View\FrameworkElements_Test.cs" />
+    <Compile Include="Node.Net\View\Grid_Test.cs" />
+    <Compile Include="Node.Net\View\Image_Test.cs" />
+    <Compile Include="Node.Net\View\ListViewItem_Test.cs" />
+    <Compile Include="Node.Net\View\NotepadDocument_Test.cs" />
+    <Compile Include="Node.Net\View\PropertiesExplorer_Test.cs" />
+    <Compile Include="Node.Net\View\Properties_Test.cs" />
+    <Compile Include="Node.Net\View\SDIApplication_Test.cs" />
+    <Compile Include="Node.Net\View\SDIMainControl_Test.cs" />
+    <Compile Include="Node.Net\View\SplitterGrid_Test.cs" />
+    <Compile Include="Node.Net\View\TabControl_Test.cs" />
+    <Compile Include="Node.Net\View\TextView_Test.cs" />
+    <Compile Include="Node.Net\View\TreeViewItem_Test.cs" />
+    <Compile Include="Node.Net\View\TreeView_Test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Node.Net\Node.Net.csproj">
+      <Project>{cd9926a1-af51-4d3b-8ad9-81948b4f46ef}</Project>
+      <Name>Node.Net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Node.Net\Resources\UnitCone.MeshGeometry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Node.Net\Resources\UnitCube.Mesh.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Node.Net\Resources\UnitCube.MeshGeometry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Node.Net\Resources\UnitCylinder.MeshGeometry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Node.Net\Resources\UnitHemisphere.MeshGeometry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Node.Net\Resources\UnitPyramid.MeshGeometry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Node.Net\Resources\UnitSphere.MeshGeometry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
