@@ -5,7 +5,7 @@
     <version>0.0.240</version>
     <authors>Lou Parslow</authors>
     <owners>Lou Parslow</owners>
-    <licenseUrl>http://http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/lou-parslow/Node.Net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>C# Library</description>

@@ -72,13 +72,13 @@
                     as System.Windows.Media.Media3D.MeshGeometry3D;
             return result;
         }
-        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitCube() => LoadMeshResource("Node.Net.Resources.UnitCube.MeshGeometry.xaml");
+        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitCube() => LoadMeshResource("Node.Net.Node.Net.Resources.UnitCube.MeshGeometry.xaml");
 
-        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitPyramid() => LoadMeshResource("Node.Net.Resources.UnitPyramid.MeshGeometry.xaml");
-        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitCylinder() => LoadMeshResource("Node.Net.Resources.UnitCylinder.MeshGeometry.xaml");
-        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitCone() => LoadMeshResource("Node.Net.Resources.UnitCone.MeshGeometry.xaml");
-        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitSphere() => LoadMeshResource("Node.Net.Resources.UnitSphere.MeshGeometry.xaml");
-        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitHemisphere() => LoadMeshResource("Node.Net.Resources.UnitHemisphere.MeshGeometry.xaml");
+        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitPyramid() => LoadMeshResource("Node.Net.Node.Net.Resources.UnitPyramid.MeshGeometry.xaml");
+        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitCylinder() => LoadMeshResource("Node.Net.Node.Net.Resources.UnitCylinder.MeshGeometry.xaml");
+        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitCone() => LoadMeshResource("Node.Net.Node.Net.Resources.UnitCone.MeshGeometry.xaml");
+        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitSphere() => LoadMeshResource("Node.Net.Node.Net.Resources.UnitSphere.MeshGeometry.xaml");
+        public static System.Windows.Media.Media3D.MeshGeometry3D CreateUnitHemisphere() => LoadMeshResource("Node.Net.Node.Net.Resources.UnitHemisphere.MeshGeometry.xaml");
 
         public static System.Windows.Media.Media3D.MeshGeometry3D TransformMesh(System.Windows.Media.Media3D.MeshGeometry3D mesh,System.Windows.Media.Media3D.Matrix3D transformation)
         {
