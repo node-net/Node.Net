@@ -59,6 +59,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Node.Net\Collections\Dictionary.Test.cs" />
     <Compile Include="Node.Net\Documents\Documents_Test.cs" />
     <Compile Include="Node.Net\Documents\TextDocument_Test.cs" />
     <Compile Include="Node.Net\Environment\Command_Test.cs" />
@@ -152,6 +153,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

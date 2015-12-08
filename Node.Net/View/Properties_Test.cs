@@ -1,4 +1,4 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
@@ -40,10 +40,10 @@ namespace Node.Net.View
             set { font = value; }
         }
     }
-    [NUnit.Framework.TestFixture,NUnit.Framework.Category("View")]
+    [TestFixture,NUnit.Framework.Category("View")]
     class Properties_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void Properties_Usage()
         {
             Properties properties = new Properties();
@@ -53,7 +53,7 @@ namespace Node.Net.View
             window.Title = "Properties_Usage";
             window.ShowDialog();
         }
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void Properties_Usage_Many_Properties()
         {
             Node.Net.Json.Hash hash = new Node.Net.Json.Hash();

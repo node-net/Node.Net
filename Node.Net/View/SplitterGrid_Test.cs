@@ -1,11 +1,11 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class SplitterGrid_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SplitterGrid_2_Vertical()
         {
             System.Windows.FrameworkElement[] elements
@@ -18,7 +18,7 @@ namespace Node.Net.View
                 Title = "View_ExplorerGrid_Usage" };
             window.ShowDialog();
         }
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SplitterGrid_3_Horizontal()
         {
             System.Windows.FrameworkElement[] elements
@@ -36,7 +36,7 @@ namespace Node.Net.View
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SplitterGrid_Nesting()
         {
             System.Windows.FrameworkElement[] velements
@@ -55,7 +55,7 @@ namespace Node.Net.View
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SplitterGrid_TreeView_Properties()
         {
             System.Collections.Generic.Dictionary<string, object> doc =

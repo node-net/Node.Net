@@ -1,9 +1,10 @@
-﻿namespace Node.Net.View
+﻿using NUnit.Framework;
+namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class Image_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Image_Menger_Bitmap()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(Image_Test));
@@ -20,7 +21,7 @@
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Image_Menger_Bitmap_Resize()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(Image_Test));
@@ -39,7 +40,7 @@
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Image_Menger_Png()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(Image_Test));
@@ -55,7 +56,7 @@
             window.Title = "Image_Menger_Png";
             window.ShowDialog();
         }
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Image_Menger_Jpg()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(Image_Test));

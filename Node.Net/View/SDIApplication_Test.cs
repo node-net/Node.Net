@@ -1,13 +1,13 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
     
 
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class SDIApplication_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SDIApplication_DictionaryModel_Usage()
         {
             System.Collections.Generic.Dictionary<string,object> hash
@@ -44,7 +44,7 @@ namespace Node.Net.View
             }
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void SDIApplication_Notepad_Usage()
         {
             NotePadDocument doc = new NotePadDocument();

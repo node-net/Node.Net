@@ -6,7 +6,7 @@ namespace Node.Net.Model3D
     class Renderer_Test
     {
 
-        [NUnit.Framework.TestCase, NUnit.Framework.Explicit, NUnit.Framework.RequiresSTA]
+        [TestCase, NUnit.Framework.Explicit, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Mesh()
         {
             System.Windows.Media.Media3D.MeshGeometry3D cube
@@ -17,7 +17,7 @@ namespace Node.Net.Model3D
                 as System.Windows.Media.Media3D.MeshGeometry3D;
             RenderToViewport(cube);
         }
-        [NUnit.Framework.TestCase, NUnit.Framework.Explicit, NUnit.Framework.RequiresSTA]
+        [TestCase, NUnit.Framework.Explicit, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Mesh_in_Hash()
         {
             Node.Net.Json.Hash model = new Json.Hash("{'Sunlight':{'Type':'Sunlight'}}");
@@ -33,7 +33,7 @@ namespace Node.Net.Model3D
             RenderToViewport(model);
         }
 
-        [NUnit.Framework.TestCase, NUnit.Framework.Explicit, NUnit.Framework.RequiresSTA]
+        [TestCase, NUnit.Framework.Explicit, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Scene_1()
         {
             RenderToViewport(new Json.Hash(
@@ -42,7 +42,7 @@ namespace Node.Net.Model3D
                   "Node.Net.Test.Resources.Scene.1.json")));
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.Explicit,NUnit.Framework.RequiresSTA]
+        [TestCase,NUnit.Framework.Explicit,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Scene_2()
         {
             RenderToViewport(new Json.Hash(
@@ -51,13 +51,13 @@ namespace Node.Net.Model3D
                   "Node.Net.Test.Resources.Scene.2.json")));
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.Explicit,NUnit.Framework.RequiresSTA]
+        [TestCase,NUnit.Framework.Explicit,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Scene_3()
         {
             Render_Resource("Node.Net.Resources.Scene.3.json");
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.Explicit,NUnit.Framework.RequiresSTA]
+        [TestCase,NUnit.Framework.Explicit,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Scene_Table()
         {
             Render_Resource("Node.Net.Resources.Scene.Table.json");

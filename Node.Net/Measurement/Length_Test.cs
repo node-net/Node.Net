@@ -2,10 +2,10 @@
 
 namespace Node.Net.Measurement
 {
-    [NUnit.Framework.TestFixture,Category("Node.Net.Measurement.Length")]
+    [TestFixture,Category("Node.Net.Measurement.Length")]
     class Length_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Length_Usage()
         {
             Length length = Length.Parse("");

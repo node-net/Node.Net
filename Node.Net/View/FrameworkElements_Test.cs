@@ -1,9 +1,10 @@
-﻿namespace Node.Net.View
+﻿using NUnit.Framework;
+namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class FrameworkElements_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void FrameworkElements_Usage()
         {
             FrameworkElements elements = new FrameworkElements();
@@ -11,7 +12,7 @@
             NUnit.Framework.Assert.IsNull(elements.DataContext);
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void FrameworkElements_GetAvailableTypes()
         {
             System.Collections.Generic.List<System.Type> types 

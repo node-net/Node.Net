@@ -1,11 +1,11 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class Explorer_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Explorer_Properties_Horizontal()
         {
             System.Collections.Generic.Dictionary<string, object> doc =
@@ -34,7 +34,7 @@ namespace Node.Net.View
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void Explorer_DynamicViewSelector()
         {
             DynamicViewSelector dynamicViewSelector = new DynamicViewSelector(new Properties());

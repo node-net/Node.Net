@@ -1,4 +1,4 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
@@ -24,10 +24,10 @@ namespace Node.Net.View
             set { model = value; }
         }
     }
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class DataGridView_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void DataGridView_Usage()
         {
             DataGridView dataGridView = new DataGridView();

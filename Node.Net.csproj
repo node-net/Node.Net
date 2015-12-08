@@ -58,6 +58,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Node.Net\Collections\Dictionary.cs" />
     <Compile Include="Node.Net\Documents\Documents.cs" />
     <Compile Include="Node.Net\Documents\IDocument.cs" />
     <Compile Include="Node.Net\Documents\TextDocument.cs" />
@@ -69,11 +70,11 @@
     <Compile Include="Node.Net\Extensions.cs" />
     <Compile Include="Node.Net\Extensions\Image.cs" />
     <Compile Include="Node.Net\Extensions\ImageSource.cs" />
-    <Compile Include="Node.Net\Extensions\Stream.Extension.cs" />
-    <Compile Include="Node.Net\Extensions\TextReader.Extension.cs" />
     <Compile Include="Node.Net\IO\Directory.cs" />
     <Compile Include="Node.Net\IO\FileList.cs" />
+    <Compile Include="Node.Net\IO\Stream.Extension.cs" />
     <Compile Include="Node.Net\IO\TemporaryDirectory.cs" />
+    <Compile Include="Node.Net\IO\TextReader.Extension.cs" />
     <Compile Include="Node.Net\Json\Array.cs" />
     <Compile Include="Node.Net\Json\Children.cs" />
     <Compile Include="Node.Net\Json\Copier.cs" />
@@ -83,7 +84,11 @@
     <Compile Include="Node.Net\Json\Hash.cs" />
     <Compile Include="Node.Net\Json\HashBase.cs" />
     <Compile Include="Node.Net\Json\IFilter.cs" />
+    <Compile Include="Node.Net\Json\Internal\JsonReader.cs" />
+    <Compile Include="Node.Net\Json\Internal\JsonWriter.cs" />
     <Compile Include="Node.Net\Json\Internal\PropertyDescriptor.cs" />
+    <Compile Include="Node.Net\Json\JsonFormatter.cs" />
+    <Compile Include="Node.Net\Json\JsonSerializationBinder.cs" />
     <Compile Include="Node.Net\Json\KeyValuePair.cs" />
     <Compile Include="Node.Net\Json\MetaData.cs" />
     <Compile Include="Node.Net\Json\Reader.cs" />

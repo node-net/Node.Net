@@ -1,11 +1,11 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     public class ComboBox_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void ComboBox_Usage()
         {
             System.Collections.Generic.List<string> fruit = new System.Collections.Generic.List<string>();
@@ -20,7 +20,7 @@ namespace Node.Net.View
             window.Title = "ComboBox_Usage";
             window.ShowDialog();
         }
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void ComboBox_Usage2()
         {
             System.Collections.Generic.Dictionary<string,object> fruit = new System.Collections.Generic.Dictionary<string,object>();
