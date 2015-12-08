@@ -64,7 +64,7 @@ namespace Node.Net.Model3D.Test
         }
 
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void PrimitiveRenderer_GetModel3D()
         {
             PrimitivesRenderer renderer = new PrimitivesRenderer();
@@ -80,7 +80,7 @@ namespace Node.Net.Model3D.Test
             NUnit.Framework.Assert.AreEqual(1.0, bounds.SizeY, "unitCube bounds.SizeY is not 1");
             NUnit.Framework.Assert.AreEqual(1.0, bounds.SizeZ, "unitCube bounds.SizeZ is not 1");
         }
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void PrimitivesRenderer_GetViewport3D()
         {
             object[] items ={ MeshGeometry3D.CreateUnitCube(),

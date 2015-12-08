@@ -2,10 +2,10 @@
 
 namespace Node.Net.Measurement
 {
-    [NUnit.Framework.TestFixture,Category("Node.Net.Measurement.LengthConverter")]
+    [TestFixture,Category("Node.Net.Measurement.LengthConverter")]
     public class LengthConverter_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Measurement_LengthConverter_Usage()
         {
             LengthConverter converter = new LengthConverter();

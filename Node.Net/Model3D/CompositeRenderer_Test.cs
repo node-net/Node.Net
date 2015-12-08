@@ -1,7 +1,7 @@
 using NUnit.Framework;
 namespace Node.Net.Model3D.Test
 {
-    [NUnit.Framework.TestFixture,Category("Node.Net.Model3D.CompositeRenderer")]
+    [TestFixture,Category("Node.Net.Model3D.CompositeRenderer")]
     class CompositeRenderer_Test
     {
         class WidgetRenderer : Renderer
@@ -20,7 +20,7 @@ namespace Node.Net.Model3D.Test
                 return base.GetModel3D(value);
             }
         }
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void CompositeRenderer_Usage()
         {
             Node.Net.Json.Hash cubeModel = new Json.Hash("{'Cube':{'Type':'Cube'}}");

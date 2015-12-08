@@ -43,7 +43,7 @@ namespace Node.Net.Documents
             NUnit.Framework.Assert.AreEqual(1, docs.Count);
         }
 
-        [TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void Documents_Open()
         {
             Documents docs = new Documents();
@@ -51,7 +51,7 @@ namespace Node.Net.Documents
             NUnit.Framework.Assert.AreEqual(1, docs.Count);
         }
 
-        [TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void Documents_Save()
         {
             Documents docs = new Documents();

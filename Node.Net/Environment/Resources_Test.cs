@@ -1,9 +1,10 @@
-﻿namespace Node.Net.Environment
+﻿using NUnit.Framework;
+namespace Node.Net.Environment
 {
-    [NUnit.Framework.TestFixture,NUnit.Framework.Category("Node.Net.Environment.Resources")]
+    [TestFixture,NUnit.Framework.Category("Node.Net.Environment.Resources")]
     class Resources_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Resources_GetStream()
         {
             System.IO.Stream stream = Resources.GetStream("Node.Net.Node.Net.Environment.Environment_Test.Tree.json");

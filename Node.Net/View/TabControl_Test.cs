@@ -1,11 +1,11 @@
-
+using NUnit.Framework;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture,NUnit.Framework.Category("TabControl")]
+    [TestFixture,Category("Node.Net.View.TabControl")]
     class TabControl_Test
     {
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, Apartment(System.Threading.ApartmentState.STA), Explicit]
         public void TabControl_Usage()
         {
             Node.Net.Json.Hash model = new Node.Net.Json.Hash();

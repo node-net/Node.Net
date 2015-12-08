@@ -2,10 +2,10 @@
 
 namespace Node.Net.Model3D.Test
 {
-    [NUnit.Framework.TestFixture,Category("Node.Net.Model3D.MeshGeometry3D")]
+    [TestFixture,Category("Node.Net.Model3D.MeshGeometry3D")]
     class MeshGeometry3D_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void MeshGeometry3D_UnitCube()
         {
             System.Windows.Media.Media3D.MeshGeometry3D unitCube
@@ -16,7 +16,7 @@ namespace Node.Net.Model3D.Test
             NUnit.Framework.Assert.AreEqual(1.0, bounds.SizeZ, "unitCube bounds.SizeZ is not 1");
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void MeshGeometry3D_Write_Unit_Mesh_Methods()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(MeshGeometry3D));

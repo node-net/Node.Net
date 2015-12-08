@@ -1,18 +1,18 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture,Category("Node.Net.View.TreeViewItem")]
     class TreeViewItem_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void TreeViewItem_IsKeyValuePair()
         {
             NUnit.Framework.Assert.False(KeyValuePair.IsKeyValuePair("abc"));
             NUnit.Framework.Assert.True(KeyValuePair.IsKeyValuePair(new System.Collections.Generic.KeyValuePair<string, dynamic>("string", "abc")));
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void TreeViewItem_GetValue()
         {
             string s = "abc";
@@ -22,7 +22,7 @@ namespace Node.Net.View
                 = new System.Collections.Generic.KeyValuePair<string, dynamic>("string", "abc");
             NUnit.Framework.Assert.AreSame(kvp.Value, KeyValuePair.GetValue(kvp));
         }
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void TreeViewItem_IsValidChild()
         {
             NUnit.Framework.Assert.False(TreeViewItem.IsValidChild("abc"));
@@ -34,7 +34,7 @@ namespace Node.Net.View
             NUnit.Framework.Assert.True(TreeViewItem.IsValidChild(new System.Collections.Generic.KeyValuePair<string,dynamic>("child",dictionary)));
         }
        
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA]
+        [TestCase,Apartment(System.Threading.ApartmentState.STA)]
         public void TreeViewItem_Children()
         {
             NUnit.Framework.Assert.AreEqual(0, TreeViewItem.GetChildren("abc").Count);
@@ -70,7 +70,7 @@ namespace Node.Net.View
             NUnit.Framework.Assert.AreSame(childHash, KeyValuePair.GetValue(children[0]));
             NUnit.Framework.Assert.AreEqual("childArray", KeyValuePair.GetKey(children[1]));
         }
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void TreeViewItem_Usage()
         {
             System.Collections.Generic.Dictionary<string, dynamic> dictionary
