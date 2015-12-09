@@ -3,6 +3,18 @@
     public class TreeViewItem : System.Windows.Controls.TreeViewItem
     {
         private string headerString = "";
+
+        public TreeViewItem()
+        {
+            DataContextChanged += TreeViewItem_DataContextChanged;
+            MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
+        }
+
+        private void TreeViewItem_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        {
+            Update(1);
+        }
+
         public TreeViewItem(object model)
         {
             DataContext = model;
