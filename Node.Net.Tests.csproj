@@ -56,6 +56,7 @@
     <EmbeddedResource Include="Node.Net\Json\Hash_Test.Sample.json" />
     <EmbeddedResource Include="Node.Net\Json\Traverser_Test.Tree.2.json" />
     <EmbeddedResource Include="Node.Net\Json\Traverser_Test.Tree.json" />
+    <EmbeddedResource Include="Node.Net\View\PropertiesExplorer_Test.ExampleA.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿namespace Node.Net.Json
+﻿using System;
+
+namespace Node.Net.Json
 {
     public class Copier
     {
@@ -49,9 +51,16 @@
                     if (!object.ReferenceEquals(null, dictionary))
                     {
                         // Copy by value
-                        System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
-                        Copy(dictionary, hashCopy, filter);
-                        destination[key] = hashCopy;
+                        try {
+                            System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
+                            Copy(dictionary, hashCopy, filter);
+                            destination[key] = hashCopy;
+                        }
+                        catch(Exception e)
+                        {
+                            throw new Exception($"unable to create instance of type {dictionary.GetType().FullName}", e);
+                        }
+                        
                     }
                     else
                     {
@@ -60,9 +69,15 @@
                             && !object.ReferenceEquals(null, enumerable))
                         {
                             // Copy by value
-                            System.Collections.IList arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
-                            Copier.Copy(enumerable, arrayCopy, filter);
-                            destination[key] = arrayCopy;
+                            try {
+                                System.Collections.IList arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
+                                Copier.Copy(enumerable, arrayCopy, filter);
+                                destination[key] = arrayCopy;
+                            }
+                            catch (Exception e)
+                            {
+                                throw new Exception($"unable to create instance of type {enumerable.GetType().FullName}", e);
+                            }
                         }
                         else
                         {
