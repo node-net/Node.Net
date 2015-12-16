@@ -2,7 +2,7 @@
 {
     class GeometryModel3DRenderer : Base
     {
-        public GeometryModel3DRenderer(IRenderer renderer) : base(renderer) { }
+        public GeometryModel3DRenderer(Node.Net.Model3D.IRenderer renderer) : base(renderer) { }
         private MaterialRenderer materialRenderer2 = null;//new MaterialRenderer();
         private MeshGeometry3DRenderer meshGeometry3DRenderer2 = null;//new MeshGeometry3DRenderer();
         private MatrixTransform3DRenderer matrixTransform3DRenderer2 = null;//new MatrixTransform3DRenderer();

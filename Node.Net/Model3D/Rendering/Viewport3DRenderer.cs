@@ -2,7 +2,7 @@
 {
     class Viewport3DRenderer : Base
     {
-        public Viewport3DRenderer(IRenderer renderer) : base(renderer)
+        public Viewport3DRenderer(Node.Net.Model3D.IRenderer renderer) : base(renderer)
         {
             Renderer = renderer;
             //SetResourceDictionary(new Node.Net.Model3D.Resources());

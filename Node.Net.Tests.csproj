@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HelixToolkit, Version=2015.1.644.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>packages\HelixToolkit.2015.1.644\lib\portable-net4+sl4+wp71+win8\HelixToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf, Version=2015.1.644.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>packages\HelixToolkit.Wpf.2015.1.644\lib\net45\HelixToolkit.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.0.5813.39031, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -90,6 +98,7 @@
     <Compile Include="Node.Net\Model3D\Model3D_Test.cs" />
     <Compile Include="Node.Net\Model3D\PrimitivesRenderer_Test.cs" />
     <Compile Include="Node.Net\Model3D\Renderer_Test.cs" />
+    <Compile Include="Node.Net\Model3D\Rendering\Renderer.Test.cs" />
     <Compile Include="Node.Net\Model3D\Resources_Test.cs" />
     <Compile Include="Node.Net\Model3D\Transform3D_Test.cs" />
     <Compile Include="Node.Net\Model3D\Viewport3D_Test.cs" />

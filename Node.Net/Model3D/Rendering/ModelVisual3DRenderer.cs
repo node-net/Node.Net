@@ -2,7 +2,7 @@
 {
     class ModelVisual3DRenderer : Base
     {
-        public ModelVisual3DRenderer(IRenderer renderer) : base(renderer)
+        public ModelVisual3DRenderer(Node.Net.Model3D.IRenderer renderer) : base(renderer)
         {
         }
         private Model3DRenderer model3DRenderer = null;//new Model3DRenderer();

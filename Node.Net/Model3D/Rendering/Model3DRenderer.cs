@@ -2,7 +2,7 @@
 {
     class Model3DRenderer : Base
     {
-        public Model3DRenderer(IRenderer renderer) : base(renderer) { }
+        public Model3DRenderer(Node.Net.Model3D.IRenderer renderer) : base(renderer) { }
         private GeometryModel3DRenderer geometryModel3DRenderer = null;//new GeometryModel3DRenderer();
 
         public GeometryModel3DRenderer GeometryModel3DRenderer
