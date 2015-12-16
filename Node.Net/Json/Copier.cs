@@ -68,16 +68,17 @@ namespace Node.Net.Json
                         if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
                             && !object.ReferenceEquals(null, enumerable))
                         {
+                            System.Collections.IList arrayCopy = new System.Collections.Generic.List<dynamic>();
                             // Copy by value
                             try {
-                                System.Collections.IList arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
-                                Copier.Copy(enumerable, arrayCopy, filter);
-                                destination[key] = arrayCopy;
+                                arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
                             }
-                            catch (Exception e)
+                            catch(Exception e)
                             {
-                                throw new Exception($"unable to create instance of type {enumerable.GetType().FullName}", e);
+                                arrayCopy = new System.Collections.Generic.List<dynamic>();
                             }
+                            Copier.Copy(enumerable, arrayCopy, filter);
+                            destination[key] = arrayCopy;
                         }
                         else
                         {
