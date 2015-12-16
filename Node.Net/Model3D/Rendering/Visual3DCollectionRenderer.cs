@@ -3,7 +3,7 @@
     class Visual3DCollectionRenderer : Base
     {
         public Visual3DCollectionRenderer(IRenderer renderer) : base(renderer) { }
-        private ModelVisual3DRenderer modelVisual3DRenderer = null;//new ModelVisual3DRenderer();
+        private ModelVisual3DRenderer modelVisual3DRenderer = null;
         public ModelVisual3DRenderer ModelVisual3DRenderer
         {
             get {
@@ -15,12 +15,6 @@
             }
             set { modelVisual3DRenderer = value; }
         }
-        /*
-        protected override void SetResourceDictionary(System.Windows.ResourceDictionary resources)
-        {
-            base.SetResourceDictionary(resources);
-            modelVisual3DRenderer.ResourceDictionary = resources;
-        }*/
 
         public System.Windows.Media.Media3D.Visual3D[] GetVisual3DCollection(object value,
         Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter) => GetVisual3DCollection(value as System.Collections.IDictionary, units);

@@ -3,7 +3,7 @@
     class Model3DRenderer : Base
     {
         public Model3DRenderer(IRenderer renderer) : base(renderer) { }
-        private GeometryModel3DRenderer geometryModel3DRenderer = null;//new GeometryModel3DRenderer();
+        private GeometryModel3DRenderer geometryModel3DRenderer = null;
 
         public GeometryModel3DRenderer GeometryModel3DRenderer
         {
@@ -21,12 +21,7 @@
             get { return GeometryModel3DRenderer.MatrixTransform3DRenderer; }
             set { GeometryModel3DRenderer.MatrixTransform3DRenderer = value; }
         }
-        /*
-        protected override void SetResourceDictionary(System.Windows.ResourceDictionary resources)
-        {
-            base.SetResourceDictionary(resources);
-            geometryModel3DRenderer.ResourceDictionary = resources;
-        }*/
+
         public virtual System.Windows.Media.Media3D.Model3D GetModel3D(string name)
         {
             if (Renderer.Resources.Contains(name))

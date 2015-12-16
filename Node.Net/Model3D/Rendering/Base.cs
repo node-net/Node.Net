@@ -2,7 +2,6 @@
 {
     class Base
     {
-        //public Base() { }
         public Base(IRenderer renderer)
         {
             Renderer = renderer;
@@ -16,21 +15,6 @@
                 renderer = value; 
             }
         }
-        /*
-        //private System.Windows.ResourceDictionary resourceDictionary = new System.Windows.ResourceDictionary();
-        public System.Windows.ResourceDictionary ResourceDictionary
-        {
-            get 
-            { 
-                return resourceDictionary; 
-            }
-            set { SetResourceDictionary(value); }
-        }*/
-        /*
-        protected virtual void SetResourceDictionary(System.Windows.ResourceDictionary resources)
-        {
-            resourceDictionary = resources;
-        }*/
 
         public string GetTypeString(object value)
         {

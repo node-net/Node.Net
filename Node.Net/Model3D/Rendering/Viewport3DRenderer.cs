@@ -5,9 +5,8 @@
         public Viewport3DRenderer(IRenderer renderer) : base(renderer)
         {
             Renderer = renderer;
-            //SetResourceDictionary(new Node.Net.Model3D.Resources());
         }
-        private ModelVisual3DRenderer modelVisual3DRenderer = null;//new ModelVisual3DRenderer();
+        private ModelVisual3DRenderer modelVisual3DRenderer = null;
         public ModelVisual3DRenderer ModelVisual3DRenderer
         {
             get 
@@ -20,12 +19,6 @@
             }
             set { modelVisual3DRenderer = value; }
         }
-        /*
-        protected override void SetResourceDictionary(System.Windows.ResourceDictionary resources)
-        {
-            base.SetResourceDictionary(resources);
-            modelVisual3DRenderer.ResourceDictionary = resources;
-        }*/
 
         public virtual System.Windows.Controls.Viewport3D GetViewport3D(object value)
         {
@@ -46,9 +39,7 @@
         {
             System.Windows.Controls.Viewport3D viewport = new System.Windows.Controls.Viewport3D();
             System.Windows.Media.Media3D.ModelVisual3D modelVisual3D = modelVisual3DRenderer.GetModelVisual3D(value, units);
-            //viewport.Camera = GetCamera(modelVisual3D);
             viewport.Children.Add(modelVisual3D);
-            //viewport.Chil
             return viewport;
         }
 

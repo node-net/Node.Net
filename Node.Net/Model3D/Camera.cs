@@ -51,15 +51,6 @@
                 }
             }
             return null;
-            /*
-            System.Windows.Media.Media3D.PerspectiveCamera camera = new System.Windows.Media.Media3D.PerspectiveCamera();
-            camera.Position = new System.Windows.Media.Media3D.Point3D(-10, -10, 10);
-            camera.LookDirection = new System.Windows.Media.Media3D.Vector3D(1, 1, -1);
-            camera.UpDirection = new System.Windows.Media.Media3D.Vector3D(0, 0, 1);
-            camera.NearPlaneDistance = 1;
-            camera.FarPlaneDistance = 216;
-            camera.FieldOfView = 10;
-            return camera;*/
         }
     }
 }
