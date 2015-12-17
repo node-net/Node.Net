@@ -1,6 +1,7 @@
-﻿namespace Node.Net.Environment
+﻿using NUnit.Framework;
+namespace Node.Net.Environment
 {
-    [NUnit.Framework.TestFixture, NUnit.Framework.Category("Node.Net.Environment.Command")]
+    [TestFixture, NUnit.Framework.Category("Node.Net.Environment.Command")]
     public class Command_Test : System.Collections.Generic.Dictionary<string,Command>
     {
         [NUnit.Framework.SetUp]
@@ -15,13 +16,13 @@
             Add("git_bogus", new Command("git bogus"));
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Not_Executed()
         {
             Command cmd = new Command("ruby --version");
             NUnit.Framework.Assert.False(cmd.HasExecuted);
         }
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Usage()
         {
             NUnit.Framework.Assert.AreEqual("ruby --version", this["ruby_version"].Name);
@@ -62,14 +63,14 @@
             //Assert.False(cmd.Duration.HasValue);
         }
 
-        [NUnit.Framework.TestCase, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Explicit]
         public void Command_TimedOut()
         {
             Command ftp = Command.Execute("ftp", 300);
             NUnit.Framework.Assert.AreNotEqual(0, ftp.ExitCode);
             NUnit.Framework.Assert.True(ftp.Error.Contains("Timed out"));
         }
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Timeout_On_Success()
         {
             Command git_help = Command.Execute("git help", 30000);
@@ -77,7 +78,7 @@
             NUnit.Framework.Assert.True(git_help.Duration.TotalSeconds < 3);
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Timeout_On_Failure()
         {
             Command git_bogus = Command.Execute("git bogus", 30000);
@@ -86,7 +87,7 @@
             NUnit.Framework.Assert.True(git_bogus.Duration.TotalSeconds < 10, "`git bogus` duration was " + git_bogus.Duration.TotalSeconds + " seconds.");
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_GetFileName()
         {
             NUnit.Framework.Assert.True(System.IO.File.Exists(Command.GetFileName("ruby")));
@@ -104,7 +105,7 @@
                         Command.GetFileName(Command.GetFileName("rake").Replace(".bat", ""))));
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Rake()
         {
             string rakefile = System.IO.Path.GetTempPath() + @"\rakefile.rb";
@@ -123,7 +124,7 @@
             if (System.IO.File.Exists(rakefile)) System.IO.File.Delete(rakefile);
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Logging()
         {
             System.Collections.Generic.Dictionary<string, object> log
@@ -133,7 +134,7 @@
             log.Add(log.Count.ToString().PadLeft(3, '0'), Command.Execute("git --version", 3000));
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Merge()
         {
             Command cmd = new Command("top");
@@ -145,7 +146,7 @@
             NUnit.Framework.Assert.True(cmd.Error.Contains(bogus.Error));
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Serialization()
         {
             Command cmd = new Command("ruby --version");
@@ -169,7 +170,7 @@
             }
             System.IO.File.Delete(filename);
         }
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Command_Save()
         {
             Command cmd = Command.Execute("ruby --version", 3000);

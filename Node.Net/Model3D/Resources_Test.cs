@@ -5,7 +5,7 @@ namespace Node.Net.Model3D.Test
     [TestFixture,Category("Node.Net.Model3D.Resources")]
     class Resources_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Resources_Usage()
         {
             Resources resources = new Resources();

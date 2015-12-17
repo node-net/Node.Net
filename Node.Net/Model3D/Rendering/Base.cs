@@ -3,12 +3,12 @@
     class Base
     {
         //public Base() { }
-        public Base(IRenderer renderer)
+        public Base(Node.Net.Model3D.IRenderer renderer)
         {
             Renderer = renderer;
         }
-        private IRenderer renderer = null;
-        public IRenderer Renderer 
+        private Node.Net.Model3D.IRenderer renderer = null;
+        public Node.Net.Model3D.IRenderer Renderer 
         { 
             get { return renderer; } 
             set 

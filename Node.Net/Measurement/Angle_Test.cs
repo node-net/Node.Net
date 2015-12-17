@@ -2,10 +2,10 @@
 
 namespace Node.Net.Measurement
 {
-    [NUnit.Framework.TestFixture,Category("Node.Net.Measurement.Angle")]
+    [TestFixture,Category("Node.Net.Measurement.Angle")]
     class Angle_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Measurement_Angle_Conversions()
         {
             // 1.57079633 radians = 90 degrees
@@ -13,7 +13,7 @@ namespace Node.Net.Measurement
             NUnit.Framework.Assert.True(System.Math.Abs(angle_degrees - 90) < 0.0001);
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Measurement_Angle_Usage()
         {
             Angle angle = new Angle();
@@ -48,7 +48,7 @@ namespace Node.Net.Measurement
             angle.Normalize();
         }
 
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void Measurement_Angle_Parse()
         {
             Angle angle = Angle.Parse("");

@@ -1,11 +1,11 @@
 ﻿
-
+using NUnit.Framework;
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class TextView_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase, Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void TextView_Usage()
         {
             System.Collections.Generic.List<string> doc = new System.Collections.Generic.List<string>();

@@ -1,11 +1,11 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class Base_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void DocumentView_Usage()
         {
             System.Collections.Generic.Dictionary<string, object> doc

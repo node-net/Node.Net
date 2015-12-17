@@ -5,8 +5,11 @@ using System.Runtime.Serialization;
 
 namespace Node.Net.Json
 {
+    public enum JsonStyle { Compact,Indented};
     public class JsonFormatter : IFormatter
     {
+
+        public JsonStyle Style = JsonStyle.Compact;
         public static void Save(Stream stream, object graph)
         {
             JsonFormatter formatter = new JsonFormatter();
@@ -47,7 +50,14 @@ namespace Node.Net.Json
 
         public void Serialize(Stream serializationStream, object graph)
         {
-            Json.Internal.JsonWriter.Write(serializationStream, graph, Internal.Style.Compact);
+            if (Style == JsonStyle.Compact)
+            {
+                Json.Internal.JsonWriter.Write(serializationStream, graph, Internal.Style.Compact);
+            }
+            else
+            {
+                Json.Internal.JsonWriter.Write(serializationStream, graph, Internal.Style.Indented);
+            }
         }
     }
 }

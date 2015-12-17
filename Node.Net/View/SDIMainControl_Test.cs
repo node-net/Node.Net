@@ -1,9 +1,10 @@
+using NUnit.Framework;
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture,NUnit.Framework.Category("SDIMainControl")]
+    [TestFixture,NUnit.Framework.Category("SDIMainControl")]
     class SDIMainControl_Test
     {
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SDIMainControl_Notepad_Usage()
         {
             SDIMainControl sdiMainControl
@@ -13,7 +14,7 @@ namespace Node.Net.View
             sdiMainControl.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SDMainControl_Properties_Update_Usage()
         {
             SDIMainControl sdiMainControl
@@ -23,7 +24,7 @@ namespace Node.Net.View
             sdiMainControl.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SDIMainControl_Usage_2()
         {
             System.Collections.Generic.Dictionary<string, string> settings
@@ -59,7 +60,7 @@ namespace Node.Net.View
             public CustomTreeViewItem(object value) : base(value) { }
             protected override object GetHeader() => "<Custom> " + base.GetHeader();
         }
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void SDIMainControl_Usage_CustomTreeViewItem()
         {
             System.Collections.Generic.Dictionary<string, string> settings

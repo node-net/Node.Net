@@ -1,11 +1,11 @@
 ﻿
-
+using NUnit.Framework;
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture,NUnit.Framework.Category("TreeView")]
+    [TestFixture,NUnit.Framework.Category("TreeView")]
     class TreeView_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase, Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void TreeView_Usage()
         {
             System.Collections.Generic.Dictionary<string, object> doc =
@@ -46,7 +46,7 @@ namespace Node.Net.View
             }*/
         }
 
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void TreeView_Usage_Xml()
         {
             System.Xml.XmlDocument xdoc = new System.Xml.XmlDocument();
@@ -65,7 +65,7 @@ namespace Node.Net.View
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void TreeView_Usage_MultipleRootElements()
         {
             System.Collections.Generic.Dictionary<string, string> settings

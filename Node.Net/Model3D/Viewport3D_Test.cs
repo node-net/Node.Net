@@ -80,10 +80,10 @@ namespace Node.Net.Model3D.Test
             }
         }
     }
-    [NUnit.Framework.TestFixture,NUnit.Framework.RequiresSTA]
+    [TestFixture,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
     class Viewport3D_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Explicit]
         public void Viewport3D_Usage()
         {
             System.Windows.Controls.Viewport3D viewport = new System.Windows.Controls.Viewport3D();

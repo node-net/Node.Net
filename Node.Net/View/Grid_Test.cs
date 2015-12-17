@@ -1,9 +1,10 @@
-﻿namespace Node.Net.View
+﻿using NUnit.Framework;
+namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class Grid_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Grid_2D_String_Array()
         {
             string[,] data = new string[5,6];
@@ -21,7 +22,7 @@
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Grid_2D_String_Array_With_Nulls()
         {
             string[,] data = new string[5, 6];
@@ -39,7 +40,7 @@
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Grid_Dictionary()
         {
             System.Collections.Generic.Dictionary<string, string[]> dictionary
@@ -57,7 +58,7 @@
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void Grid_2D_Double_Array()
         {
             double[,] data = new double[5, 6];

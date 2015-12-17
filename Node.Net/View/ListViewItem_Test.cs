@@ -1,11 +1,11 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture,NUnit.Framework.RequiresSTA]
+    [TestFixture,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
     class ListViewItem_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Explicit]
         public void ListViewItem_Usage()
         {
             ListViewItem lvItem = new ListViewItem("apple");

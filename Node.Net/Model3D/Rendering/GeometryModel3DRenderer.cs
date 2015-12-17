@@ -2,7 +2,7 @@
 {
     class GeometryModel3DRenderer : Base
     {
-        public GeometryModel3DRenderer(IRenderer renderer) : base(renderer) { }
+        public GeometryModel3DRenderer(Node.Net.Model3D.IRenderer renderer) : base(renderer) { }
         private MaterialRenderer materialRenderer2 = null;//new MaterialRenderer();
         private MeshGeometry3DRenderer meshGeometry3DRenderer2 = null;//new MeshGeometry3DRenderer();
         private MatrixTransform3DRenderer matrixTransform3DRenderer2 = null;//new MatrixTransform3DRenderer();
@@ -41,13 +41,6 @@
             }
             set { matrixTransform3DRenderer2 = value; }
         }
-        /*
-        protected override void SetResourceDictionary(System.Windows.ResourceDictionary resources)
-        {
-            base.SetResourceDictionary(resources);
-            materialRenderer.ResourceDictionary = resources;
-            meshGeometry3DRenderer.ResourceDictionary = resources;
-        }*/
 
         public System.Windows.Media.Media3D.GeometryModel3D GetGeometryModel3D(object value,
             Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter)

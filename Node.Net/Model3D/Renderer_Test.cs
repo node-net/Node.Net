@@ -1,39 +1,55 @@
 ﻿using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Node.Net.Model3D
 {
     [TestFixture,Category("Node.Net.Model3D.Renderer")]
     class Renderer_Test
     {
-
-        [NUnit.Framework.TestCase, NUnit.Framework.Explicit, NUnit.Framework.RequiresSTA]
+        private Stream GetStream(Type type,string name)
+        {
+            foreach(string manifestResourceName in type.Assembly.GetManifestResourceNames())
+            {
+                if (manifestResourceName.Contains(name)) return type.Assembly.GetManifestResourceStream(manifestResourceName);
+            }
+            return null;
+        }
+        [TestCase, NUnit.Framework.Explicit, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Mesh()
         {
             System.Windows.Media.Media3D.MeshGeometry3D cube
                 = System.Windows.Markup.XamlReader.Load(
-                    Environment.Resources.GetStream(
+                    GetStream(
                       typeof(Node.Net.Model3D.Camera),
-                        "Node.Net.Resources.UnitCube.Mesh.xaml"))
+                        "UnitCube.Mesh.xaml"))
                 as System.Windows.Media.Media3D.MeshGeometry3D;
             RenderToViewport(cube);
         }
-        [NUnit.Framework.TestCase, NUnit.Framework.Explicit, NUnit.Framework.RequiresSTA]
+        [TestCase, NUnit.Framework.Explicit, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Mesh_in_Hash()
         {
-            Node.Net.Json.Hash model = new Json.Hash("{'Sunlight':{'Type':'Sunlight'}}");
-            Node.Net.Json.Hash sphere = new Json.Hash("{'Type': 'Sphere', 'Material': 'Yellow', 'X': '10 m' }");
+            Dictionary<string, dynamic> model = new Dictionary<string, dynamic>();
+            model["Sunlight"] = PrimitivesRenderer_Test.GetSunlight();
+            //Node.Net.Json.Hash model = new Json.Hash("{'Sunlight':{'Type':'Sunlight'}}");
+            Dictionary<string, dynamic> sphere = new Dictionary<string, dynamic>();
+            sphere["Type"] = "Sphere";
+            sphere["Material"] = "Yellow";
+            sphere["X"] = "10 m";
+            //Node.Net.Json.Hash sphere = new Json.Hash("{'Type': 'Sphere', 'Material': 'Yellow', 'X': '10 m' }");
             model["Sphere"] = sphere;
             System.Windows.Media.Media3D.MeshGeometry3D cube
                 = System.Windows.Markup.XamlReader.Load(
-                    Environment.Resources.GetStream(
+                    GetStream(
                       typeof(Node.Net.Model3D.Camera),
-                        "Node.Net.Resources.UnitCube.Mesh.xaml"))
+                        "UnitCube.Mesh.xaml"))
                 as System.Windows.Media.Media3D.MeshGeometry3D;
             model["Cube"] = cube;
             RenderToViewport(model);
         }
-
-        [NUnit.Framework.TestCase, NUnit.Framework.Explicit, NUnit.Framework.RequiresSTA]
+        /*
+        [TestCase, NUnit.Framework.Explicit, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Scene_1()
         {
             RenderToViewport(new Json.Hash(
@@ -42,7 +58,7 @@ namespace Node.Net.Model3D
                   "Node.Net.Test.Resources.Scene.1.json")));
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.Explicit,NUnit.Framework.RequiresSTA]
+        [TestCase,NUnit.Framework.Explicit,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Scene_2()
         {
             RenderToViewport(new Json.Hash(
@@ -51,25 +67,26 @@ namespace Node.Net.Model3D
                   "Node.Net.Test.Resources.Scene.2.json")));
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.Explicit,NUnit.Framework.RequiresSTA]
+        [TestCase,NUnit.Framework.Explicit,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Scene_3()
         {
             Render_Resource("Node.Net.Resources.Scene.3.json");
         }
 
-        [NUnit.Framework.TestCase,NUnit.Framework.Explicit,NUnit.Framework.RequiresSTA]
+        [TestCase,NUnit.Framework.Explicit,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void Renderer_GetViewport3D_Scene_Table()
         {
             Render_Resource("Node.Net.Resources.Scene.Table.json");
         }
-
+        */
         public void RenderToViewport(object item)
         {
-            /*
-            Node.Net.Model3D.Viewport3D viewport = new Node.Net.Model3D.Viewport3D(new PrimitivesRenderer());
-            viewport.DataContext = item;
+            PrimitivesRenderer renderer = new PrimitivesRenderer();
+            System.Windows.Controls.Viewport3D viewport = renderer.GetViewport3D(item);
+            //Node.Net.Model3D.Viewport3D viewport = new Node.Net.Model3D.Viewport3D(new PrimitivesRenderer());
+            //viewport.DataContext = item;
             System.Windows.Window window = new System.Windows.Window() { Content = viewport, Title = "Renderer_GetViewport3D" };
-            window.ShowDialog();*/
+            window.ShowDialog();
         }
         public void Render_Resource(string name)
         {

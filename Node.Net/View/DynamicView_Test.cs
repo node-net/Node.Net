@@ -1,9 +1,10 @@
-﻿namespace Node.Net.View
+﻿using NUnit.Framework;
+namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class DynamicView_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void DynamicView_Usage()
         {
             DynamicView dynamicView = new DynamicView(new Properties());
@@ -29,7 +30,7 @@
                 set { state = value; }
             }
         }
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void DynamicView_ByType_Usage()
         {
             DynamicView dynamicView = new DynamicView(new Properties());

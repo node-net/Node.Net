@@ -1,11 +1,12 @@
-﻿
+﻿using NUnit.Framework;
+using System.IO;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture,Category("Node.Net.View.PropertiesExplorer")]
     class PropertiesExplorer_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void PropertiesExplorer_Properties_Horizontal()
         {
             System.Collections.Generic.Dictionary<string, object> doc =
@@ -33,7 +34,7 @@ namespace Node.Net.View
             window.ShowDialog();
         }
 
-        [NUnit.Framework.TestCase, NUnit.Framework.RequiresSTA, NUnit.Framework.Explicit]
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void PropertiesExplorer_Properties_Vertical()
         {
             System.Collections.Generic.Dictionary<string, object> doc =
@@ -62,7 +63,7 @@ namespace Node.Net.View
         }
 
 
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void Explorer_DynamicViewSelector()
         {
             DynamicViewSelector dynamicViewSelector = new DynamicViewSelector(new Properties());
@@ -78,5 +79,29 @@ namespace Node.Net.View
             };
             window.ShowDialog();
         }
+
+        private Stream GetStream(string name)
+        {
+            foreach(string resourceName in GetType().Assembly.GetManifestResourceNames())
+            {
+                if (resourceName.Contains(name)) return GetType().Assembly.GetManifestResourceStream(resourceName);
+            }
+            return null;
+        }
+        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
+        public void PropertiesExplorer_Json_Properties_Vertical()
+        {
+            Json.Hash hash = new Json.Hash(GetStream("PropertiesExplorer_Test.ExampleA.json"));
+            System.Windows.FrameworkElement[] elements
+                = { new TreeView(), new Properties() };
+            System.Windows.Window window = new System.Windows.Window()
+            {
+                Content = new PropertiesExplorer(null, new Properties(), System.Windows.Controls.Orientation.Vertical),
+                Title = "Explorer_Properties",
+                DataContext = new System.Collections.Generic.KeyValuePair<string, object>("ExampleA", hash)
+            };
+            window.ShowDialog();
+        }
+
     }
 }

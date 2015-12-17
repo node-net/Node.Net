@@ -24,7 +24,7 @@
             Clear();
             if(format == Format.Json)
             {
-                SetBase64Dictionary(Node.Net.Json.Reader.ReadHash(stream));
+                //SetBase64Dictionary(Node.Net.Json.Reader.ReadHash(stream));
             }
             else
             {
@@ -43,7 +43,7 @@
         {
             if(format == Format.Json)
             {
-                Node.Net.Json.Writer.Write(GetBase64Dictionary(), stream);
+                //Node.Net.Json.Writer.Write(GetBase64Dictionary(), stream);
             }
             else System.Windows.Markup.XamlWriter.Save(this, stream);
         }

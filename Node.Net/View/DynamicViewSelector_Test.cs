@@ -1,11 +1,11 @@
-﻿
+﻿using NUnit.Framework;
 
 namespace Node.Net.View
 {
-    [NUnit.Framework.TestFixture]
+    [TestFixture]
     class DynamicViewSelector_Test
     {
-        [NUnit.Framework.TestCase,NUnit.Framework.RequiresSTA,NUnit.Framework.Explicit]
+        [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void DynamicViewSelector_Usage()
         {
             DynamicViewSelector dynamicViewSelector = new DynamicViewSelector(new Properties());

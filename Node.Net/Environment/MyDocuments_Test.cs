@@ -1,9 +1,10 @@
+using NUnit.Framework;
 namespace Node.Net.Environment
 {
-    [NUnit.Framework.TestFixture, NUnit.Framework.Category("Node.Net.Environment.MyDocuments")]
+    [TestFixture, NUnit.Framework.Category("Node.Net.Environment.MyDocuments")]
     class MyDocuments_Test
     {
-        [NUnit.Framework.TestCase]
+        [TestCase]
         public void MyDocuments_Usage()
         {
             // GetFileName

@@ -2,7 +2,7 @@
 {
     class MeshGeometry3DRenderer : Base
     {
-        public MeshGeometry3DRenderer(IRenderer renderer)
+        public MeshGeometry3DRenderer(Node.Net.Model3D.IRenderer renderer)
             : base(renderer)
         {}
         public virtual System.Windows.Media.Media3D.MeshGeometry3D GetMeshGeometry3D(string name)
