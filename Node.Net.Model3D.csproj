@@ -80,7 +80,6 @@
     <Compile Include="Node.Net\Model3D\Rendering\ModelVisual3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Viewport3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Visual3DCollectionRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Resources.cs" />
     <Compile Include="Node.Net\Model3D\Transform3D.cs" />
     <Compile Include="Node.Net\Model3D\Viewport3D.cs" />
   </ItemGroup>
