@@ -134,6 +134,7 @@
     <Compile Include="Node.Net\View\Explorer.cs" />
     <Compile Include="Node.Net\View\FrameworkElements.cs" />
     <Compile Include="Node.Net\View\Grid.cs" />
+    <Compile Include="Node.Net\View\HashGrid.cs" />
     <Compile Include="Node.Net\View\JsonView.cs" />
     <Compile Include="Node.Net\View\KeyValuePair.cs" />
     <Compile Include="Node.Net\View\ListView.cs" />
