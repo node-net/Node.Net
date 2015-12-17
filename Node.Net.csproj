@@ -111,11 +111,13 @@
     <Compile Include="Node.Net\Model3D\Renderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Base.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\GeometryModel3DRenderer.cs" />
+    <Compile Include="Node.Net\Model3D\Rendering\IRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\MaterialRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\MatrixTransform3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\MeshGeometry3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Model3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\ModelVisual3DRenderer.cs" />
+    <Compile Include="Node.Net\Model3D\Rendering\Renderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Viewport3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Visual3DCollectionRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Transform3D.cs" />

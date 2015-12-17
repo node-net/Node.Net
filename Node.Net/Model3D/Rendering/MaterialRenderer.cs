@@ -2,7 +2,7 @@
 {
     class MaterialRenderer : Base
     {
-        public MaterialRenderer(IRenderer renderer):base(renderer)
+        public MaterialRenderer(Node.Net.Model3D.IRenderer renderer):base(renderer)
         { }
         public virtual System.Windows.Media.Media3D.Material GetMaterial(string name)
         {

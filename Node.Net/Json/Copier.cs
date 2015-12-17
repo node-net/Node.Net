@@ -1,4 +1,6 @@
-﻿namespace Node.Net.Json
+﻿using System;
+
+namespace Node.Net.Json
 {
     public class Copier
     {
@@ -49,9 +51,16 @@
                     if (!object.ReferenceEquals(null, dictionary))
                     {
                         // Copy by value
-                        System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
-                        Copy(dictionary, hashCopy, filter);
-                        destination[key] = hashCopy;
+                        try {
+                            System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
+                            Copy(dictionary, hashCopy, filter);
+                            destination[key] = hashCopy;
+                        }
+                        catch(Exception e)
+                        {
+                            throw new Exception($"unable to create instance of type {dictionary.GetType().FullName}", e);
+                        }
+                        
                     }
                     else
                     {
@@ -59,8 +68,15 @@
                         if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
                             && !object.ReferenceEquals(null, enumerable))
                         {
+                            System.Collections.IList arrayCopy = new System.Collections.Generic.List<dynamic>();
                             // Copy by value
-                            System.Collections.IList arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
+                            try {
+                                arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
+                            }
+                            catch(Exception e)
+                            {
+                                arrayCopy = new System.Collections.Generic.List<dynamic>();
+                            }
                             Copier.Copy(enumerable, arrayCopy, filter);
                             destination[key] = arrayCopy;
                         }
