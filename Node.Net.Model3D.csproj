@@ -7,8 +7,8 @@
     <ProjectGuid>{CD9926A1-AF51-4D3B-8AD9-81948B4F46EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Node.Net</RootNamespace>
-    <AssemblyName>Node.Net</AssemblyName>
+    <RootNamespace>Node.Net.Model3D</RootNamespace>
+    <AssemblyName>Node.Net.Model3D</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -58,49 +58,11 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Node.Net\Collections\Dictionary.cs" />
-    <Compile Include="Node.Net\Documents\Documents.cs" />
-    <Compile Include="Node.Net\Documents\IDocument.cs" />
-    <Compile Include="Node.Net\Documents\TextDocument.cs" />
-    <Compile Include="Node.Net\Environment\Command.cs" />
-    <Compile Include="Node.Net\Environment\Environment.cs" />
-    <Compile Include="Node.Net\Environment\Internal\Executor.cs" />
-    <Compile Include="Node.Net\Environment\MyDocuments.cs" />
-    <Compile Include="Node.Net\Environment\Resources.cs" />
-    <Compile Include="Node.Net\Extensions.cs" />
-    <Compile Include="Node.Net\Extensions\Image.cs" />
-    <Compile Include="Node.Net\Extensions\ImageSource.cs" />
-    <Compile Include="Node.Net\IO\Directory.cs" />
-    <Compile Include="Node.Net\IO\FileList.cs" />
-    <Compile Include="Node.Net\IO\Stream.Extension.cs" />
-    <Compile Include="Node.Net\IO\TemporaryDirectory.cs" />
-    <Compile Include="Node.Net\IO\TextReader.Extension.cs" />
-    <Compile Include="Node.Net\Json\Array.cs" />
-    <Compile Include="Node.Net\Json\Children.cs" />
-    <Compile Include="Node.Net\Json\Copier.cs" />
-    <Compile Include="Node.Net\Json\Document.cs" />
-    <Compile Include="Node.Net\Json\Filter.cs" />
-    <Compile Include="Node.Net\Json\Finder.cs" />
-    <Compile Include="Node.Net\Json\Hash.cs" />
-    <Compile Include="Node.Net\Json\HashBase.cs" />
-    <Compile Include="Node.Net\Json\IFilter.cs" />
-    <Compile Include="Node.Net\Json\Internal\JsonReader.cs" />
-    <Compile Include="Node.Net\Json\Internal\JsonWriter.cs" />
-    <Compile Include="Node.Net\Json\Internal\PropertyDescriptor.cs" />
-    <Compile Include="Node.Net\Json\JsonFormatter.cs" />
-    <Compile Include="Node.Net\Json\JsonSerializationBinder.cs" />
-    <Compile Include="Node.Net\Json\KeyValuePair.cs" />
-    <Compile Include="Node.Net\Json\MetaData.cs" />
-    <Compile Include="Node.Net\Json\Reader.cs" />
-    <Compile Include="Node.Net\Json\Traverser.cs" />
-    <Compile Include="Node.Net\Json\TypeFilter.cs" />
-    <Compile Include="Node.Net\Json\Writer.cs" />
     <Compile Include="Node.Net\Measurement\Angle.cs" />
     <Compile Include="Node.Net\Measurement\AngularUnit.cs" />
     <Compile Include="Node.Net\Measurement\Length.cs" />
     <Compile Include="Node.Net\Measurement\LengthConverter.cs" />
     <Compile Include="Node.Net\Measurement\LengthUnit.cs" />
-    <Compile Include="Node.Net\Model2D\Viewer.cs" />
     <Compile Include="Node.Net\Model3D\Camera.cs" />
     <Compile Include="Node.Net\Model3D\CompositeRenderer.cs" />
     <Compile Include="Node.Net\Model3D\IRenderer.cs" />
@@ -111,47 +73,15 @@
     <Compile Include="Node.Net\Model3D\Renderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Base.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\GeometryModel3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\IRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\MaterialRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\MatrixTransform3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\MeshGeometry3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Model3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\ModelVisual3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Renderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Viewport3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Visual3DCollectionRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Transform3D.cs" />
     <Compile Include="Node.Net\Model3D\Viewport3D.cs" />
-    <Compile Include="Node.Net\Model\Application.cs" />
-    <Compile Include="Node.Net\Plugin\Plugins.cs" />
-    <Compile Include="Node.Net\View\Base.cs" />
-    <Compile Include="Node.Net\View\ComboBox.cs" />
-    <Compile Include="Node.Net\View\ComboBoxItem.cs" />
-    <Compile Include="Node.Net\View\ContextMenu.cs" />
-    <Compile Include="Node.Net\View\DataGridView.cs" />
-    <Compile Include="Node.Net\View\DynamicView.cs" />
-    <Compile Include="Node.Net\View\DynamicViewSelector.cs" />
-    <Compile Include="Node.Net\View\Explorer.cs" />
-    <Compile Include="Node.Net\View\FrameworkElements.cs" />
-    <Compile Include="Node.Net\View\Grid.cs" />
-    <Compile Include="Node.Net\View\HashGrid.cs" />
-    <Compile Include="Node.Net\View\JsonView.cs" />
-    <Compile Include="Node.Net\View\KeyValuePair.cs" />
-    <Compile Include="Node.Net\View\ListView.cs" />
-    <Compile Include="Node.Net\View\ListViewItem.cs" />
-    <Compile Include="Node.Net\View\MessageBox.cs" />
-    <Compile Include="Node.Net\View\MethodInfoCommand.cs" />
-    <Compile Include="Node.Net\View\Properties.cs" />
-    <Compile Include="Node.Net\View\PropertiesExplorer.cs" />
-    <Compile Include="Node.Net\View\SDIApplication.cs" />
-    <Compile Include="Node.Net\View\SDIMainControl.cs" />
-    <Compile Include="Node.Net\View\SplitterGrid.cs" />
-    <Compile Include="Node.Net\View\TabControl.cs" />
-    <Compile Include="Node.Net\View\TextView.cs" />
-    <Compile Include="Node.Net\View\Title.cs" />
-    <Compile Include="Node.Net\View\TreeView.cs" />
-    <Compile Include="Node.Net\View\TreeViewItem.cs" />
-    <Compile Include="Node.Net\View\Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Node.Net.snk" />
@@ -186,6 +116,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Node.Net\Model3D\MeshGeometry\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

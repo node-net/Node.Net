@@ -23,6 +23,7 @@ namespace Node.Net.Model3D.Test
         [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void CompositeRenderer_Usage()
         {
+            /*
             Node.Net.Json.Hash cubeModel = new Json.Hash("{'Cube':{'Type':'Cube'}}");
             Renderer cubeRenderer = new Renderer();
             cubeRenderer.Resources["Cube"] = MeshGeometry3D.CreateUnitCube();
@@ -46,6 +47,7 @@ namespace Node.Net.Model3D.Test
             NUnit.Framework.Assert.NotNull(compositeRenderer.GetModel3D(cubeModel));
             NUnit.Framework.Assert.NotNull(compositeRenderer.GetModel3D(sphereModel));
             NUnit.Framework.Assert.NotNull(compositeRenderer.GetModel3D(widgetModel), "compositeRenderer failed to render widgetModel");
+            */
 
         }
     }

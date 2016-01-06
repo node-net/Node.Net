@@ -41,13 +41,6 @@
             }
             set { matrixTransform3DRenderer2 = value; }
         }
-        /*
-        protected override void SetResourceDictionary(System.Windows.ResourceDictionary resources)
-        {
-            base.SetResourceDictionary(resources);
-            materialRenderer.ResourceDictionary = resources;
-            meshGeometry3DRenderer.ResourceDictionary = resources;
-        }*/
 
         public System.Windows.Media.Media3D.GeometryModel3D GetGeometryModel3D(object value,
             Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter)

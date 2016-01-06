@@ -7,8 +7,8 @@
     <ProjectGuid>{E9A264F6-0AD4-4580-AC98-AB57FA540C89}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Node.Net</RootNamespace>
-    <AssemblyName>Node.Net.Tests</AssemblyName>
+    <RootNamespace>Node.Net.Model3D</RootNamespace>
+    <AssemblyName>Node.Net.Model3D.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -60,68 +60,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Node.Net\Environment\Environment_Test.Tree.json" />
-    <EmbeddedResource Include="Node.Net\Json\Hash_Test.Sample.json" />
-    <EmbeddedResource Include="Node.Net\Json\Traverser_Test.Tree.2.json" />
-    <EmbeddedResource Include="Node.Net\Json\Traverser_Test.Tree.json" />
-    <EmbeddedResource Include="Node.Net\View\PropertiesExplorer_Test.ExampleA.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Node.Net\Collections\Dictionary.Test.cs" />
-    <Compile Include="Node.Net\Documents\Documents_Test.cs" />
-    <Compile Include="Node.Net\Documents\TextDocument_Test.cs" />
-    <Compile Include="Node.Net\Environment\Command_Test.cs" />
-    <Compile Include="Node.Net\Environment\Environment_Test.cs" />
-    <Compile Include="Node.Net\Environment\MyDocuments_Test.cs" />
-    <Compile Include="Node.Net\Environment\Resources_Test.cs" />
-    <Compile Include="Node.Net\Extensions_Test.cs" />
-    <Compile Include="Node.Net\IO\Directory_Test.cs" />
-    <Compile Include="Node.Net\IO\FileList_Test.cs" />
-    <Compile Include="Node.Net\IO\TemporaryDirectory_Test.cs" />
-    <Compile Include="Node.Net\Json\Array_Test.cs" />
-    <Compile Include="Node.Net\Json\Children_Test.cs" />
-    <Compile Include="Node.Net\Json\Copier_Test.cs" />
-    <Compile Include="Node.Net\Json\Finder_Test.cs" />
-    <Compile Include="Node.Net\Json\HashBase_Test.cs" />
-    <Compile Include="Node.Net\Json\Hash_Test.cs" />
-    <Compile Include="Node.Net\Json\Reader_Test.cs" />
-    <Compile Include="Node.Net\Json\Traverser_Test.cs" />
-    <Compile Include="Node.Net\Json\Writer_Test.cs" />
-    <Compile Include="Node.Net\Measurement\Angle_Test.cs" />
-    <Compile Include="Node.Net\Measurement\LengthConverter_Test.cs" />
-    <Compile Include="Node.Net\Measurement\Length_Test.cs" />
-    <Compile Include="Node.Net\Model2D\Canvas_Test.cs" />
-    <Compile Include="Node.Net\Model2D\Viewer_Test.cs" />
     <Compile Include="Node.Net\Model3D\CompositeRenderer_Test.cs" />
     <Compile Include="Node.Net\Model3D\MeshGeometry3D_Test.cs" />
     <Compile Include="Node.Net\Model3D\Model3D_Test.cs" />
     <Compile Include="Node.Net\Model3D\PrimitivesRenderer_Test.cs" />
     <Compile Include="Node.Net\Model3D\Renderer_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Renderer.Test.cs" />
     <Compile Include="Node.Net\Model3D\Transform3D_Test.cs" />
     <Compile Include="Node.Net\Model3D\Viewport3D_Test.cs" />
-    <Compile Include="Node.Net\Model\Application_Test.cs" />
-    <Compile Include="Node.Net\View\Base_Test.cs" />
-    <Compile Include="Node.Net\View\ComboBox_Test.cs" />
-    <Compile Include="Node.Net\View\DataGridView_Test.cs" />
-    <Compile Include="Node.Net\View\DynamicViewSelector_Test.cs" />
-    <Compile Include="Node.Net\View\DynamicView_Test.cs" />
-    <Compile Include="Node.Net\View\Explorer_Test.cs" />
-    <Compile Include="Node.Net\View\FrameworkElements_Test.cs" />
-    <Compile Include="Node.Net\View\Grid_Test.cs" />
-    <Compile Include="Node.Net\View\Image_Test.cs" />
-    <Compile Include="Node.Net\View\ListViewItem_Test.cs" />
-    <Compile Include="Node.Net\View\NotepadDocument_Test.cs" />
-    <Compile Include="Node.Net\View\PropertiesExplorer_Test.cs" />
-    <Compile Include="Node.Net\View\Properties_Test.cs" />
-    <Compile Include="Node.Net\View\SDIApplication_Test.cs" />
-    <Compile Include="Node.Net\View\SDIMainControl_Test.cs" />
-    <Compile Include="Node.Net\View\SplitterGrid_Test.cs" />
-    <Compile Include="Node.Net\View\TabControl_Test.cs" />
-    <Compile Include="Node.Net\View\TextView_Test.cs" />
-    <Compile Include="Node.Net\View\TreeViewItem_Test.cs" />
-    <Compile Include="Node.Net\View\TreeView_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Node.Net\Node.Net.csproj">

@@ -1,28 +1,43 @@
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Threading;
 
-namespace Node.Net.Model3D.Test
+namespace Node.Net.Model3D
 {
     [TestFixture,Category("Node.Net.Model3D.PrimitivesRenderer")]
     class PrimitivesRenderer_Test
     {
+        public static object GetSunlight()
+        {
+            Dictionary<string, dynamic> sunlight = new Dictionary<string, dynamic>();
+            sunlight["Type"] = "Sunlight";
+            return sunlight;
+        }
+
+        public object GetCube()
+        {
+            Dictionary<string, dynamic> cube = new Dictionary<string, dynamic>();
+            cube["Type"] = "Cube";
+            return cube;
+        }
         public object GetCubeScene()
         {
-            Node.Net.Json.Hash cubeScene = new Json.Hash();
-            cubeScene["Sunlight"] = new Json.Hash("{'Type':'Sunlight'}");
-            cubeScene["Cube"] = new Json.Hash("{'Type':'Cube'}");
+            Dictionary<string, dynamic> cubeScene = new Dictionary<string, dynamic>();
+            cubeScene["Sunlight"] = GetSunlight();
+            cubeScene["Cube"] = GetCube();
             return cubeScene;
         }
         public object GetCubeScene2()
         {
-            Node.Net.Json.Hash cubeScene = new Json.Hash();
-            cubeScene["Sunlight"] = new Json.Hash("{'Type':'Sunlight'}");
+            Dictionary<string, dynamic> cubeScene = new Dictionary<string, dynamic>();
+            cubeScene["Sunlight"] = GetSunlight();
             cubeScene["Cube"] = MeshGeometry3D.CreateUnitCube();
             return cubeScene;
         }
         public object GetCubeScene3()
         {
-            Node.Net.Json.Hash cubeScene = new Json.Hash();
-            cubeScene["Sunlight"] = new Json.Hash("{'Type':'Sunlight'}");
+            Dictionary<string, dynamic> cubeScene = new Dictionary<string, dynamic>();
+            cubeScene["Sunlight"] = GetSunlight();
             System.Windows.Media.Media3D.GeometryModel3D geometryModel3D = new System.Windows.Media.Media3D.GeometryModel3D() 
             { Geometry=MeshGeometry3D.CreateUnitCube(), Material=Material.GetDiffuse(System.Windows.Media.Colors.Yellow) };
             cubeScene["Cube"] = geometryModel3D;
@@ -30,8 +45,8 @@ namespace Node.Net.Model3D.Test
         }
         public object GetCubeScene4()
         {
-            Node.Net.Json.Hash cubeScene = new Json.Hash();
-            cubeScene["Sunlight"] = new Json.Hash("{'Type':'Sunlight'}");
+            Dictionary<string, dynamic> cubeScene = new Dictionary<string, dynamic>();
+            cubeScene["Sunlight"] = GetSunlight();
             System.Windows.Media.Media3D.GeometryModel3D geometryModel3D = new System.Windows.Media.Media3D.GeometryModel3D() { Geometry = MeshGeometry3D.CreateUnitCube(), Material = Material.GetDiffuse(System.Windows.Media.Colors.Tomato) };
             System.Windows.Media.Media3D.Model3DGroup model3DGroup = new System.Windows.Media.Media3D.Model3DGroup();
             model3DGroup.Children.Add(geometryModel3D);
@@ -40,8 +55,9 @@ namespace Node.Net.Model3D.Test
         }
         public object GetCubeScene5()
         {
-            Node.Net.Json.Hash cubeScene = new Json.Hash();
-            cubeScene["Sunlight"] = new Json.Hash("{'Type':'Sunlight'}");
+            Dictionary<string, dynamic> cubeScene = new Dictionary<string, dynamic>();
+            //Node.Net.Json.Hash cubeScene = new Json.Hash();
+            cubeScene["Sunlight"] = GetSunlight();
             System.Windows.Media.Media3D.GeometryModel3D geometryModel3D 
                 = new System.Windows.Media.Media3D.GeometryModel3D() 
                 { Geometry = MeshGeometry3D.CreateUnitCube(), 
@@ -80,7 +96,7 @@ namespace Node.Net.Model3D.Test
             NUnit.Framework.Assert.AreEqual(1.0, bounds.SizeY, "unitCube bounds.SizeY is not 1");
             NUnit.Framework.Assert.AreEqual(1.0, bounds.SizeZ, "unitCube bounds.SizeZ is not 1");
         }
-        [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
+        [TestCase, Apartment(ApartmentState.STA), Explicit]
         public void PrimitivesRenderer_GetViewport3D()
         {
             object[] items ={ MeshGeometry3D.CreateUnitCube(),
