@@ -120,6 +120,7 @@
     <Compile Include="Node.Net\Model3D\Rendering\Renderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Viewport3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Rendering\Visual3DCollectionRenderer.cs" />
+    <Compile Include="Node.Net\Model3D\Rendering\Visual3DRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Transform3D.cs" />
     <Compile Include="Node.Net\Model3D\Viewport3D.cs" />
     <Compile Include="Node.Net\Model\Application.cs" />
@@ -186,6 +187,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Node.Net\Model3D\Render\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
