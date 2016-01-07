@@ -10,12 +10,12 @@ namespace Node.Net.Json
         public void Traverser_Usage()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(Traverser_Test));
-            Hash hash = new Hash(assembly.GetManifestResourceStream("Node.Net.Node.Net.Json.Traverser_Test.Tree.json"));
+            Hash hash = new Hash(IO.StreamExtension.GetStream("Json.Traverser_Test.Tree.json"));
             Traverser traverser = new Traverser(hash);
             NUnit.Framework.Assert.AreSame(hash, traverser.GetParent(hash["A"]));
             NUnit.Framework.Assert.AreSame(hash, traverser.GetRoot(hash["A"]));
 
-            hash = new Hash(assembly.GetManifestResourceStream("Node.Net.Node.Net.Json.Traverser_Test.Tree.2.json"));
+            hash = new Hash(IO.StreamExtension.GetStream("Json.Traverser_Test.Tree.2.json"));
             traverser = new Traverser(hash);
             NUnit.Framework.Assert.AreSame(hash, traverser.GetParent(hash["A"]));
             Hash hA0A0 = hash["A"]["0"]["A"]["0"] as Hash;

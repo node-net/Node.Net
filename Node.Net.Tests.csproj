@@ -7,7 +7,7 @@
     <ProjectGuid>{E9A264F6-0AD4-4580-AC98-AB57FA540C89}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Node.Net</RootNamespace>
+    <RootNamespace>Node.Net.Tests</RootNamespace>
     <AssemblyName>Node.Net.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -162,7 +162,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Node.Net\Documents\Documents.Test.Sample.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Node.Net\Documents\Documents.Test.Sample2.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

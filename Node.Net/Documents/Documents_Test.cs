@@ -7,23 +7,27 @@ namespace Node.Net.Documents
     class Documents_Test
     {
         [TestCase]
-        public void Documents_Usage()
+        public void Documents_SDI_Usage()
         {
-            /*
             Documents docs = new Documents();
-            //docs.Types.Add("txt", typeof(TextDocument));
-            docs.Open("Node.Net.Resources.Sample.txt");
-            NUnit.Framework.Assert.True(docs.ContainsKey("Node.Net.Resources.Sample.txt"),
-                        "docs does not contain 'Node.Net.Resources.Sample.txt");
-            NUnit.Framework.Assert.AreEqual(typeof(TextDocument), docs["Node.Net.Resources.Sample.txt"].GetType(), "doc is not of type TextDocument.");
+            docs.MaximumCount = 1;
+            docs.Types.Add("txt", typeof(TextDocument));
+            docs.Open("Documents.Test.Sample.txt");
+            NUnit.Framework.Assert.True(docs.ContainsKey("Documents.Test.Sample.txt"),
+                        "docs does not contain 'Documents.Test.Sample.txt'");
+            NUnit.Framework.Assert.AreEqual(typeof(TextDocument), docs["Documents.Test.Sample.txt"].GetType(), "doc is not of type TextDocument.");
 
+            Assert.AreEqual(1, docs.Count);
             string filename = System.Environment.GetFolderPath(
                                System.Environment.SpecialFolder.MyDocuments) +
-                                @"\Node.Net.Documents.Documents_Test.Documents_Usage.txt";
+                                @"\Node.Net.Documents.Documents_Test.Documents_SDI_Usage.txt";
             if (System.IO.File.Exists(filename)) System.IO.File.Delete(filename);
-            Documents.Save(filename, docs["Node.Net.Resources.Sample.txt"]);
+            Documents.Save(filename, docs["Documents.Test.Sample.txt"]);
             NUnit.Framework.Assert.True(System.IO.File.Exists(filename),filename + " does not exist.");
-            System.IO.File.Delete(filename);*/
+            System.IO.File.Delete(filename);
+
+            docs.Open("Documents.Test.Sample2.txt");
+            Assert.AreEqual(1, docs.Count);
         }
 
         [TestCase]
