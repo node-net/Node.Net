@@ -26,11 +26,6 @@
                 {
                     if (filter.Include(dictionary[key])) results.Add(key);
                 }
-                //if (key.ToString().IndexOf(search) > -1) results.Add(key);
-                //else
-                //{
-                //    if (dictionary[key].ToString().IndexOf(search) > -1) results.Add(key);
-                //}
             }
             return results.ToArray();
         }

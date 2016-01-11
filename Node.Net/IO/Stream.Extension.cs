@@ -67,21 +67,7 @@ namespace Node.Net.IO
             return GetStream(name);
         }
         public static Stream GetStream(string name)
-        {/*
-            Stream result = null;
-            if(File.Exists(name))
-            {
-                return new FileStream(name, FileMode.Open);
-            }
-            foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                result = GetStream(name, a);
-                if (!object.ReferenceEquals(null, result)) return result;
-            }
-
-            return result;*/
-
-            //Stream stream = null;
+        {
             if (System.IO.File.Exists(name)) return new System.IO.FileStream(name, System.IO.FileMode.Open);
             System.Reflection.Assembly assembly =
                 System.Reflection.Assembly.GetCallingAssembly();
@@ -94,26 +80,6 @@ namespace Node.Net.IO
                 stream = GetStream(name, a);
                 if (!object.ReferenceEquals(null, stream)) return stream;
             }
-            /*
-            System.IO.Stream stream = assembly.GetManifestResourceStream(name);
-            if(object.ReferenceEquals(null,stream))
-            {
-                foreach(string mname in assembly.GetManifestResourceNames())
-                {
-                    if (mname.Contains(name)) return assembly.GetManifestResourceStream(mname);
-                }
-                foreach(System.Reflection.Assembly a in System.AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    stream = a.GetManifestResourceStream(name);
-                    if (!object.ReferenceEquals(null, stream)) return stream;
-                    foreach (string mname in a.GetManifestResourceNames())
-                    {
-                        if (mname.Contains(name)) return a.GetManifestResourceStream(mname);
-                    }
-                }
-            }
-            return stream;
-            */
             throw new System.ArgumentException("ManifestResourceName " + name + " not found.");
 
         }
@@ -124,9 +90,6 @@ namespace Node.Net.IO
             {
                 if (rname.Contains(name)) return assembly.GetManifestResourceStream(rname);
             }
-
-
-            
             return null;
         }
     }

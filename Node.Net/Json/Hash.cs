@@ -14,11 +14,6 @@ namespace Node.Net.Json
             HashBase.Copy(source, destination, filter);
         }
         public new static string ToJson(System.Collections.IDictionary source) => HashBase.ToJson(source);
-        /*
-        public new static int GetHashCode(object value)
-        {
-            return HashBase.GetHashCode(value);
-        }*/
 
         public static Hash Parse(string[] args)
         {
