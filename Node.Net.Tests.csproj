@@ -76,11 +76,13 @@
     <Compile Include="Node.Net\Environment\MyDocuments_Test.cs" />
     <Compile Include="Node.Net\Environment\Resources_Test.cs" />
     <Compile Include="Node.Net\Extensions_Test.cs" />
+    <Compile Include="Node.Net\Framework\Application.cs" />
+    <Compile Include="Node.Net\Framework\Application.Test.cs" />
     <Compile Include="Node.Net\IO\Directory_Test.cs" />
     <Compile Include="Node.Net\IO\FileList_Test.cs" />
     <Compile Include="Node.Net\IO\TemporaryDirectory_Test.cs" />
-    <Compile Include="Node.Net\Json\Array_Test.cs" />
-    <Compile Include="Node.Net\Json\Children_Test.cs" />
+    <Compile Include="Node.Net\Json\Array.Test.cs" />
+    <Compile Include="Node.Net\Json\Children.Test.cs" />
     <Compile Include="Node.Net\Json\Copier_Test.cs" />
     <Compile Include="Node.Net\Json\Finder_Test.cs" />
     <Compile Include="Node.Net\Json\HashBase_Test.cs" />
