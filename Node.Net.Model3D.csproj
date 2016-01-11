@@ -63,25 +63,10 @@
     <Compile Include="Node.Net\Measurement\Length.cs" />
     <Compile Include="Node.Net\Measurement\LengthConverter.cs" />
     <Compile Include="Node.Net\Measurement\LengthUnit.cs" />
-    <Compile Include="Node.Net\Model3D\Camera.cs" />
-    <Compile Include="Node.Net\Model3D\CompositeRenderer.cs" />
     <Compile Include="Node.Net\Model3D\IRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Material.cs" />
-    <Compile Include="Node.Net\Model3D\MeshGeometry3D.cs" />
-    <Compile Include="Node.Net\Model3D\Model3D.cs" />
-    <Compile Include="Node.Net\Model3D\PrimitivesRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Renderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Base.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\GeometryModel3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\MaterialRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\MatrixTransform3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\MeshGeometry3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Model3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\ModelVisual3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Viewport3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Visual3DCollectionRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Transform3D.cs" />
-    <Compile Include="Node.Net\Model3D\Viewport3D.cs" />
+    <Compile Include="Node.Net\Model3D\Transform\IDictionaryTransform.cs" />
+    <Compile Include="Node.Net\Model3D\Transform\ObjectTransform.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Node.Net.snk" />
@@ -117,9 +102,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Node.Net\Model3D\MeshGeometry\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

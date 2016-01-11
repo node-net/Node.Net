@@ -3,7 +3,7 @@ using System.Collections;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Model3D
+namespace Node.Net.Model3D.Render
 {
     public class Renderer : IRenderer
     {

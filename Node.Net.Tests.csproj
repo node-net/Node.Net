@@ -93,14 +93,7 @@
     <Compile Include="Node.Net\Measurement\Length_Test.cs" />
     <Compile Include="Node.Net\Model2D\Canvas_Test.cs" />
     <Compile Include="Node.Net\Model2D\Viewer_Test.cs" />
-    <Compile Include="Node.Net\Model3D\CompositeRenderer_Test.cs" />
-    <Compile Include="Node.Net\Model3D\MeshGeometry3D_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Model3D_Test.cs" />
-    <Compile Include="Node.Net\Model3D\PrimitivesRenderer_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Renderer_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Renderer.Test.cs" />
-    <Compile Include="Node.Net\Model3D\Transform3D_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Viewport3D_Test.cs" />
+    <Compile Include="Node.Net\Model3D\Renderer.Test.cs" />
     <Compile Include="Node.Net\Model\Application_Test.cs" />
     <Compile Include="Node.Net\View\Base_Test.cs" />
     <Compile Include="Node.Net\View\ComboBox_Test.cs" />
