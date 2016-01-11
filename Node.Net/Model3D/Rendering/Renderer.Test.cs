@@ -30,7 +30,7 @@ namespace Node.Net.Model3D.Rendering
         }
 
         [TestCase, Explicit, Apartment(ApartmentState.STA)]
-        public void Renderer_Render_Cube_Scene_From_IDictionary()
+        public void Renderer_Cube_Scene()
         {
             Node.Net.Model3D.Rendering.Renderer renderer = new Node.Net.Model3D.Rendering.Renderer();
 

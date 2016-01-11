@@ -70,6 +70,10 @@
     <Compile Include="Node.Net\Extensions.cs" />
     <Compile Include="Node.Net\Extensions\Image.cs" />
     <Compile Include="Node.Net\Extensions\ImageSource.cs" />
+    <Compile Include="Node.Net\Framework\Application.cs" />
+    <Compile Include="Node.Net\Framework\Controls\SDIControl.cs" />
+    <Compile Include="Node.Net\Framework\Documents.cs" />
+    <Compile Include="Node.Net\Framework\IDocument.cs" />
     <Compile Include="Node.Net\IO\Directory.cs" />
     <Compile Include="Node.Net\IO\FileList.cs" />
     <Compile Include="Node.Net\IO\Stream.Extension.cs" />
@@ -101,28 +105,10 @@
     <Compile Include="Node.Net\Measurement\LengthConverter.cs" />
     <Compile Include="Node.Net\Measurement\LengthUnit.cs" />
     <Compile Include="Node.Net\Model2D\Viewer.cs" />
-    <Compile Include="Node.Net\Model3D\Camera.cs" />
-    <Compile Include="Node.Net\Model3D\CompositeRenderer.cs" />
     <Compile Include="Node.Net\Model3D\IRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Material.cs" />
-    <Compile Include="Node.Net\Model3D\MeshGeometry3D.cs" />
-    <Compile Include="Node.Net\Model3D\Model3D.cs" />
-    <Compile Include="Node.Net\Model3D\PrimitivesRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Renderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Base.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\GeometryModel3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\IRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\MaterialRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\MatrixTransform3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\MeshGeometry3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Model3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\ModelVisual3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Renderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Viewport3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Visual3DCollectionRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Rendering\Visual3DRenderer.cs" />
-    <Compile Include="Node.Net\Model3D\Transform3D.cs" />
-    <Compile Include="Node.Net\Model3D\Viewport3D.cs" />
+    <Compile Include="Node.Net\Model3D\Transform\IDictionaryTransform.cs" />
+    <Compile Include="Node.Net\Model3D\Transform\ObjectTransform.cs" />
     <Compile Include="Node.Net\Model\Application.cs" />
     <Compile Include="Node.Net\Plugin\Plugins.cs" />
     <Compile Include="Node.Net\View\Base.cs" />
@@ -187,9 +173,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Node.Net\Model3D\Render\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

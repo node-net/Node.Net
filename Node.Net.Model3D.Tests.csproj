@@ -63,21 +63,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Node.Net\Model3D\CompositeRenderer_Test.cs" />
-    <Compile Include="Node.Net\Model3D\MeshGeometry3D_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Model3D_Test.cs" />
-    <Compile Include="Node.Net\Model3D\PrimitivesRenderer_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Renderer_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Transform3D_Test.cs" />
-    <Compile Include="Node.Net\Model3D\Viewport3D_Test.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Node.Net\Node.Net.csproj">
-      <Project>{cd9926a1-af51-4d3b-8ad9-81948b4f46ef}</Project>
-      <Name>Node.Net</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +95,15 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Node.Net\Model3D\Renderer.Test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Node.Net.Model3D.csproj">
+      <Project>{cd9926a1-af51-4d3b-8ad9-81948b4f46ef}</Project>
+      <Name>Node.Net.Model3D</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

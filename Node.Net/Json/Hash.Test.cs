@@ -67,7 +67,7 @@ namespace Node.Net.Json
         {
             Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(Reader_Test));
             //Hash hash = new Hash(assembly.GetManifestResourceStream("Node.Net.Node.Net.Json.Hash_Test.Sample.json"));
-            Hash hash = new Hash(IO.StreamExtension.GetStream("Json.Hash_Test.Sample.json"));
+            Hash hash = new Hash(IO.StreamExtension.GetStream("Json.Hash.Test.Sample.json"));
             NUnit.Framework.Assert.AreEqual("Sample", hash["Name"].ToString());
         }
         [TestCase]
