@@ -109,6 +109,7 @@
     <Compile Include="Node.Net\Model3D\Renderer.cs" />
     <Compile Include="Node.Net\Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="Node.Net\Model3D\Transform\ObjectTransform.cs" />
+    <Compile Include="Node.Net\Model3D\Viewer.cs" />
     <Compile Include="Node.Net\Model\Application.cs" />
     <Compile Include="Node.Net\Plugin\Plugins.cs" />
     <Compile Include="Node.Net\View\Base.cs" />
