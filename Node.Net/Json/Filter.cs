@@ -15,12 +15,6 @@
         }
         public virtual bool Include(object value)
         {
-            //if (key.ToString().IndexOf(search) > -1) results.Add(key);
-            //else
-            //{
-            //    if (dictionary[key].ToString().IndexOf(search) > -1) results.Add(key);
-            //}
-
             if(KeyValuePair.IsKeyValuePair(value))
             {
                 if(!object.ReferenceEquals(null,keyFilter))

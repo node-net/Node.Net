@@ -117,7 +117,7 @@
                 return fi.DirectoryName;
             }
 
-            return "";// working_dir;
+            return "";
         }
     }
 }

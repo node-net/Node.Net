@@ -11,7 +11,6 @@ namespace Node.Net.Json
 
             object instance = AppDomain.CurrentDomain.CreateInstance(assemblyName, typeName);
             return instance.GetType();
-            //throw new NotImplementedException();
         }
 
         public static Type GetType(string name)

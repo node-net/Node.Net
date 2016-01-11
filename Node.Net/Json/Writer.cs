@@ -102,7 +102,6 @@
                 if (!skipItem)
                 {
                     if (index > 0) streamWriter.Write(",");
-                    //streamWriter.Write(GetIndent() + "\"" + key.ToString() + "\":");
                     streamWriter.Write(GetIndent());
                     Write(key.ToString());
                     streamWriter.Write(":");
@@ -171,19 +170,6 @@
             if (value.GetType() == typeof(System.String))
             {
                 Write((string)value);
-                /*
-                string svalue = value.ToString();
-            
-                if(svalue.Contains("\\"))
-                {
-                    svalue = EscapeBackslashes(svalue);
-                }
-                if (svalue.Contains("\""))
-                {
-                    svalue = EscapeDoubleQuotes(svalue);
-                }
-                streamWriter.Write("\"" + svalue + "\"");
-                 */
                 return;
             }
             if(value.GetType() == typeof(byte[]))
@@ -216,7 +202,7 @@
                 for(int i = 0; i < input.Length; ++i)
                 {
                     char ch = input[i];
-                    if(ch == '"')// && lastChar != '\\')
+                    if(ch == '"')
                     {
                         builder.Append('\\');
                         builder.Append(ch);

@@ -33,7 +33,6 @@
 
         public static string[] Glob(string directory,string pattern,bool deep=false)
         {
-            // normalize the pattern to use forward slashes
             pattern = pattern.Replace('\\', '/');
             System.Collections.Generic.List<string> results = new System.Collections.Generic.List<string>();
 

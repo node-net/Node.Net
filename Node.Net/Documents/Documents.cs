@@ -4,7 +4,6 @@
     {
         public Documents()
         {
-            //Types.Add("txt", typeof(TextDocument));
         }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
