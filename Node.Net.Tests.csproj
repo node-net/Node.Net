@@ -64,7 +64,7 @@
     <EmbeddedResource Include="Node.Net\Json\Hash.Test.Sample.json" />
     <EmbeddedResource Include="Node.Net\Json\Traverser.Test.Tree.2.json" />
     <EmbeddedResource Include="Node.Net\Json\Traverser.Test.Tree.json" />
-    <EmbeddedResource Include="Node.Net\View\PropertiesExplorer_Test.ExampleA.json" />
+    <EmbeddedResource Include="Node.Net\View\PropertiesExplorer.Test.ExampleA.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -103,20 +103,20 @@
     <Compile Include="Node.Net\View\DynamicViewSelector.Test.cs" />
     <Compile Include="Node.Net\View\DynamicView.Test.cs" />
     <Compile Include="Node.Net\View\Explorer.Test.cs" />
-    <Compile Include="Node.Net\View\FrameworkElements_Test.cs" />
-    <Compile Include="Node.Net\View\Grid_Test.cs" />
-    <Compile Include="Node.Net\View\Image_Test.cs" />
-    <Compile Include="Node.Net\View\ListViewItem_Test.cs" />
-    <Compile Include="Node.Net\View\NotepadDocument_Test.cs" />
-    <Compile Include="Node.Net\View\PropertiesExplorer_Test.cs" />
-    <Compile Include="Node.Net\View\Properties_Test.cs" />
-    <Compile Include="Node.Net\View\SDIApplication_Test.cs" />
-    <Compile Include="Node.Net\View\SDIMainControl_Test.cs" />
-    <Compile Include="Node.Net\View\SplitterGrid_Test.cs" />
-    <Compile Include="Node.Net\View\TabControl_Test.cs" />
-    <Compile Include="Node.Net\View\TextView_Test.cs" />
-    <Compile Include="Node.Net\View\TreeViewItem_Test.cs" />
-    <Compile Include="Node.Net\View\TreeView_Test.cs" />
+    <Compile Include="Node.Net\View\FrameworkElements.Test.cs" />
+    <Compile Include="Node.Net\View\Grid.Test.cs" />
+    <Compile Include="Node.Net\View\Image.Test.cs" />
+    <Compile Include="Node.Net\View\ListViewItem.Test.cs" />
+    <Compile Include="Node.Net\View\NotepadDocument.Test.cs" />
+    <Compile Include="Node.Net\View\PropertiesExplorer.Test.cs" />
+    <Compile Include="Node.Net\View\Properties.Test.cs" />
+    <Compile Include="Node.Net\View\SDIApplication.Test.cs" />
+    <Compile Include="Node.Net\View\SDIMainControl.Test.cs" />
+    <Compile Include="Node.Net\View\SplitterGrid.Test.cs" />
+    <Compile Include="Node.Net\View\TabControl.Test.cs" />
+    <Compile Include="Node.Net\View\TextView.Test.cs" />
+    <Compile Include="Node.Net\View\TreeViewItem.Test.cs" />
+    <Compile Include="Node.Net\View\TreeView.Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Node.Net\Node.Net.csproj">

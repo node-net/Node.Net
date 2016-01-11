@@ -91,7 +91,7 @@ namespace Node.Net.View
         [TestCase, NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void PropertiesExplorer_Json_Properties_Vertical()
         {
-            Json.Hash hash = new Json.Hash(GetStream("PropertiesExplorer_Test.ExampleA.json"));
+            Json.Hash hash = new Json.Hash(GetStream("PropertiesExplorer.Test.ExampleA.json"));
             System.Windows.FrameworkElement[] elements
                 = { new TreeView(), new Properties() };
             System.Windows.Window window = new System.Windows.Window()
