@@ -104,7 +104,8 @@
         {
             if (value.Length == 0) return new Length();
             double lengthValue = System.Convert.ToDouble(value.Split(' ')[0]);
-            string unit = value.Split(' ')[1];
+            string unit = "m";
+            if(value.Split(' ').Length > 1) unit = value.Split(' ')[1];
             foreach (LengthUnit lunit in abbreviations.Keys)
             {
                 if (unit == abbreviations[lunit])

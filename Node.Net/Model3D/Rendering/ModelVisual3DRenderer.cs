@@ -26,6 +26,7 @@
             if (typeof(System.Windows.Media.Media3D.ModelVisual3D).IsAssignableFrom(value.GetType()))
                 return value as System.Windows.Media.Media3D.ModelVisual3D;
 
+
             System.Windows.Media.Media3D.ModelVisual3D model = new System.Windows.Media.Media3D.ModelVisual3D();
             model.Content = model3DRenderer.GetModel3D(value, units);
             return model;

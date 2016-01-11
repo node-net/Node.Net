@@ -4,7 +4,7 @@
     {
         public Documents()
         {
-            Types.Add("txt", typeof(TextDocument));
+            //Types.Add("txt", typeof(TextDocument));
         }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -175,19 +175,8 @@
 
         public static System.IO.Stream GetStream(string name)
         {
-            if (System.IO.File.Exists(name)) return new System.IO.FileStream(name, System.IO.FileMode.Open);
-            System.Reflection.Assembly assembly =
-                System.Reflection.Assembly.GetCallingAssembly();
-            System.IO.Stream stream = assembly.GetManifestResourceStream(name);
-            if(object.ReferenceEquals(null,stream))
-            {
-                foreach(System.Reflection.Assembly a in System.AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    stream = a.GetManifestResourceStream(name);
-                    if (!object.ReferenceEquals(null, stream)) return stream;
-                }
-            }
-            return stream;
+            return global::Node.Net.IO.StreamExtension.GetStream(name);
+            
         }
 
         public static void Save(string name,object document)

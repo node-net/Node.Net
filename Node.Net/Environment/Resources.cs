@@ -4,6 +4,8 @@
     {
         public static System.IO.Stream GetStream(string name)
         {
+            return IO.StreamExtension.GetStream(name);
+            /*
             System.Reflection.Assembly assembly =
                 System.Reflection.Assembly.GetCallingAssembly();
             System.Collections.Generic.List<string> names = 
@@ -16,15 +18,18 @@
                     throw new System.ArgumentException("ManifestResourceName " + name + " not found.");
                 }
             }
-            return assembly.GetManifestResourceStream(name);
+            return assembly.GetManifestResourceStream(name);*/
         }
 
         public static System.IO.Stream GetStream(System.Reflection.Assembly assembly,string name)
         {
+            return IO.StreamExtension.GetStream(name,assembly);
+            /*
             System.Collections.Generic.List<string> names =
                 new System.Collections.Generic.List<string>(assembly.GetManifestResourceNames());
             if (!names.Contains(name)) throw new System.ArgumentException("ManifestResourceName " + name + " not found.");
             return assembly.GetManifestResourceStream(name);
+            */
         }
 
         public static System.IO.Stream GetStream(System.Type type, string name) => GetStream(System.Reflection.Assembly.GetAssembly(type), name);

@@ -159,6 +159,12 @@
   <ItemGroup>
     <Folder Include="Node.Net\Framework\Controls\" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Node.Net\Documents\Documents.Test.Sample.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Node.Net\Documents\Documents.Test.Sample2.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

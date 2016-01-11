@@ -33,6 +33,10 @@
                 string typeName = value["Type"].ToString();
                 return GetMeshGeometry3D(typeName);
             }
+            if (value.Contains("Geometry"))
+            {
+                return Renderer.Resources[value["Geometry"].ToString()] as System.Windows.Media.Media3D.MeshGeometry3D;
+            }
             return null;
         }
 

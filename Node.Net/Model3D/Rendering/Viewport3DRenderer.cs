@@ -6,18 +6,18 @@
         {
             Renderer = renderer;
         }
-        private ModelVisual3DRenderer modelVisual3DRenderer = null;
-        public ModelVisual3DRenderer ModelVisual3DRenderer
+        private Visual3DRenderer visual3DRenderer = null;
+        public Visual3DRenderer Visual3DRenderer
         {
             get 
             {
-                if(object.ReferenceEquals(null,modelVisual3DRenderer))
+                if(object.ReferenceEquals(null,visual3DRenderer))
                 {
-                    modelVisual3DRenderer = new ModelVisual3DRenderer(Renderer);
+                    visual3DRenderer = new Visual3DRenderer(Renderer);
                 }
-                return modelVisual3DRenderer; 
+                return visual3DRenderer; 
             }
-            set { modelVisual3DRenderer = value; }
+            set { visual3DRenderer = value; }
         }
 
         public virtual System.Windows.Controls.Viewport3D GetViewport3D(object value)
@@ -38,7 +38,7 @@
                     Node.Net.Measurement.LengthUnit units = Node.Net.Measurement.LengthUnit.Meter)
         {
             System.Windows.Controls.Viewport3D viewport = new System.Windows.Controls.Viewport3D();
-            System.Windows.Media.Media3D.ModelVisual3D modelVisual3D = modelVisual3DRenderer.GetModelVisual3D(value, units);
+            System.Windows.Media.Media3D.Visual3D modelVisual3D = visual3DRenderer.GetVisual3D(value, units);
             viewport.Children.Add(modelVisual3D);
             return viewport;
         }
@@ -46,7 +46,7 @@
         private System.Windows.Controls.Viewport3D GetViewport3D(System.Windows.Media.Media3D.MeshGeometry3D mesh)
         {
             System.Windows.Controls.Viewport3D viewport = new System.Windows.Controls.Viewport3D();
-            System.Windows.Media.Media3D.ModelVisual3D modelVisual3D = modelVisual3DRenderer.GetModelVisual3D(mesh);
+            System.Windows.Media.Media3D.Visual3D modelVisual3D = visual3DRenderer.GetVisual3D(mesh);
             viewport.Children.Add(modelVisual3D);
             return viewport;
         }

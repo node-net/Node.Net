@@ -64,7 +64,8 @@ namespace Node.Net.Json
         public void HashBase_Stream_Constructor()
         {
             Assembly assembly = System.Reflection.Assembly.GetAssembly(typeof(Reader_Test));
-            HashBase hash = new HashBase(assembly.GetManifestResourceStream("Node.Net.Node.Net.Json.Hash.Test.Sample.json"));
+            //HashBase hash = new HashBase(assembly.GetManifestResourceStream("Node.Net.Node.Net.Json.Hash_Test.Sample.json"));
+            HashBase hash = new HashBase(IO.StreamExtension.GetStream("Json.Hash.Test.Sample.json"));
             Assert.AreEqual("Sample", hash["Name"].ToString());
         }
         [TestCase]
