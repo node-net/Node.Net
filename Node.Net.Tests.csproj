@@ -69,8 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Node.Net\Collections\Dictionary.Test.cs" />
-    <Compile Include="Node.Net\Documents\Documents_Test.cs" />
-    <Compile Include="Node.Net\Documents\TextDocument_Test.cs" />
+    <Compile Include="Node.Net\Documents\Documents.Test.cs" />
+    <Compile Include="Node.Net\Documents\TextDocument.Test.cs" />
     <Compile Include="Node.Net\Environment\Command.Test.cs" />
     <Compile Include="Node.Net\Environment\Environment.Test.cs" />
     <Compile Include="Node.Net\Environment\MyDocuments.Test.cs" />
@@ -90,13 +90,13 @@
     <Compile Include="Node.Net\Json\Reader.Test.cs" />
     <Compile Include="Node.Net\Json\Traverser.Test.cs" />
     <Compile Include="Node.Net\Json\Writer.Test.cs" />
-    <Compile Include="Node.Net\Measurement\Angle_Test.cs" />
-    <Compile Include="Node.Net\Measurement\LengthConverter_Test.cs" />
-    <Compile Include="Node.Net\Measurement\Length_Test.cs" />
+    <Compile Include="Node.Net\Measurement\Angle.Test.cs" />
+    <Compile Include="Node.Net\Measurement\LengthConverter.Test.cs" />
+    <Compile Include="Node.Net\Measurement\Length.Test.cs" />
     <Compile Include="Node.Net\Model2D\Canvas_Test.cs" />
     <Compile Include="Node.Net\Model2D\Viewer_Test.cs" />
     <Compile Include="Node.Net\Model3D\Renderer.Test.cs" />
-    <Compile Include="Node.Net\Model\Application_Test.cs" />
+    <Compile Include="Node.Net\Model\Application.Test.cs" />
     <Compile Include="Node.Net\View\Base_Test.cs" />
     <Compile Include="Node.Net\View\ComboBox_Test.cs" />
     <Compile Include="Node.Net\View\DataGridView_Test.cs" />
