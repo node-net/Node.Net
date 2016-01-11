@@ -71,6 +71,9 @@
     <Compile Include="Node.Net\Extensions\Image.cs" />
     <Compile Include="Node.Net\Extensions\ImageSource.cs" />
     <Compile Include="Node.Net\Framework\Application.cs" />
+    <Compile Include="Node.Net\Framework\Controls\SDIControl.cs" />
+    <Compile Include="Node.Net\Framework\Documents.cs" />
+    <Compile Include="Node.Net\Framework\IDocument.cs" />
     <Compile Include="Node.Net\IO\Directory.cs" />
     <Compile Include="Node.Net\IO\FileList.cs" />
     <Compile Include="Node.Net\IO\Stream.Extension.cs" />

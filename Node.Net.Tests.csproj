@@ -76,7 +76,6 @@
     <Compile Include="Node.Net\Environment\MyDocuments.Test.cs" />
     <Compile Include="Node.Net\Environment\Resources.Test.cs" />
     <Compile Include="Node.Net\Extensions_Test.cs" />
-    <Compile Include="Node.Net\Framework\Application.cs" />
     <Compile Include="Node.Net\Framework\Application.Test.cs" />
     <Compile Include="Node.Net\IO\Directory.Test.cs" />
     <Compile Include="Node.Net\IO\FileList.Test.cs" />
@@ -157,7 +156,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Node.Net\Framework\Controls\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -69,6 +69,10 @@ namespace Node.Net.IO
         public static Stream GetStream(string name)
         {
             Stream result = null;
+            if(File.Exists(name))
+            {
+                return new FileStream(name, FileMode.Open);
+            }
             foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies())
             {
                 result = GetStream(name, a);
