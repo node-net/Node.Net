@@ -62,8 +62,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Node.Net\Environment\Environment_Test.Tree.json" />
     <EmbeddedResource Include="Node.Net\Json\Hash.Test.Sample.json" />
-    <EmbeddedResource Include="Node.Net\Json\Traverser_Test.Tree.2.json" />
-    <EmbeddedResource Include="Node.Net\Json\Traverser_Test.Tree.json" />
+    <EmbeddedResource Include="Node.Net\Json\Traverser.Test.Tree.2.json" />
+    <EmbeddedResource Include="Node.Net\Json\Traverser.Test.Tree.json" />
     <EmbeddedResource Include="Node.Net\View\PropertiesExplorer_Test.ExampleA.json" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -78,9 +78,9 @@
     <Compile Include="Node.Net\Extensions_Test.cs" />
     <Compile Include="Node.Net\Framework\Application.cs" />
     <Compile Include="Node.Net\Framework\Application.Test.cs" />
-    <Compile Include="Node.Net\IO\Directory_Test.cs" />
-    <Compile Include="Node.Net\IO\FileList_Test.cs" />
-    <Compile Include="Node.Net\IO\TemporaryDirectory_Test.cs" />
+    <Compile Include="Node.Net\IO\Directory.Test.cs" />
+    <Compile Include="Node.Net\IO\FileList.Test.cs" />
+    <Compile Include="Node.Net\IO\TemporaryDirectory.Test.cs" />
     <Compile Include="Node.Net\Json\Array.Test.cs" />
     <Compile Include="Node.Net\Json\Children.Test.cs" />
     <Compile Include="Node.Net\Json\Copier.Test.cs" />
@@ -88,8 +88,8 @@
     <Compile Include="Node.Net\Json\HashBase.Test.cs" />
     <Compile Include="Node.Net\Json\Hash.Test.cs" />
     <Compile Include="Node.Net\Json\Reader.Test.cs" />
-    <Compile Include="Node.Net\Json\Traverser_Test.cs" />
-    <Compile Include="Node.Net\Json\Writer_Test.cs" />
+    <Compile Include="Node.Net\Json\Traverser.Test.cs" />
+    <Compile Include="Node.Net\Json\Writer.Test.cs" />
     <Compile Include="Node.Net\Measurement\Angle_Test.cs" />
     <Compile Include="Node.Net\Measurement\LengthConverter_Test.cs" />
     <Compile Include="Node.Net\Measurement\Length_Test.cs" />
