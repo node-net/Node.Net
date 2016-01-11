@@ -60,7 +60,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Node.Net\Environment\Environment_Test.Tree.json" />
+    <EmbeddedResource Include="Node.Net\Environment\Environment.Test.Tree.json" />
     <EmbeddedResource Include="Node.Net\Json\Hash.Test.Sample.json" />
     <EmbeddedResource Include="Node.Net\Json\Traverser.Test.Tree.2.json" />
     <EmbeddedResource Include="Node.Net\Json\Traverser.Test.Tree.json" />
@@ -71,10 +71,10 @@
     <Compile Include="Node.Net\Collections\Dictionary.Test.cs" />
     <Compile Include="Node.Net\Documents\Documents_Test.cs" />
     <Compile Include="Node.Net\Documents\TextDocument_Test.cs" />
-    <Compile Include="Node.Net\Environment\Command_Test.cs" />
-    <Compile Include="Node.Net\Environment\Environment_Test.cs" />
-    <Compile Include="Node.Net\Environment\MyDocuments_Test.cs" />
-    <Compile Include="Node.Net\Environment\Resources_Test.cs" />
+    <Compile Include="Node.Net\Environment\Command.Test.cs" />
+    <Compile Include="Node.Net\Environment\Environment.Test.cs" />
+    <Compile Include="Node.Net\Environment\MyDocuments.Test.cs" />
+    <Compile Include="Node.Net\Environment\Resources.Test.cs" />
     <Compile Include="Node.Net\Extensions_Test.cs" />
     <Compile Include="Node.Net\Framework\Application.cs" />
     <Compile Include="Node.Net\Framework\Application.Test.cs" />

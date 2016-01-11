@@ -7,7 +7,7 @@ namespace Node.Net.Environment
         [TestCase]
         public void Resources_GetStream()
         {
-            System.IO.Stream stream = Resources.GetStream("Node.Net.Node.Net.Environment.Environment_Test.Tree.json");
+            System.IO.Stream stream = Resources.GetStream("Node.Net.Node.Net.Environment.Environment.Test.Tree.json");
             NUnit.Framework.Assert.NotNull(stream);
 
             NUnit.Framework.Assert.Throws<System.ArgumentException>(()=>Resources_GetStream_InvalidName());
