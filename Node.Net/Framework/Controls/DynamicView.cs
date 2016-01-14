@@ -42,7 +42,7 @@ namespace Node.Net.Framework.Controls
             }
         }
 
-        private void SetCurrentView(string name)
+        public void SetCurrentView(string name)
         {
             if (NamedViews.ContainsKey(name))
             {
