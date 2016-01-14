@@ -58,6 +58,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Node.Net\Json\KeyValuePair.cs" />
     <Compile Include="Node.Net\Measurement\Angle.cs" />
     <Compile Include="Node.Net\Measurement\AngularUnit.cs" />
     <Compile Include="Node.Net\Measurement\Length.cs" />
