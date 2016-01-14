@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Node.Net\Collections\Dictionary.cs" />
-    <Compile Include="Node.Net\Documents\Documents.cs" />
     <Compile Include="Node.Net\Documents\IDocument.cs" />
     <Compile Include="Node.Net\Documents\TextDocument.cs" />
     <Compile Include="Node.Net\Environment\Command.cs" />
@@ -72,6 +71,7 @@
     <Compile Include="Node.Net\Extensions\ImageSource.cs" />
     <Compile Include="Node.Net\Framework\Application.cs" />
     <Compile Include="Node.Net\Framework\Controls\SDIControl.cs" />
+    <Compile Include="Node.Net\Framework\Controls\DynamicView.cs" />
     <Compile Include="Node.Net\Framework\Documents.cs" />
     <Compile Include="Node.Net\Framework\IDocument.cs" />
     <Compile Include="Node.Net\IO\Directory.cs" />
@@ -131,6 +131,7 @@
     <Compile Include="Node.Net\View\MethodInfoCommand.cs" />
     <Compile Include="Node.Net\View\Properties.cs" />
     <Compile Include="Node.Net\View\PropertiesExplorer.cs" />
+    <Compile Include="Node.Net\View\ReadOnlyTextView.cs" />
     <Compile Include="Node.Net\View\SDIApplication.cs" />
     <Compile Include="Node.Net\View\SDIMainControl.cs" />
     <Compile Include="Node.Net\View\SplitterGrid.cs" />

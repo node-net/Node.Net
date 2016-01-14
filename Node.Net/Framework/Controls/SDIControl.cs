@@ -5,12 +5,18 @@ using System.Windows.Controls;
 
 namespace Node.Net.Framework.Controls
 {
-    public class SDIControl : System.Windows.Controls.Grid
+    public class SDIControl : Grid
     {
-        Documents Documents
+        public SDIControl()
+        {
+            DataContext = new Documents();
+        }
+        public Documents Documents
         {
             get { return DataContext as Documents; }
+            set { DataContext = value; }
         }
+
         private Menu menu = null;
         public Menu Menu
         {
@@ -52,6 +58,12 @@ namespace Node.Net.Framework.Controls
                 Children.Add(DocumentView);
                 Grid.SetRow(DocumentView, 1);
             }
+
+            DynamicView dynamicView = DocumentView as DynamicView;
+            if(!object.ReferenceEquals(null, dynamicView))
+            {
+                Menu.Items.Add(dynamicView.GetViewMenuItem());
+            }
         }
 
         private void FileOpen_Click(object sender, RoutedEventArgs e)
@@ -61,7 +73,7 @@ namespace Node.Net.Framework.Controls
             {
                 foreach (string key in Documents.Keys)
                 {
-                    DocumentView.DataContext = Documents[key];
+                    DocumentView.DataContext = new KeyValuePair<string,object>(key, Documents[key]);
                 }
             }
         }

@@ -69,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Node.Net\Collections\Dictionary.Test.cs" />
-    <Compile Include="Node.Net\Documents\Documents.Test.cs" />
     <Compile Include="Node.Net\Documents\TextDocument.Test.cs" />
     <Compile Include="Node.Net\Environment\Command.Test.cs" />
     <Compile Include="Node.Net\Environment\Environment.Test.cs" />
@@ -77,6 +76,8 @@
     <Compile Include="Node.Net\Environment\Resources.Test.cs" />
     <Compile Include="Node.Net\Extensions_Test.cs" />
     <Compile Include="Node.Net\Framework\Application.Test.cs" />
+    <Compile Include="Node.Net\Framework\Controls\SDIControl.Test.cs" />
+    <Compile Include="Node.Net\Framework\Documents.Test.cs" />
     <Compile Include="Node.Net\IO\Directory.Test.cs" />
     <Compile Include="Node.Net\IO\FileList.Test.cs" />
     <Compile Include="Node.Net\IO\TemporaryDirectory.Test.cs" />
@@ -158,13 +159,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Node.Net\Framework\Controls\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Node.Net\Documents\Documents.Test.Sample.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Node.Net\Documents\Documents.Test.Sample2.txt" />
+    <EmbeddedResource Include="Node.Net\Framework\Documents.Test.Sample.json" />
+    <EmbeddedResource Include="Node.Net\Framework\Documents.Test.Sample2.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

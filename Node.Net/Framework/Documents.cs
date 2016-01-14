@@ -14,14 +14,14 @@ namespace Node.Net.Framework
             set { maximumCount = value; }
         }
 
-        private Type defaultDocumentType = null;
+        private Type defaultDocumentType = typeof(Collections.Dictionary);
         public Type DefaultDocumentType
         {
             get { return defaultDocumentType; }
             set { defaultDocumentType = value; }
         }
 
-        private string openFileDialogFilter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
+        private string openFileDialogFilter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*";
         public string OpenFileDialogFilter
         {
             get { return openFileDialogFilter; }
