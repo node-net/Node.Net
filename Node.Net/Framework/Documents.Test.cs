@@ -20,6 +20,10 @@ namespace Node.Net.Framework
 
             Collections.Dictionary doc = documents["Documents.Test.Sample.json"] as Collections.Dictionary;
             Assert.True(doc.ContainsKey("Name"));
+
+            Assert.AreNotEqual("", documents.CurrentKey);
+            documents.Clear();
+            Assert.AreEqual("", documents.CurrentKey);
         }
     }
 }

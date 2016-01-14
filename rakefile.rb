@@ -1,4 +1,4 @@
-VERSION='0.0.252'
+VERSION='0.0.253'
 require 'dev'
 
 CLOBBER.include('lib')

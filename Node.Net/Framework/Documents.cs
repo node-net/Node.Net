@@ -1,12 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 
 namespace Node.Net.Framework
 {
-    public class Documents : Dictionary<string, dynamic>
+    public class Documents : Dictionary<string, dynamic>, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void NotifyPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
         private int maximumCount = 1;
         public int MaximumCount
         {
@@ -26,6 +36,25 @@ namespace Node.Net.Framework
         {
             get { return openFileDialogFilter; }
             set { openFileDialogFilter = value; }
+        }
+
+        public new void Clear()
+        {
+            base.Clear();
+            CurrentKey = "";
+        }
+        private string currentKey = "";
+        public string CurrentKey
+        {
+            get { return currentKey; }
+            set
+            {
+                if(currentKey != value)
+                {
+                    currentKey = value;
+                    NotifyPropertyChanged("CurrentKey");
+                }
+            }
         }
         public void Open()
         {
@@ -55,8 +84,9 @@ namespace Node.Net.Framework
             object[] parameters = { stream };
             openInfo.Invoke(document, parameters);
             if (MaximumCount > 0 && Count == maximumCount)
-            { Clear(); }
+            { base.Clear(); }
             Add(name, document);
+            CurrentKey = name;
         }
     }
 }
