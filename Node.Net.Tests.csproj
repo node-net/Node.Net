@@ -95,6 +95,7 @@
     <Compile Include="Node.Net\Model2D\Canvas.Test.cs" />
     <Compile Include="Node.Net\Model2D\Viewer.Test.cs" />
     <Compile Include="Node.Net\Model3D\Renderer.Test.cs" />
+    <Compile Include="Node.Net\Model3D\Viewer.Test.cs" />
     <Compile Include="Node.Net\Model\Application.Test.cs" />
     <Compile Include="Node.Net\View\Base.Test.cs" />
     <Compile Include="Node.Net\View\ComboBox.Test.cs" />
