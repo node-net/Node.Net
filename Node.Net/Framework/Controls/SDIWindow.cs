@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Windows;
 
 namespace Node.Net.Framework.Controls
@@ -10,17 +11,13 @@ namespace Node.Net.Framework.Controls
         {
             initialize(name, documentType, openFileDialogFilter, documentView);
         }
-        public SDIWindow(string name, Type documentType, string openFileDialogFilter, FrameworkElement documentView0,
-                         FrameworkElement documentView1)
+        public SDIWindow(string name, Type documentType, string openFileDialogFilter, FrameworkElement[] views)
         {
-            initialize(name, documentType, openFileDialogFilter,
-                       new DynamicView(documentView0, documentView1));
+            initialize(name, documentType, openFileDialogFilter, new DynamicView(views));
         }
-        public SDIWindow(string name, Type documentType, string openFileDialogFilter, FrameworkElement documentView0,
-                         FrameworkElement documentView1,FrameworkElement documentView2)
+        public SDIWindow(string name, Type documentType, string openFileDialogFilter, IDictionary views)
         {
-            initialize(name, documentType, openFileDialogFilter,
-                       new DynamicView(documentView0, documentView1,documentView2));
+            initialize(name, documentType, openFileDialogFilter, new DynamicView(views));
         }
 
         private void initialize(string name, Type documentType, string openFileDialogFilter, FrameworkElement documentView)

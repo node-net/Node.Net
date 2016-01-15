@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,18 +12,27 @@ namespace Node.Net.Framework.Controls
         {
             this.DataContextChanged += DynamicView_DataContextChanged;
         }
-        public DynamicView(FrameworkElement element0, FrameworkElement element1)
+
+        public DynamicView(FrameworkElement[] elements)
         {
             DataContextChanged += DynamicView_DataContextChanged;
-            NamedViews.Add(element0.GetType().Name, element0);
-            NamedViews.Add(element1.GetType().Name, element1);
+            foreach (FrameworkElement element in elements)
+            {
+                NamedViews.Add(element.GetType().Name, element);
+            }
         }
-        public DynamicView(FrameworkElement element0, FrameworkElement element1,FrameworkElement element2)
+
+        public DynamicView(IDictionary elements)
         {
             DataContextChanged += DynamicView_DataContextChanged;
-            NamedViews.Add(element0.GetType().Name, element0);
-            NamedViews.Add(element1.GetType().Name, element1);
-            NamedViews.Add(element2.GetType().Name, element2);
+            foreach (string key in elements.Keys)
+            {
+                FrameworkElement element = elements[key] as FrameworkElement;
+                if (!object.ReferenceEquals(null, element))
+                {
+                    NamedViews.Add(key, element);
+                }
+            }
         }
 
         public Dictionary<string, FrameworkElement> NamedViews = new Dictionary<string, FrameworkElement>();

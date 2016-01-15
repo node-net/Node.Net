@@ -22,11 +22,26 @@ namespace Node.Net.Framework.Controls
         [TestCase, Explicit, Apartment(ApartmentState.STA)]
         public void SDIWindow_Usage_Dictionary_MultipleViews()
         {
+            FrameworkElement[] views = {new Node.Net.View.JsonView(),
+                                        new Node.Net.View.TreeView(),
+                                        new Node.Net.View.HelixView3D()};
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView",
                                             typeof(Node.Net.Collections.Dictionary),
                                             "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
-                                            new Node.Net.View.JsonView(),
-                                            new Node.Net.View.TreeView());
+                                            views);
+            window.ShowDialog();
+        }
+
+        [TestCase, Explicit, Apartment(ApartmentState.STA)]
+        public void SDIWindow_Usage_Dictionary_MultipleViews2()
+        {
+            Dictionary<string, FrameworkElement> views = new Dictionary<string, FrameworkElement>();
+            views["JSON"] = new Node.Net.View.JsonView();
+            views["Tree"] = new Node.Net.View.TreeView();
+            SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView",
+                                            typeof(Node.Net.Collections.Dictionary),
+                                            "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
+                                            views);
             window.ShowDialog();
         }
     }

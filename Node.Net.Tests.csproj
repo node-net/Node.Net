@@ -107,6 +107,7 @@
     <Compile Include="Node.Net\View\Explorer.Test.cs" />
     <Compile Include="Node.Net\View\FrameworkElements.Test.cs" />
     <Compile Include="Node.Net\View\Grid.Test.cs" />
+    <Compile Include="Node.Net\View\HelixView3D.cs" />
     <Compile Include="Node.Net\View\Image.Test.cs" />
     <Compile Include="Node.Net\View\ListViewItem.Test.cs" />
     <Compile Include="Node.Net\View\NotepadDocument.Test.cs" />
@@ -162,6 +163,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Node.Net\Framework\Documents.Test.Sample.json" />
     <EmbeddedResource Include="Node.Net\Framework\Documents.Test.Sample2.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Node.Net\View\HelixView3D.Resources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
