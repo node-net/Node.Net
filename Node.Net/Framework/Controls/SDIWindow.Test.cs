@@ -25,9 +25,8 @@ namespace Node.Net.Framework.Controls
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView",
                                             typeof(Node.Net.Collections.Dictionary),
                                             "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
-                                            new Node.Net.Framework.Controls.DynamicView(
-                                                new Node.Net.View.JsonView(),
-                                                new Node.Net.View.TreeView()));
+                                            new Node.Net.View.JsonView(),
+                                            new Node.Net.View.TreeView());
             window.ShowDialog();
         }
     }

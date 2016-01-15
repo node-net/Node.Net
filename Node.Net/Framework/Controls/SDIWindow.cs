@@ -8,6 +8,23 @@ namespace Node.Net.Framework.Controls
         private SDIControl sdiControl = new SDIControl();
         public SDIWindow(string name,Type documentType,string openFileDialogFilter,FrameworkElement documentView)
         {
+            initialize(name, documentType, openFileDialogFilter, documentView);
+        }
+        public SDIWindow(string name, Type documentType, string openFileDialogFilter, FrameworkElement documentView0,
+                         FrameworkElement documentView1)
+        {
+            initialize(name, documentType, openFileDialogFilter,
+                       new DynamicView(documentView0, documentView1));
+        }
+        public SDIWindow(string name, Type documentType, string openFileDialogFilter, FrameworkElement documentView0,
+                         FrameworkElement documentView1,FrameworkElement documentView2)
+        {
+            initialize(name, documentType, openFileDialogFilter,
+                       new DynamicView(documentView0, documentView1,documentView2));
+        }
+
+        private void initialize(string name, Type documentType, string openFileDialogFilter, FrameworkElement documentView)
+        {
             Name = name;
             sdiControl = new SDIControl()
             {
@@ -22,24 +39,7 @@ namespace Node.Net.Framework.Controls
             WindowState = WindowState.Maximized;
             update();
         }
-        /*
-        SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView")
-        {
-            Content = new SDIControl()
-            {
-                Documents = new Framework.Documents()
-                {
-                    DefaultDocumentType = typeof(Node.Net.Documents.TextDocument),
-                    OpenFileDialogFilter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-                },
-                DocumentView = new Node.Net.View.ReadOnlyTextView()
-            },
-        };
-        SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView",
-                                           typeof(Node.Net.Documents.TextDocument),
-                                           "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
-                                           new Node.Net.View.ReadOnlyTextView);
-                                           */
+
 
         private void update()
         {

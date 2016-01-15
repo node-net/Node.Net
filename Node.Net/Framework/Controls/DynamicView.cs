@@ -17,6 +17,13 @@ namespace Node.Net.Framework.Controls
             NamedViews.Add(element0.GetType().Name, element0);
             NamedViews.Add(element1.GetType().Name, element1);
         }
+        public DynamicView(FrameworkElement element0, FrameworkElement element1,FrameworkElement element2)
+        {
+            DataContextChanged += DynamicView_DataContextChanged;
+            NamedViews.Add(element0.GetType().Name, element0);
+            NamedViews.Add(element1.GetType().Name, element1);
+            NamedViews.Add(element2.GetType().Name, element2);
+        }
 
         public Dictionary<string, FrameworkElement> NamedViews = new Dictionary<string, FrameworkElement>();
         private string currentViewName = "";
