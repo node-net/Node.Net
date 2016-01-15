@@ -1,4 +1,6 @@
-﻿namespace Node.Net.View
+﻿using System.Windows;
+
+namespace Node.Net.View
 {
     public class DynamicView : System.Windows.Controls.ContentControl
     {
@@ -8,6 +10,7 @@
         }
 
         
+
         public DynamicView(System.Windows.FrameworkElement defaultElement) 
         { 
             frameworkElements["Default"] = defaultElement;
