@@ -5,12 +5,25 @@
   "Table1": {
     "Geometry": "Table",
     "Material": "Blue",
-    "Width" :  "10",
+    "Width": "2 m",
     "Cube1": {
       "Geometry": "Cube",
       "Material": "Yellow",
-      "Width" :  "0.1",
-      "Z" : "1"
+      "Width": "0.1 m",
+      "Z": "1 m"
+    },
+    "Cube2": {
+      "Geometry": "Cube",
+      "Material": "Red",
+      "Length": "0.1 m",
+      "Z": "1 m"
+    },
+    "Cube3": {
+      "Geometry": "Cube",
+      "Material": "Black",
+      "Length": "0.1 m",
+      "Z": "1 m",
+      "Orientation" :  "45 deg"
     }
   }
 }

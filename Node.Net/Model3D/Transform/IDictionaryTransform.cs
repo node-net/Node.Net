@@ -137,7 +137,13 @@ namespace Node.Net.Model3D.Transform
                 Quaternion quaternion = new Quaternion(new Vector3D(0, 0, 1), rotationZ);
                 QuaternionRotation3D rotation = new QuaternionRotation3D() { Quaternion = quaternion };
                 return new RotateTransform3D(rotation);
-
+            }
+            if(value.Contains("Orientation"))
+            {
+                double rotationZ = GetRotationDegrees(value, "Orientation");
+                Quaternion quaternion = new Quaternion(new Vector3D(0, 0, 1), rotationZ);
+                QuaternionRotation3D rotation = new QuaternionRotation3D() { Quaternion = quaternion };
+                return new RotateTransform3D(rotation);
             }
 
             return new RotateTransform3D();
@@ -153,44 +159,53 @@ namespace Node.Net.Model3D.Transform
             Vector3D result = new Vector3D();
             if (value.Contains("X"))
             {
-                result.X = System.Convert.ToDouble(value["X"].ToString());
+                result.X = GetLengthMeters(value, "X");
             }
             if (value.Contains("Y"))
             {
-                result.Y = System.Convert.ToDouble(value["Y"].ToString());
+                result.Y = GetLengthMeters(value, "Y"); ;
             }
             if (value.Contains("Z"))
             {
-                result.Z = System.Convert.ToDouble(value["Z"].ToString());
+                result.Z = GetLengthMeters(value, "Z");
             }
             return result;
+        }
+
+        private static double GetLengthMeters(IDictionary dictionary,string key)
+        {
+            return Measurement.Length.Parse(dictionary[key].ToString())[Measurement.LengthUnit.Meters];
+        }
+        private static double GetRotationDegrees(IDictionary dictionary,string key)
+        {
+            return Measurement.Angle.Parse(dictionary[key].ToString())[Measurement.AngularUnit.Degrees];
         }
         public static Vector3D ToScale(IRenderer renderer,IDictionary value)
         {
             Vector3D result = new Vector3D(1, 1, 1);
             if (value.Contains("ScaleX"))
             {
-                result.X = System.Convert.ToDouble(value["ScaleX"].ToString());
+                result.X = GetLengthMeters(value, "ScaleX");
             }
             if(value.Contains("Length"))
             {
-                result.X = System.Convert.ToDouble(value["Length"].ToString());
+                result.X = GetLengthMeters(value, "Length");
             }
             if (value.Contains("ScaleY"))
             {
-                result.Y = System.Convert.ToDouble(value["ScaleY"].ToString());
+                result.Y = GetLengthMeters(value,"ScaleY");
             }
             if(value.Contains("Width"))
             {
-                result.Y = System.Convert.ToDouble(value["Width"].ToString());
+                result.Y = GetLengthMeters(value, "Width");
             }
             if (value.Contains("ScaleZ"))
             {
-                result.Z = System.Convert.ToDouble(value["ScaleZ"].ToString());
+                result.Z = GetLengthMeters(value, "ScaleZ");
             }
             if(value.Contains("Height"))
             {
-                result.Z = System.Convert.ToDouble(value["Height"].ToString());
+                result.Z = GetLengthMeters(value, "Height");
             }
             return result;
         }
