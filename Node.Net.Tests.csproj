@@ -78,6 +78,7 @@
     <Compile Include="Node.Net\Extensions_Test.cs" />
     <Compile Include="Node.Net\Framework\Application.Test.cs" />
     <Compile Include="Node.Net\Framework\Controls\SDIControl.Test.cs" />
+    <Compile Include="Node.Net\Framework\Controls\SDIWindow.Test.cs" />
     <Compile Include="Node.Net\Framework\Documents.Test.cs" />
     <Compile Include="Node.Net\IO\Directory.Test.cs" />
     <Compile Include="Node.Net\IO\FileList.Test.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Node.Net\View\Explorer.Test.cs" />
     <Compile Include="Node.Net\View\FrameworkElements.Test.cs" />
     <Compile Include="Node.Net\View\Grid.Test.cs" />
+    <Compile Include="Node.Net\View\HelixView3D.cs" />
     <Compile Include="Node.Net\View\Image.Test.cs" />
     <Compile Include="Node.Net\View\ListViewItem.Test.cs" />
     <Compile Include="Node.Net\View\NotepadDocument.Test.cs" />

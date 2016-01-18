@@ -8,7 +8,7 @@ namespace Node.Net.Model3D.Transform
     {
         public static Visual3D ToVisual3D(IRenderer renderer, object value)
         {
-            IDictionary dictionary = value as IDictionary;
+            IDictionary dictionary = Json.KeyValuePair.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToVisual3D(renderer, dictionary);
             return null;
         }

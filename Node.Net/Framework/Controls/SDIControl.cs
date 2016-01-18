@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Node.Net.Framework.Controls
 {
@@ -43,6 +44,7 @@ namespace Node.Net.Framework.Controls
         {
             base.OnInitialized(e);
 
+            Background = Brushes.DarkGray;
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition());
 
@@ -55,6 +57,7 @@ namespace Node.Net.Framework.Controls
 
             if (!object.ReferenceEquals(null, DocumentView))
             {
+                DocumentView.DataContext = null;
                 Children.Add(DocumentView);
                 Grid.SetRow(DocumentView, 1);
             }

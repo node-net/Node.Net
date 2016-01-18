@@ -1,9 +1,11 @@
-﻿namespace Node.Net.View
+﻿using System.Windows.Controls;
+
+namespace Node.Net.View
 {
-    public class JsonView : System.Windows.Controls.UserControl
+    public class JsonView : TextBox// System.Windows.Controls.UserControl
     {
         public JsonView() { DataContextChanged += on_DataContextChanged; }
-        private System.Windows.Controls.TextBox textBox = null;
+        //private System.Windows.Controls.TextBox textBox = null;
 
         void on_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
@@ -11,6 +13,16 @@
         }
         public void Update()
         {
+            /*
+            if(object.ReferenceEquals(null,DataContext))
+            {
+                Background = System.Windows.Media.Brushes.DarkGray;
+            }
+            else
+            {
+                Background = System.Windows.SystemColors.ControlBrush;
+            }
+            */
             string text =  "";
             System.Collections.IDictionary dictionary = Node.Net.View.KeyValuePair.GetValue(DataContext)
                 as System.Collections.IDictionary;
@@ -25,13 +37,17 @@
                     text = sr.ReadToEnd();
                 }
             }
-            if(!object.ReferenceEquals(null,textBox)) textBox.Text = text;
+            Text = text;
         }
 
         protected override void OnInitialized(System.EventArgs e)
         {
             base.OnInitialized(e);
 
+            HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
+            VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
+            IsReadOnly = true;
+            /*
             textBox = new System.Windows.Controls.TextBox()
             {
                 HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto,
@@ -39,6 +55,7 @@
                 IsReadOnly=true
             };
             Content = textBox;
+            */
             Update();
         }
     }

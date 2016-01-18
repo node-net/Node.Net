@@ -72,6 +72,7 @@
     <Compile Include="Node.Net\Framework\Application.cs" />
     <Compile Include="Node.Net\Framework\Controls\SDIControl.cs" />
     <Compile Include="Node.Net\Framework\Controls\DynamicView.cs" />
+    <Compile Include="Node.Net\Framework\Controls\SDIWindow.cs" />
     <Compile Include="Node.Net\Framework\Documents.cs" />
     <Compile Include="Node.Net\Framework\IDocument.cs" />
     <Compile Include="Node.Net\IO\Directory.cs" />
