@@ -46,18 +46,6 @@ namespace Node.Net.Model3D.Transform
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, IDictionary value)
         {
             return ToModel3DGroup(renderer, value);
-            /*
-            if(value.Contains("Model3D"))
-            {
-                string smodel3d = value["Model3D"].ToString();
-                if(renderer.Resources.Contains(smodel3d))
-                {
-                    System.Windows.Media.Media3D.Model3D model = renderer.Resources[smodel3d] as System.Windows.Media.Media3D.Model3D;
-                    if (!object.ReferenceEquals(null, model)) return model;
-                }
-            }
-            GeometryModel3D geometryModel3D = renderer.GetGeometryModel3D(value);
-            return geometryModel3D;*/
         }
         public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer,IDictionary value)
         {
@@ -75,10 +63,30 @@ namespace Node.Net.Model3D.Transform
             }
             else
             {
-                GeometryModel3D geometryModel3D = ToGeometryModel3D(renderer, value);
-                if(!object.ReferenceEquals(null, geometryModel3D))
+                System.Windows.Media.Media3D.Model3D model = null;
+                if(value.Contains("Type"))
                 {
-                    model3DGroup.Children.Add(geometryModel3D);
+                    
+                    System.Windows.Media.Media3D.Model3D typemodel = renderer.GetResource(value["Type"].ToString()) as System.Windows.Media.Media3D.Model3D;
+                    if (!object.ReferenceEquals(null, typemodel))
+                    {
+                        Model3DGroup modelGroup = new Model3DGroup();
+                        modelGroup.Transform = ToTransform3D(renderer, value);
+                        modelGroup.Children.Add(typemodel);
+                        model = modelGroup;
+                    }
+                }
+                if (object.ReferenceEquals(null, model))
+                {
+                    GeometryModel3D geometryModel3D = ToGeometryModel3D(renderer, value);
+                    if (!object.ReferenceEquals(null, geometryModel3D))
+                    {
+                        model = geometryModel3D;
+                    }
+                }
+                if(!object.ReferenceEquals(null, model))
+                {
+                    model3DGroup.Children.Add(model);
                 }
             }
 
@@ -148,12 +156,13 @@ namespace Node.Net.Model3D.Transform
 
             return new RotateTransform3D();
         }
+        /*
         public static Rotation3D GetRotationTrans(IDictionary value)
         {
             //Rotation3D rotationZ = new Rotation3D();//AxisAngleRotation,QuaternionRotatiom
             //return rotationZ();
             return null;
-        }
+        }*/
         public static Vector3D ToTranslation(IRenderer renderer, IDictionary value)
         {
             Vector3D result = new Vector3D();

@@ -23,7 +23,16 @@
       "Material": "Black",
       "Length": "0.1 m",
       "Z": "1 m",
-      "Orientation" :  "45 deg"
+      "Orientation": "45 deg"
+    },
+    "TableRed0": {
+      "X": "5 m",
+      "Type": "RedTable"
+    },
+    "TableRed1": {
+      "Y": "5 m",
+      "Length": "2 m",
+      "Type": "RedTable"
     }
   }
 }
