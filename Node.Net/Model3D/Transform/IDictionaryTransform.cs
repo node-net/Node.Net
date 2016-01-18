@@ -51,6 +51,7 @@ namespace Node.Net.Model3D.Transform
         public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer,IDictionary value)
         {
             Model3DGroup model3DGroup = new Model3DGroup();
+            model3DGroup.Transform = ToTransform3D_NoScale(renderer, value);
 
             // Primary Model
             System.Windows.Media.Media3D.Model3D primaryModel = null;
@@ -65,7 +66,8 @@ namespace Node.Net.Model3D.Transform
                         if(!object.ReferenceEquals(null,modelResource))
                         {
                             Model3DGroup modelGroup = new Model3DGroup();
-                            modelGroup.Transform = ToTransform3D(renderer, value);
+                            //modelGroup.Transform = ToTransform3D(renderer, value);
+                            modelGroup.Transform = new ScaleTransform3D(renderer.GetScale(value));
                             modelGroup.Children.Add(modelResource);
                             primaryModel = modelGroup;
                         }
@@ -121,6 +123,16 @@ namespace Node.Net.Model3D.Transform
         {
             Transform3DGroup transformGroup = new Transform3DGroup();
             transformGroup.Children.Add(new ScaleTransform3D(renderer.GetScale(value)));
+            transformGroup.Children.Add(GetRotateTransform3D(value));
+            TranslateTransform3D translateTransform = new TranslateTransform3D(renderer.GetTranslation(value));
+            Vector3D translation = renderer.GetTranslation(value);
+            Point3D center = new Point3D(translation.X, translation.Y, translation.Z);
+            transformGroup.Children.Add(new TranslateTransform3D(renderer.GetTranslation(value)));
+            return transformGroup;
+        }
+        public static Transform3D ToTransform3D_NoScale(IRenderer renderer, System.Collections.IDictionary value)
+        {
+            Transform3DGroup transformGroup = new Transform3DGroup();
             transformGroup.Children.Add(GetRotateTransform3D(value));
             TranslateTransform3D translateTransform = new TranslateTransform3D(renderer.GetTranslation(value));
             Vector3D translation = renderer.GetTranslation(value);
