@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
@@ -7,6 +8,12 @@ namespace Node.Net.Model3D
 {
     public class Renderer : IRenderer
     {
+        public Renderer()
+        {
+            Model3DKeys.Add("Model3D");
+            Model3DKeys.Add("Type");
+        }
+
         private ResourceDictionary resources = new ResourceDictionary();
         public ResourceDictionary Resources
         {
@@ -19,6 +26,9 @@ namespace Node.Net.Model3D
             if (resources.Contains(name)) return resources[name];
             return null;
         }
+
+        private List<string> model3DKeys = new List<string>();
+        public List<string> Model3DKeys { get { return model3DKeys; } }
 
         public virtual Visual3D GetVisual3D(object value)
         {

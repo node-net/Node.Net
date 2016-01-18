@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,42 +53,32 @@ namespace Node.Net.Model3D.Transform
             Model3DGroup model3DGroup = new Model3DGroup();
 
             // Primary Model
-            if(value.Contains("Model3D"))
+            System.Windows.Media.Media3D.Model3D primaryModel = null;
+            foreach(string modelKey in renderer.Model3DKeys)
             {
-                System.Windows.Media.Media3D.Model3D model = renderer.GetResource(value["Model3D"].ToString()) as System.Windows.Media.Media3D.Model3D;
-                if(!object.ReferenceEquals(null, model))
+                if (object.ReferenceEquals(null, primaryModel))
                 {
-                    model.Transform = ToTransform3D(renderer, value);
-                    model3DGroup.Children.Add(model);
+                    if (value.Contains(modelKey))
+                    {
+                        string modelKeyValue = value[modelKey].ToString();
+                        System.Windows.Media.Media3D.Model3D modelResource = renderer.GetResource(modelKeyValue) as System.Windows.Media.Media3D.Model3D;
+                        if(!object.ReferenceEquals(null,modelResource))
+                        {
+                            Model3DGroup modelGroup = new Model3DGroup();
+                            modelGroup.Transform = ToTransform3D(renderer, value);
+                            modelGroup.Children.Add(modelResource);
+                            primaryModel = modelGroup;
+                        }
+                    }
                 }
             }
-            else
+            if(object.ReferenceEquals(null,primaryModel))
             {
-                System.Windows.Media.Media3D.Model3D model = null;
-                if(value.Contains("Type"))
-                {
-                    
-                    System.Windows.Media.Media3D.Model3D typemodel = renderer.GetResource(value["Type"].ToString()) as System.Windows.Media.Media3D.Model3D;
-                    if (!object.ReferenceEquals(null, typemodel))
-                    {
-                        Model3DGroup modelGroup = new Model3DGroup();
-                        modelGroup.Transform = ToTransform3D(renderer, value);
-                        modelGroup.Children.Add(typemodel);
-                        model = modelGroup;
-                    }
-                }
-                if (object.ReferenceEquals(null, model))
-                {
-                    GeometryModel3D geometryModel3D = ToGeometryModel3D(renderer, value);
-                    if (!object.ReferenceEquals(null, geometryModel3D))
-                    {
-                        model = geometryModel3D;
-                    }
-                }
-                if(!object.ReferenceEquals(null, model))
-                {
-                    model3DGroup.Children.Add(model);
-                }
+                primaryModel = ToGeometryModel3D(renderer, value);
+            }
+            if(!object.ReferenceEquals(null,primaryModel))
+            {
+                model3DGroup.Children.Add(primaryModel);
             }
 
             // Children

@@ -14,13 +14,13 @@ namespace Node.Net.Model3D.Transform
         }
         public static ModelVisual3D ToModelVisual3D(IRenderer renderer, object value)
         {
-            IDictionary dictionary = value as IDictionary;
+            IDictionary dictionary = Json.KeyValuePair.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModelVisual3D(renderer, dictionary);
             return null;
         }
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, object value)
         {
-            IDictionary dictionary = value as IDictionary;
+            IDictionary dictionary = Json.KeyValuePair.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModel3D(renderer, dictionary);
             return null;
         }
