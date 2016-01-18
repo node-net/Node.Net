@@ -6,6 +6,11 @@ namespace Node.Net.Collections
     public class Dictionary : System.Collections.Generic.Dictionary<string,dynamic>, 
         Framework.IDocument
     {
+        public Dictionary() { }
+        public Dictionary(Stream stream)
+        {
+            Open(stream);
+        }
         private bool readOnly = true;
         public bool ReadOnly
         {

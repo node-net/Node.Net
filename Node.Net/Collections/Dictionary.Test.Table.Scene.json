@@ -1,0 +1,16 @@
+{
+  "Sunlight": {
+    "Model3D": "Sunlight"
+  },
+  "Table1": {
+    "Geometry": "Table",
+    "Material": "Blue",
+    "Width" :  "10",
+    "Cube1": {
+      "Geometry": "Cube",
+      "Material": "Yellow",
+      "Width" :  "0.1",
+      "Z" : "1"
+    }
+  }
+}

@@ -1,11 +1,35 @@
 ﻿using System.Windows;
 using System.Windows.Media.Media3D;
 
+/// <summary>
+/// Visual3D
+///  |
+///  +--ModelVisual3D
+///  
+/// Model3D
+///  |
+///  +--GeometryModel3D
+///  |
+///  +--Light
+///  |    |
+///  |    +--AmbientLight
+///  |    |
+///  |    +--DirectionalLight
+///  |    |
+///  |    +--PointLightBase
+///  |
+///  +--Model3DGroup
+///  
+/// </summary>
+/// <param name="value"></param>
+/// <returns></returns>
+/// 
 namespace Node.Net.Model3D
 {
     public interface IRenderer
     {
         ResourceDictionary Resources { get; set; }
+        object GetResource(string name);
         Visual3D GetVisual3D(object value);
         ModelVisual3D GetModelVisual3D(object value);
         System.Windows.Media.Media3D.Model3D GetModel3D(object value);

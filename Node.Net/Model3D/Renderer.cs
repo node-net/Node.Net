@@ -14,6 +14,12 @@ namespace Node.Net.Model3D
             set { resources = value; }
         }
 
+        public virtual object GetResource(string name)
+        {
+            if (resources.Contains(name)) return resources[name];
+            return null;
+        }
+
         public virtual Visual3D GetVisual3D(object value)
         {
             return Transform.ObjectTransform.ToVisual3D(this, value);
@@ -24,6 +30,7 @@ namespace Node.Net.Model3D
             return Transform.ObjectTransform.ToModelVisual3D(this, value);
         }
 
+        
         public virtual System.Windows.Media.Media3D.Model3D GetModel3D(object value)
         {
             return Transform.ObjectTransform.ToModel3D(this, value);

@@ -45,12 +45,54 @@ namespace Node.Net.Model3D.Transform
         }
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, IDictionary value)
         {
+            return ToModel3DGroup(renderer, value);
+            /*
+            if(value.Contains("Model3D"))
+            {
+                string smodel3d = value["Model3D"].ToString();
+                if(renderer.Resources.Contains(smodel3d))
+                {
+                    System.Windows.Media.Media3D.Model3D model = renderer.Resources[smodel3d] as System.Windows.Media.Media3D.Model3D;
+                    if (!object.ReferenceEquals(null, model)) return model;
+                }
+            }
             GeometryModel3D geometryModel3D = renderer.GetGeometryModel3D(value);
-            return geometryModel3D;
+            return geometryModel3D;*/
         }
-        public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IDictionary value)
+        public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer,IDictionary value)
         {
-            return null;
+            Model3DGroup model3DGroup = new Model3DGroup();
+
+            // Primary Model
+            if(value.Contains("Model3D"))
+            {
+                System.Windows.Media.Media3D.Model3D model = renderer.GetResource(value["Model3D"].ToString()) as System.Windows.Media.Media3D.Model3D;
+                if(!object.ReferenceEquals(null, model))
+                {
+                    model.Transform = ToTransform3D(renderer, value);
+                    model3DGroup.Children.Add(model);
+                }
+            }
+            else
+            {
+                GeometryModel3D geometryModel3D = ToGeometryModel3D(renderer, value);
+                if(!object.ReferenceEquals(null, geometryModel3D))
+                {
+                    model3DGroup.Children.Add(geometryModel3D);
+                }
+            }
+
+            // Children
+            foreach (string key in value.Keys)
+            {
+                IDictionary childDictionary = value[key] as IDictionary;
+                if (!ReferenceEquals(null, childDictionary))
+                {
+                    System.Windows.Media.Media3D.Model3D m3d = renderer.GetModel3D(childDictionary);
+                    if (!ReferenceEquals(null, m3d)) model3DGroup.Children.Add(m3d);
+                }
+            }
+            return model3DGroup;
         }
         public static GeometryModel3D ToGeometryModel3D(IRenderer renderer, System.Collections.IDictionary value)
         {
@@ -130,13 +172,25 @@ namespace Node.Net.Model3D.Transform
             {
                 result.X = System.Convert.ToDouble(value["ScaleX"].ToString());
             }
+            if(value.Contains("Length"))
+            {
+                result.X = System.Convert.ToDouble(value["Length"].ToString());
+            }
             if (value.Contains("ScaleY"))
             {
                 result.Y = System.Convert.ToDouble(value["ScaleY"].ToString());
             }
+            if(value.Contains("Width"))
+            {
+                result.Y = System.Convert.ToDouble(value["Width"].ToString());
+            }
             if (value.Contains("ScaleZ"))
             {
                 result.Z = System.Convert.ToDouble(value["ScaleZ"].ToString());
+            }
+            if(value.Contains("Height"))
+            {
+                result.Z = System.Convert.ToDouble(value["Height"].ToString());
             }
             return result;
         }

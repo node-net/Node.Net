@@ -5,12 +5,42 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using System.Windows.Markup;
 
 namespace Node.Net.Model3D
 {
     [TestFixture,Category("Node.Net.Model3D.Renderer")]
     class RendererTest
     {
+        public System.Windows.Media.Media3D.Model3D GetTableSceneModel()
+        {
+            Collections.Dictionary scene = new Collections.Dictionary(IO.StreamExtension.GetStream("Dictionary.Test.Table.Scene.json"));
+            IRenderer renderer = new Renderer()
+            {
+                Resources = XamlReader.Load(IO.StreamExtension.GetStream("Dictionary.Test.Table.Scene.Resources.xaml")) as ResourceDictionary
+            };
+            return renderer.GetModel3D(scene);
+        }
+        [TestCase, Apartment(ApartmentState.STA)]
+        public void Renderer_Table_Scene()
+        {
+            System.Windows.Media.Media3D.Model3D model = GetTableSceneModel();
+        }
+
+        [TestCase,Explicit,Apartment(ApartmentState.STA)]
+        public void Renderer_Table_Scene_Explicit()
+        {
+            HelixToolkit.Wpf.HelixViewport3D viewport = new HelixToolkit.Wpf.HelixViewport3D();
+            viewport.Children.Add(new System.Windows.Media.Media3D.ModelVisual3D()
+            {
+                Content = GetTableSceneModel()
+            });
+            Window window = new Window()
+            {
+                Content = viewport
+            };
+            window.ShowDialog();
+        }
         private Dictionary<string,dynamic> GetGeometry(string geometry_name,string material,
             string x="0",string y="0",string z="0",
             string scaleX="1",string scaleY="1",string scaleZ="1",
@@ -99,6 +129,7 @@ namespace Node.Net.Model3D
 
             Dictionary<string, dynamic> scene = new Dictionary<string, dynamic>();
             Dictionary<string, dynamic> sunlight = new Dictionary<string, dynamic>();
+            //sunlight["Model3D"] = "Sunlight";
             sunlight["Visual3D"] = "Sunlight";
             scene["Sunlight"] = sunlight;
             scene["Cube1"] = GetGeometry("Cube", "Yellow");
