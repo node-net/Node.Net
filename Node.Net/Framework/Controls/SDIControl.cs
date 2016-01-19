@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -62,11 +63,21 @@ namespace Node.Net.Framework.Controls
                 Grid.SetRow(DocumentView, 1);
             }
 
+            MethodInfo method = DocumentView.GetType().GetMethod("GetViewMenuItem");
+            if(!object.ReferenceEquals(null, method))
+            {
+                MenuItem viewMenuItem = method.Invoke(DocumentView, null) as MenuItem;
+                if(!object.ReferenceEquals(null,viewMenuItem))
+                {
+                    Menu.Items.Add(viewMenuItem);
+                }
+            }
+            /*
             DynamicView dynamicView = DocumentView as DynamicView;
             if(!object.ReferenceEquals(null, dynamicView))
             {
                 Menu.Items.Add(dynamicView.GetViewMenuItem());
-            }
+            }*/
         }
 
         private void FileOpen_Click(object sender, RoutedEventArgs e)

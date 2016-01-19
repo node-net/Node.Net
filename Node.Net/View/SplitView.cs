@@ -15,6 +15,13 @@ namespace Node.Net.View
         {
             OnDataContextChanged();
         }
+
+        private double elementASize = -1;
+        public double ElementASize
+        {
+            get { return elementASize; }
+            set { elementASize = value; OnDataContextChanged(); }
+        }
         protected virtual void OnDataContextChanged()
         {
             Children.Clear();
@@ -34,7 +41,8 @@ namespace Node.Net.View
                 {
                     case Orientation.Vertical:
                         {
-                            RowDefinitions.Add(new RowDefinition());
+                            if (elementASize < 0) RowDefinitions.Add(new RowDefinition());
+                            else RowDefinitions.Add(new RowDefinition() { Height = new GridLength(elementASize) });
                             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                             RowDefinitions.Add(new RowDefinition());
                             Children.Add(ElementA);
@@ -53,7 +61,8 @@ namespace Node.Net.View
                         }
                     default:
                         {
-                            ColumnDefinitions.Add(new ColumnDefinition());
+                            if (elementASize < 0) ColumnDefinitions.Add(new ColumnDefinition());
+                            else ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(elementASize) });
                             ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
                             ColumnDefinitions.Add(new ColumnDefinition());
                             Children.Add(ElementA);

@@ -54,5 +54,22 @@ namespace Node.Net.Framework.Controls
                                             new View.ExplorerView());
             window.ShowDialog();
         }
+
+        [TestCase, Explicit, Apartment(ApartmentState.STA)]
+        public void SDIWindow_Usage_Dictionary_ExplorerDynamicView()
+        {
+            Dictionary<string, FrameworkElement> views = new Dictionary<string, FrameworkElement>();
+            views["JSON"] = new Node.Net.View.JsonView();
+            views["Tree"] = new Node.Net.View.TreeView();
+
+            SDIWindow window = new SDIWindow("SDIWindow_Usage_Dictionary_ExplorerView",
+                                            typeof(Node.Net.Collections.Dictionary),
+                                            "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
+                                            new View.ExplorerView()
+                                            {
+                                                ContentView = new DynamicView(views)
+                                            });
+            window.ShowDialog();
+        }
     }
 }

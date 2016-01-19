@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -29,8 +30,10 @@ namespace Node.Net.View
             horizontalSplitView = new SplitView()
             {
                 Orientation = Orientation.Horizontal,
-                ElementA = verticalSplitView
+                ElementA = verticalSplitView,
+                ElementASize = 300
             };
+
 
             if(object.ReferenceEquals(null, treeView))
             {
@@ -105,6 +108,18 @@ namespace Node.Net.View
                 contentView = value;
                 OnDataContextChanged();
             }
+        }
+
+        public MenuItem GetViewMenuItem()
+        {
+            MenuItem viewMenuItem = null;
+            MethodInfo method = ContentView.GetType().GetMethod("GetViewMenuItem");
+            if (!object.ReferenceEquals(null, method))
+            {
+                viewMenuItem = method.Invoke(ContentView, null) as MenuItem;
+            }
+
+            return viewMenuItem;
         }
     }
 }
