@@ -12,7 +12,7 @@ namespace Node.Net.View
     {
         private SplitView horizontalSplitView = null;
         private SplitView verticalSplitView = null;
-        private System.Windows.Controls.TreeView treeView = new View.TreeView();
+        private System.Windows.Controls.TreeView treeView = null;// new View.TreeView();
         private View.PropertyView propertyView = new PropertyView();
         private FrameworkElement contentView = null;
 
@@ -31,6 +31,11 @@ namespace Node.Net.View
                 Orientation = Orientation.Horizontal,
                 ElementA = verticalSplitView
             };
+
+            if(object.ReferenceEquals(null, treeView))
+            {
+                TreeView = new View.TreeView();
+            }
         }
         private void ExplorerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -58,7 +63,28 @@ namespace Node.Net.View
         public System.Windows.Controls.TreeView TreeView
         {
             get { return treeView; }
-            set { treeView = value; OnDataContextChanged(); }
+            set
+            {
+                if (!object.ReferenceEquals(treeView, value))
+                {
+                    if(!object.ReferenceEquals(null,treeView))
+                    {
+                        treeView.SelectedItemChanged -= TreeView_SelectedItemChanged;
+                    }
+                    treeView = value;
+                    treeView.SelectedItemChanged += TreeView_SelectedItemChanged;
+                    OnDataContextChanged();
+                }
+            }
+        }
+
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            TreeViewItem tvi = treeView.SelectedItem as TreeViewItem;
+            if(!object.ReferenceEquals(null, tvi))
+            {
+                PropertyControl.DataContext = tvi.DataContext;
+            }
         }
 
         public FrameworkElement PropertyControl
