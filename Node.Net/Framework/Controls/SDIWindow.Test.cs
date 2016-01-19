@@ -44,5 +44,15 @@ namespace Node.Net.Framework.Controls
                                             views);
             window.ShowDialog();
         }
+
+        [TestCase, Explicit, Apartment(ApartmentState.STA)]
+        public void SDIWindow_Usage_Dictionary_ExplorerView()
+        {
+            SDIWindow window = new SDIWindow("SDIWindow_Usage_Dictionary_ExplorerView",
+                                            typeof(Node.Net.Collections.Dictionary),
+                                            "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
+                                            new View.ExplorerView());
+            window.ShowDialog();
+        }
     }
 }

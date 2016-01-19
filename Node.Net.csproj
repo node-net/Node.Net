@@ -121,6 +121,7 @@
     <Compile Include="Node.Net\View\DynamicView.cs" />
     <Compile Include="Node.Net\View\DynamicViewSelector.cs" />
     <Compile Include="Node.Net\View\Explorer.cs" />
+    <Compile Include="Node.Net\View\ExplorerView.cs" />
     <Compile Include="Node.Net\View\FrameworkElements.cs" />
     <Compile Include="Node.Net\View\Grid.cs" />
     <Compile Include="Node.Net\View\HashGrid.cs" />
@@ -132,10 +133,12 @@
     <Compile Include="Node.Net\View\MethodInfoCommand.cs" />
     <Compile Include="Node.Net\View\Properties.cs" />
     <Compile Include="Node.Net\View\PropertiesExplorer.cs" />
+    <Compile Include="Node.Net\View\PropertyView.cs" />
     <Compile Include="Node.Net\View\ReadOnlyTextView.cs" />
     <Compile Include="Node.Net\View\SDIApplication.cs" />
     <Compile Include="Node.Net\View\SDIMainControl.cs" />
     <Compile Include="Node.Net\View\SplitterGrid.cs" />
+    <Compile Include="Node.Net\View\SplitView.cs" />
     <Compile Include="Node.Net\View\TabControl.cs" />
     <Compile Include="Node.Net\View\TextView.cs" />
     <Compile Include="Node.Net\View\Title.cs" />

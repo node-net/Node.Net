@@ -82,7 +82,18 @@ namespace Node.Net.Framework
                 throw new InvalidOperationException($"type {documentType.FullName} does not have public Open(Stream stream) method");
             }
             object[] parameters = { stream };
-            openInfo.Invoke(document, parameters);
+
+            try {
+                openInfo.Invoke(document, parameters);
+            }
+            catch(Exception e)
+            {
+                System.Windows.MessageBox.Show(
+                    $"Unable to open {name}{System.Environment.NewLine}{System.Environment.NewLine}{e.Message}",
+                    "Error opening file",
+                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return;
+            }
             if (MaximumCount > 0 && Count == maximumCount)
             { base.Clear(); }
             Add(name, document);
