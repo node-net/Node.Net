@@ -38,7 +38,7 @@ namespace Node.Net.Framework.Controls
             Dictionary<string, FrameworkElement> views = new Dictionary<string, FrameworkElement>();
             views["JSON"] = new Node.Net.View.JsonView();
             views["Tree"] = new Node.Net.View.TreeView();
-            SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView",
+            SDIWindow window = new SDIWindow("SDIWindow_Usage_Dictionary_MultipleViews2",
                                             typeof(Node.Net.Collections.Dictionary),
                                             "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
                                             views);
