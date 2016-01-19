@@ -1,4 +1,4 @@
-VERSION='0.0.264'
+VERSION='0.0.265'
 require 'dev'
 
 CLOBBER.include('lib')
