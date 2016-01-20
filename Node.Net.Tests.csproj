@@ -66,6 +66,7 @@
     <EmbeddedResource Include="Node.Net\Json\Traverser.Test.Tree.json" />
     <EmbeddedResource Include="Node.Net\View\PropertiesExplorer.Test.ExampleA.json" />
     <EmbeddedResource Include="Node.Net\Collections\Dictionary.Test.Table.Scene.json" />
+    <EmbeddedResource Include="Node.Net\Collections\Dictionary.Test.Positional.Scene.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +174,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Node.Net\View\HelixView3D.Resources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Node.Net\Collections\Dictionary.Test.Positional.Scene.Resources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

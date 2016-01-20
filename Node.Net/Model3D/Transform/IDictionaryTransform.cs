@@ -52,6 +52,7 @@ namespace Node.Net.Model3D.Transform
         {
             Model3DGroup model3DGroup = new Model3DGroup();
             model3DGroup.Transform = ToTransform3D_NoScale(renderer, value);
+            // NoScale, but has Translation AND Rotations
 
             // Primary Model
             System.Windows.Media.Media3D.Model3D primaryModel = null;
@@ -113,7 +114,7 @@ namespace Node.Net.Model3D.Transform
                     Geometry = geometry,
                     Material = renderer.GetMaterial(value),
                     BackMaterial = renderer.GetBackMaterial(value),
-                    Transform = renderer.GetTransform3D(value)
+                    Transform = new ScaleTransform3D(ToScale(renderer, value))// ToTransform3D(renderer, value)// renderer.GetTransform3D(value)
                 };
             }
 
@@ -142,22 +143,43 @@ namespace Node.Net.Model3D.Transform
         }
         public static RotateTransform3D GetRotateTransform3D(System.Collections.IDictionary value)
         {
+            Quaternion rotationZ = new Quaternion();
+            Quaternion rotationY = new Quaternion();
+            Quaternion rotationX = new Quaternion();
+            QuaternionRotation3D rotation = new QuaternionRotation3D();
             if (value.Contains("RotationZ"))
             {
-                double rotationZ = System.Convert.ToDouble(value["RotationZ"].ToString());
-                Quaternion quaternion = new Quaternion(new Vector3D(0, 0, 1), rotationZ);
-                QuaternionRotation3D rotation = new QuaternionRotation3D() { Quaternion = quaternion };
-                return new RotateTransform3D(rotation);
+                double rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
+                rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
             if(value.Contains("Orientation"))
             {
-                double rotationZ = GetRotationDegrees(value, "Orientation");
-                Quaternion quaternion = new Quaternion(new Vector3D(0, 0, 1), rotationZ);
-                QuaternionRotation3D rotation = new QuaternionRotation3D() { Quaternion = quaternion };
-                return new RotateTransform3D(rotation);
+                double rotationZ_degrees = GetRotationDegrees(value, "Orientation");
+                rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
+            }
+            if (value.Contains("RotationY"))
+            {
+                double rotationY_degrees = GetRotationDegrees(value,"RotationY");
+                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+            }
+            if (value.Contains("Tilt"))
+            {
+                double rotationY_degrees = GetRotationDegrees(value, "Tilt");
+                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+            }
+            if (value.Contains("RotationX"))
+            {
+                double rotationX_degrees = GetRotationDegrees(value, "RotationX");
+                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
+            }
+            if (value.Contains("Spin"))
+            {
+                double rotationX_degrees = GetRotationDegrees(value, "Spin");
+                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
             }
 
-            return new RotateTransform3D();
+            Quaternion total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
+            return new RotateTransform3D(new QuaternionRotation3D(total_rotation));
         }
         /*
         public static Rotation3D GetRotationTrans(IDictionary value)
