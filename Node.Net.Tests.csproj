@@ -115,6 +115,7 @@
     <Compile Include="Node.Net\View\NotepadDocument.Test.cs" />
     <Compile Include="Node.Net\View\PropertiesExplorer.Test.cs" />
     <Compile Include="Node.Net\View\Properties.Test.cs" />
+    <Compile Include="Node.Net\View\PropertyView.Test.cs" />
     <Compile Include="Node.Net\View\SDIApplication.Test.cs" />
     <Compile Include="Node.Net\View\SDIMainControl.Test.cs" />
     <Compile Include="Node.Net\View\SplitterGrid.Test.cs" />

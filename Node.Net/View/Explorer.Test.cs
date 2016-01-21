@@ -2,7 +2,7 @@
 
 namespace Node.Net.View
 {
-    [TestFixture]
+    [TestFixture,Category("Node.Net.View.Explorer")]
     class Explorer_Test
     {
         [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
