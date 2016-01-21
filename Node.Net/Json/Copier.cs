@@ -107,7 +107,7 @@ namespace Node.Net.Json
                         {
                             System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(childDictionaryType) as System.Collections.IDictionary;
                             //System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
-                            Copy(dictionary, hashCopy, filter);
+                            Copy(dictionary, hashCopy,childDictionaryType, filter);
                             destination[key] = hashCopy;
                         }
                         catch (Exception e)
