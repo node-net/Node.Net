@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Node.Net.Collections
 {
-    class ReadOnlyIDictionaryPropertyDescriptor : PropertyDescriptor
+    public class ReadOnlyIDictionaryPropertyDescriptor : PropertyDescriptor
     {
         private IDictionary idictionary = null;
         public IDictionary IDictionary
@@ -13,7 +13,9 @@ namespace Node.Net.Collections
             set { idictionary = value; }
         }
 
-        public ReadOnlyIDictionaryPropertyDescriptor(string keyValue, Attribute[] attributes) : base(keyValue, attributes) { }
+        public ReadOnlyIDictionaryPropertyDescriptor(string keyValue, Attribute[] attributes) : base(keyValue, attributes)
+        {
+        }
         public override bool CanResetValue(object component) { return true; }
         public override void ResetValue(object component) { idictionary = component as IDictionary; }
         public override bool ShouldSerializeValue(object component) { idictionary = component as IDictionary; return false; }

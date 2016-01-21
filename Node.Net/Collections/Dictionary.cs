@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 
@@ -29,8 +30,11 @@ namespace Node.Net.Collections
         }
 
         #region ICustomTypeDescriptor interface
-        public PropertyDescriptorCollection GetProperties(System.Attribute[] attributes)
+        public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
+            List<Attribute> alist = new List<Attribute>(attributes);
+            alist.Add(new ReadOnlyAttribute(true));
+
             System.Collections.Generic.List<PropertyDescriptor> descriptors =
                 new System.Collections.Generic.List<PropertyDescriptor>();
             foreach(string key in Keys)
@@ -43,7 +47,9 @@ namespace Node.Net.Collections
                         value.GetType() == typeof(long) ||
                         value.GetType() == typeof(bool))
                     {
-                        ReadOnlyIDictionaryPropertyDescriptor pd = new ReadOnlyIDictionaryPropertyDescriptor(key, attributes);
+
+                        ReadOnlyIDictionaryPropertyDescriptor pd 
+                            = new ReadOnlyIDictionaryPropertyDescriptor(key, alist.ToArray());
                         pd.IDictionary = this;
                         descriptors.Add(pd);
                     }
