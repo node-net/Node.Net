@@ -80,6 +80,7 @@
     <Compile Include="Node.Net\Framework\Controls\SDIControl.Test.cs" />
     <Compile Include="Node.Net\Framework\Controls\SDIWindow.Test.cs" />
     <Compile Include="Node.Net\Framework\Documents.Test.cs" />
+    <Compile Include="Node.Net\Framework\RecentFiles.Test.cs" />
     <Compile Include="Node.Net\IO\Directory.Test.cs" />
     <Compile Include="Node.Net\IO\FileList.Test.cs" />
     <Compile Include="Node.Net\IO\TemporaryDirectory.Test.cs" />

@@ -159,13 +159,7 @@ namespace Node.Net.Model3D.Transform
 
             return new RotateTransform3D();
         }
-        /*
-        public static Rotation3D GetRotationTrans(IDictionary value)
-        {
-            //Rotation3D rotationZ = new Rotation3D();//AxisAngleRotation,QuaternionRotatiom
-            //return rotationZ();
-            return null;
-        }*/
+
         public static Vector3D ToTranslation(IRenderer renderer, IDictionary value)
         {
             Vector3D result = new Vector3D();

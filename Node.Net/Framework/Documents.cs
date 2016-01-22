@@ -8,6 +8,7 @@ namespace Node.Net.Framework
 {
     public class Documents : Dictionary<string, dynamic>, INotifyPropertyChanged
     {
+        private RecentFiles recentFiles = new RecentFiles();
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void NotifyPropertyChanged(string name)
         {

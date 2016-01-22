@@ -50,6 +50,7 @@ namespace Node.Net.Framework.Controls
             RowDefinitions.Add(new RowDefinition());
 
             Menu = new Menu();
+            // FileMenu
             MenuItem fileMenu = new MenuItem() { Header = "File" };
             Menu.Items.Add(fileMenu);
             MenuItem fileOpen = new MenuItem() { Header = "Open" };
@@ -63,6 +64,18 @@ namespace Node.Net.Framework.Controls
                 Grid.SetRow(DocumentView, 1);
             }
 
+            MenuItem fileRecentFiles = new MenuItem() { Header = "Recent Files" };
+            MenuItem[] recentFileItems = GetRecentFileMenuItems();
+            if(recentFileItems.Length > 0)
+            {
+                foreach(MenuItem rfitem in recentFileItems)
+                {
+                    fileRecentFiles.Items.Add(rfitem);
+                }
+                fileMenu.Items.Add(fileRecentFiles);
+            }
+
+            // ViewMenu
             MethodInfo method = DocumentView.GetType().GetMethod("GetViewMenuItem");
             if(!object.ReferenceEquals(null, method))
             {
@@ -72,12 +85,16 @@ namespace Node.Net.Framework.Controls
                     Menu.Items.Add(viewMenuItem);
                 }
             }
-            /*
-            DynamicView dynamicView = DocumentView as DynamicView;
-            if(!object.ReferenceEquals(null, dynamicView))
-            {
-                Menu.Items.Add(dynamicView.GetViewMenuItem());
-            }*/
+        }
+        
+        private MenuItem[] GetRecentFileMenuItems()
+        {
+            List<MenuItem> recentFileMenuItems = new List<MenuItem>();
+            return recentFileMenuItems.ToArray();
+        }
+        private void AddRecentFile(string filename)
+        {
+            //System.Windows.Application.Current.
         }
 
         private void FileOpen_Click(object sender, RoutedEventArgs e)

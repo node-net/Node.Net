@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Node.Net\Collections\Dictionary.cs" />
+    <Compile Include="Node.Net\Collections\DictionaryPropertyDescriptor.cs" />
+    <Compile Include="Node.Net\Collections\DictionaryTypeDescriptor.cs" />
     <Compile Include="Node.Net\Documents\IDocument.cs" />
     <Compile Include="Node.Net\Documents\TextDocument.cs" />
     <Compile Include="Node.Net\Environment\Command.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Node.Net\Framework\Controls\SDIWindow.cs" />
     <Compile Include="Node.Net\Framework\Documents.cs" />
     <Compile Include="Node.Net\Framework\IDocument.cs" />
+    <Compile Include="Node.Net\Framework\RecentFiles.cs" />
     <Compile Include="Node.Net\IO\Directory.cs" />
     <Compile Include="Node.Net\IO\FileList.cs" />
     <Compile Include="Node.Net\IO\Stream.Extension.cs" />
