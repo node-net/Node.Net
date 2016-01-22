@@ -113,10 +113,13 @@ namespace Node.Net.View
         public MenuItem GetViewMenuItem()
         {
             MenuItem viewMenuItem = null;
-            MethodInfo method = ContentView.GetType().GetMethod("GetViewMenuItem");
-            if (!object.ReferenceEquals(null, method))
+            if (!object.ReferenceEquals(null, ContentView))
             {
-                viewMenuItem = method.Invoke(ContentView, null) as MenuItem;
+                MethodInfo method = ContentView.GetType().GetMethod("GetViewMenuItem");
+                if (!object.ReferenceEquals(null, method))
+                {
+                    viewMenuItem = method.Invoke(ContentView, null) as MenuItem;
+                }
             }
 
             return viewMenuItem;

@@ -22,6 +22,11 @@ namespace Node.Net.Collections
             set { readOnly = true; }
         }
 
+        public void Open(string name,Stream stream)
+        {
+            Open(stream);
+            this["OpenedFrom"] = name;
+        }
         public void Open(Stream stream)
         {
             Clear();
