@@ -61,15 +61,25 @@ namespace Node.Net.Json
 
         public object Read(Stream stream,IDictionary destination)
         {
+            destination.Clear();
             IDictionary source = (IDictionary)reader.Read(stream);
-            Json.Copier.Copy(source, destination);
+            foreach(string key in source.Keys)
+            {
+                destination[key] = source[key];
+            }
+
+            //Json.Copier.Copy(source, destination);
             return source;
         }
 
         public object Read(string value, IDictionary destination)
         {
             IDictionary source = (IDictionary)reader.Read(value);
-            Json.Copier.Copy(source, destination);
+            foreach (string key in source.Keys)
+            {
+                destination[key] = source[key];
+            }
+            //Json.Copier.Copy(source, destination);
             return source;
         }
 
