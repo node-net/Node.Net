@@ -12,6 +12,7 @@ namespace Node.Net.Json.Internal
         public Style Style = Style.Compact;
         public bool AddTypeInfo = true;
         public bool IgnoreNullValues = false;
+        public List<Type> IgnoreTypes = new List<Type>();
 
         public static string Write(object value, Style style = Style.Compact)
         {
@@ -63,6 +64,7 @@ namespace Node.Net.Json.Internal
         public void Write(TextWriter writer, object value)
         {
             if (ReferenceEquals(null, value)) WriteNull(writer);
+            else if (typeof(byte[]).IsAssignableFrom(value.GetType())) WriteBytes(writer, (byte[])(value));
             else if (typeof(string).IsAssignableFrom(value.GetType())) WriteString(writer, value);
             else if (typeof(IDictionary).IsAssignableFrom(value.GetType())) WriteIDictionary(writer, value);
             else if (typeof(IEnumerable).IsAssignableFrom(value.GetType())) WriteIEnumerable(writer, value);
@@ -79,7 +81,25 @@ namespace Node.Net.Json.Internal
         }
         private void WriteString(TextWriter writer, object value)
         {
-            writer.Write($"\"{value.ToString()}\"");
+            string svalue = value.ToString();
+            if (svalue.Contains("\\"))
+            {
+                svalue = EscapeBackslashes(svalue);
+            }
+            if (svalue.Contains("\""))
+            {
+                svalue = EscapeDoubleQuotes(svalue);
+            }
+            writer.Write($"\"{svalue}\"");
+            //streamWriter.Write("\"" + svalue + "\"");
+            //return;
+
+            //writer.Write($"\"{value.ToString()}\"");
+        }
+        private void WriteBytes(TextWriter writer,byte[] bytes)
+        {
+            WriteString(writer, $"base64:{Convert.ToBase64String(bytes)}");
+            //writer.Write("base64:" + System.Convert.ToBase64String(bytes));
         }
         private void WriteValueType(TextWriter writer, object value)
         {
@@ -98,7 +118,8 @@ namespace Node.Net.Json.Internal
             foreach (object item in enumerable)
             {
                 bool skip = false;
-                if (object.ReferenceEquals(null, skip) && IgnoreNullValues) skip = true;
+                if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
                 {
                     if (object.ReferenceEquals(null, item) ||
@@ -145,6 +166,7 @@ namespace Node.Net.Json.Internal
                 object item = dictionary[key];
                 bool skip = false;
                 if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
                 {
                     if (index > 0)
@@ -184,5 +206,33 @@ namespace Node.Net.Json.Internal
             }
             return indent;
         }
+
+        private static string EscapeDoubleQuotes(string input)
+        {
+            string result = input;
+            if (input.Contains("\""))
+            {
+                System.Text.StringBuilder builder = new System.Text.StringBuilder();
+                char lastChar = 'a';
+                for (int i = 0; i < input.Length; ++i)
+                {
+                    char ch = input[i];
+                    if (ch == '"')
+                    {
+                        builder.Append('\\');
+                        builder.Append(ch);
+                    }
+
+                    else
+                    {
+                        builder.Append(ch);
+                    }
+                    lastChar = ch;
+                }
+                result = builder.ToString();
+            }
+            return result;
+        }
+        private static string EscapeBackslashes(string input) => input.Replace("\\", "\\\\");
     }
 }
