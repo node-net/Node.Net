@@ -238,7 +238,15 @@ namespace Node.Net.Json.Internal
                 reader.EatWhiteSpace();
                 char ch = (char)reader.Peek();
                 reader.Read(); //consume ':'
-                dictionary[key] = Read(reader);
+
+                object value = Read(reader);
+                if (!object.ReferenceEquals(null,value) &&
+                     value.GetType() == typeof(string) &&
+                     value.ToString().IndexOf("base64:") == 0)
+                {
+                    value = System.Convert.FromBase64String(value.ToString().Substring(7));
+                }
+                dictionary[key] = value;// Read(reader);
                 reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
                 if (ch == ',') reader.Read(); // consume ','

@@ -3,8 +3,6 @@
     public enum JsonFormat { Compressed, Indented };
     public class Writer : System.IDisposable
     {
-        private Internal.JsonWriter writer = new Internal.JsonWriter();
-
         private bool ignoreNullValues = false;
         public bool IgnoreNullValues
         {

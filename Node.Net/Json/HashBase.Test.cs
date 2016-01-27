@@ -123,7 +123,6 @@ namespace Node.Net.Json
         public void HashBase_Convert()
         {
             HashBase hash = new HashBase("{'foo':{'Type':'Foo'}}");
-            Assert.AreSame(hash["foo"].GetType(), typeof(Hash));
 
             HashBase conversions = new HashBase();
             conversions["Foo"] = typeof(Foo);

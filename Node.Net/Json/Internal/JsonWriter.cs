@@ -11,9 +11,11 @@ namespace Node.Net.Json.Internal
     {
         public Style Style = Style.Compact;
         public bool AddTypeInfo = true;
+        public bool IgnoreNullValues = false;
 
         public static string Write(object value, Style style = Style.Compact)
         {
+
             JsonWriter writer = new JsonWriter() { Style = style };
             return writer.Write(value);
         }
@@ -95,13 +97,18 @@ namespace Node.Net.Json.Internal
             int writeCount = 0;
             foreach (object item in enumerable)
             {
-                if (object.ReferenceEquals(null, item) ||
-                   item.GetType().IsValueType ||
-                   typeof(System.Collections.IEnumerable).IsAssignableFrom(value.GetType()))
+                bool skip = false;
+                if (object.ReferenceEquals(null, skip) && IgnoreNullValues) skip = true;
+                if (!skip)
                 {
-                    if (writeCount > 0) writer.Write(",");
-                    Write(writer, item);
-                    ++writeCount;
+                    if (object.ReferenceEquals(null, item) ||
+                       item.GetType().IsValueType ||
+                       typeof(System.Collections.IEnumerable).IsAssignableFrom(value.GetType()))
+                    {
+                        if (writeCount > 0) writer.Write(",");
+                        Write(writer, item);
+                        ++writeCount;
+                    }
                 }
             }
             writer.Write("]");
@@ -136,17 +143,22 @@ namespace Node.Net.Json.Internal
             foreach (object key in dictionary.Keys)
             {
                 object item = dictionary[key];
-                if (index > 0)
+                bool skip = false;
+                if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                if (!skip)
                 {
-                    if (Style == Style.Indented) writer.Write($",{System.Environment.NewLine}");
-                    else writer.Write(",");
-                }
-                if (Style == Style.Indented) writer.Write(GetIndent());
-                Write(writer, key.ToString());
-                writer.Write(":");
-                Write(writer, dictionary[key]);
+                    if (index > 0)
+                    {
+                        if (Style == Style.Indented) writer.Write($",{System.Environment.NewLine}");
+                        else writer.Write(",");
+                    }
+                    if (Style == Style.Indented) writer.Write(GetIndent());
+                    Write(writer, key.ToString());
+                    writer.Write(":");
+                    Write(writer, dictionary[key]);
 
-                ++index;
+                    ++index;
+                }
             }
             IndentLevel--;
             if (dictionary.Keys.Count > 0)

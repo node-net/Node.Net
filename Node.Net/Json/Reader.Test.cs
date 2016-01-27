@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 namespace Node.Net.Json
 {
@@ -9,19 +10,20 @@ namespace Node.Net.Json
         [TestCase]
         public void Reader_Usage()
         {
-            Reader reader = new Reader(typeof(Dictionary<string, object>));
+            Reader reader = new Reader();// typeof(Dictionary<string, object>));
+            reader.DefaultDictionaryType = typeof(Dictionary<string, object>);
             Dictionary<string, object> dictionary
                 = (Dictionary<string, object>)reader.Read("{'string':'ABC','false':false,'true':true,'null':null,'double':1.23}");
             Assert.AreEqual(5, dictionary.Count);
             Assert.AreEqual("ABC", dictionary["string"] as string);
 
             reader = new Reader();
-            Hash hash = reader.Read("{'child':{'chash':{}}}") as Hash;
+            IDictionary hash = reader.Read("{'child':{'chash':{}}}") as IDictionary;
             Assert.NotNull(hash);
             Assert.AreEqual(1, hash.Count);
-            Hash child = hash["child"] as Hash;
+            IDictionary child = hash["child"] as IDictionary;
             Assert.NotNull(child);
-            Hash chash = child["chash"] as Hash;
+            IDictionary chash = child["chash"] as IDictionary;
             Assert.NotNull(chash);
         }
 
@@ -43,14 +45,15 @@ namespace Node.Net.Json
         [TestCase]
         public void Reader_OneLineHashRead()
         {
-            Hash hash = Reader.ReadHash("{'string':'ABC'}");
+            Reader reader = new Reader();
+            IDictionary hash = (IDictionary)reader.Read("{'string':'ABC'}");
         }
 
         [TestCase]
         public void Reader_CurlyBraceInQuotes_Hash()
         {
             Reader reader = new Reader();
-            Hash hash = (Hash)reader.Read("{'{a}':'A'}");
+            IDictionary hash = (IDictionary)reader.Read("{'{a}':'A'}");
             Assert.AreEqual(hash["{a}"], "A");
         }
         [TestCase]
@@ -133,18 +136,18 @@ namespace Node.Net.Json
             Reader reader = new Reader();
             reader.Types["Foo"] = typeof(Foo);
             reader.Types["Bar"] = typeof(Bar);
-            Hash hash = (Hash)reader.Read("{'foo':{'Type':'Foo','bar':{'Type':'Bar'}}}");
+            IDictionary hash = (IDictionary)reader.Read("{'foo':{'Type':'Foo','bar':{'Type':'Bar'}}}");
             Assert.NotNull(hash);
-            Assert.True(hash.ContainsKey("foo"),"hash does not contain key 'Foo'");
+            Assert.True(hash.Contains("foo"),"hash does not contain key 'Foo'");
             Foo foo = hash["foo"] as Foo;
             Assert.NotNull(foo,"hash['foo'] did not cast to type Foo");
             Assert.True(foo.ContainsKey("bar"),"foo did not contain key 'bar'");
             Bar bar = foo["bar"] as Bar;
             Assert.NotNull(bar, "foo['bar'] did not cast to type Bar");
 
-            hash = (Hash)reader.Read("{'foo':{'Type':'Foo','history':[{'Type':'Bar'}]}}");
+            hash = (IDictionary)reader.Read("{'foo':{'Type':'Foo','history':[{'Type':'Bar'}]}}");
             Assert.NotNull(hash);
-            Assert.True(hash.ContainsKey("foo"), "hash does not contain key 'Foo'");
+            Assert.True(hash.Contains("foo"), "hash does not contain key 'Foo'");
             foo = hash["foo"] as Foo;
             Assert.NotNull(foo, "hash['foo'] did not cast to type Foo");
             Assert.True(foo.ContainsKey("history"), "foo does not contain key 'history'");

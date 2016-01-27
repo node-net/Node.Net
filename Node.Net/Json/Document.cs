@@ -1,4 +1,6 @@
-﻿namespace Node.Net.Json
+﻿using System.Collections;
+
+namespace Node.Net.Json
 {
     public class Document : Node.Net.Json.HashBase
     {
@@ -23,7 +25,8 @@
         public override void Open(System.IO.Stream stream)
         {
             Clear();
-            GetReader().Read(stream, this);
+            IDictionary dictionary = (IDictionary)GetReader().Read(stream);
+            Json.Copier.Copy(dictionary, this);
             Update();
         }
 

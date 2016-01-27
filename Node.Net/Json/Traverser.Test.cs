@@ -1,6 +1,6 @@
-﻿
-
+﻿using System.Collections;
 using NUnit.Framework;
+
 namespace Node.Net.Json
 {
     [TestFixture,Category("Node.Net.Json.Traverser")]
@@ -18,7 +18,7 @@ namespace Node.Net.Json
             hash = new Hash(IO.StreamExtension.GetStream("Json.Traverser.Test.Tree.2.json"));
             traverser = new Traverser(hash);
             NUnit.Framework.Assert.AreSame(hash, traverser.GetParent(hash["A"]));
-            Hash hA0A0 = hash["A"]["0"]["A"]["0"] as Hash;
+            IDictionary hA0A0 = hash["A"]["0"]["A"]["0"] as IDictionary;
             Assert.NotNull(hA0A0);
             Assert.AreSame(hash, traverser.GetRoot(hA0A0));
         }

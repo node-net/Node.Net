@@ -43,7 +43,6 @@ namespace Node.Net.Json
         public static void Load(Stream stream, IDictionary dictionary,Type dictionaryType)
         {
             JsonFormatter formatter = new JsonFormatter();
-            //formatter.DictionaryType = dictionaryType;
             IDictionary d = (IDictionary)formatter.Deserialize(stream);
             Copier.Copy(d, dictionary);
         }
@@ -68,17 +67,9 @@ namespace Node.Net.Json
             get { return surrogateSelector; }
             set { surrogateSelector = value; }
         }
-        /*
-        private Type dictionaryType = typeof(Collections.Dictionary);
-        public Type DictionaryType
-        {
-            get { return dictionaryType; }
-            set { dictionaryType = value; }
-        }*/
+
         public object Deserialize(Stream serializationStream)
         {
-            
-            //reader.DefaultDictionaryType = DictionaryType;
             return reader.Read(serializationStream);
         }
 

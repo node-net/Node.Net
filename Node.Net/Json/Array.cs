@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Node.Net.Json
@@ -14,7 +15,11 @@ namespace Node.Net.Json
         public Array(string json)
         {
             Reader reader = new Reader();
-            reader.Read(json,this);
+            IList list = (IList)reader.Read(json);
+            foreach(object item in list)
+            {
+                Add(item);
+            }
         }
 
 
@@ -39,7 +44,12 @@ namespace Node.Net.Json
         public void Open(Stream stream)
         {
             Reader reader = new Reader();
-            reader.Read(stream, this);
+            Clear();
+            IList list = (IList)reader.Read(stream);
+            foreach (object item in list)
+            {
+                Add(item);
+            }
         }
 
         public void Save(Stream stream)

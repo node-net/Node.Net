@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using System.Collections;
+
 namespace Node.Net.Json
 {
     [TestFixture,Category("Node.Net.Json.Finder")]
@@ -39,13 +41,14 @@ namespace Node.Net.Json
         {
             Hash hash = new Hash("{'a':{'b':{'c':3}}}");
 
-            Hash hashA = (Hash)Finder.GetValue(hash,"a");
+            IDictionary hashA = (IDictionary)Finder.GetValue(hash,"a");
             Assert.NotNull(hashA, "hashA is null");
 
-            Hash hashB = (Hash)Finder.GetValue(hash, "a/b");
+            IDictionary hashB = (IDictionary)Finder.GetValue(hash, "a/b");
             Assert.NotNull(hashB, "hashB is null");
 
-            double value = (double)Finder.GetValue(hash,"a/b/c");
+            object ovalue = Finder.GetValue(hash, "a/b/c");
+            double value = System.Convert.ToDouble(Finder.GetValue(hash,"a/b/c"));
             Assert.AreEqual(3, value, "Finder.GetValue(\"a/b/c\") did not return correct value");
         }
     }
