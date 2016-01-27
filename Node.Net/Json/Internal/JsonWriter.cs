@@ -91,15 +91,10 @@ namespace Node.Net.Json.Internal
                 svalue = EscapeDoubleQuotes(svalue);
             }
             writer.Write($"\"{svalue}\"");
-            //streamWriter.Write("\"" + svalue + "\"");
-            //return;
-
-            //writer.Write($"\"{value.ToString()}\"");
         }
         private void WriteBytes(TextWriter writer,byte[] bytes)
         {
             WriteString(writer, $"base64:{Convert.ToBase64String(bytes)}");
-            //writer.Write("base64:" + System.Convert.ToBase64String(bytes));
         }
         private void WriteValueType(TextWriter writer, object value)
         {
