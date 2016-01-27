@@ -14,14 +14,17 @@ namespace Node.Net.Json
         public Type DefaultListType
         {
             get { return reader.DefaultListType; }
+            set { reader.DefaultListType = value; }
         }
         public Type DefaultDictionaryType
         {
             get { return reader.DefaultDictionaryType; }
+            set { reader.DefaultDictionaryType = value; }
         }
         public Dictionary<string, Type> Types
         {
             get { return reader.Types; }
+            set { reader.Types = value; }
         }
 
         public JsonStyle Style = JsonStyle.Compact;
