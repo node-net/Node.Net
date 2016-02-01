@@ -6,6 +6,6 @@ namespace Node.Net.Framework
     public interface IDocument
     {
         bool ReadOnly { get; }
-        void Open(Stream stream);
+        void Open(string name,Stream stream);
     }
 }

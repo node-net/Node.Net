@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Node.Net\Collections\Dictionary.cs" />
+    <Compile Include="Node.Net\Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
     <Compile Include="Node.Net\Extensions.cs" />
     <Compile Include="Node.Net\Extensions\Image.cs" />
     <Compile Include="Node.Net\Extensions\ImageSource.cs" />
@@ -122,7 +123,6 @@
     <Compile Include="Node.Net\Json\Internal\PropertyDescriptor.cs" />
     <Compile Include="Node.Net\Json\JsonFormatter.cs" />
     <Compile Include="Node.Net\Json\JsonSerializationBinder.cs" />
-    <Compile Include="Node.Net\Json\KeyValuePair.cs" />
     <Compile Include="Node.Net\Json\MetaData.cs" />
     <Compile Include="Node.Net\Json\Reader.cs" />
     <Compile Include="Node.Net\Json\Traverser.cs" />

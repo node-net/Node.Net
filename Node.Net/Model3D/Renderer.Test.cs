@@ -21,6 +21,15 @@ namespace Node.Net.Model3D
             };
             return renderer.GetModel3D(scene);
         }
+        public System.Windows.Media.Media3D.Model3D GetPositionalSceneModel()
+        {
+            Collections.Dictionary scene = new Collections.Dictionary(IO.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.json"));
+            IRenderer renderer = new Renderer()
+            {
+                Resources = XamlReader.Load(IO.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.Resources.xaml")) as ResourceDictionary
+            };
+            return renderer.GetModel3D(scene);
+        }
         [TestCase, Apartment(ApartmentState.STA)]
         public void Renderer_Table_Scene()
         {
@@ -34,6 +43,20 @@ namespace Node.Net.Model3D
             viewport.Children.Add(new System.Windows.Media.Media3D.ModelVisual3D()
             {
                 Content = GetTableSceneModel()
+            });
+            Window window = new Window()
+            {
+                Content = viewport
+            };
+            window.ShowDialog();
+        }
+        [TestCase, Explicit, Apartment(ApartmentState.STA)]
+        public void Renderer_Positional_Scene_Explicit()
+        {
+            HelixToolkit.Wpf.HelixViewport3D viewport = new HelixToolkit.Wpf.HelixViewport3D();
+            viewport.Children.Add(new System.Windows.Media.Media3D.ModelVisual3D()
+            {
+                Content = GetPositionalSceneModel()
             });
             Window window = new Window()
             {

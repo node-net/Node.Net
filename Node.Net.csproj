@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Node.Net\Collections\Dictionary.cs" />
+    <Compile Include="Node.Net\Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
     <Compile Include="Node.Net\Collections\DictionaryPropertyDescriptor.cs" />
     <Compile Include="Node.Net\Collections\DictionaryTypeDescriptor.cs" />
     <Compile Include="Node.Net\Documents\IDocument.cs" />

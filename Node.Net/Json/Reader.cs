@@ -77,6 +77,11 @@
         }
         private System.IO.StreamReader streamReader = null;
         private System.Type dictionaryType = typeof(Hash);
+        public System.Type DictionaryType
+        {
+            get { return dictionaryType; }
+            set { dictionaryType = value; }
+        }
         private System.Type arrayType = typeof(Array);
         private System.Collections.Generic.Dictionary<string, System.Type> types = new System.Collections.Generic.Dictionary<string, System.Type>();
 

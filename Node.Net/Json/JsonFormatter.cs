@@ -22,6 +22,14 @@ namespace Node.Net.Json
             Copier.Copy(d, dictionary);
         }
 
+        public static void Load(Stream stream, IDictionary dictionary,Type dictionaryType)
+        {
+            JsonFormatter formatter = new JsonFormatter();
+            formatter.DictionaryType = dictionaryType;
+            IDictionary d = (IDictionary)formatter.Deserialize(stream);
+            Copier.Copy(d, dictionary);
+        }
+
         private SerializationBinder binder = new JsonSerializationBinder();
         public SerializationBinder Binder
         {
@@ -43,9 +51,18 @@ namespace Node.Net.Json
             set { surrogateSelector = value; }
         }
 
+        private Type dictionaryType = typeof(Collections.Dictionary);
+        public Type DictionaryType
+        {
+            get { return dictionaryType; }
+            set { dictionaryType = value; }
+        }
         public object Deserialize(Stream serializationStream)
         {
-            return Json.Internal.JsonReader.Load(serializationStream);
+            Json.Internal.JsonReader reader = new Internal.JsonReader();
+            reader.DefaultDictionaryType = DictionaryType;
+            return reader.Read(serializationStream);
+            //return Json.Internal.JsonReader.Load(serializationStream);
         }
 
         public void Serialize(Stream serializationStream, object graph)
