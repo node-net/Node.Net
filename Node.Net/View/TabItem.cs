@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace Node.Net.View
 {
-    class TabItem : System.Windows.Controls.TabItem
+    public class TabItem : System.Windows.Controls.TabItem
     {
         public TabItem()
         {
