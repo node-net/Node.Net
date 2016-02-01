@@ -141,6 +141,7 @@
     <Compile Include="Node.Net\View\SplitterGrid.cs" />
     <Compile Include="Node.Net\View\SplitView.cs" />
     <Compile Include="Node.Net\View\TabControl.cs" />
+    <Compile Include="Node.Net\View\TabItem.cs" />
     <Compile Include="Node.Net\View\TextView.cs" />
     <Compile Include="Node.Net\View\Title.cs" />
     <Compile Include="Node.Net\View\TreeView.cs" />
