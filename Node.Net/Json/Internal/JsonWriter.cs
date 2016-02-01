@@ -11,9 +11,12 @@ namespace Node.Net.Json.Internal
     {
         public Style Style = Style.Compact;
         public bool AddTypeInfo = true;
+        public bool IgnoreNullValues = false;
+        public List<Type> IgnoreTypes = new List<Type>();
 
         public static string Write(object value, Style style = Style.Compact)
         {
+
             JsonWriter writer = new JsonWriter() { Style = style };
             return writer.Write(value);
         }
@@ -61,6 +64,7 @@ namespace Node.Net.Json.Internal
         public void Write(TextWriter writer, object value)
         {
             if (ReferenceEquals(null, value)) WriteNull(writer);
+            else if (typeof(byte[]).IsAssignableFrom(value.GetType())) WriteBytes(writer, (byte[])(value));
             else if (typeof(string).IsAssignableFrom(value.GetType())) WriteString(writer, value);
             else if (typeof(IDictionary).IsAssignableFrom(value.GetType())) WriteIDictionary(writer, value);
             else if (typeof(IEnumerable).IsAssignableFrom(value.GetType())) WriteIEnumerable(writer, value);
@@ -77,7 +81,20 @@ namespace Node.Net.Json.Internal
         }
         private void WriteString(TextWriter writer, object value)
         {
-            writer.Write($"\"{value.ToString()}\"");
+            string svalue = value.ToString();
+            if (svalue.Contains("\\"))
+            {
+                svalue = EscapeBackslashes(svalue);
+            }
+            if (svalue.Contains("\""))
+            {
+                svalue = EscapeDoubleQuotes(svalue);
+            }
+            writer.Write($"\"{svalue}\"");
+        }
+        private void WriteBytes(TextWriter writer,byte[] bytes)
+        {
+            WriteString(writer, $"base64:{Convert.ToBase64String(bytes)}");
         }
         private void WriteValueType(TextWriter writer, object value)
         {
@@ -95,13 +112,19 @@ namespace Node.Net.Json.Internal
             int writeCount = 0;
             foreach (object item in enumerable)
             {
-                if (object.ReferenceEquals(null, item) ||
-                   item.GetType().IsValueType ||
-                   typeof(System.Collections.IEnumerable).IsAssignableFrom(value.GetType()))
+                bool skip = false;
+                if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
+                if (!skip)
                 {
-                    if (writeCount > 0) writer.Write(",");
-                    Write(writer, item);
-                    ++writeCount;
+                    if (object.ReferenceEquals(null, item) ||
+                       item.GetType().IsValueType ||
+                       typeof(System.Collections.IEnumerable).IsAssignableFrom(value.GetType()))
+                    {
+                        if (writeCount > 0) writer.Write(",");
+                        Write(writer, item);
+                        ++writeCount;
+                    }
                 }
             }
             writer.Write("]");
@@ -136,17 +159,23 @@ namespace Node.Net.Json.Internal
             foreach (object key in dictionary.Keys)
             {
                 object item = dictionary[key];
-                if (index > 0)
+                bool skip = false;
+                if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
+                if (!skip)
                 {
-                    if (Style == Style.Indented) writer.Write($",{System.Environment.NewLine}");
-                    else writer.Write(",");
-                }
-                if (Style == Style.Indented) writer.Write(GetIndent());
-                Write(writer, key.ToString());
-                writer.Write(":");
-                Write(writer, dictionary[key]);
+                    if (index > 0)
+                    {
+                        if (Style == Style.Indented) writer.Write($",{System.Environment.NewLine}");
+                        else writer.Write(",");
+                    }
+                    if (Style == Style.Indented) writer.Write(GetIndent());
+                    Write(writer, key.ToString());
+                    writer.Write(":");
+                    Write(writer, dictionary[key]);
 
-                ++index;
+                    ++index;
+                }
             }
             IndentLevel--;
             if (dictionary.Keys.Count > 0)
@@ -172,5 +201,33 @@ namespace Node.Net.Json.Internal
             }
             return indent;
         }
+
+        private static string EscapeDoubleQuotes(string input)
+        {
+            string result = input;
+            if (input.Contains("\""))
+            {
+                System.Text.StringBuilder builder = new System.Text.StringBuilder();
+                char lastChar = 'a';
+                for (int i = 0; i < input.Length; ++i)
+                {
+                    char ch = input[i];
+                    if (ch == '"')
+                    {
+                        builder.Append('\\');
+                        builder.Append(ch);
+                    }
+
+                    else
+                    {
+                        builder.Append(ch);
+                    }
+                    lastChar = ch;
+                }
+                result = builder.ToString();
+            }
+            return result;
+        }
+        private static string EscapeBackslashes(string input) => input.Replace("\\", "\\\\");
     }
 }

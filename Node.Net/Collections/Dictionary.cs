@@ -30,8 +30,9 @@ namespace Node.Net.Collections
         public void Open(Stream stream)
         {
             Clear();
-            Json.Hash hash = Json.Reader.ReadHash(stream);
-            Json.Copier.Copy(hash, this);
+            Json.Reader reader = new Json.Reader();
+            IDictionary dictionary = (IDictionary)reader.Read(stream);
+            Json.Copier.Copy(dictionary, this);
         }
 
         #region ICustomTypeDescriptor interface

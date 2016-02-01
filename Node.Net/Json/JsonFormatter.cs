@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
@@ -8,6 +9,23 @@ namespace Node.Net.Json
     public enum JsonStyle { Compact,Indented};
     public class JsonFormatter : IFormatter
     {
+
+        private Json.Internal.JsonReader reader = new Internal.JsonReader();
+        public Type DefaultListType
+        {
+            get { return reader.DefaultListType; }
+            set { reader.DefaultListType = value; }
+        }
+        public Type DefaultDictionaryType
+        {
+            get { return reader.DefaultDictionaryType; }
+            set { reader.DefaultDictionaryType = value; }
+        }
+        public Dictionary<string, Type> Types
+        {
+            get { return reader.Types; }
+            set { reader.Types = value; }
+        }
 
         public JsonStyle Style = JsonStyle.Compact;
         public static void Save(Stream stream, object graph)
@@ -25,7 +43,6 @@ namespace Node.Net.Json
         public static void Load(Stream stream, IDictionary dictionary,Type dictionaryType)
         {
             JsonFormatter formatter = new JsonFormatter();
-            formatter.DictionaryType = dictionaryType;
             IDictionary d = (IDictionary)formatter.Deserialize(stream);
             Copier.Copy(d, dictionary);
         }
@@ -51,18 +68,9 @@ namespace Node.Net.Json
             set { surrogateSelector = value; }
         }
 
-        private Type dictionaryType = typeof(Collections.Dictionary);
-        public Type DictionaryType
-        {
-            get { return dictionaryType; }
-            set { dictionaryType = value; }
-        }
         public object Deserialize(Stream serializationStream)
         {
-            Json.Internal.JsonReader reader = new Internal.JsonReader();
-            reader.DefaultDictionaryType = DictionaryType;
             return reader.Read(serializationStream);
-            //return Json.Internal.JsonReader.Load(serializationStream);
         }
 
         public void Serialize(Stream serializationStream, object graph)

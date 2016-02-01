@@ -1,36 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-namespace Node.Net.Json
+﻿namespace Node.Net.Json
 {
     public enum JsonFormat { Compressed, Indented };
-    public class Writer //: IDisposable
+    public class Writer : System.IDisposable
     {
-        private Internal.JsonWriter writer = new Internal.JsonWriter();
-
-        public bool IgnoreNullValues
-        {
-            get { return writer.IgnoreNullValues; }
-            set { writer.IgnoreNullValues = value; }
-        }
-        public List<Type> IgnoreTypes
-        {
-            get { return writer.IgnoreTypes; }
-            set { writer.IgnoreTypes = value; }
-        }
-        /*
         private bool ignoreNullValues = false;
         public bool IgnoreNullValues
         {
             get { return ignoreNullValues; }
             set { ignoreNullValues = value; }
-        }*/
-        /*
+        }
         private System.Collections.Generic.List<System.Type> ignoreTypes 
             = new System.Collections.Generic.List<System.Type>();
 
         public System.Collections.Generic.List<System.Type> IgnoreTypes => ignoreTypes;
-        */
-        /*
+
         public void Dispose()
         {
             Dispose(true);
@@ -43,30 +26,19 @@ namespace Node.Net.Json
             {
                 if (streamWriter != null) streamWriter.Dispose();
             }
-        }*/
+        }
 
         public static void Write(System.Collections.IDictionary dictionary, System.IO.Stream stream,JsonFormat format = JsonFormat.Indented)
         {
-            Internal.JsonWriter writer = new Internal.JsonWriter();
-            if (format == JsonFormat.Indented) writer.Style = Internal.Style.Indented;
-            else writer.Style = Internal.Style.Compact;
-            writer.Write(stream, dictionary);
-
-            /*
             Writer writer = new Writer();
             writer.Format = format;
-            writer.Write(stream, dictionary);*/
+            writer.Write(stream, dictionary);
         }
         public static void Write(System.Collections.IEnumerable enumerable, System.IO.Stream stream,JsonFormat format = JsonFormat.Indented)
         {
-            Internal.JsonWriter writer = new Internal.JsonWriter();
-            if (format == JsonFormat.Indented) writer.Style = Internal.Style.Indented;
-            else writer.Style = Internal.Style.Compact;
-            writer.Write(stream, enumerable);
-            /*
             Writer writer = new Writer();
             writer.Format = format;
-            writer.Write(stream, enumerable);*/
+            writer.Write(stream, enumerable);
         }
 
         public static string ToString(System.Collections.IDictionary dictionary)
@@ -102,24 +74,20 @@ namespace Node.Net.Json
         private int level = 0;
         
 
-        //private System.IO.StreamWriter streamWriter = null;
+        private System.IO.StreamWriter streamWriter = null;
         public void Write(System.IO.Stream stream, System.Collections.IDictionary dictionary)
         {
-            writer.Write(stream, dictionary);
-            /*
             streamWriter = new System.IO.StreamWriter(stream);
             Write(dictionary);
-            streamWriter.Flush();*/
+            streamWriter.Flush();
         }
         public void Write(System.IO.Stream stream, System.Collections.IEnumerable enumerable)
         {
-            writer.Write(stream, enumerable);
-            /*
             streamWriter = new System.IO.StreamWriter(stream);
             Write(enumerable);
-            streamWriter.Flush();*/
+            streamWriter.Flush();
         }
-        /*
+
         private void Write(System.Collections.IDictionary dictionary)
         {
             streamWriter.Write(GetIndent() + "{");
@@ -145,8 +113,8 @@ namespace Node.Net.Json
             if (level == 0 && Format == JsonFormat.Indented) streamWriter.Write(System.Environment.NewLine);
             streamWriter.Write(GetIndent() + "}");
             return;
-        }*/
-        /*
+        }
+
         private void Write(System.Collections.IEnumerable enumerable)
         {
             
@@ -164,8 +132,8 @@ namespace Node.Net.Json
             --level;
             if (level == 0 && Format == JsonFormat.Indented) streamWriter.Write(System.Environment.NewLine);
             streamWriter.Write(GetIndent() + "]");
-        }*/
-        /*
+        }
+
         private void Write(byte[] bytes)
         {
             Write("base64:" + System.Convert.ToBase64String(bytes));
@@ -265,6 +233,5 @@ namespace Node.Net.Json
             if (level == 0) return "";
             return System.Environment.NewLine + "".PadRight(level * 2);
         }
-        */
     }
 }

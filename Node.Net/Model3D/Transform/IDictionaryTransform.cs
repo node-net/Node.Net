@@ -206,6 +206,9 @@ namespace Node.Net.Model3D.Transform
         }
         private static double GetRotationDegrees(IDictionary dictionary,string key)
         {
+            if (object.ReferenceEquals(null, dictionary)) return 0;
+            if (!dictionary.Contains(key)) return 0;
+            if (object.ReferenceEquals(null, dictionary[key])) return 0;
             return Measurement.Angle.Parse(dictionary[key].ToString())[Measurement.AngularUnit.Degrees];
         }
         public static Vector3D ToScale(IRenderer renderer,IDictionary value)

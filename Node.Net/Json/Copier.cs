@@ -65,7 +65,9 @@ namespace Node.Net.Json
                     else
                     {
                         System.Collections.IEnumerable enumerable = value as System.Collections.IEnumerable;
-                        if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
+                        if (!object.ReferenceEquals(null, value) 
+                            && value.GetType() != typeof(string)
+                            && value.GetType() != typeof(byte[])
                             && !object.ReferenceEquals(null, enumerable))
                         {
                             System.Collections.IList arrayCopy = new System.Collections.Generic.List<dynamic>();
