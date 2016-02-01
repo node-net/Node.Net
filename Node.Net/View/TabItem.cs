@@ -12,7 +12,7 @@ namespace Node.Net.View
 
         private void TabItem_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            OnDataContextChanged();
         }
 
         protected virtual void OnDataContextChanged()
