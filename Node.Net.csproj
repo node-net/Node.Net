@@ -62,6 +62,10 @@
     <Compile Include="Node.Net\Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
     <Compile Include="Node.Net\Collections\DictionaryPropertyDescriptor.cs" />
     <Compile Include="Node.Net\Collections\DictionaryTypeDescriptor.cs" />
+    <Compile Include="Node.Net\Controls\Grid.cs" />
+    <Compile Include="Node.Net\Controls\TabControl.cs" />
+    <Compile Include="Node.Net\Controls\TabItem.cs" />
+    <Compile Include="Node.Net\Controls\TitledControl.cs" />
     <Compile Include="Node.Net\Documents\IDocument.cs" />
     <Compile Include="Node.Net\Documents\TextDocument.cs" />
     <Compile Include="Node.Net\Environment\Command.cs" />
