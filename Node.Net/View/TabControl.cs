@@ -1,3 +1,4 @@
+using System.Windows;
 namespace Node.Net.View
 {
     public class TabControl : System.Windows.Controls.TabControl
@@ -14,6 +15,11 @@ namespace Node.Net.View
 
         private void update()
         {
+            foreach(FrameworkElement element in Items)
+            {
+                element.DataContext = DataContext;
+            }
+            /*
             Items.Clear();
             if (!object.ReferenceEquals(null, DataContext))
             {
@@ -31,7 +37,7 @@ namespace Node.Net.View
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 }
