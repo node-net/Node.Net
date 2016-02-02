@@ -53,7 +53,7 @@ namespace Node.Net.Framework.Controls
                         DefaultDocumentType = typeof(Node.Net.Collections.Dictionary),
                         OpenFileDialogFilter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*"
                     },
-                    DocumentView = new Node.Net.View.JsonView()
+                    DocumentView = new Node.Net.Controls.ReadOnlyTextBox()
                 },
                 WindowState = WindowState.Maximized
             };
@@ -64,8 +64,8 @@ namespace Node.Net.Framework.Controls
         public void SDIControl_Usage_Dictionary_MultipleViews()
         {
             Dictionary<string, FrameworkElement> namedViews = new Dictionary<string, FrameworkElement>();
-            namedViews["JSON"] = new Node.Net.View.JsonView();
-            namedViews["Tree"] = new Node.Net.View.TreeView();
+            namedViews["JSON"] = new Node.Net.Controls.ReadOnlyTextBox();
+            namedViews["Tree"] = new Node.Net.Controls.TreeView();
 
             Window window = new Window()
             {

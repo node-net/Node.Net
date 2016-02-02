@@ -22,7 +22,7 @@ namespace Node.Net.Framework.Controls
         [TestCase, Explicit, Apartment(ApartmentState.STA)]
         public void SDIWindow_Usage_Dictionary_MultipleViews()
         {
-            FrameworkElement[] views = {new Node.Net.View.JsonView(),
+            FrameworkElement[] views = {new Node.Net.Controls.ReadOnlyTextBox(),
                                         new Node.Net.View.TreeView(),
                                         new Node.Net.View.HelixView3D()};
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView",
@@ -36,7 +36,7 @@ namespace Node.Net.Framework.Controls
         public void SDIWindow_Usage_Dictionary_MultipleViews2()
         {
             Dictionary<string, FrameworkElement> views = new Dictionary<string, FrameworkElement>();
-            views["JSON"] = new Node.Net.View.JsonView();
+            views["JSON"] = new Node.Net.Controls.ReadOnlyTextBox();
             views["Tree"] = new Node.Net.View.TreeView();
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Dictionary_MultipleViews2",
                                             typeof(Node.Net.Collections.Dictionary),
@@ -59,7 +59,7 @@ namespace Node.Net.Framework.Controls
         public void SDIWindow_Usage_Dictionary_ExplorerDynamicView()
         {
             Dictionary<string, FrameworkElement> views = new Dictionary<string, FrameworkElement>();
-            views["JSON"] = new Node.Net.View.JsonView();
+            views["JSON"] = new Node.Net.Controls.ReadOnlyTextBox();
             views["Tree"] = new Node.Net.View.TreeView();
 
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Dictionary_ExplorerView",

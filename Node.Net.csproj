@@ -59,13 +59,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Node.Net\Collections\Dictionary.cs" />
+    <Compile Include="Node.Net\Collections\Documents.cs" />
     <Compile Include="Node.Net\Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
     <Compile Include="Node.Net\Collections\DictionaryPropertyDescriptor.cs" />
     <Compile Include="Node.Net\Collections\DictionaryTypeDescriptor.cs" />
+    <Compile Include="Node.Net\Collections\RecentFiles.cs" />
+    <Compile Include="Node.Net\Controls\ContextMenu.cs" />
+    <Compile Include="Node.Net\Controls\ExplorerControl.cs" />
     <Compile Include="Node.Net\Controls\Grid.cs" />
+    <Compile Include="Node.Net\Controls\MethodInfoCommand.cs" />
+    <Compile Include="Node.Net\Controls\PropertyControl.cs" />
+    <Compile Include="Node.Net\Controls\PropertyView.cs" />
+    <Compile Include="Node.Net\Controls\ReadOnlyTextBox.cs" />
+    <Compile Include="Node.Net\Controls\SDIControl.cs" />
+    <Compile Include="Node.Net\Controls\SplitControl.cs" />
     <Compile Include="Node.Net\Controls\TabControl.cs" />
     <Compile Include="Node.Net\Controls\TabItem.cs" />
+    <Compile Include="Node.Net\Controls\TitleControl.cs" />
     <Compile Include="Node.Net\Controls\TitledControl.cs" />
+    <Compile Include="Node.Net\Controls\TreeView.cs" />
+    <Compile Include="Node.Net\Controls\TreeViewItem.cs" />
     <Compile Include="Node.Net\Documents\IDocument.cs" />
     <Compile Include="Node.Net\Documents\TextDocument.cs" />
     <Compile Include="Node.Net\Environment\Command.cs" />
@@ -133,7 +146,6 @@
     <Compile Include="Node.Net\View\FrameworkElements.cs" />
     <Compile Include="Node.Net\View\Grid.cs" />
     <Compile Include="Node.Net\View\HashGrid.cs" />
-    <Compile Include="Node.Net\View\JsonView.cs" />
     <Compile Include="Node.Net\View\KeyValuePair.cs" />
     <Compile Include="Node.Net\View\ListView.cs" />
     <Compile Include="Node.Net\View\ListViewItem.cs" />

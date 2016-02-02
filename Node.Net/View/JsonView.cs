@@ -13,16 +13,6 @@ namespace Node.Net.View
         }
         public void Update()
         {
-            /*
-            if(object.ReferenceEquals(null,DataContext))
-            {
-                Background = System.Windows.Media.Brushes.DarkGray;
-            }
-            else
-            {
-                Background = System.Windows.SystemColors.ControlBrush;
-            }
-            */
             string text =  "";
             System.Collections.IDictionary dictionary = Node.Net.View.KeyValuePair.GetValue(DataContext)
                 as System.Collections.IDictionary;
@@ -47,15 +37,6 @@ namespace Node.Net.View
             HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
             VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
             IsReadOnly = true;
-            /*
-            textBox = new System.Windows.Controls.TextBox()
-            {
-                HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto,
-                VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto,
-                IsReadOnly=true
-            };
-            Content = textBox;
-            */
             Update();
         }
     }
