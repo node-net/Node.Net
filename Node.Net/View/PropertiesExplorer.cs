@@ -6,7 +6,7 @@
         private System.Windows.FrameworkElement selectionView = null;
         public PropertiesExplorer()
         {
-            treeView = new TreeView();
+            treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = new Properties();
             DataContextChanged += Explorer_DataContextChanged;
@@ -17,7 +17,7 @@
         {
             Orientation = orientation;
             treeView = tree_view;
-            if (object.ReferenceEquals(null, treeView)) treeView = new TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged +=treeView_SelectedItemChanged;
             selectionView = selection_view;
             if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();

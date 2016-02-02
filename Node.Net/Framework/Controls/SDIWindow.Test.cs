@@ -23,7 +23,7 @@ namespace Node.Net.Framework.Controls
         public void SDIWindow_Usage_Dictionary_MultipleViews()
         {
             FrameworkElement[] views = {new Node.Net.Controls.ReadOnlyTextBox(),
-                                        new Node.Net.View.TreeView(),
+                                        new Node.Net.Controls.TreeView(),
                                         new Node.Net.View.HelixView3D()};
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView",
                                             typeof(Node.Net.Collections.Dictionary),
@@ -37,7 +37,7 @@ namespace Node.Net.Framework.Controls
         {
             Dictionary<string, FrameworkElement> views = new Dictionary<string, FrameworkElement>();
             views["JSON"] = new Node.Net.Controls.ReadOnlyTextBox();
-            views["Tree"] = new Node.Net.View.TreeView();
+            views["Tree"] = new Node.Net.Controls.TreeView();
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Dictionary_MultipleViews2",
                                             typeof(Node.Net.Collections.Dictionary),
                                             "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
@@ -60,7 +60,7 @@ namespace Node.Net.Framework.Controls
         {
             Dictionary<string, FrameworkElement> views = new Dictionary<string, FrameworkElement>();
             views["JSON"] = new Node.Net.Controls.ReadOnlyTextBox();
-            views["Tree"] = new Node.Net.View.TreeView();
+            views["Tree"] = new Node.Net.Controls.TreeView();
 
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Dictionary_ExplorerView",
                                             typeof(Node.Net.Collections.Dictionary),

@@ -20,7 +20,7 @@ namespace Node.Net.View
             SDIMainControl sdiMainControl
                 = new SDIMainControl(
                     typeof(Node.Net.Json.Document),
-                    new Explorer(new TreeView(), new Properties())) { ApplicationName = "SDIProperties" };
+                    new Explorer(new Controls.TreeView(), new Properties())) { ApplicationName = "SDIProperties" };
             sdiMainControl.ShowDialog();
         }
 
@@ -48,13 +48,13 @@ namespace Node.Net.View
             SDIMainControl sdiMainControl
                 = new SDIMainControl(
                     typeof(NotePadDocument),
-                    new Explorer(new TreeView(), dynamicView)) { ApplicationName = "SDINotepad" };
+                    new Explorer(new Controls.TreeView(), dynamicView)) { ApplicationName = "SDINotepad" };
             sdiMainControl.DataContext = items;
             sdiMainControl.ShowDialog();
             //sdiMainForm.ShowDialog();
         }
 
-        public class CustomTreeViewItem : TreeViewItem
+        public class CustomTreeViewItem : Controls.TreeViewItem
         {
             public CustomTreeViewItem() :base(null){ }
             public CustomTreeViewItem(object value) : base(value) { }
@@ -84,7 +84,7 @@ namespace Node.Net.View
             SDIMainControl sdiMainControl
                 = new SDIMainControl(
                     typeof(NotePadDocument),
-                    new Explorer(new TreeView(typeof(CustomTreeViewItem)), dynamicView)) { ApplicationName = "SDINotepad" };
+                    new Explorer(new Controls.TreeView(typeof(CustomTreeViewItem)), dynamicView)) { ApplicationName = "SDINotepad" };
             sdiMainControl.DataContext = items;
             sdiMainControl.ShowDialog();
         }

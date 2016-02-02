@@ -34,7 +34,7 @@ namespace Node.Net.Controls
 
             if (object.ReferenceEquals(null, treeView))
             {
-                TreeView = new View.TreeView();
+                TreeView = new Controls.TreeView();
             }
         }
         private void ExplorerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

@@ -24,7 +24,7 @@ namespace Node.Net.View
             doc.Add("childB", hash);
 
             System.Windows.FrameworkElement[] elements
-                = { new TreeView(), new Properties() };
+                = { new Controls.TreeView(), new Properties() };
             System.Windows.Window window = new System.Windows.Window()
             {
                 Content = new PropertiesExplorer(null, new Properties(), System.Windows.Controls.Orientation.Horizontal),
@@ -52,7 +52,7 @@ namespace Node.Net.View
             doc.Add("childB", hash);
 
             System.Windows.FrameworkElement[] elements
-                = { new TreeView(), new Properties() };
+                = { new Controls.TreeView(), new Properties() };
             System.Windows.Window window = new System.Windows.Window()
             {
                 Content = new PropertiesExplorer(null, new Properties(), System.Windows.Controls.Orientation.Vertical),
@@ -68,7 +68,7 @@ namespace Node.Net.View
         {
             DynamicViewSelector dynamicViewSelector = new DynamicViewSelector(new Properties());
             dynamicViewSelector.DynamicView.Elements.Add("ListView", new ListView());
-            dynamicViewSelector.DynamicView.Elements.Add("TreeView", new TreeView());
+            dynamicViewSelector.DynamicView.Elements.Add("TreeView", new Controls.TreeView());
             dynamicViewSelector.DynamicView.Elements.Add("TextView", new TextView());
             //dynamicViewSelector.DataContext = new Widget();
             System.Windows.Window window = new System.Windows.Window()
@@ -93,7 +93,7 @@ namespace Node.Net.View
         {
             Json.Hash hash = new Json.Hash(GetStream("PropertiesExplorer.Test.ExampleA.json"));
             System.Windows.FrameworkElement[] elements
-                = { new TreeView(), new Properties() };
+                = { new Controls.TreeView(), new Properties() };
             System.Windows.Window window = new System.Windows.Window()
             {
                 Content = new PropertiesExplorer(null, new Properties(), System.Windows.Controls.Orientation.Vertical),

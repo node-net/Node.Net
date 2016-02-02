@@ -79,6 +79,7 @@
     <Compile Include="Node.Net\Controls\TitledControl.cs" />
     <Compile Include="Node.Net\Controls\TreeView.cs" />
     <Compile Include="Node.Net\Controls\TreeViewItem.cs" />
+    <Compile Include="Node.Net\Controls\XmlTreeViewItem.cs" />
     <Compile Include="Node.Net\Documents\IDocument.cs" />
     <Compile Include="Node.Net\Documents\TextDocument.cs" />
     <Compile Include="Node.Net\Environment\Command.cs" />
@@ -163,8 +164,6 @@
     <Compile Include="Node.Net\View\TabItem.cs" />
     <Compile Include="Node.Net\View\TextView.cs" />
     <Compile Include="Node.Net\View\Title.cs" />
-    <Compile Include="Node.Net\View\TreeView.cs" />
-    <Compile Include="Node.Net\View\TreeViewItem.cs" />
     <Compile Include="Node.Net\View\Window.cs" />
   </ItemGroup>
   <ItemGroup>

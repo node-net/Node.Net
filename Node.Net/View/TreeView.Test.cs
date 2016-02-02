@@ -19,12 +19,12 @@ namespace Node.Net.View
             System.Collections.Generic.KeyValuePair<string, object> kvp
                 = new System.Collections.Generic.KeyValuePair<string, object>("doc", doc);
 
-            TreeView treeView = new TreeView(kvp);
+            Controls.TreeView treeView = new Controls.TreeView(kvp);
             System.Windows.Window window = new System.Windows.Window() { Content = treeView, Title = "SDIApplication" };
             window.ShowDialog();
         }
 
-        public class XmlTreeViewItem : TreeViewItem
+        public class XmlTreeViewItem : Controls.TreeViewItem
         {
             public XmlTreeViewItem() : base(null) { }
             public XmlTreeViewItem(object value) : base(value) { }
@@ -59,7 +59,7 @@ namespace Node.Net.View
             System.Collections.Generic.KeyValuePair<string, object> kvp
                 = new System.Collections.Generic.KeyValuePair<string, object>("doc", xdoc);
 
-            TreeView treeView = new TreeView(kvp);
+            Controls.TreeView treeView = new Controls.TreeView(kvp);
             treeView.TreeViewItemType = typeof(XmlTreeViewItem);
             System.Windows.Window window = new System.Windows.Window() { Content = treeView, Title = "SDIApplication" };
             window.ShowDialog();
@@ -86,7 +86,7 @@ namespace Node.Net.View
                 = new System.Collections.Generic.KeyValuePair<string, object>("doc", doc);
             object[] items = { kvp1, kvp2 };
 
-            TreeView treeView = new TreeView(items);
+            Controls.TreeView treeView = new Controls.TreeView(items);
             System.Windows.Window window = new System.Windows.Window() { Content = treeView, Title = "SDIApplication" };
             window.ShowDialog();
         }

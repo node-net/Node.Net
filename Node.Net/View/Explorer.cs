@@ -7,7 +7,7 @@
         private System.Windows.FrameworkElement selectionView = null;
         public Explorer()
         {
-            treeView = new TreeView();
+            treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = new Properties();
             DataContextChanged += Explorer_DataContextChanged;
@@ -15,7 +15,7 @@
         public Explorer(System.Windows.FrameworkElement selection_view)
         {
             Orientation = System.Windows.Controls.Orientation.Horizontal;
-            if (object.ReferenceEquals(null, treeView)) treeView = new TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
             if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();
@@ -25,7 +25,7 @@
         public Explorer(System.Windows.FrameworkElement selection_view, System.Windows.Controls.Orientation orientation = System.Windows.Controls.Orientation.Horizontal)
         {
             Orientation = orientation;
-            if (object.ReferenceEquals(null, treeView)) treeView = new TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
             if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();
@@ -36,7 +36,7 @@
         {
             Orientation = orientation;
             treeView = tree_view;
-            if (object.ReferenceEquals(null, treeView)) treeView = new TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged +=treeView_SelectedItemChanged;
             selectionView = selection_view;
             if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();
@@ -48,7 +48,7 @@
             Orientation = orientation;
             treeView = tree_view;
             selectionViewVertical = selection_view_vertical;
-            if (object.ReferenceEquals(null, treeView)) treeView = new TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
             if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();

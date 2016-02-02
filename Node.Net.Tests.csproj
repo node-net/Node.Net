@@ -78,6 +78,7 @@
     <Compile Include="Node.Net\Controls\TabControl.Test.cs" />
     <Compile Include="Node.Net\Controls\TitledControl.Test.cs" />
     <Compile Include="Node.Net\Controls\TreeView.Test.cs" />
+    <Compile Include="Node.Net\Controls\TreeViewItem.Test.cs" />
     <Compile Include="Node.Net\Documents\TextDocument.Test.cs" />
     <Compile Include="Node.Net\Environment\Command.Test.cs" />
     <Compile Include="Node.Net\Environment\Environment.Test.cs" />
@@ -128,9 +129,6 @@
     <Compile Include="Node.Net\View\SDIMainControl.Test.cs" />
     <Compile Include="Node.Net\View\SplitterGrid.Test.cs" />
     <Compile Include="Node.Net\View\TabControl.Test.cs" />
-    <Compile Include="Node.Net\View\TextView.Test.cs" />
-    <Compile Include="Node.Net\View\TreeViewItem.Test.cs" />
-    <Compile Include="Node.Net\View\TreeView.Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Node.Net\Node.Net.csproj">
