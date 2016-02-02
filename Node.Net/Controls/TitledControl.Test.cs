@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
@@ -19,10 +20,12 @@ namespace Node.Net.Controls
         {
             Window w = new Window()
             {
+                Title = "TitledControl_Usage_ShowDialog",
                 Content = new TitledControl()
                 {
-                    Title = "Blue",
-                    Content = new Grid() { Background = Brushes.Blue }
+                    DataContext =
+                      new KeyValuePair<string, object>(
+                        "Blue", new Grid() { Background = Brushes.Blue })
                 }
             };
             w.ShowDialog();

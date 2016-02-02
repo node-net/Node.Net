@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using NUnit.Framework;
 
 namespace Node.Net.Controls
@@ -11,6 +12,7 @@ namespace Node.Net.Controls
         public static Grid GetSampleGrid()
         {
             Grid grid = new Grid();
+            grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             return grid;
         }
         [TestCase,Apartment(ApartmentState.STA)]

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Node.Net.Controls
 {
-    public class TitledControl : StackPanel
+    public class TitledControl : Grid
     {
         public TitledControl()
         {
@@ -17,38 +18,29 @@ namespace Node.Net.Controls
         }
         protected virtual void OnDataContextChanged()
         {
-            titleGrid.Children.Clear();
-            titleGrid.Children.Add(new Label() { Content = Json.KeyValuePair.GetKey(DataContext) });
-            contentGrid.Children.Clear();
-            UIElement element = (UIElement)Json.KeyValuePair.GetValue(DataContext);
-            if(!object.ReferenceEquals(null, element))
+            Children.Clear();
+            Children.Add(new Label()
             {
-                contentGrid.Children.Add(element);
+                Background = Brushes.LightGray,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Content = Json.KeyValuePair.GetKey(DataContext)
+            });
+
+            UIElement element = (UIElement)Json.KeyValuePair.GetValue(DataContext);
+            if (!object.ReferenceEquals(null, element))
+            {
+                Children.Add(element);
+                Grid.SetRow(element, 1);
             }
-            //contentGrid.Children.Add((UIElement)Json.KeyValuePair.GetValue(DataContext));
         }
 
-        private Grid titleGrid = new Grid();
-        private Grid contentGrid = new Grid();
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            Children.Add(titleGrid);
-            Children.Add(contentGrid);
-        }
 
-        private string title = "";
-        public string Title
-        {
-            get { return title; }
-            set { title = value; OnDataContextChanged(); }
-        }
-
-        private object content = null;
-        public object Content
-        {
-            get { return content; }
-            set { content = value;  OnDataContextChanged(); }
+            RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            RowDefinitions.Add(new RowDefinition());
         }
     }
 }
