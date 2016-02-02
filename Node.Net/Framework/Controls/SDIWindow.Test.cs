@@ -15,7 +15,7 @@ namespace Node.Net.Framework.Controls
             SDIWindow window = new SDIWindow("SDIWindow_Usage_Text_SingleView",
                                            typeof(Node.Net.Documents.TextDocument),
                                            "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
-                                           new Node.Net.View.ReadOnlyTextView());
+                                           new Node.Net.Controls.ReadOnlyTextBox());
             window.ShowDialog();
         }
 

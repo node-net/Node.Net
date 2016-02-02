@@ -138,7 +138,6 @@
     <Compile Include="Node.Net\View\Base.cs" />
     <Compile Include="Node.Net\View\ComboBox.cs" />
     <Compile Include="Node.Net\View\ComboBoxItem.cs" />
-    <Compile Include="Node.Net\View\ContextMenu.cs" />
     <Compile Include="Node.Net\View\DataGridView.cs" />
     <Compile Include="Node.Net\View\DynamicView.cs" />
     <Compile Include="Node.Net\View\DynamicViewSelector.cs" />
@@ -151,9 +150,7 @@
     <Compile Include="Node.Net\View\ListView.cs" />
     <Compile Include="Node.Net\View\ListViewItem.cs" />
     <Compile Include="Node.Net\View\MessageBox.cs" />
-    <Compile Include="Node.Net\View\MethodInfoCommand.cs" />
     <Compile Include="Node.Net\View\PropertiesExplorer.cs" />
-    <Compile Include="Node.Net\View\ReadOnlyTextView.cs" />
     <Compile Include="Node.Net\View\SDIApplication.cs" />
     <Compile Include="Node.Net\View\SDIMainControl.cs" />
     <Compile Include="Node.Net\View\SplitterGrid.cs" />

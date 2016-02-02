@@ -33,7 +33,7 @@ namespace Node.Net.Framework.Controls
                         DefaultDocumentType=typeof(Node.Net.Documents.TextDocument),
                         OpenFileDialogFilter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
                     },
-                    DocumentView = new Node.Net.View.ReadOnlyTextView()
+                    DocumentView = new Node.Net.Controls.ReadOnlyTextBox()
                 },
                 WindowState = WindowState.Maximized
             };
