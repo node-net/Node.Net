@@ -9,7 +9,7 @@
         {
             treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
-            selectionView = new Properties();
+            selectionView = new Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
         public Explorer(System.Windows.FrameworkElement selection_view)
@@ -18,7 +18,7 @@
             if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 
@@ -28,7 +28,7 @@
             if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
         
@@ -39,7 +39,7 @@
             if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged +=treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 
@@ -51,7 +51,7 @@
             if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Properties();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 
@@ -83,7 +83,7 @@
 
             if(object.ReferenceEquals(null,selectionViewVertical))
             {
-                selectionViewVertical = new Properties();
+                selectionViewVertical = new Controls.PropertyControl();
 
                 System.Reflection.EventInfo valueChangedEvent = selectionViewVertical.GetType().GetEvent("ValueChanged");
                 if (!object.ReferenceEquals(null, valueChangedEvent))

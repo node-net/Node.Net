@@ -18,7 +18,7 @@ namespace Node.Net.View
 
             Node.Net.Json.Hash controls = new Node.Net.Json.Hash();
             controls["Explorer"] = new Explorer() { DataContext = model };
-            controls["Properties"] = new Properties() { DataContext = model };
+            controls["Properties"] = new Controls.PropertyControl() { DataContext = model };
             controls["JsonView"] = new Controls.ReadOnlyTextBox() { DataContext = model };
 
             TabControl tabControl = new TabControl() { TabStripPlacement=System.Windows.Controls.Dock.Bottom};

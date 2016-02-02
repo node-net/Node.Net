@@ -19,7 +19,7 @@ namespace Node.Net.View
             System.Windows.Window window = new System.Windows.Window()
             {
                 Title = "PropertyView_Usage",
-                Content = new PropertyView()
+                Content = new Controls.PropertyView()
                 {
                     DataContext = dictionary
                 }

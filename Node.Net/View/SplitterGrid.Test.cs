@@ -67,7 +67,7 @@ namespace Node.Net.View
             doc.Add("childA", child);
 
             System.Windows.FrameworkElement[] elements
-                = {new Controls.TreeView(),new Properties()};
+                = {new Controls.TreeView(),new Controls.PropertyControl()};
             System.Windows.Window window = new System.Windows.Window()
             {
                 Content = new SplitterGrid(elements, System.Windows.Controls.Orientation.Horizontal),

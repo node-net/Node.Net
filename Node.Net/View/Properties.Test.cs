@@ -46,7 +46,7 @@ namespace Node.Net.View
         [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA), NUnit.Framework.Explicit]
         public void Properties_Usage()
         {
-            Properties properties = new Properties();
+            Controls.PropertyControl properties = new Controls.PropertyControl();
             properties.DataContext = new Widget();
             System.Windows.Window window = new System.Windows.Window();
             window.Content = properties;
@@ -61,7 +61,7 @@ namespace Node.Net.View
             {
                 hash[i.ToString()] = i;
             }
-            Properties properties = new Properties();
+            Controls.PropertyControl properties = new Controls.PropertyControl();
             properties.DataContext = hash;
             System.Windows.Window window = new System.Windows.Window();
             window.Content = properties;

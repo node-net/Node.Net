@@ -8,7 +8,7 @@ namespace Node.Net.View
         [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void DynamicViewSelector_Usage()
         {
-            DynamicViewSelector dynamicViewSelector = new DynamicViewSelector(new Properties());
+            DynamicViewSelector dynamicViewSelector = new DynamicViewSelector(new Controls.PropertyControl());
             dynamicViewSelector.DynamicView.Elements.Add("ListView", new ListView());
             dynamicViewSelector.DynamicView.Elements.Add("TreeView", new Controls.TreeView());
             dynamicViewSelector.DynamicView.Elements.Add("TextView", new TextView());

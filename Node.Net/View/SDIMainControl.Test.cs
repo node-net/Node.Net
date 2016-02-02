@@ -20,7 +20,7 @@ namespace Node.Net.View
             SDIMainControl sdiMainControl
                 = new SDIMainControl(
                     typeof(Node.Net.Json.Document),
-                    new Explorer(new Controls.TreeView(), new Properties())) { ApplicationName = "SDIProperties" };
+                    new Explorer(new Controls.TreeView(), new Controls.PropertyControl())) { ApplicationName = "SDIProperties" };
             sdiMainControl.ShowDialog();
         }
 
@@ -42,7 +42,7 @@ namespace Node.Net.View
                 new System.Collections.Generic.KeyValuePair<string,object>("LargeHash",hash),
                 new System.Collections.Generic.KeyValuePair<string,object>("Untitled",null)};//new NotePadDocument()) };
 
-            DynamicView dynamicView = new DynamicView(new Properties());
+            DynamicView dynamicView = new DynamicView(new Controls.PropertyControl());
             dynamicView.Elements.Add("TextView", new TextView());
             dynamicView.TypeNames.Add(typeof(NotePadDocument), "TextView");
             SDIMainControl sdiMainControl
@@ -78,7 +78,7 @@ namespace Node.Net.View
                 new System.Collections.Generic.KeyValuePair<string,object>("LargeHash",hash),
                 new System.Collections.Generic.KeyValuePair<string,object>("Untitled",null)};//new NotePadDocument()) };
 
-            DynamicView dynamicView = new DynamicView(new Properties());
+            DynamicView dynamicView = new DynamicView(new Controls.PropertyControl());
             dynamicView.Elements.Add("TextView", new TextView());
             dynamicView.TypeNames.Add(typeof(NotePadDocument), "TextView");
             SDIMainControl sdiMainControl

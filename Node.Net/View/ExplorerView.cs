@@ -14,7 +14,7 @@ namespace Node.Net.View
         private SplitView horizontalSplitView = null;
         private SplitView verticalSplitView = null;
         private System.Windows.Controls.TreeView treeView = null;// new View.TreeView();
-        private View.PropertyView propertyView = new PropertyView();
+        private Controls.PropertyView propertyView = new Controls.PropertyView();
         private FrameworkElement contentView = null;
 
         public ExplorerView()

@@ -152,9 +152,7 @@
     <Compile Include="Node.Net\View\ListViewItem.cs" />
     <Compile Include="Node.Net\View\MessageBox.cs" />
     <Compile Include="Node.Net\View\MethodInfoCommand.cs" />
-    <Compile Include="Node.Net\View\Properties.cs" />
     <Compile Include="Node.Net\View\PropertiesExplorer.cs" />
-    <Compile Include="Node.Net\View\PropertyView.cs" />
     <Compile Include="Node.Net\View\ReadOnlyTextView.cs" />
     <Compile Include="Node.Net\View\SDIApplication.cs" />
     <Compile Include="Node.Net\View\SDIMainControl.cs" />

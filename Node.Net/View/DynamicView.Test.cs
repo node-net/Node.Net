@@ -7,7 +7,7 @@ namespace Node.Net.View
         [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA),NUnit.Framework.Explicit]
         public void DynamicView_Usage()
         {
-            DynamicView dynamicView = new DynamicView(new Properties());
+            DynamicView dynamicView = new DynamicView(new Controls.PropertyControl());
             dynamicView.DataContext = new Widget();
             Node.Net.View.Window.ShowDialog(dynamicView, "DynamicView_Usage");
         }
@@ -33,7 +33,7 @@ namespace Node.Net.View
         [TestCase,NUnit.Framework.Apartment(System.Threading.ApartmentState.STA)]
         public void DynamicView_ByType_Usage()
         {
-            DynamicView dynamicView = new DynamicView(new Properties());
+            DynamicView dynamicView = new DynamicView(new Controls.PropertyControl());
             dynamicView.Elements.Add("ListView", new ListView());
             dynamicView.Elements.Add("TextView", new TextView());
             dynamicView.TypeNames.Add(typeof(Foo), "ListView");
