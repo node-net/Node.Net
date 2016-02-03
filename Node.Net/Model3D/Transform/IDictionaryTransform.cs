@@ -160,22 +160,22 @@ namespace Node.Net.Model3D.Transform
             if (value.Contains("RotationY"))
             {
                 double rotationY_degrees = GetRotationDegrees(value,"RotationY");
-                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+                rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("Tilt"))
             {
                 double rotationY_degrees = GetRotationDegrees(value, "Tilt");
-                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+                rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("RotationX"))
             {
                 double rotationX_degrees = GetRotationDegrees(value, "RotationX");
-                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
+                rotationX = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
             }
             if (value.Contains("Spin"))
             {
                 double rotationX_degrees = GetRotationDegrees(value, "Spin");
-                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
+                rotationX = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
             }
 
             Quaternion total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
