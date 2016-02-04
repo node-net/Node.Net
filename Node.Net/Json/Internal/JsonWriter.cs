@@ -10,7 +10,7 @@ namespace Node.Net.Json.Internal
     class JsonWriter
     {
         public Style Style = Style.Compact;
-        public bool AddTypeInfo = true;
+        public bool AddTypeInfo = false;
         public bool IgnoreNullValues = false;
         public List<Type> IgnoreTypes = new List<Type>();
 
