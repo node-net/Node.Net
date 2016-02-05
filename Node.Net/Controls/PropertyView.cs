@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Node.Net.Controls
@@ -6,6 +7,7 @@ namespace Node.Net.Controls
     public class PropertyView : Grid
     {
         private FrameworkElement propertyControl = new PropertyControl();
+        private INotifyPropertyChanged inotifyPropertyChanged = null;
         public FrameworkElement PropertyControl
         {
             get { return propertyControl; }

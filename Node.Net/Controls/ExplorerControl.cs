@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +14,7 @@ namespace Node.Net.Controls
         private System.Windows.Controls.TreeView treeView = null;// new View.TreeView();
         private PropertyView propertyView = new PropertyView();
         private FrameworkElement contentView = null;
+        private INotifyPropertyChanged inotifyPropertyChanged = null;
 
         public ExplorerControl()
         {
@@ -28,7 +30,8 @@ namespace Node.Net.Controls
             {
                 Orientation = Orientation.Horizontal,
                 ElementA = verticalSplitView,
-                ElementASize = 300
+                ElementASize = 300,
+                ElementB = new Controls.ReadOnlyTextBox()
             };
 
 
@@ -46,7 +49,16 @@ namespace Node.Net.Controls
         {
 
             if (object.ReferenceEquals(null, verticalSplitView)) return;
-
+            INotifyPropertyChanged currentInotifyPropertyChanged = Node.Net.Json.KeyValuePair.GetValue(DataContext) as INotifyPropertyChanged;
+            if(!object.ReferenceEquals(null,inotifyPropertyChanged))
+            {
+                inotifyPropertyChanged.PropertyChanged -= _PropertyChanged;
+            }
+            if(!object.ReferenceEquals(null,currentInotifyPropertyChanged))
+            {
+                currentInotifyPropertyChanged.PropertyChanged += _PropertyChanged;
+                inotifyPropertyChanged = currentInotifyPropertyChanged;
+            }
             Children.Clear();
             Children.Add(horizontalSplitView);
             verticalSplitView.ElementA = TreeView;
@@ -59,6 +71,10 @@ namespace Node.Net.Controls
             }
         }
 
+        private void _PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnDataContextChanged();
+        }
 
         public System.Windows.Controls.TreeView TreeView
         {

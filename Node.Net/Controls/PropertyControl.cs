@@ -20,10 +20,11 @@ namespace Node.Net.Controls
 
         void Properties_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            Update();
+            OnDataContextChanged();
         }
 
-        private void Update()
+        private INotifyPropertyChanged inotifyPropertyChanged = null;
+        private void OnDataContextChanged()
         {
             if (object.ReferenceEquals(null, propertyGrid)) return;
 
@@ -34,6 +35,17 @@ namespace Node.Net.Controls
                 propertyGrid.SelectedObject = null;
                 return;
             }
+
+            if(!object.ReferenceEquals(null, inotifyPropertyChanged))
+            {
+                inotifyPropertyChanged.PropertyChanged -= DataContext_PropertyChanged;
+            }
+            inotifyPropertyChanged = value as INotifyPropertyChanged;
+            if(!object.ReferenceEquals(null,inotifyPropertyChanged))
+            {
+                inotifyPropertyChanged.PropertyChanged += DataContext_PropertyChanged;
+            }
+
             System.Collections.IDictionary idictionary = value as System.Collections.IDictionary;
             System.Collections.IEnumerable ienumerable = value as System.Collections.IEnumerable;
             if (object.ReferenceEquals(null, idictionary) && value.GetType() != typeof(string) &&
@@ -68,6 +80,14 @@ namespace Node.Net.Controls
                     propertyGrid.SelectedObject = value;
                 }
             }
+        }
+
+        private void DataContext_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // reset propertyGrid.Selected object
+            object selected = propertyGrid.SelectedObject;
+            propertyGrid.SelectedObject = null;
+            propertyGrid.SelectedObject = selected;
         }
 
         #region Member Data
@@ -111,7 +131,7 @@ namespace Node.Net.Controls
             System.Windows.Controls.Grid.SetRow(host, 1);
             //this.Content = host;
             propertyGrid.PropertyValueChanged += propertyGrid_PropertyValueChanged;
-            Update();
+            OnDataContextChanged();
         }
 
         public event System.EventHandler ValueChanged;
@@ -121,7 +141,8 @@ namespace Node.Net.Controls
             {
                 ValueChanged(this, new System.EventArgs());
             }
-            Update();
+            OnDataContextChanged();
+            InvalidateVisual();
         }
     }
 }

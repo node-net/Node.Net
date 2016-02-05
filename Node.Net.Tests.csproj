@@ -75,6 +75,7 @@
     <Compile Include="Node.Net\Controls\Example.DataContexts.cs" />
     <Compile Include="Node.Net\Controls\ExplorerControl.Test.cs" />
     <Compile Include="Node.Net\Controls\Grid.Test.cs" />
+    <Compile Include="Node.Net\Controls\PropertyControl.Test.cs" />
     <Compile Include="Node.Net\Controls\SDIControl.Test.cs" />
     <Compile Include="Node.Net\Controls\TabControl.Test.cs" />
     <Compile Include="Node.Net\Controls\TitledControl.Test.cs" />
