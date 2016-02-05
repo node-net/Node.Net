@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,7 +45,28 @@ namespace Node.Net.Controls
             }
             else
             {
-                propertyGrid.SelectedObject = value;
+                bool use_adapter = false;
+                if(!object.ReferenceEquals(null,idictionary))
+                {
+                    ICustomTypeDescriptor customTypeDescriptor = value as ICustomTypeDescriptor;;
+                    if (object.ReferenceEquals(null, customTypeDescriptor))
+                    {
+                        if (value.GetType().FullName.Contains("System.Collections.Generic.Dictionary"))
+                        {
+                            use_adapter = true;
+                        }
+                    }
+                }
+                
+                if (use_adapter)
+                {
+                    Collections.Dictionary d = new Collections.Dictionary();
+                    Json.Copier.Copy(idictionary, d);
+                    propertyGrid.SelectedObject = d;
+                }
+                else { 
+                    propertyGrid.SelectedObject = value;
+                }
             }
         }
 

@@ -8,6 +8,9 @@ namespace Node.Net.Json
 {
     public class Reader
     {
+        private static Reader _default = new Reader();
+        public static Reader Default { get { return _default; } }
+
         public Reader() { }
         public Reader(Assembly assembly) { AddTypes(assembly); }
 
@@ -68,7 +71,6 @@ namespace Node.Net.Json
                 destination[key] = source[key];
             }
 
-            //Json.Copier.Copy(source, destination);
             return source;
         }
 
@@ -79,7 +81,6 @@ namespace Node.Net.Json
             {
                 destination[key] = source[key];
             }
-            //Json.Copier.Copy(source, destination);
             return source;
         }
 

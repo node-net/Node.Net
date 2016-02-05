@@ -65,6 +65,7 @@
     <Compile Include="Node.Net\Collections\DictionaryTypeDescriptor.cs" />
     <Compile Include="Node.Net\Collections\RecentFiles.cs" />
     <Compile Include="Node.Net\Controls\ContextMenu.cs" />
+    <Compile Include="Node.Net\Controls\DocumentExplorer.cs" />
     <Compile Include="Node.Net\Controls\ExplorerControl.cs" />
     <Compile Include="Node.Net\Controls\Grid.cs" />
     <Compile Include="Node.Net\Controls\MethodInfoCommand.cs" />
