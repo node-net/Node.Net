@@ -270,7 +270,7 @@ namespace Node.Net.Json.Internal
             if (stype.Length > 0)
             {
                 if (Types.ContainsKey(stype)) return Types[stype];
-                return JsonSerializationBinder.GetType(stype);
+                //return JsonSerializationBinder.GetType(stype);
             }
             return result;
         }
