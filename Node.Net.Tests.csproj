@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Node.Net\Collections\Dictionary.Test.cs" />
     <Compile Include="Node.Net\Controls\DocumentExplorer.Test.cs" />
+    <Compile Include="Node.Net\Controls\DynamicControl.Test.cs" />
     <Compile Include="Node.Net\Controls\Example.DataContexts.cs" />
     <Compile Include="Node.Net\Controls\ExplorerControl.Test.cs" />
     <Compile Include="Node.Net\Controls\Grid.Test.cs" />
