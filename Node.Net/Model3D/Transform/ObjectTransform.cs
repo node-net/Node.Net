@@ -28,7 +28,7 @@ namespace Node.Net.Model3D.Transform
         {
             return IDictionaryTransform.ToGeometryModel3D(renderer, value as IDictionary);
         }
-        public static Transform3D ToTransform3D(IRenderer renderer, object value)
+        public static System.Windows.Media.Media3D.Transform3D ToTransform3D(IRenderer renderer, object value)
         {
             IDictionary dictionary = value as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToTransform3D(renderer, dictionary);

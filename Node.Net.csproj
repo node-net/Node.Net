@@ -133,6 +133,7 @@
     <Compile Include="Node.Net\Model2D\Viewer.cs" />
     <Compile Include="Node.Net\Model3D\IRenderer.cs" />
     <Compile Include="Node.Net\Model3D\Renderer.cs" />
+    <Compile Include="Node.Net\Model3D\Transform3D.cs" />
     <Compile Include="Node.Net\Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="Node.Net\Model3D\Transform\ObjectTransform.cs" />
     <Compile Include="Node.Net\Model3D\Viewer.cs" />
