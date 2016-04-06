@@ -87,6 +87,7 @@
     <Compile Include="Controls\PropertyView.cs" />
     <Compile Include="Controls\ReadOnlyTextBox.cs" />
     <Compile Include="Controls\SDIControl.cs" />
+    <Compile Include="Controls\Selector.cs" />
     <Compile Include="Controls\SplitControl.cs" />
     <Compile Include="Controls\TabControl.cs" />
     <Compile Include="Controls\TabItem.cs" />
@@ -138,7 +139,6 @@
     <Compile Include="Model3D\Renderer.cs" />
     <Compile Include="Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="Model3D\Transform\ObjectTransform.cs" />
-    <Compile Include="Model3D\Viewer.cs" />
     <Compile Include="Model\Application.cs" />
     <Compile Include="Plugin\Plugins.cs" />
     <Compile Include="View\Base.cs" />

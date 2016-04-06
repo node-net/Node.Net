@@ -30,5 +30,10 @@ namespace Node.Net
             }
             return null;
         }
+
+        public object Transform(object item,Type type)
+        {
+            return null;
+        }
     }
 }
