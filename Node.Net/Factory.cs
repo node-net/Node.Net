@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Node.Net
 {
-    public class Factory
+    public class Factory : IFactory
     {
-        private static Factory _default = null;
-        public static Factory Default
+        private static IFactory _default = null;
+        public static IFactory Default
         {
             get
             {
@@ -19,6 +19,10 @@ namespace Node.Net
                     _default = new Factory();
                 }
                 return _default;
+            }
+            set
+            {
+                _default = value;
             }
         }
 

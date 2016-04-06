@@ -118,6 +118,7 @@
     <Compile Include="Framework\Documents.cs" />
     <Compile Include="Framework\IDocument.cs" />
     <Compile Include="Framework\RecentFiles.cs" />
+    <Compile Include="IFactory.cs" />
     <Compile Include="IO\Directory.cs" />
     <Compile Include="IO\FileList.cs" />
     <Compile Include="IO\Stream.Extension.cs" />
