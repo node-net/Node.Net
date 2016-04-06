@@ -10,6 +10,7 @@ namespace Node.Net
     public interface IFactory
     {
         object Load(Stream stream, string name);
+        void Save(object item, Stream stream);
 
         object Transform(object item, Type type);
     }

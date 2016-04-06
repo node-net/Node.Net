@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,12 @@ namespace Node.Net
             }
         }
 
+        private IDictionary _resources = new Dictionary<string, dynamic>();
+        public IDictionary Resources
+        {
+            get { return _resources; }
+            set { _resources = value; }
+        }
         public object Load(Stream stream, string name)
         {
             if(name.Contains(".json"))
@@ -33,6 +40,11 @@ namespace Node.Net
                 return Json.Reader.Default.Read(stream);
             }
             return null;
+        }
+
+        public void Save(object item,Stream stream)
+        {
+
         }
 
         public object Transform(object item,Type type)
