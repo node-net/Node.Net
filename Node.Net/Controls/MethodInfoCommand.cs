@@ -27,11 +27,11 @@ namespace Node.Net.Controls
 
         private static MethodInfoCommand _default = new MethodInfoCommand();
         public static MethodInfoCommand Default => _default;
-        private bool methodExecuting = false;
+        //private bool methodExecuting = false;
         public event System.EventHandler PreMethodInvoke;
         public void OnPreMethodInvoke()
         {
-            methodExecuting = true;
+            //methodExecuting = true;
             if (!object.ReferenceEquals(null, PreMethodInvoke))
             {
                 PreMethodInvoke(this, new System.EventArgs());
@@ -44,7 +44,7 @@ namespace Node.Net.Controls
             {
                 PostMethodInvoke(this, new System.EventArgs());
             }
-            methodExecuting = false;
+            //methodExecuting = false;
         }
     }
 }

@@ -30,7 +30,7 @@
                         System.Reflection.Assembly pluginAssembly = System.Reflection.Assembly.LoadFrom(pluginPath);
                         Add(pluginName, pluginAssembly);
                     }
-                    catch(System.Exception e)
+                    catch
                     {
 
                     }

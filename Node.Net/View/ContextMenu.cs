@@ -42,7 +42,7 @@
 
                     System.Windows.Controls.MenuItem menuItem = new System.Windows.Controls.MenuItem();
                     menuItem.Header = displayName;
-                    menuItem.Command = new MethodInfoCommand(value, methodInfo);
+                    menuItem.Command = new Controls.MethodInfoCommand(value, methodInfo);
                     items.Add(menuItem);
                 }
             }

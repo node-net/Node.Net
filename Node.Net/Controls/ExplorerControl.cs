@@ -45,11 +45,11 @@ namespace Node.Net.Controls
             OnDataContextChanged();
         }
 
-        protected virtual void OnDataContextChanged()
+        protected override void OnDataContextChanged()
         {
 
             if (object.ReferenceEquals(null, verticalSplitView)) return;
-            INotifyPropertyChanged currentInotifyPropertyChanged = Node.Net.Json.KeyValuePair.GetValue(DataContext) as INotifyPropertyChanged;
+            INotifyPropertyChanged currentInotifyPropertyChanged = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as INotifyPropertyChanged;
             if(!object.ReferenceEquals(null,inotifyPropertyChanged))
             {
                 inotifyPropertyChanged.PropertyChanged -= _PropertyChanged;

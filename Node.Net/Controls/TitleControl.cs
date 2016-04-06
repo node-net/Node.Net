@@ -20,10 +20,10 @@ namespace Node.Net.Controls
 
         private void Update()
         {
-            if (!object.ReferenceEquals(null, Json.KeyValuePair.GetValue(DataContext)))
+            if (!object.ReferenceEquals(null, Collections.KeyValuePair.GetValue(DataContext)))
             {
                 System.Windows.Controls.Label label = new System.Windows.Controls.Label();
-                label.Content = Json.KeyValuePair.GetValue(DataContext).GetType().Name;
+                label.Content = Collections.KeyValuePair.GetValue(DataContext).GetType().Name;
                 Content = label;
             }
         }

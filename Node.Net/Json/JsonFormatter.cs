@@ -37,14 +37,14 @@ namespace Node.Net.Json
         {
             JsonFormatter formatter = new JsonFormatter();
             IDictionary d = (IDictionary)formatter.Deserialize(stream);
-            Copier.Copy(d, dictionary);
+            Collections.Copier.Copy(d, dictionary);
         }
 
         public static void Load(Stream stream, IDictionary dictionary,Type dictionaryType)
         {
             JsonFormatter formatter = new JsonFormatter();
             IDictionary d = (IDictionary)formatter.Deserialize(stream);
-            Copier.Copy(d, dictionary);
+            Collections.Copier.Copy(d, dictionary);
         }
 
         private SerializationBinder binder = new JsonSerializationBinder();

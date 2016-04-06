@@ -7,7 +7,7 @@ namespace Node.Net.Controls
     public class PropertyView : Grid
     {
         private FrameworkElement propertyControl = new PropertyControl();
-        private INotifyPropertyChanged inotifyPropertyChanged = null;
+        //private INotifyPropertyChanged inotifyPropertyChanged = null;
         public FrameworkElement PropertyControl
         {
             get { return propertyControl; }
@@ -27,7 +27,7 @@ namespace Node.Net.Controls
             OnDataContextChanged();
         }
 
-        protected virtual void OnDataContextChanged()
+        protected override void OnDataContextChanged()
         {
             Children.Clear();
             Children.Add(propertyControl);

@@ -51,7 +51,7 @@ namespace Node.Net.Model3D
             return Transform.ObjectTransform.ToGeometryModel3D(this, value);
         }
         
-        public virtual System.Windows.Media.Media3D.Transform3D GetTransform3D(object value)
+        public virtual Transform3D GetTransform3D(object value)
         {
             return Transform.ObjectTransform.ToTransform3D(this, value);
         }

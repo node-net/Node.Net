@@ -22,7 +22,7 @@ namespace Node.Net.Controls
             get { return elementASize; }
             set { elementASize = value; OnDataContextChanged(); }
         }
-        protected virtual void OnDataContextChanged()
+        protected override void OnDataContextChanged()
         {
             Children.Clear();
             if (!object.ReferenceEquals(null, gridSplitter))

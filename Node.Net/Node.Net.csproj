@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD9926A1-AF51-4D3B-8AD9-81948B4F46EF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Node.Net</RootNamespace>
+    <AssemblyName>Node.Net</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Net4.6\Debug\</OutputPath>
+    <IntermediateOutputPath>..\obj\Net4.6\Debug</IntermediateOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\lib\Net4.6\</OutputPath>
+    <IntermediateOutputPath>..\obj\Net4.6\Release</IntermediateOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Node.Net.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\Array.cs" />
+    <Compile Include="Collections\Children.cs" />
+    <Compile Include="Collections\Copier.cs" />
+    <Compile Include="Collections\Dictionary.cs" />
+    <Compile Include="Collections\DictionaryPropertyDescriptor.cs" />
+    <Compile Include="Collections\DictionaryTypeDescriptor.cs" />
+    <Compile Include="Collections\Document.cs" />
+    <Compile Include="Collections\Documents.cs" />
+    <Compile Include="Collections\Hash.cs" />
+    <Compile Include="Collections\HashBase.cs" />
+    <Compile Include="Collections\IFilter.cs" />
+    <Compile Include="Collections\Internal\PropertyDescriptor.cs" />
+    <Compile Include="Collections\KeyValuePair.cs" />
+    <Compile Include="Collections\MetaData.cs" />
+    <Compile Include="Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
+    <Compile Include="Collections\RecentFiles.cs" />
+    <Compile Include="Collections\Traverser.cs" />
+    <Compile Include="Controls\ContextMenu.cs" />
+    <Compile Include="Controls\DocumentExplorer.cs" />
+    <Compile Include="Controls\DynamicControl.cs" />
+    <Compile Include="Controls\DynamicGrid.cs" />
+    <Compile Include="Controls\Example.DataContexts.cs" />
+    <Compile Include="Controls\ExplorerControl.cs" />
+    <Compile Include="Controls\Grid.cs" />
+    <Compile Include="Controls\MethodInfoCommand.cs" />
+    <Compile Include="Controls\PropertyControl.cs" />
+    <Compile Include="Controls\PropertyView.cs" />
+    <Compile Include="Controls\ReadOnlyTextBox.cs" />
+    <Compile Include="Controls\SDIControl.cs" />
+    <Compile Include="Controls\SplitControl.cs" />
+    <Compile Include="Controls\TabControl.cs" />
+    <Compile Include="Controls\TabItem.cs" />
+    <Compile Include="Controls\TitleControl.cs" />
+    <Compile Include="Controls\TitledControl.cs" />
+    <Compile Include="Controls\TreeView.cs" />
+    <Compile Include="Controls\TreeViewItem.cs" />
+    <Compile Include="Controls\ViewTester.cs" />
+    <Compile Include="Controls\XmlTreeViewItem.cs" />
+    <Compile Include="Documents\Documents.cs" />
+    <Compile Include="Documents\IDocument.cs" />
+    <Compile Include="Documents\TextDocument.cs" />
+    <Compile Include="Environment\Command.cs" />
+    <Compile Include="Environment\Environment.cs" />
+    <Compile Include="Environment\Internal\Executor.cs" />
+    <Compile Include="Environment\MyDocuments.cs" />
+    <Compile Include="Environment\Resources.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="Extensions\Image.cs" />
+    <Compile Include="Extensions\ImageSource.cs" />
+    <Compile Include="Extensions\Stream.Extension.cs" />
+    <Compile Include="Extensions\TextReader.Extension.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="Framework\Application.cs" />
+    <Compile Include="Framework\Controls\DynamicView.cs" />
+    <Compile Include="Framework\Controls\SDIControl.cs" />
+    <Compile Include="Framework\Controls\SDIWindow.cs" />
+    <Compile Include="Framework\Documents.cs" />
+    <Compile Include="Framework\IDocument.cs" />
+    <Compile Include="Framework\RecentFiles.cs" />
+    <Compile Include="IO\Directory.cs" />
+    <Compile Include="IO\FileList.cs" />
+    <Compile Include="IO\Stream.Extension.cs" />
+    <Compile Include="IO\TemporaryDirectory.cs" />
+    <Compile Include="IO\TextReader.Extension.cs" />
+    <Compile Include="Json\Internal\JsonReader.cs" />
+    <Compile Include="Json\Internal\JsonWriter.cs" />
+    <Compile Include="Json\JsonFormatter.cs" />
+    <Compile Include="Json\JsonSerializationBinder.cs" />
+    <Compile Include="Json\Reader.cs" />
+    <Compile Include="Json\Writer.cs" />
+    <Compile Include="Measurement\Angle.cs" />
+    <Compile Include="Measurement\AngularUnit.cs" />
+    <Compile Include="Measurement\Length.cs" />
+    <Compile Include="Measurement\LengthConverter.cs" />
+    <Compile Include="Measurement\LengthUnit.cs" />
+    <Compile Include="Model2D\Viewer.cs" />
+    <Compile Include="Model3D\IRenderer.cs" />
+    <Compile Include="Model3D\Renderer.cs" />
+    <Compile Include="Model3D\Transform\IDictionaryTransform.cs" />
+    <Compile Include="Model3D\Transform\ObjectTransform.cs" />
+    <Compile Include="Model3D\Viewer.cs" />
+    <Compile Include="Model\Application.cs" />
+    <Compile Include="Plugin\Plugins.cs" />
+    <Compile Include="View\Base.cs" />
+    <Compile Include="View\ComboBox.cs" />
+    <Compile Include="View\ComboBoxItem.cs" />
+    <Compile Include="View\ContextMenu.cs" />
+    <Compile Include="View\DataGridView.cs" />
+    <Compile Include="View\DynamicView.cs" />
+    <Compile Include="View\DynamicViewSelector.cs" />
+    <Compile Include="View\Explorer.cs" />
+    <Compile Include="View\ExplorerView.cs" />
+    <Compile Include="View\FrameworkElements.cs" />
+    <Compile Include="View\Grid.cs" />
+    <Compile Include="View\HashGrid.cs" />
+    <Compile Include="View\HashGridEditor.cs" />
+    <Compile Include="View\JsonView.cs" />
+    <Compile Include="View\KeyValuePair.cs" />
+    <Compile Include="View\ListView.cs" />
+    <Compile Include="View\ListViewItem.cs" />
+    <Compile Include="View\MessageBox.cs" />
+    <Compile Include="View\Properties.cs" />
+    <Compile Include="View\PropertiesExplorer.cs" />
+    <Compile Include="View\PropertyView.cs" />
+    <Compile Include="View\ReadOnlyTextView.cs" />
+    <Compile Include="View\SDIApplication.cs" />
+    <Compile Include="View\SDIMainControl.cs" />
+    <Compile Include="View\SplitterGrid.cs" />
+    <Compile Include="View\SplitView.cs" />
+    <Compile Include="View\TabControl.cs" />
+    <Compile Include="View\TabItem.cs" />
+    <Compile Include="View\TextView.cs" />
+    <Compile Include="View\Title.cs" />
+    <Compile Include="View\TreeView.cs" />
+    <Compile Include="View\TreeViewItem.cs" />
+    <Compile Include="View\Window.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Node.Net.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\HelixView3D.Resources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

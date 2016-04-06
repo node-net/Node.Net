@@ -63,7 +63,7 @@ namespace Node.Net.Json
             return result;
         }
 
-        private int level = 0;
+        //private int level = 0;
         
         public void Write(System.IO.Stream stream, System.Collections.IDictionary dictionary)
         {

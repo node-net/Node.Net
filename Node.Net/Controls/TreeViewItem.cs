@@ -106,7 +106,7 @@ namespace Node.Net.Controls
         public static bool IsValidChild(object item)
         {
             if (object.ReferenceEquals(null, item)) return false;
-            object value = Json.KeyValuePair.GetValue(item);
+            object value = Collections.KeyValuePair.GetValue(item);
             if (object.ReferenceEquals(null, value)) return false;
             if (typeof(string).IsAssignableFrom(value.GetType())) return false;
             if (value.GetType().IsValueType) return false;
@@ -114,7 +114,7 @@ namespace Node.Net.Controls
         }
         public static System.Collections.IList GetChildren(object item)
         {
-            object value = Json.KeyValuePair.GetValue(item);
+            object value = Collections.KeyValuePair.GetValue(item);
             System.Collections.Generic.List<object> children = new System.Collections.Generic.List<object>();
             if (object.ReferenceEquals(null, value)) return children;
             if (typeof(string).IsAssignableFrom(value.GetType())) return children;

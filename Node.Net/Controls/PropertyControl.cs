@@ -29,7 +29,7 @@ namespace Node.Net.Controls
             if (object.ReferenceEquals(null, propertyGrid)) return;
 
             title.DataContext = DataContext;
-            object value = Json.KeyValuePair.GetValue(DataContext);
+            object value = Collections.KeyValuePair.GetValue(DataContext);
             if (object.ReferenceEquals(null, value))
             {
                 propertyGrid.SelectedObject = null;
@@ -73,7 +73,7 @@ namespace Node.Net.Controls
                 if (use_adapter)
                 {
                     Collections.Dictionary d = new Collections.Dictionary();
-                    Json.Copier.Copy(idictionary, d);
+                    Collections.Copier.Copy(idictionary, d);
                     propertyGrid.SelectedObject = d;
                 }
                 else { 

@@ -8,19 +8,19 @@ namespace Node.Net.Model3D.Transform
     {
         public static Visual3D ToVisual3D(IRenderer renderer, object value)
         {
-            IDictionary dictionary = Json.KeyValuePair.GetValue(value) as IDictionary;
+            IDictionary dictionary = Collections.KeyValuePair.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToVisual3D(renderer, dictionary);
             return null;
         }
         public static ModelVisual3D ToModelVisual3D(IRenderer renderer, object value)
         {
-            IDictionary dictionary = Json.KeyValuePair.GetValue(value) as IDictionary;
+            IDictionary dictionary = Collections.KeyValuePair.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModelVisual3D(renderer, dictionary);
             return null;
         }
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, object value)
         {
-            IDictionary dictionary = Json.KeyValuePair.GetValue(value) as IDictionary;
+            IDictionary dictionary = Collections.KeyValuePair.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModel3D(renderer, dictionary);
             return null;
         }
@@ -28,7 +28,7 @@ namespace Node.Net.Model3D.Transform
         {
             return IDictionaryTransform.ToGeometryModel3D(renderer, value as IDictionary);
         }
-        public static System.Windows.Media.Media3D.Transform3D ToTransform3D(IRenderer renderer, object value)
+        public static Transform3D ToTransform3D(IRenderer renderer, object value)
         {
             IDictionary dictionary = value as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToTransform3D(renderer, dictionary);

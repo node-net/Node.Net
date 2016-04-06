@@ -32,7 +32,7 @@ namespace Node.Net.Collections
             Clear();
             Json.Reader reader = new Json.Reader();
             IDictionary dictionary = (IDictionary)reader.Read(stream);
-            Json.Copier.Copy(dictionary, this);
+            Collections.Copier.Copy(dictionary, this);
         }
 
         #region ICustomTypeDescriptor interface

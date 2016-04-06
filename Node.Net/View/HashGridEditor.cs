@@ -6,7 +6,7 @@ namespace Node.Net.View
     public class HashGridEditor : HashGrid
     {
         public HashGridEditor() { }
-        public HashGridEditor(Node.Net.Json.Hash hash, string[] ordered_keys = null)
+        public HashGridEditor(Node.Net.Collections.Hash hash, string[] ordered_keys = null)
             : base(hash, ordered_keys)
         {
         }
@@ -15,7 +15,7 @@ namespace Node.Net.View
         {
             RowDefinitions.Clear();
             Children.Clear();
-            Node.Net.Json.Hash hash = DataContext as Node.Net.Json.Hash;
+            Node.Net.Collections.Hash hash = DataContext as Node.Net.Collections.Hash;
             if (ReferenceEquals(null, hash))
             {
                 
@@ -47,7 +47,7 @@ namespace Node.Net.View
 
         private void ValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Node.Net.Json.Hash hash = DataContext as Node.Net.Json.Hash;
+            Node.Net.Collections.Hash hash = DataContext as Node.Net.Collections.Hash;
             if (!ReferenceEquals(null, hash))
             {
                 string key = ((TextBox)sender).Tag.ToString();

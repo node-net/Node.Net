@@ -120,7 +120,7 @@ namespace Node.Net.Model3D.Transform
 
             return null;
         }
-        public static System.Windows.Media.Media3D.Transform3D ToTransform3D(IRenderer renderer, System.Collections.IDictionary value)
+        public static Transform3D ToTransform3D(IRenderer renderer, System.Collections.IDictionary value)
         {
             Transform3DGroup transformGroup = new Transform3DGroup();
             transformGroup.Children.Add(new ScaleTransform3D(renderer.GetScale(value)));
@@ -131,7 +131,7 @@ namespace Node.Net.Model3D.Transform
             transformGroup.Children.Add(new TranslateTransform3D(renderer.GetTranslation(value)));
             return transformGroup;
         }
-        public static System.Windows.Media.Media3D.Transform3D ToTransform3D_NoScale(IRenderer renderer, System.Collections.IDictionary value)
+        public static Transform3D ToTransform3D_NoScale(IRenderer renderer, System.Collections.IDictionary value)
         {
             Transform3DGroup transformGroup = new Transform3DGroup();
             transformGroup.Children.Add(GetRotateTransform3D(value));

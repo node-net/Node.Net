@@ -19,7 +19,7 @@ namespace Node.Net.Json.Internal
         {
             IDictionary d = Load(value) as IDictionary;
             dictionary.Clear();
-            Json.Copier.Copy(d, dictionary);
+            Collections.Copier.Copy(d, dictionary);
             return dictionary;
         }
         public static object Load(Stream stream)
@@ -30,7 +30,7 @@ namespace Node.Net.Json.Internal
         {
             IDictionary d = Load(stream) as IDictionary;
             dictionary.Clear();
-            Json.Copier.Copy(d, dictionary);
+            Collections.Copier.Copy(d, dictionary);
             return dictionary;
         }
 
@@ -283,7 +283,7 @@ namespace Node.Net.Json.Internal
                 IDictionary new_dictionary = Activator.CreateInstance(targetType) as IDictionary;
                 if (!ReferenceEquals(null, new_dictionary))
                 {
-                    Copier.Copy(source, new_dictionary);
+                    Collections.Copier.Copy(source, new_dictionary);
                     result = new_dictionary;
                 }
             }

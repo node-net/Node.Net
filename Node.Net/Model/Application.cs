@@ -1,6 +1,6 @@
 namespace Node.Net.Model
 {
-    public class Application : Node.Net.Json.HashBase
+    public class Application : Node.Net.Collections.HashBase
     {
         
     }

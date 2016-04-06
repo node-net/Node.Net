@@ -24,7 +24,7 @@ namespace Node.Net.View
         private void update()
         {
             Text = "";
-            IEnumerable ienumerable = Json.KeyValuePair.GetValue(DataContext) as IEnumerable;
+            IEnumerable ienumerable = Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
             if (!object.ReferenceEquals(null, ienumerable))
             {
                 StringBuilder sb = new StringBuilder();

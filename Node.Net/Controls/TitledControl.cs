@@ -16,7 +16,7 @@ namespace Node.Net.Controls
         {
             OnDataContextChanged();
         }
-        protected virtual void OnDataContextChanged()
+        protected override void OnDataContextChanged()
         {
             Children.Clear();
             Children.Add(new Label()
@@ -24,10 +24,10 @@ namespace Node.Net.Controls
                 Background = Brushes.LightGray,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = Json.KeyValuePair.GetKey(DataContext)
+                Content = Collections.KeyValuePair.GetKey(DataContext)
             });
 
-            UIElement element = (UIElement)Json.KeyValuePair.GetValue(DataContext);
+            UIElement element = (UIElement)Collections.KeyValuePair.GetValue(DataContext);
             if (!object.ReferenceEquals(null, element))
             {
                 Children.Add(element);

@@ -18,7 +18,7 @@ namespace Node.Net.Controls
         public void Update()
         {
             Items.Clear();
-            foreach (System.Windows.Controls.MenuItem item in GetMenuItems(Json.KeyValuePair.GetValue(DataContext)))
+            foreach (System.Windows.Controls.MenuItem item in GetMenuItems(Collections.KeyValuePair.GetValue(DataContext)))
             {
                 Items.Add(item);
             }

@@ -30,12 +30,12 @@ namespace Node.Net.Controls
 
         protected virtual string GetText()
         {
-            IDictionary dictionary = Json.KeyValuePair.GetValue(DataContext) as IDictionary;
+            IDictionary dictionary = Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
             if(!object.ReferenceEquals(null, dictionary))
             {
                 return Json.Writer.ToString(dictionary, Json.JsonFormat.Indented);
             }
-            IEnumerable ienumerable = Json.KeyValuePair.GetValue(DataContext) as IEnumerable;
+            IEnumerable ienumerable = Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
             if (!object.ReferenceEquals(null, ienumerable))
             {
                 StringBuilder sb = new StringBuilder();
