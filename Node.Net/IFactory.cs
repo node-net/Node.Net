@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
-    public interface IFactory
+    public interface IFactory : ITransformer
     {
         object Load(Stream stream, string name);
         void Save(object item, Stream stream);
 
-        object Transform(object item, Type type);
+        
     }
 }
