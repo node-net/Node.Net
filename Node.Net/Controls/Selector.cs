@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Node.Net.Controls
@@ -30,7 +31,8 @@ namespace Node.Net.Controls
         {
             base.OnInitialized(e);
 
-            ColumnDefinitions.Add(new ColumnDefinition());
+            ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            ColumnDefinitions.Add(new ColumnDefinition() { Width=GridLength.Auto});
             ColumnDefinitions.Add(new ColumnDefinition());
 
             Children.Add(new Label() { Content = _title });
