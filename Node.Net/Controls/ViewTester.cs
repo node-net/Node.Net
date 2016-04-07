@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -35,7 +31,7 @@ namespace Node.Net.Controls
         private object _models = null;
         private FrameworkElement _view = null;
         private object _selectedModel = null;
-        public ViewTester(object models,FrameworkElement view)
+        public ViewTester(object models, FrameworkElement view)
         {
             _models = models;
             _view = view;
