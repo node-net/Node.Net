@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Model3D.Transform
@@ -48,7 +42,7 @@ namespace Node.Net.Model3D.Transform
         {
             return ToModel3DGroup(renderer, value);
         }
-        public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer,IDictionary value)
+        public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer, IDictionary value)
         {
             Model3DGroup model3DGroup = new Model3DGroup();
             model3DGroup.Transform = ToTransform3D_NoScale(renderer, value);
@@ -56,7 +50,7 @@ namespace Node.Net.Model3D.Transform
 
             // Primary Model
             System.Windows.Media.Media3D.Model3D primaryModel = null;
-            foreach(string modelKey in renderer.Model3DKeys)
+            foreach (string modelKey in renderer.Model3DKeys)
             {
                 if (object.ReferenceEquals(null, primaryModel))
                 {
@@ -64,7 +58,7 @@ namespace Node.Net.Model3D.Transform
                     {
                         string modelKeyValue = value[modelKey].ToString();
                         System.Windows.Media.Media3D.Model3D modelResource = renderer.GetResource(modelKeyValue) as System.Windows.Media.Media3D.Model3D;
-                        if(!object.ReferenceEquals(null,modelResource))
+                        if (!object.ReferenceEquals(null, modelResource))
                         {
                             Model3DGroup modelGroup = new Model3DGroup();
                             //modelGroup.Transform = ToTransform3D(renderer, value);
@@ -75,11 +69,11 @@ namespace Node.Net.Model3D.Transform
                     }
                 }
             }
-            if(object.ReferenceEquals(null,primaryModel))
+            if (object.ReferenceEquals(null, primaryModel))
             {
                 primaryModel = ToGeometryModel3D(renderer, value);
             }
-            if(!object.ReferenceEquals(null,primaryModel))
+            if (!object.ReferenceEquals(null, primaryModel))
             {
                 model3DGroup.Children.Add(primaryModel);
             }
@@ -120,7 +114,7 @@ namespace Node.Net.Model3D.Transform
 
             return null;
         }
-        public static Transform3D ToTransform3D(IRenderer renderer, System.Collections.IDictionary value)
+        public static System.Windows.Media.Media3D.Transform3D ToTransform3D(IRenderer renderer, System.Collections.IDictionary value)
         {
             Transform3DGroup transformGroup = new Transform3DGroup();
             transformGroup.Children.Add(new ScaleTransform3D(renderer.GetScale(value)));
@@ -131,7 +125,7 @@ namespace Node.Net.Model3D.Transform
             transformGroup.Children.Add(new TranslateTransform3D(renderer.GetTranslation(value)));
             return transformGroup;
         }
-        public static Transform3D ToTransform3D_NoScale(IRenderer renderer, System.Collections.IDictionary value)
+        public static System.Windows.Media.Media3D.Transform3D ToTransform3D_NoScale(IRenderer renderer, System.Collections.IDictionary value)
         {
             Transform3DGroup transformGroup = new Transform3DGroup();
             transformGroup.Children.Add(GetRotateTransform3D(value));
@@ -152,14 +146,14 @@ namespace Node.Net.Model3D.Transform
                 double rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
-            if(value.Contains("Orientation"))
+            if (value.Contains("Orientation"))
             {
                 double rotationZ_degrees = GetRotationDegrees(value, "Orientation");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
             if (value.Contains("RotationY"))
             {
-                double rotationY_degrees = GetRotationDegrees(value,"RotationY");
+                double rotationY_degrees = GetRotationDegrees(value, "RotationY");
                 rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("Tilt"))
@@ -200,33 +194,33 @@ namespace Node.Net.Model3D.Transform
             return result;
         }
 
-        private static double GetLengthMeters(IDictionary dictionary,string key)
+        private static double GetLengthMeters(IDictionary dictionary, string key)
         {
             return Measurement.Length.Parse(dictionary[key].ToString())[Measurement.LengthUnit.Meters];
         }
-        private static double GetRotationDegrees(IDictionary dictionary,string key)
+        private static double GetRotationDegrees(IDictionary dictionary, string key)
         {
             if (object.ReferenceEquals(null, dictionary)) return 0;
             if (!dictionary.Contains(key)) return 0;
             if (object.ReferenceEquals(null, dictionary[key])) return 0;
             return Measurement.Angle.Parse(dictionary[key].ToString())[Measurement.AngularUnit.Degrees];
         }
-        public static Vector3D ToScale(IRenderer renderer,IDictionary value)
+        public static Vector3D ToScale(IRenderer renderer, IDictionary value)
         {
             Vector3D result = new Vector3D(1, 1, 1);
             if (value.Contains("ScaleX"))
             {
                 result.X = GetLengthMeters(value, "ScaleX");
             }
-            if(value.Contains("Length"))
+            if (value.Contains("Length"))
             {
                 result.X = GetLengthMeters(value, "Length");
             }
             if (value.Contains("ScaleY"))
             {
-                result.Y = GetLengthMeters(value,"ScaleY");
+                result.Y = GetLengthMeters(value, "ScaleY");
             }
-            if(value.Contains("Width"))
+            if (value.Contains("Width"))
             {
                 result.Y = GetLengthMeters(value, "Width");
             }
@@ -234,7 +228,7 @@ namespace Node.Net.Model3D.Transform
             {
                 result.Z = GetLengthMeters(value, "ScaleZ");
             }
-            if(value.Contains("Height"))
+            if (value.Contains("Height"))
             {
                 result.Z = GetLengthMeters(value, "Height");
             }

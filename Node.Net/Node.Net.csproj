@@ -124,6 +124,8 @@
     <Compile Include="IO\Stream.Extension.cs" />
     <Compile Include="IO\TemporaryDirectory.cs" />
     <Compile Include="IO\TextReader.Extension.cs" />
+    <Compile Include="ITransformer.cs" />
+    <Compile Include="ITypeTransformer.cs" />
     <Compile Include="Json\Internal\JsonReader.cs" />
     <Compile Include="Json\Internal\JsonWriter.cs" />
     <Compile Include="Json\JsonFormatter.cs" />
@@ -138,10 +140,17 @@
     <Compile Include="Model2D\Viewer.cs" />
     <Compile Include="Model3D\IRenderer.cs" />
     <Compile Include="Model3D\Renderer.cs" />
+    <Compile Include="Model3D\Transform3D.cs" />
     <Compile Include="Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="Model3D\Transform\ObjectTransform.cs" />
     <Compile Include="Model\Application.cs" />
     <Compile Include="Plugin\Plugins.cs" />
+    <Compile Include="Transformer.cs" />
+    <Compile Include="Transformers\BrushTransformer.cs" />
+    <Compile Include="Transformers\ColorTransformer.cs" />
+    <Compile Include="Transformers\MaterialTransformer.cs" />
+    <Compile Include="Transformers\Transform3DTransformer.cs" />
+    <Compile Include="Transformers\TypeTransformer.cs" />
     <Compile Include="View\Base.cs" />
     <Compile Include="View\ComboBox.cs" />
     <Compile Include="View\ComboBoxItem.cs" />
