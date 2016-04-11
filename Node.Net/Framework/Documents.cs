@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -77,7 +78,6 @@ namespace Node.Net.Framework
         {
             object document = Activator.CreateInstance(documentType);
 
-            
             Type[] types = { typeof(string), typeof(Stream) };
             MethodInfo openInfo = documentType.GetMethod("Open", types);
             try {
@@ -88,7 +88,6 @@ namespace Node.Net.Framework
                 }
                 else
                 {
-                    //types = { typeof(Stream) };
                     Type[] types2 = { typeof(Stream) };
                     openInfo = documentType.GetMethod("Open", types2);
                     if (!object.ReferenceEquals(null, openInfo))
@@ -110,29 +109,20 @@ namespace Node.Net.Framework
 
             if(object.ReferenceEquals(null,openInfo))
             {
-                throw new InvalidOperationException($"type {documentType.FullName} does not have public Open(Stream stream) method or public Open(string name,Stream stream) method");
+                if (typeof(IDictionary).IsAssignableFrom(document.GetType()))
+                {
+                    IDictionary d = Node.Net.Json.Reader.Default.Read(stream) as IDictionary;
+                    if(!object.ReferenceEquals(null, d))
+                    {
+                        Node.Net.Collections.Copier.Copy(d, (document as IDictionary));
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException($"type {documentType.FullName} does not have public Open(Stream stream) method or public Open(string name,Stream stream) method");
+                }
             }
-            /*
-            Type[] types = { typeof(Stream) };
-            MethodInfo openInfo = documentType.GetMethod("Open", types);
-            if (object.ReferenceEquals(null, openInfo))
-            {
-                throw new InvalidOperationException($"type {documentType.FullName} does not have public Open(Stream stream) method");
-            }
-            object[] parameters = { stream };
 
-            try {
-                openInfo.Invoke(document, parameters);
-            }
-            catch(Exception e)
-            {
-                System.Windows.MessageBox.Show(
-                    $"Unable to open {name}{System.Environment.NewLine}{System.Environment.NewLine}{e.Message}",
-                    "Error opening file",
-                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                return;
-            }
-            */
             if (MaximumCount > 0 && Count == maximumCount)
             { base.Clear(); }
             Add(name, document);
