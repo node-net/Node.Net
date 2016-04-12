@@ -106,6 +106,7 @@
     <Compile Include="Environment\MyDocuments.cs" />
     <Compile Include="Environment\Resources.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="Extensions\IDictionary.Extension.cs" />
     <Compile Include="Extensions\Image.cs" />
     <Compile Include="Extensions\ImageSource.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
