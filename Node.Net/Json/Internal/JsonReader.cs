@@ -142,6 +142,11 @@ namespace Node.Net.Json.Internal
             char ch = (char)reader.Peek();
             reader.Read(); // consume single or double quote
             string result = reader.Seek(ch);
+
+
+            result = result.Replace("\\u0022", "\"");
+            result = result.Replace("\\u005c", "\\");
+
             reader.Read(); // consume escaped character
             return result;
         }

@@ -82,6 +82,13 @@ namespace Node.Net.Json.Internal
         private void WriteString(TextWriter writer, object value)
         {
             string svalue = value.ToString();
+            // Escape '\' first
+            string escaped_value = svalue.Replace("\\", "\\u005c");
+            // Escape '"'
+            escaped_value = escaped_value.Replace("\"", "\\u0022");
+            writer.Write($"\"{escaped_value}\"");
+            /*
+            string svalue = value.ToString();
             if (svalue.Contains("\\"))
             {
                 svalue = EscapeBackslashes(svalue);
@@ -90,7 +97,7 @@ namespace Node.Net.Json.Internal
             {
                 svalue = EscapeDoubleQuotes(svalue);
             }
-            writer.Write($"\"{svalue}\"");
+            writer.Write($"\"{svalue}\"");*/
         }
         private void WriteBytes(TextWriter writer,byte[] bytes)
         {
