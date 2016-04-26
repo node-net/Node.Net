@@ -38,7 +38,7 @@ namespace Node.Net.Extensions
                 List<string> keys = new List<string>(Find(dictionary,filter));
                 foreach (string key in keys)
                 {
-                    results.Add(key, dictionary[key]);
+                    results.Add(key, Get(dictionary,key));
                 }
             }
             return results;
