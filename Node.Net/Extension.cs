@@ -13,6 +13,7 @@ namespace Node.Net
         public static object Get(this IDictionary dictionary, string key) => Extensions.IDictionaryExtension.Get(dictionary, key);
         public static void Set(this IDictionary dictionary, string key, object value) => Extensions.IDictionaryExtension.Set(dictionary, key, value);
         public static string[] Find(this IDictionary dictionary, IFilter filter) => Extensions.IDictionaryExtension.Find(dictionary, filter);
+        public static IDictionary Collect(this IDictionary dictionary, IFilter filter) => Extensions.IDictionaryExtension.Collect(dictionary, filter);
         #endregion
 
         #region TextReader

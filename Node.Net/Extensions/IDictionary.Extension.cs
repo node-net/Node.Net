@@ -28,6 +28,22 @@ namespace Node.Net.Extensions
             }
             return keys.ToArray();
         }
+
+        public static IDictionary Collect(IDictionary dictionary,IFilter filter)
+        {
+        
+            Dictionary<string, dynamic> results = new Dictionary<string, dynamic>();
+            if (!object.ReferenceEquals(null, dictionary))
+            {
+                List<string> keys = new List<string>(Find(dictionary,filter));
+                foreach (string key in keys)
+                {
+                    results.Add(key, dictionary[key]);
+                }
+            }
+            return results;
+        }
+    
         public static object Get(IDictionary dictionary, string key)
         {
             if (key.Contains("/"))
