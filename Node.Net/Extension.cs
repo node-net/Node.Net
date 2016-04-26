@@ -8,9 +8,11 @@ namespace Node.Net
     public static class Extension
     {
         #region IDictionary
-        public static void Save(IDictionary dictionary, Stream stream) => Extensions.IDictionaryExtension.Save(dictionary, stream);
-        public static void SavE(IDictionary dictionary, string filename) => Extensions.IDictionaryExtension.Save(dictionary, filename);
-
+        public static void Save(this IDictionary dictionary, Stream stream) => Extensions.IDictionaryExtension.Save(dictionary, stream);
+        public static void Save(this IDictionary dictionary, string filename) => Extensions.IDictionaryExtension.Save(dictionary, filename);
+        public static object Get(this IDictionary dictionary, string key) => Extensions.IDictionaryExtension.Get(dictionary, key);
+        public static void Set(this IDictionary dictionary, string key, object value) => Extensions.IDictionaryExtension.Set(dictionary, key, value);
+        public static string[] Find(this IDictionary dictionary, IFilter filter) => Extensions.IDictionaryExtension.Find(dictionary, filter);
         #endregion
 
         #region TextReader
