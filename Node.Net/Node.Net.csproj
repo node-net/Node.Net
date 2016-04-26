@@ -128,8 +128,10 @@
     <Compile Include="IO\TemporaryDirectory.cs" />
     <Compile Include="IO\TextReader.Extension.cs" />
     <Compile Include="IReader.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="ITransformer.cs" />
     <Compile Include="ITypeTransformer.cs" />
+    <Compile Include="IWriter.cs" />
     <Compile Include="Json\Internal\JsonReader.cs" />
     <Compile Include="Json\Internal\JsonWriter.cs" />
     <Compile Include="Json\JsonFormatter.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Model\Application.cs" />
     <Compile Include="Plugin\Plugins.cs" />
     <Compile Include="Reader.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="Transformer.cs" />
     <Compile Include="Transformers\BrushTransformer.cs" />
     <Compile Include="Transformers\ColorTransformer.cs" />
