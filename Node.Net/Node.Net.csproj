@@ -145,6 +145,7 @@
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Model2D\Viewer.cs" />
     <Compile Include="Model3D\IRenderer.cs" />
+    <Compile Include="Model3D\MeshHelper.cs" />
     <Compile Include="Model3D\Renderer.cs" />
     <Compile Include="Model3D\Transform3D.cs" />
     <Compile Include="Model3D\Transform\IDictionaryTransform.cs" />
