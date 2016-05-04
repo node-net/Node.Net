@@ -1,4 +1,6 @@
-﻿namespace Node.Net.Measurement
+﻿using System.Collections;
+
+namespace Node.Net.Measurement
 {
     public class Angle : System.IComparable,
                          System.ComponentModel.INotifyPropertyChanged
@@ -116,5 +118,13 @@
         }
 
         public override string ToString() => angleValue.ToString() + " " + abbreviations[angularUnit];
+
+        public static double GetRotationDegrees(IDictionary dictionary, string key)
+        {
+            if (object.ReferenceEquals(null, dictionary)) return 0;
+            if (!dictionary.Contains(key)) return 0;
+            if (object.ReferenceEquals(null, dictionary[key])) return 0;
+            return Angle.Parse(dictionary[key].ToString())[AngularUnit.Degrees];
+        }
     }
 }
