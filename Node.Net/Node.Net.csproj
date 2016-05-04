@@ -109,11 +109,8 @@
     <Compile Include="Extensions\IDictionary.Extension.cs" />
     <Compile Include="Extensions\Image.cs" />
     <Compile Include="Extensions\ImageSource.cs" />
-    <Compile Include="Extensions\Point3D.Extension.cs" />
-    <Compile Include="Extensions\RotateTransform3D.Extension.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
-    <Compile Include="Extensions\Vector3D.Extension.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Filters\TypeFilter.cs" />
     <Compile Include="Framework\Application.cs" />
@@ -151,6 +148,7 @@
     <Compile Include="Model3D\MaterialHelper.cs" />
     <Compile Include="Model3D\MeshHelper.cs" />
     <Compile Include="Model3D\Renderer.cs" />
+    <Compile Include="Model3D\RenderHelper.cs" />
     <Compile Include="Model3D\Transform3D.cs" />
     <Compile Include="Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="Model3D\Transform\ObjectTransform.cs" />
