@@ -1,4 +1,6 @@
-﻿namespace Node.Net.Collections
+﻿using System.Collections.Generic;
+
+namespace Node.Net.Collections
 {
     public class KeyValuePair
     {
@@ -22,6 +24,11 @@
         {
             if (IsKeyValuePair(item))
             {
+                if (item.GetType() == typeof(KeyValuePair<string, dynamic>))
+                {
+                    KeyValuePair<string, dynamic> kvp = (KeyValuePair<string, dynamic>)(item);
+                    return kvp.Key;
+                }
                 System.Reflection.PropertyInfo valueInfo = item.GetType().GetProperty("Key");
                 return valueInfo.GetValue(item, null);
             }
@@ -32,6 +39,11 @@
         {
             if (IsKeyValuePair(item))
             {
+                if (item.GetType() == typeof(KeyValuePair<string, dynamic>))
+                {
+                    KeyValuePair<string, dynamic> kvp = (KeyValuePair<string, dynamic>)(item);
+                    return kvp.Value;
+                }
                 System.Reflection.PropertyInfo valueInfo = item.GetType().GetProperty("Value");
                 return valueInfo.GetValue(item, null);
             }

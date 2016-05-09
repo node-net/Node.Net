@@ -74,6 +74,7 @@
     <Compile Include="Collections\MetaData.cs" />
     <Compile Include="Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
     <Compile Include="Collections\RecentFiles.cs" />
+    <Compile Include="Collections\RuntimeMetaData.cs" />
     <Compile Include="Collections\Traverser.cs" />
     <Compile Include="Controls\ContextMenu.cs" />
     <Compile Include="Controls\DocumentExplorer.cs" />
