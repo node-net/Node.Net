@@ -51,7 +51,7 @@ namespace Node.Net.Controls
             Items.Clear();
 
             TreeViewItemDetailed[] children = GetChildren();
-            if(expanding)
+            if(IsExpanded || expanding)
             {
                 foreach (TreeViewItemDetailed tvi in children)
                 {
@@ -112,6 +112,7 @@ namespace Node.Net.Controls
                     if (!object.ReferenceEquals(null, item))
                     {
                         TreeViewItemDetailed tvi = Activator.CreateInstance(GetType()) as TreeViewItemDetailed;
+                        tvi.IsExpanded = false;
                         tvi.DataContext = item;
                         tvi.ShowValues = ShowValues;
                         children.Add(tvi);
