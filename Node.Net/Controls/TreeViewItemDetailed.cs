@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml;
 
 namespace Node.Net.Controls
@@ -14,7 +15,7 @@ namespace Node.Net.Controls
         public bool ShowValues
         {
             get { return showValues; }
-            set { showValues = value; OnDataContextChanged(); }
+            set { showValues = value; Update(); }
         }
 
         public TreeViewItemDetailed()
@@ -24,9 +25,14 @@ namespace Node.Net.Controls
 
         private void _DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            OnDataContextChanged();
+            Update();
         }
 
+        protected override void OnExpanded(RoutedEventArgs e)
+        {
+            Update(true);
+            base.OnExpanded(e);
+        }
         private bool IsValue(object item)
         {
             if (object.ReferenceEquals(null, item)) return true;
@@ -39,14 +45,32 @@ namespace Node.Net.Controls
             }
             return false;
         }
-        protected virtual void OnDataContextChanged()
+        protected virtual void Update(bool expanding = false)
         {
             Header = GetHeader();
             Items.Clear();
+
+            TreeViewItemDetailed[] children = GetChildren();
+            if(expanding)
+            {
+                foreach (TreeViewItemDetailed tvi in children)
+                {
+                    Items.Add(tvi);
+                }
+            }
+            else
+            {
+                Items.Add(new TreeViewItem());
+            }
+            /*
+            if(IsExpanded)
+            {
+
+            }
             foreach (TreeViewItemDetailed tvi in GetChildren())
             {
                 Items.Add(tvi);
-            }
+            }*/
         }
 
         public static bool IsChild(object item)
