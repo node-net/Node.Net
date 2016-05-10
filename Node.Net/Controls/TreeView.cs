@@ -23,7 +23,7 @@ namespace Node.Net.Controls
             Update();
         }
 
-        private System.Type treeViewItemType = typeof(TreeViewItem);
+        private System.Type treeViewItemType = typeof(TreeViewItemDetailed);
         public System.Type TreeViewItemType
         {
             get

@@ -23,14 +23,20 @@ namespace Node.Net.Controls
             this.DataContextChanged += _DataContextChanged;
         }
 
+        public TreeViewItemDetailed(object value)
+        {
+            this.DataContextChanged += _DataContextChanged;
+            DataContext = value;
+        }
+
         private void _DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            Update();
+            Update(0);
         }
 
         protected override void OnExpanded(RoutedEventArgs e)
         {
-            Update(true);
+            Update(2);
             base.OnExpanded(e);
         }
         private bool IsValue(object item)
@@ -45,11 +51,23 @@ namespace Node.Net.Controls
             }
             return false;
         }
-        protected virtual void Update(bool expanding = false)
+        protected virtual void Update(int childDepth = 1)
         {
             Header = GetHeader();
             Items.Clear();
 
+            if(childDepth == 0)
+            {
+                Items.Add(new System.Windows.Controls.TreeViewItem() { Header = "dummy" });
+            }
+            else
+            {
+                foreach (TreeViewItemDetailed tvi in GetChildren())
+                {
+                    Items.Add(tvi);
+                }
+            }
+            /*
             TreeViewItemDetailed[] children = GetChildren();
             if(IsExpanded || expanding)
             {
@@ -61,7 +79,7 @@ namespace Node.Net.Controls
             else
             {
                 Items.Add(new TreeViewItem());
-            }
+            }*/
             /*
             if(IsExpanded)
             {
