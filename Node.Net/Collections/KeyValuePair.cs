@@ -8,6 +8,7 @@ namespace Node.Net.Collections
         {
             if (!object.ReferenceEquals(null, item))
             {
+                if (item.GetType() == typeof(System.Collections.DictionaryEntry)) return true;
                 if (item.GetType().IsGenericType &&
                     !object.ReferenceEquals(null, item.GetType().GetGenericTypeDefinition()))
                 {
@@ -24,6 +25,10 @@ namespace Node.Net.Collections
         {
             if (IsKeyValuePair(item))
             {
+                if (IsKeyValuePair(item) && item.GetType() == typeof(System.Collections.DictionaryEntry))
+                {
+                    return ((System.Collections.DictionaryEntry)item).Key;
+                }
                 if (item.GetType() == typeof(KeyValuePair<string, dynamic>))
                 {
                     KeyValuePair<string, dynamic> kvp = (KeyValuePair<string, dynamic>)(item);
@@ -39,6 +44,10 @@ namespace Node.Net.Collections
         {
             if (IsKeyValuePair(item))
             {
+                if (IsKeyValuePair(item) && item.GetType() == typeof(System.Collections.DictionaryEntry))
+                {
+                    return ((System.Collections.DictionaryEntry)item).Value;
+                }
                 if (item.GetType() == typeof(KeyValuePair<string, dynamic>))
                 {
                     KeyValuePair<string, dynamic> kvp = (KeyValuePair<string, dynamic>)(item);
