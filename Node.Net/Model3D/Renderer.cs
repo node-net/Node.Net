@@ -6,12 +6,29 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Model3D
 {
-    public class Renderer : IRenderer
+    public class Renderer : IRenderer, IVisual3DTransformer
     {
         public Renderer()
         {
             Model3DKeys.Add("Model3D");
             Model3DKeys.Add("Type");
+        }
+
+        private IMetaData _metaData = null;
+        public IMetaData MetaData
+        {
+            get
+            {
+                if(object.ReferenceEquals(null,_metaData))
+                {
+                    _metaData = Collections.MetaData.Default;
+                }
+                return _metaData;
+            }
+            set
+            {
+                _metaData = value;
+            }
         }
 
         private ResourceDictionary resources = new ResourceDictionary();

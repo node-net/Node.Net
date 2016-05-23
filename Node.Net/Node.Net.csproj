@@ -148,6 +148,7 @@
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Model2D\Viewer.cs" />
     <Compile Include="Model3D\IRenderer.cs" />
+    <Compile Include="Model3D\IVisual3DTransformer.cs" />
     <Compile Include="Model3D\MaterialHelper.cs" />
     <Compile Include="Model3D\MeshHelper.cs" />
     <Compile Include="Model3D\Renderer.cs" />
