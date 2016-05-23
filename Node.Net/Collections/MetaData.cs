@@ -5,6 +5,10 @@
         private static MetaData _default = new MetaData();
         public static MetaData Default => _default;
 
+        public MetaData()
+        {
+
+        }
         /*
         public Dictionary<object, Dictionary<string, dynamic>> MetaData = new Dictionary<object, Dictionary<string, dynamic>>();
         public dynamic GetMetaData(object item, string key)
