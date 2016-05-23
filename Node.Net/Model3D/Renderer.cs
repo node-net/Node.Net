@@ -6,7 +6,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Model3D
 {
-    public class Renderer : IRenderer, IVisual3DTransformer
+    public class Renderer : IRenderer, IVisual3DTransformer,IModel3DTransformer,IModel3DGroupTransformer
     {
         public Renderer()
         {
@@ -63,6 +63,11 @@ namespace Node.Net.Model3D
         public virtual System.Windows.Media.Media3D.Model3D GetModel3D(object value)
         {
             return Transform.ObjectTransform.ToModel3D(this, value);
+        }
+
+        public virtual System.Windows.Media.Media3D.Model3DGroup GetModel3DGroup(object value)
+        {
+            return Transform.ObjectTransform.ToModel3DGroup(this, value);
         }
 
         public virtual GeometryModel3D GetGeometryModel3D(object value)
