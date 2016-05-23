@@ -31,6 +31,7 @@ namespace Node.Net.Model3D
     {
         ResourceDictionary Resources { get; set; }
         object GetResource(string name);
+        Dictionary<string, IModel3DTransformer> TypeModel3DTransformers { get; } 
         List<string> Model3DKeys { get; }
         Visual3D GetVisual3D(object value);
         ModelVisual3D GetModelVisual3D(object value);

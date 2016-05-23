@@ -31,6 +31,8 @@ namespace Node.Net.Model3D
             }
         }
 
+        private Dictionary<string, IModel3DTransformer> _typeModel3DTransformers = new Dictionary<string, IModel3DTransformer>();
+        public Dictionary<string, IModel3DTransformer> TypeModel3DTransformers { get { return _typeModel3DTransformers; } }
         private ResourceDictionary resources = new ResourceDictionary();
         public ResourceDictionary Resources
         {
