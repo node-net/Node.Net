@@ -1,4 +1,6 @@
-﻿namespace Node.Net.Collections
+﻿using System.Collections.Generic;
+
+namespace Node.Net.Collections
 {
     public class MetaData : System.Collections.Generic.Dictionary<object,System.Collections.IDictionary>
     {
@@ -9,25 +11,24 @@
         {
 
         }
-        /*
-        public Dictionary<object, Dictionary<string, dynamic>> MetaData = new Dictionary<object, Dictionary<string, dynamic>>();
-        public dynamic GetMetaData(object item, string key)
+        
+        public object GetMetaData(object item, string key)
         {
-            if (MetaData.ContainsKey(item) && MetaData[item].ContainsKey(key))
+            if (ContainsKey(item) && this[item].Contains(key))
             {
-                return MetaData[item][key];
+                return this[item][key];
             }
             return null;
         }
 
         public void SetMetaData(object item, string key, object value)
         {
-            if (!MetaData.ContainsKey(item))
+            if (!ContainsKey(item))
             {
-                MetaData.Add(item, new Dictionary<string, dynamic>());
+                Add(item, new Dictionary<string, dynamic>());
             }
-            MetaData[item][key] = value;
+            this[item][key] = value;
         }
-        */
+        
     }
 }
