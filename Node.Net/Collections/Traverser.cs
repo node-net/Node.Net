@@ -11,6 +11,10 @@
             Traverse(model);
         }
 
+        public IMetaData MetaData
+        {
+            get { return metaData; }
+        } 
         public object GetParent(object value)
         {
             if(metaData.ContainsKey(value) && metaData[value].Contains("Parent"))

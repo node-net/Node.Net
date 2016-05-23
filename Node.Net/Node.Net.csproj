@@ -122,6 +122,7 @@
     <Compile Include="Framework\Documents.cs" />
     <Compile Include="Framework\IDocument.cs" />
     <Compile Include="Framework\RecentFiles.cs" />
+    <Compile Include="IMetaData.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IFilter.cs" />
     <Compile Include="IO\Directory.cs" />
