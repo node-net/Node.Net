@@ -40,10 +40,24 @@ namespace Node.Net.Model3D.Transform
         }
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, IDictionary value)
         {
+            string stype = "";
+            if (value.Contains("Type")) stype = value["Type"].ToString();
+            if (stype.Length > 0 && renderer.TypeModel3DTransformers.ContainsKey(stype))
+            {
+                return renderer.TypeModel3DTransformers[stype].GetModel3D(value);
+            }
+            
             return ToModel3DGroup(renderer, value);
         }
         public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer, IDictionary value)
         {
+            string stype = "";
+            if (value.Contains("Type")) stype = value["Type"].ToString();
+            if (stype.Length > 0 && renderer.TypeModel3DGroupTransformers.ContainsKey(stype))
+            {
+                return renderer.TypeModel3DGroupTransformers[stype].GetModel3DGroup(value);
+            }
+
             Model3DGroup model3DGroup = new Model3DGroup();
             model3DGroup.Transform = ToTransform3D_NoScale(renderer, value);
             // NoScale, but has Translation AND Rotations
@@ -61,11 +75,11 @@ namespace Node.Net.Model3D.Transform
                         if (!object.ReferenceEquals(null, modelResource))
                         {
                             Model3DGroup modelGroup = new Model3DGroup();
-                            //modelGroup.Transform = ToTransform3D(renderer, value);
                             modelGroup.Transform = new ScaleTransform3D(renderer.GetScale(value));
                             modelGroup.Children.Add(modelResource);
                             primaryModel = modelGroup;
                         }
+                        
                     }
                 }
             }

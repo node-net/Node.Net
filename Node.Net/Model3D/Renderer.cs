@@ -6,7 +6,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Model3D
 {
-    public class Renderer : IRenderer
+    public class Renderer : IRenderer, IVisual3DTransformer,IModel3DTransformer,IModel3DGroupTransformer
     {
         public Renderer()
         {
@@ -14,6 +14,28 @@ namespace Node.Net.Model3D
             Model3DKeys.Add("Type");
         }
 
+        private IMetaData _metaData = null;
+        public IMetaData MetaData
+        {
+            get
+            {
+                if(object.ReferenceEquals(null,_metaData))
+                {
+                    _metaData = Collections.MetaData.Default;
+                }
+                return _metaData;
+            }
+            set
+            {
+                _metaData = value;
+            }
+        }
+
+        private Dictionary<string, IModel3DTransformer> _typeModel3DTransformers = new Dictionary<string, IModel3DTransformer>();
+        public Dictionary<string, IModel3DTransformer> TypeModel3DTransformers { get { return _typeModel3DTransformers; } }
+
+        private Dictionary<string, IModel3DGroupTransformer> _typeModel3DGroupTransformers = new Dictionary<string, IModel3DGroupTransformer>();
+        public Dictionary<string, IModel3DGroupTransformer> TypeModel3DGroupTransformers { get { return _typeModel3DGroupTransformers; } }
         private ResourceDictionary resources = new ResourceDictionary();
         public ResourceDictionary Resources
         {
@@ -44,6 +66,11 @@ namespace Node.Net.Model3D
         public virtual System.Windows.Media.Media3D.Model3D GetModel3D(object value)
         {
             return Transform.ObjectTransform.ToModel3D(this, value);
+        }
+
+        public virtual System.Windows.Media.Media3D.Model3DGroup GetModel3DGroup(object value)
+        {
+            return Transform.ObjectTransform.ToModel3DGroup(this, value);
         }
 
         public virtual GeometryModel3D GetGeometryModel3D(object value)

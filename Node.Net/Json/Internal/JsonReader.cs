@@ -50,7 +50,9 @@ namespace Node.Net.Json.Internal
         public bool AutoResolveTypes = false;
         public object Read(string value)
         {
-            if (File.Exists(value))
+            bool isJson = false;
+            if (value.Length > 0 && (value[0] == '{' || value[0] == '[')) isJson = true;
+            if (!isJson && File.Exists(value))
             {
                 using (StreamReader reader = new StreamReader(value))
                 {

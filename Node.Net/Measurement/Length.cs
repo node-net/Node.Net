@@ -1,4 +1,6 @@
-﻿namespace Node.Net.Measurement
+﻿using System.Collections;
+
+namespace Node.Net.Measurement
 {
     public class Length : System.IComparable, 
                           System.ComponentModel.INotifyPropertyChanged
@@ -114,6 +116,11 @@
                 }
             }
             throw new System.FormatException("Unable to parse a Length from string \"" + value + "\"");
+        }
+
+        public static double GetLengthMeters(IDictionary dictionary, string key)
+        {
+            return Measurement.Length.Parse(dictionary[key].ToString())[Measurement.LengthUnit.Meters];
         }
     }
 }

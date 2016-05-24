@@ -116,5 +116,25 @@ namespace Node.Net.Extensions
                 Save(dictionary, stream);
             }
         }
+
+        public static IDictionary Parse(string[] args)
+        {
+            Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
+            foreach (string arg in args)
+            {
+                if (arg.IndexOf('=') > -1)
+                {
+                    char[] delimiters = { '=' };
+                    string[] words = arg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                    string key = words[0].Trim();
+                    string value = words[1].Trim().Replace("\"", "");
+                    if (key.Length > 0 && value.Length > 0)
+                    {
+                        result[key] = value;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

@@ -24,6 +24,13 @@ namespace Node.Net.Model3D.Transform
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModel3D(renderer, dictionary);
             return null;
         }
+
+        public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer,object value)
+        {
+            IDictionary dictionary = Collections.KeyValuePair.GetValue(value) as IDictionary;
+            if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModel3DGroup(renderer, dictionary);
+            return null;
+        }
         public static GeometryModel3D ToGeometryModel3D(IRenderer renderer, object value)
         {
             return IDictionaryTransform.ToGeometryModel3D(renderer, value as IDictionary);

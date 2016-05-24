@@ -22,6 +22,11 @@ namespace Node.Net.Collections
                 return traverser; 
             } 
         }
+
+        public IMetaData MetaData
+        {
+            get { return traverser.MetaData; }
+        }
         public override void Open(System.IO.Stream stream)
         {
             Clear();
@@ -32,10 +37,11 @@ namespace Node.Net.Collections
 
         public override void Update(bool deep=true)
         {
-            //this.Document = this;
             traverser = null;
             traverser = new Traverser(this);
             traverser.SetDocument(this, this);
         }
+
+
     }
 }

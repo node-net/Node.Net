@@ -23,8 +23,10 @@ namespace Node.Net
         public static string Seek(this TextReader reader, char[] values) => Extensions.TextReaderExtension.Seek(reader, values);
         #endregion
 
+        #region ImageSource
         public static ImageSource GetImageSource(this Image image) => Extensions.ImageExtension.GetImageSource(image);
-        public static void Save(this ImageSource imageSource,string filename) => Extensions.ImageSourceExtension.Save(imageSource, filename);
+        public static void Save(this ImageSource imageSource, string filename) => Extensions.ImageSourceExtension.Save(imageSource, filename);
         public static ImageSource Crop(this ImageSource imageSource, int width, int height) => Extensions.ImageSourceExtension.Crop(imageSource, width, height);
+        #endregion
     }
 }

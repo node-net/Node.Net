@@ -74,6 +74,7 @@
     <Compile Include="Collections\MetaData.cs" />
     <Compile Include="Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
     <Compile Include="Collections\RecentFiles.cs" />
+    <Compile Include="Collections\RuntimeMetaData.cs" />
     <Compile Include="Collections\Traverser.cs" />
     <Compile Include="Controls\ContextMenu.cs" />
     <Compile Include="Controls\DocumentExplorer.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Controls\TitledControl.cs" />
     <Compile Include="Controls\TreeView.cs" />
     <Compile Include="Controls\TreeViewItem.cs" />
+    <Compile Include="Controls\TreeViewItemDetailed.cs" />
     <Compile Include="Controls\ViewTester.cs" />
     <Compile Include="Controls\XmlTreeViewItem.cs" />
     <Compile Include="Documents\Documents.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Framework\Documents.cs" />
     <Compile Include="Framework\IDocument.cs" />
     <Compile Include="Framework\RecentFiles.cs" />
+    <Compile Include="IMetaData.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IFilter.cs" />
     <Compile Include="IO\Directory.cs" />
@@ -144,8 +147,14 @@
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Model2D\Viewer.cs" />
+    <Compile Include="Model3D\IModel3DGroupTransformer.cs" />
+    <Compile Include="Model3D\IModel3DTransformer.cs" />
     <Compile Include="Model3D\IRenderer.cs" />
+    <Compile Include="Model3D\IVisual3DTransformer.cs" />
+    <Compile Include="Model3D\MaterialHelper.cs" />
+    <Compile Include="Model3D\MeshHelper.cs" />
     <Compile Include="Model3D\Renderer.cs" />
+    <Compile Include="Model3D\RenderHelper.cs" />
     <Compile Include="Model3D\Transform3D.cs" />
     <Compile Include="Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="Model3D\Transform\ObjectTransform.cs" />
