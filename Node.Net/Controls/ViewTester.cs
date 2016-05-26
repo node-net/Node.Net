@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Node.Net.Controls
 {
@@ -18,6 +20,43 @@ namespace Node.Net.Controls
             window.ShowDialog();
         }
 
+        public static void ShowDialog(object models, FrameworkElement[] views,string title="ViewTester")
+        {
+            System.Windows.Window window = new System.Windows.Window()
+            {
+                Title = title,
+                Content = GetGrid(models,views),
+                WindowState = WindowState.Maximized
+            };
+            window.ShowDialog();
+        }
+
+        public static Grid GetGrid(object models,FrameworkElement[] views)
+        {
+            Grid grid = new Grid();
+
+            IDictionary modelsDictionary = models as IDictionary;
+            if (object.ReferenceEquals(null, modelsDictionary)) return grid;
+
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.Children.Add(new Label() { Content = "Model", Background = Brushes.LightGray });
+            Label viewLabel = new Label() { Content = "View", Background = Brushes.LightGray};
+            grid.Children.Add(viewLabel);
+            Grid.SetColumn(viewLabel, 1);
+
+            foreach(string key in modelsDictionary.Keys)
+            {
+                foreach(FrameworkElement view in views)
+                {
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                    Label modelLabel = new Label() { Content = key };
+                    grid.Children.Add(modelLabel);
+                   // Grid.SetRow(modelLabel,)
+                }
+            }
+            return grid;
+        }
         private static string GetTitle(FrameworkElement frameworkelement)
         {
             PropertyInfo titleInfo = frameworkelement.GetType().GetProperty("Title");

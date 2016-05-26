@@ -97,6 +97,7 @@
     <Compile Include="Controls\TreeView.cs" />
     <Compile Include="Controls\TreeViewItem.cs" />
     <Compile Include="Controls\TreeViewItemDetailed.cs" />
+    <Compile Include="Controls\TypeInstanceList.cs" />
     <Compile Include="Controls\ViewTester.cs" />
     <Compile Include="Controls\XmlTreeViewItem.cs" />
     <Compile Include="Documents\Documents.cs" />
@@ -127,7 +128,6 @@
     <Compile Include="IFilter.cs" />
     <Compile Include="IO\Directory.cs" />
     <Compile Include="IO\FileList.cs" />
-    <Compile Include="IO\Stream.Extension.cs" />
     <Compile Include="IO\TemporaryDirectory.cs" />
     <Compile Include="IO\TextReader.Extension.cs" />
     <Compile Include="IReader.cs" />
