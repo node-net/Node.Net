@@ -114,6 +114,7 @@
     <Compile Include="Extensions\ImageSource.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
+    <Compile Include="Extensions\Type.Extension.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Filters\TypeFilter.cs" />
     <Compile Include="Framework\Application.cs" />
@@ -128,7 +129,6 @@
     <Compile Include="IFilter.cs" />
     <Compile Include="IO\Directory.cs" />
     <Compile Include="IO\FileList.cs" />
-    <Compile Include="IO\Stream.Extension.cs" />
     <Compile Include="IO\TemporaryDirectory.cs" />
     <Compile Include="IO\TextReader.Extension.cs" />
     <Compile Include="IReader.cs" />

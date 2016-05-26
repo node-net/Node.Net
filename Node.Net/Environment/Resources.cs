@@ -4,12 +4,12 @@
     {
         public static System.IO.Stream GetStream(string name)
         {
-            return IO.StreamExtension.GetStream(name);
+            return Extensions.StreamExtension.GetStream(name);
         }
 
         public static System.IO.Stream GetStream(System.Reflection.Assembly assembly,string name)
         {
-            return IO.StreamExtension.GetStream(name,assembly);
+            return Extensions.StreamExtension.GetStream(name,assembly);
         }
 
         public static System.IO.Stream GetStream(System.Type type, string name) => GetStream(System.Reflection.Assembly.GetAssembly(type), name);

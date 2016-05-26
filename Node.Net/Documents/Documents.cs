@@ -174,7 +174,7 @@
 
         public static System.IO.Stream GetStream(string name)
         {
-            return global::Node.Net.IO.StreamExtension.GetStream(name);
+            return global::Node.Net.Extensions.StreamExtension.GetStream(name);
             
         }
 

@@ -49,7 +49,7 @@ namespace Node.Net.Controls
         private IDictionary LoadDictionary(string name)
         {
             IDictionary result = null;
-            System.IO.Stream stream = IO.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.json");
+            System.IO.Stream stream = Extensions.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.json");
             if(!object.ReferenceEquals(null, stream))
             {
                 Json.Reader reader = new Json.Reader();
