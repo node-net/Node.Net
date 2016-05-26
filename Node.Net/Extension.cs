@@ -32,6 +32,7 @@ namespace Node.Net
 
         #region Type
         public static Stream GetStream(this Type type, string name) => Extensions.TypeExtension.GetStream(type, name);
+        public static string[] GetManifestResourceNames(this Type type, string name) => Extensions.TypeExtension.GetManifestResourceNames(type, name);
         #endregion
     }
 }
