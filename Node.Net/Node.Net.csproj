@@ -157,6 +157,7 @@
     <Compile Include="Model3D\Renderer.cs" />
     <Compile Include="Model3D\RenderHelper.cs" />
     <Compile Include="Model3D\Transform3D.cs" />
+    <Compile Include="Model3D\Transform3DHelper.cs" />
     <Compile Include="Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="Model3D\Transform\ObjectTransform.cs" />
     <Compile Include="Model\Application.cs" />

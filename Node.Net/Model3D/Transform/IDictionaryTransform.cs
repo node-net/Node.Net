@@ -178,12 +178,12 @@ namespace Node.Net.Model3D.Transform
             if (value.Contains("RotationX"))
             {
                 double rotationX_degrees = GetRotationDegrees(value, "RotationX");
-                rotationX = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
+                rotationX = new Quaternion(new Vector3D(1, 0, 0), rotationX_degrees);
             }
             if (value.Contains("Spin"))
             {
                 double rotationX_degrees = GetRotationDegrees(value, "Spin");
-                rotationX = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
+                rotationX = new Quaternion(new Vector3D(1, 0, 0), rotationX_degrees);
             }
 
             Quaternion total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));

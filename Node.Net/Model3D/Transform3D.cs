@@ -3,14 +3,6 @@
     public class Transform3D
     {
         public Transform3D() { }
-        /*
-        public Transform3D(System.Collections.IDictionary dictionary)
-        {
-            Rendering.MatrixTransform3DRenderer r = new Rendering.MatrixTransform3DRenderer(null);
-            Transform3D tmp = r.GetTransform3D_NoScale(dictionary);
-            Translation = tmp.Translation;
-            RotationOTS = tmp.RotationOTS;
-        }*/
         public enum TransformType { LocalToParent, ParentToLocal, LocalToWorld, WorldToLocal, ParentToWorld, WorldToParent };
         private Transform3D parent = null;
         public Transform3D Parent
