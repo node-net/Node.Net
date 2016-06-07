@@ -184,7 +184,6 @@
             // Spin is rotation about the +X axis (in the YZ plane)
             System.Windows.Media.Media3D.Vector3D[] worldDirectionVectors = GetWorldDirectionVectors();
 
-            ////////////////////////////////////
             // Back out the tilt component
             Transform3D adjust = new Transform3D();
             adjust.RotationOTS = new System.Windows.Media.Media3D.Point3D(-worldOrientation, 0, 0);
