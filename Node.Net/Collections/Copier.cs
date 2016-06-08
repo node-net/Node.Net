@@ -43,16 +43,16 @@ namespace Node.Net.Collections
             {
                 var value = source[key];
 
-                System.Collections.Generic.KeyValuePair<object, object> kvp
+                var kvp
                     = new System.Collections.Generic.KeyValuePair<object, object>(key, value);
                 if (object.ReferenceEquals(null, filter) || filter.Include(kvp))//(key, value))
                 {
-                    System.Collections.IDictionary dictionary = value as System.Collections.IDictionary;
+                    var dictionary = value as System.Collections.IDictionary;
                     if (!object.ReferenceEquals(null, dictionary))
                     {
                         // Copy by value
                         try {
-                            System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
+                            var hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
                             Copy(dictionary, hashCopy, filter);
                             destination[key] = hashCopy;
                         }
@@ -64,7 +64,7 @@ namespace Node.Net.Collections
                     }
                     else
                     {
-                        System.Collections.IEnumerable enumerable = value as System.Collections.IEnumerable;
+                        var enumerable = value as System.Collections.IEnumerable;
                         if (!object.ReferenceEquals(null, value) 
                             && value.GetType() != typeof(string)
                             && value.GetType() != typeof(byte[])
@@ -95,19 +95,19 @@ namespace Node.Net.Collections
         {
             foreach (object key in source.Keys)
             {
-                object value = source[key];
+                var value = source[key];
 
-                System.Collections.Generic.KeyValuePair<object, object> kvp
+                var kvp
                     = new System.Collections.Generic.KeyValuePair<object, object>(key, value);
                 if (object.ReferenceEquals(null, filter) || filter.Include(kvp))//(key, value))
                 {
-                    System.Collections.IDictionary dictionary = value as System.Collections.IDictionary;
+                    var dictionary = value as System.Collections.IDictionary;
                     if (!object.ReferenceEquals(null, dictionary))
                     {
                         // Copy by value
                         try
                         {
-                            System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(childDictionaryType) as System.Collections.IDictionary;
+                            var hashCopy = System.Activator.CreateInstance(childDictionaryType) as System.Collections.IDictionary;
                             //System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
                             Copy(dictionary, hashCopy,childDictionaryType, filter);
                             destination[key] = hashCopy;
@@ -120,7 +120,7 @@ namespace Node.Net.Collections
                     }
                     else
                     {
-                        System.Collections.IEnumerable enumerable = value as System.Collections.IEnumerable;
+                        var enumerable = value as System.Collections.IEnumerable;
                         if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
                             && !object.ReferenceEquals(null, enumerable))
                         {
