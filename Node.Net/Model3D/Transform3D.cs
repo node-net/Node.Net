@@ -3,14 +3,6 @@
     public class Transform3D
     {
         public Transform3D() { }
-        /*
-        public Transform3D(System.Collections.IDictionary dictionary)
-        {
-            Rendering.MatrixTransform3DRenderer r = new Rendering.MatrixTransform3DRenderer(null);
-            Transform3D tmp = r.GetTransform3D_NoScale(dictionary);
-            Translation = tmp.Translation;
-            RotationOTS = tmp.RotationOTS;
-        }*/
         public enum TransformType { LocalToParent, ParentToLocal, LocalToWorld, WorldToLocal, ParentToWorld, WorldToParent };
         private Transform3D parent = null;
         public Transform3D Parent
@@ -184,6 +176,7 @@
             // Spin is rotation about the +X axis (in the YZ plane)
             System.Windows.Media.Media3D.Vector3D[] worldDirectionVectors = GetWorldDirectionVectors();
 
+            ////////////////////////////////////
             // Back out the tilt component
             Transform3D adjust = new Transform3D();
             adjust.RotationOTS = new System.Windows.Media.Media3D.Point3D(-worldOrientation, 0, 0);
