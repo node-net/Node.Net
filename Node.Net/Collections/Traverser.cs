@@ -26,7 +26,7 @@
 
         public object GetRoot(object value)
         {
-            object root = GetParent(value);
+            var root = GetParent(value);
             while(!object.ReferenceEquals(null,GetParent(root)))
             {
                 root = GetParent(root);
@@ -36,7 +36,7 @@
 
         public T GetAncestor<T>(object value)
         {
-            object ancestor = GetParent(value);
+            var ancestor = GetParent(value);
             while (!object.ReferenceEquals(null, ancestor))
             {
                 if(typeof(T).IsAssignableFrom(ancestor.GetType())) return (T)ancestor;
@@ -48,8 +48,8 @@
 
         public static int Count<T>(object value)
         {
-            int count = 0;
-            System.Collections.IDictionary dictionary = value as System.Collections.IDictionary;
+            var count = 0;
+            var dictionary = value as System.Collections.IDictionary;
             if (!object.ReferenceEquals(null, dictionary))
             {
                 foreach (string key in dictionary.Keys)
@@ -64,7 +64,7 @@
         }
         public static string[] CollectKeys<T>(object value)
         {
-            System.Collections.Generic.List<string> keys = new System.Collections.Generic.List<string>();
+            var keys = new System.Collections.Generic.List<string>();
             System.Collections.IDictionary dictionary = value as System.Collections.IDictionary;
             if (!object.ReferenceEquals(null, dictionary))
             {

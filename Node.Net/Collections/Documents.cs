@@ -59,9 +59,9 @@ namespace Node.Net.Collections
         }
         public void Open()
         {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            var ofd = new Microsoft.Win32.OpenFileDialog();
             ofd.Filter = OpenFileDialogFilter;
-            System.Nullable<bool> result = ofd.ShowDialog();
+            var result = ofd.ShowDialog();
             if (result == true)
             {
                 Open(ofd.FileName);
@@ -75,7 +75,7 @@ namespace Node.Net.Collections
 
         private void Open(string name, Type documentType, Stream stream)
         {
-            object document = Activator.CreateInstance(documentType);
+            var document = Activator.CreateInstance(documentType);
 
 
             Type[] types = { typeof(string), typeof(Stream) };
