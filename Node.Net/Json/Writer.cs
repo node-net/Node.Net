@@ -5,7 +5,7 @@ namespace Node.Net.Json
     public enum JsonFormat { Compressed, Indented };
     public class Writer
     {
-        private static readonly Writer _default = new Writer() { Format = JsonFormat.Indented };
+        private static readonly Writer _default = new Writer() { Format = JsonFormat.Compressed };
         public static Writer Default { get { return _default; } }
 
         private Internal.JsonWriter writer = new Internal.JsonWriter();

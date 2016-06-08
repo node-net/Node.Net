@@ -36,13 +36,13 @@ namespace Node.Net.Model3D
 
         private Dictionary<string, IModel3DGroupTransformer> _typeModel3DGroupTransformers = new Dictionary<string, IModel3DGroupTransformer>();
         public Dictionary<string, IModel3DGroupTransformer> TypeModel3DGroupTransformers { get { return _typeModel3DGroupTransformers; } }
-        private ResourceDictionary resources = new ResourceDictionary();
+        //private ResourceDictionary resources = new ResourceDictionary();
         public ResourceDictionary Resources { get; set; }
         
 
         public virtual object GetResource(string name)
         {
-            if (resources.Contains(name)) return resources[name];
+            if (Resources.Contains(name)) return Resources[name];
             return null;
         }
 
