@@ -8,24 +8,24 @@ namespace Node.Net.Collections
         {
             foreach (object value in source)
             {
-                if (object.ReferenceEquals(null, filter) || filter.Include(value))//(null, value))
+                if (object.ReferenceEquals(null, filter) || filter.Include(value))
                 {
-                    System.Collections.IDictionary dictionary = value as System.Collections.IDictionary;
+                    var dictionary = value as System.Collections.IDictionary;
                     if (!object.ReferenceEquals(null, dictionary))
                     {
                         // Copy by value
-                        System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
+                        var hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
                         Copier.Copy(dictionary, hashCopy, filter);
                         destination.Add(hashCopy);
                     }
                     else
                     {
-                        System.Collections.IEnumerable enumerable = value as System.Collections.IEnumerable;
+                        var enumerable = value as System.Collections.IEnumerable;
                         if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
                             && !object.ReferenceEquals(null, enumerable))
                         {
                             // Copy by value
-                            System.Collections.IList arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
+                            var arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
                             Copier.Copy(enumerable, arrayCopy, filter);
                             destination.Add(arrayCopy);
                         }
@@ -41,7 +41,7 @@ namespace Node.Net.Collections
         {
             foreach (object key in source.Keys)
             {
-                object value = source[key];
+                var value = source[key];
 
                 System.Collections.Generic.KeyValuePair<object, object> kvp
                     = new System.Collections.Generic.KeyValuePair<object, object>(key, value);

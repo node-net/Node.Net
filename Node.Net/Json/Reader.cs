@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Node.Net.Json
 {
-    public class Reader
+    public class Reader : IReader
     {
         private static Reader _default = new Reader();
         public static Reader Default { get { return _default; } }
@@ -14,6 +14,10 @@ namespace Node.Net.Json
         public Reader() { }
         public Reader(Assembly assembly) { AddTypes(assembly); }
 
+        public object Load(Stream stream,string name)
+        {
+            return Read(stream);
+        }
         public void AddTypes(Assembly assembly)
         {
             foreach (Type type in GetTypes(assembly))
