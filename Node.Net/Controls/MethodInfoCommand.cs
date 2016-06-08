@@ -30,8 +30,7 @@ namespace Node.Net.Controls
         public event System.EventHandler PreMethodInvoke;
         public void OnPreMethodInvoke()
         {
-            //methodExecuting = true;
-            if (!object.ReferenceEquals(null, PreMethodInvoke))
+            if(PreMethodInvoke != null)
             {
                 PreMethodInvoke(this, new System.EventArgs());
             }
@@ -39,11 +38,10 @@ namespace Node.Net.Controls
         public event System.EventHandler PostMethodInvoke;
         public void OnPostMethodInvoke()
         {
-            if (!object.ReferenceEquals(null, PostMethodInvoke))
+            if (PostMethodInvoke != null)
             {
                 PostMethodInvoke(this, new System.EventArgs());
             }
-            //methodExecuting = false;
         }
     }
 }
