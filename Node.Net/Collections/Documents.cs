@@ -79,7 +79,7 @@ namespace Node.Net.Collections
 
 
             Type[] types = { typeof(string), typeof(Stream) };
-            MethodInfo openInfo = documentType.GetMethod("Open", types);
+            var openInfo = documentType.GetMethod("Open", types);
             try
             {
                 if (!object.ReferenceEquals(null, openInfo))

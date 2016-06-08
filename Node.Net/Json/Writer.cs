@@ -5,11 +5,24 @@ namespace Node.Net.Json
     public enum JsonFormat { Compressed, Indented };
     public class Writer
     {
-        private static readonly Writer _default = new Writer();
+        private static readonly Writer _default = new Writer() { Format = JsonFormat.Indented };
         public static Writer Default { get { return _default; } }
 
         private Internal.JsonWriter writer = new Internal.JsonWriter();
 
+        public JsonFormat Format
+        {
+            get
+            {
+                if (writer.Style == Internal.Style.Indented) return JsonFormat.Indented;
+                else return JsonFormat.Compressed;
+            }
+            set
+            {
+                if (value == JsonFormat.Indented) writer.Style = Internal.Style.Indented;
+                else writer.Style = Internal.Style.Compact;
+            }
+        }
         public bool IgnoreNullValues
         {
             get { return writer.IgnoreNullValues; }
