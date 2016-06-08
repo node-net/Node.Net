@@ -14,7 +14,7 @@ namespace Node.Net.Model3D
             Model3DKeys.Add("Type");
         }
 
-        private IMetaData _metaData = null;
+        private IMetaData _metaData;
         public IMetaData MetaData
         {
             get
