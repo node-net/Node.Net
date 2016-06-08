@@ -8,11 +8,9 @@ namespace Node.Net
 {
     public class Reader
     {
-        private static IReader _default = null;
-        public static IReader Default
-        {
-            get { return _default; }
-            set { _default = value; }
-        }
+
+        public static IReader Default { get; set; }
+
+        
     }
 }

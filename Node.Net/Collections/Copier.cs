@@ -60,12 +60,11 @@ namespace Node.Net.Collections
                         {
                             throw new Exception($"unable to create instance of type {dictionary.GetType().FullName}", e);
                         }
-                        
                     }
                     else
                     {
                         var enumerable = value as System.Collections.IEnumerable;
-                        if (!object.ReferenceEquals(null, value) 
+                        if (!object.ReferenceEquals(null, value)
                             && value.GetType() != typeof(string)
                             && value.GetType() != typeof(byte[])
                             && !object.ReferenceEquals(null, enumerable))
@@ -99,7 +98,7 @@ namespace Node.Net.Collections
 
                 var kvp
                     = new System.Collections.Generic.KeyValuePair<object, object>(key, value);
-                if (object.ReferenceEquals(null, filter) || filter.Include(kvp))//(key, value))
+                if (object.ReferenceEquals(null, filter) || filter.Include(kvp))
                 {
                     var dictionary = value as System.Collections.IDictionary;
                     if (!object.ReferenceEquals(null, dictionary))
@@ -108,7 +107,6 @@ namespace Node.Net.Collections
                         try
                         {
                             var hashCopy = System.Activator.CreateInstance(childDictionaryType) as System.Collections.IDictionary;
-                            //System.Collections.IDictionary hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
                             Copy(dictionary, hashCopy,childDictionaryType, filter);
                             destination[key] = hashCopy;
                         }
@@ -130,7 +128,7 @@ namespace Node.Net.Collections
                             {
                                 arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
                             }
-                            catch 
+                            catch
                             {
                                 arrayCopy = new System.Collections.Generic.List<dynamic>();
                             }
