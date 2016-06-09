@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -26,18 +27,25 @@ namespace Node.Net
 
         public object Load(Stream stream, string name)
         {
-            switch(GetExtension(name).ToLower())
+            try
             {
-                case "jpg":
-                    {
-                        return GetImageSource(stream);
-                    };
-                case "xaml":
-                    {
-                        return XamlReader.Load(stream);
-                    }
+                switch (GetExtension(name).ToLower())
+                {
+                    case "jpg":
+                        {
+                            return GetImageSource(stream);
+                        };
+                    case "xaml":
+                        {
+                            return XamlReader.Load(stream);
+                        }
+                }
+                return Json.Reader.Default.Load(stream, name);
             }
-            return Json.Reader.Default.Load(stream, name);
+            catch(Exception e)
+            {
+                throw new System.Exception($"Exception occured during load of stream {name}", e);
+            }
         }
 
         private string GetExtension(string name)
