@@ -8,6 +8,7 @@ namespace Node.Net.Extensions
         public static void SetTransformMetaData(IMetaData metaData, IDictionary dictionary)
         {
             if (object.ReferenceEquals(null, dictionary)) return;
+            var parent = metaData.GetMetaData(dictionary, "Parent");
 
             var transform3D = new Node.Net.Model3D.Transform3D();
             var translation = Node.Net.Model3D.RenderHelper.GetTranslationMeters(dictionary);
@@ -16,7 +17,7 @@ namespace Node.Net.Extensions
 
             metaData.SetMetaData(dictionary, "Transform3D", transform3D);
 
-            var parent = metaData.GetMetaData(dictionary, "Parent");
+            
             if (!object.ReferenceEquals(null, parent))
             {
                 var parentTransform = metaData.GetMetaData(parent, "Transform3D") as Node.Net.Model3D.Transform3D;

@@ -100,6 +100,7 @@ namespace Node.Net.Model3D.Transform
                 IDictionary childDictionary = value[key] as IDictionary;
                 if (!ReferenceEquals(null, childDictionary))
                 {
+                    renderer.MetaData.SetMetaData(childDictionary, "Parent", value);
                     System.Windows.Media.Media3D.Model3D m3d = renderer.GetModel3D(childDictionary);
                     if (!ReferenceEquals(null, m3d)) model3DGroup.Children.Add(m3d);
                 }
