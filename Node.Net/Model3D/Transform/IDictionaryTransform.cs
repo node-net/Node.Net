@@ -41,6 +41,7 @@ namespace Node.Net.Model3D.Transform
         }
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, IDictionary value)
         {
+            renderer.MetaData.SetTransformMetaData(value);
             string stype = "";
             if (value.Contains("Type")) stype = value["Type"].ToString();
             if (stype.Length > 0 && renderer.TypeModel3DTransformers.ContainsKey(stype))
