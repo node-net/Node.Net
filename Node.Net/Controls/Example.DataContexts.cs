@@ -26,7 +26,7 @@ namespace Node.Net.Controls
                 if(!object.ReferenceEquals(null, element))
                 {
                     element.DataContext = this[key];
-                    var tabItem = new TabItem()
+                    var tabItem = new TabItem
                     {
                         Header = key,
                         Content = element
