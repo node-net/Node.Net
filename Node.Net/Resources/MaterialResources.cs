@@ -31,9 +31,14 @@ namespace Node.Net.Resources
 
         private bool IsKnownColor(string name)
         {
-            var color = (Color)ColorConverter.ConvertFromString(name);
-            var dcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
-            if (dcolor.Name == name) return true;
+            try
+            {
+                var color = (Color)ColorConverter.ConvertFromString(name);
+                var dcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+                if (dcolor.Name == name) return true;
+            }
+            catch (System.FormatException) { }
+            
             return false;
         }
     }
