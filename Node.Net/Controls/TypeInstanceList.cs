@@ -45,7 +45,7 @@ namespace Node.Net.Controls
         private IDictionary GetColumnNamesAndKeys()
         {
             var results = new Dictionary<string, string>();
-            IDictionary root = DataContext as IDictionary;
+            var root = DataContext as IDictionary;
             if (!object.ReferenceEquals(null, root))
             {
                 var model = root.Collect(new Node.Net.Filters.TypeFilter(Type));
@@ -53,7 +53,7 @@ namespace Node.Net.Controls
                 {
                     foreach (string key in model.Keys)
                     {
-                        IDictionary instance = model[key] as IDictionary;
+                        var instance = model[key] as IDictionary;
                         if (!object.ReferenceEquals(null, instance))
                         {
                             foreach (string ikey in instance.Keys)
@@ -75,7 +75,7 @@ namespace Node.Net.Controls
             Children.Clear();
             RowDefinitions.Clear();
             ColumnDefinitions.Clear();
-            IDictionary root = DataContext as IDictionary;
+            var root = DataContext as IDictionary;
             if (!object.ReferenceEquals(null, root))
             {
                 RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });

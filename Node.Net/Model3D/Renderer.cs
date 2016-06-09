@@ -39,6 +39,7 @@ namespace Node.Net.Model3D
         //private ResourceDictionary resources = new ResourceDictionary();
         //public ResourceDictionary Resources { get; set; }
         public IResources Resources { get; set; }
+
         
 
         public virtual object GetResource(string name)

@@ -112,6 +112,7 @@
     <Compile Include="Extensions\IDictionary.Extension.cs" />
     <Compile Include="Extensions\Image.cs" />
     <Compile Include="Extensions\ImageSource.cs" />
+    <Compile Include="Extensions\IMetaData.Extension.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\Type.Extension.cs" />

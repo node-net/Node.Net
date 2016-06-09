@@ -36,5 +36,9 @@ namespace Node.Net
         public static string[] GetManifestResourceNames(this Type type, string name) => Extensions.TypeExtension.GetManifestResourceNames(type, name);
         public static Dictionary<string, T> CollectManifestResources<T>(this Type type, string pattern) => Extensions.TypeExtension.CollectManifestResources<T>(type, pattern);
         #endregion
+
+        #region IMetaData
+        public static void SetTransformMetaData(this IMetaData metaData, IDictionary dictionary) => Extensions.IMetaDataExtension.SetTransformMetaData(metaData, dictionary);
+        #endregion
     }
 }
