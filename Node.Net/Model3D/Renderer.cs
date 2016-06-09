@@ -6,7 +6,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Model3D
 {
-    public class Renderer : IRenderer, IVisual3DTransformer,IModel3DTransformer,IModel3DGroupTransformer
+    public class Renderer : IRenderer, IVisual3DTransformer,IModel3DTransformer,IModel3DGroupTransformer,IResources
     {
         public Renderer()
         {
@@ -37,12 +37,14 @@ namespace Node.Net.Model3D
         private Dictionary<string, IModel3DGroupTransformer> _typeModel3DGroupTransformers = new Dictionary<string, IModel3DGroupTransformer>();
         public Dictionary<string, IModel3DGroupTransformer> TypeModel3DGroupTransformers { get { return _typeModel3DGroupTransformers; } }
         //private ResourceDictionary resources = new ResourceDictionary();
-        public ResourceDictionary Resources { get; set; }
+        //public ResourceDictionary Resources { get; set; }
+        public IResources Resources { get; set; }
         
 
         public virtual object GetResource(string name)
         {
-            if (Resources.Contains(name)) return Resources[name];
+            if (Resources != null) return Resources.GetResource(name);
+            //if (Resources.Contains(name)) return Resources[name];
             return null;
         }
 

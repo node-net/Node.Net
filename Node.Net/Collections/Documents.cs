@@ -53,14 +53,13 @@ namespace Node.Net.Collections
                 if (currentKey != value)
                 {
                     currentKey = value;
-                    NotifyPropertyChanged("CurrentKey");
+                    NotifyPropertyChanged(nameof(CurrentKey));
                 }
             }
         }
         public void Open()
         {
-            var ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Filter = OpenFileDialogFilter;
+            var ofd = new Microsoft.Win32.OpenFileDialog { Filter = OpenFileDialogFilter };
             var result = ofd.ShowDialog();
             if (result == true)
             {
@@ -79,7 +78,7 @@ namespace Node.Net.Collections
 
 
             Type[] types = { typeof(string), typeof(Stream) };
-            var openInfo = documentType.GetMethod("Open", types);
+            var openInfo = documentType.GetMethod(nameof(Open), types);
             try
             {
                 if (!object.ReferenceEquals(null, openInfo))

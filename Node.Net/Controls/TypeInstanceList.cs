@@ -44,11 +44,11 @@ namespace Node.Net.Controls
 
         private IDictionary GetColumnNamesAndKeys()
         {
-            Dictionary<string, string> results = new Dictionary<string, string>();
+            var results = new Dictionary<string, string>();
             IDictionary root = DataContext as IDictionary;
             if (!object.ReferenceEquals(null, root))
             {
-                IDictionary model = root.Collect(new Node.Net.Filters.TypeFilter(Type));
+                var model = root.Collect(new Node.Net.Filters.TypeFilter(Type));
                 if (model.Count > 0)
                 {
                     foreach (string key in model.Keys)

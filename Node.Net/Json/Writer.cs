@@ -8,7 +8,7 @@ namespace Node.Net.Json
         private static readonly Writer _default = new Writer() { Format = JsonFormat.Compressed };
         public static Writer Default { get { return _default; } }
 
-        private Internal.JsonWriter writer = new Internal.JsonWriter();
+        private readonly Internal.JsonWriter writer = new Internal.JsonWriter();
 
         public JsonFormat Format
         {
@@ -78,8 +78,6 @@ namespace Node.Net.Json
             }
             return result;
         }
-
-        //private int level = 0;
         
         public void Write(System.IO.Stream stream, System.Collections.IDictionary dictionary)
         {

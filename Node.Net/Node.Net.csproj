@@ -133,6 +133,7 @@
     <Compile Include="IO\TextReader.Extension.cs" />
     <Compile Include="IReader.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="IResources.cs" />
     <Compile Include="ITransformer.cs" />
     <Compile Include="ITypeTransformer.cs" />
     <Compile Include="IWriter.cs" />
@@ -164,6 +165,8 @@
     <Compile Include="Plugin\Plugins.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="Resources\MaterialResources.cs" />
+    <Compile Include="Resources\Resources.cs" />
     <Compile Include="Transformer.cs" />
     <Compile Include="Transformers\BrushTransformer.cs" />
     <Compile Include="Transformers\ColorTransformer.cs" />
