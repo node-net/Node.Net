@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Markup;
@@ -43,18 +44,20 @@ namespace Node.Net.Resources
             return resource;
         }
 
-        public void ImportManifestResources<T>(Assembly assembly,string pattern)
+        public void ImportManifestResources<T>(Type type, string pattern, KeyValuePair<string, string>[] searchReplacePatterns = null)
         {
-            foreach(var manifest_resource_name in assembly.GetManifestResourceNames())
+            var results = Extensions.TypeExtension.CollectManifestResources<T>(type, pattern);
+            foreach(string key in results.Keys)
             {
-                if(manifest_resource_name.Contains(pattern))
+                string name = key;
+                if(searchReplacePatterns != null)
                 {
-                    T item = (T)XamlReader.Load(assembly.GetManifestResourceStream(manifest_resource_name));
-                    if(item != null)
+                    foreach(var kvp in searchReplacePatterns)
                     {
-                        Add(manifest_resource_name, item);
+                        name = name.Replace(kvp.Key, kvp.Value);
                     }
                 }
+                Add(name, results[key]);
             }
         }
     }

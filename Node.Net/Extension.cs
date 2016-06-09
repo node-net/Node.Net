@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media;
@@ -33,6 +34,7 @@ namespace Node.Net
         #region Type
         public static Stream GetStream(this Type type, string name) => Extensions.TypeExtension.GetStream(type, name);
         public static string[] GetManifestResourceNames(this Type type, string name) => Extensions.TypeExtension.GetManifestResourceNames(type, name);
+        public static Dictionary<string, T> CollectManifestResources<T>(this Type type, string pattern) => Extensions.TypeExtension.CollectManifestResources<T>(type, pattern);
         #endregion
     }
 }
