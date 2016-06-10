@@ -6,14 +6,18 @@ using System.Reflection;
 
 namespace Node.Net.Json
 {
-    public class Reader
+    public class Reader : IReader
     {
-        private static Reader _default = new Reader();
+        private static readonly Reader _default = new Reader();
         public static Reader Default { get { return _default; } }
 
         public Reader() { }
         public Reader(Assembly assembly) { AddTypes(assembly); }
 
+        public object Load(Stream stream,string name)
+        {
+            return Read(stream);
+        }
         public void AddTypes(Assembly assembly)
         {
             foreach (Type type in GetTypes(assembly))
@@ -30,10 +34,10 @@ namespace Node.Net.Json
         }
         public static Type[] GetTypes(Assembly assembly)
         {
-            List<Type> types = new List<System.Type>();
+            var types = new List<System.Type>();
             foreach (Type type in assembly.GetTypes())
             {
-                ConstructorInfo ci = type.GetConstructor(Type.EmptyTypes);
+                var ci = type.GetConstructor(Type.EmptyTypes);
                 if (!object.ReferenceEquals(null, ci))
                 {
                     types.Add(type);
@@ -58,14 +62,14 @@ namespace Node.Net.Json
             get { return reader.Types; }
             set { reader.Types = value; }
         }
-        private Internal.JsonReader reader = new Internal.JsonReader();
+        private readonly Internal.JsonReader reader = new Internal.JsonReader();
         public object Read(Stream stream) { return reader.Read(stream); }
         public object Read(string value) { return reader.Read(value); }
 
         public object Read(Stream stream,IDictionary destination)
         {
             destination.Clear();
-            IDictionary source = (IDictionary)reader.Read(stream);
+            var source = (IDictionary)reader.Read(stream);
             foreach(string key in source.Keys)
             {
                 destination[key] = source[key];
@@ -76,7 +80,7 @@ namespace Node.Net.Json
 
         public object Read(string value, IDictionary destination)
         {
-            IDictionary source = (IDictionary)reader.Read(value);
+            var source = (IDictionary)reader.Read(value);
             foreach (string key in source.Keys)
             {
                 destination[key] = source[key];
@@ -86,14 +90,14 @@ namespace Node.Net.Json
 
         public object Read(Stream stream, IList destination)
         {
-            IList source = (IList)reader.Read(stream);
+            var source = (IList)reader.Read(stream);
             Collections.Copier.Copy(source, destination);
             return source;
         }
 
         public object Read(string value, IList destination)
         {
-            IList source = (IList)reader.Read(value);
+            var source = (IList)reader.Read(value);
             Collections.Copier.Copy(source, destination);
             return source;
         }

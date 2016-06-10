@@ -9,7 +9,8 @@ namespace Node.Net.Model3D.Transform
         {
             if (value.Contains("Visual3D"))
             {
-                return renderer.Resources[value["Visual3D"].ToString()] as Visual3D;
+                //return renderer.Resources[value["Visual3D"].ToString()] as Visual3D;
+                return renderer.Resources.GetResource(value["Visual3D"].ToString()) as Visual3D;
             }
             else
             {
@@ -40,6 +41,7 @@ namespace Node.Net.Model3D.Transform
         }
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, IDictionary value)
         {
+            renderer.MetaData.SetTransformMetaData(value);
             string stype = "";
             if (value.Contains("Type")) stype = value["Type"].ToString();
             if (stype.Length > 0 && renderer.TypeModel3DTransformers.ContainsKey(stype))
@@ -98,6 +100,7 @@ namespace Node.Net.Model3D.Transform
                 IDictionary childDictionary = value[key] as IDictionary;
                 if (!ReferenceEquals(null, childDictionary))
                 {
+                    renderer.MetaData.SetMetaData(childDictionary, "Parent", value);
                     System.Windows.Media.Media3D.Model3D m3d = renderer.GetModel3D(childDictionary);
                     if (!ReferenceEquals(null, m3d)) model3DGroup.Children.Add(m3d);
                 }
@@ -109,11 +112,13 @@ namespace Node.Net.Model3D.Transform
             Geometry3D geometry = null;
             if (value.Contains("Geometry"))
             {
-                geometry = renderer.Resources[value["Geometry"].ToString()] as Geometry3D;
+                geometry = renderer.GetResource(value["Geometry"].ToString()) as Geometry3D;
+                //geometry = renderer.Resources[value["Geometry"].ToString()] as Geometry3D;
             }
             if (value.Contains("GeometryModel3D"))
             {
-                geometry = renderer.Resources[value["GeometryModel3D"].ToString()] as Geometry3D;
+                geometry = renderer.GetResource(value["GeometryModel3D"].ToString()) as Geometry3D;
+                //geometry = renderer.Resources[value["GeometryModel3D"].ToString()] as Geometry3D;
             }
             if (!ReferenceEquals(null, geometry))
             {
@@ -253,7 +258,8 @@ namespace Node.Net.Model3D.Transform
             Material material = null;
             if (value.Contains("Material"))
             {
-                material = renderer.Resources[value["Material"].ToString()] as Material;
+                //material = renderer.Resources[value["Material"].ToString()] as Material;
+                material = renderer.GetResource(value["Material"].ToString()) as Material;
             }
             return material;
         }
@@ -262,7 +268,8 @@ namespace Node.Net.Model3D.Transform
             Material material = null;
             if (value.Contains("BackMaterial"))
             {
-                material = renderer.Resources[value["BackMaterial"].ToString()] as Material;
+                material = renderer.GetResource(value["BackMaterial"].ToString()) as Material;
+                //material = renderer.Resources[value["BackMaterial"].ToString()] as Material;
             }
             return material;
         }

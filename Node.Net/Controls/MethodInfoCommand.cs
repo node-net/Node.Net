@@ -3,8 +3,8 @@ namespace Node.Net.Controls
 {
     public class MethodInfoCommand : System.Windows.Input.ICommand
     {
-        private object instance;
-        private System.Reflection.MethodInfo methodInfo;
+        private readonly object instance;
+        private readonly System.Reflection.MethodInfo methodInfo;
 
         private MethodInfoCommand() { }
         public MethodInfoCommand(object instanceValue, System.Reflection.MethodInfo methodInfoValue)
@@ -25,14 +25,12 @@ namespace Node.Net.Controls
 
         public event System.EventHandler CanExecuteChanged;
 
-        private static MethodInfoCommand _default = new MethodInfoCommand();
+        private readonly static MethodInfoCommand _default = new MethodInfoCommand();
         public static MethodInfoCommand Default => _default;
-        //private bool methodExecuting = false;
         public event System.EventHandler PreMethodInvoke;
         public void OnPreMethodInvoke()
         {
-            //methodExecuting = true;
-            if (!object.ReferenceEquals(null, PreMethodInvoke))
+            if(PreMethodInvoke != null)
             {
                 PreMethodInvoke(this, new System.EventArgs());
             }
@@ -40,11 +38,10 @@ namespace Node.Net.Controls
         public event System.EventHandler PostMethodInvoke;
         public void OnPostMethodInvoke()
         {
-            if (!object.ReferenceEquals(null, PostMethodInvoke))
+            if (PostMethodInvoke != null)
             {
                 PostMethodInvoke(this, new System.EventArgs());
             }
-            //methodExecuting = false;
         }
     }
 }

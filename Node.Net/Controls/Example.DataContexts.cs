@@ -19,14 +19,14 @@ namespace Node.Net.Controls
 
         public TabControl GetTabControl(Type controlType)
         {
-            TabControl tabControl = new TabControl();
+            var tabControl = new TabControl();
             foreach(string key in this.Keys)
             {
-                FrameworkElement element = Activator.CreateInstance(controlType) as FrameworkElement;
+                var element = Activator.CreateInstance(controlType) as FrameworkElement;
                 if(!object.ReferenceEquals(null, element))
                 {
                     element.DataContext = this[key];
-                    TabItem tabItem = new TabItem()
+                    var tabItem = new TabItem
                     {
                         Header = key,
                         Content = element
@@ -49,10 +49,10 @@ namespace Node.Net.Controls
         private IDictionary LoadDictionary(string name)
         {
             IDictionary result = null;
-            System.IO.Stream stream = Extensions.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.json");
+            var stream = Extensions.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.json");
             if(!object.ReferenceEquals(null, stream))
             {
-                Json.Reader reader = new Json.Reader();
+                var reader = new Json.Reader();
                 return reader.Read(stream) as IDictionary;
             }
             return result;

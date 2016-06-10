@@ -44,16 +44,16 @@ namespace Node.Net.Controls
 
         private IDictionary GetColumnNamesAndKeys()
         {
-            Dictionary<string, string> results = new Dictionary<string, string>();
-            IDictionary root = DataContext as IDictionary;
+            var results = new Dictionary<string, string>();
+            var root = DataContext as IDictionary;
             if (!object.ReferenceEquals(null, root))
             {
-                IDictionary model = root.Collect(new Node.Net.Filters.TypeFilter(Type));
+                var model = root.Collect(new Node.Net.Filters.TypeFilter(Type));
                 if (model.Count > 0)
                 {
                     foreach (string key in model.Keys)
                     {
-                        IDictionary instance = model[key] as IDictionary;
+                        var instance = model[key] as IDictionary;
                         if (!object.ReferenceEquals(null, instance))
                         {
                             foreach (string ikey in instance.Keys)
@@ -75,7 +75,7 @@ namespace Node.Net.Controls
             Children.Clear();
             RowDefinitions.Clear();
             ColumnDefinitions.Clear();
-            IDictionary root = DataContext as IDictionary;
+            var root = DataContext as IDictionary;
             if (!object.ReferenceEquals(null, root))
             {
                 RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });

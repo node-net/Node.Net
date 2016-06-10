@@ -6,7 +6,7 @@ using System.Windows.Media.Media3D;
 /// Visual3D
 ///  |
 ///  +--ModelVisual3D
-///  
+///
 /// Model3D
 ///  |
 ///  +--GeometryModel3D
@@ -24,13 +24,14 @@ using System.Windows.Media.Media3D;
 /// </summary>
 /// <param name="value"></param>
 /// <returns></returns>
-/// 
+///
 namespace Node.Net.Model3D
 {
-    public interface IRenderer : IVisual3DTransformer, IModel3DTransformer
+    public interface IRenderer : IVisual3DTransformer, IModel3DTransformer,IResources
     {
-        ResourceDictionary Resources { get; set; }
-        object GetResource(string name);
+        IMetaData MetaData { get; set; }
+        IResources Resources { get; set; }
+        //object GetResource(string name);
         Dictionary<string, IModel3DTransformer> TypeModel3DTransformers { get; }
         Dictionary<string, IModel3DGroupTransformer> TypeModel3DGroupTransformers { get; }
         List<string> Model3DKeys { get; }
