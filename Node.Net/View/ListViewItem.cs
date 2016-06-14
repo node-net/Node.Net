@@ -28,21 +28,21 @@
                     Content = DataContext;
                 }
                 else{
-                    System.Collections.IDictionary dictionary = KeyValuePair.GetValue(DataContext) as System.Collections.IDictionary;
+                    var dictionary = KeyValuePair.GetValue(DataContext) as System.Collections.IDictionary;
                     if (!object.ReferenceEquals(null, dictionary))
                     {
-                        System.Windows.Controls.StackPanel sp = new System.Windows.Controls.StackPanel() { Orientation = System.Windows.Controls.Orientation.Horizontal };
-                        foreach(object key in dictionary.Keys)
+                        var sp = new System.Windows.Controls.StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal };
+                        foreach (object key in dictionary.Keys)
                         {
                             
-                            sp.Children.Add(new System.Windows.Controls.Label(){Content = dictionary[key].ToString()});
+                            sp.Children.Add(new System.Windows.Controls.Label{Content = dictionary[key].ToString()});
                             
                         }
                         Content = sp;
                     }
                     else
                     {
-                        System.Reflection.PropertyInfo keyProperty = DataContext.GetType().GetProperty("Key");
+                        var keyProperty = DataContext.GetType().GetProperty("Key");
                         if (!object.ReferenceEquals(null, keyProperty))
                         {
                             Content = keyProperty.GetValue(DataContext, null).ToString();

@@ -90,7 +90,7 @@ namespace Node.Net.Collections
                 {
                     //types = { typeof(Stream) };
                     Type[] types2 = { typeof(Stream) };
-                    openInfo = documentType.GetMethod("Open", types2);
+                    openInfo = documentType.GetMethod(nameof(Open), types2);
                     if (!object.ReferenceEquals(null, openInfo))
                     {
                         object[] parameters = { stream };

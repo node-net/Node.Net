@@ -46,14 +46,14 @@ namespace Node.Net.Controls
             base.OnInitialized(e);
 
             Background = Brushes.DarkGray;
-            RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition());
 
             Menu = new Menu();
             // FileMenu
-            MenuItem fileMenu = new MenuItem() { Header = "File" };
+            var fileMenu = new MenuItem { Header = "File" };
             Menu.Items.Add(fileMenu);
-            MenuItem fileOpen = new MenuItem() { Header = "Open" };
+            var fileOpen = new MenuItem { Header = "Open" };
             fileMenu.Items.Add(fileOpen);
             fileOpen.Click += FileOpen_Click;
 
@@ -64,8 +64,8 @@ namespace Node.Net.Controls
                 Grid.SetRow(DocumentView, 1);
             }
 
-            MenuItem fileRecentFiles = new MenuItem() { Header = "Recent Files" };
-            MenuItem[] recentFileItems = GetRecentFileMenuItems();
+            var fileRecentFiles = new MenuItem { Header = "Recent Files" };
+            var recentFileItems = GetRecentFileMenuItems();
             if (recentFileItems.Length > 0)
             {
                 foreach (MenuItem rfitem in recentFileItems)
@@ -76,10 +76,10 @@ namespace Node.Net.Controls
             }
 
             // ViewMenu
-            MethodInfo method = DocumentView.GetType().GetMethod("GetViewMenuItem");
+            var method = DocumentView.GetType().GetMethod("GetViewMenuItem");
             if (!object.ReferenceEquals(null, method))
             {
-                MenuItem viewMenuItem = method.Invoke(DocumentView, null) as MenuItem;
+                var viewMenuItem = method.Invoke(DocumentView, null) as MenuItem;
                 if (!object.ReferenceEquals(null, viewMenuItem))
                 {
                     Menu.Items.Add(viewMenuItem);
@@ -89,7 +89,7 @@ namespace Node.Net.Controls
 
         private MenuItem[] GetRecentFileMenuItems()
         {
-            List<MenuItem> recentFileMenuItems = new List<MenuItem>();
+            var recentFileMenuItems = new List<MenuItem>();
             return recentFileMenuItems.ToArray();
         }
         private void AddRecentFile(string filename)

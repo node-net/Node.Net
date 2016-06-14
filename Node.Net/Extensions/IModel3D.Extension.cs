@@ -94,6 +94,10 @@ namespace Node.Net.Extensions
         {
             return ApplyTransform(local, GetLocalToWorld(model3D));
         }
+        public static Point3D TransformLocalToParent(IModel3D model3D,Point3D local)
+        {
+            return ApplyTransform(local, model3D.LocalToParent);
+        }
         /*
         public static Vector3D GetTranslationVector3D(ITranslation3D value)
         {

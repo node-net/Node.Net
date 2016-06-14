@@ -20,7 +20,7 @@ namespace Node.Net.Transformers
 
         public Material Transform(string name)
         {
-            BrushTransformer brush_transformer = new BrushTransformer();
+            var brush_transformer = new BrushTransformer();
             return new DiffuseMaterial(brush_transformer.Transform(name));
         }
 

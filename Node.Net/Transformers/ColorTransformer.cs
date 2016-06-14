@@ -16,7 +16,7 @@ namespace Node.Net.Transformers
         public Color Transform(string name)
         {
             if (NamedColors.ContainsKey(name)) return NamedColors[name];
-            string[] words = name.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var words = name.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (words.Length == 3)
             {
                 return Color.FromRgb(Convert.ToByte(words[0]), Convert.ToByte(words[1]), Convert.ToByte(words[2]));

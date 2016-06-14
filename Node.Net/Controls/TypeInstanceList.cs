@@ -20,7 +20,7 @@ namespace Node.Net.Controls
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            IgnoreKeys.Add("Type");
+            IgnoreKeys.Add(nameof(Type));
         }
         public TypeInstanceList(string type)
         {
@@ -78,37 +78,37 @@ namespace Node.Net.Controls
             var root = DataContext as IDictionary;
             if (!object.ReferenceEquals(null, root))
             {
-                RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                 // Setup Column Headers
                 ColumnDefinitions.Add(new ColumnDefinition());  // Name
-                Label label = new Label() { Content = "Name", Background = Brushes.Gray };
+                var label = new Label { Content = "Name", Background = Brushes.Gray };
                 Children.Add(label);
-                IDictionary columnNames = GetColumnNamesAndKeys();
+                var columnNames = GetColumnNamesAndKeys();
                 foreach (string name in columnNames.Keys)
                 {
                     ColumnDefinitions.Add(new ColumnDefinition());
-                    label = new Label() { Content = name, Background = Brushes.Gray };
+                    label = new Label { Content = name, Background = Brushes.Gray };
                     Children.Add(label);
                     Grid.SetColumn(label, ColumnDefinitions.Count - 1);
                 }
-                IDictionary model = root.Collect(new Node.Net.Filters.TypeFilter(Type));
+                var model = root.Collect(new Node.Net.Filters.TypeFilter(Type));
                 foreach (string key in model.Keys)
                 {
-                    Label keyLabel = new Label() { Content = key };
-                    RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                    var keyLabel = new Label { Content = key };
+                    RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                     Children.Add(keyLabel);
                     Grid.SetRow(keyLabel, RowDefinitions.Count - 1);
 
-                    IDictionary instance = model[key] as IDictionary;
+                    var instance = model[key] as IDictionary;
                     if (!object.ReferenceEquals(null, instance))
                     {
-                        int column = 1;
+                        var column = 1;
                         foreach (string name in columnNames.Keys)
                         {
-                            string ikey = columnNames[name].ToString();
+                            var ikey = columnNames[name].ToString();
                             if (!IgnoreKeys.Contains(ikey))
                             {
-                                Label valueLabel = new Label() { Content = instance[ikey].ToString() };
+                                var valueLabel = new Label { Content = instance[ikey].ToString() };
                                 Children.Add(valueLabel);
                                 Grid.SetRow(valueLabel, RowDefinitions.Count - 1);
                                 Grid.SetColumn(valueLabel, column);

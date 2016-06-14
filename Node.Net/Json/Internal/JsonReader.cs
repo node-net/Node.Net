@@ -8,7 +8,7 @@ namespace Node.Net.Json.Internal
 {
     class JsonReader
     {
-        private static JsonReader _default = new JsonReader() { AutoResolveTypes = true };
+        private static JsonReader _default = new JsonReader { AutoResolveTypes = true };
         public static JsonReader Default { get { return _default; } }
 
         public static object Load(string value)
@@ -17,7 +17,7 @@ namespace Node.Net.Json.Internal
         }
         public static object Load(string value, IDictionary dictionary)
         {
-            IDictionary d = Load(value) as IDictionary;
+            var d = Load(value) as IDictionary;
             dictionary.Clear();
             Collections.Copier.Copy(d, dictionary);
             return dictionary;
@@ -28,7 +28,7 @@ namespace Node.Net.Json.Internal
         }
         public static object Load(Stream stream, IDictionary dictionary)
         {
-            IDictionary d = Load(stream) as IDictionary;
+            var d = Load(stream) as IDictionary;
             dictionary.Clear();
             Collections.Copier.Copy(d, dictionary);
             return dictionary;
@@ -50,7 +50,7 @@ namespace Node.Net.Json.Internal
         public bool AutoResolveTypes = false;
         public object Read(string value)
         {
-            bool isJson = false;
+            var isJson = false;
             if (value.Length > 0 && (value[0] == '{' || value[0] == '[')) isJson = true;
             if (!isJson && File.Exists(value))
             {
@@ -61,19 +61,19 @@ namespace Node.Net.Json.Internal
             }
             else
             {
-                MemoryStream memory = new MemoryStream();
-                StreamWriter writer = new StreamWriter(memory);
+                var memory = new MemoryStream();
+                var writer = new StreamWriter(memory);
                 writer.Write(value);
                 writer.Flush();
                 memory.Seek(0, SeekOrigin.Begin);
-                StreamReader reader = new StreamReader(memory);
+                var reader = new StreamReader(memory);
                 return Read(reader);
             }
         }
 
         public object Read(Stream stream)
         {
-            StreamReader reader = new StreamReader(stream);
+            var reader = new StreamReader(stream);
             return Read(reader);
         }
 
@@ -81,16 +81,16 @@ namespace Node.Net.Json.Internal
         public object Read(TextReader reader)
         {
             reader.EatWhiteSpace();
-            char ch = (char)reader.Peek();
+            var ch = (char)reader.Peek();
             if (ch == '{')
             {
-                IDictionary dictionary = ReadDictionary(reader);
+                var dictionary = ReadDictionary(reader);
                 dictionary = ConvertDictionaryType(dictionary);
                 return dictionary;
             }
             if (ch == '[')
             {
-                IList list = ReadList(reader);
+                var list = ReadList(reader);
                 list = ConvertListType(list);
                 return list;
             }
@@ -109,7 +109,7 @@ namespace Node.Net.Json.Internal
         private object ReadBool(TextReader reader)
         {
             reader.EatWhiteSpace();
-            char ch = (char)reader.Peek();
+            var ch = (char)reader.Peek();
             if (ch == 't')
             {
                 reader.Read(); reader.Read(); reader.Read(); reader.Read(); // read chars t,r,u,e
@@ -122,28 +122,28 @@ namespace Node.Net.Json.Internal
         {
             reader.EatWhiteSpace();
             char[] endchars = { '}', ']', ',', ' ' };
-            string nstr = reader.Seek(endchars);
+            var nstr = reader.Seek(endchars);
             if (nstr.Contains("."))
             {
                 return System.Convert.ToDouble(nstr);
             }
             try
             {
-                int value = System.Convert.ToInt32(nstr);
+                var value = System.Convert.ToInt32(nstr);
                 return value;
             }
             catch
             {
-                long value = System.Convert.ToInt64(nstr);
+                var value = System.Convert.ToInt64(nstr);
                 return value;
             }
         }
         private object ReadString(TextReader reader)
         {
             reader.EatWhiteSpace();
-            char ch = (char)reader.Peek();
+            var ch = (char)reader.Peek();
             reader.Read(); // consume single or double quote
-            string result = reader.Seek(ch);
+            var result = reader.Seek(ch);
 
 
             result = result.Replace("\\u0022", "\"");
@@ -154,12 +154,12 @@ namespace Node.Net.Json.Internal
         }
         private IList ReadList(TextReader reader)
         {
-            IList list = Activator.CreateInstance(DefaultListType) as IList;
+            var list = Activator.CreateInstance(DefaultListType) as IList;
             reader.Seek('[');
-            char ch = ' ';
+            var ch = ' ';
             reader.Read();// Read(reader); // consume the '['
             reader.EatWhiteSpace();
-            bool done = false;
+            var done = false;
             ch = (char)reader.Peek();
             if (ch == ']')
             {
@@ -187,8 +187,8 @@ namespace Node.Net.Json.Internal
         }
         private IList ConvertListType(IList source)
         {
-            int nullCount = 0;
-            Dictionary<Type, int> typeCounts = new Dictionary<Type, int>();
+            var nullCount = 0;
+            var typeCounts = new Dictionary<Type, int>();
             typeCounts[typeof(string)] = 0;
             typeCounts[typeof(int)] = 0;
             typeCounts[typeof(double)] = 0;
@@ -206,19 +206,19 @@ namespace Node.Net.Json.Internal
             {
                 if (typeCounts[typeof(int)] == source.Count)
                 {
-                    List<int> new_list = new List<int>();
+                    var new_list = new List<int>();
                     foreach (object i in source) { new_list.Add((int)i); }
                     return new_list;
                 }
                 if (typeCounts[typeof(string)] == source.Count)
                 {
-                    List<string> new_list = new List<string>();
+                    var new_list = new List<string>();
                     foreach (object i in source) { new_list.Add((string)i); }
                     return new_list;
                 }
                 if (typeCounts[typeof(double)] == source.Count)
                 {
-                    List<double> new_list = new List<double>();
+                    var new_list = new List<double>();
                     foreach (object i in source) { new_list.Add((double)i); }
                     return new_list;
                 }
@@ -227,11 +227,11 @@ namespace Node.Net.Json.Internal
         }
         private IDictionary ReadDictionary(TextReader reader)
         {
-            IDictionary dictionary = Activator.CreateInstance(DefaultDictionaryType) as IDictionary;
+            var dictionary = Activator.CreateInstance(DefaultDictionaryType) as IDictionary;
             reader.Seek('{');
             reader.Read(); // consume the '{'
             reader.EatWhiteSpace();
-            bool done = false;
+            var done = false;
             if ((char)(reader.Peek()) == '}')
             {
                 done = true;
@@ -240,13 +240,13 @@ namespace Node.Net.Json.Internal
             while (!done)
             {
                 reader.EatWhiteSpace();
-                string key = ReadString(reader) as string;
-                string lastKey = key;
+                var key = ReadString(reader) as string;
+                var lastKey = key;
                 reader.EatWhiteSpace();
-                char ch = (char)reader.Peek();
+                var ch = (char)reader.Peek();
                 reader.Read(); //consume ':'
 
-                object value = Read(reader);
+                var value = Read(reader);
                 if (!object.ReferenceEquals(null,value) &&
                      value.GetType() == typeof(string) &&
                      value.ToString().IndexOf("base64:") == 0)
@@ -270,9 +270,9 @@ namespace Node.Net.Json.Internal
         }
         private Type GetIDictionaryType(IDictionary source)
         {
-            Type result = source.GetType();
+            var result = source.GetType();
 
-            string stype = "";
+            var stype = "";
             if (source.Contains("Type")) stype = source["Type"].ToString();
             if (stype.Length > 0)
             {
@@ -283,11 +283,11 @@ namespace Node.Net.Json.Internal
         }
         private IDictionary ConvertDictionaryType(IDictionary source)
         {
-            IDictionary result = source;
-            Type targetType = GetIDictionaryType(source);
+            var result = source;
+            var targetType = GetIDictionaryType(source);
             if (!ReferenceEquals(null, targetType) && targetType != source.GetType())
             {
-                IDictionary new_dictionary = Activator.CreateInstance(targetType) as IDictionary;
+                var new_dictionary = Activator.CreateInstance(targetType) as IDictionary;
                 if (!ReferenceEquals(null, new_dictionary))
                 {
                     Collections.Copier.Copy(source, new_dictionary);

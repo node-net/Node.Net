@@ -54,6 +54,7 @@ namespace Node.Net
         #region IModel3D
         public static void Update(this IModel3D model3D) => Extensions.IModel3DExtension.Update(model3D);
         public static Point3D TransformLocalToWorld(this IModel3D model3D, Point3D local) => Extensions.IModel3DExtension.TransformLocalToWorld(model3D, local);
+        public static Point3D TransformLocalToParent(this IModel3D model3D, Point3D local) => Extensions.IModel3DExtension.TransformLocalToParent(model3D, local);
         #endregion
     }
 }

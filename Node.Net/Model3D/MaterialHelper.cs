@@ -7,10 +7,10 @@ namespace Node.Net.Model3D
     {
         public static Material GetImageMaterial(ImageSource imageSource,Brush specularBrush = null,double specularPower=10)
         {
-            MaterialGroup material = new MaterialGroup();
-            DiffuseMaterial diffuse = new DiffuseMaterial()
+            var material = new MaterialGroup();
+            var diffuse = new DiffuseMaterial
             {
-                Brush = new ImageBrush()
+                Brush = new ImageBrush
                 {
                     ImageSource = imageSource,
                     TileMode = TileMode.Tile
@@ -19,7 +19,7 @@ namespace Node.Net.Model3D
             material.Children.Add(diffuse);
             if (!object.ReferenceEquals(null, specularBrush))
             {
-                SpecularMaterial specular = new SpecularMaterial()
+                var specular = new SpecularMaterial
                 {
                     Brush = specularBrush,
                     SpecularPower = specularPower

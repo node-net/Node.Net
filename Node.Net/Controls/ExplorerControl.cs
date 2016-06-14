@@ -25,8 +25,8 @@ namespace Node.Net.Controls
         {
             base.OnInitialized(e);
 
-            verticalSplitView = new SplitControl() { Orientation = Orientation.Vertical };
-            horizontalSplitView = new SplitControl()
+            verticalSplitView = new SplitControl { Orientation = Orientation.Vertical };
+            horizontalSplitView = new SplitControl
             {
                 Orientation = Orientation.Horizontal,
                 ElementA = verticalSplitView,
@@ -49,8 +49,8 @@ namespace Node.Net.Controls
         {
 
             if (object.ReferenceEquals(null, verticalSplitView)) return;
-            INotifyPropertyChanged currentInotifyPropertyChanged = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as INotifyPropertyChanged;
-            if(!object.ReferenceEquals(null,inotifyPropertyChanged))
+            var currentInotifyPropertyChanged = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as INotifyPropertyChanged;
+            if (!object.ReferenceEquals(null,inotifyPropertyChanged))
             {
                 inotifyPropertyChanged.PropertyChanged -= _PropertyChanged;
             }
@@ -96,7 +96,7 @@ namespace Node.Net.Controls
 
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            TreeViewItem tvi = treeView.SelectedItem as TreeViewItem;
+            var tvi = treeView.SelectedItem as TreeViewItem;
             if (!object.ReferenceEquals(null, tvi))
             {
                 PropertyControl.DataContext = tvi.DataContext;
@@ -128,7 +128,7 @@ namespace Node.Net.Controls
             MenuItem viewMenuItem = null;
             if (!object.ReferenceEquals(null, ContentView))
             {
-                MethodInfo method = ContentView.GetType().GetMethod("GetViewMenuItem");
+                var method = ContentView.GetType().GetMethod(nameof(GetViewMenuItem));
                 if (!object.ReferenceEquals(null, method))
                 {
                     viewMenuItem = method.Invoke(ContentView, null) as MenuItem;

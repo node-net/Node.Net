@@ -4,7 +4,7 @@ namespace Node.Net.View
     {
         public static void ShowDialog(System.Windows.FrameworkElement frameworkElement,string title)
         {
-            System.Windows.Window window = new System.Windows.Window()
+            var window = new System.Windows.Window
             {
                 Content = frameworkElement,
                 Title = title,

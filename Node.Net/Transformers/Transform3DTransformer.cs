@@ -22,7 +22,7 @@ namespace Node.Net.Transformers
 
         public Vector3D ToTranslation(IDictionary value)
         {
-            Vector3D result = new Vector3D();
+            var result = new Vector3D();
             if (value.Contains("X"))
             {
                 result.X = GetLengthMeters(value, "X");
@@ -40,49 +40,49 @@ namespace Node.Net.Transformers
 
         public RotateTransform3D GetRotateTransform3D(IDictionary value)
         {
-            Quaternion rotationZ = new Quaternion();
-            Quaternion rotationY = new Quaternion();
-            Quaternion rotationX = new Quaternion();
-            QuaternionRotation3D rotation = new QuaternionRotation3D();
+            var rotationZ = new Quaternion();
+            var rotationY = new Quaternion();
+            var rotationX = new Quaternion();
+            var rotation = new QuaternionRotation3D();
             if (value.Contains("RotationZ"))
             {
-                double rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
+                var rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
             if (value.Contains("Orientation"))
             {
-                double rotationZ_degrees = GetRotationDegrees(value, "Orientation");
+                var rotationZ_degrees = GetRotationDegrees(value, "Orientation");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
             if (value.Contains("RotationY"))
             {
-                double rotationY_degrees = GetRotationDegrees(value, "RotationY");
+                var rotationY_degrees = GetRotationDegrees(value, "RotationY");
                 rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("Tilt"))
             {
-                double rotationY_degrees = GetRotationDegrees(value, "Tilt");
+                var rotationY_degrees = GetRotationDegrees(value, "Tilt");
                 rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("RotationX"))
             {
-                double rotationX_degrees = GetRotationDegrees(value, "RotationX");
+                var rotationX_degrees = GetRotationDegrees(value, "RotationX");
                 rotationX = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
             }
             if (value.Contains("Spin"))
             {
-                double rotationX_degrees = GetRotationDegrees(value, "Spin");
+                var rotationX_degrees = GetRotationDegrees(value, "Spin");
                 rotationX = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
             }
 
-            Quaternion total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
+            var total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
             return new RotateTransform3D(new QuaternionRotation3D(total_rotation));
         }
 
 
         public Vector3D ToScale(IDictionary value)
         {
-            Vector3D result = new Vector3D(1, 1, 1);
+            var result = new Vector3D(1, 1, 1);
             if (value.Contains("ScaleX"))
             {
                 result.X = GetLengthMeters(value, "ScaleX");

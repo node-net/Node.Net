@@ -15,24 +15,26 @@
         {
             base.OnInitialized(e);
 
-            textBox = new System.Windows.Controls.TextBox() 
-                          { HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto, 
-                            VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto };
-            textBox.AcceptsReturn = true;
+            textBox = new System.Windows.Controls.TextBox
+            {
+                HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto,
+                VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto,
+                AcceptsReturn = true
+            };
             textBox.TextChanged += textBox_TextChanged;
             Content = textBox;
             update();
         }
-        
+
         void textBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             if (!updating)
             {
-                object model = KeyValuePair.GetValue(DataContext);
-                System.Collections.Generic.List<string> list = model as System.Collections.Generic.List<string>;
+                var model = KeyValuePair.GetValue(DataContext);
+                var list = model as System.Collections.Generic.List<string>;
                 if (!object.ReferenceEquals(null, list))
                 {
-                    System.Collections.Generic.List<string> newText = new System.Collections.Generic.List<string>(
+                    var newText = new System.Collections.Generic.List<string>(
                                   textBox.Text.Split(new string[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries));
                     list.Clear();
                     foreach (string line in newText) list.Add(line);
@@ -53,11 +55,11 @@
             textBox.Text = "";
             try
             {
-                object model = KeyValuePair.GetValue(DataContext);
+                var model = KeyValuePair.GetValue(DataContext);
                 if (object.ReferenceEquals(null, model)) textBox.Text = "";
                 else
                 {
-                    System.Collections.IEnumerable ienum = model as System.Collections.IEnumerable;
+                    var ienum = model as System.Collections.IEnumerable;
                     if (!object.ReferenceEquals(null, ienum))
                     {
                         foreach (object item in ienum)

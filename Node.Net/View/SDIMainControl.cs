@@ -12,7 +12,7 @@ namespace Node.Net.View
 
         public bool? ShowDialog()
         {
-            System.Windows.Window window = new System.Windows.Window()
+            var window = new System.Windows.Window
             {
                 Content = this,
                 Title = this.Title,
@@ -48,7 +48,7 @@ namespace Node.Net.View
             get
             {
                 object document = null;
-                System.Collections.IEnumerable ienumerable = DataContext as System.Collections.IEnumerable;
+                var ienumerable = DataContext as System.Collections.IEnumerable;
                 if (!object.ReferenceEquals(null, ienumerable))
                 {
                     foreach (object item in ienumerable) document = item;
@@ -59,13 +59,13 @@ namespace Node.Net.View
             set
             {
 
-                System.Collections.IEnumerable ienumerable = DataContext as System.Collections.IEnumerable;
+                var ienumerable = DataContext as System.Collections.IEnumerable;
                 if (!object.ReferenceEquals(null, ienumerable))
                 {
-                    System.Collections.IList ilist = ienumerable as System.Collections.IList;
+                    var ilist = ienumerable as System.Collections.IList;
                     if (object.ReferenceEquals(null, ilist))
                     {
-                        System.Collections.Generic.List<object> list
+                        var list
                             = new System.Collections.Generic.List<object>();
                         foreach (object item in ilist) list.Add(item);
                         list[list.Count - 1] = value;
@@ -106,17 +106,17 @@ namespace Node.Net.View
         {
             base.OnInitialized(e);
 
-            System.Windows.Controls.Grid grid = new System.Windows.Controls.Grid();
-            grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition() { Height = System.Windows.GridLength.Auto });
+            var grid = new System.Windows.Controls.Grid();
+            grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition { Height = System.Windows.GridLength.Auto });
             grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
 
-            System.Windows.Controls.Menu menu = new System.Windows.Controls.Menu();
-            System.Windows.Controls.MenuItem fileMenuItem = new System.Windows.Controls.MenuItem() { Header = "File" };
-            System.Windows.Controls.MenuItem fileNewMenuItem = new System.Windows.Controls.MenuItem() { Header = "New" };
-            System.Windows.Controls.MenuItem fileOpenMenuItem = new System.Windows.Controls.MenuItem() { Header = "Open" };
-            System.Windows.Controls.MenuItem fileSaveMenuItem = new System.Windows.Controls.MenuItem() { Header = "Save" };
-            System.Windows.Controls.MenuItem fileSaveAsMenuItem = new System.Windows.Controls.MenuItem() { Header = "SaveAs" };
-            System.Windows.Controls.MenuItem fileExitMenuItem = new System.Windows.Controls.MenuItem() { Header = "Exit" };
+            var menu = new System.Windows.Controls.Menu();
+            var fileMenuItem = new System.Windows.Controls.MenuItem { Header = "File" };
+            var fileNewMenuItem = new System.Windows.Controls.MenuItem { Header = nameof(New) };
+            var fileOpenMenuItem = new System.Windows.Controls.MenuItem { Header = nameof(Open) };
+            var fileSaveMenuItem = new System.Windows.Controls.MenuItem { Header = nameof(Save) };
+            var fileSaveAsMenuItem = new System.Windows.Controls.MenuItem { Header = nameof(SaveAs) };
+            var fileExitMenuItem = new System.Windows.Controls.MenuItem { Header = nameof(Exit) };
             fileNewMenuItem.Click += fileMenuItem_Click;
             fileOpenMenuItem.Click += fileMenuItem_Click;
             fileSaveMenuItem.Click += fileMenuItem_Click;
@@ -143,18 +143,18 @@ namespace Node.Net.View
         }
         public void Update()
         {
-            object model = KeyValuePair.GetValue(DataContext);
+            var model = KeyValuePair.GetValue(DataContext);
             if (!object.ReferenceEquals(null, model))
             {
                 if (object.ReferenceEquals(null, documentType)) documentType = model.GetType();
             }
-            string title = "";
-            object key = KeyValuePair.GetKey(Document);
+            var title = "";
+            var key = KeyValuePair.GetKey(Document);
             if (!object.ReferenceEquals(null, key)) title = key.ToString() + " - ";
             title += ApplicationName;
             Title = title;
 
-            object doc = KeyValuePair.GetValue(Document);
+            var doc = KeyValuePair.GetValue(Document);
             if (object.ReferenceEquals(null, doc) || doc.GetType() != DocumentType) New();
             if (!documentViewGrid.Children.Contains(documentView))
             {
@@ -166,12 +166,12 @@ namespace Node.Net.View
 
         void fileMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            System.Windows.Controls.MenuItem menuItem = sender as System.Windows.Controls.MenuItem;
-            if (menuItem.Header.ToString() == "New") New();
-            if (menuItem.Header.ToString() == "Open") Open();
-            if (menuItem.Header.ToString() == "Save") Save();
-            if (menuItem.Header.ToString() == "SaveAs") SaveAs();
-            if (menuItem.Header.ToString() == "Exit") Exit();
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            if (menuItem.Header.ToString() == nameof(New)) New();
+            if (menuItem.Header.ToString() == nameof(Open)) Open();
+            if (menuItem.Header.ToString() == nameof(Save)) Save();
+            if (menuItem.Header.ToString() == nameof(SaveAs)) SaveAs();
+            if (menuItem.Header.ToString() == nameof(Exit)) Exit();
         }
         private void New()
         {
@@ -181,15 +181,17 @@ namespace Node.Net.View
         }
         private void Open()
         {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Filter = OpenFileDialogFilter;
-            System.Nullable<bool> result = ofd.ShowDialog();
+            var ofd = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = OpenFileDialogFilter
+            };
+            var result = ofd.ShowDialog();
             if (result == true)
             {
-                object document = System.Activator.CreateInstance(DocumentType);
+                var document = System.Activator.CreateInstance(DocumentType);
 
                 System.Type[] stringTypes = { typeof(string) };
-                System.Reflection.MethodInfo openStringInfo = document.GetType().GetMethod("Open", stringTypes);
+                var openStringInfo = document.GetType().GetMethod(nameof(Open), stringTypes);
                 if (!object.ReferenceEquals(null, openStringInfo))
                 {
                     object[] parameters = { ofd.FileName };
@@ -210,7 +212,7 @@ namespace Node.Net.View
                     using (System.IO.FileStream stream = new System.IO.FileStream(ofd.FileName, System.IO.FileMode.Open))
                     {
                         System.Type[] types = { typeof(System.IO.Stream) };
-                        System.Reflection.MethodInfo openInfo = document.GetType().GetMethod("Open", types);
+                        var openInfo = document.GetType().GetMethod(nameof(Open), types);
                         if (!object.ReferenceEquals(null, openInfo))
                         {
                             object[] parameters = { stream };
@@ -228,7 +230,7 @@ namespace Node.Net.View
                         }
                     }
                 }
-                System.IO.FileInfo fi = new System.IO.FileInfo(fileName);
+                var fi = new System.IO.FileInfo(fileName);
                 Document = new System.Collections.Generic.KeyValuePair<string, object>
                                    (fi.Name, document);
             }
@@ -245,9 +247,11 @@ namespace Node.Net.View
 
         private void SaveAs()
         {
-            Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
-            sfd.Filter = SaveFileDialogFilter;
-            System.Nullable<bool> result = sfd.ShowDialog();
+            var sfd = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = SaveFileDialogFilter
+            };
+            var result = sfd.ShowDialog();
             if (result == true)
             {
                 Save(sfd.FileName);
@@ -258,15 +262,15 @@ namespace Node.Net.View
         {
             using (System.IO.FileStream stream = new System.IO.FileStream(filename, System.IO.FileMode.Create))
             {
-                object document = KeyValuePair.GetValue(Document);
+                var document = KeyValuePair.GetValue(Document);
                 System.Type[] types = { typeof(System.IO.Stream) };
-                System.Reflection.MethodInfo saveInfo = document.GetType().GetMethod("Save", types);
+                var saveInfo = document.GetType().GetMethod(nameof(Save), types);
                 if (!object.ReferenceEquals(null, saveInfo))
                 {
                     object[] parameters = { stream };
                     saveInfo.Invoke(document, parameters);
                     fileName = filename;
-                    System.IO.FileInfo fi = new System.IO.FileInfo(fileName);
+                    var fi = new System.IO.FileInfo(fileName);
                     Document = new System.Collections.Generic.KeyValuePair<string, object>
                                        (fi.Name, document);
                 }
@@ -275,7 +279,7 @@ namespace Node.Net.View
 
         private void Exit() 
         {
-            System.Windows.Window mainWindow = System.Windows.Application.Current.MainWindow;
+            var mainWindow = System.Windows.Application.Current.MainWindow;
             mainWindow.Close(); 
         }
     }
