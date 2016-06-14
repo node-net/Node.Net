@@ -40,7 +40,7 @@
             return fileName;
         }
         private string fullName = "";
-        private string RandomString(int size)
+        private static string RandomString(int size)
         {
             var random = new System.Random((int)System.DateTime.Now.Ticks);
             var builder = new System.Text.StringBuilder();

@@ -101,12 +101,12 @@ namespace Node.Net.Json.Internal
             return null;
         }
 
-        private object ReadNull(TextReader reader)
+        private static object ReadNull(TextReader reader)
         {
             for (int i = 0; i < 4; ++i) { reader.Read(); };
             return null;
         }
-        private object ReadBool(TextReader reader)
+        private static object ReadBool(TextReader reader)
         {
             reader.EatWhiteSpace();
             var ch = (char)reader.Peek();
@@ -118,7 +118,7 @@ namespace Node.Net.Json.Internal
             reader.Read(); reader.Read(); reader.Read(); reader.Read(); reader.Read(); // read char f,a,l,s,e
             return false;
         }
-        private object ReadNumber(TextReader reader)
+        private static object ReadNumber(TextReader reader)
         {
             reader.EatWhiteSpace();
             char[] endchars = { '}', ']', ',', ' ' };
@@ -138,7 +138,7 @@ namespace Node.Net.Json.Internal
                 return value;
             }
         }
-        private object ReadString(TextReader reader)
+        private static object ReadString(TextReader reader)
         {
             reader.EatWhiteSpace();
             var ch = (char)reader.Peek();
@@ -185,7 +185,7 @@ namespace Node.Net.Json.Internal
             }
             return list;
         }
-        private IList ConvertListType(IList source)
+        private static IList ConvertListType(IList source)
         {
             var nullCount = 0;
             var typeCounts = new Dictionary<Type, int>();

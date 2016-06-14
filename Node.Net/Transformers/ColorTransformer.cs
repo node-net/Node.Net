@@ -28,7 +28,7 @@ namespace Node.Net.Transformers
             return Colors.Black;
         }
 
-        public Color Transform(IDictionary dictionary)
+        public static Color Transform(IDictionary dictionary)
         {
             return Colors.Black;
         }

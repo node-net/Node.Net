@@ -41,8 +41,10 @@ namespace Node.Net.Json.Internal
             Write(writer, value);
             writer.Flush();
             memory.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memory);
-            return reader.ReadToEnd();
+            using (var reader = new StreamReader(memory))
+            {
+                return reader.ReadToEnd();
+            }
         }
 
 #if NET40
@@ -75,11 +77,11 @@ namespace Node.Net.Json.Internal
         }
 
 
-        private void WriteNull(TextWriter writer)
+        private static void WriteNull(TextWriter writer)
         {
             writer.Write("null");
         }
-        private void WriteString(TextWriter writer, object value)
+        private static void WriteString(TextWriter writer, object value)
         {
             var svalue = value.ToString();
             // Escape '\' first
@@ -99,11 +101,11 @@ namespace Node.Net.Json.Internal
             }
             writer.Write($"\"{svalue}\"");*/
         }
-        private void WriteBytes(TextWriter writer,byte[] bytes)
+        private static void WriteBytes(TextWriter writer,byte[] bytes)
         {
             WriteString(writer, $"base64:{Convert.ToBase64String(bytes)}");
         }
-        private void WriteValueType(TextWriter writer, object value)
+        private static void WriteValueType(TextWriter writer, object value)
         {
             if (value.GetType() == typeof(bool)) writer.Write(value.ToString().ToLower());
             else writer.Write(value.ToString());
@@ -219,9 +221,8 @@ namespace Node.Net.Json.Internal
             {
                 var builder = new System.Text.StringBuilder();
                 var lastChar = 'a';
-                for (int i = 0; i < input.Length; ++i)
+                foreach (var ch in input)
                 {
-                    var ch = input[i];
                     if (ch == '"')
                     {
                         builder.Append('\\');

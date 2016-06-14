@@ -49,9 +49,12 @@
         void lvi_Update(object sender, System.EventArgs e)
         {
             var lvi = sender as System.Windows.Controls.ListViewItem;
-            if (!object.ReferenceEquals(null,lvi) && !object.ReferenceEquals(null,UpdateListViewItem))
+            if (!object.ReferenceEquals(null,lvi) )
             {
-                UpdateListViewItem(lvi);
+                if (UpdateListViewItem != null)
+                {
+                    UpdateListViewItem(lvi);
+                }
             }
         }
     }

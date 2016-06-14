@@ -24,7 +24,7 @@ namespace Node.Net.Transformers
             return new SolidColorBrush((Color)color_transformer.Transform(name));
         }
 
-        public Brush Transform(IDictionary dictionary)
+        public static Brush Transform(IDictionary dictionary)
         {
             return null;
         }

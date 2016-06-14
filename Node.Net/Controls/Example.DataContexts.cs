@@ -46,7 +46,7 @@ namespace Node.Net.Controls
                        LoadDictionary("Dictionary.Test.Positional.Scene.json"));
         }
 
-        private IDictionary LoadDictionary(string name)
+        private static IDictionary LoadDictionary(string name)
         {
             IDictionary result = null;
             var stream = Extensions.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.json");

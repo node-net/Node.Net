@@ -48,7 +48,7 @@ namespace Node.Net
             }
         }
 
-        private string GetExtension(string name)
+        private static string GetExtension(string name)
         {
             var words = name.Split(".".ToCharArray(), System.StringSplitOptions.RemoveEmptyEntries);
             if (words.Length > 0) return words[words.Length - 1];

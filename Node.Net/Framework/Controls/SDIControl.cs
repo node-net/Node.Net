@@ -87,12 +87,12 @@ namespace Node.Net.Framework.Controls
             }
         }
         
-        private MenuItem[] GetRecentFileMenuItems()
+        private static MenuItem[] GetRecentFileMenuItems()
         {
             var recentFileMenuItems = new List<MenuItem>();
             return recentFileMenuItems.ToArray();
         }
-        private void AddRecentFile(string filename)
+        private static void AddRecentFile(string filename)
         {
             //System.Windows.Application.Current.
         }

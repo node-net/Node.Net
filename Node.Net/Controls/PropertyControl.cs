@@ -139,7 +139,7 @@ namespace Node.Net.Controls
         public event System.EventHandler ValueChanged;
         void propertyGrid_PropertyValueChanged(object s, System.Windows.Forms.PropertyValueChangedEventArgs e)
         {
-            if (!object.ReferenceEquals(null, ValueChanged))
+            if (ValueChanged!=null)
             {
                 ValueChanged(this, new System.EventArgs());
             }

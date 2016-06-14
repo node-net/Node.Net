@@ -39,7 +39,7 @@ namespace Node.Net.Controls
             Update(2);
             base.OnExpanded(e);
         }
-        private bool IsValue(object item)
+        private static bool IsValue(object item)
         {
             if (object.ReferenceEquals(null, item)) return true;
             if (object.ReferenceEquals(null, Collections.KeyValuePair.GetValue(item))) return true;

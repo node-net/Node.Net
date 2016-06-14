@@ -65,7 +65,7 @@
             }
         }
 
-        private void UpdateDictionary(System.Collections.IDictionary dictionary)
+        private static void UpdateDictionary(System.Collections.IDictionary dictionary)
         {
             if(!object.ReferenceEquals(null,dictionary))
             {

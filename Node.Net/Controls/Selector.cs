@@ -45,7 +45,7 @@ namespace Node.Net.Controls
 
         private void _comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!object.ReferenceEquals(null, SelectionChanged))
+            if (SelectionChanged!=null)
             {
                 var cbi = _comboBox.SelectedItem as ComboBoxItem;
                 SelectionChanged(cbi.DataContext);

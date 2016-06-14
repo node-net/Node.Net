@@ -96,7 +96,7 @@ namespace Node.Net.Controls
             Update();
         }
 
-        private FixedDocument GetFixedDocument(PrintDialog pd, FrameworkElement view)
+        private static FixedDocument GetFixedDocument(PrintDialog pd, FrameworkElement view)
         {
             var doc = new FixedDocument();
             doc.DocumentPaginator.PageSize = new Size(pd.PrintableAreaWidth, pd.PrintableAreaHeight);

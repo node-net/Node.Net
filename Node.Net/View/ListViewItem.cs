@@ -17,7 +17,7 @@
         public event System.EventHandler Update;
         private void update()
         {
-            if (!object.ReferenceEquals(null, Update))
+            if (Update!=null)
             {
                 Update(this, new System.EventArgs());
             }

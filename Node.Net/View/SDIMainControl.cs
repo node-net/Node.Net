@@ -277,7 +277,7 @@ namespace Node.Net.View
             }
         }
 
-        private void Exit() 
+        private static void Exit() 
         {
             var mainWindow = System.Windows.Application.Current.MainWindow;
             mainWindow.Close(); 
