@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
@@ -38,7 +39,21 @@ namespace Node.Net
         #endregion
 
         #region IMetaData
-        public static void SetTransformMetaData(this IMetaData metaData, IDictionary dictionary) => Extensions.IMetaDataExtension.SetTransformMetaData(metaData, dictionary);
+        public static void SetTransformMetaData(this IMetaDataManager metaData, IDictionary dictionary) => Extensions.IMetaDataManagerExtension.SetTransformMetaData(metaData, dictionary);
+        #endregion
+
+        #region IParent
+        public static T[] Collect<T>(this IParent parent) => Extensions.IParentExtension.Collect<T>(parent);
+        public static T[] DeepCollect<T>(this IParent parent) => Extensions.IParentExtension.DeepCollect<T>(parent);
+        #endregion
+
+        #region IChild
+        public static T GetFirstAncestor<T>(this IChild child) => Extensions.IChildExtension.GetFirstAncestor<T>(child);
+        #endregion
+
+        #region IModel3D
+        public static void Update(this IModel3D model3D) => Extensions.IModel3DExtension.Update(model3D);
+        public static Point3D TransformLocalToWorld(this IModel3D model3D, Point3D local) => Extensions.IModel3DExtension.TransformLocalToWorld(model3D, local);
         #endregion
     }
 }

@@ -2,16 +2,16 @@
 {
     public class Traverser
     {
-        private MetaData metaData = null;
-        public Traverser() { metaData = new MetaData(); }
+        private MetaDataManager metaData = null;
+        public Traverser() { metaData = new MetaDataManager(); }
 
         public Traverser(object model) 
         { 
-            metaData = new MetaData();
+            metaData = new MetaDataManager();
             Traverse(model);
         }
 
-        public IMetaData MetaData
+        public IMetaDataManager MetaData
         {
             get { return metaData; }
         } 

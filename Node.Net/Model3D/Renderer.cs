@@ -14,14 +14,14 @@ namespace Node.Net.Model3D
             Model3DKeys.Add("Type");
         }
 
-        private IMetaData _metaData;
-        public IMetaData MetaData
+        private IMetaDataManager _metaData;
+        public IMetaDataManager MetaData
         {
             get
             {
                 if(object.ReferenceEquals(null,_metaData))
                 {
-                    _metaData = Collections.MetaData.Default;
+                    _metaData = Collections.MetaDataManager.Default;
                 }
                 return _metaData;
             }

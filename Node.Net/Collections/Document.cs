@@ -23,7 +23,7 @@ namespace Node.Net.Collections
             } 
         }
 
-        public IMetaData MetaData
+        public IMetaDataManager MetaData
         {
             get { return traverser.MetaData; }
         }
