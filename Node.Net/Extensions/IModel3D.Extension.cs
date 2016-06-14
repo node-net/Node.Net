@@ -79,6 +79,10 @@ namespace Node.Net.Extensions
         {
             return ApplyTransform(world, GetWorldToLocal(model3D));
         }
+        public static Vector3D TransformLocalToWorld(IModel3D model3D, Vector3D local)
+        {
+            return ApplyTransform(local, GetLocalToWorld(model3D));
+        }
         /*
         public static Vector3D GetTranslationVector3D(ITranslation3D value)
         {
@@ -102,11 +106,11 @@ namespace Node.Net.Extensions
             return result;
         }*/
 
-            /*
-        private static double GetLengthMeters(IDictionary dictionary, string key)
-        {
-            return Measurement.Length.Parse(dictionary[key].ToString())[Measurement.LengthUnit.Meters];
-        }*/
+        /*
+    private static double GetLengthMeters(IDictionary dictionary, string key)
+    {
+        return Measurement.Length.Parse(dictionary[key].ToString())[Measurement.LengthUnit.Meters];
+    }*/
         private static double GetRotationDegrees(IDictionary dictionary, string key)
         {
             if (object.ReferenceEquals(null, dictionary)) return 0;
