@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Extensions
@@ -15,16 +10,55 @@ namespace Node.Net.Extensions
             UpdateLocalToParent(model3D);
 
             var parent = model3D as IParent;
-            if(parent != null)
+            if (parent != null)
             {
                 var deepModels = parent.DeepCollect<IModel3D>();
-                foreach(var deepModel in deepModels)
+                foreach (var deepModel in deepModels)
                 {
                     UpdateLocalToParent(deepModel);
                 }
             }
         }
 
+        public static Matrix3D GetParentToWorld(IModel3D model3D)
+        {
+            if (model3D != null)
+            {
+                var child = model3D as IChild;
+                if (child != null)
+                {
+                    var parentToWorld = new Matrix3D();
+                    var current_parent = child.GetFirstAncestor<IModel3D>();
+                    while(current_parent != null)
+                    {
+                        parentToWorld.Append(current_parent.LocalToParent);
+                        var parent_as_child = current_parent as IChild;
+                        if(parent_as_child == null)
+                        {
+                            current_parent = null;
+                        }
+                        else
+                        {
+                            current_parent = parent_as_child.GetFirstAncestor<IModel3D>();
+                        }
+                    }
+                    
+                }
+                return model3D.LocalToParent;
+            }
+            return new Matrix3D();
+        }
+
+        public static Matrix3D GetLocalToWorld(IModel3D model3D)
+        {
+            if (model3D != null)
+            {
+                var localToWorld = Matrix3D.Multiply(model3D.LocalToParent, new Matrix3D());
+                localToWorld.Append(GetParentToWorld(model3D));
+                return localToWorld;
+            }
+            return new Matrix3D();
+        }
         public static void UpdateLocalToParent(IModel3D model3D)
         {
             if (model3D != null)
@@ -76,7 +110,6 @@ namespace Node.Net.Extensions
             var rotationZ = new Quaternion();
             var rotationY = new Quaternion();
             var rotationX = new Quaternion();
-            //QuaternionRotation3D rotation = new QuaternionRotation3D();
             if (value.Contains("RotationZ"))
             {
                 var rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
@@ -110,7 +143,6 @@ namespace Node.Net.Extensions
 
             var total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
             return total_rotation;
-            //return new RotateTransform3D(new QuaternionRotation3D(total_rotation));
         }
     }
 }

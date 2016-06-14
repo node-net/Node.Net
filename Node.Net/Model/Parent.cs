@@ -10,7 +10,11 @@ namespace Node.Net.Model
             foreach (string key in Keys)
             {
                 var child = this[key] as IChild;
-                if (child != null) children.Add(child);
+                if (child != null)
+                {
+                    child.Parent = this;
+                    children.Add(child);
+                }
             }
             return children.ToArray();
         }

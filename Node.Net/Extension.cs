@@ -46,6 +46,10 @@ namespace Node.Net
         public static T[] DeepCollect<T>(this IParent parent) => Extensions.IParentExtension.DeepCollect<T>(parent);
         #endregion
 
+        #region IChild
+        public static T GetFirstAncestor<T>(this IChild child) => Extensions.IChildExtension.GetFirstAncestor<T>(child);
+        #endregion
+
         #region IModel3D
         public static void Update(this IModel3D model3D) => Extensions.IModel3DExtension.Update(model3D);
         #endregion
