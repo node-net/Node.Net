@@ -114,6 +114,7 @@
     <Compile Include="Extensions\Image.cs" />
     <Compile Include="Extensions\ImageSource.cs" />
     <Compile Include="Extensions\IMetaDataManager.Extension.cs" />
+    <Compile Include="Extensions\IModel3D.Extension.cs" />
     <Compile Include="Extensions\IParent.Extension.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Framework\RecentFiles.cs" />
     <Compile Include="IChild.cs" />
     <Compile Include="IMetaData.cs" />
+    <Compile Include="IMetaDataManager.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IFilter.cs" />
     <Compile Include="IModel3D.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="Model\Child.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Parent.cs" />
+    <Compile Include="Model\SpatialElement.cs" />
     <Compile Include="Plugin\Plugins.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Repository.cs" />

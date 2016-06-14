@@ -40,5 +40,14 @@ namespace Node.Net
         #region IMetaData
         public static void SetTransformMetaData(this IMetaDataManager metaData, IDictionary dictionary) => Extensions.IMetaDataManagerExtension.SetTransformMetaData(metaData, dictionary);
         #endregion
+
+        #region IParent
+        public static T[] Collect<T>(this IParent parent) => Extensions.IParentExtension.Collect<T>(parent);
+        public static T[] DeepCollect<T>(this IParent parent) => Extensions.IParentExtension.DeepCollect<T>(parent);
+        #endregion
+
+        #region IModel3D
+        public static void Update(this IModel3D model3D) => Extensions.IModel3DExtension.Update(model3D);
+        #endregion
     }
 }

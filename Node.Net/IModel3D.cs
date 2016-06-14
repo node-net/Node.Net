@@ -1,7 +1,10 @@
-﻿namespace Node.Net
+﻿using System.Windows.Media.Media3D;
+
+namespace Node.Net
 {
-    public interface IModel3D
+    public interface IModel3D : IChild
     {
-        //object Parent { get; set; }
+
+        Matrix3D LocalToParent { get; set; }
     }
 }

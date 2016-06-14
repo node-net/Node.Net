@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Node.Net.Model
+﻿namespace Node.Net.Model
 {
     public class Child : IChild
     {
