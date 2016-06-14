@@ -38,7 +38,7 @@ namespace Node.Net
         #endregion
 
         #region IMetaData
-        public static void SetTransformMetaData(this IMetaData metaData, IDictionary dictionary) => Extensions.IMetaDataExtension.SetTransformMetaData(metaData, dictionary);
+        public static void SetTransformMetaData(this IMetaDataManager metaData, IDictionary dictionary) => Extensions.IMetaDataManagerExtension.SetTransformMetaData(metaData, dictionary);
         #endregion
     }
 }

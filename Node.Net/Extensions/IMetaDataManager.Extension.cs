@@ -3,9 +3,9 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Extensions
 {
-    public class IMetaDataExtension
+    public class IMetaDataManagerExtension
     {
-        public static void SetTransformMetaData(IMetaData metaData, IDictionary dictionary)
+        public static void SetTransformMetaData(IMetaDataManager metaData, IDictionary dictionary)
         {
             if (object.ReferenceEquals(null, dictionary)) return;
             var parent = metaData.GetMetaData(dictionary, "Parent");

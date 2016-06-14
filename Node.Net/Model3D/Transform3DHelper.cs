@@ -19,16 +19,16 @@ namespace Node.Net.Model3D
         {
             if (!object.ReferenceEquals(null, dictionary))
             {
-                Extensions.IMetaDataExtension.SetTransformMetaData(MetaData, dictionary);
+                Extensions.IMetaDataManagerExtension.SetTransformMetaData(MetaData, dictionary);
                 foreach(string key in dictionary.Keys)
                 {
-                    Extensions.IMetaDataExtension.SetTransformMetaData(MetaData, dictionary[key] as IDictionary);
+                    Extensions.IMetaDataManagerExtension.SetTransformMetaData(MetaData, dictionary[key] as IDictionary);
                 }
             }
         }
 
-        private readonly Collections.MetaData _metaData = new Collections.MetaData();
-        private Collections.MetaData MetaData
+        private readonly Collections.MetaDataManager _metaData = new Collections.MetaDataManager();
+        private Collections.MetaDataManager MetaData
         {
             get { return _metaData; }
         }

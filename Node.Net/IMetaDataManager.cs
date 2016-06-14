@@ -1,6 +1,6 @@
 ﻿namespace Node.Net
 {
-    public interface IMetaData
+    public interface IMetaDataManager
     {
         object GetMetaData(object item, string key);
 
