@@ -142,6 +142,7 @@
     <Compile Include="IReader.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IResources.cs" />
+    <Compile Include="IRotation3D.cs" />
     <Compile Include="ITransformer.cs" />
     <Compile Include="ITranslation3D.cs" />
     <Compile Include="ITypeTransformer.cs" />
