@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
@@ -52,6 +53,7 @@ namespace Node.Net
 
         #region IModel3D
         public static void Update(this IModel3D model3D) => Extensions.IModel3DExtension.Update(model3D);
+        public static Point3D TransformLocalToWorld(this IModel3D model3D, Point3D local) => Extensions.IModel3DExtension.TransformLocalToWorld(model3D, local);
         #endregion
     }
 }

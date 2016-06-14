@@ -65,11 +65,37 @@ namespace Node.Net.Extensions
             {
                 var matrix = new Matrix3D();
                 matrix.Rotate(GetQuaternionRotation(model3D as IDictionary));
-                matrix.Translate(GetTranslationVector3D(model3D as IDictionary));
+                var translation = model3D as ITranslation3D;
+                if(translation != null)
+                {
+                    matrix.Translate(translation.Translation3D);
+                }
+                //matrix.Translate(GetTranslationVector3D(model3D as ITranslation3D));
                 model3D.LocalToParent = matrix;
             }
         }
-        public static Vector3D GetTranslationVector3D(IDictionary value)
+
+        public static Point3D ApplyTransform(Point3D source, Matrix3D trans)
+        {
+            var point4D =
+                new Point4D(source.X, source.Y, source.Z, 1.0);
+            point4D = trans.Transform(point4D);
+            return new Point3D(point4D.X, point4D.Y, point4D.Z);
+        }
+        public static Vector3D ApplyTransform(Vector3D source, Matrix3D trans)
+        {
+            var mv = new Vector3D(source.X, source.Y, source.Z);
+            mv = trans.Transform(mv);
+            var result = new Vector3D(mv.X, mv.Y, mv.Z);
+            return result;
+        }
+
+        public static Point3D TransformLocalToWorld(IModel3D model3D,Point3D local)
+        {
+            return ApplyTransform(local, GetLocalToWorld(model3D));
+        }
+        /*
+        public static Vector3D GetTranslationVector3D(ITranslation3D value)
         {
             if (value == null) return new Vector3D();
             var result = new Vector3D();
@@ -89,13 +115,13 @@ namespace Node.Net.Extensions
                 }
             }
             return result;
-        }
+        }*/
 
-
+            /*
         private static double GetLengthMeters(IDictionary dictionary, string key)
         {
             return Measurement.Length.Parse(dictionary[key].ToString())[Measurement.LengthUnit.Meters];
-        }
+        }*/
         private static double GetRotationDegrees(IDictionary dictionary, string key)
         {
             if (object.ReferenceEquals(null, dictionary)) return 0;
