@@ -34,7 +34,7 @@
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
             using (System.IO.FileStream dest = new System.IO.FileStream(fileName, System.IO.FileMode.Create))
             {
-                int ibyte = source.ReadByte();
+                var ibyte = source.ReadByte();
                 while (ibyte > -1)
                 {
                     dest.WriteByte((byte)ibyte);
@@ -47,14 +47,14 @@
         public static void CopyToFile(string resourceName,string fileName)
         {
             if(System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
-            System.IO.FileInfo fi = new System.IO.FileInfo(fileName);
+            var fi = new System.IO.FileInfo(fileName);
             if (!System.IO.Directory.Exists(fi.DirectoryName)) System.IO.Directory.CreateDirectory(fi.DirectoryName);
             using(System.IO.FileStream dest = new System.IO.FileStream(fileName,System.IO.FileMode.Create))
             {
                 using(System.IO.Stream source = GetStream(resourceName))
                 {
-                    int ibyte = source.ReadByte();
-                    while(ibyte > -1)
+                    var ibyte = source.ReadByte();
+                    while (ibyte > -1)
                     {
                         dest.WriteByte((byte)ibyte);
                         ibyte = source.ReadByte();
@@ -67,13 +67,13 @@
         public static void CopyToFile(System.Reflection.Assembly assembly,string resourceName,string fileName)
         {
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
-            System.IO.FileInfo fi = new System.IO.FileInfo(fileName);
+            var fi = new System.IO.FileInfo(fileName);
             if (!System.IO.Directory.Exists(fi.DirectoryName)) System.IO.Directory.CreateDirectory(fi.DirectoryName);
             using (System.IO.FileStream dest = new System.IO.FileStream(fileName, System.IO.FileMode.Create))
             {
                 using (System.IO.Stream source = GetStream(assembly,resourceName))
                 {
-                    int ibyte = source.ReadByte();
+                    var ibyte = source.ReadByte();
                     while (ibyte > -1)
                     {
                         dest.WriteByte((byte)ibyte);

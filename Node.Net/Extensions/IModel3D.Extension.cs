@@ -5,21 +5,6 @@ namespace Node.Net.Extensions
 {
     public static class IModel3DExtension
     {
-        public static void Update(IModel3D model3D)
-        {
-            UpdateLocalToParent(model3D);
-
-            var parent = model3D as IParent;
-            if (parent != null)
-            {
-                var deepModels = parent.DeepCollect<IModel3D>();
-                foreach (var deepModel in deepModels)
-                {
-                    UpdateLocalToParent(deepModel);
-                }
-            }
-        }
-
         public static Matrix3D GetParentToWorld(IModel3D model3D)
         {
             if (model3D != null)
@@ -42,9 +27,10 @@ namespace Node.Net.Extensions
                             current_parent = parent_as_child.GetFirstAncestor<IModel3D>();
                         }
                     }
+                    return parentToWorld;
                     
                 }
-                return model3D.LocalToParent;
+
             }
             return new Matrix3D();
         }
@@ -59,20 +45,11 @@ namespace Node.Net.Extensions
             }
             return new Matrix3D();
         }
-        public static void UpdateLocalToParent(IModel3D model3D)
+        public static Matrix3D GetWorldToLocal(IModel3D model3D)
         {
-            if (model3D != null)
-            {
-                var matrix = new Matrix3D();
-                matrix.Rotate(GetQuaternionRotation(model3D as IDictionary));
-                var translation = model3D as ITranslation3D;
-                if(translation != null)
-                {
-                    matrix.Translate(translation.Translation3D);
-                }
-                //matrix.Translate(GetTranslationVector3D(model3D as ITranslation3D));
-                model3D.LocalToParent = matrix;
-            }
+            var worldToLocal = System.Windows.Media.Media3D.Matrix3D.Multiply(model3D.GetLocalToWorld(), new Matrix3D());
+            worldToLocal.Invert();
+            return worldToLocal;
         }
 
         public static Point3D ApplyTransform(Point3D source, Matrix3D trans)
@@ -98,7 +75,25 @@ namespace Node.Net.Extensions
         {
             return ApplyTransform(local, model3D.LocalToParent);
         }
+        public static Point3D TransformWorldToLocal(IModel3D model3D,Point3D world)
+        {
+            return ApplyTransform(world, GetWorldToLocal(model3D));
+        }
+        public static Vector3D TransformLocalToWorld(IModel3D model3D, Vector3D local)
+        {
+            return ApplyTransform(local, GetLocalToWorld(model3D));
+        }
+        /*
+        public static Vector3D GetTranslationVector3D(ITranslation3D value)
+        {
+            return ApplyTransform(local, model3D.LocalToParent);
+        }
 
+        /*
+    private static double GetLengthMeters(IDictionary dictionary, string key)
+    {
+        return Measurement.Length.Parse(dictionary[key].ToString())[Measurement.LengthUnit.Meters];
+    }*/
         private static double GetRotationDegrees(IDictionary dictionary, string key)
         {
             if (object.ReferenceEquals(null, dictionary)) return 0;

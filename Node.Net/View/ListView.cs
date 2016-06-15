@@ -24,15 +24,15 @@
             Items.Clear();
             if (!object.ReferenceEquals(null, DataContext))
             {
-                System.Collections.IEnumerable enumerable = DataContext as System.Collections.IEnumerable;
-                if(!object.ReferenceEquals(null,enumerable) && DataContext.GetType() != typeof(string))
+                var enumerable = DataContext as System.Collections.IEnumerable;
+                if (!object.ReferenceEquals(null,enumerable) && DataContext.GetType() != typeof(string))
                 {
                     foreach(object item in enumerable)
                     {
                         
                         if (!object.ReferenceEquals(null, UpdateListViewItem))
                         {
-                            ListViewItem lvi = new ListViewItem(null);
+                            var lvi = new ListViewItem(null);
                             lvi.Update += lvi_Update;
                             lvi.DataContext = item;
                             Items.Add(lvi);
@@ -48,10 +48,13 @@
 
         void lvi_Update(object sender, System.EventArgs e)
         {
-            System.Windows.Controls.ListViewItem lvi = sender as System.Windows.Controls.ListViewItem;
-            if(!object.ReferenceEquals(null,lvi) && !object.ReferenceEquals(null,UpdateListViewItem))
+            var lvi = sender as System.Windows.Controls.ListViewItem;
+            if (!object.ReferenceEquals(null,lvi) )
             {
-                UpdateListViewItem(lvi);
+                if (UpdateListViewItem != null)
+                {
+                    UpdateListViewItem(lvi);
+                }
             }
         }
     }

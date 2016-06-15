@@ -17,7 +17,7 @@ namespace Node.Net.Json
         {
             if (name.Length > 0)
             {
-                Type type = Type.GetType(name);
+                var type = Type.GetType(name);
                 if (!ReferenceEquals(null, type)) return type;
                 // FullName pass
                 foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())

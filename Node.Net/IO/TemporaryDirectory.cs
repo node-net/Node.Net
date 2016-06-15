@@ -34,16 +34,16 @@
         public string FullName => fullName;
         public string GetFileName(string name)
         {
-            string fileName = fullName + @"\" + name;
-            System.IO.FileInfo fi = new System.IO.FileInfo(fileName);
+            var fileName = fullName + @"\" + name;
+            var fi = new System.IO.FileInfo(fileName);
             if (!System.IO.Directory.Exists(fi.DirectoryName)) System.IO.Directory.CreateDirectory(fi.DirectoryName);
             return fileName;
         }
         private string fullName = "";
-        private string RandomString(int size)
+        private static string RandomString(int size)
         {
-            System.Random random = new System.Random((int)System.DateTime.Now.Ticks);
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+            var random = new System.Random((int)System.DateTime.Now.Ticks);
+            var builder = new System.Text.StringBuilder();
             char ch;
             for(int i = 0; i < size; ++i)
             {

@@ -49,8 +49,8 @@ namespace Node.Net.Resources
             var results = Extensions.TypeExtension.CollectManifestResources<T>(type, pattern);
             foreach(string key in results.Keys)
             {
-                string name = key;
-                if(searchReplacePatterns != null)
+                var name = key;
+                if (searchReplacePatterns != null)
                 {
                     foreach(var kvp in searchReplacePatterns)
                     {

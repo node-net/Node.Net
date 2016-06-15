@@ -10,8 +10,8 @@ namespace Node.Net.Collections
     {
         public void Clean()
         {
-            List<WeakReference> to_remove = new List<WeakReference>();
-            foreach(WeakReference wr in Keys)
+            var to_remove = new List<WeakReference>();
+            foreach (WeakReference wr in Keys)
             {
                 if (!wr.IsAlive) to_remove.Add(wr);
             }
@@ -32,8 +32,8 @@ namespace Node.Net.Collections
         }
         public void Set(object instance,string key,object value)
         {
-            WeakReference ref_instance = GetWeakReference(instance);
-            if(!ContainsKey(ref_instance))
+            var ref_instance = GetWeakReference(instance);
+            if (!ContainsKey(ref_instance))
             {
                 Add(ref_instance, new Dictionary<string, dynamic>());
             }
@@ -42,8 +42,8 @@ namespace Node.Net.Collections
 
         public object Get(object instance, string key)
         {
-            WeakReference ref_instance = GetWeakReference(instance);
-            if(ContainsKey(ref_instance))
+            var ref_instance = GetWeakReference(instance);
+            if (ContainsKey(ref_instance))
             {
                 if(this[ref_instance].ContainsKey(key))
                 {

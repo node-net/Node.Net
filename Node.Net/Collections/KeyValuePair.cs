@@ -31,10 +31,10 @@ namespace Node.Net.Collections
                 }
                 if (item.GetType() == typeof(KeyValuePair<string, dynamic>))
                 {
-                    KeyValuePair<string, dynamic> kvp = (KeyValuePair<string, dynamic>)(item);
+                    var kvp = (KeyValuePair<string, dynamic>)(item);
                     return kvp.Key;
                 }
-                System.Reflection.PropertyInfo valueInfo = item.GetType().GetProperty("Key");
+                var valueInfo = item.GetType().GetProperty("Key");
                 return valueInfo.GetValue(item, null);
             }
             return item;
@@ -50,10 +50,10 @@ namespace Node.Net.Collections
                 }
                 if (item.GetType() == typeof(KeyValuePair<string, dynamic>))
                 {
-                    KeyValuePair<string, dynamic> kvp = (KeyValuePair<string, dynamic>)(item);
+                    var kvp = (KeyValuePair<string, dynamic>)(item);
                     return kvp.Value;
                 }
-                System.Reflection.PropertyInfo valueInfo = item.GetType().GetProperty("Value");
+                var valueInfo = item.GetType().GetProperty("Value");
                 return valueInfo.GetValue(item, null);
             }
             return item;

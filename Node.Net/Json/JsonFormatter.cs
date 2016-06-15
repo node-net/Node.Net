@@ -30,20 +30,20 @@ namespace Node.Net.Json
         public JsonStyle Style = JsonStyle.Compact;
         public static void Save(Stream stream, object graph)
         {
-            JsonFormatter formatter = new JsonFormatter();
+            var formatter = new JsonFormatter();
             formatter.Serialize(stream, graph);
         }
         public static void Load(Stream stream, IDictionary dictionary)
         {
-            JsonFormatter formatter = new JsonFormatter();
-            IDictionary d = (IDictionary)formatter.Deserialize(stream);
+            var formatter = new JsonFormatter();
+            var d = (IDictionary)formatter.Deserialize(stream);
             Collections.Copier.Copy(d, dictionary);
         }
 
         public static void Load(Stream stream, IDictionary dictionary,Type dictionaryType)
         {
-            JsonFormatter formatter = new JsonFormatter();
-            IDictionary d = (IDictionary)formatter.Deserialize(stream);
+            var formatter = new JsonFormatter();
+            var d = (IDictionary)formatter.Deserialize(stream);
             Collections.Copier.Copy(d, dictionary);
         }
 

@@ -39,7 +39,7 @@
                 if (currentKey != value)
                 {
                     currentKey = value;
-                    NotifyPropertyChanged("CurrentKey");
+                    NotifyPropertyChanged(nameof(CurrentKey));
                 }
                 Current = this[currentKey];
             }
@@ -54,7 +54,7 @@
                 if(!object.ReferenceEquals(current,value))
                 {
                     current = value;
-                    NotifyPropertyChanged("Current");
+                    NotifyPropertyChanged(nameof(Current));
                 }
             }
         }
@@ -98,9 +98,9 @@
             {
                 Clear();
             }
-            string name = "New Document";
-            int index = 2;
-            while(ContainsKey(name))
+            var name = "New Document";
+            var index = 2;
+            while (ContainsKey(name))
             {
                 name = "New Document " + index.ToString();
                 ++index;
@@ -111,9 +111,11 @@
 
         public void Open()
         {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Filter = OpenFileDialogFilter;
-            System.Nullable<bool> result = ofd.ShowDialog();
+            var ofd = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = OpenFileDialogFilter
+            };
+            var result = ofd.ShowDialog();
             if (result == true)
             {
                 Open(ofd.FileName);
@@ -123,16 +125,16 @@
         public virtual void Open(string value)
         {
             char[] delimiters = { '.' };
-            string[] parts = value.Split(delimiters,System.StringSplitOptions.RemoveEmptyEntries);
-            string extension = parts[parts.Length-1];
-            if(Types.ContainsKey(extension))
+            var parts = value.Split(delimiters,System.StringSplitOptions.RemoveEmptyEntries);
+            var extension = parts[parts.Length-1];
+            if (Types.ContainsKey(extension))
             {
-                System.IO.Stream stream = GetStream(value);
+                var stream = GetStream(value);
                 System.Type[] types = {typeof(System.IO.Stream)};
-                System.Reflection.MethodInfo openInfo = Types[extension].GetMethod("Open",types);
-                if(!object.ReferenceEquals(null,openInfo))
+                var openInfo = Types[extension].GetMethod(nameof(Open), types);
+                if (!object.ReferenceEquals(null,openInfo))
                 {
-                    object document = System.Activator.CreateInstance(Types[extension]);
+                    var document = System.Activator.CreateInstance(Types[extension]);
                     object[] parameters = { stream };
                     openInfo.Invoke(document, parameters);
 
@@ -149,7 +151,7 @@
 
         public void Save()
         {
-            string filename = "";
+            var filename = "";
             if (filenames.ContainsKey(CurrentKey)) filename = filenames[CurrentKey];
 
             if (filename.Length == 0) SaveAs();
@@ -161,9 +163,11 @@
 
         public void SaveAs()
         {
-            Microsoft.Win32.SaveFileDialog ofd = new Microsoft.Win32.SaveFileDialog();
-            ofd.Filter = OpenFileDialogFilter;
-            System.Nullable<bool> result = ofd.ShowDialog();
+            var ofd = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = OpenFileDialogFilter
+            };
+            var result = ofd.ShowDialog();
             if (result == true)
             {
                 Save(ofd.FileName);
@@ -180,15 +184,15 @@
 
         public static void Save(string name,object document)
         {
-            System.IO.FileInfo fi = new System.IO.FileInfo(name);
-            if(!System.IO.Directory.Exists(fi.DirectoryName))
+            var fi = new System.IO.FileInfo(name);
+            if (!System.IO.Directory.Exists(fi.DirectoryName))
             {
                 System.IO.Directory.CreateDirectory(fi.DirectoryName);
             }
             using(System.IO.FileStream fs = new System.IO.FileStream(name,System.IO.FileMode.Create))
             {
                 System.Type[] types = { typeof(System.IO.Stream) };
-                System.Reflection.MethodInfo saveInfo = document.GetType().GetMethod("Save", types);
+                var saveInfo = document.GetType().GetMethod(nameof(Save), types);
                 if (!object.ReferenceEquals(null, saveInfo))
                 {
                     object[] parameters = { fs };

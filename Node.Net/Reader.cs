@@ -48,9 +48,9 @@ namespace Node.Net
             }
         }
 
-        private string GetExtension(string name)
+        private static string GetExtension(string name)
         {
-            string[] words = name.Split(".".ToCharArray(), System.StringSplitOptions.RemoveEmptyEntries);
+            var words = name.Split(".".ToCharArray(), System.StringSplitOptions.RemoveEmptyEntries);
             if (words.Length > 0) return words[words.Length - 1];
             return "";
         }
@@ -58,10 +58,10 @@ namespace Node.Net
         {
             var image = System.Drawing.Image.FromStream(stream);
 
-            BitmapImage bitmapImage = new BitmapImage();
+            var bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
 
-            MemoryStream memory = new MemoryStream();
+            var memory = new MemoryStream();
             image.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
             memory.Seek(0, SeekOrigin.Begin);
 

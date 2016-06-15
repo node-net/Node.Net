@@ -19,19 +19,19 @@
             if (object.ReferenceEquals(null, propertyGrid)) return;
 
             title.DataContext = DataContext;
-            object value = KeyValuePair.GetValue(DataContext);
-            if(object.ReferenceEquals(null,value))
+            var value = KeyValuePair.GetValue(DataContext);
+            if (object.ReferenceEquals(null,value))
             {
                 propertyGrid.SelectedObject = null;
                 return;
             }
-            System.Collections.IDictionary idictionary = value as System.Collections.IDictionary;
-            System.Collections.IEnumerable ienumerable = value as System.Collections.IEnumerable;
-            if(object.ReferenceEquals(null,idictionary) && value.GetType() != typeof(string) &&
+            var idictionary = value as System.Collections.IDictionary;
+            var ienumerable = value as System.Collections.IEnumerable;
+            if (object.ReferenceEquals(null,idictionary) && value.GetType() != typeof(string) &&
                !object.ReferenceEquals(null,ienumerable))
             {
-                System.Collections.Generic.List<object> items = new System.Collections.Generic.List<object>();
-                foreach(object item in ienumerable){items.Add(item);}
+                var items = new System.Collections.Generic.List<object>();
+                foreach (object item in ienumerable){items.Add(item);}
                 propertyGrid.SelectedObjects = items.ToArray();
             }
             else
@@ -67,16 +67,18 @@
         {
             base.OnInitialized(e);
 
-            RowDefinitions.Add(new System.Windows.Controls.RowDefinition() { Height = System.Windows.GridLength.Auto });
+            RowDefinitions.Add(new System.Windows.Controls.RowDefinition { Height = System.Windows.GridLength.Auto });
             RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
 
             title = new Title();
             Children.Add(title);
 
-            propertyGrid = new System.Windows.Forms.PropertyGrid();
-            propertyGrid.ToolbarVisible = false;
-            propertyGrid.LargeButtons = true;
-            host = new System.Windows.Forms.Integration.WindowsFormsHost() { Child = propertyGrid };
+            propertyGrid = new System.Windows.Forms.PropertyGrid
+            {
+                ToolbarVisible = false,
+                LargeButtons = true
+            };
+            host = new System.Windows.Forms.Integration.WindowsFormsHost { Child = propertyGrid };
             Children.Add(host);
             System.Windows.Controls.Grid.SetRow(host, 1);
             //this.Content = host;
@@ -87,7 +89,7 @@
         public event System.EventHandler ValueChanged;
         void propertyGrid_PropertyValueChanged(object s, System.Windows.Forms.PropertyValueChangedEventArgs e)
         {
-            if(!object.ReferenceEquals(null,ValueChanged))
+            if(ValueChanged!=null)
             {
                 ValueChanged(this, new System.EventArgs());
             }

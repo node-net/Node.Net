@@ -16,8 +16,10 @@
         {
             if (!object.ReferenceEquals(null, KeyValuePair.GetValue(DataContext)))
             {
-                System.Windows.Controls.Label label = new System.Windows.Controls.Label();
-                label.Content = KeyValuePair.GetValue(DataContext).GetType().Name;
+                var label = new System.Windows.Controls.Label
+                {
+                    Content = KeyValuePair.GetValue(DataContext).GetType().Name
+                };
                 Content = label;
             }
         }
