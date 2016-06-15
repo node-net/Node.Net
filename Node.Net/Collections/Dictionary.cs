@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Node.Net.Collections
 {
-    public class Dictionary : System.Collections.Generic.Dictionary<string,dynamic>, 
+    public class Dictionary : System.Collections.Generic.Dictionary<string,dynamic>,
         Framework.IDocument,
         ICustomTypeDescriptor
     {
@@ -61,7 +61,7 @@ namespace Node.Net.Collections
                         descriptors.Add(pd);
                     }
                 }
-                
+
             }
             return new System.ComponentModel.PropertyDescriptorCollection(descriptors.ToArray());
         }

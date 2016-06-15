@@ -20,10 +20,10 @@
         void ComboBoxItem_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
             Update();
-     
+
         }
 
-   
+
 
         private void Update()
         {

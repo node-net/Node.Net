@@ -18,17 +18,9 @@ namespace Node.Net.Extensions
                     {
                         parentToWorld.Append(current_parent.LocalToParent);
                         var parent_as_child = current_parent as IChild;
-                        if(parent_as_child == null)
-                        {
-                            current_parent = null;
-                        }
-                        else
-                        {
-                            current_parent = parent_as_child.GetFirstAncestor<IModel3D>();
-                        }
+                        current_parent = parent_as_child == null ? null : parent_as_child.GetFirstAncestor<IModel3D>();
                     }
                     return parentToWorld;
-                    
                 }
 
             }

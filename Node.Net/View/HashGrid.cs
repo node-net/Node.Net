@@ -53,8 +53,8 @@ namespace Node.Net.View
             var hash = DataContext as Node.Net.Collections.Hash;
             if (ReferenceEquals(null, hash))
             {
-                
-                
+
+
             }
             else
             {

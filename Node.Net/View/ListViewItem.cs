@@ -34,23 +34,19 @@
                         var sp = new System.Windows.Controls.StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal };
                         foreach (object key in dictionary.Keys)
                         {
-                            
+
                             sp.Children.Add(new System.Windows.Controls.Label{Content = dictionary[key].ToString()});
-                            
+
                         }
                         Content = sp;
                     }
                     else
                     {
                         var keyProperty = DataContext.GetType().GetProperty("Key");
-                        if (!object.ReferenceEquals(null, keyProperty))
-                        {
-                            Content = keyProperty.GetValue(DataContext, null).ToString();
-                        }
-                        else { Content = DataContext; }
+                        Content = !object.ReferenceEquals(null, keyProperty) ? keyProperty.GetValue(DataContext, null).ToString() : DataContext;
                     }
                 }
-                
+
             }
         }
     }

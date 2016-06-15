@@ -36,11 +36,10 @@ namespace Node.Net.Model3D
 
         private Dictionary<string, IModel3DGroupTransformer> _typeModel3DGroupTransformers = new Dictionary<string, IModel3DGroupTransformer>();
         public Dictionary<string, IModel3DGroupTransformer> TypeModel3DGroupTransformers { get { return _typeModel3DGroupTransformers; } }
-        //private ResourceDictionary resources = new ResourceDictionary();
-        //public ResourceDictionary Resources { get; set; }
+
         public IResources Resources { get; set; }
 
-        
+
 
         public virtual object GetResource(string name)
         {
@@ -62,7 +61,6 @@ namespace Node.Net.Model3D
             return Transform.ObjectTransform.ToModelVisual3D(this, value);
         }
 
-        
         public virtual System.Windows.Media.Media3D.Model3D GetModel3D(object value)
         {
             return Transform.ObjectTransform.ToModel3D(this, value);
@@ -77,7 +75,7 @@ namespace Node.Net.Model3D
         {
             return Transform.ObjectTransform.ToGeometryModel3D(this, value);
         }
-        
+
         public virtual System.Windows.Media.Media3D.Transform3D GetTransform3D(object value)
         {
             return Transform.ObjectTransform.ToTransform3D(this, value);

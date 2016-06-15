@@ -2,7 +2,7 @@
 {
     public class TreeView : System.Windows.Controls.TreeView
     {
-        public TreeView() 
+        public TreeView()
         {
             DataContextChanged += onDataContextChanged;
             Update();

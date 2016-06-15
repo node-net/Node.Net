@@ -29,7 +29,7 @@
                 {
                     foreach(object item in enumerable)
                     {
-                        
+
                         if (!object.ReferenceEquals(null, UpdateListViewItem))
                         {
                             var lvi = new ListViewItem(null);

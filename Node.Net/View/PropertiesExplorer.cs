@@ -48,7 +48,7 @@
         protected override void OnInitialized(System.EventArgs e)
         {
             base.OnInitialized(e);
-            
+
             System.Windows.FrameworkElement[] elements = { treeView, selectionView };
             Elements = elements;
         }

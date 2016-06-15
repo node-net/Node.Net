@@ -8,7 +8,7 @@
         public Transform3D Parent
         {
             get { return parent; }
-            set 
+            set
             {
                 if (!object.ReferenceEquals(parent, value))
                 {
@@ -45,15 +45,15 @@
         private System.Windows.Media.Media3D.Point3D rotationOTS = new System.Windows.Media.Media3D.Point3D();
         /// <summary>
         /// RotationsOTS are defined with the Right Hand Rule
-        /// 
+        ///
         /// Orientation is rotation about positive Z axis.
         /// Orientation of zero is aligned with the positive X axis.
         /// Orientation of 90 is aligned with the positive Y axis.
-        /// 
+        ///
         /// Tilt is rotation about the positive Y axis.
         /// Tilt of zero is aligned with the positive Z axis
         /// Tilt of 90 is aligned with the positive X axis.
-        /// 
+        ///
         /// Spin is rotation about eh positive X axis.
         /// Spin of zero is aligned with the positive Y axis.
         /// Spin of 90 is aligned with the positive Z axis.
@@ -138,7 +138,7 @@
                         );
                     if (worldDirectionVectors[0].Y < 0) orientation *= -1;
                 }
-                
+
             }
 
 
@@ -221,7 +221,7 @@
                     matrix.Scale(new System.Windows.Media.Media3D.Vector3D(scale.X, scale.Y, scale.Z));
                     var rotation = ComputeQuaternionFromOTS_ParentZUp(rotationOTS.X, rotationOTS.Y, rotationOTS.Z);
                     matrix.Rotate(rotation);
-                
+
                     matrix.Translate(new System.Windows.Media.Media3D.Vector3D(translation.X,
                                          translation.Y,translation.Z));
                     localToParentCached = matrix;

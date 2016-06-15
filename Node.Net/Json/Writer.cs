@@ -78,7 +78,7 @@ namespace Node.Net.Json
             }
             return result;
         }
-        
+
         public void Write(System.IO.Stream stream, System.Collections.IDictionary dictionary)
         {
             writer.Write(stream, dictionary);

@@ -9,7 +9,7 @@ namespace Node.Net.Collections
     #else
     public class Array : List<dynamic>
     #endif
-    
+
     {
         public Array() { }
         public Array(string json)

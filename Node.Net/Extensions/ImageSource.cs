@@ -83,7 +83,7 @@ namespace Node.Net
                 if (x < 0) x = 0;
                 if (y < 0) y = 0;
                 return new CroppedBitmap(source, new System.Windows.Int32Rect(x, y, width, height));
-                
+
             }
         }
     }

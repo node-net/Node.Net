@@ -10,17 +10,17 @@ namespace Node.Net.Collections
 
         private Traverser traverser = null;
         [System.ComponentModel.Browsable(false)]
-        public Traverser Traverser 
-        { 
-            get 
-            { 
+        public Traverser Traverser
+        {
+            get
+            {
                 if(object.ReferenceEquals(null,traverser))
                 {
                     traverser = new Traverser(this);
                     traverser.SetDocument(this, this);
                 }
-                return traverser; 
-            } 
+                return traverser;
+            }
         }
 
         public IMetaDataManager MetaData

@@ -37,7 +37,7 @@
             else
             {
                 propertyGrid.SelectedObject = value;
-            } 
+            }
         }
 
         #region Member Data

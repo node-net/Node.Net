@@ -2,7 +2,7 @@
 {
     public class TemporaryDirectory : System.IDisposable
     {
-        
+
         public TemporaryDirectory()
         {
             fullName = System.IO.Path.GetTempPath() + @"\" + RandomString(8);

@@ -186,11 +186,7 @@
 
         public void AppendOutput(string value)
         {
-            if (Output.Length == 0) Output = value + System.Environment.NewLine;
-            else
-            {
-                Output = Output + value + System.Environment.NewLine;
-            }
+            Output = Output.Length == 0 ? value + System.Environment.NewLine : Output + value + System.Environment.NewLine;
         }
 
         public string Error
@@ -246,28 +242,23 @@
             if (true)//other.Duration.HasValue)
             {
                 durationStr = " [" + GetFormattedTimeSpan(other.Duration) + "]";
-                if (other.ExitCode == 0) status = " OK";
-                else status = " Error";
+                status = other.ExitCode == 0 ? " OK" : " Error";
             }
 
             if (other.ExitCode != 0)
             {
                 ExitCode = other.ExitCode;
-                if (Error.Length == 0) Error = other.Name + durationStr + status;
-                else Error = Error + System.Environment.NewLine + durationStr + status;
+                Error = Error.Length == 0 ? other.Name + durationStr + status : Error + System.Environment.NewLine + durationStr + status;
             }
             if(other.Error.Length > 0)
             {
-                if (Error.Length == 0) Error = other.Error;
-                else Error = Error + System.Environment.NewLine + other.Error;
+                Error = Error.Length == 0 ? other.Error : Error + System.Environment.NewLine + other.Error;
             }
-            
-            if (Output.Length == 0) Output = other.Name + durationStr + status;
-            else Output = Output + System.Environment.NewLine + other.Name + durationStr + status;
-            if(other.Output.Length > 0)
+
+            Output = Output.Length == 0 ? other.Name + durationStr + status : Output + System.Environment.NewLine + other.Name + durationStr + status;
+            if (other.Output.Length > 0)
             {
-                if (Output.Length == 0) Output = other.Output;
-                else Output = Output + System.Environment.NewLine + other.Output;
+                Output = Output.Length == 0 ? other.Output : Output + System.Environment.NewLine + other.Output;
             }
 
             foreach(string key in other.Keys)

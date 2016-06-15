@@ -86,7 +86,7 @@ namespace Node.Net.Framework.Controls
                 }
             }
         }
-        
+
         private static MenuItem[] GetRecentFileMenuItems()
         {
             var recentFileMenuItems = new List<MenuItem>();

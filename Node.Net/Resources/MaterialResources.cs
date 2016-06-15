@@ -39,7 +39,7 @@ namespace Node.Net.Resources
                 if (dcolor.Name == name) return true;
             }
             catch (System.FormatException) { }
-            
+
             return false;
         }
     }

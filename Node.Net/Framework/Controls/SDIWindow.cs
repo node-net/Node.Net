@@ -57,7 +57,7 @@ namespace Node.Net.Framework.Controls
                     sdiControl.Documents = value;
                     sdiControl.Documents.PropertyChanged += Documents_PropertyChanged;
                 }
-                
+
             }
         }
 

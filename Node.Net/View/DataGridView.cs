@@ -30,7 +30,7 @@
             else
             {
                 dataGridView.DataSource = value;
-            } 
+            }
         }
         #endregion
 

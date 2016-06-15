@@ -48,7 +48,7 @@ namespace Node.Net.Model3D.Transform
             {
                 return renderer.TypeModel3DTransformers[stype].GetModel3D(value);
             }
-            
+
             return ToModel3DGroup(renderer, value);
         }
         public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer, IDictionary value)

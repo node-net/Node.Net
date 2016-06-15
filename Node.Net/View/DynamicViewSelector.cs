@@ -4,14 +4,14 @@
     {
         private DynamicView dynamicView = new DynamicView();
         private ComboBox comboBox = null;
-        public DynamicViewSelector() 
+        public DynamicViewSelector()
         {
             dynamicView = new DynamicView();
             DataContextChanged += DynamicViewSelector_DataContextChanged;
         }
 
-        
-        public DynamicViewSelector(System.Windows.FrameworkElement defaultElement) 
+
+        public DynamicViewSelector(System.Windows.FrameworkElement defaultElement)
         {
             dynamicView = new DynamicView(defaultElement);
             DataContextChanged += DynamicViewSelector_DataContextChanged;

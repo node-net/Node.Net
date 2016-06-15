@@ -8,6 +8,6 @@ namespace Node.Net
         object Load(Stream stream, string name);
         void Save(object item, Stream stream);
 
-        
+
     }
 }
