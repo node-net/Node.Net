@@ -182,7 +182,7 @@ namespace Node.Net.Model3D.Transform
             if (value.Contains("YAxisRotation"))
             {
                 var rotationZ_degrees = GetRotationDegrees(value, "YAxisRotation");
-                rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
+                rotationZ = new Quaternion(new Vector3D(0, 1, 0), rotationZ_degrees);
             }
             if (value.Contains("RotationY"))
             {
@@ -197,7 +197,7 @@ namespace Node.Net.Model3D.Transform
             if (value.Contains("XAxisRotation"))
             {
                 var rotationZ_degrees = GetRotationDegrees(value, "XAxisRotation");
-                rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
+                rotationZ = new Quaternion(new Vector3D(1, 0, 0), rotationZ_degrees);
             }
             if (value.Contains("RotationX"))
             {
