@@ -38,17 +38,23 @@ namespace Node.Net.Extensions
                 foreach (var child_key in all.Keys)
                 {
                     var child = all[child_key];
-                    var instance = (T)all[child_key];
-                    if (instance != null)
+                    if (child != null)
                     {
-                        children.Add(child_key,instance);
-                    }
+                        if (typeof(T).IsAssignableFrom(child.GetType()))
+                        {
+                            var instance = (T)all[child_key];
+                            if (instance != null)
+                            {
+                                children.Add(child_key, instance);
+                            }
+                        }
 
-                    var deep_children = DeepCollect<T>(child as IParent);
-                    foreach (var deep_child_key in deep_children.Keys)
-                    {
-                        var deep_child = deep_children[deep_child_key];
-                        children.Add($"{child_key}/{deep_child_key}",deep_child);
+                        var deep_children = DeepCollect<T>(child as IParent);
+                        foreach (var deep_child_key in deep_children.Keys)
+                        {
+                            var deep_child = deep_children[deep_child_key];
+                            children.Add($"{child_key}/{deep_child_key}", deep_child);
+                        }
                     }
                 }
             }
