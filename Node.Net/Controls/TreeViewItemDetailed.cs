@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
 
@@ -56,7 +53,7 @@ namespace Node.Net.Controls
             Header = GetHeader();
             Items.Clear();
 
-            if(childDepth == 0)
+            if (childDepth == 0)
             {
                 Items.Add(new System.Windows.Controls.TreeViewItem { Header = "dummy" });
             }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -34,8 +31,9 @@ namespace Node.Net.Controls
 
         public FrameworkElement View
         {
-            get {
-                if(_views.ContainsKey(ViewName)) return _views[ViewName];
+            get
+            {
+                if (_views.ContainsKey(ViewName)) return _views[ViewName];
                 return null;
             }
         }

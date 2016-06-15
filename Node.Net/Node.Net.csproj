@@ -77,7 +77,6 @@
     <Compile Include="Collections\RuntimeMetaData.cs" />
     <Compile Include="Collections\Traverser.cs" />
     <Compile Include="Controls\ContextMenu.cs" />
-    <Compile Include="Controls\DocumentExplorer.cs" />
     <Compile Include="Controls\DynamicControl.cs" />
     <Compile Include="Controls\DynamicGrid.cs" />
     <Compile Include="Controls\Example.DataContexts.cs" />
