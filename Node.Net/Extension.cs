@@ -43,8 +43,8 @@ namespace Node.Net
         #endregion
 
         #region IParent
-        public static T[] Collect<T>(this IParent parent) => Extensions.IParentExtension.Collect<T>(parent);
-        public static T[] DeepCollect<T>(this IParent parent) => Extensions.IParentExtension.DeepCollect<T>(parent);
+        public static Dictionary<string,T> Collect<T>(this IParent parent) => Extensions.IParentExtension.Collect<T>(parent);
+        public static Dictionary<string,T> DeepCollect<T>(this IParent parent) => Extensions.IParentExtension.DeepCollect<T>(parent);
         #endregion
 
         #region IChild

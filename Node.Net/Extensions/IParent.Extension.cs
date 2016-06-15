@@ -4,62 +4,48 @@ namespace Node.Net.Extensions
 {
     public static class IParentExtension
     {
-        public static T[] Collect<T>(IParent parent)
+        public static Dictionary<string,T> Collect<T>(IParent parent)
         {
-            var children = new List<T>();
+            var children = new Dictionary<string,T>();
             if (parent != null)
             {
-                foreach (var child in parent.GetChildren())
+                var all = parent.GetChildren();
+                foreach (var child_key in all.Keys)
                 {
-                    var instance = (T)child;
+                    var instance = (T)all[child_key];
                     if (instance != null)
                     {
-                        children.Add(instance);
+                        children.Add(child_key,instance);
                     }
                 }
             }
-            return children.ToArray();
+            return children;
         }
 
-        public static T[] DeepCollect<T>(IParent parent)
+        public static Dictionary<string,T> DeepCollect<T>(IParent parent)
         {
-            var children = new List<T>();
+            var children = new Dictionary<string,T>();
             if (parent != null)
             {
-                foreach (var child in parent.GetChildren())
+                var all = parent.GetChildren();
+                foreach (var child_key in all.Keys)
                 {
-                    var instance = (T)child;
+                    var child = all[child_key];
+                    var instance = (T)all[child_key];
                     if (instance != null)
                     {
-                        children.Add(instance);
+                        children.Add(child_key,instance);
                     }
 
                     var deep_children = DeepCollect<T>(child as IParent);
-                    foreach (var deep_child in deep_children)
+                    foreach (var deep_child_key in deep_children.Keys)
                     {
-                        children.Add(deep_child);
+                        var deep_child = deep_children[deep_child_key];
+                        children.Add($"{child_key}/{deep_child_key}",deep_child);
                     }
                 }
             }
-            return children.ToArray();
+            return children;
         }
-        /*
-        public static void Update(IParent parent)
-        {
-            if (parent == null) return;
-            foreach(var child in parent.GetChildren())
-            {
-                child.Parent = parent;
-            }
-        }
-        public static void DeepUpdate(IParent parent)
-        {
-            if (parent == null) return;
-            foreach (var child in parent.GetChildren())
-            {
-                child.Parent = parent;
-                DeepUpdate(child as IParent);
-            }
-        }*/
     }
 }
