@@ -64,6 +64,9 @@ namespace Node.Net
         public static Point3D TransformWorldToLocal(this IModel3D model3D, Point3D world) => Extensions.IModel3DExtension.TransformWorldToLocal(model3D, world);
         public static Point3D GetWorldOrigin(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldOrigin(model3D);
         public static Point3D GetWorldRotations(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldRotations(model3D);
+        public static double GetWorldOrientation(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldOrientation(model3D);
+        public static double GetWorldTilt(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldTilt(model3D);
+        public static double GetWorldSpin(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldSpin(model3D);
         #endregion
     }
 }

@@ -99,7 +99,7 @@ namespace Node.Net.Model
             }
             set
             {
-                this[nameof(XAxisRotation)] = value;
+                this[nameof(YAxisRotation)] = value;
                 //this.Update();
             }
         }

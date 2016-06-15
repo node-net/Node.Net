@@ -109,7 +109,7 @@ namespace Node.Net.Extensions
             directionVectors.Add(TransformLocalToWorld(model3D, new Vector3D(0, 0, 1)));
             return directionVectors.ToArray();
         }
-        private static double GetWorldOrientation(IModel3D model3D)
+        public static double GetWorldOrientation(IModel3D model3D)
         {
             // Orientation is rotation about the +Z axis (in the XY plane)
             var worldDirectionVectors = GetWorldDirectionVectors(model3D);
@@ -138,67 +138,39 @@ namespace Node.Net.Extensions
             }
             else
             {
-                var localXAxisProjectedIntoWorldXY
-                    = ProjectPointToPlane(
-                       new Point3D(
-                           worldDirectionVectors[0].X,
-                           worldDirectionVectors[0].Y,
-                           worldDirectionVectors[0].Z),
-                       new Point3D(0, 0, 0),
-                       new Vector3D(0, 0, 1));
-                if (worldDirectionVectors[2].Z < 0)
-                {
-                    orientation = -Vector3D.AngleBetween(
-                        new Vector3D(-1, 0, 0),
-                        new Vector3D(
-                            localXAxisProjectedIntoWorldXY.X,
-                            localXAxisProjectedIntoWorldXY.Y,
-                            localXAxisProjectedIntoWorldXY.Z)
-                        );
-                    if (localXAxisProjectedIntoWorldXY.Y < 0) orientation *= -1;
-                }
-                else
-                {
-                    orientation = Vector3D.AngleBetween(
-                        new Vector3D(1, 0, 0),
-                        new Vector3D(
-                            localXAxisProjectedIntoWorldXY.X,
-                            localXAxisProjectedIntoWorldXY.Y,
-                            localXAxisProjectedIntoWorldXY.Z)
-                        );
-                    if (worldDirectionVectors[0].Y < 0) orientation *= -1;
-                }
-
+                var localXAxisProjectedIntoWorldXY =
+                new Point3D(worldDirectionVectors[0].X, worldDirectionVectors[0].Y,0);
+                orientation = Vector3D.AngleBetween(
+                       new Vector3D(1, 0, 0),
+                       new Vector3D(
+                           localXAxisProjectedIntoWorldXY.X,
+                           localXAxisProjectedIntoWorldXY.Y,
+                           localXAxisProjectedIntoWorldXY.Z)
+                       );
+                if (worldDirectionVectors[0].Y < 0) orientation *= -1;
             }
-
 
             return orientation;
         }
-        private static double GetWorldTilt(IModel3D model3D)
+        public static double GetWorldTilt(IModel3D model3D)
         {
             // Tilt is rotation about the +Y axis (in the ZX plane)
             var worldDirectionVectors = GetWorldDirectionVectors(model3D);
 
-            var localZAxisProjectedIntoWorldZX
-                = ProjectPointToPlane(
-                   new Point3D(
-                       worldDirectionVectors[2].X,
-                       worldDirectionVectors[2].Y,
-                       worldDirectionVectors[2].Z),
-                   new Point3D(0, 0, 0),
-                   worldDirectionVectors[1]);
+            var localXAxisProjectedIntoWorldXZ = 
+                new Point3D(worldDirectionVectors[0].X, 0, worldDirectionVectors[0].Z);
             var tilt = Vector3D.AngleBetween(
-                new Vector3D(0, 0, 1),
-                new Vector3D(
-                    localZAxisProjectedIntoWorldZX.X,
-                    localZAxisProjectedIntoWorldZX.Y,
-                    localZAxisProjectedIntoWorldZX.Z)
-                );
+             new Vector3D(1, 0, 0),
+             new Vector3D(
+                 localXAxisProjectedIntoWorldXZ.X,
+                 localXAxisProjectedIntoWorldXZ.Y,
+                 localXAxisProjectedIntoWorldXZ.Z)
+             );
 
             if (worldDirectionVectors[0].Z > 0) tilt *= -1;
             return tilt;
         }
-        private static double GetWorldSpin(IModel3D model3D)
+        public static double GetWorldSpin(IModel3D model3D)
         {
             var worldOrientation = GetWorldOrientation(model3D);
             var worldTilt = GetWorldTilt(model3D);
@@ -206,8 +178,7 @@ namespace Node.Net.Extensions
             // Spin is rotation about the +X axis (in the YZ plane)
             var worldDirectionVectors = GetWorldDirectionVectors(model3D);
 
-            // Back out the tilt component
-            //var swo = $"{-worldOrientation} deg";
+            // Back out the orientation and tilt tilt component
             var adjust = new Model.SpatialElement
             {
                 ZAxisRotation = $"{-worldOrientation} deg"
@@ -216,26 +187,10 @@ namespace Node.Net.Extensions
             adjust.ZAxisRotation = "0 deg";
             adjust.YAxisRotation = $"{-worldTilt} deg";
             worldDirectionVectors = adjust.TransformLocalToParent(worldDirectionVectors);
-            /*
-            var adjust = new Transform3D
-            {
-                RotationOTS = new System.Windows.Media.Media3D.Point3D(-worldOrientation, 0, 0)
-            };
-            */
-            /*
-            worldDirectionVectors = adjust.Transform(worldDirectionVectors, TransformType.LocalToParent);
-            adjust.RotationOTS = new System.Windows.Media.Media3D.Point3D(0, -worldTilt, 0);
-            worldDirectionVectors = adjust.Transform(worldDirectionVectors, TransformType.LocalToParent);
-            */
 
-            var localYAxisProjectedIntoWorldZY
-                = ProjectPointToPlane(
-                   new Point3D(
-                       worldDirectionVectors[1].X,
-                       worldDirectionVectors[1].Y,
-                       worldDirectionVectors[1].Z),
-                   new Point3D(0, 0, 0),
-                   new Vector3D(1, 0, 0));
+            var localYAxisProjectedIntoWorldZY =
+                new Point3D(0,worldDirectionVectors[1].Y,worldDirectionVectors[1].Z);
+
             var spin = Vector3D.AngleBetween(
                 new Vector3D(0, 1, 0),
                 new Vector3D(
@@ -244,61 +199,9 @@ namespace Node.Net.Extensions
                     localYAxisProjectedIntoWorldZY.Z)
                 );
 
-            var yzCross
-                = Vector3D.CrossProduct(
-                worldDirectionVectors[1], worldDirectionVectors[2]);
-
             if (worldDirectionVectors[1].Z < 0) spin *= -1;
+
             return spin;
         }
-        /*
-        private static double GetRotationDegrees(IDictionary dictionary, string key)
-        {
-            if (object.ReferenceEquals(null, dictionary)) return 0;
-            if (!dictionary.Contains(key)) return 0;
-            if (object.ReferenceEquals(null, dictionary[key])) return 0;
-            return Measurement.Angle.Parse(dictionary[key].ToString())[Measurement.AngularUnit.Degrees];
-        }*/
-        /*
-        public static Quaternion GetQuaternionRotation(IDictionary value)
-        {
-            if (value == null) return new Quaternion();
-            var rotationZ = new Quaternion();
-            var rotationY = new Quaternion();
-            var rotationX = new Quaternion();
-            if (value.Contains("RotationZ"))
-            {
-                var rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
-                rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
-            }
-            if (value.Contains("Orientation"))
-            {
-                var rotationZ_degrees = GetRotationDegrees(value, "Orientation");
-                rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
-            }
-            if (value.Contains("RotationY"))
-            {
-                var rotationY_degrees = GetRotationDegrees(value, "RotationY");
-                rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
-            }
-            if (value.Contains("Tilt"))
-            {
-                var rotationY_degrees = GetRotationDegrees(value, "Tilt");
-                rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
-            }
-            if (value.Contains("RotationX"))
-            {
-                var rotationX_degrees = GetRotationDegrees(value, "RotationX");
-                rotationX = new Quaternion(new Vector3D(1, 0, 0), rotationX_degrees);
-            }
-            if (value.Contains("Spin"))
-            {
-                var rotationX_degrees = GetRotationDegrees(value, "Spin");
-                rotationX = new Quaternion(new Vector3D(1, 0, 0), rotationX_degrees);
-            }
-
-            var total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
-            return total_rotation;
-        }*/
     }
 }
