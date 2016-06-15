@@ -40,8 +40,8 @@ namespace Node.Net.Collections
 
         public override object GetValue(object component)
         {
-            IDictionary d = component as IDictionary;
-            if(!object.ReferenceEquals(null, d))
+            var d = component as IDictionary;
+            if (!object.ReferenceEquals(null, d))
             {
                 return d[Name];
             }

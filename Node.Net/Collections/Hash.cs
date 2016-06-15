@@ -17,15 +17,15 @@ namespace Node.Net.Collections
 
         public static Hash Parse(string[] args)
         {
-            Hash hash = new Hash();
+            var hash = new Hash();
             foreach (string arg in args)
             {
                 if (arg.IndexOf('=') > -1)
                 {
                     char[] delimiters = { '=' };
-                    string[] words = arg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-                    string key = words[0].Trim();
-                    string value = words[1].Trim().Replace("\"", "");
+                    var words = arg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                    var key = words[0].Trim();
+                    var value = words[1].Trim().Replace("\"", "");
                     if (key.Length > 0 && value.Length > 0)
                     {
                         hash[key] = value;
@@ -39,11 +39,11 @@ namespace Node.Net.Collections
 
         public static System.ComponentModel.PropertyDescriptorCollection GetProperties(System.Collections.IDictionary dictionary, System.Attribute[] attributes)
         {
-            System.Collections.Generic.List<System.ComponentModel.PropertyDescriptor> descriptors
+            var descriptors
                 = new System.Collections.Generic.List<System.ComponentModel.PropertyDescriptor>();
             foreach (object key in dictionary.Keys)
             {
-                System.ComponentModel.PropertyDescriptor propertyDescriptor = Internal.PropertyDescriptor.Get(dictionary, key, attributes);
+                var propertyDescriptor = Internal.PropertyDescriptor.Get(dictionary, key, attributes);
                 if (!object.ReferenceEquals(null, propertyDescriptor)) descriptors.Add(propertyDescriptor);
             }
             return new System.ComponentModel.PropertyDescriptorCollection(descriptors.ToArray());

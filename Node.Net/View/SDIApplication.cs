@@ -54,14 +54,14 @@
             base.OnInitialized(e);
 
             grid = new System.Windows.Controls.Grid();
-            grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition() { Height = System.Windows.GridLength.Auto });
+            grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition { Height = System.Windows.GridLength.Auto });
             grid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
 
             menu = new System.Windows.Controls.Menu();
-            System.Windows.Controls.MenuItem fileMenuItem = new System.Windows.Controls.MenuItem(){Header="File"};
-            System.Windows.Controls.MenuItem fileNewMenuItem = new System.Windows.Controls.MenuItem() { Header = "New"};
-            System.Windows.Controls.MenuItem fileOpenMenuItem = new System.Windows.Controls.MenuItem() { Header = "Open" };
-            System.Windows.Controls.MenuItem fileSaveMenuItem = new System.Windows.Controls.MenuItem() { Header = "Save" };
+            var fileMenuItem = new System.Windows.Controls.MenuItem{Header="File"};
+            var fileNewMenuItem = new System.Windows.Controls.MenuItem { Header = nameof(New) };
+            var fileOpenMenuItem = new System.Windows.Controls.MenuItem { Header = nameof(Open) };
+            var fileSaveMenuItem = new System.Windows.Controls.MenuItem { Header = nameof(Save) };
             fileNewMenuItem.Click += fileMenuItem_Click;
             fileOpenMenuItem.Click += fileMenuItem_Click;
             fileSaveMenuItem.Click += fileMenuItem_Click;
@@ -73,7 +73,7 @@
             grid.Children.Add(menu);
             if(object.ReferenceEquals(null,DocumentViewType))
             {
-                System.Windows.Controls.Label label = new System.Windows.Controls.Label() { Content = "to customize DocumentView, set the DocumentViewType property to a type assignable to System.Windows.FrameworkElement." };
+                var label = new System.Windows.Controls.Label { Content = "to customize DocumentView, set the DocumentViewType property to a type assignable to System.Windows.FrameworkElement." };
                 grid.Children.Add(label);
                 System.Windows.Controls.Grid.SetRow(label, 1);
             }
@@ -89,11 +89,11 @@
 
         void fileMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            System.Windows.Controls.MenuItem menuItem = sender as System.Windows.Controls.MenuItem;
-            if (menuItem.Header.ToString() == "New") New();
-            if (menuItem.Header.ToString() == "Open") Open();
-            if (menuItem.Header.ToString() == "Save") Save();
-            if (menuItem.Header.ToString() == "SaveAs") SaveAs();
+            var menuItem = sender as System.Windows.Controls.MenuItem;
+            if (menuItem.Header.ToString() == nameof(New)) New();
+            if (menuItem.Header.ToString() == nameof(Open)) Open();
+            if (menuItem.Header.ToString() == nameof(Save)) Save();
+            if (menuItem.Header.ToString() == nameof(SaveAs)) SaveAs();
         }
 
         void On_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
@@ -103,8 +103,8 @@
 
         private void update()
         {
-            object model = Document;
-            if(!object.ReferenceEquals(null,model))
+            var model = Document;
+            if (!object.ReferenceEquals(null,model))
             {
                 if (object.ReferenceEquals(null, documentType)) documentType = model.GetType();
             }
@@ -123,16 +123,18 @@
 
         private void Open()
         {
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Filter = OpenFileDialogFilter;
-            System.Nullable<bool> result = ofd.ShowDialog();
+            var ofd = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = OpenFileDialogFilter
+            };
+            var result = ofd.ShowDialog();
             if (result == true)
             {
                 Document = System.Activator.CreateInstance(DocumentType);
-                using(System.IO.FileStream stream = new System.IO.FileStream(ofd.FileName,System.IO.FileMode.Open))
+                using (System.IO.FileStream stream = new System.IO.FileStream(ofd.FileName, System.IO.FileMode.Open))
                 {
-                    System.Type[] types = {typeof(System.IO.Stream)};
-                    System.Reflection.MethodInfo openInfo = Document.GetType().GetMethod("Open",types);
+                    System.Type[] types = { typeof(System.IO.Stream) };
+                    var openInfo = Document.GetType().GetMethod(nameof(Open), types);
                     if (!object.ReferenceEquals(null, openInfo))
                     {
                         object[] parameters = { stream };
@@ -159,9 +161,11 @@
 
         private void SaveAs()
         {
-            Microsoft.Win32.SaveFileDialog ofd = new Microsoft.Win32.SaveFileDialog();
-            ofd.Filter = OpenFileDialogFilter;
-            System.Nullable<bool> result = ofd.ShowDialog();
+            var ofd = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = OpenFileDialogFilter
+            };
+            var result = ofd.ShowDialog();
             if (result == true)
             {
                 Save(ofd.FileName);
@@ -173,7 +177,7 @@
             using(System.IO.FileStream stream = new System.IO.FileStream(filename,System.IO.FileMode.Create))
             {
                 System.Type[] types = { typeof(System.IO.Stream) };
-                System.Reflection.MethodInfo saveInfo = Document.GetType().GetMethod("Save", types);
+                var saveInfo = Document.GetType().GetMethod(nameof(Save), types);
                 if (!object.ReferenceEquals(null, saveInfo))
                 {
                     object[] parameters = { stream };

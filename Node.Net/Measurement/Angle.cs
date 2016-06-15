@@ -20,8 +20,8 @@ namespace Node.Net.Measurement
         public static Angle Parse(string value)
         {
             if (value == "") return new Angle();
-            double angleValue = System.Convert.ToDouble(value.Split(' ')[0]);
-            string unit = value.Split(' ')[1];
+            var angleValue = System.Convert.ToDouble(value.Split(' ')[0]);
+            var unit = value.Split(' ')[1];
             foreach (AngularUnit aunit in abbreviations.Keys)
             {
                 if (unit == abbreviations[aunit])
@@ -43,7 +43,7 @@ namespace Node.Net.Measurement
                 {
                     angleValue = Convert(angleValue, angularUnit, value);
                     angularUnit = value;
-                    NotifyPropertyChanged("Units");
+                    NotifyPropertyChanged(nameof(Units));
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace Node.Net.Measurement
             }
             set
             {
-                double newValue = Convert(value, targetUnits, angularUnit);
+                var newValue = Convert(value, targetUnits, angularUnit);
                 if (angleValue != newValue)
                 {
                     angleValue = newValue;
@@ -70,7 +70,7 @@ namespace Node.Net.Measurement
 
         public void Set(string value)
         {
-            Angle tmp = Parse(value);
+            var tmp = Parse(value);
             angleValue = tmp.angleValue;
             angularUnit = tmp.angularUnit;
         }
@@ -88,7 +88,7 @@ namespace Node.Net.Measurement
         {
             if (object.ReferenceEquals(null, instance)) return 1;
 
-            Angle thatAngle = instance as Angle;
+            var thatAngle = instance as Angle;
             if (!object.ReferenceEquals(null, thatAngle))
             {
                 return this[AngularUnit.Degrees].CompareTo(thatAngle[AngularUnit.Degrees]);
@@ -100,7 +100,7 @@ namespace Node.Net.Measurement
 
         public override bool Equals(object obj)
         {
-            Angle thatAngle = obj as Angle;
+            var thatAngle = obj as Angle;
             if (!object.ReferenceEquals(null, thatAngle))
             {
                 return this[AngularUnit.Degrees].Equals(thatAngle[AngularUnit.Degrees]);

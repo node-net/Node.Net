@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Node.Net.Collections
 {
-    public class Dictionary : System.Collections.Generic.Dictionary<string,dynamic>, 
+    public class Dictionary : System.Collections.Generic.Dictionary<string,dynamic>,
         Framework.IDocument,
         ICustomTypeDescriptor
     {
@@ -30,37 +30,38 @@ namespace Node.Net.Collections
         public void Open(Stream stream)
         {
             Clear();
-            Json.Reader reader = new Json.Reader();
-            IDictionary dictionary = (IDictionary)reader.Read(stream);
+            var reader = new Json.Reader();
+            var dictionary = (IDictionary)reader.Read(stream);
             Collections.Copier.Copy(dictionary, this);
         }
 
         #region ICustomTypeDescriptor interface
         public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
-            List<Attribute> alist = new List<Attribute>(attributes);
+            var alist = new List<Attribute>(attributes);
             alist.Add(new ReadOnlyAttribute(true));
 
-            System.Collections.Generic.List<PropertyDescriptor> descriptors =
+            var descriptors =
                 new System.Collections.Generic.List<PropertyDescriptor>();
-            foreach(string key in Keys)
+            foreach (string key in Keys)
             {
-                object value = this[key];
-                if(!object.ReferenceEquals(null, value))
+                var value = this[key];
+                if (!object.ReferenceEquals(null, value))
                 {
                     if (value.GetType() == typeof(string)||
                         value.GetType() == typeof(double) ||
                         value.GetType() == typeof(long) ||
                         value.GetType() == typeof(bool))
                     {
-
-                        ReadOnlyIDictionaryPropertyDescriptor pd 
-                            = new ReadOnlyIDictionaryPropertyDescriptor(key, alist.ToArray());
-                        pd.IDictionary = this;
+                        var pd
+                            = new ReadOnlyIDictionaryPropertyDescriptor(key, alist.ToArray())
+                            {
+                                IDictionary = this
+                            };
                         descriptors.Add(pd);
                     }
                 }
-                
+
             }
             return new System.ComponentModel.PropertyDescriptorCollection(descriptors.ToArray());
         }

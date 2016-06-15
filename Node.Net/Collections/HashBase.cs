@@ -38,8 +38,8 @@ namespace Node.Net.Collections
             if (object.ReferenceEquals(this, value)) return 0;
             if (object.ReferenceEquals(null, value)) return 1;
 
-            int thisHash = GetHashCode();
-            int thatHash = GetHashCode(value);
+            var thisHash = GetHashCode();
+            var thatHash = GetHashCode(value);
             return GetHashCode().CompareTo(GetHashCode(value));
         }
 
@@ -68,11 +68,11 @@ namespace Node.Net.Collections
         }
         public static int GetHashCode(System.Collections.IEnumerable value)
         {
-            int count = 0;
-            int hashCode = 0;
+            var count = 0;
+            var hashCode = 0;
             foreach (object item in value)
             {
-                int tmp = GetHashCode(item);
+                var tmp = GetHashCode(item);
                 if (tmp != 0) count++;
                 hashCode = hashCode ^ tmp;
             }
@@ -81,7 +81,7 @@ namespace Node.Net.Collections
         }
         public static int GetHashCode(System.Collections.IDictionary value)
         {
-            int hashCode = value.Count;
+            var hashCode = value.Count;
             foreach (string key in value.Keys)
             {
                 hashCode = hashCode ^ GetHashCode(key) ^ GetHashCode(value[key]);
@@ -91,15 +91,15 @@ namespace Node.Net.Collections
 
         public static System.Collections.IList GetChildren(System.Collections.IDictionary value)
         {
-            System.Collections.Generic.List<object> children = new System.Collections.Generic.List<object>();
+            var children = new System.Collections.Generic.List<object>();
             foreach (object key in value.Keys)
             {
-                object item = value[key];
+                var item = value[key];
                 if (!object.ReferenceEquals(null, item))
                 {
                     if (!typeof(string).IsAssignableFrom(item.GetType()))
                     {
-                        System.Collections.IEnumerable ienumerable = item as System.Collections.IEnumerable;
+                        var ienumerable = item as System.Collections.IEnumerable;
                         if (!object.ReferenceEquals(null, ienumerable)) { children.Add(item); }
                     }
                 }
@@ -109,7 +109,7 @@ namespace Node.Net.Collections
 
         public void Save(string filename, Json.JsonFormat format = Json.JsonFormat.Indented)
         {
-            System.IO.FileInfo fi = new System.IO.FileInfo(filename);
+            var fi = new System.IO.FileInfo(filename);
             if (!System.IO.Directory.Exists(fi.DirectoryName)) System.IO.Directory.CreateDirectory(fi.DirectoryName);
             using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Create))
             {
@@ -174,11 +174,11 @@ namespace Node.Net.Collections
             {
                 if (typeConversions.Contains(source["Type"].ToString()))
                 {
-                    System.Type type = typeConversions[source["Type"].ToString()] as System.Type;
+                    var type = typeConversions[source["Type"].ToString()] as System.Type;
                     if (!object.ReferenceEquals(null, type))
                     {
                         System.Type[] types = { typeof(System.Collections.IDictionary) };
-                        System.Reflection.ConstructorInfo dictionaryConstructor
+                        var dictionaryConstructor
                             = type.GetConstructor(types);
                         if (!object.ReferenceEquals(null, dictionaryConstructor))
                         {
@@ -192,15 +192,15 @@ namespace Node.Net.Collections
 
             foreach (object key in source.Keys)
             {
-                object value = source[key];
-                System.Collections.IDictionary dictionary = value as System.Collections.IDictionary;
+                var value = source[key];
+                var dictionary = value as System.Collections.IDictionary;
                 if (!object.ReferenceEquals(null, dictionary))
                 {
                     result[key] = Convert(dictionary, typeConversions);
                 }
                 else
                 {
-                    System.Collections.IEnumerable enumerable = value as System.Collections.IEnumerable;
+                    var enumerable = value as System.Collections.IEnumerable;
                     if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
                         && !object.ReferenceEquals(null, enumerable))
                     {
@@ -231,7 +231,7 @@ namespace Node.Net.Collections
 
         public int GetCount(System.Type type)
         {
-            int count = 0;
+            var count = 0;
             foreach (string key in Keys)
             {
                 if(!object.ReferenceEquals(null,this[key]))
@@ -260,7 +260,7 @@ namespace Node.Net.Collections
 
         public T Get<T>(int index)
         {
-            int i = 0;
+            var i = 0;
             foreach (string key in CollectKeys<T>())
             {
                 if (i == index) return (T)this[key];
@@ -291,7 +291,7 @@ namespace Node.Net.Collections
             }
             set
             {
-                bool notify = false;
+                var notify = false;
                 object current_value = null;
                 if(ContainsKey(key))
                 {
@@ -326,8 +326,8 @@ namespace Node.Net.Collections
         {
             get
             {
-                int i = 0;
-                foreach(string key in Keys)
+                var i = 0;
+                foreach (string key in Keys)
                 {
                     if (i == index) return this[key];
                     ++i;
@@ -338,8 +338,8 @@ namespace Node.Net.Collections
 
         public T[] ToArray<T>()
         {
-            System.Collections.Generic.List<T> items = new System.Collections.Generic.List<T>();
-            foreach(string key in Keys)
+            var items = new System.Collections.Generic.List<T>();
+            foreach (string key in Keys)
             {
                 if(!object.ReferenceEquals(null,this[key]))
                 {

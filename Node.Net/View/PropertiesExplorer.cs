@@ -38,8 +38,8 @@
 
         void treeView_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
         {
-            System.Windows.Controls.TreeViewItem tvi = treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
-            if(!object.ReferenceEquals(null,tvi))
+            var tvi = treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
+            if (!object.ReferenceEquals(null,tvi))
             {
                 selectionView.DataContext = tvi.DataContext;
             }
@@ -48,7 +48,7 @@
         protected override void OnInitialized(System.EventArgs e)
         {
             base.OnInitialized(e);
-            
+
             System.Windows.FrameworkElement[] elements = { treeView, selectionView };
             Elements = elements;
         }

@@ -1,7 +1,8 @@
-﻿namespace Node.Net
+﻿using System.Collections.Generic;
+namespace Node.Net
 {
     public interface IParent
     {
-        IChild[] GetChildren();
+        Dictionary<string,IChild> GetChildren();
     }
 }

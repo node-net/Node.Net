@@ -7,8 +7,8 @@
             if (directory.Length > 0 && !System.IO.Directory.Exists(directory)) System.IO.Directory.CreateDirectory(directory);
             foreach(object key in contents.Keys)
             {
-                string fullName = directory + "\\" + key.ToString();
-                System.IO.FileInfo fi = new System.IO.FileInfo(fullName);
+                var fullName = directory + "\\" + key.ToString();
+                var fi = new System.IO.FileInfo(fullName);
                 if (!System.IO.Directory.Exists(fi.DirectoryName)) System.IO.Directory.CreateDirectory(fi.DirectoryName);
 
                 byte[] bytes = null;
@@ -34,19 +34,19 @@
         public static string[] Glob(string directory,string pattern,bool deep=false)
         {
             pattern = pattern.Replace('\\', '/');
-            System.Collections.Generic.List<string> results = new System.Collections.Generic.List<string>();
+            var results = new System.Collections.Generic.List<string>();
 
-            foreach(string filename in System.IO.Directory.EnumerateFiles(directory))
+            foreach (string filename in System.IO.Directory.EnumerateFiles(directory))
             {
-                string relativeFilename = filename.Replace(directory + @"\","" );
+                var relativeFilename = filename.Replace(directory + @"\","" );
                 if (IsGlobMatch(relativeFilename, pattern)) results.Add(relativeFilename);
             }
             if(pattern.IndexOf("**/") == 0 || deep)
             {
                 foreach(string subdirectory in System.IO.Directory.EnumerateDirectories(directory))
                 {
-                    string reldir = subdirectory.Replace(directory + @"\", "");
-                    foreach(string result in Glob(subdirectory,pattern,true))
+                    var reldir = subdirectory.Replace(directory + @"\", "");
+                    foreach (string result in Glob(subdirectory,pattern,true))
                     {
                         results.Add(reldir + @"\" + result);
                     }
@@ -57,8 +57,8 @@
 
         public static bool IsGlobMatch(string name,string pattern)
         {
-            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(pattern.Replace("*", ".*?"));
-            if(regex.IsMatch(name)) return true;
+            var regex = new System.Text.RegularExpressions.Regex(pattern.Replace("*", ".*?"));
+            if (regex.IsMatch(name)) return true;
             if(pattern.IndexOf("**/") == 0)
             {
                 regex = new System.Text.RegularExpressions.Regex(pattern.Replace("**/*", "").Replace("*", ".*?"));

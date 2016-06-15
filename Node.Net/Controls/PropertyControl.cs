@@ -29,7 +29,7 @@ namespace Node.Net.Controls
             if (object.ReferenceEquals(null, propertyGrid)) return;
 
             title.DataContext = DataContext;
-            object value = Collections.KeyValuePair.GetValue(DataContext);
+            var value = Collections.KeyValuePair.GetValue(DataContext);
             if (object.ReferenceEquals(null, value))
             {
                 propertyGrid.SelectedObject = null;
@@ -46,21 +46,21 @@ namespace Node.Net.Controls
                 inotifyPropertyChanged.PropertyChanged += DataContext_PropertyChanged;
             }
 
-            System.Collections.IDictionary idictionary = value as System.Collections.IDictionary;
-            System.Collections.IEnumerable ienumerable = value as System.Collections.IEnumerable;
+            var idictionary = value as System.Collections.IDictionary;
+            var ienumerable = value as System.Collections.IEnumerable;
             if (object.ReferenceEquals(null, idictionary) && value.GetType() != typeof(string) &&
                !object.ReferenceEquals(null, ienumerable))
             {
-                System.Collections.Generic.List<object> items = new System.Collections.Generic.List<object>();
+                var items = new System.Collections.Generic.List<object>();
                 foreach (object item in ienumerable) { items.Add(item); }
                 propertyGrid.SelectedObjects = items.ToArray();
             }
             else
             {
-                bool use_adapter = false;
-                if(!object.ReferenceEquals(null,idictionary))
+                var use_adapter = false;
+                if (!object.ReferenceEquals(null,idictionary))
                 {
-                    ICustomTypeDescriptor customTypeDescriptor = value as ICustomTypeDescriptor;;
+                    var customTypeDescriptor = value as ICustomTypeDescriptor; ;
                     if (object.ReferenceEquals(null, customTypeDescriptor))
                     {
                         if (value.GetType().FullName.Contains("System.Collections.Generic.Dictionary"))
@@ -72,7 +72,7 @@ namespace Node.Net.Controls
                 
                 if (use_adapter)
                 {
-                    Collections.Dictionary d = new Collections.Dictionary();
+                    var d = new Collections.Dictionary();
                     Collections.Copier.Copy(idictionary, d);
                     propertyGrid.SelectedObject = d;
                 }
@@ -85,7 +85,7 @@ namespace Node.Net.Controls
         private void DataContext_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             // reset propertyGrid.Selected object
-            object selected = propertyGrid.SelectedObject;
+            var selected = propertyGrid.SelectedObject;
             propertyGrid.SelectedObject = null;
             propertyGrid.SelectedObject = selected;
         }
@@ -117,16 +117,18 @@ namespace Node.Net.Controls
         {
             base.OnInitialized(e);
 
-            RowDefinitions.Add(new System.Windows.Controls.RowDefinition() { Height = System.Windows.GridLength.Auto });
+            RowDefinitions.Add(new System.Windows.Controls.RowDefinition { Height = System.Windows.GridLength.Auto });
             RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
 
             title = new TitleControl();
             Children.Add(title);
 
-            propertyGrid = new System.Windows.Forms.PropertyGrid();
-            propertyGrid.ToolbarVisible = false;
-            propertyGrid.LargeButtons = true;
-            host = new System.Windows.Forms.Integration.WindowsFormsHost() { Child = propertyGrid };
+            propertyGrid = new System.Windows.Forms.PropertyGrid
+            {
+                ToolbarVisible = false,
+                LargeButtons = true
+            };
+            host = new System.Windows.Forms.Integration.WindowsFormsHost { Child = propertyGrid };
             Children.Add(host);
             System.Windows.Controls.Grid.SetRow(host, 1);
             //this.Content = host;
@@ -137,7 +139,7 @@ namespace Node.Net.Controls
         public event System.EventHandler ValueChanged;
         void propertyGrid_PropertyValueChanged(object s, System.Windows.Forms.PropertyValueChangedEventArgs e)
         {
-            if (!object.ReferenceEquals(null, ValueChanged))
+            if (ValueChanged!=null)
             {
                 ValueChanged(this, new System.EventArgs());
             }

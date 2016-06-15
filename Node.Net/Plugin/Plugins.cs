@@ -20,14 +20,14 @@
             // scan Plugins Directory for Plugin Folders
             foreach(string pluginDirectory in System.IO.Directory.GetDirectories(PluginsDirectory))
             {
-                System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(pluginDirectory);
-                string pluginName = di.Name;
-                if(!ContainsKey(pluginName))
+                var di = new System.IO.DirectoryInfo(pluginDirectory);
+                var pluginName = di.Name;
+                if (!ContainsKey(pluginName))
                 {
-                    string pluginPath = pluginDirectory + @"\" + pluginName + ".dll";
+                    var pluginPath = pluginDirectory + @"\" + pluginName + ".dll";
                     try
                     {
-                        System.Reflection.Assembly pluginAssembly = System.Reflection.Assembly.LoadFrom(pluginPath);
+                        var pluginAssembly = System.Reflection.Assembly.LoadFrom(pluginPath);
                         Add(pluginName, pluginAssembly);
                     }
                     catch
@@ -39,9 +39,9 @@
         }
         private static string GetAssemblyDirectory(System.Reflection.Assembly assembly)
         {
-            string codeBase = assembly.CodeBase;
-            System.UriBuilder uri = new System.UriBuilder(codeBase);
-            string path = System.Uri.UnescapeDataString(uri.Path);
+            var codeBase = assembly.CodeBase;
+            var uri = new System.UriBuilder(codeBase);
+            var path = System.Uri.UnescapeDataString(uri.Path);
             return System.IO.Path.GetDirectoryName(path);
         }
 
@@ -61,13 +61,13 @@
             // test for static method
             if(value.IndexOf('.')>0)
             {
-                string[] parts = value.Split('.');
-                string methodName = parts[parts.Length-1];
-                string typename = value.Replace("." + methodName,"");
-                System.Type type = GetType(typename);
-                if(!object.ReferenceEquals(null,type))
+                var parts = value.Split('.');
+                var methodName = parts[parts.Length-1];
+                var typename = value.Replace("." + methodName,"");
+                var type = GetType(typename);
+                if (!object.ReferenceEquals(null,type))
                 {
-                    System.Reflection.MethodInfo method = type.GetMethod(methodName);
+                    var method = type.GetMethod(methodName);
                     if (!object.ReferenceEquals(null, method)) return method.Invoke(null, null);
                 }
             }

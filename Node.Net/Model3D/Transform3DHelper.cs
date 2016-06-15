@@ -13,7 +13,7 @@ namespace Node.Net.Model3D
 
         public Transform3D GetTransform3D(object value)
         {
-            return MetaData.GetMetaData(value, "Transform3D") as Transform3D;
+            return MetaData.GetMetaData(value, nameof(Transform3D)) as Transform3D;
         }
         private void Traverse(IDictionary dictionary)
         {

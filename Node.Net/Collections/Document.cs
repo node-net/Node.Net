@@ -10,17 +10,17 @@ namespace Node.Net.Collections
 
         private Traverser traverser = null;
         [System.ComponentModel.Browsable(false)]
-        public Traverser Traverser 
-        { 
-            get 
-            { 
+        public Traverser Traverser
+        {
+            get
+            {
                 if(object.ReferenceEquals(null,traverser))
                 {
                     traverser = new Traverser(this);
                     traverser.SetDocument(this, this);
                 }
-                return traverser; 
-            } 
+                return traverser;
+            }
         }
 
         public IMetaDataManager MetaData
@@ -30,7 +30,7 @@ namespace Node.Net.Collections
         public override void Open(System.IO.Stream stream)
         {
             Clear();
-            IDictionary dictionary = (IDictionary)GetReader().Read(stream);
+            var dictionary = (IDictionary)GetReader().Read(stream);
             Collections.Copier.Copy(dictionary, this);
             Update();
         }

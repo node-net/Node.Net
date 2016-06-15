@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -13,7 +12,7 @@ namespace Node.Net.Extensions
             if (System.IO.File.Exists(fileName)) System.IO.File.Delete(fileName);
             using (System.IO.FileStream dest = new System.IO.FileStream(fileName, System.IO.FileMode.Create))
             {
-                int ibyte = source.ReadByte();
+                var ibyte = source.ReadByte();
                 while (ibyte > -1)
                 {
                     dest.WriteByte((byte)ibyte);
@@ -25,17 +24,17 @@ namespace Node.Net.Extensions
 
         public static Stream GetStream(string name, Type typeHint)
         {
-            Stream result = GetStream(name, typeHint.Assembly);
+            var result = GetStream(name, typeHint.Assembly);
             if (!object.ReferenceEquals(null, result)) return result;
             return GetStream(name);
         }
         public static Stream GetStream(string name)
         {
             if (System.IO.File.Exists(name)) return new System.IO.FileStream(name, System.IO.FileMode.Open);
-            System.Reflection.Assembly assembly =
+            var assembly =
                 System.Reflection.Assembly.GetCallingAssembly();
 
-            System.IO.Stream stream = GetStream(name, assembly);
+            var stream = GetStream(name, assembly);
             if (!object.ReferenceEquals(null, stream)) return stream;
 
             foreach (System.Reflection.Assembly a in System.AppDomain.CurrentDomain.GetAssemblies())
@@ -48,7 +47,7 @@ namespace Node.Net.Extensions
         }
         public static Stream GetStream(string name, Assembly assembly)
         {
-            string[] rnames = assembly.GetManifestResourceNames();
+            var rnames = assembly.GetManifestResourceNames();
             foreach (string rname in rnames)
             {
                 if (rname.Contains(name)) return assembly.GetManifestResourceStream(rname);

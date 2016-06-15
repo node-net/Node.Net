@@ -4,15 +4,15 @@ namespace Node.Net.View
 {
     public class DynamicView : System.Windows.Controls.ContentControl
     {
-        public DynamicView() 
+        public DynamicView()
         {
             DataContextChanged += DynamicView_DataContextChanged;
         }
 
-        
 
-        public DynamicView(System.Windows.FrameworkElement defaultElement) 
-        { 
+
+        public DynamicView(System.Windows.FrameworkElement defaultElement)
+        {
             frameworkElements["Default"] = defaultElement;
             DataContextChanged += DynamicView_DataContextChanged;
         }
@@ -54,7 +54,7 @@ namespace Node.Net.View
                 }
             }
             Content = GetContent();
-            System.Windows.FrameworkElement element = Content as System.Windows.FrameworkElement;
+            var element = Content as System.Windows.FrameworkElement;
             if (!object.ReferenceEquals(null, element)) element.DataContext = DataContext;
         }
 

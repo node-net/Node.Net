@@ -19,8 +19,8 @@ namespace Node.Net.Model3D.Transform
         }
         public static ModelVisual3D ToModelVisual3D(IRenderer renderer, System.Collections.IDictionary dictionary)
         {
-            ModelVisual3D modelVisual3D = new ModelVisual3D();
-            System.Windows.Media.Media3D.Model3D model3D = renderer.GetModel3D(dictionary);
+            var modelVisual3D = new ModelVisual3D();
+            var model3D = renderer.GetModel3D(dictionary);
             if (!ReferenceEquals(null, model3D))
             {
                 modelVisual3D.Content = model3D;
@@ -29,10 +29,10 @@ namespace Node.Net.Model3D.Transform
             {
                 foreach (string key in dictionary.Keys)
                 {
-                    IDictionary childDictionary = dictionary[key] as IDictionary;
+                    var childDictionary = dictionary[key] as IDictionary;
                     if (!ReferenceEquals(null, childDictionary))
                     {
-                        Visual3D v3d = renderer.GetVisual3D(childDictionary);
+                        var v3d = renderer.GetVisual3D(childDictionary);
                         if (!ReferenceEquals(null, v3d)) modelVisual3D.Children.Add(v3d);
                     }
                 }
@@ -42,26 +42,28 @@ namespace Node.Net.Model3D.Transform
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, IDictionary value)
         {
             renderer.MetaData.SetTransformMetaData(value);
-            string stype = "";
+            var stype = "";
             if (value.Contains("Type")) stype = value["Type"].ToString();
             if (stype.Length > 0 && renderer.TypeModel3DTransformers.ContainsKey(stype))
             {
                 return renderer.TypeModel3DTransformers[stype].GetModel3D(value);
             }
-            
+
             return ToModel3DGroup(renderer, value);
         }
         public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer, IDictionary value)
         {
-            string stype = "";
+            var stype = "";
             if (value.Contains("Type")) stype = value["Type"].ToString();
             if (stype.Length > 0 && renderer.TypeModel3DGroupTransformers.ContainsKey(stype))
             {
                 return renderer.TypeModel3DGroupTransformers[stype].GetModel3DGroup(value);
             }
 
-            Model3DGroup model3DGroup = new Model3DGroup();
-            model3DGroup.Transform = ToTransform3D_NoScale(renderer, value);
+            var model3DGroup = new Model3DGroup
+            {
+                Transform = ToTransform3D_NoScale(renderer, value)
+            };
             // NoScale, but has Translation AND Rotations
 
             // Primary Model
@@ -72,16 +74,18 @@ namespace Node.Net.Model3D.Transform
                 {
                     if (value.Contains(modelKey))
                     {
-                        string modelKeyValue = value[modelKey].ToString();
-                        System.Windows.Media.Media3D.Model3D modelResource = renderer.GetResource(modelKeyValue) as System.Windows.Media.Media3D.Model3D;
+                        var modelKeyValue = value[modelKey].ToString();
+                        var modelResource = renderer.GetResource(modelKeyValue) as System.Windows.Media.Media3D.Model3D;
                         if (!object.ReferenceEquals(null, modelResource))
                         {
-                            Model3DGroup modelGroup = new Model3DGroup();
-                            modelGroup.Transform = new ScaleTransform3D(renderer.GetScale(value));
+                            var modelGroup = new Model3DGroup
+                            {
+                                Transform = new ScaleTransform3D(renderer.GetScale(value))
+                            };
                             modelGroup.Children.Add(modelResource);
                             primaryModel = modelGroup;
                         }
-                        
+
                     }
                 }
             }
@@ -97,11 +101,11 @@ namespace Node.Net.Model3D.Transform
             // Children
             foreach (string key in value.Keys)
             {
-                IDictionary childDictionary = value[key] as IDictionary;
+                var childDictionary = value[key] as IDictionary;
                 if (!ReferenceEquals(null, childDictionary))
                 {
                     renderer.MetaData.SetMetaData(childDictionary, "Parent", value);
-                    System.Windows.Media.Media3D.Model3D m3d = renderer.GetModel3D(childDictionary);
+                    var m3d = renderer.GetModel3D(childDictionary);
                     if (!ReferenceEquals(null, m3d)) model3DGroup.Children.Add(m3d);
                 }
             }
@@ -122,7 +126,7 @@ namespace Node.Net.Model3D.Transform
             }
             if (!ReferenceEquals(null, geometry))
             {
-                return new GeometryModel3D()
+                return new GeometryModel3D
                 {
                     Geometry = geometry,
                     Material = renderer.GetMaterial(value),
@@ -135,69 +139,69 @@ namespace Node.Net.Model3D.Transform
         }
         public static System.Windows.Media.Media3D.Transform3D ToTransform3D(IRenderer renderer, System.Collections.IDictionary value)
         {
-            Transform3DGroup transformGroup = new Transform3DGroup();
+            var transformGroup = new Transform3DGroup();
             transformGroup.Children.Add(new ScaleTransform3D(renderer.GetScale(value)));
             transformGroup.Children.Add(GetRotateTransform3D(value));
-            TranslateTransform3D translateTransform = new TranslateTransform3D(renderer.GetTranslation(value));
-            Vector3D translation = renderer.GetTranslation(value);
-            Point3D center = new Point3D(translation.X, translation.Y, translation.Z);
+            var translateTransform = new TranslateTransform3D(renderer.GetTranslation(value));
+            var translation = renderer.GetTranslation(value);
+            var center = new Point3D(translation.X, translation.Y, translation.Z);
             transformGroup.Children.Add(new TranslateTransform3D(renderer.GetTranslation(value)));
             return transformGroup;
         }
         public static System.Windows.Media.Media3D.Transform3D ToTransform3D_NoScale(IRenderer renderer, System.Collections.IDictionary value)
         {
-            Transform3DGroup transformGroup = new Transform3DGroup();
+            var transformGroup = new Transform3DGroup();
             transformGroup.Children.Add(GetRotateTransform3D(value));
-            TranslateTransform3D translateTransform = new TranslateTransform3D(renderer.GetTranslation(value));
-            Vector3D translation = renderer.GetTranslation(value);
-            Point3D center = new Point3D(translation.X, translation.Y, translation.Z);
+            var translateTransform = new TranslateTransform3D(renderer.GetTranslation(value));
+            var translation = renderer.GetTranslation(value);
+            var center = new Point3D(translation.X, translation.Y, translation.Z);
             transformGroup.Children.Add(new TranslateTransform3D(renderer.GetTranslation(value)));
             return transformGroup;
         }
         public static RotateTransform3D GetRotateTransform3D(System.Collections.IDictionary value)
         {
-            Quaternion rotationZ = new Quaternion();
-            Quaternion rotationY = new Quaternion();
-            Quaternion rotationX = new Quaternion();
-            QuaternionRotation3D rotation = new QuaternionRotation3D();
+            var rotationZ = new Quaternion();
+            var rotationY = new Quaternion();
+            var rotationX = new Quaternion();
+            var rotation = new QuaternionRotation3D();
             if (value.Contains("RotationZ"))
             {
-                double rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
+                var rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
             if (value.Contains("Orientation"))
             {
-                double rotationZ_degrees = GetRotationDegrees(value, "Orientation");
+                var rotationZ_degrees = GetRotationDegrees(value, "Orientation");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
             if (value.Contains("RotationY"))
             {
-                double rotationY_degrees = GetRotationDegrees(value, "RotationY");
+                var rotationY_degrees = GetRotationDegrees(value, "RotationY");
                 rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("Tilt"))
             {
-                double rotationY_degrees = GetRotationDegrees(value, "Tilt");
+                var rotationY_degrees = GetRotationDegrees(value, "Tilt");
                 rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("RotationX"))
             {
-                double rotationX_degrees = GetRotationDegrees(value, "RotationX");
+                var rotationX_degrees = GetRotationDegrees(value, "RotationX");
                 rotationX = new Quaternion(new Vector3D(1, 0, 0), rotationX_degrees);
             }
             if (value.Contains("Spin"))
             {
-                double rotationX_degrees = GetRotationDegrees(value, "Spin");
+                var rotationX_degrees = GetRotationDegrees(value, "Spin");
                 rotationX = new Quaternion(new Vector3D(1, 0, 0), rotationX_degrees);
             }
 
-            Quaternion total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
+            var total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
             return new RotateTransform3D(new QuaternionRotation3D(total_rotation));
         }
 
         public static Vector3D ToTranslation(IRenderer renderer, IDictionary value)
         {
-            Vector3D result = new Vector3D();
+            var result = new Vector3D();
             if (value.Contains("X"))
             {
                 result.X = GetLengthMeters(value, "X");
@@ -226,7 +230,7 @@ namespace Node.Net.Model3D.Transform
         }
         public static Vector3D ToScale(IRenderer renderer, IDictionary value)
         {
-            Vector3D result = new Vector3D(1, 1, 1);
+            var result = new Vector3D(1, 1, 1);
             if (value.Contains("ScaleX"))
             {
                 result.X = GetLengthMeters(value, "ScaleX");

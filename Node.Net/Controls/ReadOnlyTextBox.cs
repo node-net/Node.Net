@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,21 +23,21 @@ namespace Node.Net.Controls
         protected virtual void OnDataContextChanged()
         {
             Text = "";
-            
+
             Text = GetText();
         }
 
         protected virtual string GetText()
         {
-            IDictionary dictionary = Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
-            if(!object.ReferenceEquals(null, dictionary))
+            var dictionary = Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
+            if (!object.ReferenceEquals(null, dictionary))
             {
                 return Json.Writer.ToString(dictionary, Json.JsonFormat.Indented);
             }
-            IEnumerable ienumerable = Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
+            var ienumerable = Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
             if (!object.ReferenceEquals(null, ienumerable))
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 foreach (object item in ienumerable)
                 {
                     sb.AppendLine(item.ToString());

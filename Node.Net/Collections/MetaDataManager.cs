@@ -11,7 +11,7 @@ namespace Node.Net.Collections
         {
 
         }
-        
+
         public object GetMetaData(object item, string key)
         {
             if (ContainsKey(item) && this[item].Contains(key))
@@ -29,6 +29,6 @@ namespace Node.Net.Collections
             }
             this[item][key] = value;
         }
-        
+
     }
 }

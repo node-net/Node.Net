@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
 
@@ -39,14 +36,14 @@ namespace Node.Net.Controls
             Update(2);
             base.OnExpanded(e);
         }
-        private bool IsValue(object item)
+        private static bool IsValue(object item)
         {
             if (object.ReferenceEquals(null, item)) return true;
             if (object.ReferenceEquals(null, Collections.KeyValuePair.GetValue(item))) return true;
             if (Collections.KeyValuePair.IsKeyValuePair(item))
             {
                 if (Collections.KeyValuePair.GetValue(item).GetType() == typeof(string)) return true;
-                IEnumerable ienumerable = Collections.KeyValuePair.GetValue(item) as IEnumerable;
+                var ienumerable = Collections.KeyValuePair.GetValue(item) as IEnumerable;
                 if (object.ReferenceEquals(null, ienumerable)) return true;
             }
             return false;
@@ -56,9 +53,9 @@ namespace Node.Net.Controls
             Header = GetHeader();
             Items.Clear();
 
-            if(childDepth == 0)
+            if (childDepth == 0)
             {
-                Items.Add(new System.Windows.Controls.TreeViewItem() { Header = "dummy" });
+                Items.Add(new System.Windows.Controls.TreeViewItem { Header = "dummy" });
             }
             else
             {
@@ -102,10 +99,10 @@ namespace Node.Net.Controls
         public static object[] GetChildren(object item)
         {
             if (!IsChild(item)) return null;
-            IEnumerable ienumerable = item as IEnumerable;
+            var ienumerable = item as IEnumerable;
             if (!object.ReferenceEquals(null, ienumerable))
             {
-                List<object> children = new List<object>();
+                var children = new List<object>();
                 foreach (object child in ienumerable)
                 {
                     children.Add(child);
@@ -121,15 +118,15 @@ namespace Node.Net.Controls
         }
         protected virtual TreeViewItemDetailed[] GetChildren()
         {
-            List<TreeViewItemDetailed> children = new List<TreeViewItemDetailed>();
-            object[] childmodels = GetChildModels();
+            var children = new List<TreeViewItemDetailed>();
+            var childmodels = GetChildModels();
             if (!object.ReferenceEquals(null, childmodels))
             {
                 foreach (object item in GetChildModels())
                 {
                     if (!object.ReferenceEquals(null, item))
                     {
-                        TreeViewItemDetailed tvi = Activator.CreateInstance(GetType()) as TreeViewItemDetailed;
+                        var tvi = Activator.CreateInstance(GetType()) as TreeViewItemDetailed;
                         tvi.IsExpanded = false;
                         tvi.DataContext = item;
                         tvi.ShowValues = ShowValues;
@@ -142,15 +139,15 @@ namespace Node.Net.Controls
 
         protected virtual object GetHeader()
         {
-            XmlElement xmlElement = DataContext as XmlElement;
+            var xmlElement = DataContext as XmlElement;
             if (!object.ReferenceEquals(null, xmlElement))
             {
                 return xmlElement.Name;
             }
             if (IsValue(DataContext))
             {
-                string key = Collections.KeyValuePair.GetKey(DataContext).ToString();
-                string value = Collections.KeyValuePair.GetValue(DataContext).ToString();
+                var key = Collections.KeyValuePair.GetKey(DataContext).ToString();
+                var value = Collections.KeyValuePair.GetValue(DataContext).ToString();
                 return $"{key} : {value}";
             }
             else

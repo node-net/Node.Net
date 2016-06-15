@@ -2,13 +2,13 @@
 {
     public class Base : System.Windows.Controls.UserControl
     {
-        public Base() 
+        public Base()
         {
             DataContextChanged += On_DataContextChanged;
             Update();
         }
-        public Base(object value) 
-        { 
+        public Base(object value)
+        {
             DataContext = value;
             DataContextChanged += On_DataContextChanged;
             Update();

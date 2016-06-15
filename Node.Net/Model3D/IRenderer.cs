@@ -20,7 +20,7 @@ using System.Windows.Media.Media3D;
 ///  |    +--PointLightBase
 ///  |
 ///  +--Model3DGroup
-///  
+///
 /// </summary>
 /// <param name="value"></param>
 /// <returns></returns>

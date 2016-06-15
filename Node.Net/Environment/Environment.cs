@@ -13,7 +13,7 @@
         {
             get
             {
-                string dev_root = System.Environment.GetEnvironmentVariable("DEV_ROOT");
+                var dev_root = System.Environment.GetEnvironmentVariable("DEV_ROOT");
                 {
                     if(!object.ReferenceEquals(null,dev_root))
                     {
@@ -26,18 +26,18 @@
 
         public static string GetShortName(System.Reflection.Assembly assembly)
         {
-            string[] parts = assembly.FullName.Split(',');
+            var parts = assembly.FullName.Split(',');
             return parts[0];
         }
         public static string GetWorkingDirectory(System.Type type) => GetWorkingDirectory(System.Reflection.Assembly.GetAssembly(type));
         public static string GetWorkingDirectory(System.Reflection.Assembly assembly)
         {
-            string working_dir = ComputeWorkingDirectory(assembly);
+            var working_dir = ComputeWorkingDirectory(assembly);
 
-            System.Windows.ResourceDictionary cache = GetWorkingDirectories();
-            if(cache.Contains(GetShortName(assembly)))
+            var cache = GetWorkingDirectories();
+            if (cache.Contains(GetShortName(assembly)))
             {
-                string cache_name = cache[GetShortName(assembly)].ToString();
+                var cache_name = cache[GetShortName(assembly)].ToString();
                 if (working_dir.Length == 0) working_dir = cache_name;
                 else
                 {
@@ -88,15 +88,15 @@
         }
         private static string ComputeWorkingDirectory(System.Reflection.Assembly assembly)
         {
-            string working_dir = "";
-            string dll_filename = assembly.CodeBase.Replace("file:///", "").Replace('/', '\\');
+            var working_dir = "";
+            var dll_filename = assembly.CodeBase.Replace("file:///", "").Replace('/', '\\');
 
-            System.IO.FileInfo fi = new System.IO.FileInfo(dll_filename);
+            var fi = new System.IO.FileInfo(dll_filename);
 
-            bool foundName = false;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            string[] words = dll_filename.Split('\\');
-            foreach(string word in words)
+            var foundName = false;
+            var sb = new System.Text.StringBuilder();
+            var words = dll_filename.Split('\\');
+            foreach (string word in words)
             {
                 if (sb.Length > 0) sb.Append("\\");
                 sb.Append(word);

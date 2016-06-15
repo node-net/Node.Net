@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
-    public interface ITypeTransformer
+    public interface IRotation3D
     {
-        ITransformer Transformer { get; set; }
-        object Transform(object item);
+        Quaternion Rotation3D { get; }
     }
 }

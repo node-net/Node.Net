@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -34,15 +31,16 @@ namespace Node.Net.Controls
 
         public FrameworkElement View
         {
-            get {
-                if(_views.ContainsKey(ViewName)) return _views[ViewName];
+            get
+            {
+                if (_views.ContainsKey(ViewName)) return _views[ViewName];
                 return null;
             }
         }
 
         public void Print()
         {
-            PrintDialog pd = new PrintDialog();
+            var pd = new PrintDialog();
             if (pd.ShowDialog() == true)
             {
                 pd.PrintDocument(GetFixedDocument(pd, View).DocumentPaginator, "?");
@@ -51,15 +49,17 @@ namespace Node.Net.Controls
 
         public void PrintPreview()
         {
-            PrintDialog pd = new PrintDialog();
+            var pd = new PrintDialog();
             if (pd.ShowDialog() == true)
             {
-                Window w = new Window()
+                var w = new Window
                 {
                     WindowState = WindowState.Maximized
                 };
-                DocumentViewer docView = new DocumentViewer();
-                docView.Document = GetFixedDocument(pd, View);
+                var docView = new DocumentViewer
+                {
+                    Document = GetFixedDocument(pd, View)
+                };
                 w.Content = docView;
                 w.ShowDialog();
             }
@@ -94,36 +94,38 @@ namespace Node.Net.Controls
             Update();
         }
 
-        private FixedDocument GetFixedDocument(PrintDialog pd, FrameworkElement view)
+        private static FixedDocument GetFixedDocument(PrintDialog pd, FrameworkElement view)
         {
-            FixedDocument doc = new FixedDocument();
+            var doc = new FixedDocument();
             doc.DocumentPaginator.PageSize = new Size(pd.PrintableAreaWidth, pd.PrintableAreaHeight);
-            FixedPage page1 = new FixedPage();
-            page1.Width = doc.DocumentPaginator.PageSize.Width;
-            page1.Height = doc.DocumentPaginator.PageSize.Height;
+            var page1 = new FixedPage
+            {
+                Width = doc.DocumentPaginator.PageSize.Width,
+                Height = doc.DocumentPaginator.PageSize.Height
+            };
 
 
             double margin = 20;
-            Grid grid = new Grid()
+            var grid = new Grid
             {
                 Width = pd.PrintableAreaWidth - margin * 2,
                 Height = pd.PrintableAreaHeight - margin * 2,
                 Margin = new Thickness(margin)
             };
-            Border border = new Border()
+            var border = new Border
             {
                 BorderBrush = Brushes.Black,
                 BorderThickness = new Thickness(1),
                 Margin = new Thickness(5)
             };
 
-            FrameworkElement view_clone = Activator.CreateInstance(view.GetType()) as FrameworkElement;
+            var view_clone = Activator.CreateInstance(view.GetType()) as FrameworkElement;
             view_clone.DataContext = view.DataContext;
             grid.Children.Add(border);
             border.Child = view_clone;
             page1.Children.Add(grid);
 
-            doc.Pages.Add(new PageContent() { Child = page1 });
+            doc.Pages.Add(new PageContent { Child = page1 });
             return doc;
         }
     }

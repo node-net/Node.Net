@@ -5,7 +5,7 @@ namespace Node.Net.Json
     public enum JsonFormat { Compressed, Indented };
     public class Writer
     {
-        private static readonly Writer _default = new Writer() { Format = JsonFormat.Compressed };
+        private static readonly Writer _default = new Writer { Format = JsonFormat.Compressed };
         public static Writer Default { get { return _default; } }
 
         private readonly Internal.JsonWriter writer = new Internal.JsonWriter();
@@ -36,14 +36,14 @@ namespace Node.Net.Json
 
         public static void Write(System.Collections.IDictionary dictionary, System.IO.Stream stream,JsonFormat format = JsonFormat.Indented)
         {
-            Internal.JsonWriter writer = new Internal.JsonWriter();
+            var writer = new Internal.JsonWriter();
             if (format == JsonFormat.Indented) writer.Style = Internal.Style.Indented;
             else writer.Style = Internal.Style.Compact;
             writer.Write(stream, dictionary);
         }
         public static void Write(System.Collections.IEnumerable enumerable, System.IO.Stream stream,JsonFormat format = JsonFormat.Indented)
         {
-            Internal.JsonWriter writer = new Internal.JsonWriter();
+            var writer = new Internal.JsonWriter();
             if (format == JsonFormat.Indented) writer.Style = Internal.Style.Indented;
             else writer.Style = Internal.Style.Compact;
             writer.Write(stream, enumerable);
@@ -51,7 +51,7 @@ namespace Node.Net.Json
 
         public static string ToString(System.Collections.IDictionary dictionary,JsonFormat format = JsonFormat.Indented)
         {
-            string result = "";
+            var result = "";
             using (System.IO.MemoryStream memory = new System.IO.MemoryStream())
             {
                 Write(dictionary,memory,format);
@@ -66,7 +66,7 @@ namespace Node.Net.Json
 
         public static string ToString(System.Collections.IEnumerable enumerable,JsonFormat format = JsonFormat.Indented)
         {
-            string result = "";
+            var result = "";
             using (System.IO.MemoryStream memory = new System.IO.MemoryStream())
             {
                 Write(enumerable, memory,format);
@@ -78,7 +78,7 @@ namespace Node.Net.Json
             }
             return result;
         }
-        
+
         public void Write(System.IO.Stream stream, System.Collections.IDictionary dictionary)
         {
             writer.Write(stream, dictionary);
