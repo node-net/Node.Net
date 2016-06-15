@@ -16,7 +16,7 @@ namespace Node.Net.Transformers
         public Color Transform(string name)
         {
             if (NamedColors.ContainsKey(name)) return NamedColors[name];
-            var words = name.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string[] words = name.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (words.Length == 3)
             {
                 return Color.FromRgb(Convert.ToByte(words[0]), Convert.ToByte(words[1]), Convert.ToByte(words[2]));
@@ -28,7 +28,7 @@ namespace Node.Net.Transformers
             return Colors.Black;
         }
 
-        public static Color Transform(IDictionary dictionary)
+        public Color Transform(IDictionary dictionary)
         {
             return Colors.Black;
         }

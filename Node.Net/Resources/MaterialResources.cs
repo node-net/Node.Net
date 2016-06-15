@@ -30,7 +30,7 @@ namespace Node.Net.Resources
             return base.GetDynamicResource(name);
         }
 
-        private static bool IsKnownColor(string name)
+        private bool IsKnownColor(string name)
         {
             try
             {

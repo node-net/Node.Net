@@ -22,10 +22,8 @@ namespace Node.Net.Controls
         {
             if (!object.ReferenceEquals(null, Collections.KeyValuePair.GetValue(DataContext)))
             {
-                var label = new System.Windows.Controls.Label
-                {
-                    Content = Collections.KeyValuePair.GetValue(DataContext).GetType().Name
-                };
+                System.Windows.Controls.Label label = new System.Windows.Controls.Label();
+                label.Content = Collections.KeyValuePair.GetValue(DataContext).GetType().Name;
                 Content = label;
             }
         }

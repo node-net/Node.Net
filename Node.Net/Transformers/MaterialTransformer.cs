@@ -18,13 +18,13 @@ namespace Node.Net.Transformers
             return null;
         }
 
-        public static Material Transform(string name)
+        public Material Transform(string name)
         {
-            var brush_transformer = new BrushTransformer();
+            BrushTransformer brush_transformer = new BrushTransformer();
             return new DiffuseMaterial(brush_transformer.Transform(name));
         }
 
-        public static Material Transform(IDictionary dictionary)
+        public Material Transform(IDictionary dictionary)
         {
             return null;
         }

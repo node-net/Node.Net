@@ -28,13 +28,13 @@ namespace Node.Net.View
 
         private void HashGrid_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            var oldHash = e.OldValue as Node.Net.Collections.Hash;
-            if (!ReferenceEquals(null, oldHash))
+            Node.Net.Collections.Hash oldHash = e.OldValue as Node.Net.Collections.Hash;
+            if(!ReferenceEquals(null, oldHash))
             {
                 oldHash.PropertyChanged -= Hash_PropertyChanged;
             }
-            var hash = DataContext as Node.Net.Collections.Hash;
-            if (!ReferenceEquals(null, hash))
+            Node.Net.Collections.Hash hash = DataContext as Node.Net.Collections.Hash;
+            if(!ReferenceEquals(null, hash))
             {
                 hash.PropertyChanged += Hash_PropertyChanged;
             }
@@ -50,25 +50,25 @@ namespace Node.Net.View
         {
             RowDefinitions.Clear();
             Children.Clear();
-            var hash = DataContext as Node.Net.Collections.Hash;
-            if (ReferenceEquals(null, hash))
+            Node.Net.Collections.Hash hash = DataContext as Node.Net.Collections.Hash;
+            if(ReferenceEquals(null, hash))
             {
                 
                 
             }
             else
             {
-                var row_index = 0;
-                foreach (string key in GetKeys())
+                int row_index = 0;
+                foreach(string key in GetKeys())
                 {
                     RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
-                    var nameLabel = new Label { Content = key};
+                    Label nameLabel = new Label() { Content = key};
                     Children.Add(nameLabel);
                     Grid.SetColumn(nameLabel, 0);
                     Grid.SetRow(nameLabel, row_index);
-                    var svalue = "null";
+                    string svalue = "null";
                     if (!ReferenceEquals(null, hash[key])) { svalue = hash[key].ToString(); }
-                    var valueLabel = new Label { Content = svalue };
+                    Label valueLabel = new Label() { Content = svalue };
                     Children.Add(valueLabel);
                     Grid.SetColumn(valueLabel, 1);
                     Grid.SetRow(valueLabel, row_index);
@@ -80,7 +80,7 @@ namespace Node.Net.View
         protected string[] GetKeys()
         {
             if (!ReferenceEquals(null, orderedKeys)) return orderedKeys.ToArray();
-            var hash = DataContext as Node.Net.Collections.Hash;
+            Node.Net.Collections.Hash hash = DataContext as Node.Net.Collections.Hash;
             if (!ReferenceEquals(null, hash)) return new System.Collections.Generic.List<string>(hash.Keys).ToArray();
             return null;
         }

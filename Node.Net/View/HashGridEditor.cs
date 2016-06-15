@@ -15,7 +15,7 @@ namespace Node.Net.View
         {
             RowDefinitions.Clear();
             Children.Clear();
-            var hash = DataContext as Node.Net.Collections.Hash;
+            Node.Net.Collections.Hash hash = DataContext as Node.Net.Collections.Hash;
             if (ReferenceEquals(null, hash))
             {
                 
@@ -23,18 +23,18 @@ namespace Node.Net.View
             }
             else
             {
-                var row_index = 0;
+                int row_index = 0;
                 foreach (string key in GetKeys())
                 {
                     RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
-                    var nameLabel = new Label { Content = key };
+                    Label nameLabel = new Label() { Content = key };
                     Children.Add(nameLabel);
                     Grid.SetColumn(nameLabel, 0);
                     Grid.SetRow(nameLabel, row_index);
-                    var svalue = "null";
+                    string svalue = "null";
                     if (!ReferenceEquals(null, hash[key])) { svalue = hash[key].ToString(); }
                     //Label valueLabel = new Label() { Content = svalue };
-                    var valueTextBox = new TextBox { Text = svalue };
+                    TextBox valueTextBox = new TextBox() { Text = svalue };
                     valueTextBox.TextChanged += ValueTextBox_TextChanged;
                     valueTextBox.Tag = key;
                     Children.Add(valueTextBox);
@@ -47,10 +47,10 @@ namespace Node.Net.View
 
         private void ValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var hash = DataContext as Node.Net.Collections.Hash;
+            Node.Net.Collections.Hash hash = DataContext as Node.Net.Collections.Hash;
             if (!ReferenceEquals(null, hash))
             {
-                var key = ((TextBox)sender).Tag.ToString();
+                string key = ((TextBox)sender).Tag.ToString();
                 if (hash.ContainsKey(key))
                 {
                     hash[key] = ((TextBox)sender).Text;

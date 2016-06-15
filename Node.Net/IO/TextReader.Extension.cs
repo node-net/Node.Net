@@ -14,20 +14,18 @@ namespace Node.Net.IO
         }
         public static string Seek(System.IO.TextReader reader, char value)
         {
-            var buffer
+            System.Collections.Generic.Queue<char> buffer
                 = new System.Collections.Generic.Queue<char>();
-            var result = "";
-            var ipeek = reader.Peek();
-            var cpeek = (char)ipeek;
-            var escaped = false;// IsEscaped;
-            var builder = new System.Text.StringBuilder();
-            builder.Append(result);
+            string result = "";
+            int ipeek = reader.Peek();
+            char cpeek = (char)ipeek;
+            bool escaped = false;// IsEscaped;
             while (reader.Peek() != (int)value ||
                    (reader.Peek() == (int)value && escaped))
             {
                 if (reader.Peek() == -1) return result;
                 if (reader.Peek() == (int)value && escaped && result.Length > 0) result = result.Substring(0, result.Length - 1);
-                var ichar = reader.Read();
+                int ichar = reader.Read();
                 buffer.Enqueue((char)ichar);
                 if (escaped && ichar == '\\')
                 {
@@ -35,28 +33,24 @@ namespace Node.Net.IO
                 }
                 else
                 {
-                    builder.Append((char)ichar);
+                    result += (char)ichar;
                     if (ichar == value && !escaped) break;
                 }
                 escaped = IsEscaped(buffer);
             }
-            result = builder.ToString();
             return result;
         }
         public static string Seek(System.IO.TextReader reader, char[] values)
         {
-            var result = "";
-            var done = false;
+            string result = "";
+            bool done = false;
             foreach (char ch in values) { if ((char)reader.Peek() == ch) { done = true; } }
-            var builder = new System.Text.StringBuilder();
-            builder.Append(result);
             while (!done)
             {
-                var ichar = reader.Read();
-                builder.Append((char)ichar);
+                int ichar = reader.Read();
+                result += (char)ichar;
                 foreach (char ch in values) { if ((char)reader.Peek() == ch) { done = true; } }
             }
-            result = builder.ToString();
             return result;
         }
 
@@ -64,8 +58,8 @@ namespace Node.Net.IO
         {
             if (buffer.Count > 0)
             {
-                var backSlashCount = 0;
-                var cbuf = buffer.ToArray();
+                int backSlashCount = 0;
+                char[] cbuf = buffer.ToArray();
                 if (cbuf[buffer.Count - 1] == '\\')
                 {
 

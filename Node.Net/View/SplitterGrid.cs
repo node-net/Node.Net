@@ -74,11 +74,11 @@
             ColumnDefinitions.Clear();
             if(orientation == System.Windows.Controls.Orientation.Vertical)
             {
-                var rowCount = elements.Count + (elements.Count - 1);
-                for (int r = 0; r < rowCount; ++r)
+                int rowCount = elements.Count + (elements.Count - 1);
+                for(int r = 0; r < rowCount; ++r)
                 {
                     
-                    var rowDefinition = new System.Windows.Controls.RowDefinition();
+                    System.Windows.Controls.RowDefinition rowDefinition = new System.Windows.Controls.RowDefinition();
                     //if (r == 0) rowDefinition.Height = firstGridLength;
                     if (r % 2 != 0) rowDefinition.Height = System.Windows.GridLength.Auto;
                     RowDefinitions.Add(rowDefinition);
@@ -92,8 +92,8 @@
                     else
                     {
 
-                        var rowSplitter = 
-                            new System.Windows.Controls.GridSplitter
+                        System.Windows.Controls.GridSplitter rowSplitter = 
+                            new System.Windows.Controls.GridSplitter()
                                 {
                                     HorizontalAlignment=System.Windows.HorizontalAlignment.Stretch,
                                     VerticalAlignment=System.Windows.VerticalAlignment.Center,
@@ -106,11 +106,11 @@
             }
             else
             {
-                var colCount = elements.Count + (elements.Count - 1);
+                int colCount = elements.Count + (elements.Count - 1);
                 for (int c = 0; c < colCount; ++c)
                 {
                     
-                    var colDefinition = new System.Windows.Controls.ColumnDefinition();
+                    System.Windows.Controls.ColumnDefinition colDefinition = new System.Windows.Controls.ColumnDefinition();
                     //if (c == 0) colDefinition.Width = firstGridLength;
                     if (c % 2 != 0) colDefinition.Width = System.Windows.GridLength.Auto;
                     ColumnDefinitions.Add(colDefinition);
@@ -124,8 +124,8 @@
                     else
                     {
 
-                        var colSplitter =
-                            new System.Windows.Controls.GridSplitter
+                        System.Windows.Controls.GridSplitter colSplitter =
+                            new System.Windows.Controls.GridSplitter()
                             {
                                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                                 VerticalAlignment = System.Windows.VerticalAlignment.Stretch,

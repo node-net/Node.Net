@@ -54,17 +54,15 @@ namespace Node.Net.Framework
                 if(currentKey != value)
                 {
                     currentKey = value;
-                    NotifyPropertyChanged(nameof(CurrentKey));
+                    NotifyPropertyChanged("CurrentKey");
                 }
             }
         }
         public void Open()
         {
-            var ofd = new Microsoft.Win32.OpenFileDialog
-            {
-                Filter = OpenFileDialogFilter
-            };
-            var result = ofd.ShowDialog();
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            ofd.Filter = OpenFileDialogFilter;
+            System.Nullable<bool> result = ofd.ShowDialog();
             if (result == true)
             {
                 Open(ofd.FileName);
@@ -78,10 +76,10 @@ namespace Node.Net.Framework
 
         private void Open(string name, Type documentType, Stream stream)
         {
-            var document = Activator.CreateInstance(documentType);
+            object document = Activator.CreateInstance(documentType);
 
             Type[] types = { typeof(string), typeof(Stream) };
-            var openInfo = documentType.GetMethod(nameof(Open), types);
+            MethodInfo openInfo = documentType.GetMethod("Open", types);
             try {
                 if (!object.ReferenceEquals(null, openInfo))
                 {
@@ -91,7 +89,7 @@ namespace Node.Net.Framework
                 else
                 {
                     Type[] types2 = { typeof(Stream) };
-                    openInfo = documentType.GetMethod(nameof(Open), types2);
+                    openInfo = documentType.GetMethod("Open", types2);
                     if (!object.ReferenceEquals(null, openInfo))
                     {
                         object[] parameters = { stream };
@@ -113,8 +111,8 @@ namespace Node.Net.Framework
             {
                 if (typeof(IDictionary).IsAssignableFrom(document.GetType()))
                 {
-                    var d = Node.Net.Json.Reader.Default.Read(stream) as IDictionary;
-                    if (!object.ReferenceEquals(null, d))
+                    IDictionary d = Node.Net.Json.Reader.Default.Read(stream) as IDictionary;
+                    if(!object.ReferenceEquals(null, d))
                     {
                         Node.Net.Collections.Copier.Copy(d, (document as IDictionary));
                     }

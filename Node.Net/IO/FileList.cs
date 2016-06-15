@@ -15,7 +15,7 @@ namespace Node.Net.IO
 
         public string[] Collect()
         {
-            var files
+            System.Collections.Generic.List<string> files
                 = new System.Collections.Generic.List<string>();
 
             foreach (string includePattern in includePatterns)

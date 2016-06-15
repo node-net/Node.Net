@@ -70,8 +70,8 @@
 
         void treeView_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
         {
-            var tvi = treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
-            if (!object.ReferenceEquals(null,tvi))
+            System.Windows.Controls.TreeViewItem tvi = treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
+            if(!object.ReferenceEquals(null,tvi))
             {
                 selectionView.DataContext = tvi.DataContext;
             }
@@ -85,17 +85,17 @@
             {
                 selectionViewVertical = new Controls.PropertyControl();
 
-                var valueChangedEvent = selectionViewVertical.GetType().GetEvent("ValueChanged");
+                System.Reflection.EventInfo valueChangedEvent = selectionViewVertical.GetType().GetEvent("ValueChanged");
                 if (!object.ReferenceEquals(null, valueChangedEvent))
                 {
-                    var handlerInfo = GetType().GetMethod(nameof(properties_ValueChanged));
-                    var handler =
+                    System.Reflection.MethodInfo handlerInfo = GetType().GetMethod("properties_ValueChanged");
+                    System.Delegate handler =
                         System.Delegate.CreateDelegate(valueChangedEvent.EventHandlerType,this,handlerInfo);
                     valueChangedEvent.AddEventHandler(selectionViewVertical, handler);
                 }
             }
             
-            var propertiesExplorer = new PropertiesExplorer(treeView,selectionViewVertical,System.Windows.Controls.Orientation.Vertical);
+            PropertiesExplorer propertiesExplorer = new PropertiesExplorer(treeView,selectionViewVertical,System.Windows.Controls.Orientation.Vertical);
             System.Windows.FrameworkElement[] elements = { propertiesExplorer, selectionView };
             Elements = elements;
             gridLengths.Add(new System.Windows.GridLength(200));

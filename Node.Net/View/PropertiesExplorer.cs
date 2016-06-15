@@ -38,8 +38,8 @@
 
         void treeView_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
         {
-            var tvi = treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
-            if (!object.ReferenceEquals(null,tvi))
+            System.Windows.Controls.TreeViewItem tvi = treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
+            if(!object.ReferenceEquals(null,tvi))
             {
                 selectionView.DataContext = tvi.DataContext;
             }

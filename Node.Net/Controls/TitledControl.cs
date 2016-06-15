@@ -19,7 +19,7 @@ namespace Node.Net.Controls
         protected override void OnDataContextChanged()
         {
             Children.Clear();
-            Children.Add(new Label
+            Children.Add(new Label()
             {
                 Background = Brushes.LightGray,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
@@ -27,7 +27,7 @@ namespace Node.Net.Controls
                 Content = Collections.KeyValuePair.GetKey(DataContext)
             });
 
-            var element = (UIElement)Collections.KeyValuePair.GetValue(DataContext);
+            UIElement element = (UIElement)Collections.KeyValuePair.GetValue(DataContext);
             if (!object.ReferenceEquals(null, element))
             {
                 Children.Add(element);
@@ -39,7 +39,7 @@ namespace Node.Net.Controls
         {
             base.OnInitialized(e);
 
-            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition());
         }
     }

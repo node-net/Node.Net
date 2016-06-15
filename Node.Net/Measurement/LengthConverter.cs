@@ -10,7 +10,7 @@
 
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType)
         {
-            var length = value as Length;
+            Length length = value as Length;
             if (!object.ReferenceEquals(null, length))
             {
                 return length.ToString();

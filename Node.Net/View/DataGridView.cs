@@ -17,14 +17,14 @@
         {
             if (object.ReferenceEquals(null, dataGridView)) return;
 
-            var value = KeyValuePair.GetValue(DataContext);
-            var idictionary = value as System.Collections.IDictionary;
-            var ienumerable = value as System.Collections.IEnumerable;
-            if (object.ReferenceEquals(null,idictionary) && value.GetType() != typeof(string) &&
+            object value = KeyValuePair.GetValue(DataContext);
+            System.Collections.IDictionary idictionary = value as System.Collections.IDictionary;
+            System.Collections.IEnumerable ienumerable = value as System.Collections.IEnumerable;
+            if(object.ReferenceEquals(null,idictionary) && value.GetType() != typeof(string) &&
                !object.ReferenceEquals(null,ienumerable))
             {
-                var items = new System.Collections.Generic.List<object>();
-                foreach (object item in ienumerable){items.Add(item);}
+                System.Collections.Generic.List<object> items = new System.Collections.Generic.List<object>();
+                foreach(object item in ienumerable){items.Add(item);}
                 dataGridView.DataSource = items;
             }
             else
@@ -60,7 +60,7 @@
         {
             base.OnInitialized(e);
             dataGridView = new System.Windows.Forms.DataGridView();
-            host = new System.Windows.Forms.Integration.WindowsFormsHost { Child = dataGridView };
+            host = new System.Windows.Forms.Integration.WindowsFormsHost() { Child = dataGridView };
             this.Content = host;
             dataGridView.CellValueChanged += dataGridView_CellValueChanged;
             Update();

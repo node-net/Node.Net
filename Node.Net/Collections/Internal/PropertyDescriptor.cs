@@ -4,8 +4,8 @@
     {
         public static System.ComponentModel.PropertyDescriptor Get(System.Collections.IDictionary dictionary,object key,System.Attribute[] attributes)
         {
-            var value = dictionary[key];
-            if (!object.ReferenceEquals(null,value) && key.GetType() == typeof(string))
+            object value = dictionary[key];
+            if(!object.ReferenceEquals(null,value) && key.GetType() == typeof(string))
             {
                 if (value.GetType() == typeof(string)) return new PropertyDescriptor(dictionary,key.ToString(), attributes);
                 if (value.GetType().IsValueType) return new PropertyDescriptor(dictionary,key.ToString(), attributes);
@@ -25,7 +25,7 @@
         public override bool ShouldSerializeValue(object component) => false;
         public override void SetValue(object component, object value)
         {
-            var dictionary = component as System.Collections.IDictionary;
+            System.Collections.IDictionary dictionary = component as System.Collections.IDictionary;
             if (!object.ReferenceEquals(null, dictionary))
             {
                 dictionary[Name] = value;
@@ -35,7 +35,7 @@
 
         public override object GetValue(object component)
         {
-            var dictionary = component as System.Collections.IDictionary;
+            System.Collections.IDictionary dictionary = component as System.Collections.IDictionary;
             if (!object.ReferenceEquals(null, dictionary))
             {
                 return dictionary[Name];

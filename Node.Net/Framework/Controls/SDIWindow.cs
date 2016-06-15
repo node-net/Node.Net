@@ -23,9 +23,9 @@ namespace Node.Net.Framework.Controls
         private void initialize(string name, Type documentType, string openFileDialogFilter, FrameworkElement documentView)
         {
             Name = name;
-            sdiControl = new SDIControl
+            sdiControl = new SDIControl()
             {
-                Documents = new Framework.Documents
+                Documents = new Framework.Documents()
                 {
                     DefaultDocumentType = documentType,
                     OpenFileDialogFilter = openFileDialogFilter

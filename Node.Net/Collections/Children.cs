@@ -8,20 +8,20 @@
 
         public void Update()
         {
-            var children = new System.Collections.Generic.List<object>();
-            var idictionary = model as System.Collections.IDictionary;
+            System.Collections.Generic.List<object> children = new System.Collections.Generic.List<object>();
+            System.Collections.IDictionary idictionary = model as System.Collections.IDictionary;
             if (!object.ReferenceEquals(null, idictionary))
             {
                 foreach (object key in idictionary.Keys)
                 {
-                    var kvp
+                    System.Collections.Generic.KeyValuePair<object, object> kvp
                         = new System.Collections.Generic.KeyValuePair<object, object>(key, idictionary[key]);
                     children.Add(kvp);
                 }
             }
             else
             {
-                var ienumerable = model as System.Collections.IEnumerable;
+                System.Collections.IEnumerable ienumerable = model as System.Collections.IEnumerable;
                 if (!object.ReferenceEquals(null, ienumerable) && !typeof(string).IsAssignableFrom(model.GetType()))
                 {
                     foreach (object item in ienumerable) children.Add(item);

@@ -17,7 +17,7 @@ namespace Node.Net.Json.Internal
         public static string Write(object value, Style style = Style.Compact)
         {
 
-            var writer = new JsonWriter { Style = style };
+            JsonWriter writer = new JsonWriter() { Style = style };
             return writer.Write(value);
         }
 
@@ -30,21 +30,19 @@ namespace Node.Net.Json.Internal
         }
         public static void Write(Stream stream, object value, Style style = Style.Compact)
         {
-            var writer = new JsonWriter { Style = style };
+            JsonWriter writer = new JsonWriter() { Style = style };
             writer.Write(stream, value);
         }
 
         public string Write(object value)
         {
-            var memory = new MemoryStream();
-            var writer = new StreamWriter(memory);
+            MemoryStream memory = new MemoryStream();
+            StreamWriter writer = new StreamWriter(memory);
             Write(writer, value);
             writer.Flush();
             memory.Seek(0, SeekOrigin.Begin);
-            using (var reader = new StreamReader(memory))
-            {
-                return reader.ReadToEnd();
-            }
+            StreamReader reader = new StreamReader(memory);
+            return reader.ReadToEnd();
         }
 
 #if NET40
@@ -77,15 +75,15 @@ namespace Node.Net.Json.Internal
         }
 
 
-        private static void WriteNull(TextWriter writer)
+        private void WriteNull(TextWriter writer)
         {
             writer.Write("null");
         }
-        private static void WriteString(TextWriter writer, object value)
+        private void WriteString(TextWriter writer, object value)
         {
-            var svalue = value.ToString();
+            string svalue = value.ToString();
             // Escape '\' first
-            var escaped_value = svalue.Replace("\\", "\\u005c");
+            string escaped_value = svalue.Replace("\\", "\\u005c");
             // Escape '"'
             escaped_value = escaped_value.Replace("\"", "\\u0022");
             writer.Write($"\"{escaped_value}\"");
@@ -101,11 +99,11 @@ namespace Node.Net.Json.Internal
             }
             writer.Write($"\"{svalue}\"");*/
         }
-        private static void WriteBytes(TextWriter writer,byte[] bytes)
+        private void WriteBytes(TextWriter writer,byte[] bytes)
         {
             WriteString(writer, $"base64:{Convert.ToBase64String(bytes)}");
         }
-        private static void WriteValueType(TextWriter writer, object value)
+        private void WriteValueType(TextWriter writer, object value)
         {
             if (value.GetType() == typeof(bool)) writer.Write(value.ToString().ToLower());
             else writer.Write(value.ToString());
@@ -117,11 +115,11 @@ namespace Node.Net.Json.Internal
                 writer.Write(GetIndent());
             }
             writer.Write("[");
-            var enumerable = value as System.Collections.IEnumerable;
-            var writeCount = 0;
+            System.Collections.IEnumerable enumerable = value as System.Collections.IEnumerable;
+            int writeCount = 0;
             foreach (object item in enumerable)
             {
-                var skip = false;
+                bool skip = false;
                 if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
                 if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
@@ -144,7 +142,7 @@ namespace Node.Net.Json.Internal
             if (!AddTypeInfo) return;
             if (idictionary.GetType().IsGenericType)
             {
-                var generic_types = idictionary.GetType().GetGenericArguments();
+                Type[] generic_types = idictionary.GetType().GetGenericArguments();
                 if (generic_types.Length == 2)
                 {
                     if (!generic_types[0].IsAssignableFrom(typeof(string))) return;
@@ -157,18 +155,18 @@ namespace Node.Net.Json.Internal
         }
         private void WriteIDictionary(TextWriter writer, object value)
         {
-            var index = 0;
+            int index = 0;
             if (Style == Style.Indented) writer.Write(GetIndent());
             writer.Write("{");
             if (IndentString.Length > 0) writer.Write(System.Environment.NewLine);
             IndentLevel++;
 
-            var dictionary = value as System.Collections.IDictionary;
+            System.Collections.IDictionary dictionary = value as System.Collections.IDictionary;
             UpdateTypeInfo(dictionary);
             foreach (object key in dictionary.Keys)
             {
-                var item = dictionary[key];
-                var skip = false;
+                object item = dictionary[key];
+                bool skip = false;
                 if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
                 if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
@@ -203,26 +201,24 @@ namespace Node.Net.Json.Internal
         private string IndentString = "";
         private string GetIndent()
         {
-            var indent = "";
-            var builder = new System.Text.StringBuilder();
-            builder.Append(indent);
+            string indent = "";
             for (uint i = 0; i < IndentLevel; ++i)
             {
-                builder.Append(IndentString);
+                indent = indent + IndentString;
             }
-            indent = builder.ToString();
             return indent;
         }
 
         private static string EscapeDoubleQuotes(string input)
         {
-            var result = input;
+            string result = input;
             if (input.Contains("\""))
             {
-                var builder = new System.Text.StringBuilder();
-                var lastChar = 'a';
-                foreach (var ch in input)
+                System.Text.StringBuilder builder = new System.Text.StringBuilder();
+                char lastChar = 'a';
+                for (int i = 0; i < input.Length; ++i)
                 {
+                    char ch = input[i];
                     if (ch == '"')
                     {
                         builder.Append('\\');

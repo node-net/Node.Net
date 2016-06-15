@@ -13,17 +13,17 @@ namespace Node.Net.View
         }
         public void Update()
         {
-            var text =  "";
-            var dictionary = Node.Net.View.KeyValuePair.GetValue(DataContext)
+            string text =  "";
+            System.Collections.IDictionary dictionary = Node.Net.View.KeyValuePair.GetValue(DataContext)
                 as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null,dictionary))
+            if(!object.ReferenceEquals(null,dictionary))
             {
                 using(System.IO.MemoryStream memory = new System.IO.MemoryStream())
                 {
                     Node.Net.Json.Writer.Write(dictionary,memory);
                     memory.Flush();
                     memory.Seek(0,System.IO.SeekOrigin.Begin);
-                    var sr = new System.IO.StreamReader(memory);
+                    System.IO.StreamReader sr = new System.IO.StreamReader(memory);
                     text = sr.ReadToEnd();
                 }
             }

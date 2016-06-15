@@ -19,12 +19,12 @@ namespace Node.Net.Transformers
         public Brush Transform(string name)
         {
             if (NamedBrushes.ContainsKey(name)) return NamedBrushes[name];
-            var words = name.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            var color_transformer = new ColorTransformer();
+            string[] words = name.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            ColorTransformer color_transformer = new ColorTransformer();
             return new SolidColorBrush((Color)color_transformer.Transform(name));
         }
 
-        public static Brush Transform(IDictionary dictionary)
+        public Brush Transform(IDictionary dictionary)
         {
             return null;
         }

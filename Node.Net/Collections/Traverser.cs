@@ -130,7 +130,7 @@
         public static void Update(object value)
         {
             System.Type[] types = { typeof(bool) };
-            var updateMethod = value.GetType().GetMethod(nameof(Update), types);
+            var updateMethod = value.GetType().GetMethod("Update", types);
             if(!object.ReferenceEquals(null,updateMethod))
             {
                 object[] parameters = { false };
@@ -179,7 +179,7 @@
                         foreach (object item in ienumerable)
                         {
                             var itemValue = Collections.KeyValuePair.GetValue(item);
-                            var documentProperty = itemValue.GetType().GetProperty(nameof(Document));
+                            var documentProperty = itemValue.GetType().GetProperty("Document");
                             if(!object.ReferenceEquals(null,documentProperty) && documentProperty.CanWrite)
                             {
                                 documentProperty.SetValue(itemValue, document, null);

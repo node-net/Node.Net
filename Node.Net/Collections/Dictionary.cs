@@ -30,34 +30,33 @@ namespace Node.Net.Collections
         public void Open(Stream stream)
         {
             Clear();
-            var reader = new Json.Reader();
-            var dictionary = (IDictionary)reader.Read(stream);
+            Json.Reader reader = new Json.Reader();
+            IDictionary dictionary = (IDictionary)reader.Read(stream);
             Collections.Copier.Copy(dictionary, this);
         }
 
         #region ICustomTypeDescriptor interface
         public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
         {
-            var alist = new List<Attribute>(attributes);
+            List<Attribute> alist = new List<Attribute>(attributes);
             alist.Add(new ReadOnlyAttribute(true));
 
-            var descriptors =
+            System.Collections.Generic.List<PropertyDescriptor> descriptors =
                 new System.Collections.Generic.List<PropertyDescriptor>();
-            foreach (string key in Keys)
+            foreach(string key in Keys)
             {
-                var value = this[key];
-                if (!object.ReferenceEquals(null, value))
+                object value = this[key];
+                if(!object.ReferenceEquals(null, value))
                 {
                     if (value.GetType() == typeof(string)||
                         value.GetType() == typeof(double) ||
                         value.GetType() == typeof(long) ||
                         value.GetType() == typeof(bool))
                     {
-                        var pd
-                            = new ReadOnlyIDictionaryPropertyDescriptor(key, alist.ToArray())
-                            {
-                                IDictionary = this
-                            };
+
+                        ReadOnlyIDictionaryPropertyDescriptor pd 
+                            = new ReadOnlyIDictionaryPropertyDescriptor(key, alist.ToArray());
+                        pd.IDictionary = this;
                         descriptors.Add(pd);
                     }
                 }

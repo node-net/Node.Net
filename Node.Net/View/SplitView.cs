@@ -42,11 +42,11 @@ namespace Node.Net.View
                     case Orientation.Vertical:
                         {
                             if (elementASize < 0) RowDefinitions.Add(new RowDefinition());
-                            else RowDefinitions.Add(new RowDefinition { Height = new GridLength(elementASize) });
-                            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                            else RowDefinitions.Add(new RowDefinition() { Height = new GridLength(elementASize) });
+                            RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                             RowDefinitions.Add(new RowDefinition());
                             Children.Add(ElementA);
-                            gridSplitter = new GridSplitter
+                            gridSplitter = new GridSplitter()
                             {
                                 HorizontalAlignment = HorizontalAlignment.Stretch,
                                 VerticalAlignment = VerticalAlignment.Center,
@@ -62,11 +62,11 @@ namespace Node.Net.View
                     default:
                         {
                             if (elementASize < 0) ColumnDefinitions.Add(new ColumnDefinition());
-                            else ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(elementASize) });
-                            ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                            else ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(elementASize) });
+                            ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
                             ColumnDefinitions.Add(new ColumnDefinition());
                             Children.Add(ElementA);
-                            gridSplitter = new GridSplitter
+                            gridSplitter = new GridSplitter()
                             {
                                 HorizontalAlignment = HorizontalAlignment.Center,
                                 VerticalAlignment = VerticalAlignment.Stretch,
@@ -87,7 +87,7 @@ namespace Node.Net.View
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            gridSplitter = new GridSplitter
+            gridSplitter = new GridSplitter()
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Stretch,
@@ -98,11 +98,11 @@ namespace Node.Net.View
 
             if(object.ReferenceEquals(null,elementA))
             {
-                elementA = new Label { Content = nameof(ElementA) };
+                elementA = new Label() { Content = "ElementA" };
             }
             if(object.ReferenceEquals(null, elementB))
             {
-                elementB = new Label { Content = nameof(ElementB) };
+                elementB = new Label() { Content = "ElementB" };
             }
 
             OnDataContextChanged();

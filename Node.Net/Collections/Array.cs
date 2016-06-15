@@ -14,9 +14,9 @@ namespace Node.Net.Collections
         public Array() { }
         public Array(string json)
         {
-            var reader = new Json.Reader();
-            var list = (IList)reader.Read(json);
-            foreach (object item in list)
+            Json.Reader reader = new Json.Reader();
+            IList list = (IList)reader.Read(json);
+            foreach(object item in list)
             {
                 Add(item);
             }
@@ -36,16 +36,16 @@ namespace Node.Net.Collections
             if (object.ReferenceEquals(this, value)) return 0;
             if (object.ReferenceEquals(null, value)) return 1;
 
-            var thisHash = GetHashCode();
-            var thatHash = Hash.GetHashCode(value);
+            int thisHash = GetHashCode();
+            int thatHash = Hash.GetHashCode(value);
             return GetHashCode().CompareTo(Hash.GetHashCode(value));
         }
 
         public void Open(Stream stream)
         {
-            var reader = new Json.Reader();
+            Json.Reader reader = new Json.Reader();
             Clear();
-            var list = (IList)reader.Read(stream);
+            IList list = (IList)reader.Read(stream);
             foreach (object item in list)
             {
                 Add(item);

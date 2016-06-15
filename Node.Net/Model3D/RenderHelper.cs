@@ -7,35 +7,35 @@ namespace Node.Net.Model3D
     {
         public static Point3D GetRotationOTSDegrees(IDictionary value)
         {
-            var rotationOTS = new Point3D();
+            Point3D rotationOTS = new Point3D();
             if (value.Contains("RotationZ"))
             {
-                var rotationZ_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationZ");
+                double rotationZ_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationZ");
                 rotationOTS.X = rotationZ_degrees;
             }
             if (value.Contains("Orientation"))
             {
-                var rotationZ_degrees = Measurement.Angle.GetRotationDegrees(value, "Orientation");
+                double rotationZ_degrees = Measurement.Angle.GetRotationDegrees(value, "Orientation");
                 rotationOTS.X = rotationZ_degrees;
             }
             if (value.Contains("RotationY"))
             {
-                var rotationY_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationY");
+                double rotationY_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationY");
                 rotationOTS.Y = rotationY_degrees;
             }
             if (value.Contains("Tilt"))
             {
-                var rotationY_degrees = Measurement.Angle.GetRotationDegrees(value, "Tilt");
+                double rotationY_degrees = Measurement.Angle.GetRotationDegrees(value, "Tilt");
                 rotationOTS.Y = rotationY_degrees;
             }
             if (value.Contains("RotationX"))
             {
-                var rotationX_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationX");
+                double rotationX_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationX");
                 rotationOTS.Z = rotationX_degrees;
             }
             if (value.Contains("Spin"))
             {
-                var rotationX_degrees = Measurement.Angle.GetRotationDegrees(value, "Spin");
+                double rotationX_degrees = Measurement.Angle.GetRotationDegrees(value, "Spin");
                 rotationOTS.Z = rotationX_degrees;
             }
 
@@ -43,8 +43,8 @@ namespace Node.Net.Model3D
         }
         public static Vector3D GetTranslationMeters(object value)
         {
-            var translation = new Vector3D();
-            var dictionary = value as IDictionary;
+            Vector3D translation = new Vector3D();
+            IDictionary dictionary = value as IDictionary;
             if (!ReferenceEquals(null, dictionary))
             {
                 if (dictionary.Contains("X"))
@@ -64,8 +64,8 @@ namespace Node.Net.Model3D
         }
         public static Vector3D GetScaleMeters(object value)
         {
-            var scale = new Vector3D(1, 1, 1);
-            var dictionary = value as IDictionary;
+            Vector3D scale = new Vector3D(1, 1, 1);
+            IDictionary dictionary = value as IDictionary;
             if (!ReferenceEquals(null, dictionary))
             {
                 if (dictionary.Contains("ScaleX"))
@@ -97,42 +97,42 @@ namespace Node.Net.Model3D
         }
         public static RotateTransform3D GetRotateTransform3D(System.Collections.IDictionary value)
         {
-            var rotationZ = new Quaternion();
-            var rotationY = new Quaternion();
-            var rotationX = new Quaternion();
-            var rotation = new QuaternionRotation3D();
+            Quaternion rotationZ = new Quaternion();
+            Quaternion rotationY = new Quaternion();
+            Quaternion rotationX = new Quaternion();
+            QuaternionRotation3D rotation = new QuaternionRotation3D();
             if (value.Contains("RotationZ"))
             {
-                var rotationZ_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationZ");
+                double rotationZ_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationZ");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
             if (value.Contains("Orientation"))
             {
-                var rotationZ_degrees = Measurement.Angle.GetRotationDegrees(value, "Orientation");
+                double rotationZ_degrees = Measurement.Angle.GetRotationDegrees(value, "Orientation");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
             if (value.Contains("RotationY"))
             {
-                var rotationY_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationY");
+                double rotationY_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationY");
                 rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("Tilt"))
             {
-                var rotationY_degrees = Measurement.Angle.GetRotationDegrees(value, "Tilt");
+                double rotationY_degrees = Measurement.Angle.GetRotationDegrees(value, "Tilt");
                 rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
             }
             if (value.Contains("RotationX"))
             {
-                var rotationX_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationX");
+                double rotationX_degrees = Measurement.Angle.GetRotationDegrees(value, "RotationX");
                 rotationX = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
             }
             if (value.Contains("Spin"))
             {
-                var rotationX_degrees = Measurement.Angle.GetRotationDegrees(value, "Spin");
+                double rotationX_degrees = Measurement.Angle.GetRotationDegrees(value, "Spin");
                 rotationX = new Quaternion(new Vector3D(0, 1, 0), rotationX_degrees);
             }
 
-            var total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
+            Quaternion total_rotation = Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
             return new RotateTransform3D(new QuaternionRotation3D(total_rotation));
         }
     }

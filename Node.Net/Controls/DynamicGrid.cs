@@ -35,19 +35,19 @@ namespace Node.Net.Controls
             RowDefinitions.Clear();
 
             AddColumnHeaders();
-            var items = Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
-            if (!object.ReferenceEquals(null, items))
+            IDictionary items = Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
+            if(!object.ReferenceEquals(null, items))
             {
-                var row = 1;
+                int row = 1;
                 foreach (string name in items.Keys)
                 {
-                    var item = items[name] as IDictionary;
+                    IDictionary item = items[name] as IDictionary;
                     if (!object.ReferenceEquals(null, item))
                     {
-                        RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                        RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                         for (int c = 0; c < columnNames.Count; ++c)
                         {
-                            var element = GetUIElement(name, item, ColumnNames[c]);
+                            UIElement element = GetUIElement(name, item, ColumnNames[c]);
                             Children.Add(element);
                             Grid.SetRow(element, row);
                             Grid.SetColumn(element, c);
@@ -60,7 +60,7 @@ namespace Node.Net.Controls
 
         protected UIElement GetUIElement(string name, IDictionary value, string key)
         {
-            var svalue = "";
+            string svalue = "";
             if (value.Contains(key))
             {
                 svalue = value[key].ToString();
@@ -73,14 +73,14 @@ namespace Node.Net.Controls
                 }
                 else
                 {
-                    var propertyInfo = GetType().GetProperty(key);
-                    if (!object.ReferenceEquals(null,propertyInfo))
+                    PropertyInfo propertyInfo = GetType().GetProperty(key);
+                    if(!object.ReferenceEquals(null,propertyInfo))
                     {
                         svalue = propertyInfo.GetValue(this).ToString();
                     }
                 }
             }
-            return new Label
+            return new Label()
             {
                 Content = svalue,
                 HorizontalAlignment = HorizontalAlignment.Right
@@ -89,10 +89,10 @@ namespace Node.Net.Controls
 
         private void AddColumnHeaders()
         {
-            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             for (int i = 0; i < columnNames.Count; ++i)
             {
-                var label = new Label
+                Label label = new Label()
                 {
                     Content = columnNames[i],
                     FontWeight = FontWeights.Bold,

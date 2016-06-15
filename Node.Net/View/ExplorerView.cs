@@ -26,8 +26,8 @@ namespace Node.Net.View
         {
             base.OnInitialized(e);
 
-            verticalSplitView = new SplitView { Orientation = Orientation.Vertical };
-            horizontalSplitView = new SplitView
+            verticalSplitView = new SplitView() { Orientation = Orientation.Vertical };
+            horizontalSplitView = new SplitView()
             {
                 Orientation = Orientation.Horizontal,
                 ElementA = verticalSplitView,
@@ -83,8 +83,8 @@ namespace Node.Net.View
 
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            var tvi = treeView.SelectedItem as TreeViewItem;
-            if (!object.ReferenceEquals(null, tvi))
+            TreeViewItem tvi = treeView.SelectedItem as TreeViewItem;
+            if(!object.ReferenceEquals(null, tvi))
             {
                 PropertyControl.DataContext = tvi.DataContext;
             }
@@ -115,7 +115,7 @@ namespace Node.Net.View
             MenuItem viewMenuItem = null;
             if (!object.ReferenceEquals(null, ContentView))
             {
-                var method = ContentView.GetType().GetMethod(nameof(GetViewMenuItem));
+                MethodInfo method = ContentView.GetType().GetMethod("GetViewMenuItem");
                 if (!object.ReferenceEquals(null, method))
                 {
                     viewMenuItem = method.Invoke(ContentView, null) as MenuItem;

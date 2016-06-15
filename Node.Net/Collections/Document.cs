@@ -30,7 +30,7 @@ namespace Node.Net.Collections
         public override void Open(System.IO.Stream stream)
         {
             Clear();
-            var dictionary = (IDictionary)GetReader().Read(stream);
+            IDictionary dictionary = (IDictionary)GetReader().Read(stream);
             Collections.Copier.Copy(dictionary, this);
             Update();
         }

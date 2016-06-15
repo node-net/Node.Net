@@ -10,7 +10,7 @@ namespace Node.Net.Controls
 {
     public class Selector : Grid
     {
-        private string _title = nameof(Selector);
+        private string _title = "Selector";
         private object _items = null;
         public Selector(string title, object items)
         {
@@ -31,11 +31,11 @@ namespace Node.Net.Controls
         {
             base.OnInitialized(e);
 
-            ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-            ColumnDefinitions.Add(new ColumnDefinition { Width=GridLength.Auto});
+            ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            ColumnDefinitions.Add(new ColumnDefinition() { Width=GridLength.Auto});
             ColumnDefinitions.Add(new ColumnDefinition());
 
-            Children.Add(new Label { Content = _title });
+            Children.Add(new Label() { Content = _title });
             _comboBox = new ComboBox();
             _comboBox.SelectionChanged += _comboBox_SelectionChanged;
             Children.Add(_comboBox);
@@ -45,9 +45,9 @@ namespace Node.Net.Controls
 
         private void _comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectionChanged!=null)
+            if (!object.ReferenceEquals(null, SelectionChanged))
             {
-                var cbi = _comboBox.SelectedItem as ComboBoxItem;
+                ComboBoxItem cbi = _comboBox.SelectedItem as ComboBoxItem;
                 SelectionChanged(cbi.DataContext);
             }
         }
@@ -57,12 +57,12 @@ namespace Node.Net.Controls
             if (!object.ReferenceEquals(null, _comboBox))
             {
                 _comboBox.Items.Clear();
-                var dictionary = _items as IDictionary;
+                IDictionary dictionary = _items as IDictionary;
                 if (!object.ReferenceEquals(null, dictionary))
                 {
                     foreach (string key in dictionary.Keys)
                     {
-                        _comboBox.Items.Add(new ComboBoxItem { Content = key, DataContext = dictionary[key] });
+                        _comboBox.Items.Add(new ComboBoxItem() { Content = key, DataContext = dictionary[key] });
                     }
                     if (object.ReferenceEquals(null, _comboBox.SelectedItem) && _comboBox.Items.Count > 0)
                     {

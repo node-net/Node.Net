@@ -54,7 +54,7 @@ namespace Node.Net.View
                 }
             }
             Content = GetContent();
-            var element = Content as System.Windows.FrameworkElement;
+            System.Windows.FrameworkElement element = Content as System.Windows.FrameworkElement;
             if (!object.ReferenceEquals(null, element)) element.DataContext = DataContext;
         }
 

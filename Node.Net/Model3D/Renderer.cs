@@ -10,7 +10,7 @@ namespace Node.Net.Model3D
     {
         public Renderer()
         {
-            Model3DKeys.Add(nameof(Model3D));
+            Model3DKeys.Add("Model3D");
             Model3DKeys.Add("Type");
         }
 

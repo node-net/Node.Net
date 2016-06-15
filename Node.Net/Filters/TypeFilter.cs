@@ -14,12 +14,12 @@ namespace Node.Net.Filters
         public List<string> TypePatterns = new List<string>();
         public bool Include(object value)
         {
-            var dictionary = value as IDictionary;
+            IDictionary dictionary = value as IDictionary;
             if (!object.ReferenceEquals(null, dictionary))
             {
                 if (dictionary.Contains("Type"))
                 {
-                    var stype = dictionary["Type"].ToString();
+                    string stype = dictionary["Type"].ToString();
                     foreach (string v in TypeValues)
                     {
                         if (stype == v) return true;

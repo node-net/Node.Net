@@ -24,10 +24,10 @@ namespace Node.Net.View
         private void update()
         {
             Text = "";
-            var ienumerable = Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
+            IEnumerable ienumerable = Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
             if (!object.ReferenceEquals(null, ienumerable))
             {
-                var sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 foreach (object item in ienumerable)
                 {
                     sb.AppendLine(item.ToString());

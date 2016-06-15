@@ -33,14 +33,14 @@
 
         public int Execute()
         {
-            var entry = new System.Threading.ThreadStart(this.ExecutionThread);
-            var thread = new System.Threading.Thread(entry);
+            System.Threading.ThreadStart entry = new System.Threading.ThreadStart(this.ExecutionThread);
+            System.Threading.Thread thread = new System.Threading.Thread(entry);
             thread.Start();
 
             if (command.Timeout > 0)
             {
-                var timeout = new System.TimeSpan(0, 0, 0, 0, command.Timeout);
-                if (autoEvent.WaitOne(timeout,false))
+                System.TimeSpan timeout = new System.TimeSpan(0, 0, 0, 0, command.Timeout);
+                if(autoEvent.WaitOne(timeout,false))
                 {
                     #if NET35
                     autoEvent=null;
@@ -75,16 +75,16 @@
 
         private static void KillProcessAndChildren(int pid)
         {
-            var searcher = new System.Management.ManagementObjectSearcher
+            System.Management.ManagementObjectSearcher searcher = new System.Management.ManagementObjectSearcher
               ("Select * From Win32_Process Where ParentProcessID=" + pid);
-            var moc = searcher.Get();
+            System.Management.ManagementObjectCollection moc = searcher.Get();
             foreach (System.Management.ManagementObject mo in moc)
             {
                 KillProcessAndChildren(System.Convert.ToInt32(mo["ProcessID"]));
             }
             try
             {
-                var proc = System.Diagnostics.Process.GetProcessById(pid);
+                System.Diagnostics.Process proc = System.Diagnostics.Process.GetProcessById(pid);
                 proc.Kill();
             }
             catch (System.ArgumentException)
@@ -96,7 +96,7 @@
         public void ExecutionThread()
         {
             command.StartTime = System.DateTime.Now;
-            var process = new System.Diagnostics.Process();
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;

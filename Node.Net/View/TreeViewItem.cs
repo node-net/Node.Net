@@ -59,21 +59,21 @@
         private void Update(int childDepth=1)
         {
             Header = GetHeader();
-            var children = GetChildren();
+            System.Collections.IList children = GetChildren();
             if (children.Count == 0) Items.Clear();
             else
             {
                 Items.Clear();
                 if (childDepth == 0)
                 {
-                    Items.Add(new System.Windows.Controls.TreeViewItem { Header = "dummy" });
+                    Items.Add(new System.Windows.Controls.TreeViewItem() { Header = "dummy" });
                 }
                 else
                 {
                     foreach (object item in children)
                     {
                         object[] args = {item,childDepth-1};
-                        var tvi = (TreeViewItem)System.Activator.CreateInstance(GetType(), args);
+                        TreeViewItem tvi = (TreeViewItem)System.Activator.CreateInstance(GetType(), args);
                         Items.Add(tvi);
                     }
                 }
@@ -88,14 +88,14 @@
             if (headerString.Length > 0) return headerString;
             if (DataContext.GetType() == typeof(System.Collections.Generic.KeyValuePair<string, dynamic>))
             {
-                var kvp = (System.Collections.Generic.KeyValuePair<string, dynamic>)DataContext;
+                System.Collections.Generic.KeyValuePair<string, dynamic> kvp = (System.Collections.Generic.KeyValuePair<string, dynamic>)DataContext;
                 if (!object.ReferenceEquals(null, kvp))
                 {
                     return kvp.Key;
                 }
             }
-            var nameInfo = Node.Net.View.KeyValuePair.GetValue(DataContext).GetType().GetProperty("Name");
-            if (!object.ReferenceEquals(null,nameInfo))
+            System.Reflection.PropertyInfo nameInfo = Node.Net.View.KeyValuePair.GetValue(DataContext).GetType().GetProperty("Name");
+            if(!object.ReferenceEquals(null,nameInfo))
             {
                 return nameInfo.GetValue(Node.Net.View.KeyValuePair.GetValue(DataContext),null).ToString();
             }
@@ -105,7 +105,7 @@
         public static bool IsValidChild(object item)
         {
             if (object.ReferenceEquals(null, item)) return false;
-            var value = KeyValuePair.GetValue(item);
+            object value = KeyValuePair.GetValue(item);
             if (object.ReferenceEquals(null, value)) return false;
             if (typeof(string).IsAssignableFrom(value.GetType())) return false;
             if (value.GetType().IsValueType) return false;
@@ -113,14 +113,14 @@
         }
         public static System.Collections.IList GetChildren(object item)
         {
-            var value = KeyValuePair.GetValue(item);
-            var children = new System.Collections.Generic.List<object>();
+            object value = KeyValuePair.GetValue(item);
+            System.Collections.Generic.List<object> children = new System.Collections.Generic.List<object>();
             if (object.ReferenceEquals(null, value)) return children;
             if (typeof(string).IsAssignableFrom(value.GetType())) return children;
             if (value.GetType().IsValueType) return children;
             if (!typeof(string).IsAssignableFrom(value.GetType()))
             {
-                var ienumerable = value as System.Collections.IEnumerable;
+                System.Collections.IEnumerable ienumerable = value as System.Collections.IEnumerable;
                 if (!object.ReferenceEquals(null, ienumerable))
                 {
                     foreach (object i in ienumerable)

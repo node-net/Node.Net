@@ -18,8 +18,8 @@ namespace Node.Net
                 if (object.ReferenceEquals(null, _typeTransformers))
                 {
                     _typeTransformers = new Dictionary<Type, ITypeTransformer>();
-                    _typeTransformers.Add(typeof(Color), new Transformers.ColorTransformer { Transformer = this });
-                    _typeTransformers.Add(typeof(Brush), new Transformers.BrushTransformer { Transformer = this });
+                    _typeTransformers.Add(typeof(Color), new Transformers.ColorTransformer() { Transformer = this });
+                    _typeTransformers.Add(typeof(Brush), new Transformers.BrushTransformer() { Transformer = this });
                 }
                 return _typeTransformers;
             }

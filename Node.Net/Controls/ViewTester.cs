@@ -11,7 +11,7 @@ namespace Node.Net.Controls
     {
         public static void ShowDialog(object models, FrameworkElement view)
         {
-            var window = new System.Windows.Window
+            System.Windows.Window window = new System.Windows.Window()
             {
                 Title = GetTitle(view),
                 Content = new ViewTester(models, view),
@@ -20,9 +20,9 @@ namespace Node.Net.Controls
             window.ShowDialog();
         }
 
-        public static void ShowDialog(object models, FrameworkElement[] views,string title= nameof(ViewTester))
+        public static void ShowDialog(object models, FrameworkElement[] views,string title="ViewTester")
         {
-            var window = new System.Windows.Window
+            System.Windows.Window window = new System.Windows.Window()
             {
                 Title = title,
                 Content = GetGrid(models,views),
@@ -33,15 +33,15 @@ namespace Node.Net.Controls
 
         public static Grid GetGrid(object models,FrameworkElement[] views)
         {
-            var grid = new Grid();
+            Grid grid = new Grid();
 
-            var modelsDictionary = models as IDictionary;
+            IDictionary modelsDictionary = models as IDictionary;
             if (object.ReferenceEquals(null, modelsDictionary)) return grid;
 
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.Children.Add(new Label { Content = nameof(Model), Background = Brushes.LightGray });
-            var viewLabel = new Label { Content = nameof(View), Background = Brushes.LightGray};
+            grid.Children.Add(new Label() { Content = "Model", Background = Brushes.LightGray });
+            Label viewLabel = new Label() { Content = "View", Background = Brushes.LightGray};
             grid.Children.Add(viewLabel);
             Grid.SetColumn(viewLabel, 1);
 
@@ -49,8 +49,8 @@ namespace Node.Net.Controls
             {
                 foreach(FrameworkElement view in views)
                 {
-                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                    var modelLabel = new Label { Content = key };
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                    Label modelLabel = new Label() { Content = key };
                     grid.Children.Add(modelLabel);
                    // Grid.SetRow(modelLabel,)
                 }
@@ -59,7 +59,7 @@ namespace Node.Net.Controls
         }
         private static string GetTitle(FrameworkElement frameworkelement)
         {
-            var titleInfo = frameworkelement.GetType().GetProperty(nameof(Title));
+            PropertyInfo titleInfo = frameworkelement.GetType().GetProperty("Title");
             if (!object.ReferenceEquals(null, titleInfo))
             {
                 return titleInfo.GetValue(frameworkelement).ToString();
@@ -94,7 +94,7 @@ namespace Node.Net.Controls
         {
             base.OnInitialized(e);
 
-            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition());
 
             _selector = new Selector("Models", _models);

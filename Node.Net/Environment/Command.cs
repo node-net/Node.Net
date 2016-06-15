@@ -9,21 +9,21 @@
     {
         public static Command Execute(string cmd, int timeout)
         {
-            var command = new Command(cmd, timeout);
+            Command command = new Command(cmd, timeout);
             command.Execute();
             return command;
         }
         public static Command Execute(string cmd,string workingDirectory,int timeout)
         {
-            var command = new Command(cmd, workingDirectory, timeout);
+            Command command = new Command(cmd, workingDirectory, timeout);
             command.Execute();
             return command;
         }
-        public Command() { StartTime = System.DateTime.Now; this["Type"] = nameof(Command); }
-        public Command(string cmd) { StartTime = System.DateTime.Now; this["Type"] = nameof(Command); this[nameof(Name)] = cmd; }
-        public Command(string cmd, string workingDirectory) { StartTime = System.DateTime.Now; this["Type"] = nameof(Command); this[nameof(Name)] = cmd; Directory = workingDirectory; }
-        public Command(string cmd, string workingDirectory, int timeout) { StartTime = System.DateTime.Now; this["Type"] = nameof(Command); this[nameof(Name)] = cmd; Directory = workingDirectory; Timeout = timeout; }
-        public Command(string cmd, int timeout) { StartTime = System.DateTime.Now; this["Type"] = nameof(Command); this[nameof(Name)] = cmd; Timeout = timeout; }
+        public Command() { StartTime = System.DateTime.Now; this["Type"] = "Command"; }
+        public Command(string cmd) { StartTime = System.DateTime.Now; this["Type"] = "Command"; this["Name"] = cmd; }
+        public Command(string cmd, string workingDirectory) { StartTime = System.DateTime.Now; this["Type"] = "Command"; this["Name"] = cmd; Directory = workingDirectory; }
+        public Command(string cmd, string workingDirectory, int timeout) { StartTime = System.DateTime.Now; this["Type"] = "Command"; this["Name"] = cmd; Directory = workingDirectory; Timeout = timeout; }
+        public Command(string cmd, int timeout) { StartTime = System.DateTime.Now; this["Type"] = "Command"; this["Name"] = cmd; Timeout = timeout; }
 
         private Command(System.Runtime.Serialization.SerializationInfo info,System.Runtime.Serialization.StreamingContext context) : base(info,context)
         {
@@ -31,8 +31,8 @@
 
         public string Name
         {
-            get { return getString(nameof(Name));}
-            private set { this[nameof(Name)] = value; }
+            get { return getString("Name");}
+            private set { this["Name"] = value; }
         }
 
         private string getString(string key) => ContainsKey(key) ? this[key].ToString() : "";
@@ -41,11 +41,11 @@
         {
             get 
             {
-                if(!ContainsKey(nameof(FileName)))
+                if(!ContainsKey("FileName"))
                 {
-                    this[nameof(FileName)] = GetFileName(Name);
+                    this["FileName"] = GetFileName(Name);
                 }
-                return getString(nameof(FileName));
+                return getString("FileName");
             }
         }
 
@@ -53,11 +53,11 @@
         {
             get
             {
-                return getString(nameof(Directory));
+                return getString("Directory");
             }
             set
             {
-                this[nameof(Directory)] = value;
+                this["Directory"] = value;
             }
         }
 
@@ -65,12 +65,12 @@
         {
             get
             {
-                if (ContainsKey(nameof(Timeout))) return (int)(double)this[nameof(Timeout)];
+                if (ContainsKey("Timeout")) return (int)(double)this["Timeout"];
                 return 0;
             }
             set
             {
-                this[nameof(Timeout)] = (double)value;
+                this["Timeout"] = (double)value;
             }
         }
 
@@ -88,7 +88,7 @@
         {
             get
             {
-                if (!ContainsKey(nameof(EndTime))) return false;
+                if (!ContainsKey("EndTime")) return false;
                 return true;
             }
         }
@@ -96,12 +96,12 @@
         {
             get
             {
-                if (ContainsKey(nameof(ExitCode))) return (int)(double)this[nameof(ExitCode)];
+                if (ContainsKey("ExitCode")) return (int)(double)this["ExitCode"];
                 return 0;
             }
             set
             {
-                this[nameof(ExitCode)] = (double)value;
+                this["ExitCode"] = (double)value;
             }
         }
 
@@ -109,28 +109,28 @@
         {
             get
             {
-                if (ContainsKey(nameof(User))) return this[nameof(User)].ToString();
+                if (ContainsKey("User")) return this["User"].ToString();
                 return System.Environment.UserName;
             }
-            set { this[nameof(User)] = value; }
+            set { this["User"] = value; }
         }
 
         public string Machine
         {
             get
             {
-                if (ContainsKey(nameof(Machine))) return this[nameof(Machine)].ToString();
+                if (ContainsKey("Machine")) return this["Machine"].ToString();
                 return System.Environment.MachineName;
             }
-            set { this[nameof(Machine)] = value; }
+            set { this["Machine"] = value; }
         }
 
         public string Arguments
         {
             get
             {
-                var name = Name.Trim();
-                var parts = name.Split(' ');
+                string name = Name.Trim();
+                string[] parts = name.Split(' ');
                 return name.Substring(parts[0].Length).Trim();
             }
         }
@@ -139,16 +139,16 @@
         {
             get
             {
-                if (ContainsKey(nameof(StartTime)))
+                if (ContainsKey("StartTime"))
                 {
-                    return System.DateTime.Parse(this[nameof(StartTime)].ToString());
+                    return System.DateTime.Parse(this["StartTime"].ToString());
                 }
-                this[nameof(StartTime)] = System.DateTime.Now.ToString("o");
-                return System.DateTime.Parse(this[nameof(StartTime)].ToString());
+                this["StartTime"] = System.DateTime.Now.ToString("o");
+                return System.DateTime.Parse(this["StartTime"].ToString());
             }
             set
             {
-                this[nameof(StartTime)] = value.ToString("o");
+                this["StartTime"] = value.ToString("o");
             }
         }
 
@@ -156,16 +156,16 @@
         {
             get
             {
-                if(ContainsKey(nameof(EndTime)))
+                if(ContainsKey("EndTime"))
                 {
-                    return System.DateTime.Parse(this[nameof(EndTime)].ToString());
+                    return System.DateTime.Parse(this["EndTime"].ToString());
                 }
-                this[nameof(EndTime)] = System.DateTime.Now.ToString("o");
-                return System.DateTime.Parse(this[nameof(EndTime)].ToString());
+                this["EndTime"] = System.DateTime.Now.ToString("o");
+                return System.DateTime.Parse(this["EndTime"].ToString());
             }
             set
             {
-                this[nameof(EndTime)] = value.ToString("o");
+                this["EndTime"] = value.ToString("o");
             }
         }
 
@@ -175,12 +175,12 @@
         {
             get
             {
-                if (ContainsKey(nameof(Output))) return this[nameof(Output)].ToString();
+                if (ContainsKey("Output")) return this["Output"].ToString();
                 return "";
             }
             set
             {
-                this[nameof(Output)] = value;
+                this["Output"] = value;
             }
         }
 
@@ -197,30 +197,30 @@
         {
             get
             {
-                if (ContainsKey(nameof(Error))) return this[nameof(Error)].ToString();
+                if (ContainsKey("Error")) return this["Error"].ToString();
                 return "";
             }
             set
             {
-                this[nameof(Error)] = value;
+                this["Error"] = value;
             }
         }
 
         public static string GetFileName(string command)
         {
-            var target = command;
-
-            var parts = command.Split(' ');
+            string target = command;
+            
+            string[] parts = command.Split(' ');
             if (parts.Length > 1) target = parts[0];
 
-            var fname = target + ".exe";
+            string fname = target + ".exe";
             if (System.IO.File.Exists(fname)) return fname;
 
             fname = target + ".bat";
             if (System.IO.File.Exists(fname)) return fname;
 
             // search path
-            var allpaths = System.Environment.GetEnvironmentVariable("PATH").Split(';');
+            string[] allpaths = System.Environment.GetEnvironmentVariable("PATH").Split(';');
             foreach (string path in allpaths)
             {
                 fname = path + @"\" + target + ".bat";
@@ -240,8 +240,8 @@
         public void Merge(Command other)
         {
             if (object.ReferenceEquals(null, other)) return;
-            var durationStr = "";
-            var status = " not executed";
+            string durationStr = "";
+            string status = " not executed";
 
             if (true)//other.Duration.HasValue)
             {
@@ -298,11 +298,11 @@
         }
         public static int GetHashCode(System.Collections.IEnumerable value)
         {
-            var count = 0;
-            var hashCode = 0;
+            int count = 0;
+            int hashCode = 0;
             foreach (object item in value)
             {
-                var tmp = GetHashCode(item);
+                int tmp = GetHashCode(item);
                 if (tmp != 0) count++;
                 hashCode = hashCode ^ tmp;
             }
@@ -311,7 +311,7 @@
         }
         public static int GetHashCode(System.Collections.IDictionary value)
         {
-            var hashCode = value.Count;
+            int hashCode = value.Count;
             foreach (string key in value.Keys)
             {
                 hashCode = hashCode ^ GetHashCode(key) ^ GetHashCode(value[key]);
@@ -329,7 +329,7 @@
             if (object.ReferenceEquals(this, value)) return 0;
             if (object.ReferenceEquals(null, value)) return 1;
 
-            var thatCommand = value as Command;
+            Command thatCommand = value as Command;
             if (!object.ReferenceEquals(null, thatCommand))
             {
                 return thatCommand.StartTime.CompareTo(StartTime);
@@ -365,8 +365,8 @@
 
         public static string GetFormattedDateTime(System.DateTime time)
         {
-            var now = System.DateTime.Now;
-            if (time.Year == now.Year && time.Month == now.Month && time.Day == now.Day)
+            System.DateTime now = System.DateTime.Now;
+            if(time.Year == now.Year && time.Month == now.Month && time.Day == now.Day)
             {
                 return time.ToString("t");
             }
@@ -380,9 +380,9 @@
 
         public static string GetLogDirectory()
         {
-            var dir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData) +
+            string dir = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData) +
                          @"\LEP\CommandHistory";
-            if (!System.IO.Directory.Exists(dir))
+            if(!System.IO.Directory.Exists(dir))
             {
                 System.IO.Directory.CreateDirectory(dir);
             }
@@ -390,9 +390,9 @@
         }
         public static string GetLogBaseName(Command command)
         {
-            var time = System.DateTime.Now;
+            System.DateTime time = System.DateTime.Now;
             time = command.EndTime;
-            var logName = command.Name + "-" + time.ToString("o") + ".Command.bin";
+            string logName = command.Name + "-" + time.ToString("o") + ".Command.bin";
             char[] invalidFileChars = { '/', '\\', ':', '*', '"', '<', '>' };
             foreach (char c in invalidFileChars)
             {
@@ -405,7 +405,7 @@
             if (filename.Length == 0) filename = GetLogDirectory() + @"\" + GetLogBaseName(this);
             using(System.IO.FileStream fs = new System.IO.FileStream(filename,System.IO.FileMode.Create))
             {
-                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                System.Runtime.Serialization.Formatters.Binary.BinaryFormatter binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
                 {
                     binaryFormatter.Serialize(fs, this);
                 }
@@ -414,27 +414,27 @@
 
         public static Command[] GetHistory(int maxCount,string pattern="")
         {
-            var history
+            System.Collections.Generic.List<Command> history
                 = new System.Collections.Generic.List<Command>();
 
             System.Text.RegularExpressions.Regex regex = null;
             if(pattern.Length > 0)
             {
-                var regexPattern =  "^" + System.Text.RegularExpressions.Regex.Escape(pattern).Replace("\\*", ".*").Replace("\\?", ".") + "$";
+                string regexPattern =  "^" + System.Text.RegularExpressions.Regex.Escape(pattern).Replace("\\*", ".*").Replace("\\?", ".") + "$";
                 regex = new System.Text.RegularExpressions.Regex(regexPattern);
 
             }
-            var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            foreach (string filename in System.IO.Directory.GetFiles(GetLogDirectory(),"*.Command.bin"))
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            foreach(string filename in System.IO.Directory.GetFiles(GetLogDirectory(),"*.Command.bin"))
             {
-                var fi = new System.IO.FileInfo(filename);
+                System.IO.FileInfo fi = new System.IO.FileInfo(filename);
                 if (object.ReferenceEquals(null, regex) || regex.IsMatch(fi.Name))
                 {
                     using (System.IO.FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Open))
                     {
                         try
                         {
-                            var command = binaryFormatter.Deserialize(fs) as Command;
+                            Command command = binaryFormatter.Deserialize(fs) as Command;
                             history.Add(command);
                         }
                         catch { }
@@ -450,17 +450,17 @@
             System.Text.RegularExpressions.Regex regex = null;
             if (pattern.Length > 0)
             {
-                var regexPattern = "^" + System.Text.RegularExpressions.Regex.Escape(pattern).Replace("\\*", ".*").Replace("\\?", ".") + "$";
+                string regexPattern = "^" + System.Text.RegularExpressions.Regex.Escape(pattern).Replace("\\*", ".*").Replace("\\?", ".") + "$";
                 regex = new System.Text.RegularExpressions.Regex(regexPattern);
 
             }
 
             foreach (string filename in System.IO.Directory.GetFiles(GetLogDirectory(), "*.Command.bin"))
             {
-                var fi = new System.IO.FileInfo(filename);
+                System.IO.FileInfo fi = new System.IO.FileInfo(filename);
                 if (object.ReferenceEquals(null, regex) || regex.IsMatch(fi.Name))
                 {
-                    var age = System.DateTime.Now - fi.CreationTime;
+                    System.TimeSpan age = System.DateTime.Now - fi.CreationTime;
                     if (age > ageLimit)
                     {
                         System.IO.File.Delete(fi.FullName);

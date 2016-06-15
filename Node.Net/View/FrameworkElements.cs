@@ -17,8 +17,8 @@
 
         public static System.Type[] GetAvailableTypes()
         {
-            var types = new System.Collections.Generic.List<System.Type>();
-            foreach (System.Reflection.Assembly a in System.AppDomain.CurrentDomain.GetAssemblies())
+            System.Collections.Generic.List<System.Type> types = new System.Collections.Generic.List<System.Type>();
+            foreach(System.Reflection.Assembly a in System.AppDomain.CurrentDomain.GetAssemblies())
             {
                 foreach(System.Type type in a.GetTypes())
                 {

@@ -7,7 +7,7 @@ namespace Node.Net.Model3D
     {
         public static MeshGeometry3D GetRectangularMesh(double width_meters, double height_meters)
         {
-            var mesh = new MeshGeometry3D();
+            MeshGeometry3D mesh = new MeshGeometry3D();
             mesh.Positions.Add(new Point3D(width_meters / 2.0, height_meters / -2.0, 0));
             mesh.Positions.Add(new Point3D(width_meters / -2.0, height_meters / -2.0, 0));
             mesh.Positions.Add(new Point3D(width_meters / -2.0, height_meters / 2.0, 0));

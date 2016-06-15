@@ -9,17 +9,17 @@ namespace Node.Net.Extensions
     {
         public static string[] Find(IDictionary dictionary, IFilter filter)
         {
-            var keys = new List<string>();
+            List<string> keys = new List<string>();
             foreach (string key in dictionary.Keys)
             {
                 if (object.ReferenceEquals(null, filter) || filter.Include(dictionary[key]))
                 {
                     keys.Add(key);
                 }
-                var child_dictionary = dictionary[key] as IDictionary;
+                IDictionary child_dictionary = dictionary[key] as IDictionary;
                 if (!object.ReferenceEquals(null, child_dictionary))
                 {
-                    var subkeys = Find(child_dictionary, filter);
+                    string[] subkeys = Find(child_dictionary, filter);
                     foreach (string subkey in subkeys)
                     {
                         keys.Add($"{key}/{subkey}");
@@ -32,10 +32,10 @@ namespace Node.Net.Extensions
         public static IDictionary Collect(IDictionary dictionary,IFilter filter)
         {
         
-            var results = new Dictionary<string, dynamic>();
+            Dictionary<string, dynamic> results = new Dictionary<string, dynamic>();
             if (!object.ReferenceEquals(null, dictionary))
             {
-                var keys = new List<string>(Find(dictionary,filter));
+                List<string> keys = new List<string>(Find(dictionary,filter));
                 foreach (string key in keys)
                 {
                     results.Add(key, Get(dictionary,key));
@@ -48,10 +48,10 @@ namespace Node.Net.Extensions
         {
             if (key.Contains("/"))
             {
-                var parts = new List<string>(key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries));
+                List<string> parts = new List<string>(key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries));
                 if (dictionary.Contains(parts[0]))
                 {
-                    var subDictionary = dictionary[parts[0]] as IDictionary;
+                    IDictionary subDictionary = dictionary[parts[0]] as IDictionary;
                     if (!object.ReferenceEquals(null, subDictionary))
                     {
                         parts.RemoveAt(0);
@@ -70,13 +70,13 @@ namespace Node.Net.Extensions
         {
             if (key.Contains("/"))
             {
-                var parts = new List<string>(key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries));
+                List<string> parts = new List<string>(key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries));
                 if (!dictionary.Contains(parts[0]))
                 {
                     dictionary.Add(parts[0], new Dictionary<string, dynamic>());
                 }
 
-                var subDictionary = dictionary[parts[0]] as IDictionary;
+                IDictionary subDictionary = dictionary[parts[0]] as IDictionary;
                 if (object.ReferenceEquals(null, subDictionary))
                 {
                     subDictionary = new Dictionary<string, dynamic>();
@@ -102,7 +102,7 @@ namespace Node.Net.Extensions
 
         public static void Save(IDictionary dictionary, Stream stream)
         {
-            var formatter = new Node.Net.Json.JsonFormatter
+            Node.Net.Json.JsonFormatter formatter = new Node.Net.Json.JsonFormatter()
             {
                 Style = Node.Net.Json.JsonStyle.Indented
             };
@@ -119,15 +119,15 @@ namespace Node.Net.Extensions
 
         public static IDictionary Parse(string[] args)
         {
-            var result = new Dictionary<string, dynamic>();
+            Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
             foreach (string arg in args)
             {
                 if (arg.IndexOf('=') > -1)
                 {
                     char[] delimiters = { '=' };
-                    var words = arg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-                    var key = words[0].Trim();
-                    var value = words[1].Trim().Replace("\"", "");
+                    string[] words = arg.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+                    string key = words[0].Trim();
+                    string value = words[1].Trim().Replace("\"", "");
                     if (key.Length > 0 && value.Length > 0)
                     {
                         result[key] = value;

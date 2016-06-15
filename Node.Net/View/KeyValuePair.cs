@@ -22,7 +22,7 @@
         {
             if (IsKeyValuePair(item))
             {
-                var valueInfo = item.GetType().GetProperty("Key");
+                System.Reflection.PropertyInfo valueInfo = item.GetType().GetProperty("Key");
                 return valueInfo.GetValue(item, null);
             }
             return item;
@@ -32,7 +32,7 @@
         {
             if (IsKeyValuePair(item))
             {
-                var valueInfo = item.GetType().GetProperty("Value");
+                System.Reflection.PropertyInfo valueInfo = item.GetType().GetProperty("Value");
                 return valueInfo.GetValue(item, null);
             }
             return item;

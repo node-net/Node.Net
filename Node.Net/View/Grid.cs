@@ -18,11 +18,11 @@
             RowDefinitions.Clear();
             Children.Clear();
 
-            var array = KeyValuePair.GetValue(DataContext) as System.Array;
+            System.Array array = KeyValuePair.GetValue(DataContext) as System.Array;
             UpdateArray(array);
 
-            var dictionary = KeyValuePair.GetValue(DataContext) as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null,dictionary))
+            System.Collections.IDictionary dictionary = KeyValuePair.GetValue(DataContext) as System.Collections.IDictionary;
+            if(!object.ReferenceEquals(null,dictionary))
             {
                 UpdateDictionary(dictionary);
             }
@@ -31,8 +31,8 @@
         {
             if (!object.ReferenceEquals(null, array) && array.Rank == 2)
             {
-                var ncols = array.GetLength(0);
-                var nrows = array.GetLength(1);
+                int ncols = array.GetLength(0);
+                int nrows = array.GetLength(1);
                 for (int c = 0; c < ncols; ++c)
                 {
                     ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition());
@@ -45,12 +45,12 @@
                 {
                     for (int r = 0; r < nrows; ++r)
                     {
-                        var item = array.GetValue(c, r);
+                        object item = array.GetValue(c, r);
                         if (!object.ReferenceEquals(null, item))
                         {
-                            var value = array.GetValue(c, r).ToString();
-                            var label
-                                = new System.Windows.Controls.Label
+                            string value = array.GetValue(c, r).ToString();
+                            System.Windows.Controls.Label label
+                                = new System.Windows.Controls.Label()
                                 {
                                     Content = value,
                                     HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
@@ -65,15 +65,15 @@
             }
         }
 
-        private static void UpdateDictionary(System.Collections.IDictionary dictionary)
+        private void UpdateDictionary(System.Collections.IDictionary dictionary)
         {
             if(!object.ReferenceEquals(null,dictionary))
             {
                 foreach (object key in dictionary.Keys)
                 {
-                    var value = dictionary[key];
-                    var ienumerable = value as System.Collections.IEnumerable;
-                    if (!object.ReferenceEquals(null,value) && value.GetType() != typeof(string) && !object.ReferenceEquals(null,ienumerable))
+                    object value = dictionary[key];
+                    System.Collections.IEnumerable ienumerable = value as System.Collections.IEnumerable;
+                    if(!object.ReferenceEquals(null,value) && value.GetType() != typeof(string) && !object.ReferenceEquals(null,ienumerable))
                     {
                         foreach(object item in ienumerable)
                         {

@@ -33,7 +33,7 @@ namespace Node.Net.Controls
             set
             {
                 System.Type[] types = { typeof(object) };
-                var ci = value.GetConstructor(types);
+                System.Reflection.ConstructorInfo ci = value.GetConstructor(types);
                 if (object.ReferenceEquals(null, ci))
                 {
                     throw new System.InvalidOperationException("TreeViewItemType does not have a constructor accepting an object");
@@ -50,7 +50,7 @@ namespace Node.Net.Controls
         System.Windows.Controls.TreeViewItem CreateTreeViewItem(object value)
         {
             object[] args = { value };
-            var tvi
+            System.Windows.Controls.TreeViewItem tvi
                 = System.Activator.CreateInstance(treeViewItemType, args)
                     as System.Windows.Controls.TreeViewItem;
             return tvi;
@@ -60,8 +60,8 @@ namespace Node.Net.Controls
             Items.Clear();
             if (!object.ReferenceEquals(null, DataContext))
             {
-                var dictionary = DataContext as System.Collections.IDictionary;
-                var ienumerable = DataContext as System.Collections.IEnumerable;
+                System.Collections.IDictionary dictionary = DataContext as System.Collections.IDictionary;
+                System.Collections.IEnumerable ienumerable = DataContext as System.Collections.IEnumerable;
                 if (!object.ReferenceEquals(null, ienumerable) && object.ReferenceEquals(null, dictionary))
                 {
                     foreach (object item in ienumerable)

@@ -27,7 +27,7 @@ namespace Node.Net.Framework.Controls
             DataContextChanged += DynamicView_DataContextChanged;
             foreach (string key in elements.Keys)
             {
-                var element = elements[key] as FrameworkElement;
+                FrameworkElement element = elements[key] as FrameworkElement;
                 if (!object.ReferenceEquals(null, element))
                 {
                     NamedViews.Add(key, element);
@@ -44,8 +44,8 @@ namespace Node.Net.Framework.Controls
         private void update()
         {
             Children.Clear();
-            var current = CurrentView;
-            if (!object.ReferenceEquals(null, current))
+            FrameworkElement current = CurrentView;
+            if(!object.ReferenceEquals(null, current))
             {
                 Children.Add(current);
                 current.DataContext = DataContext;
@@ -76,10 +76,10 @@ namespace Node.Net.Framework.Controls
 
         public MenuItem GetViewMenuItem()
         {
-            var viewMenuItem = new MenuItem { Header = nameof(View) };
+            MenuItem viewMenuItem = new MenuItem() { Header = "View" };
             foreach (string key in NamedViews.Keys)
             {
-                var item = new MenuItem { Header = key };
+                MenuItem item = new MenuItem() { Header = key };
                 item.Click += ViewMenuItem_Click;
                 viewMenuItem.Items.Add(item);
             }
@@ -88,7 +88,7 @@ namespace Node.Net.Framework.Controls
 
         private void ViewMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var menuItem = sender as MenuItem;
+            MenuItem menuItem = sender as MenuItem;
             SetCurrentView(menuItem.Header.ToString());
         }
     }

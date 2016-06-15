@@ -19,7 +19,7 @@ namespace Node.Net.Measurement
             }
             set
             {
-                var newValue = Convert(value, targetUnits, lengthUnit);
+                double newValue = Convert(value, targetUnits, lengthUnit);
                 if (lengthValue != newValue)
                 {
                     lengthValue = newValue;
@@ -37,7 +37,7 @@ namespace Node.Net.Measurement
                 {
                     lengthValue = Convert(lengthValue, lengthUnit, value);
                     lengthUnit = value;
-                    NotifyPropertyChanged(nameof(Units));
+                    NotifyPropertyChanged("Units");
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace Node.Net.Measurement
         {
             if (object.ReferenceEquals(null, instance)) return 1;
 
-            var thatLength = instance as Length;
+            Length thatLength = instance as Length;
             if (!object.ReferenceEquals(null, thatLength))
             {
                 return this[LengthUnit.Meters].CompareTo(thatLength[LengthUnit.Meters]);
@@ -61,7 +61,7 @@ namespace Node.Net.Measurement
 
         public override bool Equals(object obj)
         {
-            var thatLength = obj as Length;
+            Length thatLength = obj as Length;
             if (!object.ReferenceEquals(null, thatLength))
             {
                 return this[LengthUnit.Meters].Equals(thatLength[LengthUnit.Meters]);
@@ -105,9 +105,9 @@ namespace Node.Net.Measurement
         public static Length Parse(string value)
         {
             if (value.Length == 0) return new Length();
-            var lengthValue = System.Convert.ToDouble(value.Split(' ')[0]);
-            var unit = "m";
-            if (value.Split(' ').Length > 1) unit = value.Split(' ')[1];
+            double lengthValue = System.Convert.ToDouble(value.Split(' ')[0]);
+            string unit = "m";
+            if(value.Split(' ').Length > 1) unit = value.Split(' ')[1];
             foreach (LengthUnit lunit in abbreviations.Keys)
             {
                 if (unit == abbreviations[lunit])

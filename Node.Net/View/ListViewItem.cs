@@ -17,7 +17,7 @@
         public event System.EventHandler Update;
         private void update()
         {
-            if (Update!=null)
+            if (!object.ReferenceEquals(null, Update))
             {
                 Update(this, new System.EventArgs());
             }
@@ -28,21 +28,21 @@
                     Content = DataContext;
                 }
                 else{
-                    var dictionary = KeyValuePair.GetValue(DataContext) as System.Collections.IDictionary;
+                    System.Collections.IDictionary dictionary = KeyValuePair.GetValue(DataContext) as System.Collections.IDictionary;
                     if (!object.ReferenceEquals(null, dictionary))
                     {
-                        var sp = new System.Windows.Controls.StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal };
-                        foreach (object key in dictionary.Keys)
+                        System.Windows.Controls.StackPanel sp = new System.Windows.Controls.StackPanel() { Orientation = System.Windows.Controls.Orientation.Horizontal };
+                        foreach(object key in dictionary.Keys)
                         {
                             
-                            sp.Children.Add(new System.Windows.Controls.Label{Content = dictionary[key].ToString()});
+                            sp.Children.Add(new System.Windows.Controls.Label(){Content = dictionary[key].ToString()});
                             
                         }
                         Content = sp;
                     }
                     else
                     {
-                        var keyProperty = DataContext.GetType().GetProperty("Key");
+                        System.Reflection.PropertyInfo keyProperty = DataContext.GetType().GetProperty("Key");
                         if (!object.ReferenceEquals(null, keyProperty))
                         {
                             Content = keyProperty.GetValue(DataContext, null).ToString();

@@ -72,7 +72,7 @@
     GetWorldTilt(), GetWorldSpin());
         private System.Windows.Media.Media3D.Vector3D[] GetWorldDirectionVectors()
         {
-            var
+            System.Collections.Generic.List<System.Windows.Media.Media3D.Vector3D>
                 directionVectors = new System.Collections.Generic.List<System.Windows.Media.Media3D.Vector3D>();
             directionVectors.Add(ApplyTransform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0), LocalToWorld));
             directionVectors.Add(ApplyTransform(new System.Windows.Media.Media3D.Vector3D(0, 1, 0), LocalToWorld));
@@ -82,14 +82,14 @@
         private double GetWorldOrientation()
         {
             // Orientation is rotation about the +Z axis (in the XY plane)
-            var worldDirectionVectors = GetWorldDirectionVectors();
+            System.Windows.Media.Media3D.Vector3D[] worldDirectionVectors = GetWorldDirectionVectors();
 
             double orientation = 0;
             if (System.Math.Abs(System.Math.Round(worldDirectionVectors[0].Z, 4)) == 1)
             {
                 // Edge case where X Axis is normal to XY plane, use Y Axis to compute orientation,
                 // any spin will be combined into the orientation
-                var localYAxisProjectedIntoWorldXY
+                System.Windows.Media.Media3D.Point3D localYAxisProjectedIntoWorldXY
                 = ProjectPointToPlane(
                    new System.Windows.Media.Media3D.Point3D(
                        worldDirectionVectors[1].X,
@@ -108,7 +108,7 @@
             }
             else
             {
-                var localXAxisProjectedIntoWorldXY
+                System.Windows.Media.Media3D.Point3D localXAxisProjectedIntoWorldXY
                     = ProjectPointToPlane(
                        new System.Windows.Media.Media3D.Point3D(
                            worldDirectionVectors[0].X,
@@ -147,9 +147,9 @@
         private double GetWorldTilt()
         {
             // Tilt is rotation about the +Y axis (in the ZX plane)
-            var worldDirectionVectors = GetWorldDirectionVectors();
+            System.Windows.Media.Media3D.Vector3D[] worldDirectionVectors = GetWorldDirectionVectors();
 
-            var localZAxisProjectedIntoWorldZX
+            System.Windows.Media.Media3D.Point3D localZAxisProjectedIntoWorldZX
                 = ProjectPointToPlane(
                    new System.Windows.Media.Media3D.Point3D(
                        worldDirectionVectors[2].X,
@@ -157,7 +157,7 @@
                        worldDirectionVectors[2].Z),
                    new System.Windows.Media.Media3D.Point3D(0, 0, 0),
                    worldDirectionVectors[1]);
-            var tilt = System.Windows.Media.Media3D.Vector3D.AngleBetween(
+            double tilt = System.Windows.Media.Media3D.Vector3D.AngleBetween(
                 new System.Windows.Media.Media3D.Vector3D(0, 0, 1),
                 new System.Windows.Media.Media3D.Vector3D(
                     localZAxisProjectedIntoWorldZX.X,
@@ -170,30 +170,28 @@
         }
         private double GetWorldSpin()
         {
-            var worldOrientation = GetWorldOrientation();
-            var worldTilt = GetWorldTilt();
+            double worldOrientation = GetWorldOrientation();
+            double worldTilt = GetWorldTilt();
 
             // Spin is rotation about the +X axis (in the YZ plane)
-            var worldDirectionVectors = GetWorldDirectionVectors();
+            System.Windows.Media.Media3D.Vector3D[] worldDirectionVectors = GetWorldDirectionVectors();
 
             // Back out the tilt component
-            var adjust = new Transform3D
-            {
-                RotationOTS = new System.Windows.Media.Media3D.Point3D(-worldOrientation, 0, 0)
-            };
+            Transform3D adjust = new Transform3D();
+            adjust.RotationOTS = new System.Windows.Media.Media3D.Point3D(-worldOrientation, 0, 0);
             worldDirectionVectors = adjust.Transform(worldDirectionVectors, TransformType.LocalToParent);
-            adjust.RotationOTS = new System.Windows.Media.Media3D.Point3D(0, -worldTilt, 0);
+            adjust.RotationOTS = new System.Windows.Media.Media3D.Point3D(0,-worldTilt, 0);
             worldDirectionVectors = adjust.Transform(worldDirectionVectors, TransformType.LocalToParent);
-
-            var localYAxisProjectedIntoWorldZY
+            
+            System.Windows.Media.Media3D.Point3D localYAxisProjectedIntoWorldZY
                 = ProjectPointToPlane(
                    new System.Windows.Media.Media3D.Point3D(
                        worldDirectionVectors[1].X,
                        worldDirectionVectors[1].Y,
                        worldDirectionVectors[1].Z),
-                   new System.Windows.Media.Media3D.Point3D(0, 0, 0),
-                   new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
-            var spin = System.Windows.Media.Media3D.Vector3D.AngleBetween(
+                   new System.Windows.Media.Media3D.Point3D(0,0,0),
+                   new System.Windows.Media.Media3D.Vector3D(1,0,0));
+            double spin = System.Windows.Media.Media3D.Vector3D.AngleBetween(
                 new System.Windows.Media.Media3D.Vector3D(0, 1, 0),
                 new System.Windows.Media.Media3D.Vector3D(
                     localYAxisProjectedIntoWorldZY.X,
@@ -201,7 +199,7 @@
                     localYAxisProjectedIntoWorldZY.Z)
                 );
 
-            var yzCross
+            System.Windows.Media.Media3D.Vector3D yzCross
                 = System.Windows.Media.Media3D.Vector3D.CrossProduct(
                 worldDirectionVectors[1], worldDirectionVectors[2]);
 
@@ -217,9 +215,9 @@
             {
                 if(localToParentCacheDirty)
                 {
-                    var matrix = new System.Windows.Media.Media3D.Matrix3D();
+                    System.Windows.Media.Media3D.Matrix3D matrix = new System.Windows.Media.Media3D.Matrix3D();
                     matrix.Scale(new System.Windows.Media.Media3D.Vector3D(scale.X, scale.Y, scale.Z));
-                    var rotation = ComputeQuaternionFromOTS_ParentZUp(rotationOTS.X, rotationOTS.Y, rotationOTS.Z);
+                    System.Windows.Media.Media3D.Quaternion rotation = ComputeQuaternionFromOTS_ParentZUp(rotationOTS.X, rotationOTS.Y, rotationOTS.Z);
                     matrix.Rotate(rotation);
                 
                     matrix.Translate(new System.Windows.Media.Media3D.Vector3D(translation.X,
@@ -235,8 +233,8 @@
         {
             get
             {
-                var parentToWorld = new System.Windows.Media.Media3D.Matrix3D();
-                var currentParent = parent;
+                System.Windows.Media.Media3D.Matrix3D parentToWorld = new System.Windows.Media.Media3D.Matrix3D();
+                Transform3D currentParent = parent;
                 while (!object.ReferenceEquals(null, currentParent))
                 {
                     parentToWorld.Append(currentParent.LocalToParent);
@@ -254,7 +252,7 @@
             {
                 if (localToWorldCacheDirty)
                 {
-                    var localToWorld = System.Windows.Media.Media3D.Matrix3D.Multiply(LocalToParent, new System.Windows.Media.Media3D.Matrix3D());
+                    System.Windows.Media.Media3D.Matrix3D localToWorld = System.Windows.Media.Media3D.Matrix3D.Multiply(LocalToParent, new System.Windows.Media.Media3D.Matrix3D());
                     localToWorld.Append(ParentToWorld);
                     localToWorldCached = localToWorld;
                     localToWorldCacheDirty = false;
@@ -269,8 +267,8 @@
         {
             get
             {
-                var identity = new System.Windows.Media.Media3D.Matrix3D();
-                var p2l = System.Windows.Media.Media3D.Matrix3D.Multiply(LocalToParent, identity);
+                System.Windows.Media.Media3D.Matrix3D identity = new System.Windows.Media.Media3D.Matrix3D();
+                System.Windows.Media.Media3D.Matrix3D p2l = System.Windows.Media.Media3D.Matrix3D.Multiply(LocalToParent, identity);
                 p2l.Invert();
                 return p2l;
             }
@@ -279,8 +277,8 @@
         {
             get
             {
-                var identity = new System.Windows.Media.Media3D.Matrix3D();
-                var p2l = System.Windows.Media.Media3D.Matrix3D.Multiply(ParentToWorld, identity);
+                System.Windows.Media.Media3D.Matrix3D identity = new System.Windows.Media.Media3D.Matrix3D();
+                System.Windows.Media.Media3D.Matrix3D p2l = System.Windows.Media.Media3D.Matrix3D.Multiply(ParentToWorld, identity);
                 p2l.Invert();
                 return p2l;
             }
@@ -294,8 +292,8 @@
             {
                 if (worldToLocalCacheDirty)
                 {
-                    var identity = new System.Windows.Media.Media3D.Matrix3D();
-                    var p2l = System.Windows.Media.Media3D.Matrix3D.Multiply(LocalToWorld, identity);
+                    System.Windows.Media.Media3D.Matrix3D identity = new System.Windows.Media.Media3D.Matrix3D();
+                    System.Windows.Media.Media3D.Matrix3D p2l = System.Windows.Media.Media3D.Matrix3D.Multiply(LocalToWorld, identity);
                     p2l.Invert();
                     worldToLocalCached = p2l;
                     worldToLocalCacheDirty = false;
@@ -335,8 +333,8 @@
 
         public System.Windows.Media.Media3D.Vector3D[] Transform(System.Windows.Media.Media3D.Vector3D[] source,TransformType transformType)
         {
-            var results = new System.Collections.Generic.List<System.Windows.Media.Media3D.Vector3D>();
-            foreach (System.Windows.Media.Media3D.Vector3D item in source)
+            System.Collections.Generic.List<System.Windows.Media.Media3D.Vector3D> results = new System.Collections.Generic.List<System.Windows.Media.Media3D.Vector3D>();
+            foreach(System.Windows.Media.Media3D.Vector3D item in source)
             {
                 results.Add(Transform(item, transformType));
             }
@@ -345,45 +343,45 @@
         #region static methods
         public static System.Windows.Media.Media3D.Quaternion ComputeQuaternionFromOTS_ParentZUp(double orientation_degrees, double tilt_degrees, double spin_degrees)
         {
-            var rotationMatrix = new System.Windows.Media.Media3D.Matrix3D();
+            System.Windows.Media.Media3D.Matrix3D rotationMatrix = new System.Windows.Media.Media3D.Matrix3D();
 
             // Rotate for Orientation about the Z axis
-            var RHR_rotation = orientation_degrees;
-            var axis = new global::System.Windows.Media.Media3D.Vector3D(0.0, 0.0, 1.0);
-            var orientation = new System.Windows.Media.Media3D.Quaternion(axis, RHR_rotation);
+            double RHR_rotation = orientation_degrees;
+            global::System.Windows.Media.Media3D.Vector3D axis = new global::System.Windows.Media.Media3D.Vector3D(0.0, 0.0, 1.0);
+            System.Windows.Media.Media3D.Quaternion orientation = new System.Windows.Media.Media3D.Quaternion(axis, RHR_rotation);
             rotationMatrix.Rotate(orientation);
 
             // Rotate for Tilt about the Y axis
-            var tilt_axis = new System.Windows.Media.Media3D.Vector3D(0.0, 1.0, 0.0);
+            System.Windows.Media.Media3D.Vector3D tilt_axis = new System.Windows.Media.Media3D.Vector3D(0.0, 1.0, 0.0);
             tilt_axis = System.Windows.Media.Media3D.Vector3D.Multiply(tilt_axis, rotationMatrix);
 
-            var tRHR = tilt_degrees;
-            var tilt = new System.Windows.Media.Media3D.Quaternion(tilt_axis, tRHR);
+            double tRHR = tilt_degrees;
+            System.Windows.Media.Media3D.Quaternion tilt = new System.Windows.Media.Media3D.Quaternion(tilt_axis, tRHR);
             rotationMatrix.Rotate(tilt);
 
             // Rotate for Spin about X axis
-            var spin_axis = new System.Windows.Media.Media3D.Vector3D(1.0, 0.0, 0.0);
+            System.Windows.Media.Media3D.Vector3D spin_axis = new System.Windows.Media.Media3D.Vector3D(1.0, 0.0, 0.0);
             spin_axis = System.Windows.Media.Media3D.Vector3D.Multiply(spin_axis, rotationMatrix);
-            var spin = new System.Windows.Media.Media3D.Quaternion(spin_axis, spin_degrees);
+            System.Windows.Media.Media3D.Quaternion spin = new System.Windows.Media.Media3D.Quaternion(spin_axis, spin_degrees);
             //matrix.Rotate(spin);
 
             // Combine the orientation and tilt Quaternions
-            var total_rotation = System.Windows.Media.Media3D.Quaternion.Multiply(tilt, orientation);
+            System.Windows.Media.Media3D.Quaternion total_rotation = System.Windows.Media.Media3D.Quaternion.Multiply(tilt, orientation);
             total_rotation = System.Windows.Media.Media3D.Quaternion.Multiply(spin, total_rotation);
             return total_rotation;
         }
         public static System.Windows.Media.Media3D.Point3D ApplyTransform(System.Windows.Media.Media3D.Point3D source, System.Windows.Media.Media3D.Matrix3D trans)
         {
-            var point4D =
+            System.Windows.Media.Media3D.Point4D point4D =
                 new System.Windows.Media.Media3D.Point4D(source.X, source.Y, source.Z, 1.0);
             point4D = trans.Transform(point4D);
             return new System.Windows.Media.Media3D.Point3D(point4D.X, point4D.Y, point4D.Z);
         }
         public static System.Windows.Media.Media3D.Vector3D ApplyTransform(System.Windows.Media.Media3D.Vector3D source, System.Windows.Media.Media3D.Matrix3D trans)
         {
-            var mv = new System.Windows.Media.Media3D.Vector3D(source.X, source.Y, source.Z);
+            System.Windows.Media.Media3D.Vector3D mv = new System.Windows.Media.Media3D.Vector3D(source.X, source.Y, source.Z);
             mv = trans.Transform(mv);
-            var result = new System.Windows.Media.Media3D.Vector3D(mv.X, mv.Y, mv.Z);
+            System.Windows.Media.Media3D.Vector3D result = new System.Windows.Media.Media3D.Vector3D(mv.X, mv.Y, mv.Z);
             return result;
         }
         #endregion
