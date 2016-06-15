@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Collections
 {
-    public class RuntimeMetaData : Dictionary<WeakReference,Dictionary<string,dynamic>>
+    public class RuntimeMetaData : Dictionary<WeakReference, Dictionary<string, dynamic>>
     {
         public void Clean()
         {
@@ -15,7 +12,7 @@ namespace Node.Net.Collections
             {
                 if (!wr.IsAlive) to_remove.Add(wr);
             }
-            foreach(WeakReference wr in to_remove)
+            foreach (WeakReference wr in to_remove)
             {
                 Remove(wr);
             }
@@ -23,14 +20,14 @@ namespace Node.Net.Collections
 
         private WeakReference GetWeakReference(object instance)
         {
-            foreach(WeakReference wr in Keys)
+            foreach (WeakReference wr in Keys)
             {
                 if (object.ReferenceEquals(wr.Target, instance)) return wr;
                 if (instance.GetType().IsValueType && wr.Target.Equals(instance)) return wr;
             }
             return new WeakReference(instance);
         }
-        public void Set(object instance,string key,object value)
+        public void Set(object instance, string key, object value)
         {
             var ref_instance = GetWeakReference(instance);
             if (!ContainsKey(ref_instance))
@@ -45,7 +42,7 @@ namespace Node.Net.Collections
             var ref_instance = GetWeakReference(instance);
             if (ContainsKey(ref_instance))
             {
-                if(this[ref_instance].ContainsKey(key))
+                if (this[ref_instance].ContainsKey(key))
                 {
                     return this[ref_instance][key];
                 }

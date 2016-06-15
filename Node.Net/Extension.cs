@@ -49,6 +49,8 @@ namespace Node.Net
 
         #region IChild
         public static T GetFirstAncestor<T>(this IChild child) => Extensions.IChildExtension.GetFirstAncestor<T>(child);
+        public static string GetKey(this IChild child) => Extensions.IChildExtension.GetKey(child);
+        public static string GetFullKey(this IChild child) => Extensions.IChildExtension.GetFullKey(child);
         #endregion
 
         #region IModel3D
