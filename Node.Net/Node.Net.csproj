@@ -145,6 +145,7 @@
     <Compile Include="ITransformer.cs" />
     <Compile Include="ITranslation3D.cs" />
     <Compile Include="ITypeTransformer.cs" />
+    <Compile Include="IUpdate.cs" />
     <Compile Include="IWriter.cs" />
     <Compile Include="Json\Internal\JsonReader.cs" />
     <Compile Include="Json\Internal\JsonWriter.cs" />

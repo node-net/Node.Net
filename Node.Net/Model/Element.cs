@@ -9,5 +9,6 @@ namespace Node.Net.Model
 
         private readonly Dictionary<string, dynamic> _metaData = new Dictionary<string, dynamic>();
         public IDictionary MetaData { get { return _metaData; } }
+
     }
 }
