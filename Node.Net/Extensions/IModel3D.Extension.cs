@@ -157,6 +157,17 @@ namespace Node.Net.Extensions
             // Tilt is rotation about the +Y axis (in the ZX plane)
             var worldDirectionVectors = GetWorldDirectionVectors(model3D);
 
+            /*
+            // Backout world orientation
+            var worldOrientation = GetWorldOrientation(model3D);
+            var adjust = new Model.SpatialElement
+            {
+                ZAxisRotation = $"{-worldOrientation} deg"
+            };
+            worldDirectionVectors = adjust.TransformLocalToParent(worldDirectionVectors);
+            */
+            
+
             var localXAxisProjectedIntoWorldXZ = 
                 new Point3D(worldDirectionVectors[0].X, 0, worldDirectionVectors[0].Z);
             var tilt = Vector3D.AngleBetween(
