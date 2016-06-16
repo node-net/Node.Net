@@ -123,7 +123,7 @@ namespace Node.Net.Extensions
         }
         public static double GetWorldOrientation(IModel3D model3D)
         {
-            return GetWorldOrientationC(model3D);
+            return GetWorldOrientationF(model3D);
         }
         public static double GetWorldOrientationA(IModel3D model3D)
         {
@@ -261,9 +261,32 @@ namespace Node.Net.Extensions
 
             return orientation;
         }
+        public static double GetWorldOrientationE(IModel3D model3D)
+        {
+            var orientation = 0.0;
+            var worldXDirectionVector = TransformLocalToWorld(model3D, new Vector3D(1, 0, 0));
+
+            orientation = Vector3D.AngleBetween(new Vector3D(1, 0, 0), worldXDirectionVector);
+            if (worldXDirectionVector.Y < 0) orientation *= -1;
+
+
+            return orientation;
+        }
+        public static double GetWorldOrientationF(IModel3D model3D)
+        {
+            // By using the Y directionVector, tilt does not effect the result
+            var orientation = 0.0;
+            var worldYDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 1, 0));
+
+            orientation = Vector3D.AngleBetween(new Vector3D(0, 1, 0), worldYDirectionVector);
+            if (worldYDirectionVector.X > 0) orientation *= -1;
+
+
+            return orientation;
+        }
         public static double GetWorldTilt(IModel3D model3D)
         {
-            return GetWorldTiltB(model3D);
+            return GetWorldTiltC(model3D);
         }
         public static double GetWorldTiltA(IModel3D model3D)
         {
@@ -302,6 +325,36 @@ namespace Node.Net.Extensions
                 new Vector3D(0, 0, 1), 
                 new Vector3D(worldZDirectionVector.X,0,worldZDirectionVector.Z));
             if (worldZDirectionVector.X < 0) tilt *= -1;
+            return tilt;
+        }
+        public static double GetWorldTiltC(IModel3D model3D)
+        {
+            var tilt = 0.0;
+            var worldZDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 0, 1));
+
+            // Backout world orientation
+            var worldOrientation = GetWorldOrientation(model3D);
+            var adjust = new Model.SpatialElement
+            {
+                ZAxisRotation = $"{-worldOrientation} deg"
+            };
+            worldZDirectionVector = adjust.TransformLocalToParent(worldZDirectionVector);
+
+            tilt = Vector3D.AngleBetween(
+                new Vector3D(0, 0, 1),
+                worldZDirectionVector);
+            if (worldOrientation > 90)
+            {
+                if (worldZDirectionVector.Y > 0) tilt *= -1;
+            }
+            else if(worldOrientation < -90)
+            {
+                if (worldZDirectionVector.Y < 0) tilt *= -1;
+            }
+            else
+            {
+                if (worldZDirectionVector.X < 0) tilt *= -1;
+            }
             return tilt;
         }
         public static double GetWorldSpin(IModel3D model3D)
