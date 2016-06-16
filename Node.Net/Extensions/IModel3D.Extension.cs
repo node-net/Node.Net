@@ -15,12 +15,12 @@ namespace Node.Net.Extensions
                 if (child != null)
                 {
                     var parentToWorld = new Matrix3D();
-                    var current_parent = child.GetFirstAncestor<IModel3D>();
+                    var current_parent = child.GetNearestAncestor<IModel3D>();
                     while(current_parent != null)
                     {
                         parentToWorld.Append(current_parent.LocalToParent);
                         var parent_as_child = current_parent as IChild;
-                        current_parent = parent_as_child == null ? null : parent_as_child.GetFirstAncestor<IModel3D>();
+                        current_parent = parent_as_child == null ? null : parent_as_child.GetNearestAncestor<IModel3D>();
                     }
                     return parentToWorld;
                 }

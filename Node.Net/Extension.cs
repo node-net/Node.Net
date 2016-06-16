@@ -48,7 +48,8 @@ namespace Node.Net
         #endregion
 
         #region IChild
-        public static T GetFirstAncestor<T>(this IChild child) => Extensions.IChildExtension.GetFirstAncestor<T>(child);
+        public static T GetNearestAncestor<T>(this IChild child) => Extensions.IChildExtension.GetNearestAncestor<T>(child);
+        public static T GetFurthestAncestor<T>(this IChild child) => Extensions.IChildExtension.GetFurthestAncestor<T>(child);
         public static string GetKey(this IChild child) => Extensions.IChildExtension.GetKey(child);
         public static string GetFullKey(this IChild child) => Extensions.IChildExtension.GetFullKey(child);
         #endregion

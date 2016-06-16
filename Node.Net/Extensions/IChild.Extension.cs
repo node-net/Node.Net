@@ -4,13 +4,28 @@ namespace Node.Net.Extensions
 {
     public static class IChildExtension
     {
-        public static T GetFirstAncestor<T>(IChild child)
+        public static T GetNearestAncestor<T>(IChild child)
         {
             if (child != null)
             {
                 var ancestor = (T)child.Parent;
                 if (ancestor != null) return ancestor;
-                return GetFirstAncestor<T>(child.Parent as IChild);
+                return GetNearestAncestor<T>(child.Parent as IChild);
+            }
+            return default(T);
+        }
+
+        public static T GetFurthestAncestor<T>(IChild child)
+        {
+            if (child != null)
+            {
+                var ancestor = GetNearestAncestor<T>(child);
+                if(ancestor != null)
+                {
+                    var further_ancestor = GetFurthestAncestor<T>(ancestor as IChild);
+                    if (further_ancestor != null) return further_ancestor;
+                }
+                return ancestor;
             }
             return default(T);
         }
