@@ -306,6 +306,11 @@ namespace Node.Net.Extensions
         }
         public static double GetWorldSpin(IModel3D model3D)
         {
+            return 0.0;
+            //return GetWorldSpinB(model3D);
+        }
+        public static double GetWorldSpinA(IModel3D model3D)
+        {
             // Spin is rotation about the +X axis (in the YZ plane)
             var worldYDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 1, 0));
 
@@ -314,6 +319,7 @@ namespace Node.Net.Extensions
             var worldXDirectionVector = TransformLocalToWorld(model3D, new Vector3D(1, 0, 0));
             worldOrientation = Vector3D.AngleBetween(new Vector3D(1, 0, 0), worldXDirectionVector);
             if (worldXDirectionVector.Y < 0) worldOrientation *= -1;
+
 
             var adjust = new Model.SpatialElement
             {
@@ -336,6 +342,26 @@ namespace Node.Net.Extensions
             var spin = Vector3D.AngleBetween(
                 new Vector3D(0, 1, 0),
                 worldYDirectionVector
+            );
+            if (worldYDirectionVector.Z < 0) spin *= -1;
+            return spin;
+        }
+        public static double GetWorldSpinB(IModel3D model3D)
+        {
+            // Spin is rotation about the +X axis (in the YZ plane)
+            var worldYDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 1, 0));
+            /*
+            var adjust = new Model.SpatialElement
+            {
+                ZAxisRotation = $"{-GetWorldOrientation(model3D)} deg",
+                YAxisRotation = $"{-GetWorldTilt(model3D)} deg"
+            };
+            worldYDirectionVector = adjust.TransformLocalToParent(worldYDirectionVector);
+            */
+
+            var spin = Vector3D.AngleBetween(
+                new Vector3D(0, 1, 0),
+                new Vector3D(0,worldYDirectionVector.Y,worldYDirectionVector.Z)
             );
             if (worldYDirectionVector.Z < 0) spin *= -1;
             return spin;
