@@ -86,6 +86,10 @@ namespace Node.Net.Extensions
         {
             return ApplyTransform(world, GetWorldToLocal(model3D));
         }
+        public static Vector3D TransformWorldToLocal(IModel3D model3D, Vector3D world)
+        {
+            return ApplyTransform(world, GetWorldToLocal(model3D));
+        }
         public static Vector3D TransformLocalToWorld(IModel3D model3D, Vector3D local)
         {
             return ApplyTransform(local, GetLocalToWorld(model3D));
