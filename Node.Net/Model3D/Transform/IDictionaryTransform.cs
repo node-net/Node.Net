@@ -164,6 +164,11 @@ namespace Node.Net.Model3D.Transform
             var rotationY = new Quaternion();
             var rotationX = new Quaternion();
             var rotation = new QuaternionRotation3D();
+            if (value.Contains("ZAxisRotation"))
+            {
+                var rotationZ_degrees = GetRotationDegrees(value, "ZAxisRotation");
+                rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
+            }
             if (value.Contains("RotationZ"))
             {
                 var rotationZ_degrees = GetRotationDegrees(value, "RotationZ");
@@ -174,6 +179,11 @@ namespace Node.Net.Model3D.Transform
                 var rotationZ_degrees = GetRotationDegrees(value, "Orientation");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
+            if (value.Contains("YAxisRotation"))
+            {
+                var rotationY_degrees = GetRotationDegrees(value, "YAxisRotation");
+                rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+            }
             if (value.Contains("RotationY"))
             {
                 var rotationY_degrees = GetRotationDegrees(value, "RotationY");
@@ -183,6 +193,11 @@ namespace Node.Net.Model3D.Transform
             {
                 var rotationY_degrees = GetRotationDegrees(value, "Tilt");
                 rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+            }
+            if (value.Contains("XAxisRotation"))
+            {
+                var rotationX_degrees = GetRotationDegrees(value, "XAxisRotation");
+                rotationX = new Quaternion(new Vector3D(1, 0, 0), rotationX_degrees);
             }
             if (value.Contains("RotationX"))
             {

@@ -80,6 +80,7 @@ namespace Node.Net.Model
             get
             {
                 if (ContainsKey(nameof(XAxisRotation))) return this[nameof(XAxisRotation)].ToString();
+                if (ContainsKey("Spin")) return this["Spin"].ToString();
                 return string.Empty;
             }
             set
@@ -93,11 +94,12 @@ namespace Node.Net.Model
             get
             {
                 if (ContainsKey(nameof(YAxisRotation))) return this[nameof(YAxisRotation)].ToString();
+                if (ContainsKey("Tilt")) return this["Tilt"].ToString();
                 return string.Empty;
             }
             set
             {
-                this[nameof(XAxisRotation)] = value;
+                this[nameof(YAxisRotation)] = value;
                 //this.Update();
             }
         }
@@ -106,6 +108,7 @@ namespace Node.Net.Model
             get
             {
                 if (ContainsKey(nameof(ZAxisRotation))) return this[nameof(ZAxisRotation)].ToString();
+                if (ContainsKey("Orientation")) return this["Orientation"].ToString();
                 return string.Empty;
             }
             set

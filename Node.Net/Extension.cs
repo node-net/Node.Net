@@ -59,7 +59,18 @@ namespace Node.Net
         public static Point3D TransformLocalToWorld(this IModel3D model3D, Point3D local) => Extensions.IModel3DExtension.TransformLocalToWorld(model3D, local);
         public static Vector3D TransformLocalToWorld(this IModel3D model3D, Vector3D local) => Extensions.IModel3DExtension.TransformLocalToWorld(model3D, local);
         public static Point3D TransformLocalToParent(this IModel3D model3D, Point3D local) => Extensions.IModel3DExtension.TransformLocalToParent(model3D, local);
+        public static Vector3D TransformLocalToParent(this IModel3D model3D, Vector3D local) => Extensions.IModel3DExtension.TransformLocalToParent(model3D, local);
+        public static Vector3D[] TransformLocalToParent(this IModel3D model3D, Vector3D[] local) => Extensions.IModel3DExtension.TransformLocalToParent(model3D, local);
         public static Point3D TransformWorldToLocal(this IModel3D model3D, Point3D world) => Extensions.IModel3DExtension.TransformWorldToLocal(model3D, world);
+        public static Vector3D TransformWorldToLocal(this IModel3D model3D, Vector3D world) => Extensions.IModel3DExtension.TransformWorldToLocal(model3D, world);
+        public static Point3D GetWorldOrigin(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldOrigin(model3D);
+        public static Point3D GetWorldRotations(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldRotations(model3D);
+        public static Vector3D GetWorldXDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldXDirectionVector(model3D);
+        public static Vector3D GetWorldYDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldYDirectionVector(model3D);
+        public static Vector3D GetWorldZDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldZDirectionVector(model3D);
+        public static double GetWorldOrientation(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldOrientation(model3D);
+        public static double GetWorldTilt(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldTilt(model3D);
+        public static double GetWorldSpin(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldSpin(model3D);
         #endregion
     }
 }
