@@ -41,12 +41,27 @@ namespace Node.Net.Extensions
 
         public static Matrix3D GetLocalToWorld(IModel3D model3D)
         {
+            var metaData = model3D as IMetaData;
+            if (metaData != null && metaData.MetaData.Contains("LocalToWorld"))
+            {
+                return (Matrix3D)metaData.MetaData["LocalToWorld"];
+
+            }
+
             if (model3D != null)
             {
                 var localToWorld = Matrix3D.Multiply(model3D.LocalToParent, new Matrix3D());
                 localToWorld.Append(GetParentToWorld(model3D));
+
+                if (metaData != null)
+                {
+                    metaData.MetaData["LocalToWorld"] = localToWorld;
+                }
+
                 return localToWorld;
             }
+
+            
             return new Matrix3D();
         }
         public static Matrix3D GetWorldToLocal(IModel3D model3D)
