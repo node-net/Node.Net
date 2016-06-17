@@ -174,6 +174,8 @@
     <Compile Include="Model\Application.cs" />
     <Compile Include="Model\Child.cs" />
     <Compile Include="Model\Element.cs" />
+    <Compile Include="Model\Generic\Element.cs" />
+    <Compile Include="Model\Generic\Parent.cs" />
     <Compile Include="Model\Parent.cs" />
     <Compile Include="Model\SpatialElement.cs" />
     <Compile Include="Plugin\Plugins.cs" />
