@@ -108,6 +108,7 @@
     <Compile Include="Environment\MyDocuments.cs" />
     <Compile Include="Environment\Resources.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="Extensions\Grid.Extension.cs" />
     <Compile Include="Extensions\IChild.Extension.cs" />
     <Compile Include="Extensions\IDictionary.Extension.cs" />
     <Compile Include="Extensions\IGetDataSet.Extension.cs" />
