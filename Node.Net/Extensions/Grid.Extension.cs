@@ -19,7 +19,7 @@ namespace Node.Net.Extensions
 
                 grid.Children.Add(label);
                 Grid.SetRow(label, grid.RowDefinitions.Count - 1);
-                if (grid.ColumnDefinitions.Count < column + 1) grid.ColumnDefinitions.Add(new ColumnDefinition());
+                if (grid.ColumnDefinitions.Count < column + 1) grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                 Grid.SetColumn(label, column);
                 ++column;
             }
