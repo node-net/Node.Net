@@ -110,6 +110,7 @@
     <Compile Include="Extension.cs" />
     <Compile Include="Extensions\IChild.Extension.cs" />
     <Compile Include="Extensions\IDictionary.Extension.cs" />
+    <Compile Include="Extensions\IGetDataSet.Extension.cs" />
     <Compile Include="Extensions\Image.cs" />
     <Compile Include="Extensions\ImageSource.cs" />
     <Compile Include="Extensions\IMetaDataManager.Extension.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Framework\IDocument.cs" />
     <Compile Include="Framework\RecentFiles.cs" />
     <Compile Include="IChild.cs" />
+    <Compile Include="IGetDataSet.cs" />
     <Compile Include="IMetaData.cs" />
     <Compile Include="IMetaDataManager.cs" />
     <Compile Include="IFactory.cs" />
