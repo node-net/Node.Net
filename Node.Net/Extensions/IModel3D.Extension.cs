@@ -11,6 +11,12 @@ namespace Node.Net.Extensions
         {
             if (model3D != null)
             {
+                var metaData = model3D as IMetaData;
+                if(metaData != null && metaData.MetaData.Contains("ParentToWorld"))
+                {
+                    var parentToWorld = (Matrix3D)metaData.MetaData["ParentToWorld"];
+                    
+                }
                 var child = model3D as IChild;
                 if (child != null)
                 {
@@ -21,6 +27,10 @@ namespace Node.Net.Extensions
                         parentToWorld.Append(current_parent.LocalToParent);
                         var parent_as_child = current_parent as IChild;
                         current_parent = parent_as_child == null ? null : parent_as_child.GetNearestAncestor<IModel3D>();
+                    }
+                    if(metaData != null)
+                    {
+                        metaData.MetaData["ParentToWorld"] = parentToWorld;
                     }
                     return parentToWorld;
                 }

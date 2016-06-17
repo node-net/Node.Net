@@ -114,6 +114,7 @@
     <Compile Include="Extensions\IGetDataSet.Extension.cs" />
     <Compile Include="Extensions\Image.cs" />
     <Compile Include="Extensions\ImageSource.cs" />
+    <Compile Include="Extensions\IMetaData.Extension.cs" />
     <Compile Include="Extensions\IMetaDataManager.Extension.cs" />
     <Compile Include="Extensions\IModel3D.Extension.cs" />
     <Compile Include="Extensions\IParent.Extension.cs" />
