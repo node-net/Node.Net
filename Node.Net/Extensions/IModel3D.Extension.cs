@@ -11,12 +11,6 @@ namespace Node.Net.Extensions
         {
             if (model3D != null)
             {
-                var metaData = model3D as IMetaData;
-                if(metaData != null && metaData.MetaData.Contains("ParentToWorld"))
-                {
-                    var parentToWorld = (Matrix3D)metaData.MetaData["ParentToWorld"];
-                    return parentToWorld;
-                }
                 var child = model3D as IChild;
                 if (child != null)
                 {
@@ -28,10 +22,6 @@ namespace Node.Net.Extensions
                         var parent_as_child = current_parent as IChild;
                         current_parent = parent_as_child == null ? null : parent_as_child.GetNearestAncestor<IModel3D>();
                     }
-                    if(metaData != null)
-                    {
-                        metaData.MetaData["ParentToWorld"] = parentToWorld;
-                    }
                     return parentToWorld;
                 }
 
@@ -41,44 +31,18 @@ namespace Node.Net.Extensions
 
         public static Matrix3D GetLocalToWorld(IModel3D model3D)
         {
-            var metaData = model3D as IMetaData;
-            if (metaData != null && metaData.MetaData.Contains("LocalToWorld"))
-            {
-                return (Matrix3D)metaData.MetaData["LocalToWorld"];
-
-            }
-
             if (model3D != null)
             {
                 var localToWorld = Matrix3D.Multiply(model3D.LocalToParent, new Matrix3D());
                 localToWorld.Append(GetParentToWorld(model3D));
-
-                if (metaData != null)
-                {
-                    metaData.MetaData["LocalToWorld"] = localToWorld;
-                }
-
                 return localToWorld;
             }
-
-            
             return new Matrix3D();
         }
         public static Matrix3D GetWorldToLocal(IModel3D model3D)
         {
-            var metaData = model3D as IMetaData;
-            if (metaData != null && metaData.MetaData.Contains("WorldToLocal"))
-            {
-                return (Matrix3D)metaData.MetaData["WorldToLocal"];
-
-            }
-
             var worldToLocal = System.Windows.Media.Media3D.Matrix3D.Multiply(model3D.GetLocalToWorld(), new Matrix3D());
             worldToLocal.Invert();
-            if(metaData != null)
-            {
-                metaData.MetaData["WorldToLocal"] = worldToLocal;
-            }
             return worldToLocal;
         }
 

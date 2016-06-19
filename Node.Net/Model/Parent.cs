@@ -2,12 +2,7 @@
 
 namespace Node.Net.Model
 {
-    public class Parent : Generic.Parent<dynamic>
-    {
-
-    }
-    /*
-    public class Parent<T> : Dictionary<string, T>, IParent
+    public class Parent : Dictionary<string, dynamic>, IParent
     {
         public Dictionary<string,IChild> GetChildren()
         {
@@ -23,5 +18,5 @@ namespace Node.Net.Model
             }
             return children;
         }
-    }*/
+    }
 }
