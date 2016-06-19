@@ -12,6 +12,15 @@ namespace Node.Net.Controls
             ExpandButton = new Button { Content = "+" ,Width=30};
             CollapseButton = new Button { Content = "-",Width=30, Visibility=Visibility.Collapsed };
             Header = new Label { Content = "Header" };
+            DataContextChanged += CollapseDecorator_DataContextChanged;
+        }
+
+        private void CollapseDecorator_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Child != null)
+            {
+                Child.DataContext = DataContext;
+            }
         }
 
         public FrameworkElement Header { get; set; }
