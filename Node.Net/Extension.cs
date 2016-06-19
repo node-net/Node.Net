@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -27,7 +28,7 @@ namespace Node.Net
         #endregion
 
         #region ImageSource
-        public static ImageSource GetImageSource(this Image image) => Extensions.ImageExtension.GetImageSource(image);
+        public static ImageSource GetImageSource(this System.Drawing.Image image) => Extensions.ImageExtension.GetImageSource(image);
         public static void Save(this ImageSource imageSource, string filename) => Extensions.ImageSourceExtension.Save(imageSource, filename);
         public static ImageSource Crop(this ImageSource imageSource, int width, int height) => Extensions.ImageSourceExtension.Crop(imageSource, width, height);
         #endregion
@@ -72,6 +73,15 @@ namespace Node.Net
         public static double GetWorldOrientation(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldOrientation(model3D);
         public static double GetWorldTilt(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldTilt(model3D);
         public static double GetWorldSpin(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldSpin(model3D);
+        #endregion
+
+        #region IGetDataSet
+        public static string[] GetStringArray(this IGetDataSet getDataSet, string sql) => Extensions.IGetDataSetExtension.GetStringArray(getDataSet, sql);
+        #endregion
+
+        #region Grid
+        public static void AddRow(this Grid grid, string[] content, System.Windows.Media.Brush backgroundBrush = null, System.Windows.Media.Brush foregroundBrush = null) => Extensions.GridExtension.AddRow(grid, content, backgroundBrush, foregroundBrush);
+    
         #endregion
     }
 }
