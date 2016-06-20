@@ -70,7 +70,7 @@ namespace Node.Net
         public static Vector3D GetWorldXDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldXDirectionVector(model3D);
         public static Vector3D GetWorldYDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldYDirectionVector(model3D);
         public static Vector3D GetWorldZDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldZDirectionVector(model3D);
-        public static double GetWorldOrientation(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldOrientation(model3D);
+        public static double GetWorldZAxisRotation(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldZAxisRotation(model3D);
         public static double GetWorldTilt(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldTilt(model3D);
         public static double GetWorldSpin(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldSpin(model3D);
         #endregion

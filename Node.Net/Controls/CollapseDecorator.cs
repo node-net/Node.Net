@@ -53,9 +53,16 @@ namespace Node.Net.Controls
             ExpandButton.Click += ExpandButton_Click;
             CollapseButton.Click += CollapseButton_Click;
 
-            Children.Add(Child);
-            Grid.SetRow(Child, 1);
-            Grid.SetColumn(Child, 1);
+            var scrollViewer = new ScrollViewer {
+                Content = Child,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+            Children.Add(scrollViewer);
+            Grid.SetRow(scrollViewer, 1);
+            Grid.SetColumn(scrollViewer, 1);
+            //Children.Add(Child);
+            //Grid.SetRow(Child, 1);
+            //Grid.SetColumn(Child, 1);
         }
 
         private void CollapseButton_Click(object sender, RoutedEventArgs e)
