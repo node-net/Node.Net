@@ -27,6 +27,7 @@ namespace Node.Net.Controls
         public Button ExpandButton { get; set; }
         public Button CollapseButton { get; set; }
         public FrameworkElement Child { get; set; }
+        private Frame _frame;
 
         protected override void OnInitialized(EventArgs e)
         {
@@ -53,16 +54,24 @@ namespace Node.Net.Controls
             ExpandButton.Click += ExpandButton_Click;
             CollapseButton.Click += CollapseButton_Click;
 
+            _frame = new Frame() { JournalOwnership = System.Windows.Navigation.JournalOwnership.UsesParentJournal };
+            Children.Add(_frame);
+            Grid.SetRow(_frame, 1);
+            Grid.SetColumn(_frame, 1);
+            /*
             Children.Add(Child);
             Grid.SetRow(Child, 1);
             Grid.SetColumn(Child, 1);
+            */
         }
 
         private void CollapseButton_Click(object sender, RoutedEventArgs e)
         {
             CollapseButton.Visibility = Visibility.Collapsed;
             ExpandButton.Visibility = Visibility.Visible;
-            RowDefinitions[1].Height = new GridLength(0);
+            //RowDefinitions[1].Height = new GridLength(0);
+            RowDefinitions[1].Height = GridLength.Auto;
+            _frame.Content = null;
         }
 
         private void ExpandButton_Click(object sender, RoutedEventArgs e)
@@ -70,6 +79,7 @@ namespace Node.Net.Controls
             ExpandButton.Visibility = Visibility.Collapsed;
             CollapseButton.Visibility = Visibility.Visible;
             RowDefinitions[1].Height = GridLength.Auto;
+            _frame.Content = Child;
         }
     }
 }

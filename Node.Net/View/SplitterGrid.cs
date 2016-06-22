@@ -3,7 +3,6 @@
     public class SplitterGrid : System.Windows.Controls.Grid
     {
         private System.Windows.Controls.Orientation orientation = System.Windows.Controls.Orientation.Vertical;
-        //private System.Windows.GridLength firstGridLength = System.Windows.GridLength.Auto;
         private System.Collections.Generic.List<System.Windows.FrameworkElement> elements
             = new System.Collections.Generic.List<System.Windows.FrameworkElement>();
         protected System.Collections.Generic.List<System.Windows.GridLength> gridLengths
