@@ -30,6 +30,15 @@ namespace Node.Net.Extensions
             return default(T);
         }
 
+        public static IParent GetRootAncestor(IChild child)
+        {
+            if (child != null)
+            {
+                return child.GetFurthestAncestor<IParent>();
+            }
+            return null;
+        }
+
         public static string GetKey(IChild child)
         {
             var parentDictionary = child.Parent as IDictionary;
