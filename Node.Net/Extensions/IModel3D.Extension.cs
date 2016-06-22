@@ -136,7 +136,7 @@ namespace Node.Net.Extensions
         }
         public static Point3D GetWorldRotations(IModel3D model3D)
         {
-            return new Point3D(GetWorldSpin(model3D),GetWorldTilt(model3D),GetWorldOrientation(model3D));
+            return new Point3D(GetWorldSpin(model3D),GetWorldTilt(model3D), GetWorldZAxisRotation(model3D));
         }
         private static Point3D ProjectPointToPlane(Point3D point,Point3D pointOnPlane,Vector3D planeNormal)
             => point - Vector3D.DotProduct(point - pointOnPlane, planeNormal) * planeNormal;
@@ -161,7 +161,7 @@ namespace Node.Net.Extensions
             directionVectors.Add(TransformLocalToWorld(model3D, new Vector3D(0, 0, 1)));
             return directionVectors.ToArray();
         }
-        public static double GetWorldOrientation(IModel3D model3D)
+        public static double GetWorldZAxisRotation(IModel3D model3D)
         {
             return GetWorldOrientationF(model3D);
         }
@@ -372,7 +372,7 @@ namespace Node.Net.Extensions
             var worldZDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 0, 1));
 
             // Backout world orientation
-            var worldOrientation = GetWorldOrientation(model3D);
+            var worldOrientation = GetWorldZAxisRotation(model3D);
             var adjust = new Model.SpatialElement
             {
                 ZAxisRotation = $"{-worldOrientation} deg"
