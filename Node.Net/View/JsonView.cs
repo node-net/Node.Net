@@ -5,6 +5,7 @@ namespace Node.Net.View
     public class JsonView : TextBox// System.Windows.Controls.UserControl
     {
         public JsonView() { DataContextChanged += on_DataContextChanged; }
+        //private System.Windows.Controls.TextBox textBox = null;
 
         void on_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {

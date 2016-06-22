@@ -51,7 +51,6 @@ namespace Node.Net
         #region IChild
         public static T GetNearestAncestor<T>(this IChild child) => Extensions.IChildExtension.GetNearestAncestor<T>(child);
         public static T GetFurthestAncestor<T>(this IChild child) => Extensions.IChildExtension.GetFurthestAncestor<T>(child);
-        public static IParent GetRoot(this IChild child) => Extensions.IChildExtension.GetRootAncestor(child);
         public static string GetKey(this IChild child) => Extensions.IChildExtension.GetKey(child);
         public static string GetFullKey(this IChild child) => Extensions.IChildExtension.GetFullKey(child);
         #endregion
@@ -82,7 +81,7 @@ namespace Node.Net
 
         #region Grid
         public static void AddRow(this Grid grid, string[] content, System.Windows.Media.Brush backgroundBrush = null, System.Windows.Media.Brush foregroundBrush = null) => Extensions.GridExtension.AddRow(grid, content, backgroundBrush, foregroundBrush);
-
+    
         #endregion
     }
 }

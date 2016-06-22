@@ -32,6 +32,7 @@ namespace Node.Net.Extensions
                 if (manifest_resource_name.Contains(pattern))
                 {
                     var item = (T)Reader.Default.Load(type.GetStream(manifest_resource_name), manifest_resource_name);
+                    //T item = (T)XamlReader.Load(type.Assembly.GetManifestResourceStream(manifest_resource_name));
                     if (item != null)
                     {
                         results.Add(manifest_resource_name, item);

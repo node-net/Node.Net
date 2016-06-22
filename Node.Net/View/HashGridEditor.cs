@@ -33,6 +33,7 @@ namespace Node.Net.View
                     Grid.SetRow(nameLabel, row_index);
                     var svalue = "null";
                     if (!ReferenceEquals(null, hash[key])) { svalue = hash[key].ToString(); }
+                    //Label valueLabel = new Label() { Content = svalue };
                     var valueTextBox = new TextBox { Text = svalue };
                     valueTextBox.TextChanged += ValueTextBox_TextChanged;
                     valueTextBox.Tag = key;

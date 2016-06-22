@@ -61,7 +61,7 @@ namespace Node.Net.Extensions
                 return localToWorld;
             }
 
-
+            
             return new Matrix3D();
         }
         public static Matrix3D GetWorldToLocal(IModel3D model3D)
@@ -138,9 +138,9 @@ namespace Node.Net.Extensions
         {
             return new Point3D(GetWorldSpin(model3D),GetWorldTilt(model3D), GetWorldZAxisRotation(model3D));
         }
-        private static Point3D ProjectPointToPlane(Point3D point,Point3D pointOnPlane,Vector3D planeNormal)
+        private static Point3D ProjectPointToPlane(Point3D point,Point3D pointOnPlane,Vector3D planeNormal) 
             => point - Vector3D.DotProduct(point - pointOnPlane, planeNormal) * planeNormal;
-
+    
         public static Vector3D GetWorldXDirectionVector(IModel3D model3D)
         {
             return TransformLocalToWorld(model3D, new Vector3D(1, 0, 0));
@@ -169,6 +169,7 @@ namespace Node.Net.Extensions
         {
             var worldXDirectionVector = TransformLocalToWorld(model3D, new Vector3D(1, 0, 0));
             // Orientation is rotation about the +Z axis (in the XY plane)
+            //var worldDirectionVectors = GetWorldDirectionVectors(model3D);
 
             double orientation = 0;
             if (Abs(Round(worldXDirectionVector.Z, 4)) == 1)
@@ -296,7 +297,7 @@ namespace Node.Net.Extensions
             worldYDirectionVector = adjust.TransformLocalToParent(worldYDirectionVector);
             orientation = Vector3D.AngleBetween(new Vector3D(0, 1, 0), worldYDirectionVector);
             if (worldYDirectionVector.X > 0) orientation *= -1;
-
+            
 
             return orientation;
         }
@@ -341,9 +342,9 @@ namespace Node.Net.Extensions
             };
             worldDirectionVectors = adjust.TransformLocalToParent(worldDirectionVectors);
             */
+            
 
-
-            var localXAxisProjectedIntoWorldXZ =
+            var localXAxisProjectedIntoWorldXZ = 
                 new Point3D(worldDirectionVectors[0].X, 0, worldDirectionVectors[0].Z);
             var tilt = Vector3D.AngleBetween(
              new Vector3D(1, 0, 0),
@@ -361,7 +362,7 @@ namespace Node.Net.Extensions
             var tilt = 0.0;
             var worldZDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 0, 1));
             tilt = Vector3D.AngleBetween(
-                new Vector3D(0, 0, 1),
+                new Vector3D(0, 0, 1), 
                 new Vector3D(worldZDirectionVector.X,0,worldZDirectionVector.Z));
             if (worldZDirectionVector.X < 0) tilt *= -1;
             return tilt;
