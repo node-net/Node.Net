@@ -6,10 +6,13 @@ namespace Node.Net.Extensions
     {
         public static T GetNearestAncestor<T>(IChild child)
         {
-            if (child != null)
+            if (child != null && child.Parent != null)
             {
-                var ancestor = (T)child.Parent;
-                if (ancestor != null) return ancestor;
+                if (typeof(T).IsAssignableFrom(child.Parent.GetType()))
+                {
+                    var ancestor = (T)child.Parent;
+                    if (ancestor != null) return ancestor;
+                }
                 return GetNearestAncestor<T>(child.Parent as IChild);
             }
             return default(T);
