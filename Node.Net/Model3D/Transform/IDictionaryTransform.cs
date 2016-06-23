@@ -179,20 +179,26 @@ namespace Node.Net.Model3D.Transform
                 var rotationZ_degrees = GetRotationDegrees(value, "Orientation");
                 rotationZ = new Quaternion(new Vector3D(0, 0, 1), rotationZ_degrees);
             }
+
+            var zAxisRotation = new RotateTransform3D(new QuaternionRotation3D(rotationZ));
+            var parentToLocalzAxisRotation = zAxisRotation.Inverse;
+            var localYAxisPoint = parentToLocalzAxisRotation.Transform(new Point3D(0, 1, 0));
+            var localYAxis = new Vector3D(localYAxisPoint.X, localYAxisPoint.Y, localYAxisPoint.Z);
+            //var localYAxis = 
             if (value.Contains("YAxisRotation"))
             {
                 var rotationY_degrees = GetRotationDegrees(value, "YAxisRotation");
-                rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+                rotationY = new Quaternion(localYAxis, rotationY_degrees);
             }
             if (value.Contains("RotationY"))
             {
                 var rotationY_degrees = GetRotationDegrees(value, "RotationY");
-                rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+                rotationY = new Quaternion(localYAxis, rotationY_degrees);
             }
             if (value.Contains("Tilt"))
             {
                 var rotationY_degrees = GetRotationDegrees(value, "Tilt");
-                rotationY = new Quaternion(new Vector3D(0, 1, 0), rotationY_degrees);
+                rotationY = new Quaternion(localYAxis, rotationY_degrees);
             }
             if (value.Contains("XAxisRotation"))
             {
