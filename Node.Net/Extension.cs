@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -27,7 +28,7 @@ namespace Node.Net
         #endregion
 
         #region ImageSource
-        public static ImageSource GetImageSource(this Image image) => Extensions.ImageExtension.GetImageSource(image);
+        public static ImageSource GetImageSource(this System.Drawing.Image image) => Extensions.ImageExtension.GetImageSource(image);
         public static void Save(this ImageSource imageSource, string filename) => Extensions.ImageSourceExtension.Save(imageSource, filename);
         public static ImageSource Crop(this ImageSource imageSource, int width, int height) => Extensions.ImageSourceExtension.Crop(imageSource, width, height);
         #endregion
@@ -48,7 +49,9 @@ namespace Node.Net
         #endregion
 
         #region IChild
-        public static T GetFirstAncestor<T>(this IChild child) => Extensions.IChildExtension.GetFirstAncestor<T>(child);
+        public static T GetNearestAncestor<T>(this IChild child) => Extensions.IChildExtension.GetNearestAncestor<T>(child);
+        public static T GetFurthestAncestor<T>(this IChild child) => Extensions.IChildExtension.GetFurthestAncestor<T>(child);
+        public static IParent GetRoot(this IChild child) => Extensions.IChildExtension.GetRootAncestor(child);
         public static string GetKey(this IChild child) => Extensions.IChildExtension.GetKey(child);
         public static string GetFullKey(this IChild child) => Extensions.IChildExtension.GetFullKey(child);
         #endregion
@@ -68,9 +71,18 @@ namespace Node.Net
         public static Vector3D GetWorldXDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldXDirectionVector(model3D);
         public static Vector3D GetWorldYDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldYDirectionVector(model3D);
         public static Vector3D GetWorldZDirectionVector(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldZDirectionVector(model3D);
-        public static double GetWorldOrientation(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldOrientation(model3D);
+        public static double GetWorldZAxisRotation(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldZAxisRotation(model3D);
         public static double GetWorldTilt(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldTilt(model3D);
         public static double GetWorldSpin(this IModel3D model3D) => Extensions.IModel3DExtension.GetWorldSpin(model3D);
+        #endregion
+
+        #region IGetDataSet
+        public static string[] GetStringArray(this IGetDataSet getDataSet, string sql) => Extensions.IGetDataSetExtension.GetStringArray(getDataSet, sql);
+        #endregion
+
+        #region Grid
+        public static void AddRow(this Grid grid, string[] content, System.Windows.Media.Brush backgroundBrush = null, System.Windows.Media.Brush foregroundBrush = null) => Extensions.GridExtension.AddRow(grid, content, backgroundBrush, foregroundBrush);
+
         #endregion
     }
 }

@@ -11,16 +11,26 @@ namespace Node.Net.Extensions
         {
             if (model3D != null)
             {
+                var metaData = model3D as IMetaData;
+                if(metaData != null && metaData.MetaData.Contains("ParentToWorld"))
+                {
+                    var parentToWorld = (Matrix3D)metaData.MetaData["ParentToWorld"];
+                    return parentToWorld;
+                }
                 var child = model3D as IChild;
                 if (child != null)
                 {
                     var parentToWorld = new Matrix3D();
-                    var current_parent = child.GetFirstAncestor<IModel3D>();
+                    var current_parent = child.GetNearestAncestor<IModel3D>();
                     while(current_parent != null)
                     {
                         parentToWorld.Append(current_parent.LocalToParent);
                         var parent_as_child = current_parent as IChild;
-                        current_parent = parent_as_child == null ? null : parent_as_child.GetFirstAncestor<IModel3D>();
+                        current_parent = parent_as_child == null ? null : parent_as_child.GetNearestAncestor<IModel3D>();
+                    }
+                    if(metaData != null)
+                    {
+                        metaData.MetaData["ParentToWorld"] = parentToWorld;
                     }
                     return parentToWorld;
                 }
@@ -31,18 +41,44 @@ namespace Node.Net.Extensions
 
         public static Matrix3D GetLocalToWorld(IModel3D model3D)
         {
+            var metaData = model3D as IMetaData;
+            if (metaData != null && metaData.MetaData.Contains("LocalToWorld"))
+            {
+                return (Matrix3D)metaData.MetaData["LocalToWorld"];
+
+            }
+
             if (model3D != null)
             {
                 var localToWorld = Matrix3D.Multiply(model3D.LocalToParent, new Matrix3D());
                 localToWorld.Append(GetParentToWorld(model3D));
+
+                if (metaData != null)
+                {
+                    metaData.MetaData["LocalToWorld"] = localToWorld;
+                }
+
                 return localToWorld;
             }
+
+
             return new Matrix3D();
         }
         public static Matrix3D GetWorldToLocal(IModel3D model3D)
         {
+            var metaData = model3D as IMetaData;
+            if (metaData != null && metaData.MetaData.Contains("WorldToLocal"))
+            {
+                return (Matrix3D)metaData.MetaData["WorldToLocal"];
+
+            }
+
             var worldToLocal = System.Windows.Media.Media3D.Matrix3D.Multiply(model3D.GetLocalToWorld(), new Matrix3D());
             worldToLocal.Invert();
+            if(metaData != null)
+            {
+                metaData.MetaData["WorldToLocal"] = worldToLocal;
+            }
             return worldToLocal;
         }
 
@@ -100,11 +136,11 @@ namespace Node.Net.Extensions
         }
         public static Point3D GetWorldRotations(IModel3D model3D)
         {
-            return new Point3D(GetWorldSpin(model3D),GetWorldTilt(model3D),GetWorldOrientation(model3D));
+            return new Point3D(GetWorldSpin(model3D),GetWorldTilt(model3D), GetWorldZAxisRotation(model3D));
         }
-        private static Point3D ProjectPointToPlane(Point3D point,Point3D pointOnPlane,Vector3D planeNormal) 
+        private static Point3D ProjectPointToPlane(Point3D point,Point3D pointOnPlane,Vector3D planeNormal)
             => point - Vector3D.DotProduct(point - pointOnPlane, planeNormal) * planeNormal;
-    
+
         public static Vector3D GetWorldXDirectionVector(IModel3D model3D)
         {
             return TransformLocalToWorld(model3D, new Vector3D(1, 0, 0));
@@ -125,7 +161,7 @@ namespace Node.Net.Extensions
             directionVectors.Add(TransformLocalToWorld(model3D, new Vector3D(0, 0, 1)));
             return directionVectors.ToArray();
         }
-        public static double GetWorldOrientation(IModel3D model3D)
+        public static double GetWorldZAxisRotation(IModel3D model3D)
         {
             return GetWorldOrientationF(model3D);
         }
@@ -133,7 +169,6 @@ namespace Node.Net.Extensions
         {
             var worldXDirectionVector = TransformLocalToWorld(model3D, new Vector3D(1, 0, 0));
             // Orientation is rotation about the +Z axis (in the XY plane)
-            //var worldDirectionVectors = GetWorldDirectionVectors(model3D);
 
             double orientation = 0;
             if (Abs(Round(worldXDirectionVector.Z, 4)) == 1)
@@ -261,7 +296,7 @@ namespace Node.Net.Extensions
             worldYDirectionVector = adjust.TransformLocalToParent(worldYDirectionVector);
             orientation = Vector3D.AngleBetween(new Vector3D(0, 1, 0), worldYDirectionVector);
             if (worldYDirectionVector.X > 0) orientation *= -1;
-            
+
 
             return orientation;
         }
@@ -306,9 +341,9 @@ namespace Node.Net.Extensions
             };
             worldDirectionVectors = adjust.TransformLocalToParent(worldDirectionVectors);
             */
-            
 
-            var localXAxisProjectedIntoWorldXZ = 
+
+            var localXAxisProjectedIntoWorldXZ =
                 new Point3D(worldDirectionVectors[0].X, 0, worldDirectionVectors[0].Z);
             var tilt = Vector3D.AngleBetween(
              new Vector3D(1, 0, 0),
@@ -326,7 +361,7 @@ namespace Node.Net.Extensions
             var tilt = 0.0;
             var worldZDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 0, 1));
             tilt = Vector3D.AngleBetween(
-                new Vector3D(0, 0, 1), 
+                new Vector3D(0, 0, 1),
                 new Vector3D(worldZDirectionVector.X,0,worldZDirectionVector.Z));
             if (worldZDirectionVector.X < 0) tilt *= -1;
             return tilt;
@@ -337,7 +372,7 @@ namespace Node.Net.Extensions
             var worldZDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 0, 1));
 
             // Backout world orientation
-            var worldOrientation = GetWorldOrientation(model3D);
+            var worldOrientation = GetWorldZAxisRotation(model3D);
             var adjust = new Model.SpatialElement
             {
                 ZAxisRotation = $"{-worldOrientation} deg"
