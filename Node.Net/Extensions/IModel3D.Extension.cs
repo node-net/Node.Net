@@ -370,6 +370,7 @@ namespace Node.Net.Extensions
         {
             var tilt = 0.0;
             var worldZDirectionVector = TransformLocalToWorld(model3D, new Vector3D(0, 0, 1));
+            var worldXDirectionVector = TransformLocalToWorld(model3D, new Vector3D(1, 0, 0));
 
             // Backout world orientation
             var worldOrientation = GetWorldZAxisRotation(model3D);
@@ -384,11 +385,13 @@ namespace Node.Net.Extensions
                 worldZDirectionVector);
             if (worldOrientation > 90)
             {
-                if (worldZDirectionVector.Y > 0) tilt *= -1;
+                if (worldXDirectionVector.Z > 0) tilt *= -1;
+                //if (worldZDirectionVector.Y > 0) tilt *= -1;
             }
             else if(worldOrientation < -90)
             {
-                if (worldZDirectionVector.Y < 0) tilt *= -1;
+                if (worldXDirectionVector.Z > 0) tilt *= -1;
+                //if (worldZDirectionVector.Y < 0) tilt *= -1;
             }
             else
             {
