@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Node.Net.Extensions
 {
@@ -40,6 +42,30 @@ namespace Node.Net.Extensions
                 return child.GetFurthestAncestor<IParent>();
             }
             return null;
+        }
+
+        public static Dictionary<string, T> LocateAll<T>(IChild child)
+        {
+            var root = GetRootAncestor(child);
+            if(root != null)
+            {
+                return root.DeepCollect<T>();
+            }
+            return new Dictionary<string, T>();
+        }
+        
+
+        public static T LocateFirst<T>(IChild child)
+        {
+            var dictionary = LocateAll<T>(child);
+            if (dictionary.Count > 0)
+            {
+                foreach(var key in dictionary.Keys)
+                {
+                    return dictionary[key];
+                }
+            }
+            return default(T);
         }
 
         public static string GetKey(IChild child)

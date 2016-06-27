@@ -54,6 +54,8 @@ namespace Node.Net
         public static IParent GetRoot(this IChild child) => Extensions.IChildExtension.GetRootAncestor(child);
         public static string GetKey(this IChild child) => Extensions.IChildExtension.GetKey(child);
         public static string GetFullKey(this IChild child) => Extensions.IChildExtension.GetFullKey(child);
+        public static Dictionary<string, T> LocateAll<T>(this IChild child) => Extensions.IChildExtension.LocateAll<T>(child);
+        public static T LocateFirst<T>(this IChild child) => Extensions.IChildExtension.LocateFirst<T>(child);
         #endregion
 
         #region IModel3D
