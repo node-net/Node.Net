@@ -30,6 +30,13 @@ namespace Node.Net.Extensions
                     var further_ancestor = GetFurthestAncestor<T>(ancestor as IChild);
                     if (further_ancestor != null) return further_ancestor;
                 }
+                if(ancestor == null)
+                {
+                    if(typeof(T).IsAssignableFrom(child.GetType()))
+                    {
+                        ancestor = (T)child;
+                    }
+                }
                 return ancestor;
             }
             return default(T);
@@ -50,6 +57,11 @@ namespace Node.Net.Extensions
             if(root != null)
             {
                 return root.DeepCollect<T>();
+            }
+            var parent = child as IParent;
+            if(parent != null)
+            {
+                return parent.DeepCollect<T>();
             }
             return new Dictionary<string, T>();
         }
