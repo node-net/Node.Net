@@ -120,6 +120,7 @@
     <Compile Include="Extensions\IMetaDataManager.Extension.cs" />
     <Compile Include="Extensions\IModel3D.Extension.cs" />
     <Compile Include="Extensions\IParent.Extension.cs" />
+    <Compile Include="Extensions\IWriter.Extension.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\Type.Extension.cs" />
