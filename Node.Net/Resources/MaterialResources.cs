@@ -39,20 +39,23 @@ namespace Node.Net.Resources
             {
                 if(_knownColors == null)
                 {
-                    _knownColors = new List<string>(Enum.GetNames(typeof(Colors)));
+                    _knownColors = new List<string>();
+                    var properties = typeof(Colors).GetProperties();
+                    foreach(var property in properties)
+                    {
+                        _knownColors.Add(property.Name);
+                    }
                 }
                 return _knownColors;
             }
         }
-        private static bool IsKnownColor(string name)
+        public static bool IsKnownColor(string name)
         {
             try
             {
                 if (KnownColors.Contains(name))
                 {
-                    var color = (Color)ColorConverter.ConvertFromString(name);
-                    var dcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
-                    if (dcolor.Name == name) return true;
+                    return true;
                 }
             }
             catch (Exception exception)
