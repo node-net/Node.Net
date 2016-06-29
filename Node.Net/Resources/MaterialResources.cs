@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -31,13 +32,28 @@ namespace Node.Net.Resources
             return base.GetDynamicResource(name);
         }
 
+        private static List<string> _knownColors;
+        private static List<string> KnownColors
+        {
+            get
+            {
+                if(_knownColors == null)
+                {
+                    _knownColors = new List<string>(Enum.GetNames(typeof(Colors)));
+                }
+                return _knownColors;
+            }
+        }
         private static bool IsKnownColor(string name)
         {
             try
             {
-                var color = (Color)ColorConverter.ConvertFromString(name);
-                var dcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
-                if (dcolor.Name == name) return true;
+                if (KnownColors.Contains(name))
+                {
+                    var color = (Color)ColorConverter.ConvertFromString(name);
+                    var dcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+                    if (dcolor.Name == name) return true;
+                }
             }
             catch (Exception exception)
             {
