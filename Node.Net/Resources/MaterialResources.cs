@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Resources
@@ -38,7 +39,10 @@ namespace Node.Net.Resources
                 var dcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
                 if (dcolor.Name == name) return true;
             }
-            catch (System.FormatException) { }
+            catch (Exception exception)
+            {
+                throw new Exception($"{typeof(MaterialResources).FullName}.IsKnownColor('{name}')", exception);
+            }
 
             return false;
         }
