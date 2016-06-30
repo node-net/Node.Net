@@ -54,6 +54,8 @@ namespace Node.Net
         public static IParent GetRoot(this IChild child) => Extensions.IChildExtension.GetRootAncestor(child);
         public static string GetKey(this IChild child) => Extensions.IChildExtension.GetKey(child);
         public static string GetFullKey(this IChild child) => Extensions.IChildExtension.GetFullKey(child);
+        public static Dictionary<string, T> LocateAll<T>(this IChild child) => Extensions.IChildExtension.LocateAll<T>(child);
+        public static T LocateFirst<T>(this IChild child) => Extensions.IChildExtension.LocateFirst<T>(child);
         #endregion
 
         #region IModel3D
@@ -83,6 +85,10 @@ namespace Node.Net
         #region Grid
         public static void AddRow(this Grid grid, string[] content, System.Windows.Media.Brush backgroundBrush = null, System.Windows.Media.Brush foregroundBrush = null) => Extensions.GridExtension.AddRow(grid, content, backgroundBrush, foregroundBrush);
 
+        #endregion
+
+        #region IWriter
+        public static void Save(this IWriter writer, string filename, object value) => Extensions.IWriterExtension.Save(writer, filename, value);
         #endregion
     }
 }

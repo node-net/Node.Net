@@ -35,13 +35,20 @@ namespace Node.Net.Resources
 
         protected virtual object GetDynamicResource(string name)
         {
-            object resource=null;
-            foreach (var child in Children)
+            try
             {
-                resource = child.GetResource(name);
-                if (resource != null) return resource;
+                object resource = null;
+                foreach (var child in Children)
+                {
+                    resource = child.GetResource(name);
+                    if (resource != null) return resource;
+                }
+                return resource;
             }
-            return resource;
+            catch(Exception exception)
+            {
+                throw new Exception($"{GetType().FullName}.GetDynamicResource('{name}')", exception);
+            }
         }
 
         public void ImportManifestResources<T>(Type type, string pattern, KeyValuePair<string, string>[] searchReplacePatterns = null)
