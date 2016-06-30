@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Node.Net.Extensions
 {
@@ -6,10 +8,13 @@ namespace Node.Net.Extensions
     {
         public static T GetNearestAncestor<T>(IChild child)
         {
-            if (child != null)
+            if (child != null && child.Parent != null)
             {
-                var ancestor = (T)child.Parent;
-                if (ancestor != null) return ancestor;
+                if (typeof(T).IsAssignableFrom(child.Parent.GetType()))
+                {
+                    var ancestor = (T)child.Parent;
+                    if (ancestor != null) return ancestor;
+                }
                 return GetNearestAncestor<T>(child.Parent as IChild);
             }
             return default(T);
@@ -25,6 +30,13 @@ namespace Node.Net.Extensions
                     var further_ancestor = GetFurthestAncestor<T>(ancestor as IChild);
                     if (further_ancestor != null) return further_ancestor;
                 }
+                if(ancestor == null)
+                {
+                    if(typeof(T).IsAssignableFrom(child.GetType()))
+                    {
+                        ancestor = (T)child;
+                    }
+                }
                 return ancestor;
             }
             return default(T);
@@ -37,6 +49,35 @@ namespace Node.Net.Extensions
                 return child.GetFurthestAncestor<IParent>();
             }
             return null;
+        }
+
+        public static Dictionary<string, T> LocateAll<T>(IChild child)
+        {
+            var root = GetRootAncestor(child);
+            if(root != null)
+            {
+                return root.DeepCollect<T>();
+            }
+            var parent = child as IParent;
+            if(parent != null)
+            {
+                return parent.DeepCollect<T>();
+            }
+            return new Dictionary<string, T>();
+        }
+        
+
+        public static T LocateFirst<T>(IChild child)
+        {
+            var dictionary = LocateAll<T>(child);
+            if (dictionary.Count > 0)
+            {
+                foreach(var key in dictionary.Keys)
+                {
+                    return dictionary[key];
+                }
+            }
+            return default(T);
         }
 
         public static string GetKey(IChild child)

@@ -31,11 +31,32 @@ namespace Node.Net.Model
             {
                 var rotationZ = new Quaternion(new Vector3D(0, 0, 1),
                     Measurement.Angle.Parse(ZAxisRotation)[Measurement.AngularUnit.Degrees]);
-                var rotationY = new Quaternion( new Vector3D(0,1,0),
+                var rotationY = new Quaternion( LocalYAxis,
                     Measurement.Angle.Parse(YAxisRotation)[Measurement.AngularUnit.Degrees]);
-                var rotationX = new Quaternion(new Vector3D(1, 0, 0),
+                var rotationX = new Quaternion(LocalXAxis,
                     Measurement.Angle.Parse(XAxisRotation)[Measurement.AngularUnit.Degrees]);
                 return Quaternion.Multiply(rotationX, Quaternion.Multiply(rotationY, rotationZ));
+            }
+        }
+
+        public Vector3D LocalYAxis
+        {
+            get
+            {
+                var z = Measurement.Angle.Parse(ZAxisRotation)[Measurement.AngularUnit.Degrees];
+                var transform = new Node.Net.Model3D.Transform3D { RotationOTS = new Point3D(z, 0, 0) };
+                return transform.Transform(new Vector3D(0, 1, 0), Model3D.Transform3D.TransformType.LocalToParent);
+            }
+        }
+
+        public Vector3D LocalXAxis
+        {
+            get
+            {
+                var z = Measurement.Angle.Parse(ZAxisRotation)[Measurement.AngularUnit.Degrees];
+                var y = Measurement.Angle.Parse(YAxisRotation)[Measurement.AngularUnit.Degrees];
+                var transform = new Node.Net.Model3D.Transform3D { RotationOTS = new Point3D(z, y, 0) };
+                return transform.Transform(new Vector3D(0, 1, 0), Model3D.Transform3D.TransformType.LocalToParent);
             }
         }
 
