@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Node.Net.Controls.StackPanels
 {
@@ -9,6 +10,11 @@ namespace Node.Net.Controls.StackPanels
             DataContextChanged += _DataContextChanged;
         }
 
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            Update();
+        }
         private void _DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
             Update();
