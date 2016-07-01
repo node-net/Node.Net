@@ -18,6 +18,7 @@ namespace Node.Net
         public static void Set(this IDictionary dictionary, string key, object value) => Extensions.IDictionaryExtension.Set(dictionary, key, value);
         public static string[] Find(this IDictionary dictionary, IFilter filter) => Extensions.IDictionaryExtension.Find(dictionary, filter);
         public static IDictionary Collect(this IDictionary dictionary, IFilter filter) => Extensions.IDictionaryExtension.Collect(dictionary, filter);
+        public static bool IsChildKey(this IDictionary dictionary, object key) => Extensions.IDictionaryExtension.IsChildKey(dictionary, key);
         #endregion
 
         #region TextReader

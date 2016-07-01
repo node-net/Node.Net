@@ -13,7 +13,10 @@ namespace Node.Net.Controls.StackPanels
             {
                 foreach (var key in data.Keys)
                 {
-                    values.Add(data[key].ToString());
+                    if(!data.IsChildKey(key))
+                    {
+                        values.Add(data[key].ToString());
+                    }
                 }
             }
             return values.ToArray();

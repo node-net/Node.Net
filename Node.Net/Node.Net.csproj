@@ -102,6 +102,7 @@
     <Compile Include="Controls\TreeView.cs" />
     <Compile Include="Controls\TreeViewItem.cs" />
     <Compile Include="Controls\TreeViewItemDetailed.cs" />
+    <Compile Include="Controls\TreeViewItems\IDictionaryTreeViewItem.cs" />
     <Compile Include="Controls\TreeViewItems\TreeViewItem.cs" />
     <Compile Include="Controls\TypeInstanceList.cs" />
     <Compile Include="Controls\ViewTester.cs" />

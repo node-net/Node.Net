@@ -7,6 +7,7 @@ namespace Node.Net.Controls.StackPanels
     {
         public StackPanel()
         {
+            Orientation = System.Windows.Controls.Orientation.Horizontal;
             DataContextChanged += _DataContextChanged;
         }
 
@@ -22,7 +23,8 @@ namespace Node.Net.Controls.StackPanels
         private void Update()
         {
             Children.Clear();
-            foreach (FrameworkElement element in GetFrameworkElements())
+            var elements = GetFrameworkElements();
+            foreach (FrameworkElement element in elements)
             {
                 Children.Add(element);
             }

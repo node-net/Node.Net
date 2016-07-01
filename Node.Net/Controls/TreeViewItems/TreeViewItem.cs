@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Node.Net.Controls.TreeViewItems
+﻿namespace Node.Net.Controls.TreeViewItems
 {
     public class TreeViewItem : System.Windows.Controls.TreeViewItem
     {
