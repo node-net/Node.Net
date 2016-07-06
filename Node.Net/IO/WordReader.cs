@@ -94,7 +94,7 @@ namespace Node.Net.IO
             return word;
         }
 
-        public long ReadInt32()
+        public int ReadInt32()
         {
             return System.Convert.ToInt32(ReadWord(), System.Globalization.CultureInfo.CurrentCulture);
         }
