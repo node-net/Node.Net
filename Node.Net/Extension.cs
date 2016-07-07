@@ -18,6 +18,7 @@ namespace Node.Net
         public static void Set(this IDictionary dictionary, string key, object value) => Extensions.IDictionaryExtension.Set(dictionary, key, value);
         public static string[] Find(this IDictionary dictionary, IFilter filter) => Extensions.IDictionaryExtension.Find(dictionary, filter);
         public static IDictionary Collect(this IDictionary dictionary, IFilter filter) => Extensions.IDictionaryExtension.Collect(dictionary, filter);
+        public static bool IsChildKey(this IDictionary dictionary, object key) => Extensions.IDictionaryExtension.IsChildKey(dictionary, key);
         #endregion
 
         #region TextReader
@@ -61,6 +62,7 @@ namespace Node.Net
         #region IModel3D
         public static Matrix3D GetParentToWorld(this IModel3D model3D) => Extensions.IModel3DExtension.GetParentToWorld(model3D);
         public static Matrix3D GetLocalToWorld(this IModel3D model3D) => Extensions.IModel3DExtension.GetLocalToWorld(model3D);
+        
         public static Point3D TransformLocalToWorld(this IModel3D model3D, Point3D local) => Extensions.IModel3DExtension.TransformLocalToWorld(model3D, local);
         public static Vector3D TransformLocalToWorld(this IModel3D model3D, Vector3D local) => Extensions.IModel3DExtension.TransformLocalToWorld(model3D, local);
         public static Point3D TransformLocalToParent(this IModel3D model3D, Point3D local) => Extensions.IModel3DExtension.TransformLocalToParent(model3D, local);
@@ -89,6 +91,10 @@ namespace Node.Net
 
         #region IWriter
         public static void Save(this IWriter writer, string filename, object value) => Extensions.IWriterExtension.Save(writer, filename, value);
+        #endregion
+
+        #region Matrix3D
+        public static Matrix3D RotateLocal(this Matrix3D matrix, Vector3D axis, double rotation_degrees) => Extensions.Matrix3DExtension.RotateLocal(matrix,axis, rotation_degrees);
         #endregion
     }
 }
