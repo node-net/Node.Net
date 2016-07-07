@@ -151,6 +151,7 @@
     <Compile Include="IO\FileList.cs" />
     <Compile Include="IO\TemporaryDirectory.cs" />
     <Compile Include="IO\TextReader.Extension.cs" />
+    <Compile Include="IO\WordReader.cs" />
     <Compile Include="IParent.cs" />
     <Compile Include="IReader.cs" />
     <Compile Include="IRepository.cs" />
