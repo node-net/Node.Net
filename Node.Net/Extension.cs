@@ -89,9 +89,11 @@ namespace Node.Net
 
         #endregion
 
+        /*
         #region IWriter
         public static void Save(this IWriter writer, string filename, object value) => Extensions.IWriterExtension.Save(writer, filename, value);
         #endregion
+        */
 
         #region Matrix3D
         public static Matrix3D RotateLocal(this Matrix3D matrix, Vector3D axis, double rotation_degrees) => Extensions.Matrix3DExtension.RotateLocal(matrix,axis, rotation_degrees);
