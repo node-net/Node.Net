@@ -66,8 +66,10 @@
     <Compile Include="Collections\DictionaryTypeDescriptor.cs" />
     <Compile Include="Collections\Document.cs" />
     <Compile Include="Collections\Documents.cs" />
+    <Compile Include="Collections\Extensions.cs" />
     <Compile Include="Collections\Hash.cs" />
     <Compile Include="Collections\HashBase.cs" />
+    <Compile Include="Collections\IDictionary.Extension.cs" />
     <Compile Include="Collections\IFilter.cs" />
     <Compile Include="Collections\Internal\PropertyDescriptor.cs" />
     <Compile Include="Collections\KeyValuePair.cs" />
