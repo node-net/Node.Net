@@ -21,8 +21,8 @@ namespace Node.Net.Data.Readers
 
         public static KeyValuePair<Stream,byte[]> GetStreamSignature(Stream stream,int maxBytes = 128)
         {
-            MemoryStream memory = null;
-            if (!stream.CanSeek) memory = new MemoryStream();
+            //MemoryStream memory = null;
+            //if (!stream.CanSeek) memory = new MemoryStream();
 
             var bytes = new List<byte>();
             var ibyte = stream.ReadByte();
@@ -35,16 +35,16 @@ namespace Node.Net.Data.Readers
 
                     break;
                 }
-                if (memory != null) memory.WriteByte((byte)ibyte);
+                //if (memory != null) memory.WriteByte((byte)ibyte);
                 ibyte = stream.ReadByte();
             }
 
-            if (stream.CanSeek)
-            {
+            //if (stream.CanSeek)
+            //{
                 stream.Seek(0, SeekOrigin.Begin);
                 return new KeyValuePair<Stream, byte[]>(stream, bytes.ToArray());
-            }
-            return new KeyValuePair<Stream, byte[]>(memory, bytes.ToArray());
+            //}
+            //return new KeyValuePair<Stream, byte[]>(memory, bytes.ToArray());
         }
 
         public static byte[] HexStringToByteArray(string hex_in)

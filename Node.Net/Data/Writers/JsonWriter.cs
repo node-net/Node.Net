@@ -8,7 +8,7 @@ namespace Node.Net.Data.Writers
 {
     class JsonWriter : IWrite
     {
-        public bool IgnoreNullValues;
+        //public bool IgnoreNullValues;
         public List<Type> IgnoreTypes = new List<Type>();
         public void Write(Stream stream, object value)
         {
@@ -71,7 +71,7 @@ namespace Node.Net.Data.Writers
             foreach (object item in enumerable)
             {
                 var skip = false;
-                if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                //if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
                 if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
                 {
@@ -98,7 +98,7 @@ namespace Node.Net.Data.Writers
             {
                 var item = dictionary[key];
                 var skip = false;
-                if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                //if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
                 if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
                 {

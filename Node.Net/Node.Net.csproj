@@ -112,6 +112,7 @@
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\Readers\BytesReader.cs" />
     <Compile Include="Data\Readers\ImageSourceReader.cs" />
+    <Compile Include="Data\Readers\IRead.Extension.cs" />
     <Compile Include="Data\Readers\JsonReader.cs" />
     <Compile Include="Data\Readers\LinesReader.cs" />
     <Compile Include="Data\Readers\PrimitiveReader.cs" />
