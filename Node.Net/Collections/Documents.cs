@@ -69,7 +69,7 @@ namespace Node.Net.Collections
 
         public void Open(string name)
         {
-            Open(name, DefaultDocumentType, Extensions.StreamExtension.GetStream(name));
+            Open(name, DefaultDocumentType, Node.Net.Extensions.StreamExtension.GetStream(name));
         }
 
         private void Open(string name, Type documentType, Stream stream)
