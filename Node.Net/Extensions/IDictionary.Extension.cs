@@ -136,15 +136,5 @@ namespace Node.Net.Extensions
             }
             return result;
         }
-
-        public static bool IsChildKey(IDictionary dictionary, object key)
-        {
-            if (dictionary == null) return false;
-            if (!dictionary.Contains(key)) return false;
-            var value = dictionary[key];
-            if (value == null) { return false; }
-            else if (value.GetType().IsValueType || value.GetType() == typeof(string)) { return false; }
-            return true;
-        }
     }
 }
