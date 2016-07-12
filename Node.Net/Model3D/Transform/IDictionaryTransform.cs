@@ -9,7 +9,6 @@ namespace Node.Net.Model3D.Transform
         {
             if (value.Contains("Visual3D"))
             {
-                //return renderer.Resources[value["Visual3D"].ToString()] as Visual3D;
                 return renderer.Resources.GetResource(value["Visual3D"].ToString()) as Visual3D;
             }
             else
@@ -131,7 +130,7 @@ namespace Node.Net.Model3D.Transform
                     Geometry = geometry,
                     Material = renderer.GetMaterial(value),
                     BackMaterial = renderer.GetBackMaterial(value),
-                    Transform = new ScaleTransform3D(ToScale(renderer, value))// ToTransform3D(renderer, value)// renderer.GetTransform3D(value)
+                    Transform = new ScaleTransform3D(ToScale(renderer, value))
                 };
             }
 
@@ -151,12 +150,7 @@ namespace Node.Net.Model3D.Transform
         public static System.Windows.Media.Media3D.Transform3D ToTransform3D_NoScale(IRenderer renderer, System.Collections.IDictionary value)
         {
             var transformGroup = new Transform3DGroup();
-            //transformGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), GetZAxisRotationDegrees(value))));
-            //transformGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), GetYAxisRotationDegrees(value))));
             transformGroup.Children.Add(GetRotateTransform3D(value));
-            //var translateTransform = new TranslateTransform3D(renderer.GetTranslation(value));
-            //var translation = renderer.GetTranslation(value);
-            //var center = new Point3D(translation.X, translation.Y, translation.Z);
             transformGroup.Children.Add(new TranslateTransform3D(renderer.GetTranslation(value)));
             return transformGroup;
         }
@@ -164,15 +158,14 @@ namespace Node.Net.Model3D.Transform
         public static System.Windows.Media.Media3D.Transform3D GetRotateTransform3D(IDictionary value)
         {
             return GetRotateTransform3DAxis2(value);
-            //return GetRotateTransform3DQuaternions(value);
         }
 
         public static System.Windows.Media.Media3D.Transform3D GetRotateTransform3DAxis(IDictionary value)
         {
             var transformGroup = new Transform3DGroup();
-            double z = GetZAxisRotationDegrees(value);
-            double y = GetYAxisRotationDegrees(value);
-            double x = GetXAxisRotationDegrees(value);
+            var z = GetZAxisRotationDegrees(value);
+            var y = GetYAxisRotationDegrees(value);
+            var x = GetXAxisRotationDegrees(value);
             transformGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), z)));
             transformGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), y)));
             transformGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), x)));
@@ -181,9 +174,9 @@ namespace Node.Net.Model3D.Transform
         public static System.Windows.Media.Media3D.Transform3D GetRotateTransform3DAxis2(IDictionary value)
         {
             var transformGroup = new Transform3DGroup();
-            double z = GetZAxisRotationDegrees(value);
-            double y = GetYAxisRotationDegrees(value);
-            double x = GetXAxisRotationDegrees(value);
+            var z = GetZAxisRotationDegrees(value);
+            var y = GetYAxisRotationDegrees(value);
+            var x = GetXAxisRotationDegrees(value);
             transformGroup.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), z)));
 
             var otransform = new Transform3D { RotationOTS = new Point3D(z, 0, 0) };
