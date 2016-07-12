@@ -128,8 +128,12 @@
     <Compile Include="Data\Repositories\IRepository.Extension.cs" />
     <Compile Include="Data\Repositories\ManifestResourcesRepository.cs" />
     <Compile Include="Data\Repositories\MemoryRepository.cs" />
+    <Compile Include="Data\Writers\BitmapImageWriter.cs" />
     <Compile Include="Data\Writers\JsonWriter.cs" />
     <Compile Include="Data\Writers\PrimitiveWriter.cs" />
+    <Compile Include="Data\Writers\StringWriter.cs" />
+    <Compile Include="Data\Writers\Writer.cs" />
+    <Compile Include="Data\Writers\XmlWriter.cs" />
     <Compile Include="Diagnostics\ConsoleCommand.cs" />
     <Compile Include="Diagnostics\Executor.cs" />
     <Compile Include="Documents\Documents.cs" />
