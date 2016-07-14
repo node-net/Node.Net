@@ -46,7 +46,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -129,16 +128,7 @@
     <Compile Include="Data\Repositories\IRepository.Extension.cs" />
     <Compile Include="Data\Repositories\ManifestResourcesRepository.cs" />
     <Compile Include="Data\Repositories\MemoryRepository.cs" />
-    <Compile Include="Data\Security\Credential.cs" />
-    <Compile Include="Data\Security\Credentials.cs" />
-    <Compile Include="Data\Security\CurrentUserProtection.cs" />
-    <Compile Include="Data\Security\ICredential.cs" />
-    <Compile Include="Data\Security\ICredentials.cs" />
-    <Compile Include="Data\Security\IProtection.cs" />
-    <Compile Include="Data\Security\IProtection.Extension.cs" />
-    <Compile Include="Data\Services\GMail.cs" />
     <Compile Include="Data\Writers\BitmapImageWriter.cs" />
-    <Compile Include="Data\Writers\IWrite.Extension.cs" />
     <Compile Include="Data\Writers\JsonWriter.cs" />
     <Compile Include="Data\Writers\PrimitiveWriter.cs" />
     <Compile Include="Data\Writers\StringWriter.cs" />
@@ -282,7 +272,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

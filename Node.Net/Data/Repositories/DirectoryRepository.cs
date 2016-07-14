@@ -7,7 +7,7 @@ namespace Node.Net.Data.Repositories
         public string Directory { get; set; } = $"{Path.GetTempPath()}DirectoryRepository";
 
         public IRead Reader => new Readers.Reader();
-        public IWrite Writer => new Writers.Writer();
+        public IWrite Writer => new Writers.PrimitiveWriter();
 
         public object Get(string key)
         {
