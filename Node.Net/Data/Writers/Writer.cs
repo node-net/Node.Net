@@ -10,6 +10,18 @@ namespace Node.Net.Data.Writers
 {
     public class Writer : IWrite
     {
+        private static Writer _default;
+        public static Writer Default
+        {
+            get
+            {
+                if(_default == null)
+                {
+                    _default = new Writer();
+                }
+                return _default;
+            }
+        }
         private Dictionary<Type, IWrite> writersMap;
         public Dictionary<Type, IWrite> WritersMap
         {
