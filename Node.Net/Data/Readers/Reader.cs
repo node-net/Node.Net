@@ -6,6 +6,18 @@ namespace Node.Net.Data.Readers
 {
     public class Reader : IRead
     {
+        private static Reader _default;
+        public static Reader Default
+        {
+            get
+            {
+                if(_default == null)
+                {
+                    _default = new Reader();
+                }
+                return _default;
+            }
+        }
         private Dictionary<string, IRead> textSignatureReaders;
         public Dictionary<string, IRead> TextSignatureReaders
         {
