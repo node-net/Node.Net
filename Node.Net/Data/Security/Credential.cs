@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security;
 
 namespace Node.Net.Data.Security
 {
-    public class Credential : Dictionary<string, string>, ICredential
+    public class Credential : Dictionary<string, string>, ICredential, Model.IModel
     {
-        public Credential() { }
-        public Credential(IProtection protection) { _protection = protection; }
-        private IProtection _protection = new CurrentUserProtection();
+        public Credential() { this.SetTypeName(); }// this.Set(nameof(Type),nameof(Credential)); }
+        public Credential(IProtection protection) { this.SetTypeName();  _protection = protection; }
+        private readonly IProtection _protection = new CurrentUserProtection();
         public IProtection Protection
         {
             get
@@ -15,31 +16,9 @@ namespace Node.Net.Data.Security
                 return _protection;
             }
         }
-        public string Domain
-        {
-            get
-            {
-                if (ContainsKey(nameof(Domain))) return this[nameof(Domain)].ToString();
-                return string.Empty;
-            }
-            set
-            {
-                this[nameof(Domain)] = value;
-            }
-        }
 
-        public string UserName
-        {
-            get
-            {
-                if (ContainsKey(nameof(UserName))) return this[nameof(UserName)].ToString();
-                return string.Empty;
-            }
-            set
-            {
-                this[nameof(UserName)] = value;
-            }
-        }
+        public string Domain { get { return this.Get<string>(nameof(Domain)); }set { this.Set(nameof(Domain), value); } }
+        public string UserName { get { return this.Get<string>(nameof(UserName)); } set { this.Set(nameof(UserName),value); } }
 
         public SecureString Password
         {

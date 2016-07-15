@@ -113,7 +113,12 @@
     <Compile Include="Data\Assembly.Extension.cs" />
     <Compile Include="Data\Extensions.cs" />
     <Compile Include="Data\Interfaces.cs" />
+    <Compile Include="Data\Model\IModel.cs" />
+    <Compile Include="Data\Model\IModel.Extension.cs" />
+    <Compile Include="Data\Model\MailMessage.cs" />
     <Compile Include="Data\Readers\BytesReader.cs" />
+    <Compile Include="Data\Readers\DictionaryTypeConverter.cs" />
+    <Compile Include="Data\Readers\IDictionaryTypeConverter.cs" />
     <Compile Include="Data\Readers\ImageSourceReader.cs" />
     <Compile Include="Data\Readers\IRead.Extension.cs" />
     <Compile Include="Data\Readers\JsonReader.cs" />
@@ -131,11 +136,13 @@
     <Compile Include="Data\Repositories\MemoryRepository.cs" />
     <Compile Include="Data\Security\Credential.cs" />
     <Compile Include="Data\Security\Credentials.cs" />
+    <Compile Include="Data\Security\CurrentUserCredentials.cs" />
     <Compile Include="Data\Security\CurrentUserProtection.cs" />
     <Compile Include="Data\Security\ICredential.cs" />
     <Compile Include="Data\Security\ICredentials.cs" />
     <Compile Include="Data\Security\IProtection.cs" />
     <Compile Include="Data\Security\IProtection.Extension.cs" />
+    <Compile Include="Data\Security\SymmetricAlgorithm.Extension.cs" />
     <Compile Include="Data\Services\GMail.cs" />
     <Compile Include="Data\Writers\BitmapImageWriter.cs" />
     <Compile Include="Data\Writers\IWrite.Extension.cs" />

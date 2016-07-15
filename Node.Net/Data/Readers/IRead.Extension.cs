@@ -11,7 +11,9 @@ namespace Node.Net.Data.Readers
             {
                 using (FileStream stream = new FileStream(value, FileMode.Open))
                 {
-                    return read.Read(stream);
+                    var result = read.Read(stream);
+                    stream.Close();
+                    return result;
                 }
             }
             using (MemoryStream memory = new MemoryStream(Encoding.UTF8.GetBytes(value)))

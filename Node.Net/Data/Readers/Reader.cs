@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace Node.Net.Data.Readers
 {
     public class Reader : IRead
     {
+        public Reader() { }
+        public Reader(Assembly assembly)
+        {
+            DictionaryTypeConverter = new DictionaryTypeConverter(assembly);
+        }
         private static Reader _default;
         public static Reader Default
         {
@@ -56,6 +63,21 @@ namespace Node.Net.Data.Readers
             }
             set { binarySignatureReaders = value; }
         }
+
+        private IDictionaryTypeConverter dictionaryTypeConverter = new DictionaryTypeConverter(typeof(DictionaryTypeConverter).Assembly);
+        public IDictionaryTypeConverter DictionaryTypeConverter
+        {
+            get { return dictionaryTypeConverter; }
+            set {
+                if(value == null)
+                {
+                    throw new System.Exception("setting DictionaryTypeConverter to null");
+
+                }
+                dictionaryTypeConverter = value;
+            }
+        }
+
         public object Read(Stream stream_original)
         {
             var kvp = BytesReader.GetStreamSignature(stream_original);
@@ -65,7 +87,7 @@ namespace Node.Net.Data.Readers
             {
                 if (SignatureMatches(signature, binary_signature))
                 {
-                    return BinarySignatureReaders[binary_signature].Read(stream);
+                    return Convert(BinarySignatureReaders[binary_signature].Read(stream));
                 }
             }
             var text_signature = Encoding.UTF8.GetString(kvp.Value).Trim();
@@ -76,11 +98,21 @@ namespace Node.Net.Data.Readers
                     var index = text_signature.IndexOf(key);
                     if (index == 0 || index == 1)
                     {
-                        return TextSignatureReaders[key].Read(stream);
+                        return Convert(TextSignatureReaders[key].Read(stream));
                     }
                 }
             }
             return new BytesReader().Read(stream);
+        }
+
+        private object Convert(object source)
+        {
+            var dictionary = source as IDictionary;
+            if(dictionary != null && DictionaryTypeConverter != null)
+            {
+                return DictionaryTypeConverter.Convert(dictionary);
+            }
+            return source;
         }
 
         private static bool SignatureMatches(byte[] test_signature, byte[] target_signature)
@@ -89,19 +121,6 @@ namespace Node.Net.Data.Readers
             var hex_target_signature = BytesReader.ByteArrayToHexString(target_signature);
             if (hex_test_signature.IndexOf(hex_target_signature) == 0) return true;
             return false;
-            /*
-            Assert.True(hex_signature.Contains(hex), hex_signature);
-
-            if (signature.Length >= binary_signature.Length)
-            {
-                for(int i = 0; i < binary_signature.Length; ++i)
-                {
-                    if (binary_signature[i] != signature[i]) return false;
-                }
-                return true;
-            }
-            return false;
-            */
         }
     }
 }
