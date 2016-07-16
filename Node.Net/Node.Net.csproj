@@ -136,6 +136,9 @@
     <Compile Include="Data\Repositories\MemoryRepository.cs" />
     <Compile Include="Data\Security\Credential.cs" />
     <Compile Include="Data\Security\Credentials.cs" />
+    <Compile Include="Data\Security\CredentialsList.cs" />
+    <Compile Include="Data\Security\CredentialsView.cs" />
+    <Compile Include="Data\Security\CredentialView.cs" />
     <Compile Include="Data\Security\CurrentUserCredentials.cs" />
     <Compile Include="Data\Security\CurrentUserProtection.cs" />
     <Compile Include="Data\Security\ICredential.cs" />
@@ -144,6 +147,7 @@
     <Compile Include="Data\Security\IProtection.Extension.cs" />
     <Compile Include="Data\Security\SymmetricAlgorithm.Extension.cs" />
     <Compile Include="Data\Services\GMail.cs" />
+    <Compile Include="Data\Services\Twitter.cs" />
     <Compile Include="Data\Writers\BitmapImageWriter.cs" />
     <Compile Include="Data\Writers\IWrite.Extension.cs" />
     <Compile Include="Data\Writers\JsonWriter.cs" />
