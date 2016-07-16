@@ -28,7 +28,7 @@ namespace Node.Net.Data.Security
         }
 
         public static byte[] Encrypt(SymmetricAlgorithm algorithm,byte[] data)
-        { 
+        {
             using (MemoryStream memory = new MemoryStream())
             {
                 using (CryptoStream encrypt = new CryptoStream(memory, algorithm.CreateEncryptor(algorithm.Key, algorithm.IV), CryptoStreamMode.Write))

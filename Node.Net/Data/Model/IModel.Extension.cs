@@ -64,7 +64,7 @@ namespace Node.Net.Data.Model
             hashCode = hashCode ^ count;
             return hashCode;
         }
-        
+
         public static T Get<T>(IModel dictionary, string name)
         {
             if (!dictionary.Contains(name)) return default(T);

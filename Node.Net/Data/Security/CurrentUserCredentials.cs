@@ -14,23 +14,84 @@ namespace Node.Net.Data.Security
                 return $"{GetFolderPath(SpecialFolder.UserProfile)}\\Credentials.json";
             }
         }
-        public CurrentUserCredentials()
+        private CurrentUserCredentials()
         {
             this.SetTypeName();
+            //Load();
+        }
 
+        private static CurrentUserCredentials _default;
+        public static CurrentUserCredentials Default
+        {
+            get
+            {
+                if(_default == null)
+                {
+                    _default = new CurrentUserCredentials();
+                    if (File.Exists(FileName))
+                    {
+                        var reader = new Readers.JsonReader();
+                        var stored_creds = reader.Read(FileName) as IDictionary;
+                        //var converter = new Readers.DictionaryTypeConverter();
+                        //converter.Types.Add(nameof(Credential), typeof(Credential));
+                        //var credentials = converter.Convert(stored_creds);
+                        foreach (var key in stored_creds.Keys)
+                        {
+                            var dictionary = stored_creds[key] as IDictionary;
+                            if (dictionary != null)
+                            {
+                                var converter = new Readers.DictionaryTypeConverter();
+                                converter.Types.Add(nameof(Credential), typeof(Credential));
+                                var credential = converter.Convert(dictionary) as ICredential;
+                                if (credential != null)
+                                {
+                                    _default[key.ToString()] = credential;
+                                }
+                                //var credential = stored_creds[key] as ICredential;
+                                //_default[key.ToString()] = credential;
+                            }
+                        }
+                    }
+                }
+                return _default;
+            }
         }
 
         private void Load()
         {
+            foreach(var key in Default.Keys)
+            {
+                this[key.ToString()] = Default[key];
+            }
+            /*
+            if (ContainsKey("LoadLock")) return;
             if (File.Exists(FileName))
             {
-                var reader = new Readers.Reader(typeof(Credential).Assembly);
-                var stored_creds = reader.Read(FileName) as IDictionary;
-                foreach (var key in stored_creds.Keys)
+                using (MemoryStream memory = new MemoryStream())
                 {
-                    this[key.ToString()] = stored_creds[key];
+                    using (FileStream fs = new FileStream(FileName, FileMode.Open))
+                    {
+                        var ibyte = fs.ReadByte();
+                        while (ibyte != -1)
+                        {
+                            memory.WriteByte((byte)ibyte);
+                            ibyte = fs.ReadByte();
+                        }
+                        fs.Close();
+                    }
+                    memory.Seek(0, SeekOrigin.Begin);
+                    this["LoadLock"] = true;
+                    var reader = new Readers.Reader(typeof(Credential).Assembly);
+                    var stored_creds = reader.Read(memory) as IDictionary;
+                    foreach (var key in stored_creds.Keys)
+                    {
+                        this[key.ToString()] = stored_creds[key];
+                    }
+                    Remove("LoadLock");
                 }
             }
+            */
+            
         }
 
         public void Save()
