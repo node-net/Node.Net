@@ -5,9 +5,16 @@ namespace Node.Net.Diagnostics
 {
     public class ConsoleCommand : Dictionary<string, dynamic>
     {
+        public static ConsoleCommand Execute(string name,string directory = "",int timeout = 0)
+        {
+            var command = new ConsoleCommand { Name = name, Directory = directory, Timeout = timeout };
+            command.Execute();
+            return command;
+        }
+
         public ConsoleCommand()
         {
-            this["Type"] = "ConsoleCommand";
+            this[nameof(Type)] = nameof(ConsoleCommand);
         }
 
         public void Execute()
