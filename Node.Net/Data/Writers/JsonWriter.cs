@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using static System.Environment;
 
 namespace Node.Net.Data.Writers
 {
+    public enum JsonFormat { Compact,Indented};
     class JsonWriter : IWrite
     {
-        //public bool IgnoreNullValues;
+        public JsonFormat Format = JsonFormat.Indented;
+        private int IndentLevel;
         public List<Type> IgnoreTypes = new List<Type>();
         public void Write(Stream stream, object value)
         {
@@ -31,6 +34,33 @@ namespace Node.Net.Data.Writers
             }
         }
 
+        private void PushIndent()
+        {
+            IndentLevel++;
+        }
+        private void PopIndent()
+        {
+            IndentLevel--;
+        }
+        private string GetIndent()
+        {
+            if(Format == JsonFormat.Indented)
+            {
+                var sb = new StringBuilder();
+                while(sb.Length < IndentLevel * 2) { sb.Append(" "); }
+                return sb.ToString();
+            }
+            return string.Empty;
+        }
+
+        private string GetLineFeed()
+        {
+            if(Format == JsonFormat.Indented)
+            {
+                return NewLine;
+            }
+            return string.Empty;
+        }
         private void Write(System.IO.TextWriter writer, object value)
         {
             if (ReferenceEquals(null, value)) WriteNull(writer);
@@ -45,33 +75,33 @@ namespace Node.Net.Data.Writers
         }
 
         private static void WriteNull(System.IO.TextWriter writer) { writer.Write("null"); }
-        private static void WriteBytes(System.IO.TextWriter writer, byte[] bytes)
+        private void WriteBytes(System.IO.TextWriter writer, byte[] bytes)
         {
             WriteString(writer, $"base64:{Convert.ToBase64String(bytes)}");
         }
-        private static void WriteString(System.IO.TextWriter writer, object value)
+        private void WriteString(System.IO.TextWriter writer, object value)
         {
             var svalue = value.ToString();
             // Escape '\' first
             var escaped_value = svalue.Replace("\\", "\\u005c");
             // Escape '"'
             escaped_value = escaped_value.Replace("\"", "\\u0022");
-            writer.Write($"\"{escaped_value}\"");
+            writer.Write($"{GetIndent()}\"{escaped_value}\"");
         }
-        private static void WriteValueType(System.IO.TextWriter writer, object value)
+        private void WriteValueType(System.IO.TextWriter writer, object value)
         {
-            if (value.GetType() == typeof(bool)) writer.Write(value.ToString().ToLower());
-            else writer.Write(value.ToString());
+            if (value.GetType() == typeof(bool)) writer.Write($"{GetIndent()}{value.ToString().ToLower()}");
+            else writer.Write($"{GetIndent()}{value}");
         }
         private void WriteIEnumerable(System.IO.TextWriter writer, object value)
         {
-            writer.Write("[");
+            writer.Write($"{GetIndent()}[{GetLineFeed()}");
+            PushIndent();
             var enumerable = value as System.Collections.IEnumerable;
             var writeCount = 0;
             foreach (object item in enumerable)
             {
                 var skip = false;
-                //if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
                 if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
                 {
@@ -79,18 +109,21 @@ namespace Node.Net.Data.Writers
                        item.GetType().IsValueType ||
                        typeof(System.Collections.IEnumerable).IsAssignableFrom(value.GetType()))
                     {
-                        if (writeCount > 0) writer.Write(",");
+                        if (writeCount > 0) writer.Write($",{GetLineFeed()}");
                         Write(writer, item);
                         ++writeCount;
                     }
                 }
             }
-            writer.Write("]");
+            PopIndent();
+            writer.Write($"{GetLineFeed()}{GetIndent()}]{GetLineFeed()}");
+
         }
         private void WriteIDictionary(System.IO.TextWriter writer, object value)
         {
             var index = 0;
-            writer.Write("{");
+            writer.Write($"{GetIndent()}{{{GetLineFeed()}");
+            PushIndent();
 
             var dictionary = value as System.Collections.IDictionary;
 
@@ -107,13 +140,25 @@ namespace Node.Net.Data.Writers
                         writer.Write(",");
                     }
                     Write(writer, key.ToString());
-                    writer.Write(":");
-                    Write(writer, dictionary[key]);
+
+                    var tmp = dictionary[key];
+                    if (tmp == null || tmp.GetType().IsPrimitive || tmp.GetType() == typeof(string))
+                    {
+                        writer.Write(":");
+                        Write(writer, dictionary[key]);
+                    }
+                    else
+                    {
+                        writer.Write($":{GetLineFeed()}");
+                        Write(writer, dictionary[key]);
+
+                    }
 
                     ++index;
                 }
             }
-            writer.Write("}");
+            PopIndent();
+            writer.Write($"{GetIndent()}}}{GetLineFeed()}");
         }
     }
 }
