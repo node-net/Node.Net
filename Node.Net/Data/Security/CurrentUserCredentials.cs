@@ -59,39 +59,17 @@ namespace Node.Net.Data.Security
 
         private void Load()
         {
+            var tmp = new Dictionary<string, dynamic>();
             foreach(var key in Default.Keys)
             {
                 this[key.ToString()] = Default[key];
+                tmp[key.ToString()] = Default[key];
             }
-            /*
-            if (ContainsKey("LoadLock")) return;
-            if (File.Exists(FileName))
+            foreach (var key in tmp.Keys)
             {
-                using (MemoryStream memory = new MemoryStream())
-                {
-                    using (FileStream fs = new FileStream(FileName, FileMode.Open))
-                    {
-                        var ibyte = fs.ReadByte();
-                        while (ibyte != -1)
-                        {
-                            memory.WriteByte((byte)ibyte);
-                            ibyte = fs.ReadByte();
-                        }
-                        fs.Close();
-                    }
-                    memory.Seek(0, SeekOrigin.Begin);
-                    this["LoadLock"] = true;
-                    var reader = new Readers.Reader(typeof(Credential).Assembly);
-                    var stored_creds = reader.Read(memory) as IDictionary;
-                    foreach (var key in stored_creds.Keys)
-                    {
-                        this[key.ToString()] = stored_creds[key];
-                    }
-                    Remove("LoadLock");
-                }
+                this[key.ToString()] = tmp[key];
+
             }
-            */
-            
         }
 
         public void Save()
