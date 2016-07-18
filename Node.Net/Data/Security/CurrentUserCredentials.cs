@@ -25,7 +25,7 @@ namespace Node.Net.Data.Security
         {
             get
             {
-                if(_default == null)
+                if (_default == null)
                 {
                     _default = new CurrentUserCredentials();
                     if (File.Exists(FileName))
@@ -60,9 +60,8 @@ namespace Node.Net.Data.Security
         private void Load()
         {
             var tmp = new Dictionary<string, dynamic>();
-            foreach(var key in Default.Keys)
+            foreach (var key in Default.Keys)
             {
-                this[key.ToString()] = Default[key];
                 tmp[key.ToString()] = Default[key];
             }
             foreach (var key in tmp.Keys)
@@ -104,10 +103,10 @@ namespace Node.Net.Data.Security
             };
             Save();
         }
-        public void Remove(string domain,string userName)
+        public void Remove(string domain, string userName)
         {
             var key = $"{domain}|{userName}";
-            if(ContainsKey(key))
+            if (ContainsKey(key))
             {
                 Remove(key);
                 Save();
