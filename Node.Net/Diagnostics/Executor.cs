@@ -2,9 +2,9 @@
 {
     public class Executor : System.IDisposable
     {
-        private ConsoleCommand command = null;
-        private int pid = 0;
-        System.Threading.AutoResetEvent autoEvent = new System.Threading.AutoResetEvent(false);
+        private readonly ConsoleCommand command;
+        private int pid;
+        readonly System.Threading.AutoResetEvent autoEvent = new System.Threading.AutoResetEvent(false);
 
         public Executor(ConsoleCommand value) { command = value; }
 
