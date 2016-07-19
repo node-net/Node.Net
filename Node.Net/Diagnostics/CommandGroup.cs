@@ -5,6 +5,10 @@ namespace Node.Net.Diagnostics
 {
     public class CommandGroup : Command
     {
+        public CommandGroup()
+        {
+            this[nameof(Type)] = nameof(CommandGroup);
+        }
         public override int Execute()
         {
             StartTime = DateTime.Now;

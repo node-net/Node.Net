@@ -13,6 +13,11 @@ namespace Node.Net.Data.Readers
             AddTypes(Types, assembly);
         }
         public Dictionary<string, Type> Types { get; set; } = new Dictionary<string, Type>();
+
+        public void AddTypes(Assembly assembly)
+        {
+            AddTypes(Types, assembly);
+        }
         public IDictionary Convert(IDictionary source)
         {
             if (source.Contains(nameof(Type)))
