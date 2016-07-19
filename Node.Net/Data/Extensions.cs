@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Security;
+using System.Text.RegularExpressions;
 
 namespace Node.Net.Data
 {
@@ -17,5 +18,7 @@ namespace Node.Net.Data
         public static T Get<T>(this Model.IModel model, string key) => Model.IModelExtension.Get<T>(model, key);
         public static void Set(this Model.IModel model, string key, object value) => Model.IModelExtension.Set(model, key, value);
         public static void SetTypeName(this Model.IModel model) => Model.IModelExtension.SetTypeName(model);
+        public static string[] GetGroupMatches(this Regex regex, string text, int group_index = 0) => Extension.RegexExtension.GetGroupMatches(regex, text, group_index);
+
     }
 }

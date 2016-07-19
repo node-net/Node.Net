@@ -112,6 +112,7 @@
     <Compile Include="Controls\XmlTreeViewItem.cs" />
     <Compile Include="Data\Assembly.Extension.cs" />
     <Compile Include="Data\Extensions.cs" />
+    <Compile Include="Data\Extension\Regex.Extension.cs" />
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\Model\IModel.cs" />
     <Compile Include="Data\Model\IModel.Extension.cs" />
