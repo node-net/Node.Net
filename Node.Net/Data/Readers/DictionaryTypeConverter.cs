@@ -10,14 +10,14 @@ namespace Node.Net.Data.Readers
         public DictionaryTypeConverter() { }
         public DictionaryTypeConverter(Assembly assembly)
         {
-            AddTypes(Types, assembly);
+            AddTypes(assembly);
         }
         public Dictionary<string, Type> Types { get; set; } = new Dictionary<string, Type>();
-
+        /*
         public void AddTypes(Assembly assembly)
         {
             AddTypes(Types, assembly);
-        }
+        }*/
         public IDictionary Convert(IDictionary source)
         {
             if (source.Contains(nameof(Type)))
@@ -50,6 +50,28 @@ namespace Node.Net.Data.Readers
         }
 
 
+        public void AddType(Type type)
+        {
+            var defaultConstructorInfo = type.GetConstructor(Type.EmptyTypes);
+            if (defaultConstructorInfo != null)
+            {
+                Types[type.Name] = type;
+            }
+        }
+
+        public void AddTypes(Assembly assembly)
+        {
+            foreach(var type in assembly.GetTypes())
+            {
+                var defaultConstructorInfo = type.GetConstructor(Type.EmptyTypes);
+                if (defaultConstructorInfo != null)
+                {
+                    Types[type.Name] = type;
+                }
+            }
+        }
+
+        /*
         public static void AddTypes(Dictionary<string,Type> types,Assembly assembly)
         {
             foreach(var type in assembly.GetTypes())
@@ -60,7 +82,7 @@ namespace Node.Net.Data.Readers
                     types[type.Name] = type;
                 }
             }
-        }
+        }*/
         public void Copy(IDictionary source, IDictionary destination)
         {
             foreach (object key in source.Keys)

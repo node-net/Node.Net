@@ -7,7 +7,7 @@ using static System.Environment;
 
 namespace Node.Net.Data.Writers
 {
-    public enum JsonFormat { Compact,Indented};
+    public enum JsonFormat { Compact, Indented };
     class JsonWriter : IWrite
     {
         public JsonFormat Format = JsonFormat.Indented;
@@ -44,10 +44,10 @@ namespace Node.Net.Data.Writers
         }
         private string GetIndent()
         {
-            if(Format == JsonFormat.Indented)
+            if (Format == JsonFormat.Indented)
             {
                 var sb = new StringBuilder();
-                while(sb.Length < IndentLevel * 2) { sb.Append(" "); }
+                while (sb.Length < IndentLevel * 2) { sb.Append(" "); }
                 return sb.ToString();
             }
             return string.Empty;
@@ -55,7 +55,7 @@ namespace Node.Net.Data.Writers
 
         private string GetLineFeed()
         {
-            if(Format == JsonFormat.Indented)
+            if (Format == JsonFormat.Indented)
             {
                 return NewLine;
             }
@@ -109,7 +109,7 @@ namespace Node.Net.Data.Writers
                        item.GetType().IsValueType ||
                        typeof(System.Collections.IEnumerable).IsAssignableFrom(value.GetType()))
                     {
-                        if (writeCount > 0) writer.Write($",{GetLineFeed()}");
+                        if (writeCount > 0) writer.Write($",{GetLineFeed()}{GetIndent()}");
                         Write(writer, item);
                         ++writeCount;
                     }
@@ -137,7 +137,7 @@ namespace Node.Net.Data.Writers
                 {
                     if (index > 0)
                     {
-                        writer.Write(",");
+                        writer.Write($",{GetLineFeed()}{GetIndent()}");
                     }
                     Write(writer, key.ToString());
 

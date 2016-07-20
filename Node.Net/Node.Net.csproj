@@ -122,6 +122,7 @@
     <Compile Include="Data\Readers\IDictionaryTypeConverter.cs" />
     <Compile Include="Data\Readers\ImageSourceReader.cs" />
     <Compile Include="Data\Readers\IRead.Extension.cs" />
+    <Compile Include="Data\Readers\IReadAdapter.cs" />
     <Compile Include="Data\Readers\JsonReader.cs" />
     <Compile Include="Data\Readers\LinesReader.cs" />
     <Compile Include="Data\Readers\PrimitiveReader.cs" />
@@ -144,11 +145,11 @@
     <Compile Include="Data\Security\CurrentUserProtection.cs" />
     <Compile Include="Data\Security\ICredential.cs" />
     <Compile Include="Data\Security\ICredentials.cs" />
+    <Compile Include="Data\Security\ICredentialsView.cs" />
     <Compile Include="Data\Security\IProtection.cs" />
     <Compile Include="Data\Security\IProtection.Extension.cs" />
     <Compile Include="Data\Security\SymmetricAlgorithm.Extension.cs" />
     <Compile Include="Data\Services\GMail.cs" />
-    <Compile Include="Data\Services\Twitter.cs" />
     <Compile Include="Data\Writers\BitmapImageWriter.cs" />
     <Compile Include="Data\Writers\IWrite.Extension.cs" />
     <Compile Include="Data\Writers\JsonWriter.cs" />
