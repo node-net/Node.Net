@@ -134,6 +134,7 @@
     <Compile Include="Data\Repositories\IReadOnlyRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.Extension.cs" />
+    <Compile Include="Data\Repositories\KeySimplifierRepository.cs" />
     <Compile Include="Data\Repositories\ManifestResourcesRepository.cs" />
     <Compile Include="Data\Repositories\MemoryRepository.cs" />
     <Compile Include="Data\Security\Credential.cs" />
