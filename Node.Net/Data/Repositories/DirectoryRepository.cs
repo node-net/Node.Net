@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace Node.Net.Data.Repositories
 {
-    public class DirectoryRepository : IRepository, IReader, IWriter
+    public class DirectoryRepository : IRepository, IReader, IWriter, IGetKeys
     {
         public string Directory { get; set; } = $"{Path.GetTempPath()}DirectoryRepository";
 
@@ -37,5 +38,18 @@ namespace Node.Net.Data.Repositories
         }
 
         private string GetFileName(string key) => Path.GetFullPath($"{Directory}\\{key.Replace("/", "\\")}");
+
+        public string[] GetKeys(bool deep)
+        {
+            var keys = new List<string>();
+            SearchOption option = SearchOption.TopDirectoryOnly;
+            if (deep) option = SearchOption.AllDirectories;
+            foreach(var filename in System.IO.Directory.GetFiles(Directory,"*",option))
+            {
+                keys.Add(filename.Replace("\\", "/"));
+            }
+            return keys.ToArray();
+        }
+
     }
 }

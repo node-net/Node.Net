@@ -2,7 +2,7 @@
 
 namespace Node.Net.Data.Repositories
 {
-    public class MemoryRepository : Dictionary<string, dynamic>, IRepository
+    public class MemoryRepository : Dictionary<string, dynamic>, IRepository, IGetKeys
     {
         public IRead Reader { get; set; } = Readers.Reader.Default;
         public IWrite Writer { get; set; } = Writers.Writer.Default;
@@ -10,6 +10,11 @@ namespace Node.Net.Data.Repositories
         public void Set(string key, object value)
         {
             this[key] = this.Clone(value);
+        }
+        public string[] GetKeys(bool deep)
+        {
+            var keys = new List<string>(Keys);
+            return keys.ToArray();
         }
     }
 }

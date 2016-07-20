@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.IO;
 using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
@@ -19,6 +20,7 @@ namespace Node.Net.Data
         public static void Set(this Model.IModel model, string key, object value) => Model.IModelExtension.Set(model, key, value);
         public static void SetTypeName(this Model.IModel model) => Model.IModelExtension.SetTypeName(model);
         public static string[] GetGroupMatches(this Regex regex, string text, int group_index = 0) => Extension.RegexExtension.GetGroupMatches(regex, text, group_index);
-
+        public static void Import(this Repositories.IRepository destination, Repositories.IReadOnlyRepository sourceRepository) => Repositories.IRepositoryExtension.Import(destination, sourceRepository);
+        public static void Import(this Repositories.IRepository destination, IDictionary source) => Repositories.IRepositoryExtension.Import(destination, source);
     }
 }
