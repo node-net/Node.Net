@@ -154,6 +154,7 @@
     <Compile Include="Data\Services\Twitter.cs" />
     <Compile Include="Data\Writers\BitmapImageWriter.cs" />
     <Compile Include="Data\Writers\IWrite.Extension.cs" />
+    <Compile Include="Data\Writers\IWriteAdapter.cs" />
     <Compile Include="Data\Writers\JsonWriter.cs" />
     <Compile Include="Data\Writers\PrimitiveWriter.cs" />
     <Compile Include="Data\Writers\StringWriter.cs" />
