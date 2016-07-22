@@ -122,7 +122,6 @@
     <Compile Include="Data\Readers\IDictionaryTypeConverter.cs" />
     <Compile Include="Data\Readers\ImageSourceReader.cs" />
     <Compile Include="Data\Readers\IRead.Extension.cs" />
-    <Compile Include="Data\Readers\IReadAdapter.cs" />
     <Compile Include="Data\Readers\JsonReader.cs" />
     <Compile Include="Data\Readers\LinesReader.cs" />
     <Compile Include="Data\Readers\PrimitiveReader.cs" />
@@ -134,7 +133,6 @@
     <Compile Include="Data\Repositories\IReadOnlyRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.Extension.cs" />
-    <Compile Include="Data\Repositories\KeySimplifierRepository.cs" />
     <Compile Include="Data\Repositories\ManifestResourcesRepository.cs" />
     <Compile Include="Data\Repositories\MemoryRepository.cs" />
     <Compile Include="Data\Security\Credential.cs" />
@@ -146,7 +144,6 @@
     <Compile Include="Data\Security\CurrentUserProtection.cs" />
     <Compile Include="Data\Security\ICredential.cs" />
     <Compile Include="Data\Security\ICredentials.cs" />
-    <Compile Include="Data\Security\ICredentialsView.cs" />
     <Compile Include="Data\Security\IProtection.cs" />
     <Compile Include="Data\Security\IProtection.Extension.cs" />
     <Compile Include="Data\Security\SymmetricAlgorithm.Extension.cs" />
@@ -154,7 +151,6 @@
     <Compile Include="Data\Services\Twitter.cs" />
     <Compile Include="Data\Writers\BitmapImageWriter.cs" />
     <Compile Include="Data\Writers\IWrite.Extension.cs" />
-    <Compile Include="Data\Writers\IWriteAdapter.cs" />
     <Compile Include="Data\Writers\JsonWriter.cs" />
     <Compile Include="Data\Writers\PrimitiveWriter.cs" />
     <Compile Include="Data\Writers\StringWriter.cs" />
@@ -260,45 +256,45 @@
     <Compile Include="Transformers\MaterialTransformer.cs" />
     <Compile Include="Transformers\Transform3DTransformer.cs" />
     <Compile Include="Transformers\TypeTransformer.cs" />
-    <Compile Include="View\Base.cs" />
-    <Compile Include="View\ComboBox.cs" />
-    <Compile Include="View\ComboBoxItem.cs" />
-    <Compile Include="View\ContextMenu.cs" />
-    <Compile Include="View\DataGridView.cs" />
-    <Compile Include="View\DynamicView.cs" />
-    <Compile Include="View\DynamicViewSelector.cs" />
-    <Compile Include="View\Explorer.cs" />
-    <Compile Include="View\ExplorerView.cs" />
-    <Compile Include="View\FrameworkElements.cs" />
-    <Compile Include="View\Grid.cs" />
-    <Compile Include="View\HashGrid.cs" />
-    <Compile Include="View\HashGridEditor.cs" />
-    <Compile Include="View\JsonView.cs" />
-    <Compile Include="View\KeyValuePair.cs" />
-    <Compile Include="View\ListView.cs" />
-    <Compile Include="View\ListViewItem.cs" />
-    <Compile Include="View\MessageBox.cs" />
-    <Compile Include="View\Properties.cs" />
-    <Compile Include="View\PropertiesExplorer.cs" />
-    <Compile Include="View\PropertyView.cs" />
-    <Compile Include="View\ReadOnlyTextView.cs" />
-    <Compile Include="View\SDIApplication.cs" />
-    <Compile Include="View\SDIMainControl.cs" />
-    <Compile Include="View\SplitterGrid.cs" />
-    <Compile Include="View\SplitView.cs" />
-    <Compile Include="View\TabControl.cs" />
-    <Compile Include="View\TabItem.cs" />
-    <Compile Include="View\TextView.cs" />
-    <Compile Include="View\Title.cs" />
-    <Compile Include="View\TreeView.cs" />
-    <Compile Include="View\TreeViewItem.cs" />
-    <Compile Include="View\Window.cs" />
+    <Compile Include="Controls\View\Base.cs" />
+    <Compile Include="Controls\View\ComboBox.cs" />
+    <Compile Include="Controls\View\ComboBoxItem.cs" />
+    <Compile Include="Controls\View\ContextMenu.cs" />
+    <Compile Include="Controls\View\DataGridView.cs" />
+    <Compile Include="Controls\View\DynamicView.cs" />
+    <Compile Include="Controls\View\DynamicViewSelector.cs" />
+    <Compile Include="Controls\View\Explorer.cs" />
+    <Compile Include="Controls\View\ExplorerView.cs" />
+    <Compile Include="Controls\View\FrameworkElements.cs" />
+    <Compile Include="Controls\View\Grid.cs" />
+    <Compile Include="Controls\View\HashGrid.cs" />
+    <Compile Include="Controls\View\HashGridEditor.cs" />
+    <Compile Include="Controls\View\JsonView.cs" />
+    <Compile Include="Controls\View\KeyValuePair.cs" />
+    <Compile Include="Controls\View\ListView.cs" />
+    <Compile Include="Controls\View\ListViewItem.cs" />
+    <Compile Include="Controls\View\MessageBox.cs" />
+    <Compile Include="Controls\View\Properties.cs" />
+    <Compile Include="Controls\View\PropertiesExplorer.cs" />
+    <Compile Include="Controls\View\PropertyView.cs" />
+    <Compile Include="Controls\View\ReadOnlyTextView.cs" />
+    <Compile Include="Controls\View\SDIApplication.cs" />
+    <Compile Include="Controls\View\SDIMainControl.cs" />
+    <Compile Include="Controls\View\SplitterGrid.cs" />
+    <Compile Include="Controls\View\SplitView.cs" />
+    <Compile Include="Controls\View\TabControl.cs" />
+    <Compile Include="Controls\View\TabItem.cs" />
+    <Compile Include="Controls\View\TextView.cs" />
+    <Compile Include="Controls\View\Title.cs" />
+    <Compile Include="Controls\View\TreeView.cs" />
+    <Compile Include="Controls\View\TreeViewItem.cs" />
+    <Compile Include="Controls\View\Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Node.Net.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\HelixView3D.Resources.xaml">
+    <EmbeddedResource Include="Controls\View\HelixView3D.Resources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

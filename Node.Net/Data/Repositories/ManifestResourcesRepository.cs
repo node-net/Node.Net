@@ -6,7 +6,7 @@ namespace Node.Net.Data.Repositories
 {
     public class ManifestResourcesRepository : IReadOnlyRepository, IReader, IGetKeys
     {
-        public IRead Reader { get; set; } = Readers.Reader.Default;
+        public IRead Reader => new Readers.Reader();
 
         public object Get(string key)
         {
@@ -32,6 +32,45 @@ namespace Node.Net.Data.Repositories
         }
 
         public List<Assembly> Assemblies { get; set; } = new List<Assembly>();
+        /*
+        private List<Assembly> assemblies = new List<Assembly>();
+        public Assembly[] Assemblies
+        {
+            get
+            {
+                if (assemblies == null)
+                {
+                    var list = new List<Assembly>();
+                    foreach (AssemblyName assemblyName in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
+                    {
+                        var asm = Assembly.Load(assemblyName.ToString());
+                        if (!list.Contains(asm)) list.Add(asm);
+                    }
+                    assemblies = list.ToArray();
+                }
+                return assemblies;
+            }
+            set { assemblies = value; }
+        }
+        //private Assembly[] assemblies;
+        public Assembly[] Assemblies
+        {
+            get
+            {
+                if (assemblies == null)
+                {
+                    var list = new List<Assembly>();
+                    foreach (AssemblyName assemblyName in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
+                    {
+                        var asm = Assembly.Load(assemblyName.ToString());
+                        if (!list.Contains(asm)) list.Add(asm);
+                    }
+                    assemblies = list.ToArray();
+                }
+                return assemblies;
+            }
+            set { assemblies = value; }
+        }*/
         private Stream GetResourceStream(string name)
         {
             foreach (var assembly in Assemblies)

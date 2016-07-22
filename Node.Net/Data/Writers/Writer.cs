@@ -42,7 +42,6 @@ namespace Node.Net.Data.Writers
                 }
                 return writersMap;
             }
-            set { writersMap = value; }
         }
         public void Write(Stream stream, object value)
         {
