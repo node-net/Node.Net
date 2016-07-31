@@ -8,4 +8,6 @@ namespace Node.Net.Data
     public interface IReader { IRead Reader { get; } }
     public interface IWrite { void Write(Stream stream, object value); }
     public interface IWriter { IWrite Writer { get; } }
+    public interface IFactory { T Create<T>(object value); }
+    public interface IReadOnlyRepository : IGet, IReader { }
 }

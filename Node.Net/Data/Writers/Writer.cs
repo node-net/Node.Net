@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
@@ -38,6 +39,7 @@ namespace Node.Net.Data.Writers
                     writersMap.Add(typeof(XmlDocument), xmlWriter);
                     writersMap.Add(typeof(BitmapSource), new BitmapImageWriter());
                     writersMap.Add(typeof(Visual), xmlWriter);
+                    writersMap.Add(typeof(DependencyObject), xmlWriter);
                     writersMap.Add(typeof(IEnumerable), new JsonWriter());
                 }
                 return writersMap;

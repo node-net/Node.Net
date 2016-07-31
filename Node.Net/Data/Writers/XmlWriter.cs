@@ -18,6 +18,12 @@ namespace Node.Net.Data.Writers
                 System.Windows.Markup.XamlWriter.Save(value, stream);
                 return;
             }
+            var dependencyObject = value as System.Windows.DependencyObject;
+            if(!object.ReferenceEquals(null,dependencyObject))
+            {
+                System.Windows.Markup.XamlWriter.Save(value, stream);
+                return;
+            }
         }
     }
 }

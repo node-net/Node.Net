@@ -112,6 +112,7 @@
     <Compile Include="Controls\XmlTreeViewItem.cs" />
     <Compile Include="Data\Assembly.Extension.cs" />
     <Compile Include="Data\Extensions.cs" />
+    <Compile Include="Data\Extension\Matrix3D.Extension.cs" />
     <Compile Include="Data\Extension\Regex.Extension.cs" />
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\Model\IModel.cs" />
@@ -131,7 +132,6 @@
     <Compile Include="Data\Readers\XamlReader.cs" />
     <Compile Include="Data\Readers\XmlReader.cs" />
     <Compile Include="Data\Repositories\DirectoryRepository.cs" />
-    <Compile Include="Data\Repositories\IReadOnlyRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.Extension.cs" />
     <Compile Include="Data\Repositories\KeySimplifierRepository.cs" />
