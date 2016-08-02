@@ -78,10 +78,10 @@ namespace Node.Net.Data.Readers
 
         public void Copy(IDictionary source, IDictionary destination)
         {
+            if (source == null) return;
             foreach (object key in source.Keys)
             {
                 var value = source[key];
-
                 var kvp
                     = new System.Collections.Generic.KeyValuePair<object, object>(key, value);
                 var dictionary = value as System.Collections.IDictionary;
