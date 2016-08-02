@@ -75,6 +75,17 @@ namespace Node.Net.Data.Readers
                 }
             }
         }
+        public void AddTypes(Assembly assembly,string pattern)
+        {
+            foreach (var type in assembly.GetTypes())
+            {
+                var defaultConstructorInfo = type.GetConstructor(Type.EmptyTypes);
+                if (defaultConstructorInfo != null && type.FullName.Contains(pattern))
+                {
+                    Types[type.Name] = type;
+                }
+            }
+        }
 
         public void Copy(IDictionary source, IDictionary destination)
         {
