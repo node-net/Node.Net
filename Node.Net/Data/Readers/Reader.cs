@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -25,6 +26,17 @@ namespace Node.Net.Data.Readers
                 return _default;
             }
         }
+        private readonly JsonReader jsonReader = new JsonReader();
+        public Type DefaultArrayType
+        {
+            get { return jsonReader.DefaultArrayType; }
+            set { jsonReader.DefaultArrayType = value; }
+        }
+        public Type DefaultObjectType
+        {
+            get { return jsonReader.DefaultObjectType; }
+            set { jsonReader.DefaultObjectType = value; }
+        }
         private Dictionary<string, IRead> textSignatureReaders;
         public Dictionary<string, IRead> TextSignatureReaders
         {
@@ -33,7 +45,7 @@ namespace Node.Net.Data.Readers
                 if (textSignatureReaders == null)
                 {
                     textSignatureReaders = new Dictionary<string, IRead>();
-                    var jsonReader = new JsonReader();
+                    //var jsonReader = new JsonReader();
                     textSignatureReaders.Add("{", jsonReader);
                     textSignatureReaders.Add("[", jsonReader);
                     var xmlReader = new XmlReader();

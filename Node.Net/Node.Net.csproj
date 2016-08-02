@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
     <Reference Include="System.Security" />
@@ -114,6 +115,8 @@
     <Compile Include="Data\Extensions.cs" />
     <Compile Include="Data\Extension\Matrix3D.Extension.cs" />
     <Compile Include="Data\Extension\Regex.Extension.cs" />
+    <Compile Include="Data\Factories\Factory.cs" />
+    <Compile Include="Data\Factories\RepositoryFactory.cs" />
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\Model\IModel.cs" />
     <Compile Include="Data\Model\IModel.Extension.cs" />
@@ -132,11 +135,11 @@
     <Compile Include="Data\Readers\XamlReader.cs" />
     <Compile Include="Data\Readers\XmlReader.cs" />
     <Compile Include="Data\Repositories\DirectoryRepository.cs" />
-    <Compile Include="Data\Repositories\IRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.Extension.cs" />
     <Compile Include="Data\Repositories\KeySimplifierRepository.cs" />
     <Compile Include="Data\Repositories\ManifestResourcesRepository.cs" />
     <Compile Include="Data\Repositories\MemoryRepository.cs" />
+    <Compile Include="Data\Repositories\ZipRepository.cs" />
     <Compile Include="Data\Security\Credential.cs" />
     <Compile Include="Data\Security\Credentials.cs" />
     <Compile Include="Data\Security\CredentialsList.cs" />

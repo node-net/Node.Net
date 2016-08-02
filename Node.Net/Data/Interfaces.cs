@@ -10,4 +10,5 @@ namespace Node.Net.Data
     public interface IWriter { IWrite Writer { get; } }
     public interface IFactory { T Create<T>(object value); }
     public interface IReadOnlyRepository : IGet, IReader { }
+    public interface IRepository : IReadOnlyRepository, ISet, IWriter { }
 }
