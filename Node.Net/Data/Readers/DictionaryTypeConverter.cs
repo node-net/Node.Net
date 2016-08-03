@@ -13,21 +13,26 @@ namespace Node.Net.Data.Readers
             AddTypes(assembly);
         }
         public Dictionary<string, Type> Types { get; set; } = new Dictionary<string, Type>();
-        /*
-        public void AddTypes(Assembly assembly)
-        {
-            AddTypes(Types, assembly);
-        }*/
+
         public IDictionary Convert(IDictionary source)
         {
-            if (source.Contains(nameof(Type)))
+            if (source != null && source.Contains(nameof(Type)))
             {
                 var type = source[nameof(Type)].ToString();
                 if (Types != null && Types.ContainsKey(type))
                 {
-                    var dictionary = Activator.CreateInstance(Types[type]) as IDictionary;
-                    Copy(source, dictionary);
-                    return dictionary;
+                    try
+                    {
+                        var _type = Types[type];
+                        if (_type == null) throw new Exception($"Types['{type}'] was null");
+                        var dictionary = Activator.CreateInstance(_type) as IDictionary;
+                        Copy(source, dictionary);
+                        return dictionary;
+                    }
+                    catch(Exception ex)
+                    {
+                        throw new Exception($"Exception while converting type '{type}', fullname {Types[type].FullName}", ex);
+                    }
                 }
             }
             return source;
@@ -70,25 +75,24 @@ namespace Node.Net.Data.Readers
                 }
             }
         }
-
-        /*
-        public static void AddTypes(Dictionary<string,Type> types,Assembly assembly)
+        public void AddTypes(Assembly assembly,string pattern)
         {
-            foreach(var type in assembly.GetTypes())
+            foreach (var type in assembly.GetTypes())
             {
                 var defaultConstructorInfo = type.GetConstructor(Type.EmptyTypes);
-                if(defaultConstructorInfo != null)
+                if (defaultConstructorInfo != null && type.FullName.Contains(pattern))
                 {
-                    types[type.Name] = type;
+                    Types[type.Name] = type;
                 }
             }
-        }*/
+        }
+
         public void Copy(IDictionary source, IDictionary destination)
         {
+            if (source == null) return;
             foreach (object key in source.Keys)
             {
                 var value = source[key];
-
                 var kvp
                     = new System.Collections.Generic.KeyValuePair<object, object>(key, value);
                 var dictionary = value as System.Collections.IDictionary;
