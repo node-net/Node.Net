@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Node.Net.Deprecated.Collections
+namespace Node.Net.Collections
 {
     public class MetaDataManager : System.Collections.Generic.Dictionary<object,System.Collections.IDictionary>, IMetaDataManager
     {

@@ -27,8 +27,8 @@ namespace Node.Net.Model3D
             }
         }
 
-        private readonly Deprecated.Collections.MetaDataManager _metaData = new Deprecated.Collections.MetaDataManager();
-        private Deprecated.Collections.MetaDataManager MetaData
+        private readonly Collections.MetaDataManager _metaData = new Collections.MetaDataManager();
+        private Collections.MetaDataManager MetaData
         {
             get { return _metaData; }
         }

@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Deprecated.Collections
+﻿namespace Node.Net.Collections
 {
     public class Children : System.Collections.ObjectModel.ObservableCollection<object>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Node.Net.Deprecated.Collections
+namespace Node.Net.Collections
 {
     public class RuntimeMetaData : Dictionary<WeakReference, Dictionary<string, dynamic>>
     {

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 
-namespace Node.Net.Deprecated.Collections
+namespace Node.Net.Collections
 {
     public class Documents : Dictionary<string, dynamic>, INotifyPropertyChanged
     {
@@ -25,7 +25,7 @@ namespace Node.Net.Deprecated.Collections
             set { maximumCount = value; }
         }
 
-        private Type defaultDocumentType = typeof(Deprecated.Collections.Dictionary);
+        private Type defaultDocumentType = typeof(Collections.Dictionary);
         public Type DefaultDocumentType
         {
             get { return defaultDocumentType; }

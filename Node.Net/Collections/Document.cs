@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Node.Net.Deprecated.Collections
+namespace Node.Net.Collections
 {
     public class Document : HashBase
     {
@@ -8,9 +8,9 @@ namespace Node.Net.Deprecated.Collections
         public Document(string json) : base(json) { Update(); }
         public Document(System.IO.Stream stream) : base(stream) { Update(); }
 
-        private Deprecated.Collections.Traverser traverser = null;
+        private Traverser traverser = null;
         [System.ComponentModel.Browsable(false)]
-        public Deprecated.Collections.Traverser Traverser
+        public Traverser Traverser
         {
             get
             {

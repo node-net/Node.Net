@@ -7,7 +7,7 @@ namespace Node.Net.View
     {
         private System.Collections.Generic.List<string> orderedKeys = null;
         public HashGrid() { }
-        public HashGrid(Node.Net.Deprecated.Collections.Hash hash,string[] ordered_keys= null)
+        public HashGrid(Node.Net.Collections.Hash hash,string[] ordered_keys= null)
         {
             DataContext = hash;
             if(!ReferenceEquals(null, hash)) { hash.PropertyChanged += Hash_PropertyChanged; }
@@ -28,12 +28,12 @@ namespace Node.Net.View
 
         private void HashGrid_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            var oldHash = e.OldValue as Node.Net.Deprecated.Collections.Hash;
+            var oldHash = e.OldValue as Node.Net.Collections.Hash;
             if (!ReferenceEquals(null, oldHash))
             {
                 oldHash.PropertyChanged -= Hash_PropertyChanged;
             }
-            var hash = DataContext as Node.Net.Deprecated.Collections.Hash;
+            var hash = DataContext as Node.Net.Collections.Hash;
             if (!ReferenceEquals(null, hash))
             {
                 hash.PropertyChanged += Hash_PropertyChanged;
@@ -50,7 +50,7 @@ namespace Node.Net.View
         {
             RowDefinitions.Clear();
             Children.Clear();
-            var hash = DataContext as Node.Net.Deprecated.Collections.Hash;
+            var hash = DataContext as Node.Net.Collections.Hash;
             if (ReferenceEquals(null, hash))
             {
 
@@ -80,7 +80,7 @@ namespace Node.Net.View
         protected string[] GetKeys()
         {
             if (!ReferenceEquals(null, orderedKeys)) return orderedKeys.ToArray();
-            var hash = DataContext as Node.Net.Deprecated.Collections.Hash;
+            var hash = DataContext as Node.Net.Collections.Hash;
             if (!ReferenceEquals(null, hash)) return new System.Collections.Generic.List<string>(hash.Keys).ToArray();
             return null;
         }

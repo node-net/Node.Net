@@ -2,7 +2,7 @@
 using System.Collections;
 using System.ComponentModel;
 
-namespace Node.Net.Deprecated.Collections
+namespace Node.Net.Collections
 {
     public class ReadOnlyIDictionaryPropertyDescriptor : PropertyDescriptor
     {

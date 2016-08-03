@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Node.Net.Deprecated.Collections
+namespace Node.Net.Collections
 {
     #if NET35
     public class Array : List<object>
@@ -23,7 +23,7 @@ namespace Node.Net.Deprecated.Collections
         }
 
 
-        public override int GetHashCode() => Deprecated.Collections.Hash.GetHashCode(this);
+        public override int GetHashCode() => Hash.GetHashCode(this);
 
         public override bool Equals(object obj)
         {

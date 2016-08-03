@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 
 
-namespace Node.Net.Deprecated.Collections
+namespace Node.Net.Collections
 {
     public class RecentFiles : ObservableCollection<string>
     {

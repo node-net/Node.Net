@@ -11,11 +11,11 @@ namespace Node.Net.Controls
     {
         public SDIControl()
         {
-            DataContext = new Deprecated.Collections.Documents();
+            DataContext = new Collections.Documents();
         }
-        public Deprecated.Collections.Documents Documents
+        public Collections.Documents Documents
         {
-            get { return DataContext as Deprecated.Collections.Documents; }
+            get { return DataContext as Collections.Documents; }
             set { DataContext = value; }
         }
 

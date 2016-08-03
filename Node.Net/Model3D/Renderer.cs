@@ -21,7 +21,7 @@ namespace Node.Net.Model3D
             {
                 if(object.ReferenceEquals(null,_metaData))
                 {
-                    _metaData = Deprecated.Collections.MetaDataManager.Default;
+                    _metaData = Collections.MetaDataManager.Default;
                 }
                 return _metaData;
             }
