@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 
-namespace Node.Net.Collections
+namespace Node.Net.Deprecated.Collections
 {
     public class Dictionary : System.Collections.Generic.Dictionary<string,dynamic>,
         Framework.IDocument,
@@ -32,7 +32,7 @@ namespace Node.Net.Collections
             Clear();
             var reader = new Json.Reader();
             var dictionary = (IDictionary)reader.Read(stream);
-            Collections.Copier.Copy(dictionary, this);
+            Deprecated.Collections.Copier.Copy(dictionary, this);
         }
 
         #region ICustomTypeDescriptor interface

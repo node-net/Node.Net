@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Node.Net.Collections
+namespace Node.Net.Deprecated.Collections
 {
 #if NET35
     public class HashBase : System.Collections.Generic.Dictionary<string, object>, System.IComparable, System.ComponentModel.INotifyPropertyChanged

@@ -91,14 +91,14 @@ namespace Node.Net.Json
         public object Read(Stream stream, IList destination)
         {
             var source = (IList)reader.Read(stream);
-            Collections.Copier.Copy(source, destination);
+            Deprecated.Collections.Copier.Copy(source, destination);
             return source;
         }
 
         public object Read(string value, IList destination)
         {
             var source = (IList)reader.Read(value);
-            Collections.Copier.Copy(source, destination);
+            Deprecated.Collections.Copier.Copy(source, destination);
             return source;
         }
     }

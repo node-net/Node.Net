@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Collections.Internal
+﻿namespace Node.Net.Deprecated.Collections.Internal
 {
     class PropertyDescriptor : System.ComponentModel.PropertyDescriptor
     {

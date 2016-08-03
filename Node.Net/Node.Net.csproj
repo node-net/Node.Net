@@ -68,13 +68,13 @@
     <Compile Include="Deprecated\Collections\DictionaryTypeDescriptor.cs" />
     <Compile Include="Deprecated\Collections\Document.cs" />
     <Compile Include="Deprecated\Collections\Documents.cs" />
-    <Compile Include="Deprecated\Collections\Extensions.cs" />
+    <Compile Include="Collections\Extensions.cs" />
     <Compile Include="Deprecated\Collections\Hash.cs" />
     <Compile Include="Deprecated\Collections\HashBase.cs" />
-    <Compile Include="Deprecated\Collections\IDictionary.Extension.cs" />
+    <Compile Include="Collections\IDictionary.Extension.cs" />
     <Compile Include="Deprecated\Collections\IFilter.cs" />
     <Compile Include="Deprecated\Collections\Internal\PropertyDescriptor.cs" />
-    <Compile Include="Deprecated\Collections\KeyValuePair.cs" />
+    <Compile Include="Collections\KeyValuePair.cs" />
     <Compile Include="Deprecated\Collections\MetaDataManager.cs" />
     <Compile Include="Deprecated\Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
     <Compile Include="Deprecated\Collections\RecentFiles.cs" />

@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Collections
+﻿namespace Node.Net.Deprecated.Collections
 {
     public interface IFilter
     {

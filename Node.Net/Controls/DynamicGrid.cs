@@ -35,7 +35,7 @@ namespace Node.Net.Controls
             RowDefinitions.Clear();
 
             AddColumnHeaders();
-            var items = Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
+            var items = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
             if (!object.ReferenceEquals(null, items))
             {
                 var row = 1;
