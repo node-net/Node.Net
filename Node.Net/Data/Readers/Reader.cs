@@ -100,7 +100,7 @@ namespace Node.Net.Data.Readers
                 if (SignatureMatches(signature, binary_signature))
                 {
                     return Convert(BinarySignatureReaders[binary_signature].Read(stream));
-                }                
+                }
             }
             var text_signature = Encoding.UTF8.GetString(kvp.Value).Trim();
             if (text_signature.Length > 0)
