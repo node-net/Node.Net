@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Node.Net.Collections
+namespace Node.Net.Deprecated.Collections
 {
     class DictionaryPropertyDescriptor : PropertyDescriptor
     {

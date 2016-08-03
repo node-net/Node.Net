@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Node.Net.Collections
+namespace Node.Net.Deprecated.Collections
 {
     public class Hash : HashBase,System.ComponentModel.ICustomTypeDescriptor,System.Collections.IDictionary
     {

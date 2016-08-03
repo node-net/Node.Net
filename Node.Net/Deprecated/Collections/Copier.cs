@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Node.Net.Collections
+namespace Node.Net.Deprecated.Collections
 {
     public class Copier
     {

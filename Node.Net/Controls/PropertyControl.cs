@@ -72,8 +72,8 @@ namespace Node.Net.Controls
                 
                 if (use_adapter)
                 {
-                    var d = new Collections.Dictionary();
-                    Collections.Copier.Copy(idictionary, d);
+                    var d = new Deprecated.Collections.Dictionary();
+                    Deprecated.Collections.Copier.Copy(idictionary, d);
                     propertyGrid.SelectedObject = d;
                 }
                 else { 

@@ -26,7 +26,7 @@ namespace Node.Net.Framework
             set { maximumCount = value; }
         }
 
-        private Type defaultDocumentType = typeof(Collections.Dictionary);
+        private Type defaultDocumentType = typeof(Deprecated.Collections.Dictionary);
         public Type DefaultDocumentType
         {
             get { return defaultDocumentType; }
@@ -116,7 +116,7 @@ namespace Node.Net.Framework
                     var d = Node.Net.Json.Reader.Default.Read(stream) as IDictionary;
                     if (!object.ReferenceEquals(null, d))
                     {
-                        Node.Net.Collections.Copier.Copy(d, (document as IDictionary));
+                        Node.Net.Deprecated.Collections.Copier.Copy(d, (document as IDictionary));
                     }
                 }
                 else

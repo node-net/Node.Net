@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Collections
+﻿namespace Node.Net.Deprecated.Collections
 {
     public class Traverser
     {
@@ -152,14 +152,14 @@
             {
                 if(value.GetType() != typeof(string))
                 {
-                    var ienumerable = Collections.KeyValuePair.GetValue(value) as System.Collections.IEnumerable;
+                    var ienumerable = Node.Net.Collections.KeyValuePair.GetValue(value) as System.Collections.IEnumerable;
                     if (!object.ReferenceEquals(null, ienumerable))
                     {
                         foreach (object item in ienumerable)
                         {
-                            var itemValue = Collections.KeyValuePair.GetValue(item);
-                            if (!metaData.ContainsKey(item)) metaData[itemValue] = new Node.Net.Collections.Hash();
-                            metaData[itemValue]["Parent"] = Collections.KeyValuePair.GetValue(value);
+                            var itemValue = Node.Net.Collections.KeyValuePair.GetValue(item);
+                            if (!metaData.ContainsKey(item)) metaData[itemValue] = new Node.Net.Deprecated.Collections.Hash();
+                            metaData[itemValue]["Parent"] = Node.Net.Collections.KeyValuePair.GetValue(value);
                             Traverse(item);
                         }
                     }
@@ -173,12 +173,12 @@
             {
                 if (value.GetType() != typeof(string))
                 {
-                    var ienumerable = Collections.KeyValuePair.GetValue(value) as System.Collections.IEnumerable;
+                    var ienumerable = Node.Net.Collections.KeyValuePair.GetValue(value) as System.Collections.IEnumerable;
                     if (!object.ReferenceEquals(null, ienumerable))
                     {
                         foreach (object item in ienumerable)
                         {
-                            var itemValue = Collections.KeyValuePair.GetValue(item);
+                            var itemValue = Node.Net.Collections.KeyValuePair.GetValue(item);
                             var documentProperty = itemValue.GetType().GetProperty(nameof(Document));
                             if(!object.ReferenceEquals(null,documentProperty) && documentProperty.CanWrite)
                             {
