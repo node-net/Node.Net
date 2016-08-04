@@ -31,7 +31,7 @@ namespace Node.Net.Extensions
 
         public static IDictionary Collect(IDictionary dictionary,IFilter filter)
         {
-        
+
             var results = new Dictionary<string, dynamic>();
             if (!object.ReferenceEquals(null, dictionary))
             {
@@ -43,7 +43,7 @@ namespace Node.Net.Extensions
             }
             return results;
         }
-    
+
         public static object Get(IDictionary dictionary, string key)
         {
             if (key.Contains("/"))

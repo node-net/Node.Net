@@ -78,7 +78,7 @@ namespace Node.Net.Framework
                     {
                         object[] parameters = { stream };
                         openInfo.Invoke(document, parameters);
-              
+
                     }
                 }
             }

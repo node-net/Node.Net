@@ -70,7 +70,7 @@
                             foreach (object item in attributes)
                             {
                                 var browableAttribute = item as System.ComponentModel.BrowsableAttribute;
-                                if (!object.ReferenceEquals(null, browableAttribute) && browableAttribute.Browsable == false) { browsable = false; break; }
+                                if (!object.ReferenceEquals(null, browableAttribute) && !browableAttribute.Browsable) { browsable = false; break; }
                             }
                         }
                         if (browsable) methods.Add(methodInfo);

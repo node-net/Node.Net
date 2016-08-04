@@ -213,31 +213,5 @@ namespace Node.Net.Deprecated.Json.Internal
             indent = builder.ToString();
             return indent;
         }
-
-        private static string EscapeDoubleQuotes(string input)
-        {
-            var result = input;
-            if (input.Contains("\""))
-            {
-                var builder = new System.Text.StringBuilder();
-                var lastChar = 'a';
-                foreach (var ch in input)
-                {
-                    if (ch == '"')
-                    {
-                        builder.Append('\\');
-                        builder.Append(ch);
-                    }
-
-                    else
-                    {
-                        builder.Append(ch);
-                    }
-                    lastChar = ch;
-                }
-                result = builder.ToString();
-            }
-            return result;
-        }
     }
 }
