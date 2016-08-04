@@ -7,7 +7,7 @@ namespace Node.Net.Deprecated.Controls
 {
     class ExampleDataContexts : Dictionary<string,object>
     {
-        private static ExampleDataContexts _default = new ExampleDataContexts();
+        private static readonly ExampleDataContexts _default = new ExampleDataContexts();
         public static ExampleDataContexts Default
         {
             get { return _default; }

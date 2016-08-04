@@ -2,9 +2,9 @@
 {
     public class Explorer : SplitterGrid
     {
-        private System.Windows.Controls.TreeView treeView;
+        private readonly System.Windows.Controls.TreeView treeView;
         private System.Windows.FrameworkElement selectionViewVertical;
-        private System.Windows.FrameworkElement selectionView;
+        private readonly System.Windows.FrameworkElement selectionView;
         public Explorer()
         {
             treeView = new Deprecated.Controls.TreeView();

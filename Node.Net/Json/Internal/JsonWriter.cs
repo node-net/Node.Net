@@ -200,7 +200,7 @@ namespace Node.Net.Json.Internal
         }
 
         private uint IndentLevel;
-        private string IndentString = "";
+        private readonly string IndentString = "";
         private string GetIndent()
         {
             var indent = "";

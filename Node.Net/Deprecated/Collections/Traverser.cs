@@ -2,7 +2,7 @@
 {
     public class Traverser
     {
-        private MetaDataManager metaData;
+        private readonly MetaDataManager metaData;
         public Traverser() { metaData = new MetaDataManager(); }
 
         public Traverser(object model) 

@@ -2,10 +2,10 @@
 {
     public class Executor : System.IDisposable
     {
-        private Command command;
+        private readonly Command command;
         private int pid;
-        System.Threading.AutoResetEvent autoEvent = new System.Threading.AutoResetEvent(false);
-        
+        readonly System.Threading.AutoResetEvent autoEvent = new System.Threading.AutoResetEvent(false);
+
         public Executor(Command value) { command = value; }
 
         #region Dispose

@@ -7,7 +7,7 @@ namespace Node.Net
 {
     public class Transformer : ITransformer
     {
-        private Dictionary<string, dynamic> _resources = new Dictionary<string, dynamic>();
+        private readonly Dictionary<string, dynamic> _resources = new Dictionary<string, dynamic>();
         public IDictionary Resources { get { return _resources; } }
 
         private Dictionary<Type, ITypeTransformer> _typeTransformers;

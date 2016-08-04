@@ -10,8 +10,8 @@ namespace Node.Net.Deprecated.Controls
 {
     public class Selector : Grid
     {
-        private string _title = nameof(Selector);
-        private object _items;
+        private readonly string _title = nameof(Selector);
+        private readonly object _items;
         public Selector(string title, object items)
         {
             _title = title;

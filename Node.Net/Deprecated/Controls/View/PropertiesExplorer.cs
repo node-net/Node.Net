@@ -2,8 +2,8 @@
 {
     public class PropertiesExplorer : SplitterGrid
     {
-        private System.Windows.Controls.TreeView treeView;
-        private System.Windows.FrameworkElement selectionView;
+        private readonly System.Windows.Controls.TreeView treeView;
+        private readonly System.Windows.FrameworkElement selectionView;
         public PropertiesExplorer()
         {
             treeView = new Deprecated.Controls.TreeView();

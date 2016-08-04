@@ -9,9 +9,9 @@ namespace Node.Net.IO
 {
     public class WordReader : System.IDisposable
     {
-        private System.IO.StreamReader _sr;
-        private System.Collections.Generic.List<string> _words = new System.Collections.Generic.List<string>();
-        private System.Collections.Generic.List<char> _delimiters = new System.Collections.Generic.List<char>();
+        private readonly System.IO.StreamReader _sr;
+        private readonly System.Collections.Generic.List<string> _words = new System.Collections.Generic.List<string>();
+        private readonly System.Collections.Generic.List<char> _delimiters = new System.Collections.Generic.List<char>();
 
         /*
         public WordReader(string fileName)

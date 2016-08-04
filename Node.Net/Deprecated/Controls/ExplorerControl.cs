@@ -12,7 +12,7 @@ namespace Node.Net.Deprecated.Controls
         private SplitControl horizontalSplitView;
         private SplitControl verticalSplitView;
         private System.Windows.Controls.TreeView treeView;// new View.TreeView();
-        private PropertyView propertyView = new PropertyView();
+        private readonly PropertyView propertyView = new PropertyView();
         private FrameworkElement contentView;
         private INotifyPropertyChanged inotifyPropertyChanged;
 

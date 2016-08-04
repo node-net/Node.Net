@@ -2,7 +2,7 @@
 {
     public class DynamicViewSelector : System.Windows.Controls.UserControl
     {
-        private DynamicView dynamicView = new DynamicView();
+        private readonly DynamicView dynamicView = new DynamicView();
         private ComboBox comboBox;
         public DynamicViewSelector()
         {

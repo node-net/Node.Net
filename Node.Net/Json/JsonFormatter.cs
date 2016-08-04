@@ -10,7 +10,7 @@ namespace Node.Net.Json
     public class JsonFormatter : IFormatter
     {
 
-        private Json.Internal.JsonReader reader = new Internal.JsonReader();
+        private readonly Json.Internal.JsonReader reader = new Internal.JsonReader();
         public Type DefaultListType
         {
             get { return reader.DefaultListType; }

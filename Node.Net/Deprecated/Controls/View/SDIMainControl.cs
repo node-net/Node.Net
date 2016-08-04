@@ -80,8 +80,8 @@ namespace Node.Net.View
             }
         }
         private string fileName = "";
-        private System.Windows.Controls.Grid documentViewGrid = new System.Windows.Controls.Grid();
-        private System.Windows.FrameworkElement documentView;
+        private readonly System.Windows.Controls.Grid documentViewGrid = new System.Windows.Controls.Grid();
+        private readonly System.Windows.FrameworkElement documentView;
         public string OpenFileDialogFilter { get; set; } = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
         public string SaveFileDialogFilter { get; set; } = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
         protected override void OnInitialized(System.EventArgs e)

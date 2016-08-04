@@ -8,7 +8,7 @@ namespace Node.Net.Json.Internal
 {
     class JsonReader
     {
-        private static JsonReader _default = new JsonReader { AutoResolveTypes = true };
+        private static readonly JsonReader _default = new JsonReader { AutoResolveTypes = true };
         public static JsonReader Default { get { return _default; } }
 
         public static object Load(string value)

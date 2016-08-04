@@ -18,7 +18,7 @@
         public System.Collections.Generic.Dictionary<string, System.Type> Types
             = new System.Collections.Generic.Dictionary<string, System.Type>();
 
-        private System.Collections.Generic.Dictionary<string, string> filenames
+        private readonly System.Collections.Generic.Dictionary<string, string> filenames
             = new System.Collections.Generic.Dictionary<string, string>();
 
 

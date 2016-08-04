@@ -79,8 +79,8 @@ namespace Node.Net.Measurement
         }
 
         public override string ToString() => lengthValue.ToString() + " " + abbreviations[lengthUnit];
-        private static System.Collections.Generic.Dictionary<LengthUnit, double> conversionToMeters = new System.Collections.Generic.Dictionary<LengthUnit, double>();
-        private static System.Collections.Generic.Dictionary<LengthUnit, string> abbreviations = new System.Collections.Generic.Dictionary<LengthUnit, string>();
+        private static readonly System.Collections.Generic.Dictionary<LengthUnit, double> conversionToMeters = new System.Collections.Generic.Dictionary<LengthUnit, double>();
+        private static readonly System.Collections.Generic.Dictionary<LengthUnit, string> abbreviations = new System.Collections.Generic.Dictionary<LengthUnit, string>();
         static Length()
         {
             conversionToMeters.Add(LengthUnit.Meters, 1.0);

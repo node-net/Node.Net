@@ -2,9 +2,9 @@ namespace Node.Net.IO
 {
     public class FileList
     {
-        private System.Collections.Generic.List<string> includePatterns
+        private readonly System.Collections.Generic.List<string> includePatterns
             = new System.Collections.Generic.List<string>();
-        private System.Collections.Generic.List<string> excludePatterns
+        private readonly System.Collections.Generic.List<string> excludePatterns
             = new System.Collections.Generic.List<string>();
 
         public FileList() { }

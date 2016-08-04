@@ -16,10 +16,10 @@ namespace Node.Net.View
             frameworkElements["Default"] = defaultElement;
             DataContextChanged += DynamicView_DataContextChanged;
         }
-        private FrameworkElements frameworkElements = new FrameworkElements();
+        private readonly FrameworkElements frameworkElements = new FrameworkElements();
         public FrameworkElements Elements => frameworkElements;
 
-        private System.Collections.Generic.Dictionary<System.Type, string> typeNames
+        private readonly System.Collections.Generic.Dictionary<System.Type, string> typeNames
             = new System.Collections.Generic.Dictionary<System.Type, string>();
         public System.Collections.Generic.Dictionary<System.Type, string> TypeNames => typeNames;
         void DynamicView_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)

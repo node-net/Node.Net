@@ -3,7 +3,7 @@ namespace Node.Net.Deprecated.Controls
 {
     public class TreeViewItem : System.Windows.Controls.TreeViewItem
     {
-        private string headerString = "";
+        private readonly string headerString = "";
 
         public TreeViewItem()
         {

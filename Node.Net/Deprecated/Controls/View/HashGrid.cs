@@ -5,7 +5,7 @@ namespace Node.Net.View
 {
     public class HashGrid : System.Windows.Controls.Grid
     {
-        private System.Collections.Generic.List<string> orderedKeys;
+        private readonly System.Collections.Generic.List<string> orderedKeys;
         public HashGrid() { }
         public HashGrid(Node.Net.Deprecated.Collections.Hash hash,string[] ordered_keys= null)
         {

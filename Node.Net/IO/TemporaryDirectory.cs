@@ -39,7 +39,7 @@
             if (!System.IO.Directory.Exists(fi.DirectoryName)) System.IO.Directory.CreateDirectory(fi.DirectoryName);
             return fileName;
         }
-        private string fullName = "";
+        private readonly string fullName = "";
         private static string RandomString(int size)
         {
             var random = new System.Random((int)System.DateTime.Now.Ticks);

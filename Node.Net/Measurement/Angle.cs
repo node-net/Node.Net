@@ -5,8 +5,8 @@ namespace Node.Net.Measurement
     public class Angle : System.IComparable,
                          System.ComponentModel.INotifyPropertyChanged
     {
-        private static System.Collections.Generic.Dictionary<AngularUnit, double> conversionToRadians = new System.Collections.Generic.Dictionary<AngularUnit, double>();
-        private static System.Collections.Generic.Dictionary<AngularUnit, string> abbreviations = new System.Collections.Generic.Dictionary<AngularUnit, string>();
+        private static readonly System.Collections.Generic.Dictionary<AngularUnit, double> conversionToRadians = new System.Collections.Generic.Dictionary<AngularUnit, double>();
+        private static readonly System.Collections.Generic.Dictionary<AngularUnit, string> abbreviations = new System.Collections.Generic.Dictionary<AngularUnit, string>();
         static Angle()
         {
             conversionToRadians.Add(AngularUnit.Radians, 1);

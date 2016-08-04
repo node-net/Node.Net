@@ -4,7 +4,7 @@
     {
         public Children() { }
         public Children(object value) { model = value; Update(); }
-        private object model;
+        private readonly object model;
 
         public void Update()
         {

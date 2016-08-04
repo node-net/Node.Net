@@ -66,8 +66,8 @@ namespace Node.Net.Deprecated.Controls
             return frameworkelement.GetType().FullName;
         }
 
-        private object _models;
-        private FrameworkElement _view;
+        private readonly object _models;
+        private readonly FrameworkElement _view;
         private object _selectedModel;
         public ViewTester(object models, FrameworkElement view)
         {

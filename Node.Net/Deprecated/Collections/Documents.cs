@@ -8,7 +8,7 @@ namespace Node.Net.Deprecated.Collections
 {
     public class Documents : Dictionary<string, dynamic>, INotifyPropertyChanged
     {
-        private RecentFiles recentFiles = new RecentFiles();
+        private readonly RecentFiles recentFiles = new RecentFiles();
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void NotifyPropertyChanged(string name)
         {

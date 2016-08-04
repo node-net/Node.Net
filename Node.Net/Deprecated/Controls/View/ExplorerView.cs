@@ -14,7 +14,7 @@ namespace Node.Net.View
         private SplitView horizontalSplitView;
         private SplitView verticalSplitView;
         private System.Windows.Controls.TreeView treeView;// new View.TreeView();
-        private Deprecated.Controls.PropertyView propertyView = new Deprecated.Controls.PropertyView();
+        private readonly Deprecated.Controls.PropertyView propertyView = new Deprecated.Controls.PropertyView();
         private FrameworkElement contentView;
 
         public ExplorerView()
