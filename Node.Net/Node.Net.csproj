@@ -170,9 +170,9 @@
     <Compile Include="Diagnostics\FileSystem.cs" />
     <Compile Include="Diagnostics\ICommand.cs" />
     <Compile Include="Diagnostics\IDictionary.Extension.cs" />
-    <Compile Include="Documents\Documents.cs" />
-    <Compile Include="Documents\IDocument.cs" />
-    <Compile Include="Documents\TextDocument.cs" />
+    <Compile Include="Deprecated\Documents\Documents.cs" />
+    <Compile Include="Deprecated\Documents\IDocument.cs" />
+    <Compile Include="Deprecated\Documents\TextDocument.cs" />
     <Compile Include="Environment\Command.cs" />
     <Compile Include="Environment\Environment.cs" />
     <Compile Include="Environment\Internal\Executor.cs" />
