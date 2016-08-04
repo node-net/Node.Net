@@ -38,7 +38,10 @@ namespace Node.Net.Model3D.Transform
             if (value.Contains("Type")) stype = value["Type"].ToString();
             if (stype.Length > 0 && renderer.TypeModel3DTransformers.ContainsKey(stype))
             {
-                return renderer.TypeModel3DTransformers[stype].GetModel3D(value);
+                if (renderer.TypeNameFilter == null || renderer.TypeNameFilter.Include(stype))
+                {
+                    return renderer.TypeModel3DTransformers[stype].GetModel3D(value);
+                }
             }
 
             return ToModel3DGroup(renderer, value);
@@ -49,6 +52,7 @@ namespace Node.Net.Model3D.Transform
             if (value.Contains("Type")) stype = value["Type"].ToString();
             if (stype.Length > 0 && renderer.TypeModel3DGroupTransformers.ContainsKey(stype))
             {
+                
                 return renderer.TypeModel3DGroupTransformers[stype].GetModel3DGroup(value);
             }
 
@@ -76,6 +80,11 @@ namespace Node.Net.Model3D.Transform
                             };
                             modelGroup.Children.Add(modelResource);
                             primaryModel = modelGroup;
+
+                            if(modelKey == "Type" && renderer.TypeNameFilter != null && !renderer.TypeNameFilter.Include(modelKeyValue))
+                            {
+                                primaryModel = null;
+                            }
                         }
 
                     }
