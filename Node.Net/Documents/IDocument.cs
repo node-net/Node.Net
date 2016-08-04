@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Deprecated.Documents
+﻿namespace Node.Net.Documents
 {
     public interface IDocument
     {
