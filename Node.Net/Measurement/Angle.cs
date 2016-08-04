@@ -47,7 +47,7 @@ namespace Node.Net.Measurement
                 }
             }
         }
-        private double angleValue = 0;
+        private double angleValue;
 
         public Angle() { }
         public Angle(double value, AngularUnit units) { angleValue = value; angularUnit = units; }

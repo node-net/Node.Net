@@ -8,7 +8,7 @@ namespace Node.Net.Deprecated.Collections
         public Document(string json) : base(json) { Update(); }
         public Document(System.IO.Stream stream) : base(stream) { Update(); }
 
-        private Deprecated.Collections.Traverser traverser = null;
+        private Deprecated.Collections.Traverser traverser;
         [System.ComponentModel.Browsable(false)]
         public Deprecated.Collections.Traverser Traverser
         {

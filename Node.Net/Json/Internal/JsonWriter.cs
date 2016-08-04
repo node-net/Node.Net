@@ -10,8 +10,8 @@ namespace Node.Net.Json.Internal
     class JsonWriter
     {
         public Style Style = Style.Compact;
-        public bool AddTypeInfo = false;
-        public bool IgnoreNullValues = false;
+        public bool AddTypeInfo;
+        public bool IgnoreNullValues;
         public List<Type> IgnoreTypes = new List<Type>();
 
         public static string Write(object value, Style style = Style.Compact)
@@ -199,7 +199,7 @@ namespace Node.Net.Json.Internal
             if (Style == Style.Indented) writer.Write(System.Environment.NewLine);
         }
 
-        private uint IndentLevel = 0;
+        private uint IndentLevel;
         private string IndentString = "";
         private string GetIndent()
         {

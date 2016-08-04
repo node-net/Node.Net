@@ -9,12 +9,12 @@ namespace Node.Net.Deprecated.Controls
 {
     public class ExplorerControl : Grid
     {
-        private SplitControl horizontalSplitView = null;
-        private SplitControl verticalSplitView = null;
-        private System.Windows.Controls.TreeView treeView = null;// new View.TreeView();
+        private SplitControl horizontalSplitView;
+        private SplitControl verticalSplitView;
+        private System.Windows.Controls.TreeView treeView;// new View.TreeView();
         private PropertyView propertyView = new PropertyView();
-        private FrameworkElement contentView = null;
-        private INotifyPropertyChanged inotifyPropertyChanged = null;
+        private FrameworkElement contentView;
+        private INotifyPropertyChanged inotifyPropertyChanged;
 
         public ExplorerControl()
         {

@@ -36,7 +36,7 @@ namespace Node.Net.View
             Update();
         }
 
-        private System.Type documentType = null;
+        private System.Type documentType;
         public System.Type DocumentType
         {
             get { return documentType; }
@@ -87,7 +87,7 @@ namespace Node.Net.View
         }
         private string fileName = "";
         private System.Windows.Controls.Grid documentViewGrid = new System.Windows.Controls.Grid();
-        private System.Windows.FrameworkElement documentView = null;
+        private System.Windows.FrameworkElement documentView;
 
         private string openFileDialogFilter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
         public string OpenFileDialogFilter

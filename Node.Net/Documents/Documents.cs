@@ -45,7 +45,7 @@
             }
         }
 
-        private object current = null;
+        private object current;
         public object Current
         {
             get { return current; }
@@ -59,7 +59,7 @@
             }
         }
 
-        private System.Type defaultDocumentType = null;
+        private System.Type defaultDocumentType;
         public System.Type DefaultDocumentType
         {
             get

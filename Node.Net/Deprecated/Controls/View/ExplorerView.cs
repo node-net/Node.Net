@@ -11,11 +11,11 @@ namespace Node.Net.View
     /// </summary>
     public class ExplorerView : Grid
     {
-        private SplitView horizontalSplitView = null;
-        private SplitView verticalSplitView = null;
-        private System.Windows.Controls.TreeView treeView = null;// new View.TreeView();
+        private SplitView horizontalSplitView;
+        private SplitView verticalSplitView;
+        private System.Windows.Controls.TreeView treeView;// new View.TreeView();
         private Deprecated.Controls.PropertyView propertyView = new Deprecated.Controls.PropertyView();
-        private FrameworkElement contentView = null;
+        private FrameworkElement contentView;
 
         public ExplorerView()
         {

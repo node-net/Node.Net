@@ -29,7 +29,7 @@ namespace Node.Net.Transformers
             return null;
         }
 
-        private Dictionary<string, Brush> _namedBrushes = null;
+        private Dictionary<string, Brush> _namedBrushes;
         public Dictionary<string, Brush> NamedBrushes
         {
             get

@@ -47,7 +47,7 @@ namespace Node.Net.Json.Internal
                 }
             }
         }
-        public bool AutoResolveTypes = false;
+        public bool AutoResolveTypes;
         public object Read(string value)
         {
             var isJson = false;

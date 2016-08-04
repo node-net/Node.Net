@@ -2,7 +2,7 @@
 {
     public class Plugins : System.Collections.Generic.Dictionary<string,System.Reflection.Assembly>
     {
-        private static Plugins _default = null;
+        private static Plugins _default;
         public static Plugins Default
         {
             get

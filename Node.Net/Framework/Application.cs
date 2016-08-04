@@ -4,7 +4,7 @@ namespace Node.Net.Framework
 {
     public class Application
     {
-        private Window mainWindow = null;
+        private Window mainWindow;
         public Window MainWindow
         {
             get { return mainWindow; }

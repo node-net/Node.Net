@@ -7,7 +7,7 @@ namespace Node.Net.Resources
 {
     public class MaterialResources : Resources
     {
-        public IResources ImageResources = null;
+        public IResources ImageResources;
 
         protected override object GetDynamicResource(string name)
         {

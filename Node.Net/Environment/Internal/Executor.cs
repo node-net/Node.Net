@@ -2,8 +2,8 @@
 {
     public class Executor : System.IDisposable
     {
-        private Command command = null;
-        private int pid = 0;
+        private Command command;
+        private int pid;
         System.Threading.AutoResetEvent autoEvent = new System.Threading.AutoResetEvent(false);
         
         public Executor(Command value) { command = value; }

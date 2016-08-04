@@ -9,7 +9,7 @@ namespace Node.Net.IO
 {
     public class WordReader : System.IDisposable
     {
-        private System.IO.StreamReader _sr = null;
+        private System.IO.StreamReader _sr;
         private System.Collections.Generic.List<string> _words = new System.Collections.Generic.List<string>();
         private System.Collections.Generic.List<char> _delimiters = new System.Collections.Generic.List<char>();
 

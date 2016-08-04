@@ -8,7 +8,7 @@ namespace Node.Net.Deprecated.Controls
 {
     public class TreeViewItemDetailed : System.Windows.Controls.TreeViewItem
     {
-        private bool showValues = false;
+        private bool showValues;
         public bool ShowValues
         {
             get { return showValues; }

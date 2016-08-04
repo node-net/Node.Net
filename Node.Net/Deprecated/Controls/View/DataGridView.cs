@@ -35,8 +35,8 @@
         #endregion
 
         #region Member Data
-        private System.Windows.Forms.Integration.WindowsFormsHost host = null;
-        private System.Windows.Forms.DataGridView dataGridView = null;
+        private System.Windows.Forms.Integration.WindowsFormsHost host;
+        private System.Windows.Forms.DataGridView dataGridView;
         #endregion
 
         #region Dispose

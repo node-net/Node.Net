@@ -138,7 +138,7 @@ namespace Node.Net.Deprecated.Collections
             }
         }
 
-        private Document document = null;
+        private Document document;
         [System.ComponentModel.Browsable(false)]
         public virtual Document Document
         {

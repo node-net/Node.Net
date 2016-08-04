@@ -66,9 +66,9 @@ namespace Node.Net.Deprecated.Controls
             return frameworkelement.GetType().FullName;
         }
 
-        private object _models = null;
-        private FrameworkElement _view = null;
-        private object _selectedModel = null;
+        private object _models;
+        private FrameworkElement _view;
+        private object _selectedModel;
         public ViewTester(object models, FrameworkElement view)
         {
             _models = models;
@@ -87,8 +87,8 @@ namespace Node.Net.Deprecated.Controls
             }
         }
 
-        private Selector _selector = null;
-        private System.Windows.Controls.Grid _viewGrid = null;
+        private Selector _selector;
+        private System.Windows.Controls.Grid _viewGrid;
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);

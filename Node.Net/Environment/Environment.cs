@@ -56,7 +56,7 @@
             return working_dir;
         }
 
-        private static System.Windows.ResourceDictionary workingDirectories = null;
+        private static System.Windows.ResourceDictionary workingDirectories;
         private static System.Windows.ResourceDictionary GetWorkingDirectories()
         {
             if(object.ReferenceEquals(null,workingDirectories))

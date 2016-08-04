@@ -11,7 +11,7 @@ namespace Node.Net.Deprecated.Controls
     public class Selector : Grid
     {
         private string _title = nameof(Selector);
-        private object _items = null;
+        private object _items;
         public Selector(string title, object items)
         {
             _title = title;
@@ -26,7 +26,7 @@ namespace Node.Net.Deprecated.Controls
             Update();
         }
 
-        private ComboBox _comboBox = null;
+        private ComboBox _comboBox;
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);

@@ -8,7 +8,7 @@ namespace Node.Net.Measurement
         public Length() { }
         public Length(double value, LengthUnit units) { lengthValue = value; lengthUnit = units; }
 
-        private double lengthValue = 0;
+        private double lengthValue;
         private LengthUnit lengthUnit = LengthUnit.Meters;
 
         public double this[LengthUnit targetUnits]

@@ -4,8 +4,8 @@
                                 IDocument,
                                 System.IDisposable
     {
-        private System.IO.StreamWriter streamWriter = null;
-        private System.IO.StreamReader streamReader = null;
+        private System.IO.StreamWriter streamWriter;
+        private System.IO.StreamReader streamReader;
         public void Dispose()
         {
             Dispose(true);

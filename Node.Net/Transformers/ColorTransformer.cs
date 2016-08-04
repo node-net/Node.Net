@@ -33,7 +33,7 @@ namespace Node.Net.Transformers
             return Colors.Black;
         }
 
-        private Dictionary<string, Color> _namedColors = null;
+        private Dictionary<string, Color> _namedColors;
         public Dictionary<string, Color> NamedColors
         {
             get

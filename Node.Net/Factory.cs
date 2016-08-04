@@ -10,7 +10,7 @@ namespace Node.Net
 {
     public class Factory : IFactory
     {
-        private static IFactory _default = null;
+        private static IFactory _default;
         public static IFactory Default
         {
             get

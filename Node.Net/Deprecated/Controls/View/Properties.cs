@@ -41,9 +41,9 @@
         }
 
         #region Member Data
-        private System.Windows.Forms.Integration.WindowsFormsHost host = null;
-        private System.Windows.Forms.PropertyGrid propertyGrid = null;
-        private Title title = null;
+        private System.Windows.Forms.Integration.WindowsFormsHost host;
+        private System.Windows.Forms.PropertyGrid propertyGrid;
+        private Title title;
         #endregion
 
         #region Dispose

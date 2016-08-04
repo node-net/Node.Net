@@ -15,7 +15,7 @@
             get{return KeyValuePair.GetValue(DataContext);}
             set { DataContext = value; }
         }
-        private System.Windows.Controls.Grid grid = null;
+        private System.Windows.Controls.Grid grid;
 
         private string openFileDialogFilter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
         public string OpenFileDialogFilter
@@ -25,14 +25,14 @@
         }
 
         private string fileName = "";
-        private System.Type documentType = null;
+        private System.Type documentType;
         public System.Type DocumentType
         {
             get { return documentType; }
             set { documentType = value; }
         }
-        private System.Windows.FrameworkElement documentView = null;
-        private System.Type documentViewType = null;
+        private System.Windows.FrameworkElement documentView;
+        private System.Type documentViewType;
         public System.Type DocumentViewType
         {
             get
@@ -48,7 +48,7 @@
                 documentViewType = value;
             }
         }
-        private System.Windows.Controls.Menu menu = null;
+        private System.Windows.Controls.Menu menu;
         protected override void OnInitialized(System.EventArgs e)
         {
             base.OnInitialized(e);

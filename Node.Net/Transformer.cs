@@ -10,7 +10,7 @@ namespace Node.Net
         private Dictionary<string, dynamic> _resources = new Dictionary<string, dynamic>();
         public IDictionary Resources { get { return _resources; } }
 
-        private Dictionary<Type, ITypeTransformer> _typeTransformers = null;
+        private Dictionary<Type, ITypeTransformer> _typeTransformers;
         public IDictionary TypeTransformers
         {
             get

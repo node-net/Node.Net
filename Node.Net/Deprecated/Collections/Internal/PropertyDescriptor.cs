@@ -14,7 +14,7 @@
             return null;
         }
 
-        private System.Collections.IDictionary idictionary = null;
+        private System.Collections.IDictionary idictionary;
         public PropertyDescriptor(string name,System.Attribute[] attributes) : base(name,attributes) { }
         public PropertyDescriptor(System.Collections.IDictionary dictionary, string name, System.Attribute[] attributes) : base(name, attributes) { idictionary = dictionary; }
         public override bool CanResetValue(object component) => true;

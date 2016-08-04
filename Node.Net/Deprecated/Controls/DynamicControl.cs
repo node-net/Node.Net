@@ -87,7 +87,7 @@ namespace Node.Net.Deprecated.Controls
             //_views[ViewName].DataContext = DataContext;
         }
 
-        private Dictionary<string, FrameworkElement> _views = null;
+        private Dictionary<string, FrameworkElement> _views;
         private void InitializeViews()
         {
             _views = new Dictionary<string, FrameworkElement>();

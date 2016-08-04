@@ -6,7 +6,7 @@ namespace Node.Net.Deprecated.Collections
 {
     public class ReadOnlyIDictionaryPropertyDescriptor : PropertyDescriptor
     {
-        private IDictionary idictionary = null;
+        private IDictionary idictionary;
         public IDictionary IDictionary
         {
             get { return idictionary; }

@@ -23,7 +23,7 @@ namespace Node.Net.Deprecated.Controls
             OnDataContextChanged();
         }
 
-        private INotifyPropertyChanged inotifyPropertyChanged = null;
+        private INotifyPropertyChanged inotifyPropertyChanged;
         private void OnDataContextChanged()
         {
             if (object.ReferenceEquals(null, propertyGrid)) return;
@@ -91,9 +91,9 @@ namespace Node.Net.Deprecated.Controls
         }
 
         #region Member Data
-        private System.Windows.Forms.Integration.WindowsFormsHost host = null;
-        private System.Windows.Forms.PropertyGrid propertyGrid = null;
-        private TitleControl title = null;
+        private System.Windows.Forms.Integration.WindowsFormsHost host;
+        private System.Windows.Forms.PropertyGrid propertyGrid;
+        private TitleControl title;
         #endregion
 
         #region Dispose

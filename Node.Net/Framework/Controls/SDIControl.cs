@@ -19,7 +19,7 @@ namespace Node.Net.Framework.Controls
             set { DataContext = value; }
         }
 
-        private Menu menu = null;
+        private Menu menu;
         public Menu Menu
         {
             get { return menu; }
@@ -31,7 +31,7 @@ namespace Node.Net.Framework.Controls
             }
         }
 
-        private FrameworkElement documentView = null;
+        private FrameworkElement documentView;
         public FrameworkElement DocumentView
         {
             get { return documentView; }

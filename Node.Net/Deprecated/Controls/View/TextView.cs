@@ -10,7 +10,7 @@
             update();
         }
 
-        private System.Windows.Controls.TextBox textBox = null;
+        private System.Windows.Controls.TextBox textBox;
         protected override void OnInitialized(System.EventArgs e)
         {
             base.OnInitialized(e);
@@ -46,7 +46,7 @@
             update();
         }
 
-        private bool updating = false;
+        private bool updating;
         private void update()
         {
             if (object.ReferenceEquals(null, textBox)) return;

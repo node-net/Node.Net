@@ -83,7 +83,7 @@ namespace Node.Net.View
             }
         }
 
-        private GridSplitter gridSplitter = null;
+        private GridSplitter gridSplitter;
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
@@ -115,14 +115,14 @@ namespace Node.Net.View
             set { orientation = value; OnDataContextChanged(); }
         }
 
-        private UIElement elementA = null;
+        private UIElement elementA;
         public UIElement ElementA
         {
             get { return elementA; }
             set { elementA = value; OnDataContextChanged(); }
         }
 
-        private UIElement elementB = null;
+        private UIElement elementB;
         public UIElement ElementB
         {
             get { return elementB; }
