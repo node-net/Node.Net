@@ -35,13 +35,7 @@ namespace Node.Net.View
         {
             Update();
         }
-
-        private System.Type documentType;
-        public System.Type DocumentType
-        {
-            get { return documentType; }
-            set { documentType = value; }
-        }
+        public System.Type DocumentType { get; set; }
 
         public object Document
         {
@@ -88,20 +82,8 @@ namespace Node.Net.View
         private string fileName = "";
         private System.Windows.Controls.Grid documentViewGrid = new System.Windows.Controls.Grid();
         private System.Windows.FrameworkElement documentView;
-
-        private string openFileDialogFilter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
-        public string OpenFileDialogFilter
-        {
-            get { return openFileDialogFilter; }
-            set { openFileDialogFilter = value; }
-        }
-
-        private string saveFileDialogFilter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
-        public string SaveFileDialogFilter
-        {
-            get { return saveFileDialogFilter; }
-            set { saveFileDialogFilter = value; }
-        }
+        public string OpenFileDialogFilter { get; set; } = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
+        public string SaveFileDialogFilter { get; set; } = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
         protected override void OnInitialized(System.EventArgs e)
         {
             base.OnInitialized(e);
@@ -134,19 +116,13 @@ namespace Node.Net.View
             System.Windows.Controls.Grid.SetRow(documentViewGrid, 1);
             Content = grid;
         }
-
-        private string title = "";
-        public string Title
-        {
-            get{return title;}
-            set{title=value;}
-        }
+        public string Title { get; set; } = "";
         public void Update()
         {
             var model = KeyValuePair.GetValue(DataContext);
             if (!object.ReferenceEquals(null, model))
             {
-                if (object.ReferenceEquals(null, documentType)) documentType = model.GetType();
+                if (object.ReferenceEquals(null, DocumentType)) DocumentType = model.GetType();
             }
             var title = "";
             var key = KeyValuePair.GetKey(Document);

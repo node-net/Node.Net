@@ -46,27 +46,9 @@ namespace Node.Net.Json
             var d = (IDictionary)formatter.Deserialize(stream);
             Deprecated.Collections.Copier.Copy(d, dictionary);
         }
-
-        private SerializationBinder binder = new JsonSerializationBinder();
-        public SerializationBinder Binder
-        {
-            get { return binder; }
-            set { binder = value; }
-        }
-
-        private StreamingContext context = new StreamingContext();
-        public StreamingContext Context
-        {
-            get { return context; }
-            set { context = value; }
-        }
-
-        private ISurrogateSelector surrogateSelector = new SurrogateSelector();
-        public ISurrogateSelector SurrogateSelector
-        {
-            get { return surrogateSelector; }
-            set { surrogateSelector = value; }
-        }
+        public SerializationBinder Binder { get; set; } = new JsonSerializationBinder();
+        public StreamingContext Context { get; set; } = new StreamingContext();
+        public ISurrogateSelector SurrogateSelector { get; set; } = new SurrogateSelector();
 
         public object Deserialize(Stream serializationStream)
         {

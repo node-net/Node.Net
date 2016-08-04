@@ -6,19 +6,14 @@ namespace Node.Net.Deprecated.Collections
 {
     public class ReadOnlyIDictionaryPropertyDescriptor : PropertyDescriptor
     {
-        private IDictionary idictionary;
-        public IDictionary IDictionary
-        {
-            get { return idictionary; }
-            set { idictionary = value; }
-        }
+        public IDictionary IDictionary { get; set; }
 
         public ReadOnlyIDictionaryPropertyDescriptor(string keyValue, Attribute[] attributes) : base(keyValue, attributes)
         {
         }
         public override bool CanResetValue(object component) { return true; }
-        public override void ResetValue(object component) { idictionary = component as IDictionary; }
-        public override bool ShouldSerializeValue(object component) { idictionary = component as IDictionary; return false; }
+        public override void ResetValue(object component) { IDictionary = component as IDictionary; }
+        public override bool ShouldSerializeValue(object component) { IDictionary = component as IDictionary; return false; }
         public override bool IsReadOnly
         {
             get
@@ -28,13 +23,13 @@ namespace Node.Net.Deprecated.Collections
         }
         public override void SetValue(object component, object value)
         {
-            idictionary = component as IDictionary;
+            IDictionary = component as IDictionary;
         }
         public override Type PropertyType
         {
             get
             {
-                return idictionary[Name].GetType();
+                return IDictionary[Name].GetType();
             }
         }
 

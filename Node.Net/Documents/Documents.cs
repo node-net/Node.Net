@@ -78,23 +78,11 @@
                 defaultDocumentType = value;
             }
         }
-
-        private string openFileDialogFilter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
-        public string OpenFileDialogFilter
-        {
-            get { return openFileDialogFilter; }
-            set { openFileDialogFilter = value; }
-        }
-
-        private int maximumCount = -1;
-        public int MaximumCount
-        {
-            get { return maximumCount; }
-            set { maximumCount = value; }
-        }
+        public string OpenFileDialogFilter { get; set; } = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
+        public int MaximumCount { get; set; } = -1;
         public void New()
         {
-            if(MaximumCount > 0 && Count == maximumCount)
+            if(MaximumCount > 0 && Count == MaximumCount)
             {
                 Clear();
             }
@@ -138,7 +126,7 @@
                     object[] parameters = { stream };
                     openInfo.Invoke(document, parameters);
 
-                    if (MaximumCount > 0 && Count == maximumCount)
+                    if (MaximumCount > 0 && Count == MaximumCount)
                     {
                         Clear();
                     }

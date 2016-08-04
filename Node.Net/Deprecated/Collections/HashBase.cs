@@ -137,15 +137,9 @@ namespace Node.Net.Deprecated.Collections
                 Open(fs);
             }
         }
-
-        private Document document;
         [System.ComponentModel.Browsable(false)]
-        public virtual Document Document
-        {
-            get { return document; }
-            set { document = value; }
-        }
-        
+        public virtual Document Document { get; set; }
+
         [System.ComponentModel.Browsable(false)]
         public object Parent
         {

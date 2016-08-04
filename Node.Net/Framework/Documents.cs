@@ -18,27 +18,9 @@ namespace Node.Net.Framework
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-
-        private int maximumCount = 1;
-        public int MaximumCount
-        {
-            get { return maximumCount; }
-            set { maximumCount = value; }
-        }
-
-        private Type defaultDocumentType = typeof(Deprecated.Collections.Dictionary);
-        public Type DefaultDocumentType
-        {
-            get { return defaultDocumentType; }
-            set { defaultDocumentType = value; }
-        }
-
-        private string openFileDialogFilter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*";
-        public string OpenFileDialogFilter
-        {
-            get { return openFileDialogFilter; }
-            set { openFileDialogFilter = value; }
-        }
+        public int MaximumCount { get; set; } = 1;
+        public Type DefaultDocumentType { get; set; } = typeof(Deprecated.Collections.Dictionary);
+        public string OpenFileDialogFilter { get; set; } = "JSON Files (*.json)|*.json|All Files (*.*)|*.*";
 
         public new void Clear()
         {
@@ -125,7 +107,7 @@ namespace Node.Net.Framework
                 }
             }
 
-            if (MaximumCount > 0 && Count == maximumCount)
+            if (MaximumCount > 0 && Count == MaximumCount)
             { base.Clear(); }
             Add(name, document);
             CurrentKey = name;

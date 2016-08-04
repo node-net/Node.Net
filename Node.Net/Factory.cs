@@ -26,13 +26,7 @@ namespace Node.Net
                 _default = value;
             }
         }
-
-        private IDictionary _resources = new Dictionary<string, dynamic>();
-        public IDictionary Resources
-        {
-            get { return _resources; }
-            set { _resources = value; }
-        }
+        public IDictionary Resources { get; set; } = new Dictionary<string, dynamic>();
         public object Load(Stream stream, string name)
         {
             if(name.Contains(".json"))

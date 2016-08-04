@@ -8,12 +8,7 @@ namespace Node.Net.Transformers
 {
     public abstract class TypeTransformer : ITypeTransformer
     {
-        private ITransformer _itransform;
-        public ITransformer Transformer
-        {
-            get { return _itransform; }
-            set { _itransform = value; }
-        }
+        public ITransformer Transformer { get; set; }
 
         public abstract object Transform(object item);
     }

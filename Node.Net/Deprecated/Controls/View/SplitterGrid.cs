@@ -2,7 +2,6 @@
 {
     public class SplitterGrid : System.Windows.Controls.Grid
     {
-        private System.Windows.Controls.Orientation orientation = System.Windows.Controls.Orientation.Vertical;
         private System.Collections.Generic.List<System.Windows.FrameworkElement> elements
             = new System.Collections.Generic.List<System.Windows.FrameworkElement>();
         protected System.Collections.Generic.List<System.Windows.GridLength> gridLengths
@@ -14,12 +13,12 @@
 
         public SplitterGrid(System.Windows.Controls.Orientation value) 
         { 
-            orientation = value;
+            Orientation = value;
             DataContextChanged += SplitterGrid_DataContextChanged;
         }
         public SplitterGrid(System.Windows.Controls.Orientation value,System.Windows.GridLength gridLength1)
         {
-            orientation = value;
+            Orientation = value;
             DataContextChanged +=SplitterGrid_DataContextChanged;
             gridLengths.Add(gridLength1);
             //firstGridLength = gridLength1;
@@ -28,7 +27,7 @@
         public SplitterGrid(System.Windows.FrameworkElement[] value,System.Windows.Controls.Orientation orientation_value)
         {
             DataContextChanged += SplitterGrid_DataContextChanged;
-            orientation = orientation_value;
+            Orientation = orientation_value;
             elements.Clear();
             foreach (System.Windows.FrameworkElement e in value) { elements.Add(e); }
             Update();
@@ -39,7 +38,7 @@
             System.Windows.GridLength[] grid_lengths)
         {
             DataContextChanged += SplitterGrid_DataContextChanged;
-            orientation = orientation_value;
+            Orientation = orientation_value;
             elements.Clear();
             foreach (System.Windows.FrameworkElement e in value) { elements.Add(e); }
             gridLengths = new System.Collections.Generic.List<System.Windows.GridLength>(grid_lengths);
@@ -51,11 +50,7 @@
             Update();
         }
 
-        public System.Windows.Controls.Orientation Orientation
-        {
-            get { return orientation; }
-            set { orientation = value; }
-        }
+        public System.Windows.Controls.Orientation Orientation { get; set; } = System.Windows.Controls.Orientation.Vertical;
         public System.Windows.FrameworkElement[] Elements
         {
             get { return elements.ToArray(); }
@@ -71,7 +66,7 @@
             Children.Clear();
             RowDefinitions.Clear();
             ColumnDefinitions.Clear();
-            if(orientation == System.Windows.Controls.Orientation.Vertical)
+            if(Orientation == System.Windows.Controls.Orientation.Vertical)
             {
                 var rowCount = elements.Count + (elements.Count - 1);
                 for (int r = 0; r < rowCount; ++r)

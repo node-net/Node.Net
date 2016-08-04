@@ -16,21 +16,10 @@
             set { DataContext = value; }
         }
         private System.Windows.Controls.Grid grid;
-
-        private string openFileDialogFilter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
-        public string OpenFileDialogFilter
-        {
-            get { return openFileDialogFilter; }
-            set { openFileDialogFilter = value; }
-        }
+        public string OpenFileDialogFilter { get; set; } = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All Files (*.*)|*.*";
 
         private string fileName = "";
-        private System.Type documentType;
-        public System.Type DocumentType
-        {
-            get { return documentType; }
-            set { documentType = value; }
-        }
+        public System.Type DocumentType { get; set; }
         private System.Windows.FrameworkElement documentView;
         private System.Type documentViewType;
         public System.Type DocumentViewType
@@ -106,7 +95,7 @@
             var model = Document;
             if (!object.ReferenceEquals(null,model))
             {
-                if (object.ReferenceEquals(null, documentType)) documentType = model.GetType();
+                if (object.ReferenceEquals(null, DocumentType)) DocumentType = model.GetType();
             }
         }
 

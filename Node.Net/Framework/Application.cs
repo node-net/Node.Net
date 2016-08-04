@@ -4,12 +4,7 @@ namespace Node.Net.Framework
 {
     public class Application
     {
-        private Window mainWindow;
-        public Window MainWindow
-        {
-            get { return mainWindow; }
-            set { mainWindow = value; }
-        }
+        public Window MainWindow { get; set; }
 
         public virtual int Run(string[] args)
         {
