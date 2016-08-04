@@ -77,13 +77,6 @@ namespace Node.Net.Data.Services
             return nonce;
         }
 
-        private static double GenerateTimestamp(DateTime date)
-        {
-            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            TimeSpan diff = date.ToUniversalTime() - origin;
-            return Math.Floor(diff.TotalSeconds);
-        }
-
         public static double ConvertToUnixTimestamp(DateTime date)
         {
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);

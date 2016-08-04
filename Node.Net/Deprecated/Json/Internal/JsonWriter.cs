@@ -239,6 +239,5 @@ namespace Node.Net.Deprecated.Json.Internal
             }
             return result;
         }
-        private static string EscapeBackslashes(string input) => input.Replace("\\", "\\\\");
     }
 }

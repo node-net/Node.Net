@@ -92,10 +92,6 @@ namespace Node.Net.Framework.Controls
             var recentFileMenuItems = new List<MenuItem>();
             return recentFileMenuItems.ToArray();
         }
-        private static void AddRecentFile(string filename)
-        {
-            //System.Windows.Application.Current.
-        }
 
         private void FileOpen_Click(object sender, RoutedEventArgs e)
         {
