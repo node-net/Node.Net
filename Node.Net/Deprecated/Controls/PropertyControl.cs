@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class PropertyControl : System.Windows.Controls.Grid, System.IDisposable
     {
@@ -29,7 +29,7 @@ namespace Node.Net.Controls
             if (object.ReferenceEquals(null, propertyGrid)) return;
 
             title.DataContext = DataContext;
-            var value = Collections.KeyValuePair.GetValue(DataContext);
+            var value = Node.Net.Collections.KeyValuePair.GetValue(DataContext);
             if (object.ReferenceEquals(null, value))
             {
                 propertyGrid.SelectedObject = null;

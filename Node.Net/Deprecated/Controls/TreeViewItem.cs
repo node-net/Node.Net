@@ -1,5 +1,5 @@
 ﻿
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class TreeViewItem : System.Windows.Controls.TreeViewItem
     {
@@ -106,7 +106,7 @@ namespace Node.Net.Controls
         public static bool IsValidChild(object item)
         {
             if (object.ReferenceEquals(null, item)) return false;
-            var value = Collections.KeyValuePair.GetValue(item);
+            var value = Node.Net.Collections.KeyValuePair.GetValue(item);
             if (object.ReferenceEquals(null, value)) return false;
             if (typeof(string).IsAssignableFrom(value.GetType())) return false;
             if (value.GetType().IsValueType) return false;
@@ -114,7 +114,7 @@ namespace Node.Net.Controls
         }
         public static System.Collections.IList GetChildren(object item)
         {
-            var value = Collections.KeyValuePair.GetValue(item);
+            var value = Node.Net.Collections.KeyValuePair.GetValue(item);
             var children = new System.Collections.Generic.List<object>();
             if (object.ReferenceEquals(null, value)) return children;
             if (typeof(string).IsAssignableFrom(value.GetType())) return children;

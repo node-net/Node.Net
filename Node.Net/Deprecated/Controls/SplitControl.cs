@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class SplitControl : Grid
     {

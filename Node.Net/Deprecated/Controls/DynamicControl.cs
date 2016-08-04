@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class DynamicControl : Grid
     {

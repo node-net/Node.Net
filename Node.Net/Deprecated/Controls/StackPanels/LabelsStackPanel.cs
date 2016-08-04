@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 
-namespace Node.Net.Controls.StackPanels
+namespace Node.Net.Deprecated.Controls.StackPanels
 {
     public abstract class LabelsStackPanel : StackPanel
     {

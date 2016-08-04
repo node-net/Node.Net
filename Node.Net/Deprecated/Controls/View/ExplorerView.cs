@@ -14,7 +14,7 @@ namespace Node.Net.View
         private SplitView horizontalSplitView = null;
         private SplitView verticalSplitView = null;
         private System.Windows.Controls.TreeView treeView = null;// new View.TreeView();
-        private Controls.PropertyView propertyView = new Controls.PropertyView();
+        private Deprecated.Controls.PropertyView propertyView = new Deprecated.Controls.PropertyView();
         private FrameworkElement contentView = null;
 
         public ExplorerView()
@@ -37,7 +37,7 @@ namespace Node.Net.View
 
             if(object.ReferenceEquals(null, treeView))
             {
-                TreeView = new Controls.TreeView();
+                TreeView = new Deprecated.Controls.TreeView();
             }
         }
         private void ExplorerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

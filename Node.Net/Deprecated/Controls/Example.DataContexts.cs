@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     class ExampleDataContexts : Dictionary<string,object>
     {

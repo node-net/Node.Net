@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Node.Net.Controls.StackPanels
+namespace Node.Net.Deprecated.Controls.StackPanels
 {
     public class IDictionaryKeysStackPanel : LabelsStackPanel
     {

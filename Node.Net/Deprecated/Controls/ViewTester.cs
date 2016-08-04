@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class ViewTester : System.Windows.Controls.Grid
     {

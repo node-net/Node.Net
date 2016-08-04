@@ -6,9 +6,9 @@
         private System.Windows.FrameworkElement selectionView = null;
         public PropertiesExplorer()
         {
-            treeView = new Controls.TreeView();
+            treeView = new Deprecated.Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
-            selectionView = new Controls.PropertyControl();
+            selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 
@@ -17,10 +17,10 @@
         {
             Orientation = orientation;
             treeView = tree_view;
-            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Deprecated.Controls.TreeView();
             treeView.SelectedItemChanged +=treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 

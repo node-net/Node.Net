@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Xml;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class TreeViewItemDetailed : System.Windows.Controls.TreeViewItem
     {
@@ -39,11 +39,11 @@ namespace Node.Net.Controls
         private static bool IsValue(object item)
         {
             if (object.ReferenceEquals(null, item)) return true;
-            if (object.ReferenceEquals(null, Collections.KeyValuePair.GetValue(item))) return true;
-            if (Collections.KeyValuePair.IsKeyValuePair(item))
+            if (object.ReferenceEquals(null, Node.Net.Collections.KeyValuePair.GetValue(item))) return true;
+            if (Node.Net.Collections.KeyValuePair.IsKeyValuePair(item))
             {
-                if (Collections.KeyValuePair.GetValue(item).GetType() == typeof(string)) return true;
-                var ienumerable = Collections.KeyValuePair.GetValue(item) as IEnumerable;
+                if (Node.Net.Collections.KeyValuePair.GetValue(item).GetType() == typeof(string)) return true;
+                var ienumerable = Node.Net.Collections.KeyValuePair.GetValue(item) as IEnumerable;
                 if (object.ReferenceEquals(null, ienumerable)) return true;
             }
             return false;
@@ -114,7 +114,7 @@ namespace Node.Net.Controls
 
         protected virtual object[] GetChildModels()
         {
-            return GetChildren(Collections.KeyValuePair.GetValue(DataContext));
+            return GetChildren(Node.Net.Collections.KeyValuePair.GetValue(DataContext));
         }
         protected virtual TreeViewItemDetailed[] GetChildren()
         {
@@ -146,15 +146,15 @@ namespace Node.Net.Controls
             }
             if (IsValue(DataContext))
             {
-                var key = Collections.KeyValuePair.GetKey(DataContext).ToString();
-                var value = Collections.KeyValuePair.GetValue(DataContext).ToString();
+                var key = Node.Net.Collections.KeyValuePair.GetKey(DataContext).ToString();
+                var value = Node.Net.Collections.KeyValuePair.GetValue(DataContext).ToString();
                 return $"{key} : {value}";
             }
             else
             {
-                if (Collections.KeyValuePair.IsKeyValuePair(DataContext))
+                if (Node.Net.Collections.KeyValuePair.IsKeyValuePair(DataContext))
                 {
-                    return Collections.KeyValuePair.GetKey(DataContext).ToString();
+                    return Node.Net.Collections.KeyValuePair.GetKey(DataContext).ToString();
                 }
                 return "null";
             }

@@ -43,7 +43,7 @@
                     var menuItem = new System.Windows.Controls.MenuItem
                     {
                         Header = displayName,
-                        Command = new Controls.MethodInfoCommand(value, methodInfo)
+                        Command = new Deprecated.Controls.MethodInfoCommand(value, methodInfo)
                     };
                     items.Add(menuItem);
                 }

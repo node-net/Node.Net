@@ -7,7 +7,7 @@
         public TreeViewItem()
         {
             DataContextChanged += TreeViewItem_DataContextChanged;
-            Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
+            Deprecated.Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
         }
 
         private void TreeViewItem_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
@@ -19,13 +19,13 @@
         {
             DataContext = model;
             Update(1);
-            Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
+            Deprecated.Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
         }
         public TreeViewItem(object model,int childDepth=1)
         {
             DataContext = model;
             Update(childDepth);
-            Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
+            Deprecated.Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
         }
 
         
@@ -34,7 +34,7 @@
             headerString = header;
             DataContext = model;
             Update(childDepth);
-            Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
+            Deprecated.Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
         }
 
         void Default_PostMethodInvoke(object sender, System.EventArgs e)

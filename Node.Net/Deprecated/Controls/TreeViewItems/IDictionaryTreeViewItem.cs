@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Controls.TreeViewItems
+namespace Node.Net.Deprecated.Controls.TreeViewItems
 {
     public class IDictionaryTreeViewItem : System.Windows.Controls.TreeViewItem
     {

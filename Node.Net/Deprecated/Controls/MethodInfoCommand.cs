@@ -1,5 +1,5 @@
 ﻿
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class MethodInfoCommand : System.Windows.Input.ICommand
     {

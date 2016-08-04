@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class TitleControl : System.Windows.Controls.UserControl
     {
@@ -20,11 +20,11 @@ namespace Node.Net.Controls
 
         private void Update()
         {
-            if (!object.ReferenceEquals(null, Collections.KeyValuePair.GetValue(DataContext)))
+            if (!object.ReferenceEquals(null, Node.Net.Collections.KeyValuePair.GetValue(DataContext)))
             {
                 var label = new System.Windows.Controls.Label
                 {
-                    Content = Collections.KeyValuePair.GetValue(DataContext).GetType().Name
+                    Content = Node.Net.Collections.KeyValuePair.GetValue(DataContext).GetType().Name
                 };
                 Content = label;
             }

@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Controls.TreeViewItems
+﻿namespace Node.Net.Deprecated.Controls.TreeViewItems
 {
     public class TreeViewItem : System.Windows.Controls.TreeViewItem
     {

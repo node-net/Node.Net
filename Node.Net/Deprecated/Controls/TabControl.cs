@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class TabControl : System.Windows.Controls.TabControl
     {

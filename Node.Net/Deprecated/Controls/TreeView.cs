@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class TreeView : System.Windows.Controls.TreeView
     {

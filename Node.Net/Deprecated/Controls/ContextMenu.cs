@@ -1,5 +1,5 @@
 ﻿
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class ContextMenu : System.Windows.Controls.ContextMenu
     {

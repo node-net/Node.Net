@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace Node.Net.Controls.StackPanels
+namespace Node.Net.Deprecated.Controls.StackPanels
 {
     public abstract class StackPanel : System.Windows.Controls.StackPanel
     {

@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class TitledControl : Grid
     {
@@ -24,10 +24,10 @@ namespace Node.Net.Controls
                 Background = Brushes.LightGray,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 HorizontalContentAlignment = HorizontalAlignment.Center,
-                Content = Collections.KeyValuePair.GetKey(DataContext)
+                Content = Node.Net.Collections.KeyValuePair.GetKey(DataContext)
             });
 
-            var element = (UIElement)Collections.KeyValuePair.GetValue(DataContext);
+            var element = (UIElement)Node.Net.Collections.KeyValuePair.GetValue(DataContext);
             if (!object.ReferenceEquals(null, element))
             {
                 Children.Add(element);

@@ -3,7 +3,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Node.Net.Controls
+namespace Node.Net.Deprecated.Controls
 {
     public class ReadOnlyTextBox : TextBox
     {
@@ -29,12 +29,12 @@ namespace Node.Net.Controls
 
         protected virtual string GetText()
         {
-            var dictionary = Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
+            var dictionary = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
             if (!object.ReferenceEquals(null, dictionary))
             {
                 return Json.Writer.ToString(dictionary, Json.JsonFormat.Indented);
             }
-            var ienumerable = Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
+            var ienumerable = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
             if (!object.ReferenceEquals(null, ienumerable))
             {
                 var sb = new StringBuilder();

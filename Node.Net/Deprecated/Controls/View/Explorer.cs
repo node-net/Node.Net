@@ -7,28 +7,28 @@
         private System.Windows.FrameworkElement selectionView = null;
         public Explorer()
         {
-            treeView = new Controls.TreeView();
+            treeView = new Deprecated.Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
-            selectionView = new Controls.PropertyControl();
+            selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
         public Explorer(System.Windows.FrameworkElement selection_view)
         {
             Orientation = System.Windows.Controls.Orientation.Horizontal;
-            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Deprecated.Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 
         public Explorer(System.Windows.FrameworkElement selection_view, System.Windows.Controls.Orientation orientation = System.Windows.Controls.Orientation.Horizontal)
         {
             Orientation = orientation;
-            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Deprecated.Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
         
@@ -36,10 +36,10 @@
         {
             Orientation = orientation;
             treeView = tree_view;
-            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Deprecated.Controls.TreeView();
             treeView.SelectedItemChanged +=treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 
@@ -48,10 +48,10 @@
             Orientation = orientation;
             treeView = tree_view;
             selectionViewVertical = selection_view_vertical;
-            if (object.ReferenceEquals(null, treeView)) treeView = new Controls.TreeView();
+            if (object.ReferenceEquals(null, treeView)) treeView = new Deprecated.Controls.TreeView();
             treeView.SelectedItemChanged += treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Controls.PropertyControl();
+            if (object.ReferenceEquals(null, selectionView)) selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 
@@ -83,7 +83,7 @@
 
             if(object.ReferenceEquals(null,selectionViewVertical))
             {
-                selectionViewVertical = new Controls.PropertyControl();
+                selectionViewVertical = new Deprecated.Controls.PropertyControl();
 
                 var valueChangedEvent = selectionViewVertical.GetType().GetEvent("ValueChanged");
                 if (!object.ReferenceEquals(null, valueChangedEvent))
