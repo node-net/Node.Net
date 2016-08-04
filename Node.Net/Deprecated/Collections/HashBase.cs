@@ -21,7 +21,7 @@ namespace Node.Net.Deprecated.Collections
             Hash.Copy(source, this);
             Initialize();
         }
-       
+
         protected virtual void Initialize(){}
         protected virtual Json.Reader GetReader() => new Json.Reader();
         protected virtual Json.Writer GetWriter() => new Json.Writer();
@@ -143,7 +143,7 @@ namespace Node.Net.Deprecated.Collections
         [System.ComponentModel.Browsable(false)]
         public object Parent
         {
-            get 
+            get
             {
                 if (!object.ReferenceEquals(null, Document))
                 {
@@ -271,7 +271,7 @@ namespace Node.Net.Deprecated.Collections
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-        
+
 #if NET35
         public new object this[string key]
 #else

@@ -65,7 +65,7 @@ namespace Node.Net.Extensions
             }
             return new Dictionary<string, T>();
         }
-        
+
 
         public static T LocateFirst<T>(IChild child)
         {

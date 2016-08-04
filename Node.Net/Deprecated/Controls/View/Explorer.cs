@@ -31,7 +31,7 @@
             if (object.ReferenceEquals(null, selectionView)) selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
-        
+
         public Explorer(System.Windows.Controls.TreeView tree_view,System.Windows.FrameworkElement selection_view,System.Windows.Controls.Orientation orientation = System.Windows.Controls.Orientation.Horizontal)
         {
             Orientation = orientation;
@@ -94,7 +94,7 @@
                     valueChangedEvent.AddEventHandler(selectionViewVertical, handler);
                 }
             }
-            
+
             var propertiesExplorer = new PropertiesExplorer(treeView,selectionViewVertical,System.Windows.Controls.Orientation.Vertical);
             System.Windows.FrameworkElement[] elements = { propertiesExplorer, selectionView };
             Elements = elements;

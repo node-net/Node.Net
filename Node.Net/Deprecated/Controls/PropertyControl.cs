@@ -69,14 +69,14 @@ namespace Node.Net.Deprecated.Controls
                         }
                     }
                 }
-                
+
                 if (use_adapter)
                 {
                     var d = new Deprecated.Collections.Dictionary();
                     Deprecated.Collections.Copier.Copy(idictionary, d);
                     propertyGrid.SelectedObject = d;
                 }
-                else { 
+                else {
                     propertyGrid.SelectedObject = value;
                 }
             }

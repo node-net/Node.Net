@@ -105,7 +105,7 @@ namespace Node.Net.Deprecated.Controls
             };
 
 
-            double margin = 20;
+            const double margin = 20;
             var grid = new Grid
             {
                 Width = pd.PrintableAreaWidth - margin * 2,

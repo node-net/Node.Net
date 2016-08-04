@@ -28,7 +28,7 @@
             Deprecated.Controls.MethodInfoCommand.Default.PostMethodInvoke += Default_PostMethodInvoke;
         }
 
-        
+
         public TreeViewItem(string header,object model,int childDepth=1)
         {
             headerString = header;
@@ -101,7 +101,7 @@
             }
             return DataContext.ToString();
         }
-        
+
         public static bool IsValidChild(object item)
         {
             if (object.ReferenceEquals(null, item)) return false;

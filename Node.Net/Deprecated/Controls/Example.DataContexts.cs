@@ -48,7 +48,7 @@ namespace Node.Net.Deprecated.Controls
 
         private static IDictionary LoadDictionary(string name)
         {
-            IDictionary result = null;
+            const IDictionary result = null;
             var stream = Extensions.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.json");
             if(!object.ReferenceEquals(null, stream))
             {

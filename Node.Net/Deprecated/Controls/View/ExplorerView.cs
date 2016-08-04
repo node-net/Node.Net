@@ -47,7 +47,7 @@ namespace Node.Net.View
 
         protected virtual void OnDataContextChanged()
         {
-            
+
             if (object.ReferenceEquals(null, verticalSplitView)) return;
 
             Children.Clear();
@@ -62,7 +62,7 @@ namespace Node.Net.View
             }
         }
 
-        
+
         public System.Windows.Controls.TreeView TreeView
         {
             get { return treeView; }
