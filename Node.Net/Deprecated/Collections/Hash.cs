@@ -44,7 +44,7 @@ namespace Node.Net.Deprecated.Collections
             foreach (object key in dictionary.Keys)
             {
                 var propertyDescriptor = Internal.PropertyDescriptor.Get(dictionary, key, attributes);
-                if (!object.ReferenceEquals(null, propertyDescriptor)) descriptors.Add(propertyDescriptor);
+                if (!ReferenceEquals(null, propertyDescriptor)) descriptors.Add(propertyDescriptor);
             }
             return new System.ComponentModel.PropertyDescriptorCollection(descriptors.ToArray());
         }

@@ -15,7 +15,7 @@ namespace Node.Net.Deprecated
         {
             get
             {
-                if(object.ReferenceEquals(null, _default))
+                if(ReferenceEquals(null, _default))
                 {
                     _default = new Factory();
                 }

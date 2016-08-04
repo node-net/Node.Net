@@ -28,7 +28,7 @@ namespace Node.Net.Framework.Controls
             foreach (string key in elements.Keys)
             {
                 var element = elements[key] as FrameworkElement;
-                if (!object.ReferenceEquals(null, element))
+                if (!ReferenceEquals(null, element))
                 {
                     NamedViews.Add(key, element);
                 }
@@ -45,7 +45,7 @@ namespace Node.Net.Framework.Controls
         {
             Children.Clear();
             var current = CurrentView;
-            if (!object.ReferenceEquals(null, current))
+            if (!ReferenceEquals(null, current))
             {
                 Children.Add(current);
                 current.DataContext = DataContext;

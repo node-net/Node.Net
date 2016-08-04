@@ -35,7 +35,7 @@ namespace Node.Net.View
             };
 
 
-            if(object.ReferenceEquals(null, treeView))
+            if(ReferenceEquals(null, treeView))
             {
                 TreeView = new Deprecated.Controls.TreeView();
             }
@@ -48,14 +48,14 @@ namespace Node.Net.View
         protected virtual void OnDataContextChanged()
         {
 
-            if (object.ReferenceEquals(null, verticalSplitView)) return;
+            if (ReferenceEquals(null, verticalSplitView)) return;
 
             Children.Clear();
             Children.Add(horizontalSplitView);
             verticalSplitView.ElementA = TreeView;
             verticalSplitView.ElementB = propertyView;
             TreeView.DataContext = DataContext;
-            if(!object.ReferenceEquals(null, contentView))
+            if(!ReferenceEquals(null, contentView))
             {
                 horizontalSplitView.ElementB = contentView;
                 contentView.DataContext = DataContext;
@@ -68,9 +68,9 @@ namespace Node.Net.View
             get { return treeView; }
             set
             {
-                if (!object.ReferenceEquals(treeView, value))
+                if (!ReferenceEquals(treeView, value))
                 {
-                    if(!object.ReferenceEquals(null,treeView))
+                    if(!ReferenceEquals(null,treeView))
                     {
                         treeView.SelectedItemChanged -= TreeView_SelectedItemChanged;
                     }
@@ -84,7 +84,7 @@ namespace Node.Net.View
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             var tvi = treeView.SelectedItem as TreeViewItem;
-            if (!object.ReferenceEquals(null, tvi))
+            if (!ReferenceEquals(null, tvi))
             {
                 PropertyControl.DataContext = tvi.DataContext;
             }
@@ -113,10 +113,10 @@ namespace Node.Net.View
         public MenuItem GetViewMenuItem()
         {
             MenuItem viewMenuItem = null;
-            if (!object.ReferenceEquals(null, ContentView))
+            if (!ReferenceEquals(null, ContentView))
             {
                 var method = ContentView.GetType().GetMethod(nameof(GetViewMenuItem));
-                if (!object.ReferenceEquals(null, method))
+                if (!ReferenceEquals(null, method))
                 {
                     viewMenuItem = method.Invoke(ContentView, null) as MenuItem;
                 }

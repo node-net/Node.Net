@@ -17,10 +17,10 @@
         {
             Orientation = orientation;
             treeView = tree_view;
-            if (object.ReferenceEquals(null, treeView)) treeView = new Deprecated.Controls.TreeView();
+            if (ReferenceEquals(null, treeView)) treeView = new Deprecated.Controls.TreeView();
             treeView.SelectedItemChanged +=treeView_SelectedItemChanged;
             selectionView = selection_view;
-            if (object.ReferenceEquals(null, selectionView)) selectionView = new Deprecated.Controls.PropertyControl();
+            if (ReferenceEquals(null, selectionView)) selectionView = new Deprecated.Controls.PropertyControl();
             DataContextChanged += Explorer_DataContextChanged;
         }
 
@@ -39,7 +39,7 @@
         void treeView_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
         {
             var tvi = treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
-            if (!object.ReferenceEquals(null,tvi))
+            if (!ReferenceEquals(null,tvi))
             {
                 selectionView.DataContext = tvi.DataContext;
             }

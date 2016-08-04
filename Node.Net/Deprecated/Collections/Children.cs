@@ -10,7 +10,7 @@
         {
             var children = new System.Collections.Generic.List<object>();
             var idictionary = model as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null, idictionary))
+            if (!ReferenceEquals(null, idictionary))
             {
                 foreach (object key in idictionary.Keys)
                 {
@@ -22,7 +22,7 @@
             else
             {
                 var ienumerable = model as System.Collections.IEnumerable;
-                if (!object.ReferenceEquals(null, ienumerable) && !typeof(string).IsAssignableFrom(model.GetType()))
+                if (!ReferenceEquals(null, ienumerable) && !typeof(string).IsAssignableFrom(model.GetType()))
                 {
                     foreach (object item in ienumerable) children.Add(item);
                 }

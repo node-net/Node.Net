@@ -36,13 +36,13 @@ namespace Node.Net.Deprecated.Controls
 
             AddColumnHeaders();
             var items = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
-            if (!object.ReferenceEquals(null, items))
+            if (!ReferenceEquals(null, items))
             {
                 var row = 1;
                 foreach (string name in items.Keys)
                 {
                     var item = items[name] as IDictionary;
-                    if (!object.ReferenceEquals(null, item))
+                    if (!ReferenceEquals(null, item))
                     {
                         RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         for (int c = 0; c < columnNames.Count; ++c)
@@ -74,7 +74,7 @@ namespace Node.Net.Deprecated.Controls
                 else
                 {
                     var propertyInfo = GetType().GetProperty(key);
-                    if (!object.ReferenceEquals(null,propertyInfo))
+                    if (!ReferenceEquals(null,propertyInfo))
                     {
                         svalue = propertyInfo.GetValue(this).ToString();
                     }

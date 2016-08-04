@@ -28,7 +28,7 @@ namespace Node.Net.Deprecated.Controls
             });
 
             var element = (UIElement)Node.Net.Collections.KeyValuePair.GetValue(DataContext);
-            if (!object.ReferenceEquals(null, element))
+            if (!ReferenceEquals(null, element))
             {
                 Children.Add(element);
                 Grid.SetRow(element, 1);

@@ -19,7 +19,7 @@ namespace Node.Net.Model3D
         {
             get
             {
-                if(object.ReferenceEquals(null,_metaData))
+                if(ReferenceEquals(null,_metaData))
                 {
                     _metaData = Deprecated.Collections.MetaDataManager.Default;
                 }

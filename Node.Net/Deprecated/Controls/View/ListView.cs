@@ -22,15 +22,15 @@
         private void update()
         {
             Items.Clear();
-            if (!object.ReferenceEquals(null, DataContext))
+            if (!ReferenceEquals(null, DataContext))
             {
                 var enumerable = DataContext as System.Collections.IEnumerable;
-                if (!object.ReferenceEquals(null,enumerable) && DataContext.GetType() != typeof(string))
+                if (!ReferenceEquals(null,enumerable) && DataContext.GetType() != typeof(string))
                 {
                     foreach(object item in enumerable)
                     {
 
-                        if (!object.ReferenceEquals(null, UpdateListViewItem))
+                        if (!ReferenceEquals(null, UpdateListViewItem))
                         {
                             var lvi = new ListViewItem(null);
                             lvi.Update += lvi_Update;
@@ -49,7 +49,7 @@
         void lvi_Update(object sender, System.EventArgs e)
         {
             var lvi = sender as System.Windows.Controls.ListViewItem;
-            if (!object.ReferenceEquals(null,lvi) )
+            if (!ReferenceEquals(null,lvi) )
             {
                 if (UpdateListViewItem != null)
                 {

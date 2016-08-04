@@ -20,7 +20,7 @@ namespace Node.Net.Deprecated.Controls
 
         private void Update()
         {
-            if (!object.ReferenceEquals(null, Node.Net.Collections.KeyValuePair.GetValue(DataContext)))
+            if (!ReferenceEquals(null, Node.Net.Collections.KeyValuePair.GetValue(DataContext)))
             {
                 var label = new System.Windows.Controls.Label
                 {

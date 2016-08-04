@@ -57,7 +57,7 @@ namespace Node.Net.Deprecated.Controls
             fileMenu.Items.Add(fileOpen);
             fileOpen.Click += FileOpen_Click;
 
-            if (!object.ReferenceEquals(null, DocumentView))
+            if (!ReferenceEquals(null, DocumentView))
             {
                 DocumentView.DataContext = null;
                 Children.Add(DocumentView);
@@ -77,10 +77,10 @@ namespace Node.Net.Deprecated.Controls
 
             // ViewMenu
             var method = DocumentView.GetType().GetMethod("GetViewMenuItem");
-            if (!object.ReferenceEquals(null, method))
+            if (!ReferenceEquals(null, method))
             {
                 var viewMenuItem = method.Invoke(DocumentView, null) as MenuItem;
-                if (!object.ReferenceEquals(null, viewMenuItem))
+                if (!ReferenceEquals(null, viewMenuItem))
                 {
                     Menu.Items.Add(viewMenuItem);
                 }
@@ -96,7 +96,7 @@ namespace Node.Net.Deprecated.Controls
         private void FileOpen_Click(object sender, RoutedEventArgs e)
         {
             Documents.Open();
-            if (!object.ReferenceEquals(null, DocumentView))
+            if (!ReferenceEquals(null, DocumentView))
             {
                 foreach (string key in Documents.Keys)
                 {

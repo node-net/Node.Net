@@ -15,7 +15,7 @@ namespace Node.Net.View
             var text =  "";
             var dictionary = Node.Net.View.KeyValuePair.GetValue(DataContext)
                 as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null,dictionary))
+            if (!ReferenceEquals(null,dictionary))
             {
                 using(System.IO.MemoryStream memory = new System.IO.MemoryStream())
                 {

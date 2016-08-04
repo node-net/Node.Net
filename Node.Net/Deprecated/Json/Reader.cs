@@ -38,7 +38,7 @@ namespace Node.Net.Deprecated.Json
             foreach (Type type in assembly.GetTypes())
             {
                 var ci = type.GetConstructor(Type.EmptyTypes);
-                if (!object.ReferenceEquals(null, ci))
+                if (!ReferenceEquals(null, ci))
                 {
                     types.Add(type);
                 }

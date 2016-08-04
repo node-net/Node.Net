@@ -7,7 +7,7 @@
         {
             get
             {
-                if (object.ReferenceEquals(null, _default)) _default = new Plugins();
+                if (ReferenceEquals(null, _default)) _default = new Plugins();
                 return _default;
             }
         }
@@ -51,7 +51,7 @@
             foreach(string plugin in Keys)
             {
                 result = this[plugin].GetType(fullname);
-                if (!object.ReferenceEquals(null, result)) return result;
+                if (!ReferenceEquals(null, result)) return result;
             }
             return result;
         }
@@ -65,10 +65,10 @@
                 var methodName = parts[parts.Length-1];
                 var typename = value.Replace("." + methodName,"");
                 var type = GetType(typename);
-                if (!object.ReferenceEquals(null,type))
+                if (!ReferenceEquals(null,type))
                 {
                     var method = type.GetMethod(methodName);
-                    if (!object.ReferenceEquals(null, method)) return method.Invoke(null, null);
+                    if (!ReferenceEquals(null, method)) return method.Invoke(null, null);
                 }
             }
             return null;

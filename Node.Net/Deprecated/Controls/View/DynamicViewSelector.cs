@@ -54,7 +54,7 @@
         void comboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             var cbItem = comboBox.SelectedItem as System.Windows.Controls.ComboBoxItem;
-            if (!object.ReferenceEquals(null,cbItem))
+            if (!ReferenceEquals(null,cbItem))
             {
                 var name = KeyValuePair.GetValue(cbItem.DataContext).ToString();
                 dynamicView.Current = name;
@@ -64,7 +64,7 @@
 
         private void Update()
         {
-            if (object.ReferenceEquals(null, comboBox)) return;
+            if (ReferenceEquals(null, comboBox)) return;
             comboBox.DataContext = dynamicView.Elements.Keys;
             dynamicView.DataContext = DataContext;
         }

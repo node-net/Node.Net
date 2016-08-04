@@ -16,7 +16,7 @@
         {
             Items.Clear();
             var ienumerable = DataContext as System.Collections.IEnumerable;
-            if (!object.ReferenceEquals(null,ienumerable))
+            if (!ReferenceEquals(null,ienumerable))
             {
                 foreach(object item in ienumerable)
                 {

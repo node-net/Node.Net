@@ -45,7 +45,7 @@ namespace Node.Net.View
             current = "";
             if(TypeNames.Count > 0)
             {
-                if(!object.ReferenceEquals(null,KeyValuePair.GetValue(DataContext)))
+                if(!ReferenceEquals(null,KeyValuePair.GetValue(DataContext)))
                 {
                     foreach(System.Type type in TypeNames.Keys)
                     {
@@ -55,7 +55,7 @@ namespace Node.Net.View
             }
             Content = GetContent();
             var element = Content as System.Windows.FrameworkElement;
-            if (!object.ReferenceEquals(null, element)) element.DataContext = DataContext;
+            if (!ReferenceEquals(null, element)) element.DataContext = DataContext;
         }
 
         protected virtual object GetContent()

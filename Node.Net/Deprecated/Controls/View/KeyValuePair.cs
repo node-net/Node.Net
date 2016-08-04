@@ -4,10 +4,10 @@
     {
         public static bool IsKeyValuePair(object item)
         {
-            if (!object.ReferenceEquals(null, item))
+            if (!ReferenceEquals(null, item))
             {
                 if (item.GetType().IsGenericType &&
-                    !object.ReferenceEquals(null, item.GetType().GetGenericTypeDefinition()))
+                    !ReferenceEquals(null, item.GetType().GetGenericTypeDefinition()))
                 {
                     if (item.GetType().GetGenericTypeDefinition() == typeof(System.Collections.Generic.KeyValuePair<,>))
                     {

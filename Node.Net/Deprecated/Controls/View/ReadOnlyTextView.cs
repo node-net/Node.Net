@@ -25,7 +25,7 @@ namespace Node.Net.View
         {
             Text = "";
             var ienumerable = Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
-            if (!object.ReferenceEquals(null, ienumerable))
+            if (!ReferenceEquals(null, ienumerable))
             {
                 var sb = new StringBuilder();
                 foreach (object item in ienumerable)

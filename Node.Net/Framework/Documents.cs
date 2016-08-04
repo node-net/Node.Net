@@ -65,7 +65,7 @@ namespace Node.Net.Framework
             Type[] types = { typeof(string), typeof(Stream) };
             var openInfo = documentType.GetMethod(nameof(Open), types);
             try {
-                if (!object.ReferenceEquals(null, openInfo))
+                if (!ReferenceEquals(null, openInfo))
                 {
                     object[] parameters = { name, stream };
                     openInfo.Invoke(document, parameters);
@@ -74,7 +74,7 @@ namespace Node.Net.Framework
                 {
                     Type[] types2 = { typeof(Stream) };
                     openInfo = documentType.GetMethod(nameof(Open), types2);
-                    if (!object.ReferenceEquals(null, openInfo))
+                    if (!ReferenceEquals(null, openInfo))
                     {
                         object[] parameters = { stream };
                         openInfo.Invoke(document, parameters);
@@ -91,12 +91,12 @@ namespace Node.Net.Framework
                 return;
             }
 
-            if(object.ReferenceEquals(null,openInfo))
+            if(ReferenceEquals(null,openInfo))
             {
                 if (typeof(IDictionary).IsAssignableFrom(document.GetType()))
                 {
                     var d = Node.Net.Deprecated.Json.Reader.Default.Read(stream) as IDictionary;
-                    if (!object.ReferenceEquals(null, d))
+                    if (!ReferenceEquals(null, d))
                     {
                         Node.Net.Deprecated.Collections.Copier.Copy(d, (document as IDictionary));
                     }

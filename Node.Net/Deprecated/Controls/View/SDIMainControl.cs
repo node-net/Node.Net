@@ -43,7 +43,7 @@ namespace Node.Net.View
             {
                 object document = null;
                 var ienumerable = DataContext as System.Collections.IEnumerable;
-                if (!object.ReferenceEquals(null, ienumerable))
+                if (!ReferenceEquals(null, ienumerable))
                 {
                     foreach (object item in ienumerable) document = item;
                     return document;
@@ -54,10 +54,10 @@ namespace Node.Net.View
             {
 
                 var ienumerable = DataContext as System.Collections.IEnumerable;
-                if (!object.ReferenceEquals(null, ienumerable))
+                if (!ReferenceEquals(null, ienumerable))
                 {
                     var ilist = ienumerable as System.Collections.IList;
-                    if (object.ReferenceEquals(null, ilist))
+                    if (ReferenceEquals(null, ilist))
                     {
                         var list
                             = new System.Collections.Generic.List<object>();
@@ -120,18 +120,18 @@ namespace Node.Net.View
         public void Update()
         {
             var model = KeyValuePair.GetValue(DataContext);
-            if (!object.ReferenceEquals(null, model))
+            if (!ReferenceEquals(null, model))
             {
-                if (object.ReferenceEquals(null, DocumentType)) DocumentType = model.GetType();
+                if (ReferenceEquals(null, DocumentType)) DocumentType = model.GetType();
             }
             var title = "";
             var key = KeyValuePair.GetKey(Document);
-            if (!object.ReferenceEquals(null, key)) title = key.ToString() + " - ";
+            if (!ReferenceEquals(null, key)) title = key.ToString() + " - ";
             title += ApplicationName;
             Title = title;
 
             var doc = KeyValuePair.GetValue(Document);
-            if (object.ReferenceEquals(null, doc) || doc.GetType() != DocumentType) New();
+            if (ReferenceEquals(null, doc) || doc.GetType() != DocumentType) New();
             if (!documentViewGrid.Children.Contains(documentView))
             {
                 documentViewGrid.Children.Clear();
@@ -168,7 +168,7 @@ namespace Node.Net.View
 
                 System.Type[] stringTypes = { typeof(string) };
                 var openStringInfo = document.GetType().GetMethod(nameof(Open), stringTypes);
-                if (!object.ReferenceEquals(null, openStringInfo))
+                if (!ReferenceEquals(null, openStringInfo))
                 {
                     object[] parameters = { ofd.FileName };
                     try
@@ -189,7 +189,7 @@ namespace Node.Net.View
                     {
                         System.Type[] types = { typeof(System.IO.Stream) };
                         var openInfo = document.GetType().GetMethod(nameof(Open), types);
-                        if (!object.ReferenceEquals(null, openInfo))
+                        if (!ReferenceEquals(null, openInfo))
                         {
                             object[] parameters = { stream };
                             try
@@ -241,7 +241,7 @@ namespace Node.Net.View
                 var document = KeyValuePair.GetValue(Document);
                 System.Type[] types = { typeof(System.IO.Stream) };
                 var saveInfo = document.GetType().GetMethod(nameof(Save), types);
-                if (!object.ReferenceEquals(null, saveInfo))
+                if (!ReferenceEquals(null, saveInfo))
                 {
                     object[] parameters = { stream };
                     saveInfo.Invoke(document, parameters);

@@ -25,11 +25,11 @@ namespace Node.Net.View
         protected virtual void OnDataContextChanged()
         {
             Children.Clear();
-            if (!object.ReferenceEquals(null, gridSplitter))
+            if (!ReferenceEquals(null, gridSplitter))
             {
                 foreach (FrameworkElement element in Children)
                 {
-                    if (!object.ReferenceEquals(null, element))
+                    if (!ReferenceEquals(null, element))
                     {
                         element.DataContext = DataContext;
                     }
@@ -96,11 +96,11 @@ namespace Node.Net.View
             };
             
 
-            if(object.ReferenceEquals(null,elementA))
+            if(ReferenceEquals(null,elementA))
             {
                 elementA = new Label { Content = nameof(ElementA) };
             }
-            if(object.ReferenceEquals(null, elementB))
+            if(ReferenceEquals(null, elementB))
             {
                 elementB = new Label { Content = nameof(ElementB) };
             }

@@ -17,7 +17,7 @@ namespace Node.Net.Model3D
         }
         private void Traverse(IDictionary dictionary)
         {
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 Extensions.IMetaDataManagerExtension.SetTransformMetaData(MetaData, dictionary);
                 foreach(string key in dictionary.Keys)

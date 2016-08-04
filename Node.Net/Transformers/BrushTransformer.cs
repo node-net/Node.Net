@@ -34,7 +34,7 @@ namespace Node.Net.Transformers
         {
             get
             {
-                if (object.ReferenceEquals(null, _namedBrushes))
+                if (ReferenceEquals(null, _namedBrushes))
                 {
                     _namedBrushes = new Dictionary<string, Brush>();
                     foreach (PropertyInfo property in typeof(Brushes).GetProperties(BindingFlags.Public | BindingFlags.Static))

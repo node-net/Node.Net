@@ -46,7 +46,7 @@ namespace Node.Net.Deprecated.Controls
         {
             var results = new Dictionary<string, string>();
             var root = DataContext as IDictionary;
-            if (!object.ReferenceEquals(null, root))
+            if (!ReferenceEquals(null, root))
             {
                 var model = root.Collect(new Node.Net.Filters.TypeFilter(Type));
                 if (model.Count > 0)
@@ -54,7 +54,7 @@ namespace Node.Net.Deprecated.Controls
                     foreach (string key in model.Keys)
                     {
                         var instance = model[key] as IDictionary;
-                        if (!object.ReferenceEquals(null, instance))
+                        if (!ReferenceEquals(null, instance))
                         {
                             foreach (string ikey in instance.Keys)
                             {
@@ -76,7 +76,7 @@ namespace Node.Net.Deprecated.Controls
             RowDefinitions.Clear();
             ColumnDefinitions.Clear();
             var root = DataContext as IDictionary;
-            if (!object.ReferenceEquals(null, root))
+            if (!ReferenceEquals(null, root))
             {
                 RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                 // Setup Column Headers
@@ -100,7 +100,7 @@ namespace Node.Net.Deprecated.Controls
                     Grid.SetRow(keyLabel, RowDefinitions.Count - 1);
 
                     var instance = model[key] as IDictionary;
-                    if (!object.ReferenceEquals(null, instance))
+                    if (!ReferenceEquals(null, instance))
                     {
                         var column = 1;
                         foreach (string name in columnNames.Keys)

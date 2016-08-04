@@ -87,7 +87,7 @@ namespace Node.Net.Extensions
             {
                 foreach(var key in parentDictionary.Keys)
                 {
-                    if(object.ReferenceEquals(child,parentDictionary[key]))
+                    if(ReferenceEquals(child,parentDictionary[key]))
                     {
                         return key.ToString();
                     }

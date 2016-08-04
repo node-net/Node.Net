@@ -17,7 +17,7 @@ namespace Node.Net.Model3D
                 }
             };
             material.Children.Add(diffuse);
-            if (!object.ReferenceEquals(null, specularBrush))
+            if (!ReferenceEquals(null, specularBrush))
             {
                 var specular = new SpecularMaterial
                 {

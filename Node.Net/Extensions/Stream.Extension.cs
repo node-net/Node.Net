@@ -25,7 +25,7 @@ namespace Node.Net.Extensions
         public static Stream GetStream(string name, Type typeHint)
         {
             var result = GetStream(name, typeHint.Assembly);
-            if (!object.ReferenceEquals(null, result)) return result;
+            if (!ReferenceEquals(null, result)) return result;
             return GetStream(name);
         }
         public static Stream GetStream(string name)
@@ -35,12 +35,12 @@ namespace Node.Net.Extensions
                 System.Reflection.Assembly.GetCallingAssembly();
 
             var stream = GetStream(name, assembly);
-            if (!object.ReferenceEquals(null, stream)) return stream;
+            if (!ReferenceEquals(null, stream)) return stream;
 
             foreach (System.Reflection.Assembly a in System.AppDomain.CurrentDomain.GetAssemblies())
             {
                 stream = GetStream(name, a);
-                if (!object.ReferenceEquals(null, stream)) return stream;
+                if (!ReferenceEquals(null, stream)) return stream;
             }
             throw new System.ArgumentException("ManifestResourceName " + name + " not found.");
 

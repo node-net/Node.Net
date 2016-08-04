@@ -63,7 +63,7 @@ namespace Node.Net.Deprecated.Collections
             var openInfo = documentType.GetMethod(nameof(Open), types);
             try
             {
-                if (!object.ReferenceEquals(null, openInfo))
+                if (!ReferenceEquals(null, openInfo))
                 {
                     object[] parameters = { name, stream };
                     openInfo.Invoke(document, parameters);
@@ -73,7 +73,7 @@ namespace Node.Net.Deprecated.Collections
                     //types = { typeof(Stream) };
                     Type[] types2 = { typeof(Stream) };
                     openInfo = documentType.GetMethod(nameof(Open), types2);
-                    if (!object.ReferenceEquals(null, openInfo))
+                    if (!ReferenceEquals(null, openInfo))
                     {
                         object[] parameters = { stream };
                         openInfo.Invoke(document, parameters);
@@ -90,7 +90,7 @@ namespace Node.Net.Deprecated.Collections
                 return;
             }
 
-            if (object.ReferenceEquals(null, openInfo))
+            if (ReferenceEquals(null, openInfo))
             {
                 throw new InvalidOperationException($"type {documentType.FullName} does not have public Open(Stream stream) method or public Open(string name,Stream stream) method");
             }

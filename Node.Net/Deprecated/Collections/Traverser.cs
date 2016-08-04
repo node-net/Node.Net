@@ -27,7 +27,7 @@
         public object GetRoot(object value)
         {
             var root = GetParent(value);
-            while(!object.ReferenceEquals(null,GetParent(root)))
+            while(!ReferenceEquals(null,GetParent(root)))
             {
                 root = GetParent(root);
             }
@@ -37,7 +37,7 @@
         public T GetAncestor<T>(object value)
         {
             var ancestor = GetParent(value);
-            while (!object.ReferenceEquals(null, ancestor))
+            while (!ReferenceEquals(null, ancestor))
             {
                 if(typeof(T).IsAssignableFrom(ancestor.GetType())) return (T)ancestor;
                 ancestor = GetParent(ancestor);
@@ -50,11 +50,11 @@
         {
             var count = 0;
             var dictionary = value as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 foreach (string key in dictionary.Keys)
                 {
-                    if (!object.ReferenceEquals(null, dictionary[key]))
+                    if (!ReferenceEquals(null, dictionary[key]))
                     {
                         if (typeof(T).IsAssignableFrom(dictionary[key].GetType())) ++count;
                     }
@@ -66,11 +66,11 @@
         {
             var keys = new System.Collections.Generic.List<string>();
             var dictionary = value as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 foreach (string key in dictionary.Keys)
                 {
-                    if (!object.ReferenceEquals(null, dictionary[key]))
+                    if (!ReferenceEquals(null, dictionary[key]))
                     {
                         if (typeof(T).IsAssignableFrom(dictionary[key].GetType())) keys.Add(key);
                     }
@@ -83,11 +83,11 @@
         {
             var items = new System.Collections.Generic.List<T>();
             var dictionary = value as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 foreach (string key in dictionary.Keys)
                 {
-                    if (!object.ReferenceEquals(null, dictionary[key]))
+                    if (!ReferenceEquals(null, dictionary[key]))
                     {
                         if (typeof(T).IsAssignableFrom(dictionary[key].GetType())) items.Add((T)dictionary[key]);
                     }
@@ -100,11 +100,11 @@
         {
             var count = Count<T>(value);
             var dictionary = value as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 foreach (string key in dictionary.Keys)
                 {
-                    if (!object.ReferenceEquals(null, dictionary[key]))
+                    if (!ReferenceEquals(null, dictionary[key]))
                     {
                         if (typeof(T).IsAssignableFrom(dictionary[key].GetType())) count += DeepCount<T>(dictionary[key]);
                     }
@@ -117,7 +117,7 @@
         {
             var items = new System.Collections.Generic.List<T>(Collect<T>(value));
             var dictionary = value as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 foreach(var child in Collect<System.Collections.IDictionary>(dictionary))
                 {
@@ -131,14 +131,14 @@
         {
             System.Type[] types = { typeof(bool) };
             var updateMethod = value.GetType().GetMethod(nameof(Update), types);
-            if(!object.ReferenceEquals(null,updateMethod))
+            if(!ReferenceEquals(null,updateMethod))
             {
                 object[] parameters = { false };
                 updateMethod.Invoke(value, parameters);
             }
 
             var dictionary = value as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 foreach (System.Collections.IDictionary child in Collect<System.Collections.IDictionary>(dictionary))
                 {
@@ -148,12 +148,12 @@
         }
         private void Traverse(object value)
         {
-            if(!object.ReferenceEquals(null,value))
+            if(!ReferenceEquals(null,value))
             {
                 if(value.GetType() != typeof(string))
                 {
                     var ienumerable = Node.Net.Collections.KeyValuePair.GetValue(value) as System.Collections.IEnumerable;
-                    if (!object.ReferenceEquals(null, ienumerable))
+                    if (!ReferenceEquals(null, ienumerable))
                     {
                         foreach (object item in ienumerable)
                         {
@@ -169,18 +169,18 @@
 
         public void SetDocument(object value,Document document)
         {
-            if (!object.ReferenceEquals(null, value))
+            if (!ReferenceEquals(null, value))
             {
                 if (value.GetType() != typeof(string))
                 {
                     var ienumerable = Node.Net.Collections.KeyValuePair.GetValue(value) as System.Collections.IEnumerable;
-                    if (!object.ReferenceEquals(null, ienumerable))
+                    if (!ReferenceEquals(null, ienumerable))
                     {
                         foreach (object item in ienumerable)
                         {
                             var itemValue = Node.Net.Collections.KeyValuePair.GetValue(item);
                             var documentProperty = itemValue.GetType().GetProperty(nameof(Document));
-                            if(!object.ReferenceEquals(null,documentProperty) && documentProperty.CanWrite)
+                            if(!ReferenceEquals(null,documentProperty) && documentProperty.CanWrite)
                             {
                                 documentProperty.SetValue(itemValue, document, null);
                             }

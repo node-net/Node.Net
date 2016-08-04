@@ -16,19 +16,19 @@
 
         private void Update()
         {
-            if (object.ReferenceEquals(null, propertyGrid)) return;
+            if (ReferenceEquals(null, propertyGrid)) return;
 
             title.DataContext = DataContext;
             var value = KeyValuePair.GetValue(DataContext);
-            if (object.ReferenceEquals(null,value))
+            if (ReferenceEquals(null,value))
             {
                 propertyGrid.SelectedObject = null;
                 return;
             }
             var idictionary = value as System.Collections.IDictionary;
             var ienumerable = value as System.Collections.IEnumerable;
-            if (object.ReferenceEquals(null,idictionary) && value.GetType() != typeof(string) &&
-               !object.ReferenceEquals(null,ienumerable))
+            if (ReferenceEquals(null,idictionary) && value.GetType() != typeof(string) &&
+               !ReferenceEquals(null,ienumerable))
             {
                 var items = new System.Collections.Generic.List<object>();
                 foreach (object item in ienumerable){items.Add(item);}

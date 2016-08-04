@@ -15,13 +15,13 @@
 
         private void Update()
         {
-            if (object.ReferenceEquals(null, dataGridView)) return;
+            if (ReferenceEquals(null, dataGridView)) return;
 
             var value = KeyValuePair.GetValue(DataContext);
             var idictionary = value as System.Collections.IDictionary;
             var ienumerable = value as System.Collections.IEnumerable;
-            if (object.ReferenceEquals(null,idictionary) && value.GetType() != typeof(string) &&
-               !object.ReferenceEquals(null,ienumerable))
+            if (ReferenceEquals(null,idictionary) && value.GetType() != typeof(string) &&
+               !ReferenceEquals(null,ienumerable))
             {
                 var items = new System.Collections.Generic.List<object>();
                 foreach (object item in ienumerable){items.Add(item);}
@@ -68,7 +68,7 @@
 
         void dataGridView_CellValueChanged(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-            if (!object.ReferenceEquals(null, ValueChanged))
+            if (!ReferenceEquals(null, ValueChanged))
             {
                 ValueChanged(this, new System.EventArgs());
             }

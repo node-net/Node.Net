@@ -247,7 +247,7 @@ namespace Node.Net.Deprecated.Json.Internal
                 reader.Read(); //consume ':'
 
                 var value = Read(reader);
-                if (!object.ReferenceEquals(null,value) &&
+                if (!ReferenceEquals(null,value) &&
                      value.GetType() == typeof(string) &&
                      value.ToString().IndexOf("base64:") == 0)
                 {

@@ -14,8 +14,7 @@ namespace Node.Net.Deprecated.Json
         {
             get
             {
-                if (writer.Style == Internal.Style.Indented) return JsonFormat.Indented;
-                else return JsonFormat.Compressed;
+                return writer.Style == Internal.Style.Indented ? JsonFormat.Indented : JsonFormat.Compressed;
             }
             set
             {

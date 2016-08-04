@@ -27,7 +27,7 @@
 
         private void Update()
         {
-            if (!object.ReferenceEquals(null, DataContext))
+            if (!ReferenceEquals(null, DataContext))
             {
                 Content = KeyValuePair.GetKey(DataContext).ToString();
             }

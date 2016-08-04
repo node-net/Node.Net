@@ -8,10 +8,10 @@ namespace Node.Net.Deprecated.Collections
         {
             foreach (object value in source)
             {
-                if (object.ReferenceEquals(null, filter) || filter.Include(value))
+                if (ReferenceEquals(null, filter) || filter.Include(value))
                 {
                     var dictionary = value as System.Collections.IDictionary;
-                    if (!object.ReferenceEquals(null, dictionary))
+                    if (!ReferenceEquals(null, dictionary))
                     {
                         // Copy by value
                         var hashCopy = System.Activator.CreateInstance(dictionary.GetType()) as System.Collections.IDictionary;
@@ -21,8 +21,8 @@ namespace Node.Net.Deprecated.Collections
                     else
                     {
                         var enumerable = value as System.Collections.IEnumerable;
-                        if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
-                            && !object.ReferenceEquals(null, enumerable))
+                        if (!ReferenceEquals(null, value) && value.GetType() != typeof(string)
+                            && !ReferenceEquals(null, enumerable))
                         {
                             // Copy by value
                             var arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
@@ -45,10 +45,10 @@ namespace Node.Net.Deprecated.Collections
 
                 var kvp
                     = new System.Collections.Generic.KeyValuePair<object, object>(key, value);
-                if (object.ReferenceEquals(null, filter) || filter.Include(kvp))//(key, value))
+                if (ReferenceEquals(null, filter) || filter.Include(kvp))//(key, value))
                 {
                     var dictionary = value as System.Collections.IDictionary;
-                    if (!object.ReferenceEquals(null, dictionary))
+                    if (!ReferenceEquals(null, dictionary))
                     {
                         // Copy by value
                         try {
@@ -64,10 +64,10 @@ namespace Node.Net.Deprecated.Collections
                     else
                     {
                         var enumerable = value as System.Collections.IEnumerable;
-                        if (!object.ReferenceEquals(null, value)
+                        if (!ReferenceEquals(null, value)
                             && value.GetType() != typeof(string)
                             && value.GetType() != typeof(byte[])
-                            && !object.ReferenceEquals(null, enumerable))
+                            && !ReferenceEquals(null, enumerable))
                         {
                             System.Collections.IList arrayCopy = new System.Collections.Generic.List<dynamic>();
                             // Copy by value
@@ -98,10 +98,10 @@ namespace Node.Net.Deprecated.Collections
 
                 var kvp
                     = new System.Collections.Generic.KeyValuePair<object, object>(key, value);
-                if (object.ReferenceEquals(null, filter) || filter.Include(kvp))
+                if (ReferenceEquals(null, filter) || filter.Include(kvp))
                 {
                     var dictionary = value as System.Collections.IDictionary;
-                    if (!object.ReferenceEquals(null, dictionary))
+                    if (!ReferenceEquals(null, dictionary))
                     {
                         // Copy by value
                         try
@@ -119,8 +119,8 @@ namespace Node.Net.Deprecated.Collections
                     else
                     {
                         var enumerable = value as System.Collections.IEnumerable;
-                        if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
-                            && !object.ReferenceEquals(null, enumerable))
+                        if (!ReferenceEquals(null, value) && value.GetType() != typeof(string)
+                            && !ReferenceEquals(null, enumerable))
                         {
                             System.Collections.IList arrayCopy = new System.Collections.Generic.List<dynamic>();
                             // Copy by value

@@ -32,7 +32,7 @@
             {
                 var model = KeyValuePair.GetValue(DataContext);
                 var list = model as System.Collections.Generic.List<string>;
-                if (!object.ReferenceEquals(null, list))
+                if (!ReferenceEquals(null, list))
                 {
                     var newText = new System.Collections.Generic.List<string>(
                                   textBox.Text.Split(new string[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries));
@@ -49,18 +49,18 @@
         private bool updating;
         private void update()
         {
-            if (object.ReferenceEquals(null, textBox)) return;
+            if (ReferenceEquals(null, textBox)) return;
 
             updating = true;
             textBox.Text = "";
             try
             {
                 var model = KeyValuePair.GetValue(DataContext);
-                if (object.ReferenceEquals(null, model)) textBox.Text = "";
+                if (ReferenceEquals(null, model)) textBox.Text = "";
                 else
                 {
                     var ienum = model as System.Collections.IEnumerable;
-                    if (!object.ReferenceEquals(null, ienum))
+                    if (!ReferenceEquals(null, ienum))
                     {
                         foreach (object item in ienum)
                         {

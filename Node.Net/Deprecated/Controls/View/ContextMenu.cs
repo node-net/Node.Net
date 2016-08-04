@@ -27,7 +27,7 @@
         {
             var items =
                 new System.Collections.Generic.List<System.Windows.Controls.MenuItem>();
-            if (!object.ReferenceEquals(null, value))
+            if (!ReferenceEquals(null, value))
             {
                 foreach (System.Reflection.MethodInfo methodInfo in GetMethods(value))
                 {
@@ -54,7 +54,7 @@
         {
             var methods
                 = new System.Collections.Generic.List<System.Reflection.MethodInfo>();
-            if (!object.ReferenceEquals(null, instance))
+            if (!ReferenceEquals(null, instance))
             {
                 var methodInfos = instance.GetType().GetMethods(
                     System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
@@ -65,12 +65,12 @@
                     {
                         var browsable = true;
                         var attributes = methodInfo.GetCustomAttributes(typeof(System.ComponentModel.BrowsableAttribute), true);
-                        if (!object.ReferenceEquals(null, attributes))
+                        if (!ReferenceEquals(null, attributes))
                         {
                             foreach (object item in attributes)
                             {
                                 var browableAttribute = item as System.ComponentModel.BrowsableAttribute;
-                                if (!object.ReferenceEquals(null, browableAttribute) && !browableAttribute.Browsable) { browsable = false; break; }
+                                if (!ReferenceEquals(null, browableAttribute) && !browableAttribute.Browsable) { browsable = false; break; }
                             }
                         }
                         if (browsable) methods.Add(methodInfo);

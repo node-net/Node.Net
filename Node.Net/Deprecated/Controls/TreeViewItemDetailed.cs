@@ -38,13 +38,13 @@ namespace Node.Net.Deprecated.Controls
         }
         private static bool IsValue(object item)
         {
-            if (object.ReferenceEquals(null, item)) return true;
-            if (object.ReferenceEquals(null, Node.Net.Collections.KeyValuePair.GetValue(item))) return true;
+            if (ReferenceEquals(null, item)) return true;
+            if (ReferenceEquals(null, Node.Net.Collections.KeyValuePair.GetValue(item))) return true;
             if (Node.Net.Collections.KeyValuePair.IsKeyValuePair(item))
             {
                 if (Node.Net.Collections.KeyValuePair.GetValue(item).GetType() == typeof(string)) return true;
                 var ienumerable = Node.Net.Collections.KeyValuePair.GetValue(item) as IEnumerable;
-                if (object.ReferenceEquals(null, ienumerable)) return true;
+                if (ReferenceEquals(null, ienumerable)) return true;
             }
             return false;
         }
@@ -90,7 +90,7 @@ namespace Node.Net.Deprecated.Controls
 
         public static bool IsChild(object item)
         {
-            if (object.ReferenceEquals(null, item)) return false;
+            if (ReferenceEquals(null, item)) return false;
             if (typeof(string).IsAssignableFrom(item.GetType())) return false;
             if (item.GetType().IsPrimitive) return false;
             return true;
@@ -100,7 +100,7 @@ namespace Node.Net.Deprecated.Controls
         {
             if (!IsChild(item)) return null;
             var ienumerable = item as IEnumerable;
-            if (!object.ReferenceEquals(null, ienumerable))
+            if (!ReferenceEquals(null, ienumerable))
             {
                 var children = new List<object>();
                 foreach (object child in ienumerable)
@@ -120,11 +120,11 @@ namespace Node.Net.Deprecated.Controls
         {
             var children = new List<TreeViewItemDetailed>();
             var childmodels = GetChildModels();
-            if (!object.ReferenceEquals(null, childmodels))
+            if (!ReferenceEquals(null, childmodels))
             {
                 foreach (object item in GetChildModels())
                 {
-                    if (!object.ReferenceEquals(null, item))
+                    if (!ReferenceEquals(null, item))
                     {
                         var tvi = Activator.CreateInstance(GetType()) as TreeViewItemDetailed;
                         tvi.IsExpanded = false;
@@ -140,7 +140,7 @@ namespace Node.Net.Deprecated.Controls
         protected virtual object GetHeader()
         {
             var xmlElement = DataContext as XmlElement;
-            if (!object.ReferenceEquals(null, xmlElement))
+            if (!ReferenceEquals(null, xmlElement))
             {
                 return xmlElement.Name;
             }

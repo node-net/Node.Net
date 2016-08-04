@@ -17,7 +17,7 @@ namespace Node.Net.Deprecated.Controls
         protected virtual void OnDataContextChanged()
         {
             var element = Content as FrameworkElement;
-            if (!object.ReferenceEquals(null, element))
+            if (!ReferenceEquals(null, element))
             {
                 element.DataContext = DataContext;
             }

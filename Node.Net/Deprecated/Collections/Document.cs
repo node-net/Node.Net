@@ -14,7 +14,7 @@ namespace Node.Net.Deprecated.Collections
         {
             get
             {
-                if(object.ReferenceEquals(null,traverser))
+                if(ReferenceEquals(null,traverser))
                 {
                     traverser = new Traverser(this);
                     traverser.SetDocument(this, this);

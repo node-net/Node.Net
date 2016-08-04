@@ -51,7 +51,7 @@
             get { return current; }
             set
             {
-                if(!object.ReferenceEquals(current,value))
+                if(!ReferenceEquals(current,value))
                 {
                     current = value;
                     NotifyPropertyChanged(nameof(Current));
@@ -64,13 +64,13 @@
         {
             get
             {
-                if(object.ReferenceEquals(null,defaultDocumentType))
+                if(ReferenceEquals(null,defaultDocumentType))
                 {
                     foreach (string key in Types.Keys)
                     {
                         defaultDocumentType = Types[key];
                     }
-                    if (object.ReferenceEquals(null, defaultDocumentType)) defaultDocumentType = typeof(TextDocument);
+                    if (ReferenceEquals(null, defaultDocumentType)) defaultDocumentType = typeof(TextDocument);
                 }
                 return defaultDocumentType;
             }
@@ -120,7 +120,7 @@
                 var stream = GetStream(value);
                 System.Type[] types = {typeof(System.IO.Stream)};
                 var openInfo = Types[extension].GetMethod(nameof(Open), types);
-                if (!object.ReferenceEquals(null,openInfo))
+                if (!ReferenceEquals(null,openInfo))
                 {
                     var document = System.Activator.CreateInstance(Types[extension]);
                     object[] parameters = { stream };
@@ -181,7 +181,7 @@
             {
                 System.Type[] types = { typeof(System.IO.Stream) };
                 var saveInfo = document.GetType().GetMethod(nameof(Save), types);
-                if (!object.ReferenceEquals(null, saveInfo))
+                if (!ReferenceEquals(null, saveInfo))
                 {
                     object[] parameters = { fs };
                     saveInfo.Invoke(document, parameters);

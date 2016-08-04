@@ -35,7 +35,7 @@ namespace Node.Net.Deprecated.Controls
             };
 
 
-            if (object.ReferenceEquals(null, treeView))
+            if (ReferenceEquals(null, treeView))
             {
                 TreeView = new Controls.TreeView();
             }
@@ -48,13 +48,13 @@ namespace Node.Net.Deprecated.Controls
         protected override void OnDataContextChanged()
         {
 
-            if (object.ReferenceEquals(null, verticalSplitView)) return;
+            if (ReferenceEquals(null, verticalSplitView)) return;
             var currentInotifyPropertyChanged = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as INotifyPropertyChanged;
-            if (!object.ReferenceEquals(null,inotifyPropertyChanged))
+            if (!ReferenceEquals(null,inotifyPropertyChanged))
             {
                 inotifyPropertyChanged.PropertyChanged -= _PropertyChanged;
             }
-            if(!object.ReferenceEquals(null,currentInotifyPropertyChanged))
+            if(!ReferenceEquals(null,currentInotifyPropertyChanged))
             {
                 currentInotifyPropertyChanged.PropertyChanged += _PropertyChanged;
                 inotifyPropertyChanged = currentInotifyPropertyChanged;
@@ -64,7 +64,7 @@ namespace Node.Net.Deprecated.Controls
             verticalSplitView.ElementA = TreeView;
             verticalSplitView.ElementB = propertyView;
             TreeView.DataContext = DataContext;
-            if (!object.ReferenceEquals(null, contentView))
+            if (!ReferenceEquals(null, contentView))
             {
                 horizontalSplitView.ElementB = contentView;
                 contentView.DataContext = DataContext;
@@ -81,9 +81,9 @@ namespace Node.Net.Deprecated.Controls
             get { return treeView; }
             set
             {
-                if (!object.ReferenceEquals(treeView, value))
+                if (!ReferenceEquals(treeView, value))
                 {
-                    if (!object.ReferenceEquals(null, treeView))
+                    if (!ReferenceEquals(null, treeView))
                     {
                         treeView.SelectedItemChanged -= TreeView_SelectedItemChanged;
                     }
@@ -97,7 +97,7 @@ namespace Node.Net.Deprecated.Controls
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             var tvi = treeView.SelectedItem as TreeViewItem;
-            if (!object.ReferenceEquals(null, tvi))
+            if (!ReferenceEquals(null, tvi))
             {
                 PropertyControl.DataContext = tvi.DataContext;
             }
@@ -126,10 +126,10 @@ namespace Node.Net.Deprecated.Controls
         public MenuItem GetViewMenuItem()
         {
             MenuItem viewMenuItem = null;
-            if (!object.ReferenceEquals(null, ContentView))
+            if (!ReferenceEquals(null, ContentView))
             {
                 var method = ContentView.GetType().GetMethod(nameof(GetViewMenuItem));
-                if (!object.ReferenceEquals(null, method))
+                if (!ReferenceEquals(null, method))
                 {
                     viewMenuItem = method.Invoke(ContentView, null) as MenuItem;
                 }

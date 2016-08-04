@@ -60,7 +60,7 @@
             menu.Items.Add(fileMenuItem);
 
             grid.Children.Add(menu);
-            if(object.ReferenceEquals(null,DocumentViewType))
+            if(ReferenceEquals(null,DocumentViewType))
             {
                 var label = new System.Windows.Controls.Label { Content = "to customize DocumentView, set the DocumentViewType property to a type assignable to System.Windows.FrameworkElement." };
                 grid.Children.Add(label);
@@ -93,9 +93,9 @@
         private void update()
         {
             var model = Document;
-            if (!object.ReferenceEquals(null,model))
+            if (!ReferenceEquals(null,model))
             {
-                if (object.ReferenceEquals(null, DocumentType)) DocumentType = model.GetType();
+                if (ReferenceEquals(null, DocumentType)) DocumentType = model.GetType();
             }
         }
 
@@ -124,7 +124,7 @@
                 {
                     System.Type[] types = { typeof(System.IO.Stream) };
                     var openInfo = Document.GetType().GetMethod(nameof(Open), types);
-                    if (!object.ReferenceEquals(null, openInfo))
+                    if (!ReferenceEquals(null, openInfo))
                     {
                         object[] parameters = { stream };
                         openInfo.Invoke(Document, parameters);
@@ -167,7 +167,7 @@
             {
                 System.Type[] types = { typeof(System.IO.Stream) };
                 var saveInfo = Document.GetType().GetMethod(nameof(Save), types);
-                if (!object.ReferenceEquals(null, saveInfo))
+                if (!ReferenceEquals(null, saveInfo))
                 {
                     object[] parameters = { stream };
                     saveInfo.Invoke(Document, parameters);

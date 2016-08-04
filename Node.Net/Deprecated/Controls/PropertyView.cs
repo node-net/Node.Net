@@ -29,7 +29,7 @@ namespace Node.Net.Deprecated.Controls
         {
             Children.Clear();
             Children.Add(propertyControl);
-            if (!object.ReferenceEquals(null, PropertyControl))
+            if (!ReferenceEquals(null, PropertyControl))
             {
                 PropertyControl.DataContext = DataContext;
             }

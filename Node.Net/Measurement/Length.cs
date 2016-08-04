@@ -47,10 +47,10 @@ namespace Node.Net.Measurement
         }
         public int CompareTo(object instance)
         {
-            if (object.ReferenceEquals(null, instance)) return 1;
+            if (ReferenceEquals(null, instance)) return 1;
 
             var thatLength = instance as Length;
-            if (!object.ReferenceEquals(null, thatLength))
+            if (!ReferenceEquals(null, thatLength))
             {
                 return this[LengthUnit.Meters].CompareTo(thatLength[LengthUnit.Meters]);
             }
@@ -62,7 +62,7 @@ namespace Node.Net.Measurement
         public override bool Equals(object obj)
         {
             var thatLength = obj as Length;
-            if (!object.ReferenceEquals(null, thatLength))
+            if (!ReferenceEquals(null, thatLength))
             {
                 return this[LengthUnit.Meters].Equals(thatLength[LengthUnit.Meters]);
             }

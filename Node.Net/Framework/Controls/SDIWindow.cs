@@ -48,9 +48,9 @@ namespace Node.Net.Framework.Controls
             get { return sdiControl.Documents; }
             set
             {
-                if(!object.ReferenceEquals(value,sdiControl.Documents))
+                if(!ReferenceEquals(value,sdiControl.Documents))
                 {
-                    if (!object.ReferenceEquals(null, sdiControl.Documents))
+                    if (!ReferenceEquals(null, sdiControl.Documents))
                     {
                         sdiControl.Documents.PropertyChanged -= Documents_PropertyChanged;
                     }

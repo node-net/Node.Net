@@ -30,12 +30,12 @@ namespace Node.Net.Deprecated.Controls
         protected virtual string GetText()
         {
             var dictionary = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as IDictionary;
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 return Json.Writer.ToString(dictionary, Json.JsonFormat.Indented);
             }
             var ienumerable = Node.Net.Collections.KeyValuePair.GetValue(DataContext) as IEnumerable;
-            if (!object.ReferenceEquals(null, ienumerable))
+            if (!ReferenceEquals(null, ienumerable))
             {
                 var sb = new StringBuilder();
                 foreach (object item in ienumerable)

@@ -23,13 +23,13 @@
             }
             else
             {
-                if(object.ReferenceEquals(null,DataContext))
+                if(ReferenceEquals(null,DataContext))
                 {
                     Content = DataContext;
                 }
                 else{
                     var dictionary = KeyValuePair.GetValue(DataContext) as System.Collections.IDictionary;
-                    if (!object.ReferenceEquals(null, dictionary))
+                    if (!ReferenceEquals(null, dictionary))
                     {
                         var sp = new System.Windows.Controls.StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal };
                         foreach (object key in dictionary.Keys)
@@ -43,7 +43,7 @@
                     else
                     {
                         var keyProperty = DataContext.GetType().GetProperty("Key");
-                        Content = !object.ReferenceEquals(null, keyProperty) ? keyProperty.GetValue(DataContext, null).ToString() : DataContext;
+                        Content = !ReferenceEquals(null, keyProperty) ? keyProperty.GetValue(DataContext, null).ToString() : DataContext;
                     }
                 }
 

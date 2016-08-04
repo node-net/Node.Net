@@ -35,7 +35,7 @@ namespace Node.Net.Deprecated.Controls
             var grid = new Grid();
 
             var modelsDictionary = models as IDictionary;
-            if (object.ReferenceEquals(null, modelsDictionary)) return grid;
+            if (ReferenceEquals(null, modelsDictionary)) return grid;
 
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             grid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -59,7 +59,7 @@ namespace Node.Net.Deprecated.Controls
         private static string GetTitle(FrameworkElement frameworkelement)
         {
             var titleInfo = frameworkelement.GetType().GetProperty(nameof(Title));
-            if (!object.ReferenceEquals(null, titleInfo))
+            if (!ReferenceEquals(null, titleInfo))
             {
                 return titleInfo.GetValue(frameworkelement).ToString();
             }
@@ -79,7 +79,7 @@ namespace Node.Net.Deprecated.Controls
         {
             get
             {
-                if (!object.ReferenceEquals(null, _view))
+                if (!ReferenceEquals(null, _view))
                 {
                     return _view.GetType().FullName;
                 }
@@ -115,10 +115,10 @@ namespace Node.Net.Deprecated.Controls
 
         private void Update()
         {
-            if (!object.ReferenceEquals(null, _viewGrid))
+            if (!ReferenceEquals(null, _viewGrid))
             {
                 if (!_viewGrid.Children.Contains(_view)) _viewGrid.Children.Clear();
-                if (!object.ReferenceEquals(null, _view))
+                if (!ReferenceEquals(null, _view))
                 {
                     if (!_viewGrid.Children.Contains(_view)) _viewGrid.Children.Add(_view);
                     _view.DataContext = _selectedModel;

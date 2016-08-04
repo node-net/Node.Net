@@ -34,7 +34,7 @@ namespace Node.Net.Deprecated.Controls
             {
                 System.Type[] types = { typeof(object) };
                 var ci = value.GetConstructor(types);
-                if (object.ReferenceEquals(null, ci))
+                if (ReferenceEquals(null, ci))
                 {
                     throw new System.InvalidOperationException("TreeViewItemType does not have a constructor accepting an object");
                 }
@@ -58,11 +58,11 @@ namespace Node.Net.Deprecated.Controls
         public virtual void Update()
         {
             Items.Clear();
-            if (!object.ReferenceEquals(null, DataContext))
+            if (!ReferenceEquals(null, DataContext))
             {
                 var dictionary = DataContext as System.Collections.IDictionary;
                 var ienumerable = DataContext as System.Collections.IEnumerable;
-                if (!object.ReferenceEquals(null, ienumerable) && object.ReferenceEquals(null, dictionary))
+                if (!ReferenceEquals(null, ienumerable) && ReferenceEquals(null, dictionary))
                 {
                     foreach (object item in ienumerable)
                     {

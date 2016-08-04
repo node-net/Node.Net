@@ -15,7 +15,7 @@ namespace Node.Net
         {
             get
             {
-                if (object.ReferenceEquals(null, _typeTransformers))
+                if (ReferenceEquals(null, _typeTransformers))
                 {
                     _typeTransformers = new Dictionary<Type, ITypeTransformer>();
                     _typeTransformers.Add(typeof(Color), new Transformers.ColorTransformer { Transformer = this });

@@ -15,7 +15,7 @@ namespace Node.Net.Filters
         public bool Include(object value)
         {
             var dictionary = value as IDictionary;
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 if (dictionary.Contains("Type"))
                 {

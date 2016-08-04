@@ -10,7 +10,7 @@
             get { return parent; }
             set
             {
-                if (!object.ReferenceEquals(parent, value))
+                if (!ReferenceEquals(parent, value))
                 {
                     parent = value;
                     Flush();
@@ -237,7 +237,7 @@
             {
                 var parentToWorld = new System.Windows.Media.Media3D.Matrix3D();
                 var currentParent = parent;
-                while (!object.ReferenceEquals(null, currentParent))
+                while (!ReferenceEquals(null, currentParent))
                 {
                     parentToWorld.Append(currentParent.LocalToParent);
                     currentParent = currentParent.Parent;

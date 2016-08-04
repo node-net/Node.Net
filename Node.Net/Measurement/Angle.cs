@@ -86,10 +86,10 @@ namespace Node.Net.Measurement
         }
         public int CompareTo(object instance)
         {
-            if (object.ReferenceEquals(null, instance)) return 1;
+            if (ReferenceEquals(null, instance)) return 1;
 
             var thatAngle = instance as Angle;
-            if (!object.ReferenceEquals(null, thatAngle))
+            if (!ReferenceEquals(null, thatAngle))
             {
                 return this[AngularUnit.Degrees].CompareTo(thatAngle[AngularUnit.Degrees]);
             }
@@ -101,7 +101,7 @@ namespace Node.Net.Measurement
         public override bool Equals(object obj)
         {
             var thatAngle = obj as Angle;
-            if (!object.ReferenceEquals(null, thatAngle))
+            if (!ReferenceEquals(null, thatAngle))
             {
                 return this[AngularUnit.Degrees].Equals(thatAngle[AngularUnit.Degrees]);
             }
@@ -121,9 +121,9 @@ namespace Node.Net.Measurement
 
         public static double GetRotationDegrees(IDictionary dictionary, string key)
         {
-            if (object.ReferenceEquals(null, dictionary)) return 0;
+            if (ReferenceEquals(null, dictionary)) return 0;
             if (!dictionary.Contains(key)) return 0;
-            if (object.ReferenceEquals(null, dictionary[key])) return 0;
+            if (ReferenceEquals(null, dictionary[key])) return 0;
             return Angle.Parse(dictionary[key].ToString())[AngularUnit.Degrees];
         }
     }

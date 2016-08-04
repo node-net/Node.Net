@@ -7,14 +7,7 @@ namespace Node.Net.Model3D.Transform
     {
         public static Visual3D ToVisual3D(IRenderer renderer, IDictionary value)
         {
-            if (value.Contains("Visual3D"))
-            {
-                return renderer.Resources.GetResource(value["Visual3D"].ToString()) as Visual3D;
-            }
-            else
-            {
-                return renderer.GetModelVisual3D(value);
-            }
+            return value.Contains("Visual3D") ? renderer.Resources.GetResource(value["Visual3D"].ToString()) as Visual3D : renderer.GetModelVisual3D(value);
         }
         public static ModelVisual3D ToModelVisual3D(IRenderer renderer, System.Collections.IDictionary dictionary)
         {
@@ -69,13 +62,13 @@ namespace Node.Net.Model3D.Transform
             System.Windows.Media.Media3D.Model3D primaryModel = null;
             foreach (string modelKey in renderer.Model3DKeys)
             {
-                if (object.ReferenceEquals(null, primaryModel))
+                if (ReferenceEquals(null, primaryModel))
                 {
                     if (value.Contains(modelKey))
                     {
                         var modelKeyValue = value[modelKey].ToString();
                         var modelResource = renderer.GetResource(modelKeyValue) as System.Windows.Media.Media3D.Model3D;
-                        if (!object.ReferenceEquals(null, modelResource))
+                        if (!ReferenceEquals(null, modelResource))
                         {
                             var modelGroup = new Model3DGroup
                             {
@@ -88,11 +81,11 @@ namespace Node.Net.Model3D.Transform
                     }
                 }
             }
-            if (object.ReferenceEquals(null, primaryModel))
+            if (ReferenceEquals(null, primaryModel))
             {
                 primaryModel = ToGeometryModel3D(renderer, value);
             }
-            if (!object.ReferenceEquals(null, primaryModel))
+            if (!ReferenceEquals(null, primaryModel))
             {
                 model3DGroup.Children.Add(primaryModel);
             }
@@ -331,9 +324,9 @@ namespace Node.Net.Model3D.Transform
         }
         private static double GetRotationDegrees(IDictionary dictionary, string key)
         {
-            if (object.ReferenceEquals(null, dictionary)) return 0;
+            if (ReferenceEquals(null, dictionary)) return 0;
             if (!dictionary.Contains(key)) return 0;
-            if (object.ReferenceEquals(null, dictionary[key])) return 0;
+            if (ReferenceEquals(null, dictionary[key])) return 0;
             return Measurement.Angle.Parse(dictionary[key].ToString())[Measurement.AngularUnit.Degrees];
         }
         public static Vector3D ToScale(IRenderer renderer, IDictionary value)

@@ -122,11 +122,11 @@ namespace Node.Net.Deprecated.Json.Internal
             foreach (object item in enumerable)
             {
                 var skip = false;
-                if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
-                if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
+                if (ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                if (!ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
                 {
-                    if (object.ReferenceEquals(null, item) ||
+                    if (ReferenceEquals(null, item) ||
                        item.GetType().IsValueType ||
                        typeof(System.Collections.IEnumerable).IsAssignableFrom(value.GetType()))
                     {
@@ -169,8 +169,8 @@ namespace Node.Net.Deprecated.Json.Internal
             {
                 var item = dictionary[key];
                 var skip = false;
-                if (object.ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
-                if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
+                if (ReferenceEquals(null, item) && IgnoreNullValues) skip = true;
+                if (!ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
                 if (!skip)
                 {
                     if (index > 0)

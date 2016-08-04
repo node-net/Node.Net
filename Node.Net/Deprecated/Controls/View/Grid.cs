@@ -22,14 +22,14 @@
             UpdateArray(array);
 
             var dictionary = KeyValuePair.GetValue(DataContext) as System.Collections.IDictionary;
-            if (!object.ReferenceEquals(null,dictionary))
+            if (!ReferenceEquals(null,dictionary))
             {
                 UpdateDictionary(dictionary);
             }
         }
         private void UpdateArray(System.Array array)
         {
-            if (!object.ReferenceEquals(null, array) && array.Rank == 2)
+            if (!ReferenceEquals(null, array) && array.Rank == 2)
             {
                 var ncols = array.GetLength(0);
                 var nrows = array.GetLength(1);
@@ -46,7 +46,7 @@
                     for (int r = 0; r < nrows; ++r)
                     {
                         var item = array.GetValue(c, r);
-                        if (!object.ReferenceEquals(null, item))
+                        if (!ReferenceEquals(null, item))
                         {
                             var value = array.GetValue(c, r).ToString();
                             var label
@@ -67,17 +67,17 @@
 
         private static void UpdateDictionary(System.Collections.IDictionary dictionary)
         {
-            if(!object.ReferenceEquals(null,dictionary))
+            if(!ReferenceEquals(null,dictionary))
             {
                 foreach (object key in dictionary.Keys)
                 {
                     var value = dictionary[key];
                     var ienumerable = value as System.Collections.IEnumerable;
-                    if (!object.ReferenceEquals(null,value) && value.GetType() != typeof(string) && !object.ReferenceEquals(null,ienumerable))
+                    if (!ReferenceEquals(null,value) && value.GetType() != typeof(string) && !ReferenceEquals(null,ienumerable))
                     {
                         foreach(object item in ienumerable)
                         {
-                            if(!object.ReferenceEquals(null,item))
+                            if(!ReferenceEquals(null,item))
                             {
                                 if(item.GetType().IsValueType || item.GetType() == typeof(string))
                                 {

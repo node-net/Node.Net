@@ -13,7 +13,7 @@ namespace Node.Net.Transformers
     {
         public override object Transform(object item)
         {
-            if (object.ReferenceEquals(null, item)) return null;
+            if (ReferenceEquals(null, item)) return null;
             if (item.GetType() == typeof(string)) return Transform(item.ToString());
             return null;
         }

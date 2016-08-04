@@ -22,7 +22,7 @@ namespace Node.Net.Deprecated.Collections
         {
             foreach (WeakReference wr in Keys)
             {
-                if (object.ReferenceEquals(wr.Target, instance)) return wr;
+                if (ReferenceEquals(wr.Target, instance)) return wr;
                 if (instance.GetType().IsValueType && wr.Target.Equals(instance)) return wr;
             }
             return new WeakReference(instance);

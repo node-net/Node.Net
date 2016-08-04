@@ -26,30 +26,30 @@ namespace Node.Net.Deprecated.Controls
         private INotifyPropertyChanged inotifyPropertyChanged;
         private void OnDataContextChanged()
         {
-            if (object.ReferenceEquals(null, propertyGrid)) return;
+            if (ReferenceEquals(null, propertyGrid)) return;
 
             title.DataContext = DataContext;
             var value = Node.Net.Collections.KeyValuePair.GetValue(DataContext);
-            if (object.ReferenceEquals(null, value))
+            if (ReferenceEquals(null, value))
             {
                 propertyGrid.SelectedObject = null;
                 return;
             }
 
-            if(!object.ReferenceEquals(null, inotifyPropertyChanged))
+            if(!ReferenceEquals(null, inotifyPropertyChanged))
             {
                 inotifyPropertyChanged.PropertyChanged -= DataContext_PropertyChanged;
             }
             inotifyPropertyChanged = value as INotifyPropertyChanged;
-            if(!object.ReferenceEquals(null,inotifyPropertyChanged))
+            if(!ReferenceEquals(null,inotifyPropertyChanged))
             {
                 inotifyPropertyChanged.PropertyChanged += DataContext_PropertyChanged;
             }
 
             var idictionary = value as System.Collections.IDictionary;
             var ienumerable = value as System.Collections.IEnumerable;
-            if (object.ReferenceEquals(null, idictionary) && value.GetType() != typeof(string) &&
-               !object.ReferenceEquals(null, ienumerable))
+            if (ReferenceEquals(null, idictionary) && value.GetType() != typeof(string) &&
+               !ReferenceEquals(null, ienumerable))
             {
                 var items = new System.Collections.Generic.List<object>();
                 foreach (object item in ienumerable) { items.Add(item); }
@@ -58,10 +58,10 @@ namespace Node.Net.Deprecated.Controls
             else
             {
                 var use_adapter = false;
-                if (!object.ReferenceEquals(null,idictionary))
+                if (!ReferenceEquals(null,idictionary))
                 {
                     var customTypeDescriptor = value as ICustomTypeDescriptor; ;
-                    if (object.ReferenceEquals(null, customTypeDescriptor))
+                    if (ReferenceEquals(null, customTypeDescriptor))
                     {
                         if (value.GetType().FullName.Contains("System.Collections.Generic.Dictionary"))
                         {

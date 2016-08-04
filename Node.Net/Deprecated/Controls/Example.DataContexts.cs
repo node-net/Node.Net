@@ -23,7 +23,7 @@ namespace Node.Net.Deprecated.Controls
             foreach(string key in this.Keys)
             {
                 var element = Activator.CreateInstance(controlType) as FrameworkElement;
-                if(!object.ReferenceEquals(null, element))
+                if(!ReferenceEquals(null, element))
                 {
                     element.DataContext = this[key];
                     var tabItem = new TabItem
@@ -50,7 +50,7 @@ namespace Node.Net.Deprecated.Controls
         {
             const IDictionary result = null;
             var stream = Extensions.StreamExtension.GetStream("Dictionary.Test.Positional.Scene.json");
-            if(!object.ReferenceEquals(null, stream))
+            if(!ReferenceEquals(null, stream))
             {
                 var reader = new Json.Reader();
                 return reader.Read(stream) as IDictionary;

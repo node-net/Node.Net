@@ -78,7 +78,7 @@ namespace Node.Net.Deprecated.Controls
                 RemoveVisualChild(_views[name]);
                 //_views[name].DataContext = DataContext;
             }
-            if (!object.ReferenceEquals(null, View))
+            if (!ReferenceEquals(null, View))
             {
                 Children.Add(View);
                 //Children.Add(_views[_viewName]);

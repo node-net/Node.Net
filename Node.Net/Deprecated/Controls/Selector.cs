@@ -54,17 +54,17 @@ namespace Node.Net.Deprecated.Controls
 
         private void Update()
         {
-            if (!object.ReferenceEquals(null, _comboBox))
+            if (!ReferenceEquals(null, _comboBox))
             {
                 _comboBox.Items.Clear();
                 var dictionary = _items as IDictionary;
-                if (!object.ReferenceEquals(null, dictionary))
+                if (!ReferenceEquals(null, dictionary))
                 {
                     foreach (string key in dictionary.Keys)
                     {
                         _comboBox.Items.Add(new ComboBoxItem { Content = key, DataContext = dictionary[key] });
                     }
-                    if (object.ReferenceEquals(null, _comboBox.SelectedItem) && _comboBox.Items.Count > 0)
+                    if (ReferenceEquals(null, _comboBox.SelectedItem) && _comboBox.Items.Count > 0)
                     {
                         _comboBox.SelectedIndex = 0;
                     }

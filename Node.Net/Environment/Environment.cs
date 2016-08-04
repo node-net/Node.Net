@@ -15,7 +15,7 @@
             {
                 var dev_root = System.Environment.GetEnvironmentVariable("DEV_ROOT");
                 {
-                    if(!object.ReferenceEquals(null,dev_root))
+                    if(!ReferenceEquals(null,dev_root))
                     {
                         return dev_root.Replace('/','\\');
                     }
@@ -59,7 +59,7 @@
         private static System.Windows.ResourceDictionary workingDirectories;
         private static System.Windows.ResourceDictionary GetWorkingDirectories()
         {
-            if(object.ReferenceEquals(null,workingDirectories))
+            if(ReferenceEquals(null,workingDirectories))
             {
                 if (System.IO.File.Exists(WorkingDirectoriesFilename))
                 {

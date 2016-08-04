@@ -33,8 +33,8 @@ namespace Node.Net.Deprecated.Collections
 
         public int CompareTo(object value)
         {
-            if (object.ReferenceEquals(this, value)) return 0;
-            if (object.ReferenceEquals(null, value)) return 1;
+            if (ReferenceEquals(this, value)) return 0;
+            if (ReferenceEquals(null, value)) return 1;
 
             var thisHash = GetHashCode();
             var thatHash = Hash.GetHashCode(value);

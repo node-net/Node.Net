@@ -235,7 +235,7 @@
 
         public void Merge(Command other)
         {
-            if (object.ReferenceEquals(null, other)) return;
+            if (ReferenceEquals(null, other)) return;
             var durationStr = "";
             var status = " not executed";
 
@@ -274,7 +274,7 @@
 
         public static int GetHashCode(object value)
         {
-            if (!object.ReferenceEquals(null, value))
+            if (!ReferenceEquals(null, value))
             {
                 if (value.GetType() == typeof(bool) ||
                    value.GetType() == typeof(double) ||
@@ -317,11 +317,11 @@
 
         public int CompareTo(object value)
         {
-            if (object.ReferenceEquals(this, value)) return 0;
-            if (object.ReferenceEquals(null, value)) return 1;
+            if (ReferenceEquals(this, value)) return 0;
+            if (ReferenceEquals(null, value)) return 1;
 
             var thatCommand = value as Command;
-            if (!object.ReferenceEquals(null, thatCommand))
+            if (!ReferenceEquals(null, thatCommand))
             {
                 return thatCommand.StartTime.CompareTo(StartTime);
             }
@@ -419,7 +419,7 @@
             foreach (string filename in System.IO.Directory.GetFiles(GetLogDirectory(),"*.Command.bin"))
             {
                 var fi = new System.IO.FileInfo(filename);
-                if (object.ReferenceEquals(null, regex) || regex.IsMatch(fi.Name))
+                if (ReferenceEquals(null, regex) || regex.IsMatch(fi.Name))
                 {
                     using (System.IO.FileStream fs = new System.IO.FileStream(filename, System.IO.FileMode.Open))
                     {
@@ -449,7 +449,7 @@
             foreach (string filename in System.IO.Directory.GetFiles(GetLogDirectory(), "*.Command.bin"))
             {
                 var fi = new System.IO.FileInfo(filename);
-                if (object.ReferenceEquals(null, regex) || regex.IsMatch(fi.Name))
+                if (ReferenceEquals(null, regex) || regex.IsMatch(fi.Name))
                 {
                     var age = System.DateTime.Now - fi.CreationTime;
                     if (age > ageLimit)

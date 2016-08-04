@@ -38,7 +38,7 @@ namespace Node.Net.Transformers
         {
             get
             {
-                if (object.ReferenceEquals(null, _namedColors))
+                if (ReferenceEquals(null, _namedColors))
                 {
                     _namedColors = new Dictionary<string, Color>();
                     foreach (PropertyInfo property in typeof(Colors).GetProperties(BindingFlags.Public | BindingFlags.Static))

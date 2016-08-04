@@ -14,7 +14,7 @@
 
         private void Update()
         {
-            if (!object.ReferenceEquals(null, KeyValuePair.GetValue(DataContext)))
+            if (!ReferenceEquals(null, KeyValuePair.GetValue(DataContext)))
             {
                 var label = new System.Windows.Controls.Label
                 {

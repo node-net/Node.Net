@@ -12,9 +12,9 @@
                 if (!System.IO.Directory.Exists(fi.DirectoryName)) System.IO.Directory.CreateDirectory(fi.DirectoryName);
 
                 byte[] bytes = null;
-                if(!object.ReferenceEquals(null,contents[key]) && typeof(byte[]).IsAssignableFrom(contents[key].GetType())) bytes = (byte[])contents[key];
+                if(!ReferenceEquals(null,contents[key]) && typeof(byte[]).IsAssignableFrom(contents[key].GetType())) bytes = (byte[])contents[key];
 
-                if (object.ReferenceEquals(null, bytes))
+                if (ReferenceEquals(null, bytes))
                 {
                     using (System.IO.StreamWriter sw = new System.IO.StreamWriter(fullName))
                     {

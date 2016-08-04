@@ -12,12 +12,12 @@ namespace Node.Net.Extensions
             var keys = new List<string>();
             foreach (string key in dictionary.Keys)
             {
-                if (object.ReferenceEquals(null, filter) || filter.Include(dictionary[key]))
+                if (ReferenceEquals(null, filter) || filter.Include(dictionary[key]))
                 {
                     keys.Add(key);
                 }
                 var child_dictionary = dictionary[key] as IDictionary;
-                if (!object.ReferenceEquals(null, child_dictionary))
+                if (!ReferenceEquals(null, child_dictionary))
                 {
                     var subkeys = Find(child_dictionary, filter);
                     foreach (string subkey in subkeys)
@@ -33,7 +33,7 @@ namespace Node.Net.Extensions
         {
 
             var results = new Dictionary<string, dynamic>();
-            if (!object.ReferenceEquals(null, dictionary))
+            if (!ReferenceEquals(null, dictionary))
             {
                 var keys = new List<string>(Find(dictionary,filter));
                 foreach (string key in keys)
@@ -52,11 +52,10 @@ namespace Node.Net.Extensions
                 if (dictionary.Contains(parts[0]))
                 {
                     var subDictionary = dictionary[parts[0]] as IDictionary;
-                    if (!object.ReferenceEquals(null, subDictionary))
+                    if (!ReferenceEquals(null, subDictionary))
                     {
                         parts.RemoveAt(0);
-                        if (parts.Count == 1) return Get(subDictionary, parts[0]);
-                        else return Get(subDictionary, String.Join("/", parts));
+                        return parts.Count == 1 ? Get(subDictionary, parts[0]) : Get(subDictionary, String.Join("/", parts));
                     }
                 }
             }
@@ -77,7 +76,7 @@ namespace Node.Net.Extensions
                 }
 
                 var subDictionary = dictionary[parts[0]] as IDictionary;
-                if (object.ReferenceEquals(null, subDictionary))
+                if (ReferenceEquals(null, subDictionary))
                 {
                     subDictionary = new Dictionary<string, dynamic>();
                     dictionary[parts[0]] = subDictionary;

@@ -85,18 +85,18 @@ namespace Node.Net.Deprecated.Controls
 
         protected virtual object GetHeader()
         {
-            if (object.ReferenceEquals(null, DataContext)) return "null";
+            if (ReferenceEquals(null, DataContext)) return "null";
             if (headerString.Length > 0) return headerString;
             if (DataContext.GetType() == typeof(System.Collections.Generic.KeyValuePair<string, dynamic>))
             {
                 var kvp = (System.Collections.Generic.KeyValuePair<string, dynamic>)DataContext;
-                if (!object.ReferenceEquals(null, kvp))
+                if (!ReferenceEquals(null, kvp))
                 {
                     return kvp.Key;
                 }
             }
             var nameInfo = Node.Net.View.KeyValuePair.GetValue(DataContext).GetType().GetProperty("Name");
-            if (!object.ReferenceEquals(null, nameInfo))
+            if (!ReferenceEquals(null, nameInfo))
             {
                 return nameInfo.GetValue(Node.Net.View.KeyValuePair.GetValue(DataContext), null).ToString();
             }
@@ -105,9 +105,9 @@ namespace Node.Net.Deprecated.Controls
 
         public static bool IsValidChild(object item)
         {
-            if (object.ReferenceEquals(null, item)) return false;
+            if (ReferenceEquals(null, item)) return false;
             var value = Node.Net.Collections.KeyValuePair.GetValue(item);
-            if (object.ReferenceEquals(null, value)) return false;
+            if (ReferenceEquals(null, value)) return false;
             if (typeof(string).IsAssignableFrom(value.GetType())) return false;
             if (value.GetType().IsValueType) return false;
             return true;
@@ -116,13 +116,13 @@ namespace Node.Net.Deprecated.Controls
         {
             var value = Node.Net.Collections.KeyValuePair.GetValue(item);
             var children = new System.Collections.Generic.List<object>();
-            if (object.ReferenceEquals(null, value)) return children;
+            if (ReferenceEquals(null, value)) return children;
             if (typeof(string).IsAssignableFrom(value.GetType())) return children;
             if (value.GetType().IsValueType) return children;
             if (!typeof(string).IsAssignableFrom(value.GetType()))
             {
                 var ienumerable = value as System.Collections.IEnumerable;
-                if (!object.ReferenceEquals(null, ienumerable))
+                if (!ReferenceEquals(null, ienumerable))
                 {
                     foreach (object i in ienumerable)
                     {

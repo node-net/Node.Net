@@ -35,8 +35,8 @@ namespace Node.Net.Deprecated.Collections
 
         public int CompareTo(object value)
         {
-            if (object.ReferenceEquals(this, value)) return 0;
-            if (object.ReferenceEquals(null, value)) return 1;
+            if (ReferenceEquals(this, value)) return 0;
+            if (ReferenceEquals(null, value)) return 1;
 
             var thisHash = GetHashCode();
             var thatHash = GetHashCode(value);
@@ -53,7 +53,7 @@ namespace Node.Net.Deprecated.Collections
 
         public static int GetHashCode(object value)
         {
-            if (!object.ReferenceEquals(null, value))
+            if (!ReferenceEquals(null, value))
             {
                 if (value.GetType() == typeof(bool) ||
                    value.GetType() == typeof(double) ||
@@ -95,12 +95,12 @@ namespace Node.Net.Deprecated.Collections
             foreach (object key in value.Keys)
             {
                 var item = value[key];
-                if (!object.ReferenceEquals(null, item))
+                if (!ReferenceEquals(null, item))
                 {
                     if (!typeof(string).IsAssignableFrom(item.GetType()))
                     {
                         var ienumerable = item as System.Collections.IEnumerable;
-                        if (!object.ReferenceEquals(null, ienumerable)) { children.Add(item); }
+                        if (!ReferenceEquals(null, ienumerable)) { children.Add(item); }
                     }
                 }
             }
@@ -145,7 +145,7 @@ namespace Node.Net.Deprecated.Collections
         {
             get
             {
-                if (!object.ReferenceEquals(null, Document))
+                if (!ReferenceEquals(null, Document))
                 {
                     return Document.Traverser.GetParent(this);
                 }
@@ -154,7 +154,7 @@ namespace Node.Net.Deprecated.Collections
         }
         public T GetAncestor<T>()
         {
-            if (!object.ReferenceEquals(null, Document))
+            if (!ReferenceEquals(null, Document))
             {
                 return Document.Traverser.GetAncestor<T>(this);
             }
@@ -169,12 +169,12 @@ namespace Node.Net.Deprecated.Collections
                 if (typeConversions.Contains(source["Type"].ToString()))
                 {
                     var type = typeConversions[source["Type"].ToString()] as System.Type;
-                    if (!object.ReferenceEquals(null, type))
+                    if (!ReferenceEquals(null, type))
                     {
                         System.Type[] types = { typeof(System.Collections.IDictionary) };
                         var dictionaryConstructor
                             = type.GetConstructor(types);
-                        if (!object.ReferenceEquals(null, dictionaryConstructor))
+                        if (!ReferenceEquals(null, dictionaryConstructor))
                         {
                             object[] args = { source };
                             return System.Activator.CreateInstance(type, args) as System.Collections.IDictionary;
@@ -188,15 +188,15 @@ namespace Node.Net.Deprecated.Collections
             {
                 var value = source[key];
                 var dictionary = value as System.Collections.IDictionary;
-                if (!object.ReferenceEquals(null, dictionary))
+                if (!ReferenceEquals(null, dictionary))
                 {
                     result[key] = Convert(dictionary, typeConversions);
                 }
                 else
                 {
                     var enumerable = value as System.Collections.IEnumerable;
-                    if (!object.ReferenceEquals(null, value) && value.GetType() != typeof(string)
-                        && !object.ReferenceEquals(null, enumerable))
+                    if (!ReferenceEquals(null, value) && value.GetType() != typeof(string)
+                        && !ReferenceEquals(null, enumerable))
                     {
                         // TODO, convert array elements
                         result[key] = enumerable;
