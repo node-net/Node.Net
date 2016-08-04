@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Node.Net.Json
+namespace Node.Net.Deprecated.Json
 {
     public class Reader : IReader
     {

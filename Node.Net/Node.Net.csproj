@@ -193,7 +193,7 @@
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\Type.Extension.cs" />
-    <Compile Include="Factory.cs" />
+    <Compile Include="Deprecated\Factory.cs" />
     <Compile Include="Filters\TypeFilter.cs" />
     <Compile Include="Framework\Application.cs" />
     <Compile Include="Framework\Controls\DynamicView.cs" />

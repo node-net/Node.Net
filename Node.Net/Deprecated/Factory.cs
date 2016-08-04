@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net
+namespace Node.Net.Deprecated
 {
     public class Factory : IFactory
     {

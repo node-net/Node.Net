@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace Node.Net.Json
+namespace Node.Net.Deprecated.Json
 {
     public class JsonSerializationBinder : SerializationBinder
     {

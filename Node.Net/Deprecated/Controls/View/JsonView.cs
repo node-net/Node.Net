@@ -19,7 +19,7 @@ namespace Node.Net.View
             {
                 using(System.IO.MemoryStream memory = new System.IO.MemoryStream())
                 {
-                    Node.Net.Json.Writer.Write(dictionary,memory);
+                    Node.Net.Deprecated.Json.Writer.Write(dictionary,memory);
                     memory.Flush();
                     memory.Seek(0,System.IO.SeekOrigin.Begin);
                     var sr = new System.IO.StreamReader(memory);

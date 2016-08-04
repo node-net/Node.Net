@@ -40,7 +40,7 @@ namespace Node.Net
                             return XamlReader.Load(stream);
                         }
                 }
-                return Json.Reader.Default.Load(stream, name);
+                return Deprecated.Json.Reader.Default.Load(stream, name);
             }
             catch(Exception e)
             {

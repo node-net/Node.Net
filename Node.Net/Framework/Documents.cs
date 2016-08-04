@@ -95,7 +95,7 @@ namespace Node.Net.Framework
             {
                 if (typeof(IDictionary).IsAssignableFrom(document.GetType()))
                 {
-                    var d = Node.Net.Json.Reader.Default.Read(stream) as IDictionary;
+                    var d = Node.Net.Deprecated.Json.Reader.Default.Read(stream) as IDictionary;
                     if (!object.ReferenceEquals(null, d))
                     {
                         Node.Net.Deprecated.Collections.Copier.Copy(d, (document as IDictionary));

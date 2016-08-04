@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Node.Net.Json.Internal
+namespace Node.Net.Deprecated.Json.Internal
 {
     public enum Style { Compact, Indented };
 

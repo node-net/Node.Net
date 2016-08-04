@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace Node.Net.Json
+namespace Node.Net.Deprecated.Json
 {
     public enum JsonStyle { Compact,Indented};
     public class JsonFormatter : IFormatter

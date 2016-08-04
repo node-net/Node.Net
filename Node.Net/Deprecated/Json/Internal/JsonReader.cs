@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Node.Net.Json.Internal
+namespace Node.Net.Deprecated.Json.Internal
 {
     class JsonReader
     {

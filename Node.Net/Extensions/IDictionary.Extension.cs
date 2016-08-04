@@ -102,9 +102,9 @@ namespace Node.Net.Extensions
 
         public static void Save(IDictionary dictionary, Stream stream)
         {
-            var formatter = new Node.Net.Json.JsonFormatter
+            var formatter = new Node.Net.Deprecated.Json.JsonFormatter
             {
-                Style = Node.Net.Json.JsonStyle.Indented
+                Style = Node.Net.Deprecated.Json.JsonStyle.Indented
             };
             formatter.Serialize(stream, dictionary);
         }

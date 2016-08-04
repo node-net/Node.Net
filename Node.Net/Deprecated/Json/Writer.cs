@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace Node.Net.Json
+namespace Node.Net.Deprecated.Json
 {
     public enum JsonFormat { Compressed, Indented };
     public class Writer
