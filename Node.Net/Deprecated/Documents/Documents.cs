@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Documents
+﻿namespace Node.Net.Deprecated.Documents
 {
     public class Documents : System.Collections.Generic.Dictionary<string,object>, System.ComponentModel.INotifyPropertyChanged
     {

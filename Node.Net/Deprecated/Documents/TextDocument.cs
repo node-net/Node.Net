@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Documents
+﻿namespace Node.Net.Deprecated.Documents
 {
     public class TextDocument : System.Collections.Generic.List<string>,
                                 IDocument,
