@@ -14,6 +14,7 @@ namespace Node.Net.Model3D
             Model3DKeys.Add("Type");
         }
 
+        public IFilter TypeNameFilter { get; set; }
         private IMetaDataManager _metaData;
         public IMetaDataManager MetaData
         {

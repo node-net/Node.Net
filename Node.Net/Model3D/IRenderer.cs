@@ -29,6 +29,7 @@ namespace Node.Net.Model3D
 {
     public interface IRenderer : IVisual3DTransformer, IModel3DTransformer,IResources
     {
+        IFilter TypeNameFilter { get; set; }
         IMetaDataManager MetaData { get; set; }
         IResources Resources { get; set; }
         Dictionary<string, IModel3DTransformer> TypeModel3DTransformers { get; }
