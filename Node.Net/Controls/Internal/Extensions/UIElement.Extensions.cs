@@ -6,7 +6,7 @@ namespace Node.Net.Controls.Internal.Extensions
 {
     static class UIElementExtensions
     {
-        public static ImageSource ToImageSource(UIElement element, Size size)
+        public static ImageSource ToImageSource(UIElement element, System.Windows.Size size)
         {
             element.Measure(size);
             element.Arrange(new Rect(size));

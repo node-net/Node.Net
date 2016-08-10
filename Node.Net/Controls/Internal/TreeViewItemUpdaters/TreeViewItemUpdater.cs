@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Node.Net.Controls.Internal
+namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
 {
     class TreeViewItemUpdater
     {
@@ -38,18 +38,7 @@ namespace Node.Net.Controls.Internal
                 else if (value.GetType() == typeof(string)) treeViewItem.Header = $"{treeViewItem.DataContext.GetKey()} {value.ToString()}";
                 else
                 {
-                    treeViewItem.Header = treeViewItem.DataContext.GetKey();
-                    /*
-                    var grid = new System.Windows.Controls.Grid { HorizontalAlignment = HorizontalAlignment.Stretch };
-                    grid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition());
-                    grid.ColumnDefinitions.Add(new ColumnDefinition());
-                    grid.Children.Add(new Label { Content = key });
-                    var valuesGrid = new ValuesGrid { DataContext = value };
-                
-                    grid.Children.Add(valuesGrid);
-                    Grid.SetColumn(valuesGrid, 1);
-                    treeViewItem.Header = grid;
-                    treeViewItem.HorizontalAlignment = HorizontalAlignment.Stretch;*/
+                    treeViewItem.Header = new Header { DataContext = treeViewItem.DataContext };
                 }
             }
         }
@@ -71,7 +60,7 @@ namespace Node.Net.Controls.Internal
                         else
                         {
                             tvi = new System.Windows.Controls.TreeViewItem { DataContext = item, HorizontalAlignment = HorizontalAlignment.Stretch,HorizontalContentAlignment = HorizontalAlignment.Stretch };
-                            tvi.Tag = new Internal.TreeViewItemUpdater(tvi);
+                            tvi.Tag = new Internal.TreeViewItemUpdaters.TreeViewItemUpdater(tvi);
                             if (tvi != null) treeViewItems[item] = tvi;
                         }
                         if (tvi != null && !treeViewItem.Items.Contains(tvi)) treeViewItem.Items.Add(tvi);

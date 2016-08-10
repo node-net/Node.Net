@@ -36,7 +36,6 @@ namespace Node.Net.Model3D.Transform
             renderer.MetaData.SetTransformMetaData(value);
             var stype = "";
             if (value.Contains("Type")) stype = value["Type"].ToString();
-            if (stype.Length == 0) stype = value.GetType().Name;
             if (stype.Length > 0 && renderer.TypeModel3DTransformers.ContainsKey(stype))
             {
                 if (renderer.TypeNameFilter == null || renderer.TypeNameFilter.Include(stype))
@@ -51,7 +50,6 @@ namespace Node.Net.Model3D.Transform
         {
             var stype = "";
             if (value.Contains("Type")) stype = value["Type"].ToString();
-            if (stype.Length == 0) stype = value.GetType().Name;
             if (stype.Length > 0 && renderer.TypeModel3DGroupTransformers.ContainsKey(stype))
             {
                 
@@ -73,10 +71,6 @@ namespace Node.Net.Model3D.Transform
                     if (value.Contains(modelKey))
                     {
                         var modelKeyValue = value[modelKey].ToString();
-                        if(modelKey == "Type" && modelKeyValue.Length == 0)
-                        {
-                            modelKeyValue = value.GetType().Name;
-                        }
                         var modelResource = renderer.GetResource(modelKeyValue) as System.Windows.Media.Media3D.Model3D;
                         if (!ReferenceEquals(null, modelResource))
                         {
