@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factory.Internal
 {
@@ -10,7 +6,12 @@ namespace Node.Net.Factory.Internal
     {
         public T Create<T>(object value)
         {
-            return default(T);
+            var matrix3D = new Matrix3D();
+            var translation = ITranslationFactory.Default.Create<ITranslation>(value);
+            matrix3D.Translate(translation.Translation);
+            return (T)(object)matrix3D;
         }
+
+
     }
 }

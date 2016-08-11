@@ -35,14 +35,10 @@ namespace Node.Net.Controls.Internal.GridUpdaters
                             grid.Children.Add(keyLabel);
                             Grid.SetRow(keyLabel, rowIndex);
                         }
-                        var value = dictionary[key];
-                        if (value != null)
-                        {
-                            var keyValue = new Label { Content = value.ToString() };
-                            grid.Children.Add(keyValue);
-                            Grid.SetColumn(keyValue, ShowKeys ? 1 : 0);
-                            Grid.SetRow(keyValue, rowIndex);
-                        }
+                        var keyValue = new Label { Content = dictionary[key].ToString() };
+                        grid.Children.Add(keyValue);
+                        Grid.SetColumn(keyValue, ShowKeys ? 1 : 0);
+                        Grid.SetRow(keyValue, rowIndex);
                         ++rowIndex;
                     }
                 }

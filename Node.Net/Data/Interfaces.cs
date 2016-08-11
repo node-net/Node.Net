@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+
 namespace Node.Net.Data
 {
     public interface IGet { object Get(string key); }
@@ -11,4 +13,7 @@ namespace Node.Net.Data
     public interface IFactory { T Create<T>(object value); }
     public interface IReadOnlyRepository : IGet, IReader { }
     public interface IRepository : IReadOnlyRepository, ISet, IWriter { }
+    public interface IChild { IParent Parent { get; set; } }
+    public interface IParent { Dictionary<string, IChild> GetChildren(); }
+    
 }

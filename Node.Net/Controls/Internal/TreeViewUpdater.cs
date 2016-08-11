@@ -16,59 +16,57 @@ namespace Node.Net.Controls.Internal
             UpdateTreeView(sender as System.Windows.Controls.TreeView);
         }
 
-        private Dictionary<string, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<string, System.Windows.Controls.TreeViewItem>();
+        private Dictionary<object, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<object, System.Windows.Controls.TreeViewItem>();
         public void UpdateTreeView(System.Windows.Controls.TreeView treeView)
         {
             treeView.Background = Brushes.Azure;
             treeView.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch;
             treeView.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             treeView.Items.Clear();
-
-            var dictionary = GetItems(treeView);
-            foreach(string key in dictionary.Keys)
+            var dictionary = treeView.DataContext.GetValue() as IDictionary;
+            if (dictionary != null)
             {
-                System.Windows.Controls.TreeViewItem tvi = null;
-                if (treeViewItems.ContainsKey(key)) tvi = treeViewItems[key];
-                else
+                var keys = new List<string>(TreeViewItemUpdater.GetChildKeys(dictionary));
+                foreach (var item in dictionary)
                 {
-                    tvi = new System.Windows.Controls.TreeViewItem { DataContext = new KeyValuePair<string, dynamic>(key, dictionary[key]) };
-                    tvi.Tag = new Internal.TreeViewItemUpdaters.TreeViewItemUpdater(tvi);
-                    treeViewItems[key] = tvi;
-                }
-                treeView.Items.Add(tvi);
-            }  
-        }
-        
-        private Dictionary<string,dynamic> GetItems(System.Windows.Controls.TreeView treeView)
-        {
-            if (treeView.DataContext != null)
-            {
-                var result = new Dictionary<string, dynamic>();
-                result.Add(treeView.DataContext.GetKey(), treeView.DataContext.GetValue());
-                return result;
-            }
-            return GetChildren(treeView);
-        }
-        private Dictionary<string,dynamic> GetChildren(System.Windows.Controls.TreeView treeView)
-        {
-            var children = new Dictionary<string, dynamic>();
-            if(treeView.DataContext != null)
-            {
-                var dictionary = treeView.DataContext.GetValue() as IDictionary;
-                if (dictionary != null)
-                {
-
-                    var keys = new List<string>(Internal.TreeViewItemUpdaters.TreeViewItemUpdater.GetChildKeys(dictionary));
-                    foreach (var item in dictionary)
+                    if (keys.Contains(item.GetKey()))
                     {
-                        if (keys.Contains(item.GetKey()))
+                        System.Windows.Controls.TreeViewItem tvi = null;
+                        if (treeViewItems.ContainsKey(item)) tvi = treeViewItems[item];
+                        else
                         {
-                            children.Add(item.GetKey(), item.GetValue());
+                            tvi = new System.Windows.Controls.TreeViewItem { DataContext = item , HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch};
+                            tvi.Tag = new TreeViewItemUpdater(tvi);
+                            if (tvi != null) treeViewItems[item] = tvi;
                         }
+                        if (tvi != null && !treeView.Items.Contains(tvi)) treeView.Items.Add(tvi);
                     }
                 }
             }
-            return children;
-        }        
+                
+        }
+        public void UpdateTreeViewX(System.Windows.Controls.TreeView treeView)
+        {
+            treeView.Items.Clear();
+            var dictionary = treeView.DataContext as IDictionary;
+            if (dictionary != null)
+            {
+
+                foreach (var item in dictionary)
+                {
+                    System.Windows.Controls.TreeViewItem tvi = null;
+                    if (treeViewItems.ContainsKey(item)) tvi = treeViewItems[item];
+                    else
+                    {
+                        tvi = new System.Windows.Controls.TreeViewItem { DataContext = item };
+                        tvi.Tag = new TreeViewItemUpdater(tvi);
+                        if (tvi != null) treeViewItems[item] = tvi;
+                    }
+                    if (tvi != null && !treeView.Items.Contains(tvi)) treeView.Items.Add(tvi);
+                }
+            }
+        }
+
+        
     }
 }
