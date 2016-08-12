@@ -7,15 +7,13 @@ namespace Node.Net.Factory.Internal
 {
     class ColorFactory : IFactory
     {
-        public object Create(Type type,object value)
-        {
-            return Create(value);
-        }
+        public object Create(Type type, object value) => Create(value);
 
         public Color Create(object value)
         {
-            if (value != null)
-            {
+            if (value == null) return Colors.Black;
+            //if (value != null)
+            //{
                 if (value.GetType() == typeof(string))
                 {
                     var name = value.ToString();
@@ -30,7 +28,7 @@ namespace Node.Net.Factory.Internal
                         return Color.FromArgb(Convert.ToByte(words[0]), Convert.ToByte(words[1]), Convert.ToByte(words[2]), Convert.ToByte(words[3]));
                     }
                 }
-            }
+            //}
             return Colors.Black;
             //throw new Exception("unable to create Color from argument");
         }

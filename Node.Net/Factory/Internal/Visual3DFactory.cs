@@ -12,26 +12,48 @@ namespace Node.Net.Factory.Internal
         }
         public object Create(Type type, object value)
         {
+            if (value == null) return null;
+            var modelVisual3D = new ModelVisual3D();
             var typeName = Factory.Create<ITypeName>(value).TypeName;
             if (typeName.Length > 0)
             {
                 var model3D = Factory.Create<Model3D>(typeName);
 
-                if (model3D != null) return Create(model3D.Clone());
+                if (model3D != null)
+                {
+                    var v3d =  Create(model3D);
+                    if (v3d != null)
+                    {
+                        v3d.Transform = Factory.Create<Transform3D>(value);
+                        modelVisual3D.Children.Add(v3d);
+                    }
+                }
+                //return modelVisual3D;
             }
+            // Children
+            var dictionary = value as IDictionary;
+            if (dictionary != null)
+            {
+                foreach (var key in dictionary.Keys)
+                {
+                    var v3dc = Factory.Create<Visual3D>(dictionary[key]);
+                    if (v3dc != null) modelVisual3D.Children.Add(v3dc);
+                }
+            }
+            if (modelVisual3D.Children.Count > 0) return modelVisual3D;
             if (typeof(Model3D).IsAssignableFrom(value.GetType())) return Create(value as Model3D);
-            //if (value.GetType() == typeof(GeometryModel3D)) return Create(value as GeometryModel3D);
             if (value.GetType() == typeof(IDictionary)) return Create(value as IDictionary);
             var geometryModel3D = Factory.Create<GeometryModel3D>(value);
             if (geometryModel3D != null) return Create(geometryModel3D);
             return null;
         }
 
-        private Visual3D Create(Model3D model)
+
+        private static Visual3D Create(Model3D model)
         {
             return new ModelVisual3D { Content = model };
         }
-        private Visual3D Create(IDictionary dictionary)
+        private static Visual3D Create(IDictionary dictionary)
         {
             //var typeName = Factory.Default.Create<ITypeName>(dic)
             return null;

@@ -47,7 +47,7 @@ namespace Node.Net.Factory.Internal
             return results.ToArray();
         }
 
-        private object Load(Assembly assembly,string manifestResourceName)
+        private static object Load(Assembly assembly,string manifestResourceName)
         {
             try
             {

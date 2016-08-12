@@ -14,7 +14,7 @@ namespace Node.Net.Factory.Internal
         {
             return Create(type, value as Stream);
         }
-        public object Create(Type type,Stream stream)
+        public static object Create(Type type,Stream stream)
         {
             if (stream == null) return null;
             return XamlReader.Load(stream);

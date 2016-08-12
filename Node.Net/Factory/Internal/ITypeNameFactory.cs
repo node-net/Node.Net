@@ -18,7 +18,7 @@ namespace Node.Net.Factory.Internal
             return new ConcreteTypeName { TypeName = GetTypeName(source) };
         }
 
-        private string GetTypeName(object source)
+        private static string GetTypeName(object source)
         {
             if (source == null) return string.Empty;
             var dictionary = source as IDictionary;

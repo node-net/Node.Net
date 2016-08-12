@@ -18,7 +18,7 @@ namespace Node.Net.Factory.Internal
             };
         }
 
-        private string GetDictionaryValue(object value,string name)
+        private static string GetDictionaryValue(object value,string name)
         {
             var dictionary = value as IDictionary;
             if(dictionary != null && dictionary.Contains(name))
@@ -27,15 +27,15 @@ namespace Node.Net.Factory.Internal
             }
             return string.Empty;
         }
-        public double GetX(object value)
+        public static double GetX(object value)
         {
             return Factory.Default.Create<ILength>(GetDictionaryValue(value, "X")).Length;
         }
-        public double GetY(object value)
+        public static double GetY(object value)
         {
             return Factory.Default.Create<ILength>(GetDictionaryValue(value, "Y")).Length;
         }
-        public double GetZ(object value)
+        public static double GetZ(object value)
         {
             return Factory.Default.Create<ILength>(GetDictionaryValue(value, "Z")).Length;
         }

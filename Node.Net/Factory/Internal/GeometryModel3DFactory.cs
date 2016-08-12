@@ -16,7 +16,7 @@ namespace Node.Net.Factory.Internal
             return null;
         }
 
-        private GeometryModel3D Create(MeshGeometry3D mesh)
+        private static GeometryModel3D Create(MeshGeometry3D mesh)
         {
             return new GeometryModel3D
             {
