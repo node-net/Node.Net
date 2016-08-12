@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Node.Net.Factory.Internal
 {
-    class ConcreteLength : ILength
+    class ConcreteAngle : IAngle
     {
-        public double Length { get; set; }
+        public double Angle { get; set; }
     }
-    class ILengthFactory : IFactory
+    class IAngleFactory : IFactory
     {
         public object Create(Type type, object value)
         {
-            return new ConcreteLength { Length = Create(value) };
+            return new ConcreteAngle { Angle = Create(value) };
         }
-      
+
 
         private double Create(object value)
         {
@@ -52,10 +55,7 @@ namespace Node.Net.Factory.Internal
             {
                 if (unitsConversionFactors.Count == 0)
                 {
-                    unitsConversionFactors.Add("feet", 1.0 / 3.28084);
-                    unitsConversionFactors.Add("inch", 1.0 / 39.3701);
-                    unitsConversionFactors.Add("centimeter", 1.0 / 100.0);
-                    unitsConversionFactors.Add("millimeter", 1.0 / 1000.0);
+                    unitsConversionFactors.Add("radians", 1.0 / 0.0174533);
                 }
                 return unitsConversionFactors;
             }
@@ -67,13 +67,7 @@ namespace Node.Net.Factory.Internal
             {
                 if (unitsAliases.Count == 0)
                 {
-                    unitsAliases.Add("'", "feet");
-                    unitsAliases.Add("ft", "feet");
-                    unitsAliases.Add("foot", "feet");
-                    unitsAliases.Add("inches", "inch");
-                    unitsAliases.Add("\"", "inch");
-                    unitsAliases.Add("cm", "centimeter");
-                    unitsAliases.Add("mm", "millimeter");
+                    unitsAliases.Add("rad", "radians");
                 }
                 return unitsAliases;
             }

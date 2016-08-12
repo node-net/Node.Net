@@ -7,9 +7,9 @@ namespace Node.Net.Factory.Internal
 {
     class ColorFactory : IFactory
     {
-        public T Create<T>(object value)
+        public object Create(Type type,object value)
         {
-            return (T)(object)Create(value);
+            return Create(value);
         }
 
         public Color Create(object value)
@@ -31,7 +31,8 @@ namespace Node.Net.Factory.Internal
                     }
                 }
             }
-            throw new Exception("unable to create Color from argument");
+            return Colors.Black;
+            //throw new Exception("unable to create Color from argument");
         }
 
         private Dictionary<string, Color> _namedColors;

@@ -1,10 +1,12 @@
-﻿namespace Node.Net.Factory.Internal
+﻿using System;
+
+namespace Node.Net.Factory.Internal
 {
     class MaterialFactory : IFactory
     {
-        public T Create<T>(object value)
+        public object Create(Type type,object value)
         {
-            return default(T);
+            return null;
         }
     }
 }
