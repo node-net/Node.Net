@@ -17,7 +17,7 @@ namespace Node.Net.Factory.Internal
             var typeName = Factory.Create<ITypeName>(value).TypeName;
             if (typeName.Length > 0)
             {
-                var model3D = Factory.Create<Model3D>(typeName);
+                var model3D = Factory.Create<System.Windows.Media.Media3D.Model3D>(typeName);
 
                 if (model3D != null)
                 {
@@ -41,7 +41,7 @@ namespace Node.Net.Factory.Internal
                 }
             }
             if (modelVisual3D.Children.Count > 0) return modelVisual3D;
-            if (typeof(Model3D).IsAssignableFrom(value.GetType())) return Create(value as Model3D);
+            if (typeof(System.Windows.Media.Media3D.Model3D).IsAssignableFrom(value.GetType())) return Create(value as System.Windows.Media.Media3D.Model3D);
             if (value.GetType() == typeof(IDictionary)) return Create(value as IDictionary);
             var geometryModel3D = Factory.Create<GeometryModel3D>(value);
             if (geometryModel3D != null) return Create(geometryModel3D);
@@ -49,7 +49,7 @@ namespace Node.Net.Factory.Internal
         }
 
 
-        private static Visual3D Create(Model3D model)
+        private static Visual3D Create(System.Windows.Media.Media3D.Model3D model)
         {
             return new ModelVisual3D { Content = model };
         }
