@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Windows.Media.Media3D;
+
 
 namespace Node.Net.Factory.Internal
 {
@@ -13,7 +13,7 @@ namespace Node.Net.Factory.Internal
         public object Create(Type type, object value)
         {
             if (value == null) return null;
-            var modelVisual3D = new ModelVisual3D();
+            var modelVisual3D = new System.Windows.Media.Media3D.ModelVisual3D();
             var typeName = Factory.Create<ITypeName>(value).TypeName;
             if (typeName.Length > 0)
             {
@@ -24,7 +24,7 @@ namespace Node.Net.Factory.Internal
                     var v3d =  Create(model3D);
                     if (v3d != null)
                     {
-                        v3d.Transform = Factory.Create<Transform3D>(value);
+                        v3d.Transform = Factory.Create<System.Windows.Media.Media3D.Transform3D>(value);
                         modelVisual3D.Children.Add(v3d);
                     }
                 }
@@ -36,24 +36,24 @@ namespace Node.Net.Factory.Internal
             {
                 foreach (var key in dictionary.Keys)
                 {
-                    var v3dc = Factory.Create<Visual3D>(dictionary[key]);
+                    var v3dc = Factory.Create<System.Windows.Media.Media3D.Visual3D>(dictionary[key]);
                     if (v3dc != null) modelVisual3D.Children.Add(v3dc);
                 }
             }
             if (modelVisual3D.Children.Count > 0) return modelVisual3D;
             if (typeof(System.Windows.Media.Media3D.Model3D).IsAssignableFrom(value.GetType())) return Create(value as System.Windows.Media.Media3D.Model3D);
             if (value.GetType() == typeof(IDictionary)) return Create(value as IDictionary);
-            var geometryModel3D = Factory.Create<GeometryModel3D>(value);
+            var geometryModel3D = Factory.Create<System.Windows.Media.Media3D.GeometryModel3D>(value);
             if (geometryModel3D != null) return Create(geometryModel3D);
             return null;
         }
 
 
-        private static Visual3D Create(System.Windows.Media.Media3D.Model3D model)
+        private static System.Windows.Media.Media3D.Visual3D Create(System.Windows.Media.Media3D.Model3D model)
         {
-            return new ModelVisual3D { Content = model };
+            return new System.Windows.Media.Media3D.ModelVisual3D { Content = model };
         }
-        private static Visual3D Create(IDictionary dictionary)
+        private static System.Windows.Media.Media3D.Visual3D Create(IDictionary dictionary)
         {
             //var typeName = Factory.Default.Create<ITypeName>(dic)
             return null;

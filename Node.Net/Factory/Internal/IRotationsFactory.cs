@@ -22,21 +22,21 @@ namespace Node.Net.Factory.Internal
             };
         }
 
-        public double GetRotationX(object value)
+        public static double GetRotationX(object value)
         {
             var stringValue = GetDictionaryValue(value, "RotationX");
             if (stringValue.Length == 0) stringValue = GetDictionaryValue(value, "Spin");
             if (stringValue.Length == 0) stringValue = GetDictionaryValue(value, "Roll");
             return Factory.Default.Create<ILength>(stringValue).Length;
         }
-        public double GetRotationY(object value)
+        public static double GetRotationY(object value)
         {
             var stringValue = GetDictionaryValue(value, "RotationY");
             if (stringValue.Length == 0) stringValue = GetDictionaryValue(value, "Tilt");
             if (stringValue.Length == 0) stringValue = GetDictionaryValue(value, "Pitch");
             return Factory.Default.Create<ILength>(stringValue).Length;
         }
-        public double GetRotationZ(object value)
+        public static double GetRotationZ(object value)
         {
             var stringValue = GetDictionaryValue(value, "RotationZ");
             if (stringValue.Length == 0) stringValue = GetDictionaryValue(value, "Orientation");
