@@ -19,6 +19,7 @@ namespace Node.Net.Factory
             TypeFactories.Add(typeof(ILength), new Internal.ILengthFactory());
             TypeFactories.Add(typeof(IAngle), new Internal.IAngleFactory());
             TypeFactories.Add(typeof(ITranslation), new Internal.ITranslationFactory());
+            TypeFactories.Add(typeof(Material), new Internal.MaterialFactory());
             TypeFactories.Add(typeof(Matrix3D), new Internal.Matrix3DFactory());
             TypeFactories.Add(typeof(Transform3D), new Internal.Transform3DFactory());
             TypeFactories.Add(typeof(GeometryModel3D), new Internal.GeometryModel3DFactory());
@@ -26,7 +27,7 @@ namespace Node.Net.Factory
         }
 
         public List<Assembly> ResourceAssemblies = new List<Assembly>();
-        private readonly Internal.ValueStringFactory valueStringFactory = new Internal.ValueStringFactory();
+        private Internal.ValueStringFactory valueStringFactory = new Internal.ValueStringFactory();
         public Dictionary<Type, IFactory> ValueTypeFactories = new Dictionary<Type, IFactory>();
         public Dictionary<Type, IFactory> TypeFactories = new Dictionary<Type, IFactory>();
         public object Create(Type targetType, object value)

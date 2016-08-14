@@ -27,15 +27,15 @@ namespace Node.Net.Factory.Internal
             }
             return string.Empty;
         }
-        public static double GetX(object value)
+        public double GetX(object value)
         {
             return Factory.Default.Create<ILength>(GetDictionaryValue(value, "X")).Length;
         }
-        public static double GetY(object value)
+        public double GetY(object value)
         {
             return Factory.Default.Create<ILength>(GetDictionaryValue(value, "Y")).Length;
         }
-        public static double GetZ(object value)
+        public double GetZ(object value)
         {
             return Factory.Default.Create<ILength>(GetDictionaryValue(value, "Z")).Length;
         }

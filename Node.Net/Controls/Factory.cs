@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 
 namespace Node.Net.Controls
@@ -24,6 +25,7 @@ namespace Node.Net.Controls
 
         public T Create<T>(object value)
         {
+            if (value != null && typeof(Stream).IsAssignableFrom(value.GetType())) return CreateFromStream<T>(value as Stream);
             if (AbstractTypeMap.ContainsKey(typeof(T)))
             {
                 var result = (T)Activator.CreateInstance(AbstractTypeMap[typeof(T)]);
@@ -37,6 +39,11 @@ namespace Node.Net.Controls
                 return Activator.CreateInstance<T>();
             }
             return default(T);
+        }
+
+        private T CreateFromStream<T>(Stream stream)
+        {
+            return (T)Internal.ImageSourceReader.Default.Read(stream);
         }
     }
 }

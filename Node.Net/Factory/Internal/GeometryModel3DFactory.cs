@@ -13,6 +13,7 @@ namespace Node.Net.Factory.Internal
         public object Create(Type type, object value)
         {
             if (value.GetType() == typeof(MeshGeometry3D)) return Create(value as MeshGeometry3D);
+
             return null;
         }
 
