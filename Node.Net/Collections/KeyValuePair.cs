@@ -9,8 +9,6 @@ namespace Node.Net.Collections
             if (!object.ReferenceEquals(null, item))
             {
                 if (item.GetType() == typeof(System.Collections.DictionaryEntry)) return true;
-                if (item.GetType().IsGenericType && item.GetType().GetGenericTypeDefinition() == typeof(System.Collections.Generic.KeyValuePair<,>)) return true;
-                /*
                 if (item.GetType().IsGenericType &&
                     !object.ReferenceEquals(null, item.GetType().GetGenericTypeDefinition()))
                 {
@@ -18,7 +16,7 @@ namespace Node.Net.Collections
                     {
                         return true;
                     }
-                }*/
+                }
             }
             return false;
         }
@@ -27,7 +25,7 @@ namespace Node.Net.Collections
         {
             if (IsKeyValuePair(item))
             {
-                if (item.GetType() == typeof(System.Collections.DictionaryEntry))
+                if (IsKeyValuePair(item) && item.GetType() == typeof(System.Collections.DictionaryEntry))
                 {
                     return ((System.Collections.DictionaryEntry)item).Key;
                 }
@@ -46,7 +44,7 @@ namespace Node.Net.Collections
         {
             if (IsKeyValuePair(item))
             {
-                if (item.GetType() == typeof(System.Collections.DictionaryEntry))
+                if (IsKeyValuePair(item) && item.GetType() == typeof(System.Collections.DictionaryEntry))
                 {
                     return ((System.Collections.DictionaryEntry)item).Value;
                 }
