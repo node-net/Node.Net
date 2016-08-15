@@ -19,14 +19,14 @@ namespace Node.Net.Factory.Internal
         }
 
 
-        private double Create(object value)
+        private static double Create(object value)
         {
             if (value == null) return 0.0;
             if (value.GetType() == typeof(string)) return Create(value.ToString());
             return Convert.ToDouble(value);
         }
 
-        private double Create(string value)
+        private static double Create(string value)
         {
             var unitsSB = new StringBuilder();
             var numberSB = new StringBuilder();
@@ -48,7 +48,7 @@ namespace Node.Net.Factory.Internal
             return double_value * GetUnitsConversion(unitsSB.ToString().Trim());
         }
 
-        private static Dictionary<string, double> unitsConversionFactors = new Dictionary<string, double>();
+        private static readonly Dictionary<string, double> unitsConversionFactors = new Dictionary<string, double>();
         private static Dictionary<string, double> UnitsConversionFactors
         {
             get
@@ -60,7 +60,7 @@ namespace Node.Net.Factory.Internal
                 return unitsConversionFactors;
             }
         }
-        private static Dictionary<string, string> unitsAliases = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> unitsAliases = new Dictionary<string, string>();
         private static Dictionary<string, string> UnitsAliases
         {
             get
