@@ -17,39 +17,22 @@ namespace Node.Net.Factory.Internal
         public object Create(Type type, object value)
         {
             if (value == null) return null;
-            /*
-            var model3DGroup = new Model3DGroup();
+            var modelVisual3D = new System.Windows.Media.Media3D.ModelVisual3D();
             var typeName = Factory.Create<ITypeName>(value).TypeName;
             if (typeName.Length > 0)
             {
-                var geometry = Factory.Create<Geometry3D>(typeName);
-                if (geometry != null)
+                var model3D = Factory.Create<System.Windows.Media.Media3D.Model3D>(typeName);
+                if (model3D != null)
                 {
-                    var v3d = Create(model3D);
-                    if (v3d != null)
+                    var model3DGroup = new Model3DGroup
                     {
-                        v3d.Transform = Factory.Create<Transform3D>(value);
-                        modelVisual3D.Children.Add(v3d);
-                    }
+                        Transform = Factory.Create<Transform3D>(value)
+                    };
+                    model3DGroup.Children.Add(model3D);
+                    return model3D;
                 }
                 //return modelVisual3D;
             }
-            // Children
-            var dictionary = value as IDictionary;
-            if (dictionary != null)
-            {
-                foreach (var key in dictionary.Keys)
-                {
-                    var v3dc = Factory.Create<Visual3D>(dictionary[key]);
-                    if (v3dc != null) modelVisual3D.Children.Add(v3dc);
-                }
-            }
-            if (modelVisual3D.Children.Count > 0) return modelVisual3D;
-            if (typeof(Model3D).IsAssignableFrom(value.GetType())) return Create(value as Model3D);
-            if (value.GetType() == typeof(IDictionary)) return Create(value as IDictionary);
-            var geometryModel3D = Factory.Create<GeometryModel3D>(value);
-            if (geometryModel3D != null) return Create(geometryModel3D);
-            */
             return null;
         }
 

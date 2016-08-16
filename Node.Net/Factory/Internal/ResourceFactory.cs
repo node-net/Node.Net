@@ -16,9 +16,10 @@ namespace Node.Net.Factory.Internal
         {
             if (source == null) return null;
             var resources = GetResources(source.ToString());
-            if (resources.Length == 0) resources = GetResources(source.ToString(), true);
-            foreach(var resource in resources)
+            if (resources.Count == 0) resources = GetResources(source.ToString(), true);
+            foreach(var resourceName in resources.Keys)
             {
+                var resource = resources[resourceName];
                 if(resource != null)
                 {
                     if (type.IsAssignableFrom(resource.GetType())) return resource;
@@ -27,24 +28,27 @@ namespace Node.Net.Factory.Internal
             return null;
         }
 
-        private object[] GetResources(string name, bool partial_match = false)
+        private IDictionary GetResources(string name, bool partial_match = false)
         {
-            var results = new List<object>();
+            var results = new Dictionary<string, dynamic>();
             foreach (var assembly in ResourceAssemblies)
             {
                 foreach (var manifestResourceName in assembly.GetManifestResourceNames())
                 {
-                    if (partial_match)
+                    if (!results.ContainsKey(manifestResourceName))
                     {
-                        if (manifestResourceName.Contains(name)) results.Add(Load(assembly,manifestResourceName));
-                    }
-                    else
-                    {
-                        if (manifestResourceName == name) results.Add(Load(assembly,manifestResourceName));
+                        if (partial_match && name.Length > 0)
+                        {
+                            if (manifestResourceName.Contains(name)) results.Add(manifestResourceName, Load(assembly, manifestResourceName));
+                        }
+                        else
+                        {
+                            if (manifestResourceName == name) results.Add(manifestResourceName,Load(assembly, manifestResourceName));
+                        }
                     }
                 }
             }
-            return results.ToArray();
+            return results;
         }
 
         private static object Load(Assembly assembly,string manifestResourceName)

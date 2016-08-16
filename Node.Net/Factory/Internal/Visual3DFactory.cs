@@ -14,6 +14,10 @@ namespace Node.Net.Factory.Internal
         {
             if (value == null) return null;
             var modelVisual3D = new System.Windows.Media.Media3D.ModelVisual3D();
+
+            //var model3D = Factory.Create<System.Windows.Media.Media3D.Model3D>(value);
+            //if (model3D != null) modelVisual3D.Children.Add(new System.Windows.Media.Media3D.ModelVisual3D { Content = model3D });
+
             var typeName = Factory.Create<ITypeName>(value).TypeName;
             if (typeName.Length > 0)
             {
@@ -36,6 +40,10 @@ namespace Node.Net.Factory.Internal
             {
                 foreach (var key in dictionary.Keys)
                 {
+                    /*
+                    model3D = Factory.Create<System.Windows.Media.Media3D.Model3D>(dictionary[key]);
+                    if (model3D != null) modelVisual3D.Children.Add(new System.Windows.Media.Media3D.ModelVisual3D { Content = model3D });*/
+
                     var v3dc = Factory.Create<System.Windows.Media.Media3D.Visual3D>(dictionary[key]);
                     if (v3dc != null) modelVisual3D.Children.Add(v3dc);
                 }

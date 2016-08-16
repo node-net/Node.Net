@@ -198,6 +198,11 @@
     <Compile Include="Factory\Extension\HitTester.cs" />
     <Compile Include="Factory\Extension\Visual.Extension.cs" />
     <Compile Include="Factory\Extension\Visual3D.Extension.cs" />
+    <Compile Include="Factory\Factories\DefaultFactory.cs" />
+    <Compile Include="Factory\Factories\ManifestResourceFactory.cs" />
+    <Compile Include="Factory\Factories\SourceTypesFactory.cs" />
+    <Compile Include="Factory\Factories\StreamSourceFactory.cs" />
+    <Compile Include="Factory\Factories\TargetTypesFactory.cs" />
     <Compile Include="Factory\Factory.cs" />
     <Compile Include="Factory\Interfaces.cs" />
     <Compile Include="Factory\Internal\ColorFactory.cs" />
@@ -206,6 +211,7 @@
     <Compile Include="Factory\Internal\IFactory.Extension.cs" />
     <Compile Include="Factory\Internal\ILengthFactory.cs" />
     <Compile Include="Factory\Internal\IRotationsFactory.cs" />
+    <Compile Include="Factory\Internal\IScaleFactory.cs" />
     <Compile Include="Factory\Internal\ITranslationFactory.cs" />
     <Compile Include="Factory\Internal\ITypeNameFactory.cs" />
     <Compile Include="Factory\Internal\MaterialFactory.cs" />
