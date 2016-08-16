@@ -11,7 +11,7 @@ namespace Node.Net.Factory.Factories
     {
         public List<Assembly> Assemblies = new List<Assembly>();
         public Func<Stream, object> ReadFunction;
-
+        public IFactory Factory { get; set; }
         public object Create(Type targetType, object source)
         {
             if (source == null) return null;
@@ -21,9 +21,10 @@ namespace Node.Net.Factory.Factories
                 foreach (var resourceName in resources.Keys)
                 {
                     var resource = resources[resourceName];
-                    if (resource != null && targetType.IsAssignableFrom(resource.GetType()))
+                    if (resource != null)// && targetType.IsAssignableFrom(resource.GetType()))
                     {
-                        return resource;
+                        if (targetType.IsAssignableFrom(resource.GetType())) return resource;
+                        if (Factory != null) return Factory.Create(targetType, resource);
                     }
                 }
             }
