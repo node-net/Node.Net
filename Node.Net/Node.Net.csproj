@@ -199,6 +199,7 @@
     <Compile Include="Factory\Extension\Visual.Extension.cs" />
     <Compile Include="Factory\Extension\Visual3D.Extension.cs" />
     <Compile Include="Factory\Factories\DefaultFactory.cs" />
+    <Compile Include="Factory\Factories\IFactoryAdapter.cs" />
     <Compile Include="Factory\Factories\ManifestResourceFactory.cs" />
     <Compile Include="Factory\Factories\SourceTypesFactory.cs" />
     <Compile Include="Factory\Factories\StreamSourceFactory.cs" />
