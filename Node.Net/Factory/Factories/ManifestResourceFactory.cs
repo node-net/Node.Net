@@ -82,8 +82,15 @@ namespace Node.Net.Factory.Factories
                 var stream = assembly.GetManifestResourceStream(resourceName);
                 if (stream != null)
                 {
-                    if (ReadFunction != null) return ReadFunction(stream);
-                    return XamlReader.Load(stream);
+                    try
+                    {
+                        if (ReadFunction != null) return ReadFunction(stream);
+                        return XamlReader.Load(stream);
+                    }
+                    catch(Exception e)
+                    {
+                        throw new Exception($"error in LoadResource('{resourceName}')", e);
+                    }
                 }
             }
             return null;

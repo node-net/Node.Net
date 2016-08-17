@@ -8,6 +8,7 @@ namespace Node.Net.Factory
         public static Factory Default { get; set; } = new Factories.DefaultFactory();
         public Factory() { }
 
+        public Factories.ManifestResourceFactory ManifestResourceFactory = new Net.Factory.Factories.ManifestResourceFactory();
         public List<IFactory> Factories = new List<IFactory>();
         public object Create(Type targetType, object value)
         {

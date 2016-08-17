@@ -9,7 +9,5 @@ namespace Node.Net.Factory.Extension
             var hitTester = new HitTester();
             return hitTester.HitTest(reference, point, direction);
         }
-
-
     }
 }
