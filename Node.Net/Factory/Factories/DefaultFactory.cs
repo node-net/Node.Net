@@ -7,13 +7,13 @@ namespace Node.Net.Factory.Factories
     {
         public DefaultFactory()
         {
-            Factories.Add(new StreamSourceFactory { Factory = this });
+            Add("StreamSource",new StreamSourceFactory { Factory = this });
             var targetTypeFactories = new TargetTypesFactory();
-            Factories.Add(targetTypeFactories);
-            targetTypeFactories.TargetTypeFactories.Add(typeof(Color), new Internal.ColorFactory());
+            Add("TargetTypes",targetTypeFactories);
+            targetTypeFactories.TargetTypeFactories.Add(typeof(Color), new Internal.TypeFactories.ColorFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(ITypeName), new Internal.ITypeNameFactory());
-            targetTypeFactories.TargetTypeFactories.Add(typeof(ILength), new Internal.ILengthFactory());
-            targetTypeFactories.TargetTypeFactories.Add(typeof(IAngle), new Internal.IAngleFactory());
+            targetTypeFactories.TargetTypeFactories.Add(typeof(ILength), new Internal.TypeFactories.ILengthFactory());
+            targetTypeFactories.TargetTypeFactories.Add(typeof(IAngle), new Internal.TypeFactories.IAngleFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(ITranslation), new Internal.ITranslationFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(IScale), new Internal.IScaleFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(IRotations), new Internal.IRotationsFactory());

@@ -60,31 +60,6 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Explorer.cs" />
-    <Compile Include="Controls\Extensions.cs" />
-    <Compile Include="Controls\Factories\ImageSourceFactory.cs" />
-    <Compile Include="Controls\Factory.cs" />
-    <Compile Include="Controls\Forms\PropertyGrid.cs" />
-    <Compile Include="Controls\Header.cs" />
-    <Compile Include="Controls\Image.cs" />
-    <Compile Include="Controls\Interfaces.cs" />
-    <Compile Include="Controls\Internal\Extensions\DirectoryIcon.cs" />
-    <Compile Include="Controls\Internal\Extensions\Icon.Extensions.cs" />
-    <Compile Include="Controls\Internal\Extensions\Image.Extensions.cs" />
-    <Compile Include="Controls\Internal\Extensions\Object.Extensions.cs" />
-    <Compile Include="Controls\Internal\Extensions\UIElement.Extensions.cs" />
-    <Compile Include="Controls\Internal\GridUpdaters\GridUpdater.cs" />
-    <Compile Include="Controls\Internal\GridUpdaters\HorizontalValuesGridUpdater.cs" />
-    <Compile Include="Controls\Internal\GridUpdaters\ValuesGridUpdater.cs" />
-    <Compile Include="Controls\Internal\GridUpdaters\VerticalValuesGridUpdater.cs" />
-    <Compile Include="Controls\Internal\ImageSourceReader.cs" />
-    <Compile Include="Controls\Internal\ImageUpdater.cs" />
-    <Compile Include="Controls\Internal\KeyValuePair.cs" />
-    <Compile Include="Controls\Internal\TreeViewItemUpdaters\TreeViewItemUpdater.cs" />
-    <Compile Include="Controls\Internal\TreeViewUpdater.cs" />
-    <Compile Include="Controls\Properties.cs" />
-    <Compile Include="Controls\TreeView.cs" />
-    <Compile Include="Controls\ValuesGrid.cs" />
     <Compile Include="Deprecated\Collections\Array.cs" />
     <Compile Include="Deprecated\Collections\Children.cs" />
     <Compile Include="Deprecated\Collections\Copier.cs" />
@@ -224,6 +199,7 @@
     <Compile Include="Factory\Extension\Visual.Extension.cs" />
     <Compile Include="Factory\Extension\Visual3D.Extension.cs" />
     <Compile Include="Factory\Factories\DefaultFactory.cs" />
+    <Compile Include="Factory\Factories\Generic\TypeFactory.cs" />
     <Compile Include="Factory\Factories\IFactoryAdapter.cs" />
     <Compile Include="Factory\Factories\ManifestResourceFactory.cs" />
     <Compile Include="Factory\Factories\SourceTypesFactory.cs" />
@@ -245,6 +221,9 @@
     <Compile Include="Factory\Internal\Model3DFactory.cs" />
     <Compile Include="Factory\Internal\ResourceFactory.cs" />
     <Compile Include="Factory\Internal\Transform3DFactory.cs" />
+    <Compile Include="Factory\Internal\TypeFactories\ColorFactory.cs" />
+    <Compile Include="Factory\Internal\TypeFactories\IAngleFactory.cs" />
+    <Compile Include="Factory\Internal\TypeFactories\ILengthFactory.cs" />
     <Compile Include="Factory\Internal\ValueStreamFactory.cs" />
     <Compile Include="Factory\Internal\ValueStringFactory.cs" />
     <Compile Include="Factory\Internal\Visual3DFactory.cs" />

@@ -12,5 +12,9 @@ namespace Node.Net.Factory.Internal
         {
             return (T)(object)factory.Create(typeof(T), value);
         }
+        public static object Create(IFactory factory,object value)
+        {
+            return factory.Create(null, value);
+        }
     }
 }

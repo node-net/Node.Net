@@ -3,26 +3,23 @@ using System.Collections.Generic;
 
 namespace Node.Net.Factory
 {
-    public class Factory : IFactory
+    public class Factory : Dictionary<string,IFactory>, ICompositeFactory
     {
         public static Factory Default { get; set; } = new Factories.DefaultFactory();
         public Factory() { }
+        public IFactory Parent { get; set; }
 
-        public Factories.ManifestResourceFactory ManifestResourceFactory = new Net.Factory.Factories.ManifestResourceFactory();
-        public List<IFactory> Factories = new List<IFactory>();
         public object Create(Type targetType, object value)
         {
-            foreach (var factory in Factories)
+            foreach(var key in Keys)
             {
-                var result = factory.Create(targetType, value);
-                if (result != null)
+                var result = this[key].Create(targetType, value);
+                if(result != null)
                 {
-                    if (targetType.IsAssignableFrom(result.GetType()))
-                    {
-                        return result;
-                    }
+                    if (targetType.IsAssignableFrom(result.GetType())) return result;
                 }
             }
+
             return null;
         }
     }
