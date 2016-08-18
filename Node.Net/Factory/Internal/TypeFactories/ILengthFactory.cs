@@ -13,7 +13,6 @@ namespace Node.Net.Factory.Internal.TypeFactories
         public object Create(Type type, object value)
         {
             return Create(value);
-            //return new ConcreteLength { Length = Create(value) };
         }
 
         public ILength Create(object source) { return new ConcreteLength { Length = GetDouble(source) }; }

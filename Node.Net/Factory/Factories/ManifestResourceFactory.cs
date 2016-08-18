@@ -9,6 +9,8 @@ namespace Node.Net.Factory.Factories
 {
     public class ManifestResourceFactory : IFactory
     {
+        public ManifestResourceFactory() { }
+        public ManifestResourceFactory(Assembly assembly) { Assemblies.Add(assembly); }
         public List<Assembly> Assemblies = new List<Assembly>();
         public Func<Stream, object> ReadFunction;
         public IFactory Factory { get; set; }
