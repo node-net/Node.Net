@@ -60,6 +60,8 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Interfaces.cs" />
+    <Compile Include="Collections\TypeValueFilter.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\Factories\ImageSourceFactory.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Deprecated\Factory.cs" />
     <Compile Include="Factory\Extensions.cs" />
     <Compile Include="Factory\Extension\HitTester.cs" />
+    <Compile Include="Factory\Extension\Stream.Extension.cs" />
     <Compile Include="Factory\Extension\Visual.Extension.cs" />
     <Compile Include="Factory\Extension\Visual3D.Extension.cs" />
     <Compile Include="Factory\Factories\DefaultFactory.cs" />
@@ -230,6 +233,7 @@
     <Compile Include="Factory\Factories\SourceTypesFactory.cs" />
     <Compile Include="Factory\Factories\StreamSourceFactory.cs" />
     <Compile Include="Factory\Factories\TargetTypesFactory.cs" />
+    <Compile Include="Factory\Factories\TypeFactories\MaterialFactory.cs" />
     <Compile Include="Factory\Factory.cs" />
     <Compile Include="Factory\Interfaces.cs" />
     <Compile Include="Factory\Internal\ColorFactory.cs" />

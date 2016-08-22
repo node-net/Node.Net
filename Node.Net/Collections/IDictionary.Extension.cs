@@ -29,7 +29,7 @@ namespace Node.Net.Collections
             else { dictionary[key] = value; }
         }
 
-        public static Dictionary<string,T> Collect<T>(IDictionary dictionary)
+        public static Dictionary<string,T> Collect<T>(IDictionary dictionary,IFilter filter = null)
         {
             var children = new Dictionary<string, T>();
             if (dictionary != null)
@@ -44,7 +44,10 @@ namespace Node.Net.Collections
                             var instance = (T)child;
                             if (instance != null)
                             {
-                                children.Add(key.ToString(), instance);
+                                if (filter == null || filter.Include(instance))
+                                {
+                                    children.Add(key.ToString(), instance);
+                                }
                             }
                         }
                     }
@@ -52,6 +55,41 @@ namespace Node.Net.Collections
             }
             return children;
         }
+
+        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary,IFilter filter = null)
+        {
+            var children = new Dictionary<string, T>();
+            if (dictionary != null)
+            {
+                foreach (var child_key in dictionary.Keys)
+                {
+                    var child = dictionary[child_key];
+                    if (child != null)
+                    {
+                        if (typeof(T).IsAssignableFrom(child.GetType()))
+                        {
+                            var instance = (T)child;
+                            if (instance != null)
+                            {
+                                if (filter == null || filter.Include(instance))
+                                {
+                                    children.Add(child_key.ToString(), instance);
+                                }
+                            }
+                        }
+
+                        var deep_children = DeepCollect<T>(child as IDictionary,filter);
+                        foreach (var deep_child_key in deep_children.Keys)
+                        {
+                            var deep_child = deep_children[deep_child_key];
+                            children.Add($"{child_key}/{deep_child_key}", deep_child);
+                        }
+                    }
+                }
+            }
+            return children;
+        }
+
         public static string[] CollectUniqueStrings(IDictionary dictionary,string key)
         {
             var results = new List<string>();

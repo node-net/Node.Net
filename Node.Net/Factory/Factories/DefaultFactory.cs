@@ -17,7 +17,7 @@ namespace Node.Net.Factory.Factories
             targetTypeFactories.TargetTypeFactories.Add(typeof(ITranslation), new Internal.ITranslationFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(IScale), new Internal.IScaleFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(IRotations), new Internal.IRotationsFactory());
-            targetTypeFactories.TargetTypeFactories.Add(typeof(Material), new Internal.MaterialFactory());
+            targetTypeFactories.TargetTypeFactories.Add(typeof(Material), new Factories.TypeFactories.MaterialFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(Matrix3D), new Internal.Matrix3DFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(Transform3D), new Internal.Transform3DFactory());
             targetTypeFactories.TargetTypeFactories.Add(typeof(GeometryModel3D), new Internal.GeometryModel3DFactory());

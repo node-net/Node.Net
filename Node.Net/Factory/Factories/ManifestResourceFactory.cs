@@ -12,6 +12,7 @@ namespace Node.Net.Factory.Factories
         public ManifestResourceFactory() { }
         public ManifestResourceFactory(Assembly assembly) { Assemblies.Add(assembly); }
         public List<Assembly> Assemblies = new List<Assembly>();
+        public List<string> ExcludePatterns = new List<string>();
         public Func<Stream, object> ReadFunction;
         public IFactory Factory { get; set; }
         public object Create(Type targetType, object source)
@@ -81,21 +82,37 @@ namespace Node.Net.Factory.Factories
         {
             foreach (var assembly in Assemblies)
             {
+                if (Exclude(resourceName)) return false;
+                
                 var stream = assembly.GetManifestResourceStream(resourceName);
                 if (stream != null)
                 {
+                    stream.SetName(resourceName);
                     try
                     {
                         if (ReadFunction != null) return ReadFunction(stream);
                         return XamlReader.Load(stream);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         throw new Exception($"error in LoadResource('{resourceName}')", e);
                     }
                 }
+                
             }
             return null;
+        }
+
+        private bool Exclude(string name)
+        {
+            foreach(string pattern in ExcludePatterns)
+            {
+                if(name.Contains(pattern))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
