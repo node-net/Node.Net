@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Collections
 {
-    class TypeValueFilter : IFilter
+    public class TypeValueFilter : IFilter
     {
         private string _typeValue = "";
         public TypeValueFilter(string typeValue)
