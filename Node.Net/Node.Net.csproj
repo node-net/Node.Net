@@ -233,9 +233,7 @@
     <Compile Include="Factory\Factories\SourceTypesFactory.cs" />
     <Compile Include="Factory\Factories\StreamSourceFactory.cs" />
     <Compile Include="Factory\Factories\TargetTypesFactory.cs" />
-    <Compile Include="Factory\Factories\TypeFactories\ImageSourceFactory.cs" />
     <Compile Include="Factory\Factories\TypeFactories\MaterialFactory.cs" />
-    <Compile Include="Factory\Factories\TypeFactories\MeshGeometry3DFactory.cs" />
     <Compile Include="Factory\Factory.cs" />
     <Compile Include="Factory\Interfaces.cs" />
     <Compile Include="Factory\Internal\ColorFactory.cs" />
