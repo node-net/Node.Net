@@ -5,7 +5,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factory.Factories.TypeFactories
 {
-    public class MaterialFactory : IFactory
+    public class MaterialFactory : Generic.TypeFactory<Material>, IFactory
     {
         public object Create(Type type,object value)
         {
