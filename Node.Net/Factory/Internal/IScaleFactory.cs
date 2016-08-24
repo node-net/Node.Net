@@ -19,37 +19,23 @@ namespace Node.Net.Factory.Internal
             };
         }
 
-        private IFactory HelperFactory = null;
-        private Internal.TypeFactories.ILengthFactory LengthFactory = new TypeFactories.ILengthFactory();
-
-        private double GetScale(string value)
-        {
-            ILength length = null;
-            if (HelperFactory != null)
-            {
-                length = HelperFactory.Create<ILength>(value);
-            }
-            if (length == null) length = LengthFactory.Create<ILength>(value);
-            return length.Length;
-        }
-
-        public double GetScaleX(object value)
+        public static double GetScaleX(object value)
         {
             var stringValue = GetDictionaryValue(value, "ScaleX");
             if (stringValue.Length == 0) stringValue = GetDictionaryValue(value, "Length");
-            return GetScale(stringValue);// HelperFactory.Create<ILength>(stringValue).Length;
+            return Factory.Default.Create<ILength>(stringValue).Length;
         }
-        public double GetScaleY(object value)
+        public static double GetScaleY(object value)
         {
             var stringValue = GetDictionaryValue(value, "ScaleY");
             if (stringValue.Length == 0) stringValue = GetDictionaryValue(value, "Width");
-            return GetScale(stringValue);// HelperFactory.Create<ILength>(stringValue).Length;
+            return Factory.Default.Create<ILength>(stringValue).Length;
         }
-        public double GetScaleZ(object value)
+        public static double GetScaleZ(object value)
         {
             var stringValue = GetDictionaryValue(value, "ScaleZ");
             if (stringValue.Length == 0) stringValue = GetDictionaryValue(value, "Height");
-            return GetScale(stringValue);// HelperFactory.Create<ILength>(stringValue).Length;
+            return Factory.Default.Create<ILength>(stringValue).Length;
         }
         private static string GetDictionaryValue(object value, string name)
         {

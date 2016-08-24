@@ -8,13 +8,8 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factory.Factories.TypeFactories
 {
-    public class MeshGeometry3DFactory : Generic.TypeFactory<MeshGeometry3D>, IFactory
+    public class MeshGeometry3DFactory
     {
-        public object Create(Type type, object value)
-        {
-            if (value == null) return null;
-            return null;
-        }
         public static MeshGeometry3D GetRectangularMesh2(double width_meters, double height_meters)
         {
             var mesh = new MeshGeometry3D();

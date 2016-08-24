@@ -230,14 +230,12 @@
     <Compile Include="Factory\Factories\Generic\TypeFactory.cs" />
     <Compile Include="Factory\Factories\IFactoryAdapter.cs" />
     <Compile Include="Factory\Factories\ManifestResourceFactory.cs" />
-    <Compile Include="Factory\Factories\SourceFactories\StreamSourceFactory.cs" />
     <Compile Include="Factory\Factories\SourceTypesFactory.cs" />
     <Compile Include="Factory\Factories\StreamSourceFactory.cs" />
     <Compile Include="Factory\Factories\TargetTypesFactory.cs" />
     <Compile Include="Factory\Factories\TypeFactories\ImageSourceFactory.cs" />
     <Compile Include="Factory\Factories\TypeFactories\MaterialFactory.cs" />
     <Compile Include="Factory\Factories\TypeFactories\MeshGeometry3DFactory.cs" />
-    <Compile Include="Factory\Factories\TypeFactories\StreamFactory.cs" />
     <Compile Include="Factory\Factory.cs" />
     <Compile Include="Factory\Interfaces.cs" />
     <Compile Include="Factory\Internal\ColorFactory.cs" />
@@ -249,6 +247,7 @@
     <Compile Include="Factory\Internal\IScaleFactory.cs" />
     <Compile Include="Factory\Internal\ITranslationFactory.cs" />
     <Compile Include="Factory\Internal\ITypeNameFactory.cs" />
+    <Compile Include="Factory\Internal\MaterialFactory.cs" />
     <Compile Include="Factory\Internal\Matrix3DFactory.cs" />
     <Compile Include="Factory\Internal\Model3DFactory.cs" />
     <Compile Include="Factory\Internal\ResourceFactory.cs" />

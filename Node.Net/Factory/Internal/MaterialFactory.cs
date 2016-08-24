@@ -3,15 +3,14 @@ using System.Collections;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Factory.Factories.TypeFactories
+namespace Node.Net.Factory.Internal
 {
-    public class MaterialFactory : Generic.TypeFactory<Material>, IFactory
+    class MaterialFactory : IFactory
     {
         public object Create(Type type,object value)
         {
             if (value == null) return null;
             if (typeof(string) == value.GetType()) return Create(value.ToString());
-            if (typeof(ImageSource).IsAssignableFrom(value.GetType())) return Create(value as ImageSource);
             return Create(value as IDictionary);
         }
 
@@ -46,33 +45,5 @@ namespace Node.Net.Factory.Factories.TypeFactories
             return new DiffuseMaterial { Brush = new SolidColorBrush(color) };
         }
 
-        private Material Create(ImageSource imageSource)
-        {
-            return GetImageMaterial(imageSource);
-        }
-
-        public static Material GetImageMaterial(ImageSource imageSource, Brush specularBrush = null, double specularPower = 10)
-        {
-            var material = new MaterialGroup();
-            var diffuse = new DiffuseMaterial
-            {
-                Brush = new ImageBrush
-                {
-                    ImageSource = imageSource,
-                    TileMode = TileMode.Tile
-                }
-            };
-            material.Children.Add(diffuse);
-            if (!ReferenceEquals(null, specularBrush))
-            {
-                var specular = new SpecularMaterial
-                {
-                    Brush = specularBrush,
-                    SpecularPower = specularPower
-                };
-                material.Children.Add(specular);
-            }
-            return material;
-        }
     }
 }
