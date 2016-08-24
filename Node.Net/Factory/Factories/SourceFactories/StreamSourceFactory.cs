@@ -2,12 +2,18 @@
 using System.IO;
 using System.Windows.Markup;
 
-namespace Node.Net.Factory.Factories
+namespace Node.Net.Factory.Factories.SourceFactories
 {
     public class StreamSourceFactory : IFactory
     {
-        public Func<Stream, object> ReadFunction = DefaultReadFunction;
-        public IFactory Factory { get; set; }
+        private Func<Stream, object> ReadFunction;
+        private IFactory HelperFactory;
+        public StreamSourceFactory(Func<Stream,object> read_function,IFactory helper_factory)
+        {
+            ReadFunction = read_function;
+            HelperFactory = helper_factory;
+        }
+
         public object Create(Type type, object value)
         {
             return Create(type, value as Stream);
@@ -22,9 +28,9 @@ namespace Node.Net.Factory.Factories
                 {
                     if(type.IsAssignableFrom(item.GetType())) return item;
                 }
-                if (Factory != null)
+                if (HelperFactory != null)
                 {
-                    item = Factory.Create(type, item);
+                    item = HelperFactory.Create(type, item);
                     if (item != null && type.IsAssignableFrom(item.GetType())) return item;
                 }
             }

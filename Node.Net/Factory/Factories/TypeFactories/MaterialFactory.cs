@@ -15,17 +15,33 @@ namespace Node.Net.Factory.Factories.TypeFactories
             return Create(value as IDictionary);
         }
 
-        private IFactory Factory
+        public IFactory HelperFactory
+        {
+            get
+            {
+                if (helperFactory == null)
+                {
+                    helperFactory = new Internal.TypeFactories.ILengthFactory();
+                }
+                return helperFactory;
+            }
+            set
+            {
+                helperFactory = value;
+            }
+        }
+        private IFactory helperFactory = null;// new Factories.DefaultFactory();
+        /*
         {
             get { return Node.Net.Factory.Factory.Default; }
-        }
+        }*/
         private Material Create(IDictionary dictionary)
         {
             if (dictionary == null) return null;
             var materialName = GetDictionaryValue(dictionary, "Material");
             if(materialName.Length > 0)
             {
-                return Factory.Create<Material>(materialName);
+                return HelperFactory.Create<Material>(materialName);
             }
             return null;
         }
@@ -42,7 +58,7 @@ namespace Node.Net.Factory.Factories.TypeFactories
 
         private Material Create(string name)
         {
-            var color = Factory.Create<Color>(name);
+            var color = HelperFactory.Create<Color>(name);
             return new DiffuseMaterial { Brush = new SolidColorBrush(color) };
         }
 

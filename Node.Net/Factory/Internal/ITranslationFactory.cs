@@ -10,6 +10,7 @@ namespace Node.Net.Factory.Internal
     }
     class ITranslationFactory : IFactory
     {
+       
         public object Create(Type type,object value)
         {
             return new ConcreteTranslation
@@ -18,6 +19,8 @@ namespace Node.Net.Factory.Internal
             };
         }
 
+        private IFactory HelperFactory = null;
+        private Internal.TypeFactories.ILengthFactory LengthFactory = new TypeFactories.ILengthFactory();
         private static string GetDictionaryValue(object value,string name)
         {
             var dictionary = value as IDictionary;
@@ -27,19 +30,20 @@ namespace Node.Net.Factory.Internal
             }
             return string.Empty;
         }
-        public static double GetX(object value)
+        private double GetLength(string name,object value)
         {
-            return Factory.Default.Create<ILength>(GetDictionaryValue(value, "X")).Length;
+            ILength length = null;
+            if (HelperFactory != null)
+            {
+                length = HelperFactory.Create<ILength>(GetDictionaryValue(value, name));
+            }
+            if (length == null) length = LengthFactory.Create<ILength>(GetDictionaryValue(value, name));
+            return length.Length;
         }
-        public static double GetY(object value)
-        {
-            return Factory.Default.Create<ILength>(GetDictionaryValue(value, "Y")).Length;
-        }
-        public static double GetZ(object value)
-        {
-            return Factory.Default.Create<ILength>(GetDictionaryValue(value, "Z")).Length;
-        }
+        public double GetX(object value) => GetLength("X", value);
+        public double GetY(object value) => GetLength("Y", value);
+        public double GetZ(object value) => GetLength("Z", value);
 
-        public static ITranslationFactory Default { get; } = new ITranslationFactory();
+        //public static ITranslationFactory Default { get; } = new ITranslationFactory();
     }
 }
