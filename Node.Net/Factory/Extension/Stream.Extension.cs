@@ -9,7 +9,7 @@ namespace Node.Net.Factory.Extension
 {
     static class StreamExtension
     {
-        private static Dictionary<WeakReference<Stream>, string> StreamNames = new Dictionary<WeakReference<Stream>, string>();
+        private static readonly Dictionary<WeakReference<Stream>, string> StreamNames = new Dictionary<WeakReference<Stream>, string>();
         public static string GetName(Stream stream)
         {
             foreach(var reference in StreamNames.Keys)

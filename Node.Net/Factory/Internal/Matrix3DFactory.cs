@@ -5,10 +5,12 @@ namespace Node.Net.Factory.Internal
 {
     class Matrix3DFactory : IFactory
     {
+        private IRotationsFactory RotationsFactory = new IRotationsFactory();
+        private ITranslationFactory TranslationFactory = new ITranslationFactory();
         public object Create(Type type,object value)
         {
-            var matrix3D = RotateXYZ(new Matrix3D(), IRotationsFactory.Default.Create<IRotations>(value).RotationsXYZ);
-            matrix3D.Translate(ITranslationFactory.Default.Create<ITranslation>(value).Translation);
+            var matrix3D = RotateXYZ(new Matrix3D(), RotationsFactory.Create<IRotations>(value).RotationsXYZ);
+            matrix3D.Translate(TranslationFactory.Create<ITranslation>(value).Translation);
             return matrix3D;
         }
 
