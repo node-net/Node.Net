@@ -6,6 +6,8 @@ namespace Node.Net.Data.Repositories
 {
     public class ManifestResourcesRepository : IReadOnlyRepository, IReader, IGetKeys
     {
+        public ManifestResourcesRepository() { }
+        public ManifestResourcesRepository(Assembly assembly) { Assemblies.Add(assembly); }
         public IRead Reader { get; set; } = Readers.Reader.Default;
 
         public object Get(string key)
