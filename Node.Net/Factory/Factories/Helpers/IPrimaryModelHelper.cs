@@ -10,6 +10,7 @@ namespace Node.Net.Factory.Factories.Helpers
 {
     public static class IPrimaryModelHelper
     {
+        //public Func<IDictionary,IFactory>
         class PrimaryModel : IPrimaryModel { public Model3D Model3D { get; set; } = null; }
         public static IPrimaryModel FromIDictionary(IDictionary source,IFactory factory)
         {
