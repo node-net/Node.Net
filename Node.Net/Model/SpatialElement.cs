@@ -44,8 +44,8 @@ namespace Node.Net.Model
             get
             {
                 var z = Measurement.Angle.Parse(ZAxisRotation)[Measurement.AngularUnit.Degrees];
-                var transform = new Node.Net.Model3D.Transform3D { RotationOTS = new Point3D(z, 0, 0) };
-                return transform.Transform(new Vector3D(0, 1, 0), Model3D.Transform3D.TransformType.LocalToParent);
+                var transform = new Node.Net._Model3D.Transform3D { RotationOTS = new Point3D(z, 0, 0) };
+                return transform.Transform(new Vector3D(0, 1, 0), _Model3D.Transform3D.TransformType.LocalToParent);
             }
         }
 
@@ -55,8 +55,8 @@ namespace Node.Net.Model
             {
                 var z = Measurement.Angle.Parse(ZAxisRotation)[Measurement.AngularUnit.Degrees];
                 var y = Measurement.Angle.Parse(YAxisRotation)[Measurement.AngularUnit.Degrees];
-                var transform = new Node.Net.Model3D.Transform3D { RotationOTS = new Point3D(z, y, 0) };
-                return transform.Transform(new Vector3D(0, 1, 0), Model3D.Transform3D.TransformType.LocalToParent);
+                var transform = new Node.Net._Model3D.Transform3D { RotationOTS = new Point3D(z, y, 0) };
+                return transform.Transform(new Vector3D(0, 1, 0), _Model3D.Transform3D.TransformType.LocalToParent);
             }
         }
 

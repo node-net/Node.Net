@@ -1,14 +1,17 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Factory.Factories.Generic
 {
-    public class TypeFactory<T> 
+    public class TypeFactory<T> : CompositeFactory, ITargetType, IFactory
     {
         public Type TargetType { get { return typeof(T); } }
+
+        public override object Create(Type targetType, object source)
+        {
+            if (TargetType.IsAssignableFrom(targetType)) return Create(source);
+            return base.Create(targetType, source);
+        }
+        // TODO : mark abstract
+        public virtual T Create(object source) { return default(T); }
     }
 }

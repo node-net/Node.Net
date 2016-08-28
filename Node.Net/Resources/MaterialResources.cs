@@ -24,7 +24,7 @@ namespace Node.Net.Resources
                 if (imageSource == null) imageSource = ImageResources.GetResource($"{name}.jpg") as ImageSource;
                 if(imageSource != null)
                 {
-                    var material = Model3D.MaterialHelper.GetImageMaterial(imageSource);
+                    var material = _Model3D.MaterialHelper.GetImageMaterial(imageSource);
                     Add(name, material);
                     return material;
                 }
