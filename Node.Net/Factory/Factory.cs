@@ -39,7 +39,11 @@ namespace Node.Net.Factory
 
             if (source != null && source.GetType() == typeof(string))
             {
-                return objectFromString.Create(targetType, source.ToString());
+                instance = objectFromString.Create(targetType, source.ToString());
+                if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
+
+                // Partial matches
+                return objectFromString.CreatePartialMatch(targetType, source.ToString());
             }
             return null;
         }

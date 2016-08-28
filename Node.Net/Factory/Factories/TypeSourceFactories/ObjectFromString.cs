@@ -33,6 +33,33 @@ namespace Node.Net.Factory.Factories.TypeSourceFactories
                 return objectFromStream.Create<object>(stream);
             }
 
+           
+
+            return null;
+        }
+
+        public object CreatePartialMatch(Type targetType,string source)
+        {
+            // Partial matches
+            if (source.Length > 3)
+            {
+                foreach (var assembly in ResourceAssemblies)
+                {
+                    foreach (var resource_name in assembly.GetManifestResourceNames())
+                    {
+                        if (resource_name.Contains(source))
+                        {
+                            var stream = assembly.GetManifestResourceStream(resource_name);
+                            try
+                            {
+                                var instance = objectFromStream.Create<object>(stream);
+                                if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
+                            }
+                            catch { }
+                        }
+                    }
+                }
+            }
             return null;
         }
     }

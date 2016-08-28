@@ -21,6 +21,7 @@ namespace Node.Net.Factory.Factories.TypeSourceFactories
                     if (resource_name == source) return assembly.GetManifestResourceStream(resource_name);
                 }
             }
+            /*
             if (source.Length > 3)
             {
                 foreach (var assembly in ResourceAssemblies)
@@ -30,7 +31,7 @@ namespace Node.Net.Factory.Factories.TypeSourceFactories
                         if (resource_name.Contains(source)) return assembly.GetManifestResourceStream(resource_name);
                     }
                 }
-            }
+            }*/
             return null;
         }
     }
