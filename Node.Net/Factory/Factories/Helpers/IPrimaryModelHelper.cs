@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factory.Factories.Helpers
 {
     public static class IPrimaryModelHelper
     {
-        //public Func<IDictionary,IFactory>
         class PrimaryModel : IPrimaryModel { public Model3D Model3D { get; set; } = null; }
-        public static IPrimaryModel FromIDictionary(IDictionary source,IFactory factory)
+        public static IPrimaryModel FromIDictionary(IDictionary source, IFactory factory)
         {
             if (source == null) return null;
 
             var itypeName = factory.Create<ITypeName>(source);
             if (itypeName != null)
             {
-                var typeName = itypeName.TypeName;// factory.Create<ITypeName>(source).TypeName;
+                var typeName = itypeName.TypeName;
                 var model3D = factory.Create<Model3D>(typeName);
                 if (model3D != null)
                 {
@@ -39,9 +33,9 @@ namespace Node.Net.Factory.Factories.Helpers
             }
             return null;
         }
-        private static string GetTypeName(IDictionary source,IFactory factory)
+        private static string GetTypeName(IDictionary source, IFactory factory)
         {
-       
+
             var typeName = string.Empty;
             if (factory != null)
             {
@@ -51,15 +45,9 @@ namespace Node.Net.Factory.Factories.Helpers
             return typeName;
         }
 
-        private static Transform3D GetTransform(IDictionary source,IFactory factory)
+        private static Transform3D GetTransform(IDictionary source, IFactory factory)
         {
-            IScale iscale = null;
-
-            if (factory != null)
-            {
-                iscale = factory.Create<IScale>(source);
-            }
-
+            IScale iscale = factory.Create<IScale>(source);
             if (iscale != null)
             {
                 return new ScaleTransform3D { ScaleX = iscale.Scale.X, ScaleY = iscale.Scale.Y, ScaleZ = iscale.Scale.Z };
@@ -67,7 +55,7 @@ namespace Node.Net.Factory.Factories.Helpers
             return null;
         }
 
-        private static Model3D GetModel3D(string typeName,IFactory factory)
+        private static Model3D GetModel3D(string typeName, IFactory factory)
         {
 
             if (factory != null)
@@ -78,7 +66,7 @@ namespace Node.Net.Factory.Factories.Helpers
             return null;
         }
 
-        private static Material GetMaterial(IDictionary source,IFactory factory)
+        private static Material GetMaterial(IDictionary source, IFactory factory)
         {
 
             if (factory != null)

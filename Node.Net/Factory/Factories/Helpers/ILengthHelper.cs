@@ -58,6 +58,7 @@ namespace Node.Net.Factory.Factories.Helpers
                     unitsAliases.Add("'", "feet");
                     unitsAliases.Add("ft", "feet");
                     unitsAliases.Add("foot", "feet");
+                    unitsAliases.Add("in", "inch");
                     unitsAliases.Add("inches", "inch");
                     unitsAliases.Add("\"", "inch");
                     unitsAliases.Add("cm", "centimeter");
