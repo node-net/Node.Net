@@ -20,6 +20,8 @@ namespace Node.Net.Factories.Factories.TypeSourceFactories
             get { return streamFromString.ResourceAssemblies; }
             set { streamFromString.ResourceAssemblies = value; }
         }
+        public bool CacheReadItems = true;
+        private Dictionary<string, dynamic> readCache = new Dictionary<string, dynamic>();
         public override object Create(string source)
         {
             if(GetFunction != null)
@@ -27,14 +29,17 @@ namespace Node.Net.Factories.Factories.TypeSourceFactories
                 var value = GetFunction(source);
                 if (value != null) return value;
             }
+            if (readCache.ContainsKey(source)) return readCache[source];
             var stream = streamFromString.Create<Stream>(source);
             if(stream != null)
             {
-                return objectFromStream.Create<object>(stream);
+                var item =  objectFromStream.Create<object>(stream);
+                if(item != null && CacheReadItems)
+                {
+                    readCache.Add(source, item);
+                }
+                return item;
             }
-
-           
-
             return null;
         }
 
