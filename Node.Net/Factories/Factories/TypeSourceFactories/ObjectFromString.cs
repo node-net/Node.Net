@@ -54,12 +54,22 @@ namespace Node.Net.Factories.Factories.TypeSourceFactories
                     {
                         if (resource_name.Contains(source))
                         {
+                            if (readCache.ContainsKey(source))
+                            {
+                                var instance = readCache[source];
+                                if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
+                                //return readCache[source];
+                            }
                             var stream = assembly.GetManifestResourceStream(resource_name);
                             if (stream != null && targetType.IsAssignableFrom(stream.GetType())) return stream;
                             try
                             {
                                 var instance = objectFromStream.Create<object>(stream);
-                                if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
+                                if (instance != null && targetType.IsAssignableFrom(instance.GetType()))
+                                {
+                                    readCache.Add(source, instance);
+                                    return instance;
+                                }
                             }
                             catch { }
                         }
