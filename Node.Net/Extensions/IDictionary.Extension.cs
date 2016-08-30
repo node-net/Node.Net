@@ -101,11 +101,13 @@ namespace Node.Net.Extensions
 
         public static void Save(IDictionary dictionary, Stream stream)
         {
+            Node.Net.Data.Writers.Writer.Default.Write(stream, dictionary);
+            /*
             var formatter = new Node.Net.Deprecated.Json.JsonFormatter
             {
                 Style = Node.Net.Deprecated.Json.JsonStyle.Indented
             };
-            formatter.Serialize(stream, dictionary);
+            formatter.Serialize(stream, dictionary);*/
         }
 
         public static void Save(IDictionary dictionary, string filename)

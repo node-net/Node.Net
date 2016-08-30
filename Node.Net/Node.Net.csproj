@@ -87,57 +87,9 @@
     <Compile Include="Controls\Properties.cs" />
     <Compile Include="Controls\TreeView.cs" />
     <Compile Include="Controls\ValuesGrid.cs" />
-    <Compile Include="Deprecated\Collections\Array.cs" />
-    <Compile Include="Deprecated\Collections\Children.cs" />
-    <Compile Include="Deprecated\Collections\Copier.cs" />
-    <Compile Include="Deprecated\Collections\Dictionary.cs" />
-    <Compile Include="Deprecated\Collections\DictionaryPropertyDescriptor.cs" />
-    <Compile Include="Deprecated\Collections\DictionaryTypeDescriptor.cs" />
-    <Compile Include="Deprecated\Collections\Document.cs" />
-    <Compile Include="Deprecated\Collections\Documents.cs" />
     <Compile Include="Collections\Extensions.cs" />
-    <Compile Include="Deprecated\Collections\Hash.cs" />
-    <Compile Include="Deprecated\Collections\HashBase.cs" />
     <Compile Include="Collections\IDictionary.Extension.cs" />
-    <Compile Include="Deprecated\Collections\IFilter.cs" />
-    <Compile Include="Deprecated\Collections\Internal\PropertyDescriptor.cs" />
     <Compile Include="Collections\KeyValuePair.cs" />
-    <Compile Include="Deprecated\Collections\MetaDataManager.cs" />
-    <Compile Include="Deprecated\Collections\ReadOnlyIDictionaryPropertyDescriptor.cs" />
-    <Compile Include="Deprecated\Collections\RecentFiles.cs" />
-    <Compile Include="Deprecated\Collections\RuntimeMetaData.cs" />
-    <Compile Include="Deprecated\Collections\Traverser.cs" />
-    <Compile Include="Deprecated\Controls\CollapseDecorator.cs" />
-    <Compile Include="Deprecated\Controls\CollapseDecorator2.cs" />
-    <Compile Include="Deprecated\Controls\ContextMenu.cs" />
-    <Compile Include="Deprecated\Controls\DynamicControl.cs" />
-    <Compile Include="Deprecated\Controls\DynamicGrid.cs" />
-    <Compile Include="Deprecated\Controls\Example.DataContexts.cs" />
-    <Compile Include="Deprecated\Controls\ExplorerControl.cs" />
-    <Compile Include="Deprecated\Controls\Grid.cs" />
-    <Compile Include="Deprecated\Controls\MethodInfoCommand.cs" />
-    <Compile Include="Deprecated\Controls\PropertyControl.cs" />
-    <Compile Include="Deprecated\Controls\PropertyView.cs" />
-    <Compile Include="Deprecated\Controls\ReadOnlyTextBox.cs" />
-    <Compile Include="Deprecated\Controls\SDIControl.cs" />
-    <Compile Include="Deprecated\Controls\Selector.cs" />
-    <Compile Include="Deprecated\Controls\SplitControl.cs" />
-    <Compile Include="Deprecated\Controls\StackPanels\IDictionaryKeysStackPanel.cs" />
-    <Compile Include="Deprecated\Controls\StackPanels\IDictionaryValuesStackPanel.cs" />
-    <Compile Include="Deprecated\Controls\StackPanels\LabelsStackPanel.cs" />
-    <Compile Include="Deprecated\Controls\StackPanels\StackPanel.cs" />
-    <Compile Include="Deprecated\Controls\TabControl.cs" />
-    <Compile Include="Deprecated\Controls\TabItem.cs" />
-    <Compile Include="Deprecated\Controls\TitleControl.cs" />
-    <Compile Include="Deprecated\Controls\TitledControl.cs" />
-    <Compile Include="Deprecated\Controls\TreeView.cs" />
-    <Compile Include="Deprecated\Controls\TreeViewItem.cs" />
-    <Compile Include="Deprecated\Controls\TreeViewItemDetailed.cs" />
-    <Compile Include="Deprecated\Controls\TreeViewItems\IDictionaryTreeViewItem.cs" />
-    <Compile Include="Deprecated\Controls\TreeViewItems\TreeViewItem.cs" />
-    <Compile Include="Deprecated\Controls\TypeInstanceList.cs" />
-    <Compile Include="Deprecated\Controls\ViewTester.cs" />
-    <Compile Include="Deprecated\Controls\XmlTreeViewItem.cs" />
     <Compile Include="Data\Assembly.Extension.cs" />
     <Compile Include="Data\Extensions.cs" />
     <Compile Include="Data\Extension\Matrix3D.Extension.cs" />
@@ -190,7 +142,7 @@
     <Compile Include="Data\Writers\StringWriter.cs" />
     <Compile Include="Data\Writers\Writer.cs" />
     <Compile Include="Data\Writers\XmlWriter.cs" />
-    <Compile Include="Deprecated\Factory.cs" />
+    <Compile Include="Deprecated\Collections\MetaDataManager.cs" />
     <Compile Include="Diagnostics\Command.cs" />
     <Compile Include="Diagnostics\CommandGroup.cs" />
     <Compile Include="Diagnostics\ConsoleCommand.cs" />
@@ -198,9 +150,6 @@
     <Compile Include="Diagnostics\FileSystem.cs" />
     <Compile Include="Diagnostics\ICommand.cs" />
     <Compile Include="Diagnostics\IDictionary.Extension.cs" />
-    <Compile Include="Deprecated\Documents\Documents.cs" />
-    <Compile Include="Deprecated\Documents\IDocument.cs" />
-    <Compile Include="Deprecated\Documents\TextDocument.cs" />
     <Compile Include="Environment\Command.cs" />
     <Compile Include="Environment\Environment.cs" />
     <Compile Include="Environment\Internal\Executor.cs" />
@@ -258,13 +207,6 @@
     <Compile Include="Factories\Internal\IFactory.Extension.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Filters\TypeFilter.cs" />
-    <Compile Include="Framework\Application.cs" />
-    <Compile Include="Framework\Controls\DynamicView.cs" />
-    <Compile Include="Framework\Controls\SDIControl.cs" />
-    <Compile Include="Framework\Controls\SDIWindow.cs" />
-    <Compile Include="Framework\Documents.cs" />
-    <Compile Include="Framework\IDocument.cs" />
-    <Compile Include="Framework\RecentFiles.cs" />
     <Compile Include="IChild.cs" />
     <Compile Include="IGetDataSet.cs" />
     <Compile Include="IMetaData.cs" />
@@ -285,12 +227,6 @@
     <Compile Include="ITranslation3D.cs" />
     <Compile Include="ITypeTransformer.cs" />
     <Compile Include="IUpdate.cs" />
-    <Compile Include="Deprecated\Json\Internal\JsonReader.cs" />
-    <Compile Include="Deprecated\Json\Internal\JsonWriter.cs" />
-    <Compile Include="Deprecated\Json\JsonFormatter.cs" />
-    <Compile Include="Deprecated\Json\JsonSerializationBinder.cs" />
-    <Compile Include="Deprecated\Json\Reader.cs" />
-    <Compile Include="Deprecated\Json\Writer.cs" />
     <Compile Include="Measurement\Angle.cs" />
     <Compile Include="Measurement\AngularUnit.cs" />
     <Compile Include="Measurement\Length.cs" />
@@ -309,7 +245,6 @@
     <Compile Include="_Model3D\Transform3DHelper.cs" />
     <Compile Include="_Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="_Model3D\Transform\ObjectTransform.cs" />
-    <Compile Include="Model\Application.cs" />
     <Compile Include="Model\Child.cs" />
     <Compile Include="Model\Element.cs" />
     <Compile Include="Model\Generic\Element.cs" />
@@ -327,48 +262,9 @@
     <Compile Include="Transformers\MaterialTransformer.cs" />
     <Compile Include="Transformers\Transform3DTransformer.cs" />
     <Compile Include="Transformers\TypeTransformer.cs" />
-    <Compile Include="Deprecated\Controls\View\Base.cs" />
-    <Compile Include="Deprecated\Controls\View\ComboBox.cs" />
-    <Compile Include="Deprecated\Controls\View\ComboBoxItem.cs" />
-    <Compile Include="Deprecated\Controls\View\ContextMenu.cs" />
-    <Compile Include="Deprecated\Controls\View\DataGridView.cs" />
-    <Compile Include="Deprecated\Controls\View\DynamicView.cs" />
-    <Compile Include="Deprecated\Controls\View\DynamicViewSelector.cs" />
-    <Compile Include="Deprecated\Controls\View\Explorer.cs" />
-    <Compile Include="Deprecated\Controls\View\ExplorerView.cs" />
-    <Compile Include="Deprecated\Controls\View\FrameworkElements.cs" />
-    <Compile Include="Deprecated\Controls\View\Grid.cs" />
-    <Compile Include="Deprecated\Controls\View\HashGrid.cs" />
-    <Compile Include="Deprecated\Controls\View\HashGridEditor.cs" />
-    <Compile Include="Deprecated\Controls\View\JsonView.cs" />
-    <Compile Include="Deprecated\Controls\View\KeyValuePair.cs" />
-    <Compile Include="Deprecated\Controls\View\ListView.cs" />
-    <Compile Include="Deprecated\Controls\View\ListViewItem.cs" />
-    <Compile Include="Deprecated\Controls\View\MessageBox.cs" />
-    <Compile Include="Deprecated\Controls\View\Properties.cs" />
-    <Compile Include="Deprecated\Controls\View\PropertiesExplorer.cs" />
-    <Compile Include="Deprecated\Controls\View\PropertyView.cs" />
-    <Compile Include="Deprecated\Controls\View\ReadOnlyTextView.cs" />
-    <Compile Include="Deprecated\Controls\View\SDIApplication.cs" />
-    <Compile Include="Deprecated\Controls\View\SDIMainControl.cs" />
-    <Compile Include="Deprecated\Controls\View\SplitterGrid.cs" />
-    <Compile Include="Deprecated\Controls\View\SplitView.cs" />
-    <Compile Include="Deprecated\Controls\View\TabControl.cs" />
-    <Compile Include="Deprecated\Controls\View\TabItem.cs" />
-    <Compile Include="Deprecated\Controls\View\TextView.cs" />
-    <Compile Include="Deprecated\Controls\View\Title.cs" />
-    <Compile Include="Deprecated\Controls\View\TreeView.cs" />
-    <Compile Include="Deprecated\Controls\View\TreeViewItem.cs" />
-    <Compile Include="Deprecated\Controls\View\Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Node.Net.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Deprecated\Controls\View\HelixView3D.Resources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
