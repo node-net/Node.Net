@@ -17,7 +17,7 @@ namespace Node.Net
             factory.ResourceAssemblies.Add(assembly);
         }
 
-        private Node.Net.Factories.Factory factory = new Factories.Factory();
+        private Node.Net.Factories.Factory factory = new Factories.Factory { ReadFunction = Node.Net.Data.Readers.Reader.Default.Read };
         public object Create(Type targetType,object source)
         {
             return factory.Create(targetType,source);

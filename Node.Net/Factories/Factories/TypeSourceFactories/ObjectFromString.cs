@@ -50,6 +50,7 @@ namespace Node.Net.Factories.Factories.TypeSourceFactories
                         if (resource_name.Contains(source))
                         {
                             var stream = assembly.GetManifestResourceStream(resource_name);
+                            if (stream != null && targetType.IsAssignableFrom(stream.GetType())) return stream;
                             try
                             {
                                 var instance = objectFromStream.Create<object>(stream);
