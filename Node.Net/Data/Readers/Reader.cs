@@ -14,6 +14,8 @@ namespace Node.Net.Data.Readers
         {
             DictionaryTypeConverter = new DictionaryTypeConverter(assembly);
         }
+        public static Reader Default { get; } = new Reader();
+        /*
         private static Reader _default;
         public static Reader Default
         {
@@ -25,7 +27,7 @@ namespace Node.Net.Data.Readers
                 }
                 return _default;
             }
-        }
+        }*/
         private readonly JsonReader jsonReader = new JsonReader();
         public Type DefaultArrayType
         {

@@ -6,8 +6,14 @@ using System.Windows.Media.Imaging;
 
 namespace Node.Net
 {
-    public class Reader : IReader
+    public class Reader : IRead
     {
+        public static Reader Default { get; } = new Reader();
+        public object Read(Stream stream)
+        {
+            return Node.Net.Data.Readers.Reader.Default.Read(stream);
+        }
+        /*
         private static IReader _default;
         public static IReader Default
         {
@@ -70,6 +76,6 @@ namespace Node.Net
             memory = null;
             return bitmapImage;
 
-        }
+        }*/
     }
 }

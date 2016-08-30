@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Deprecated
 {
-    public class Factory : IFactory
+    
+    public class Factory //: IFactory
     {
-        private static IFactory _default;
-        public static IFactory Default
+        private static Factory _default;
+        public static Factory Default
         {
             get
             {

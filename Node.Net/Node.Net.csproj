@@ -190,6 +190,7 @@
     <Compile Include="Data\Writers\StringWriter.cs" />
     <Compile Include="Data\Writers\Writer.cs" />
     <Compile Include="Data\Writers\XmlWriter.cs" />
+    <Compile Include="Deprecated\Factory.cs" />
     <Compile Include="Diagnostics\Command.cs" />
     <Compile Include="Diagnostics\CommandGroup.cs" />
     <Compile Include="Diagnostics\ConsoleCommand.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Extensions\Grid.Extension.cs" />
     <Compile Include="Extensions\IChild.Extension.cs" />
     <Compile Include="Extensions\IDictionary.Extension.cs" />
+    <Compile Include="Extensions\IFactory.Extension.cs" />
     <Compile Include="Extensions\IGetDataSet.Extension.cs" />
     <Compile Include="Extensions\Image.cs" />
     <Compile Include="Extensions\ImageSource.cs" />
@@ -216,11 +218,11 @@
     <Compile Include="Extensions\IMetaDataManager.Extension.cs" />
     <Compile Include="Extensions\IModel3D.Extension.cs" />
     <Compile Include="Extensions\IParent.Extension.cs" />
+    <Compile Include="Extensions\IRead.Extension.cs" />
     <Compile Include="Extensions\Matrix3D.Extension.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\Type.Extension.cs" />
-    <Compile Include="Deprecated\Factory.cs" />
     <Compile Include="Factory\Extensions.cs" />
     <Compile Include="Factory\Extension\HitTester.cs" />
     <Compile Include="Factory\Extension\Stream.Extension.cs" />
@@ -266,9 +268,9 @@
     <Compile Include="IGetDataSet.cs" />
     <Compile Include="IMetaData.cs" />
     <Compile Include="IMetaDataManager.cs" />
-    <Compile Include="IFactory.cs" />
     <Compile Include="IFilter.cs" />
     <Compile Include="IModel3D.cs" />
+    <Compile Include="Interfaces.cs" />
     <Compile Include="IO\Directory.cs" />
     <Compile Include="IO\FileList.cs" />
     <Compile Include="IO\TemporaryDirectory.cs" />
