@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Node.Net.Data.Readers
 {
-    public class BytesReader : IRead
+    public sealed class BytesReader : IRead
     {
         public object Read(Stream stream)
         {

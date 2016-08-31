@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Node.Net.Data.Readers
 {
-    public class Reader : IRead
+    sealed class Reader : IRead
     {
         public Reader() { }
         public Reader(Assembly assembly)
@@ -15,19 +15,6 @@ namespace Node.Net.Data.Readers
             DictionaryTypeConverter = new DictionaryTypeConverter(assembly);
         }
         public static Reader Default { get; } = new Reader();
-        /*
-        private static Reader _default;
-        public static Reader Default
-        {
-            get
-            {
-                if(_default == null)
-                {
-                    _default = new Reader();
-                }
-                return _default;
-            }
-        }*/
         private readonly JsonReader jsonReader = new JsonReader();
         public Type DefaultArrayType
         {
@@ -47,7 +34,6 @@ namespace Node.Net.Data.Readers
                 if (textSignatureReaders == null)
                 {
                     textSignatureReaders = new Dictionary<string, IRead>();
-                    //var jsonReader = new JsonReader();
                     textSignatureReaders.Add("{", jsonReader);
                     textSignatureReaders.Add("[", jsonReader);
                     var xmlReader = new XmlReader();

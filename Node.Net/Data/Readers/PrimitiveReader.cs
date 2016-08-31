@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Node.Net.Data.Readers
 {
-    public class PrimitiveReader : IRead
+    sealed class PrimitiveReader : IRead
     {
         public object Read(Stream stream)
         {

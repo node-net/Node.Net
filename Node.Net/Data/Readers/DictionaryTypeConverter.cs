@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Node.Net.Data.Readers
 {
-    public class DictionaryTypeConverter : IDictionaryTypeConverter
+    public sealed class DictionaryTypeConverter : IDictionaryTypeConverter
     {
         public DictionaryTypeConverter() { }
         public DictionaryTypeConverter(Assembly assembly)

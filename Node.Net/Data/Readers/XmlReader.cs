@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace Node.Net.Data.Readers
 {
-    public class XmlReader : IRead
+    sealed class XmlReader : IRead
     {
         public object Read(Stream stream)
         {

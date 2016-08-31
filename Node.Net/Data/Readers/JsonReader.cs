@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Node.Net.Data.Readers
 {
-    public class JsonReader : IRead
+    sealed class JsonReader : IRead
     {
         public Type DefaultArrayType = typeof(List<dynamic>);
         public Type DefaultObjectType = typeof(Dictionary<string, dynamic>);

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Node.Net.Data.Readers
 {
-    public static class IReadExtension
+    static class IReadExtension
     {
         public static object Read(IRead read, string value)
         {

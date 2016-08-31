@@ -2,7 +2,7 @@
 
 namespace Node.Net.Data.Readers
 {
-    public class XamlReader : IRead
+    sealed class XamlReader : IRead
     {
         public object Read(Stream stream) => System.Windows.Markup.XamlReader.Load(stream);
     }

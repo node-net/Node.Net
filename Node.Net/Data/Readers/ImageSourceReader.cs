@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace Node.Net.Data.Readers
 {
-    class ImageSourceReader : IRead
+    sealed class ImageSourceReader : IRead
     {
         public object Read(Stream stream) => GetImageSource(Image.FromStream(stream));
 
