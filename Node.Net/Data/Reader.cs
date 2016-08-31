@@ -37,7 +37,7 @@ namespace Node.Net.Data
             get { return reader.TextSignatureReaders; }
             set { reader.TextSignatureReaders = value; }
         }
-        public Dictionary<byte[], IRead> BinarySignatureReader
+        public Dictionary<byte[], IRead> BinarySignatureReaders
         {
             get { return reader.BinarySignatureReaders; }
             set { reader.BinarySignatureReaders = value; }

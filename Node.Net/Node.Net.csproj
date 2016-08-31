@@ -98,9 +98,9 @@
     <Compile Include="Data\Model\IModel.cs" />
     <Compile Include="Data\Model\IModel.Extension.cs" />
     <Compile Include="Data\Model\MailMessage.cs" />
+    <Compile Include="Data\Reader.cs" />
     <Compile Include="Data\Readers\BytesReader.cs" />
     <Compile Include="Data\Readers\DictionaryTypeConverter.cs" />
-    <Compile Include="Data\Readers\IDictionaryTypeConverter.cs" />
     <Compile Include="Data\Readers\ImageSourceReader.cs" />
     <Compile Include="Data\Readers\IRead.Extension.cs" />
     <Compile Include="Data\Readers\IReadAdapter.cs" />

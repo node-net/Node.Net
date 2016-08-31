@@ -3,15 +3,57 @@ using System.IO;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Node.Net.Data;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Node.Net
 {
     public sealed class Reader : IRead
     {
         public static Reader Default { get; } = new Reader();
+
+        public Reader() { }
+        public Reader(Assembly assembly)
+        {
+            reader = new Data.Reader(assembly);
+        }
+
         public object Read(Stream stream)
         {
-            return Node.Net.Data.Readers.Reader.Default.Read(stream);
+            return reader.Read(stream);
         }
+        public object Read(string value)
+        {
+            return reader.Read(value);
+        }
+
+        public Type DefaultArrayType
+        {
+            get { return reader.DefaultArrayType; }
+            set { reader.DefaultArrayType = value; }
+        }
+        public Type DefaultObjectType
+        {
+            get { return reader.DefaultObjectType; }
+            set { reader.DefaultObjectType = value; }
+        }
+        public IDictionaryTypeConverter DictionaryTypeConverter
+        {
+            get { return reader.DictionaryTypeConverter; }
+            set { reader.DictionaryTypeConverter = value; }
+        }
+        public Dictionary<string, IRead> TextSignatureReaders
+        {
+            get { return reader.TextSignatureReaders; }
+            set { reader.TextSignatureReaders = value; }
+        }
+        public Dictionary<byte[], IRead> BinarySignatureReader
+        {
+            get { return reader.BinarySignatureReaders; }
+            set { reader.BinarySignatureReaders = value; }
+        }
+
+        private Node.Net.Data.Reader reader = new Node.Net.Data.Reader();
     }
 }
