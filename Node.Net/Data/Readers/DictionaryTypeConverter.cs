@@ -26,6 +26,10 @@ namespace Node.Net.Data.Readers
                         var _type = Types[type];
                         if (_type == null) throw new Exception($"Types['{type}'] was null");
                         var dictionary = Activator.CreateInstance(_type) as IDictionary;
+                        if(dictionary == null)
+                        {
+                            throw new Exception($"unable to create instance of type {_type.FullName}");
+                        }
                         Copy(source, dictionary);
                         return dictionary;
                     }
@@ -90,6 +94,7 @@ namespace Node.Net.Data.Readers
         public void Copy(IDictionary source, IDictionary destination)
         {
             if (source == null) return;
+            if (destination == null) return;
             foreach (object key in source.Keys)
             {
                 var value = source[key];
