@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -10,8 +11,10 @@ namespace Node.Net.Data
         public Reader() { }
         public Reader(Assembly assembly)
         {
-            reader = new Readers.Reader(assembly);
+            dictionaryTypeConverter = new Readers.DictionaryTypeConverter(assembly);
+            reader = new Readers.Reader { IDictionaryTypeConversionFunction = dictionaryTypeConverter.Convert };
         }
+        private readonly Readers.DictionaryTypeConverter dictionaryTypeConverter;
 
         public object Read(Stream stream)
         {
@@ -27,10 +30,11 @@ namespace Node.Net.Data
             get { return reader.DefaultObjectType; }
             set { reader.DefaultObjectType = value; }
         }
-        public IDictionaryTypeConverter DictionaryTypeConverter
+
+        public Func<IDictionary,IDictionary> IDictionaryTypeConversionFunction
         {
-            get { return reader.DictionaryTypeConverter; }
-            set { reader.DictionaryTypeConverter = value; }
+            get { return reader.IDictionaryTypeConversionFunction; }
+            set { reader.IDictionaryTypeConversionFunction = value; }
         }
         public Dictionary<string, IRead> TextSignatureReaders
         {
@@ -42,7 +46,7 @@ namespace Node.Net.Data
             get { return reader.BinarySignatureReaders; }
             set { reader.BinarySignatureReaders = value; }
         }
-        private Readers.Reader reader = new Readers.Reader();
+        private readonly Readers.Reader reader = new Readers.Reader();
 
         public static Reader Default { get; } = new Reader();
     }

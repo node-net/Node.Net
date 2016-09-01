@@ -7,7 +7,7 @@ namespace Node.Net.Data.Repositories
     {
         public string Directory { get; set; } = $"{Path.GetTempPath()}DirectoryRepository";
 
-        public IRead Reader { get; set; } = Readers.Reader.Default;
+        public IRead Reader { get; set; } = Node.Net.Data.Reader.Default;
         public IWrite Writer { get; set; } =Writers.Writer.Default;
 
         public object Get(string key)

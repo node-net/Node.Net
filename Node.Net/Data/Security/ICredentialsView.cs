@@ -17,7 +17,7 @@ namespace Node.Net.Data.Security
         }
 
 
-        private void Update(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        private static void Update(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
 
         }

@@ -19,7 +19,7 @@ namespace Node.Net.Controls.Internal.GridUpdaters
         }
 
         public bool ShowKeys { get; set; } = true;
-        protected string[] GetKeys(IDictionary dictionary)
+        protected static string[] GetKeys(IDictionary dictionary)
         {
             var keys = new List<string>();
             foreach (string key in dictionary.Keys)
@@ -34,11 +34,11 @@ namespace Node.Net.Controls.Internal.GridUpdaters
         }
 
         public abstract void UpdateGrid(System.Windows.Controls.Grid grid);
-        protected UIElement GetKeyElement(IDictionary dictionary, string key)
+        protected static UIElement GetKeyElement(IDictionary dictionary, string key)
         {
             return new Label { Content = key, Background = Brushes.LightGray };
         }
-        protected UIElement GetValueElement(IDictionary dictionary, string key)
+        protected static UIElement GetValueElement(IDictionary dictionary, string key)
         {
             var value = dictionary[key];
             if (value == null) return new Label();

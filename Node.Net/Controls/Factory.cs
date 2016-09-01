@@ -41,9 +41,9 @@ namespace Node.Net.Controls
             return default(T);
         }
 
-        private T CreateFromStream<T>(Stream stream)
+        private static T CreateFromStream<T>(Stream stream)
         {
-            return (T)Internal.ImageSourceReader.Default.Read(stream);
+            return (T)Internal.ImageSourceReader.Read(stream);
         }
     }
 }

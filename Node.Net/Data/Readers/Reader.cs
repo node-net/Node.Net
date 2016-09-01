@@ -10,11 +10,16 @@ namespace Node.Net.Data.Readers
     sealed class Reader : IRead
     {
         public Reader() { }
+        
         public Reader(Assembly assembly)
         {
-            DictionaryTypeConverter = new DictionaryTypeConverter(assembly);
+            dictionaryTypeConverter = new DictionaryTypeConverter(assembly);
+            IDictionaryTypeConversionFunction = dictionaryTypeConverter.Convert;
+            //DictionaryTypeConverter = new DictionaryTypeConverter(assembly);
         }
-        public static Reader Default { get; } = new Reader();
+        private readonly Readers.DictionaryTypeConverter dictionaryTypeConverter;
+
+        //public static Reader Default { get; } = new Reader();
         private readonly JsonReader jsonReader = new JsonReader();
         public Type DefaultArrayType
         {
@@ -64,6 +69,8 @@ namespace Node.Net.Data.Readers
             set { binarySignatureReaders = value; }
         }
 
+        public Func<IDictionary,IDictionary> IDictionaryTypeConversionFunction { get; set; }
+        /*
         private IDictionaryTypeConverter dictionaryTypeConverter = new DictionaryTypeConverter(typeof(DictionaryTypeConverter).Assembly);
         public IDictionaryTypeConverter DictionaryTypeConverter
         {
@@ -76,7 +83,7 @@ namespace Node.Net.Data.Readers
                 }
                 dictionaryTypeConverter = value;
             }
-        }
+        }*/
 
         public object Read(Stream stream_original)
         {
@@ -108,10 +115,15 @@ namespace Node.Net.Data.Readers
         private object Convert(object source)
         {
             var dictionary = source as IDictionary;
+            if(IDictionaryTypeConversionFunction != null && dictionary !=null)
+            {
+                return IDictionaryTypeConversionFunction(dictionary);
+            }
+            /*
             if(dictionary != null && DictionaryTypeConverter != null)
             {
                 return DictionaryTypeConverter.Convert(dictionary);
-            }
+            }*/
             return source;
         }
 

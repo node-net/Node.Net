@@ -16,7 +16,7 @@ namespace Node.Net.Controls.Internal
             UpdateTreeView(sender as System.Windows.Controls.TreeView);
         }
 
-        private Dictionary<string, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<string, System.Windows.Controls.TreeViewItem>();
+        private readonly Dictionary<string, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<string, System.Windows.Controls.TreeViewItem>();
         public void UpdateTreeView(System.Windows.Controls.TreeView treeView)
         {
             treeView.Background = Brushes.Azure;
@@ -36,9 +36,9 @@ namespace Node.Net.Controls.Internal
                     treeViewItems[key] = tvi;
                 }
                 treeView.Items.Add(tvi);
-            }  
+            }
         }
-        
+
         private Dictionary<string,dynamic> GetItems(System.Windows.Controls.TreeView treeView)
         {
             if (treeView.DataContext != null)
@@ -49,7 +49,7 @@ namespace Node.Net.Controls.Internal
             }
             return GetChildren(treeView);
         }
-        private Dictionary<string,dynamic> GetChildren(System.Windows.Controls.TreeView treeView)
+        private static Dictionary<string,dynamic> GetChildren(System.Windows.Controls.TreeView treeView)
         {
             var children = new Dictionary<string, dynamic>();
             if(treeView.DataContext != null)
@@ -69,6 +69,6 @@ namespace Node.Net.Controls.Internal
                 }
             }
             return children;
-        }        
+        }
     }
 }

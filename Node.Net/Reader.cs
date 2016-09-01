@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -38,10 +39,10 @@ namespace Node.Net
             get { return reader.DefaultObjectType; }
             set { reader.DefaultObjectType = value; }
         }
-        public IDictionaryTypeConverter DictionaryTypeConverter
+        public Func<IDictionary, IDictionary> IDictionaryTypeConversionFunction
         {
-            get { return reader.DictionaryTypeConverter; }
-            set { reader.DictionaryTypeConverter = value; }
+            get { return reader.IDictionaryTypeConversionFunction; }
+            set { reader.IDictionaryTypeConversionFunction = value; }
         }
         public Dictionary<string, IRead> TextSignatureReaders
         {
@@ -54,6 +55,6 @@ namespace Node.Net
             set { reader.BinarySignatureReaders = value; }
         }
 
-        private Node.Net.Data.Reader reader = new Node.Net.Data.Reader();
+        private readonly Node.Net.Data.Reader reader = new Node.Net.Data.Reader();
     }
 }

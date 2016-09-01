@@ -8,7 +8,7 @@ namespace Node.Net.Factories.Factories.Helpers
     public sealed class IColorHelper
     {
         class ConcreteColor : IColor { public Color Color { get; set; } }
-        private static ConcreteColor concreteColor = new ConcreteColor();
+        private static readonly ConcreteColor concreteColor = new ConcreteColor();
         public static IColor FromString(string source,IFactory factory)
         {
             if (source == null) return null;

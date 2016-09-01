@@ -37,6 +37,18 @@ namespace Node.Net
             return factory.Create(targetType, source);
         }
 
-        private Node.Net.Factories.Factory factory = new Factories.Factory { ReadFunction = Node.Net.Data.Readers.Reader.Default.Read };
+        private readonly Node.Net.Reader reader = new Reader();
+        private Node.Net.Factories.Factory _factory;
+        private Node.Net.Factories.Factory factory
+        {
+            get
+            {
+                if(_factory == null)
+                {
+                    _factory = new Factories.Factory { ReadFunction = reader.Read };
+                }
+                return _factory;
+            }
+        }
     }
 }

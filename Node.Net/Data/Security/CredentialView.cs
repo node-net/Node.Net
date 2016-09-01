@@ -98,7 +98,7 @@ namespace Node.Net.Data.Security
 
 
 
-        private void Update(object sender, DependencyPropertyChangedEventArgs e)
+        private static void Update(object sender, DependencyPropertyChangedEventArgs e)
         {
 
         }

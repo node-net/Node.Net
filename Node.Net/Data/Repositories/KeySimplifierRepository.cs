@@ -8,8 +8,8 @@ namespace Node.Net.Data.Repositories
 {
     public class KeySimplifierRepository : IRepository, IGetKeys
     {
-        private IReadOnlyRepository _readOnlyRepository = new MemoryRepository();
-        private string _key_strip_pattern;
+        private readonly IReadOnlyRepository _readOnlyRepository = new MemoryRepository();
+        private readonly string _key_strip_pattern;
         public KeySimplifierRepository(IReadOnlyRepository readOnlyRepository, string key_strip_pattern)
         {
             if (readOnlyRepository != null)

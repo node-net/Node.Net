@@ -32,7 +32,7 @@ namespace Node.Net.Controls.Factories
 
         public List<Assembly> ResourceAssemblies = new List<Assembly>();
         public Dictionary<string, string> AliasMap = new Dictionary<string, string>();
-        private Dictionary<string, ImageSource> ImageSourceMap = new Dictionary<string, ImageSource>();
+        private readonly Dictionary<string, ImageSource> ImageSourceMap = new Dictionary<string, ImageSource>();
 
         public ImageSource GetImageSource(string name)
         {
@@ -47,7 +47,7 @@ namespace Node.Net.Controls.Factories
             }
             if (ImageSourceMap.ContainsKey(name)) return ImageSourceMap[name];
 
-            
+
             var icon = Internal.Extensions.IconExtensions.GetIcon(name);
             if (icon != null) return icon.ToImageSource();
 
