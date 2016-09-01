@@ -29,5 +29,7 @@ namespace Node.Net.Data.Readers
             }
             return null;
         }
+
+        public static PrimitiveReader Default { get; } = new PrimitiveReader();
     }
 }

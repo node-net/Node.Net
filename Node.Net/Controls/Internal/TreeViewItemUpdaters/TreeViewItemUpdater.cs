@@ -21,13 +21,13 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
         }
         private void UpdateTreeViewItem(System.Windows.Controls.TreeViewItem treeViewItem)
         {
-
+            
             treeViewItem.HorizontalAlignment = HorizontalAlignment.Stretch;
             UpdateHeader(treeViewItem);
             UpdateChildren(treeViewItem);
         }
 
-        private static void UpdateHeader(System.Windows.Controls.TreeViewItem treeViewItem)
+        private void UpdateHeader(System.Windows.Controls.TreeViewItem treeViewItem)
         {
             if (treeViewItem.DataContext != null)
             {
@@ -42,7 +42,7 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
                 }
             }
         }
-        private readonly Dictionary<object, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<object, System.Windows.Controls.TreeViewItem>();
+        private Dictionary<object, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<object, System.Windows.Controls.TreeViewItem>();
 
         private void UpdateChildren(System.Windows.Controls.TreeViewItem treeViewItem)
         {

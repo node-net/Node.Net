@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Node.Net.Data;
+using System;
 using System.Collections;
-using System.IO;
-using System.Windows.Markup;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Node.Net.Data;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 
 namespace Node.Net
@@ -44,15 +41,15 @@ namespace Node.Net
             get { return reader.IDictionaryTypeConversionFunction; }
             set { reader.IDictionaryTypeConversionFunction = value; }
         }
-        public Dictionary<string, IRead> TextSignatureReaders
+        public Dictionary<string, Func<Stream, object>> TextSignatureReadFunctions
         {
-            get { return reader.TextSignatureReaders; }
-            set { reader.TextSignatureReaders = value; }
+            get { return reader.TextSignatureReadFunctions; }
+            set { reader.TextSignatureReadFunctions = value; }
         }
-        public Dictionary<byte[], IRead> BinarySignatureReaders
+        public Dictionary<byte[], Func<Stream, object>> BinarySignatureReadFunctions
         {
-            get { return reader.BinarySignatureReaders; }
-            set { reader.BinarySignatureReaders = value; }
+            get { return reader.BinarySignatureReadFunctions; }
+            set { reader.BinarySignatureReadFunctions = value; }
         }
 
         private readonly Node.Net.Data.Reader reader = new Node.Net.Data.Reader();

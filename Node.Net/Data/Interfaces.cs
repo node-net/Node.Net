@@ -18,5 +18,11 @@ namespace Node.Net.Data
     public interface IRepository : IReadOnlyRepository, ISet, IWriter { }
     public interface IChild { IParent Parent { get; set; } }
     public interface IParent { Dictionary<string, IChild> GetChildren(); }
-    public interface IDictionaryTypeConverter { IDictionary Convert(IDictionary source); }
+
+    public interface IDictionaryTypeConverter
+    {
+        IDictionary Convert(IDictionary source);
+        //void AddType(Type type);
+        //void AddTypes(Assembly assembly);
+    }
 }

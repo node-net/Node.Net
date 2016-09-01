@@ -8,6 +8,7 @@ namespace Node.Net.Data.Readers
 {
     sealed class JsonReader : IRead
     {
+        public static JsonReader Default { get; } = new JsonReader();
         public Type DefaultArrayType = typeof(List<dynamic>);
         public Type DefaultObjectType = typeof(Dictionary<string, dynamic>);
         public object Read(Stream stream)

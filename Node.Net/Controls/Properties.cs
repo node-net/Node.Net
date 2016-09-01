@@ -15,8 +15,8 @@ namespace Node.Net.Controls
             DataContextChanged += _DataContextChanged;
         }
 
-        private readonly Header _header = new Header();
-        private readonly ValuesGrid _values = new ValuesGrid();
+        private Header _header = new Header();
+        private ValuesGrid _values = new ValuesGrid();
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);

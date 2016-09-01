@@ -5,7 +5,7 @@ namespace Node.Net.Data.Writers
 {
     public class IWriteAdapter : IWrite
     {
-        private readonly object _target;
+        private object _target;
         public IWriteAdapter(object value)
         {
             _target = value;

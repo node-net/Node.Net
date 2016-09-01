@@ -15,11 +15,9 @@ namespace Node.Net.Data.Readers
         {
             dictionaryTypeConverter = new DictionaryTypeConverter(assembly);
             IDictionaryTypeConversionFunction = dictionaryTypeConverter.Convert;
-            //DictionaryTypeConverter = new DictionaryTypeConverter(assembly);
         }
-        private readonly Readers.DictionaryTypeConverter dictionaryTypeConverter;
+        private Readers.DictionaryTypeConverter dictionaryTypeConverter;
 
-        //public static Reader Default { get; } = new Reader();
         private readonly JsonReader jsonReader = new JsonReader();
         public Type DefaultArrayType
         {
@@ -31,81 +29,70 @@ namespace Node.Net.Data.Readers
             get { return jsonReader.DefaultObjectType; }
             set { jsonReader.DefaultObjectType = value; }
         }
-        private Dictionary<string, IRead> textSignatureReaders;
-        public Dictionary<string, IRead> TextSignatureReaders
+
+        private Dictionary<string, Func<Stream, object>> textSignatureReadFunctions;
+        public Dictionary<string,Func<Stream,object>> TextSignatureReadFunctions
         {
             get
             {
-                if (textSignatureReaders == null)
+                if(textSignatureReadFunctions == null)
                 {
-                    textSignatureReaders = new Dictionary<string, IRead>();
-                    textSignatureReaders.Add("{", jsonReader);
-                    textSignatureReaders.Add("[", jsonReader);
-                    var xmlReader = new XmlReader();
-                    textSignatureReaders.Add("<", xmlReader);
-                    textSignatureReaders.Add(":Primitive:", new PrimitiveReader());
+                    textSignatureReadFunctions = new Dictionary<string, Func<Stream, object>>();
+                    textSignatureReadFunctions.Add("{", jsonReader.Read);
+                    textSignatureReadFunctions.Add("[", jsonReader.Read);
+                    textSignatureReadFunctions.Add("<", XamlReader.Default.Read);
+                    textSignatureReadFunctions.Add(":Primitive:", PrimitiveReader.Default.Read);
                 }
-                return textSignatureReaders;
+                return textSignatureReadFunctions;
             }
-            set { textSignatureReaders = value; }
+            set { textSignatureReadFunctions = value; }
         }
 
-        private Dictionary<byte[], IRead> binarySignatureReaders;
-        public Dictionary<byte[], IRead> BinarySignatureReaders
+        private Dictionary<byte[], Func<Stream, object>> binarySignatureReadFunctions;
+        public Dictionary<byte[],Func<Stream,object>> BinarySignatureReadFunctions
         {
             get
             {
-                if (binarySignatureReaders == null)
+                if (binarySignatureReadFunctions == null)
                 {
-                    binarySignatureReaders = new Dictionary<byte[], IRead>();
-                    var imageSourceReader = new ImageSourceReader();
-                    foreach(var signature in ImageSourceReader.BinarySignatures.Keys)
+                    binarySignatureReadFunctions = new Dictionary<byte[], Func<Stream, object>>();
+                    foreach (var signature in ImageSourceReader.BinarySignatures.Keys)
                     {
-                        binarySignatureReaders.Add(signature, imageSourceReader);
+                        binarySignatureReadFunctions.Add(signature, ImageSourceReader.Default.Read);
                     }
                 }
-                return binarySignatureReaders;
+                return binarySignatureReadFunctions;
             }
-            set { binarySignatureReaders = value; }
+            set
+            {
+                binarySignatureReadFunctions = value;
+            }
         }
 
         public Func<IDictionary,IDictionary> IDictionaryTypeConversionFunction { get; set; }
-        /*
-        private IDictionaryTypeConverter dictionaryTypeConverter = new DictionaryTypeConverter(typeof(DictionaryTypeConverter).Assembly);
-        public IDictionaryTypeConverter DictionaryTypeConverter
-        {
-            get { return dictionaryTypeConverter; }
-            set {
-                if(value == null)
-                {
-                    throw new System.Exception("setting DictionaryTypeConverter to null");
-
-                }
-                dictionaryTypeConverter = value;
-            }
-        }*/
 
         public object Read(Stream stream_original)
         {
             var kvp = BytesReader.GetStreamSignature(stream_original);
             var stream = kvp.Key;
             var signature = kvp.Value;
-            foreach (var binary_signature in BinarySignatureReaders.Keys)
+            foreach(var binary_signature in BinarySignatureReadFunctions.Keys)
             {
-                if (SignatureMatches(signature, binary_signature))
+                if(SignatureMatches(signature,binary_signature))
                 {
-                    return Convert(BinarySignatureReaders[binary_signature].Read(stream));
-                }                
+                    return BinarySignatureReadFunctions[binary_signature](stream);
+                }
             }
+
             var text_signature = Encoding.UTF8.GetString(kvp.Value).Trim();
             if (text_signature.Length > 0)
             {
-                foreach (var key in TextSignatureReaders.Keys)
+                foreach(var key in TextSignatureReadFunctions.Keys)
                 {
                     var index = text_signature.IndexOf(key);
-                    if (index == 0 || index == 1)
+                    if(index == 0 || index == 1)
                     {
-                        return Convert(TextSignatureReaders[key].Read(stream));
+                        return Convert(TextSignatureReadFunctions[key](stream));
                     }
                 }
             }
@@ -119,11 +106,6 @@ namespace Node.Net.Data.Readers
             {
                 return IDictionaryTypeConversionFunction(dictionary);
             }
-            /*
-            if(dictionary != null && DictionaryTypeConverter != null)
-            {
-                return DictionaryTypeConverter.Convert(dictionary);
-            }*/
             return source;
         }
 

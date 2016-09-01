@@ -10,7 +10,7 @@ namespace Node.Net.Controls.Internal
 {
     class ImageSourceReader
     {
-        public static object Read(Stream stream)
+        public object Read(Stream stream)
         {
             var image = System.Drawing.Image.FromStream(stream);
             return image.ToImageSource();

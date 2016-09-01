@@ -11,6 +11,7 @@ namespace Node.Net.Data.Readers
     {
         public object Read(Stream stream) => GetImageSource(Image.FromStream(stream));
 
+        public static ImageSourceReader Default { get; } = new ImageSourceReader();
         public static ImageSource GetImageSource(object value)
         {
             var image = value as Image;

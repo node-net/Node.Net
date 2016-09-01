@@ -98,7 +98,7 @@ namespace Node.Net.Controls.Internal.GridUpdaters
             }
         }
 
-        private static string[] GetRowKeys(IDictionary dictionary)
+        private string[] GetRowKeys(IDictionary dictionary)
         {
             var keys = new List<string>();
             foreach (string key in dictionary.Keys)
@@ -108,7 +108,7 @@ namespace Node.Net.Controls.Internal.GridUpdaters
             }
             return keys.ToArray();
         }
-        private static string[] GetColumnKeys(IDictionary dictionary)
+        private string[] GetColumnKeys(IDictionary dictionary)
         {
             var keys = new List<string>();
             foreach (string rowKey in dictionary.Keys)

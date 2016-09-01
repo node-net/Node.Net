@@ -5,7 +5,7 @@ namespace Node.Net.Data.Readers
 {
     public class IReadAdapter : IRead
     {
-        private readonly object _target;
+        private object _target;
         public IReadAdapter(object value)
         {
             _target = value;

@@ -20,16 +20,16 @@ namespace Node.Net.Controls.Internal
             image.Source = GetImageSource(image.DataContext);
         }
 
-        private static ImageSource GetImageSource(object value)
+        private ImageSource GetImageSource(object value)
         {
-
+            
             ImageSource imageSource = Factories.ImageSourceFactory.Default.Create<ImageSource>(value);
             if(imageSource == null)
             {
                 imageSource = Internal.Extensions.IconExtensions.GetIcon("Question").ToImageSource();
             }
             return imageSource;
-
+            
             //return Factories.ImageSourceFactory.Default.Create<ImageSource>(typeof(object));
             /*
             ImageSource imageSource = null;

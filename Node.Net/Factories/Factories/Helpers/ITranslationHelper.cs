@@ -11,7 +11,7 @@ namespace Node.Net.Factories.Factories.Helpers
     public static class ITranslationHelper
     {
         class ConcreteTranslation : ITranslation { public Vector3D Translation { get; set; } = new Vector3D(0, 0, 0); }
-
+        
         public static ITranslation FromIDictionary(IDictionary source,IFactory factory)
         {
             var concreteTranslation = new ConcreteTranslation
