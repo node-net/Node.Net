@@ -2,9 +2,9 @@
 
 namespace Node.Net.Controls
 {
-    class TreeView : System.Windows.Controls.TreeView
+    public class TreeView : System.Windows.Controls.TreeView
     {
-        private Internal.TreeViewUpdater _updater;
+        private readonly Internal.TreeViewUpdater _updater;
         public TreeView()
         {
             HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;

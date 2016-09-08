@@ -1,18 +1,12 @@
-﻿using System;
+﻿using Node.Net.Factories.Factories.Generic;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Node.Net.Factories.Factories.Generic;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factories.Factories.Helpers
 {
     class IFactoryHelper
     {
-        public static IFactory FromObject(object source,IFactory factory)
+        public static IFactory FromObject(object source, IFactory factory)
         {
             return CreateDefaultFactory();
         }

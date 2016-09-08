@@ -21,7 +21,7 @@ namespace Node.Net.Factories.Factories.TypeSourceFactories
             set { streamFromString.ResourceAssemblies = value; }
         }
         public bool CacheReadItems = true;
-        private Dictionary<string, dynamic> readCache = new Dictionary<string, dynamic>();
+        private readonly Dictionary<string, dynamic> readCache = new Dictionary<string, dynamic>();
         public override object Create(string source)
         {
             if(GetFunction != null)

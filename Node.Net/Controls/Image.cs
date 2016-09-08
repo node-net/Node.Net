@@ -8,7 +8,7 @@ namespace Node.Net.Controls
 {
     public class Image : System.Windows.Controls.Image
     {
-        private Internal.ImageUpdater _updater;
+        private readonly Internal.ImageUpdater _updater;
         public Image()
         {
             _updater = new Internal.ImageUpdater(this);
