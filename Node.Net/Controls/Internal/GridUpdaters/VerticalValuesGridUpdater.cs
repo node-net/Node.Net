@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -38,7 +39,7 @@ namespace Node.Net.Controls.Internal.GridUpdaters
                         var value = dictionary[key];
                         if (value != null)
                         {
-                            var keyValue = new Label { Content = value.ToString() };
+                            var keyValue = new Label { Content = GetStringValue(value) };
                             grid.Children.Add(keyValue);
                             Grid.SetColumn(keyValue, ShowKeys ? 1 : 0);
                             Grid.SetRow(keyValue, rowIndex);
@@ -49,6 +50,21 @@ namespace Node.Net.Controls.Internal.GridUpdaters
             }
         }
 
-
+        private string GetStringValue(object value)
+        {
+            if (value == null) return "";
+            if(value.GetType() != typeof(string) && typeof(IEnumerable).IsAssignableFrom(value.GetType()))
+            {
+                var ienumerable = value as IEnumerable;
+                var stringBuilder = new StringBuilder();
+                foreach(var item in ienumerable)
+                {
+                    if (stringBuilder.Length > 0) stringBuilder.Append(",");
+                    stringBuilder.Append(item.ToString());
+                }
+                return stringBuilder.ToString();
+            }
+            return value.ToString();
+        }
     }
 }

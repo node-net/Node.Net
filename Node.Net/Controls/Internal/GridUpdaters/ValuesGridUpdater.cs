@@ -25,7 +25,9 @@ namespace Node.Net.Controls.Internal.GridUpdaters
             foreach (string key in dictionary.Keys)
             {
                 var value = dictionary[key];
-                if (value == null || value.GetType().IsValueType || value.GetType() == typeof(string))
+                if (value == null || value.GetType().IsValueType || value.GetType() == typeof(string)
+                    || value.GetType() == typeof(string[]) || value.GetType() == typeof(double[])
+                    || value.GetType() == typeof(int[]) || value.GetType() == typeof(double[,]))
                 {
                     if (!keys.Contains(key)) keys.Add(key);
                 }
