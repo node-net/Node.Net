@@ -16,7 +16,7 @@ namespace Node.Net.Data.Readers
             dictionaryTypeConverter = new DictionaryTypeConverter(assembly);
             IDictionaryTypeConversionFunction = dictionaryTypeConverter.Convert;
         }
-        private readonly Readers.DictionaryTypeConverter dictionaryTypeConverter;
+        private Readers.DictionaryTypeConverter dictionaryTypeConverter;
 
         private readonly JsonReader jsonReader = new JsonReader();
         public Type DefaultArrayType

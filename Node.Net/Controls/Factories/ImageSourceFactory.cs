@@ -32,7 +32,7 @@ namespace Node.Net.Controls.Factories
 
         public List<Assembly> ResourceAssemblies = new List<Assembly>();
         public Dictionary<string, string> AliasMap = new Dictionary<string, string>();
-        private readonly Dictionary<string, ImageSource> ImageSourceMap = new Dictionary<string, ImageSource>();
+        private Dictionary<string, ImageSource> ImageSourceMap = new Dictionary<string, ImageSource>();
 
         public ImageSource GetImageSource(string name)
         {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Node.Net.Controls.Forms
@@ -15,14 +17,34 @@ namespace Node.Net.Controls.Forms
             Update();
         }
 
+        private string GetLabelText()
+        {
+            var type = "";
+            var key = "";
+            var value = Internal.KeyValuePair.GetValue(DataContext);
+            if(value != null)
+            {
+                type = value.GetType().ToString();
+                var dictionary = value as IDictionary;
+                if (dictionary != null && dictionary.Contains("Type")) type = dictionary["Type"].ToString();
+                if(Internal.KeyValuePair.IsKeyValuePair(DataContext))
+                {
+                    key = Internal.KeyValuePair.GetKey(DataContext).ToString();
+                }
+            }
+            return $"{type} {key}".Trim();
+        }
         private void Update()
         {
+            titleLabel.Content = GetLabelText();
+
             if (propertyGrid != null)
             {
-                propertyGrid.SelectedObject = DataContext;
+                propertyGrid.SelectedObject = Node.Net.Controls.Internal.KeyValuePair.GetValue(DataContext);
             }
         }
 
+        private Label titleLabel = new Label();
         private System.Windows.Forms.Integration.WindowsFormsHost host;
         private System.Windows.Forms.PropertyGrid propertyGrid;
 
@@ -45,6 +67,11 @@ namespace Node.Net.Controls.Forms
         {
             base.OnInitialized(e);
 
+            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            RowDefinitions.Add(new RowDefinition());
+
+            Children.Add(titleLabel);
+
             propertyGrid = new System.Windows.Forms.PropertyGrid
             {
                 ToolbarVisible = false,
@@ -53,6 +80,7 @@ namespace Node.Net.Controls.Forms
             propertyGrid.PropertyValueChanged += PropertyGrid_PropertyValueChanged;
             host = new System.Windows.Forms.Integration.WindowsFormsHost { Child = propertyGrid };
             Children.Add(host);
+            Grid.SetRow(host, 1);
             Update();
         }
         public event System.EventHandler ValueChanged;

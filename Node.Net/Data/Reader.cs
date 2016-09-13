@@ -14,7 +14,7 @@ namespace Node.Net.Data
             dictionaryTypeConverter = new Readers.DictionaryTypeConverter(assembly);
             reader = new Readers.Reader { IDictionaryTypeConversionFunction = dictionaryTypeConverter.Convert };
         }
-        private readonly Readers.DictionaryTypeConverter dictionaryTypeConverter;
+        private Readers.DictionaryTypeConverter dictionaryTypeConverter;
 
         public object Read(Stream stream)
         {
@@ -46,7 +46,7 @@ namespace Node.Net.Data
             get { return reader.BinarySignatureReadFunctions; }
             set { reader.BinarySignatureReadFunctions = value; }
         }
-        private readonly Readers.Reader reader = new Readers.Reader();
+        private Readers.Reader reader = new Readers.Reader();
 
         public static Reader Default { get; } = new Reader();
     }
