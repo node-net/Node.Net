@@ -42,10 +42,12 @@ namespace Node.Net.Controls
                 var idictionary = DataContext.GetValue() as IDictionary;
                 if(idictionary != null)
                 {
-                    sContent = "Dictionary";
-                    if(idictionary.Contains("Type") && idictionary["Type"].ToString().Length > 0)
+                    if (sContent.Length == 0)
                     {
-                        sContent = idictionary["Type"].ToString();
+                        if (idictionary.Contains("Type") && idictionary["Type"].ToString().Length > 0)
+                        {
+                            sContent = idictionary["Type"].ToString();
+                        }
                     }
                 }
                 Children.Add(new Label { Content = sContent, ToolTip = toolTipText, VerticalAlignment = VerticalAlignment.Center });
