@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace Node.Net.Controls
 {
-    class Properties : System.Windows.Controls.Grid
+    public class Properties : System.Windows.Controls.Grid
     {
         public Properties()
         {

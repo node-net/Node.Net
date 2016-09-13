@@ -12,5 +12,7 @@ namespace Node.Net.Collections
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary) => IDictionaryExtension.DeepCollect<T>(dictionary);
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary,IFilter filter) => IDictionaryExtension.DeepCollect<T>(dictionary,filter);
         public static string[] CollectUniqueStrings(this IDictionary dictionary, string key) => IDictionaryExtension.CollectUniqueStrings(dictionary, key);
+        public static object GetParent(this IDictionary dictionary) => IDictionaryExtension.GetParent(dictionary);
+        public static void Copy(this IDictionary destination, IDictionary source) => IDictionaryExtension.Copy(destination, source);
     }
 }

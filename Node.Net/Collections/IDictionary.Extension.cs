@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Node.Net.Collections
 {
@@ -39,6 +40,7 @@ namespace Node.Net.Collections
                     var child = dictionary[key];
                     if (child != null)
                     {
+                        SetParent(child as IDictionary, dictionary);
                         if (typeof(T).IsAssignableFrom(child.GetType()))
                         {
                             var instance = (T)child;
@@ -66,6 +68,8 @@ namespace Node.Net.Collections
                     var child = dictionary[child_key];
                     if (child != null)
                     {
+                        SetParent(child as IDictionary, dictionary);
+
                         if (typeof(T).IsAssignableFrom(child.GetType()))
                         {
                             var instance = (T)child;
@@ -116,6 +120,65 @@ namespace Node.Net.Collections
                 }
             }
             return results.ToArray();
+        }
+
+        public static object GetParent(IDictionary dictionary)
+        {
+            var parentProperty = dictionary.GetType().GetProperty("Parent");
+            if(parentProperty != null)
+            {
+                return parentProperty.GetValue(dictionary);
+            }
+            return null;
+        }
+
+        public static void SetParent(IDictionary dictionary,object parent)
+        {
+            if (dictionary != null)
+            {
+                var parentProperty = dictionary.GetType().GetProperty("Parent");
+                if (parentProperty != null)
+                {
+                    parentProperty.SetValue(dictionary, parent);
+                }
+            }
+        }
+
+        public static void Copy(IDictionary destination,IDictionary source)
+        {
+            destination.Clear();
+            foreach(string key in source.Keys)
+            {
+                destination[key] = CopyChild(source[key]);
+            }
+        }
+
+        public static object CopyChild(object instance)
+        {
+            object copy = instance;
+            var child_dictionary = instance as IDictionary;
+            var child_enumerable = instance as IEnumerable;
+            if (child_dictionary != null)
+            {
+                var new_child_dictionary = Activator.CreateInstance(child_dictionary.GetType()) as IDictionary;
+                new_child_dictionary.Copy(child_dictionary);
+                copy = new_child_dictionary;
+            }
+            else if (child_enumerable != null && child_enumerable.GetType() != typeof(string))
+            {
+                var new_child_list = new List<dynamic>();
+                Copy(new_child_list, child_enumerable);
+                copy = new_child_list;
+            }
+            return copy;
+        }
+
+        public static void Copy(IList destination,IEnumerable source)
+        {
+            foreach(var child in source)
+            {
+                destination.Add(CopyChild(child));
+            }
         }
     }
 }
