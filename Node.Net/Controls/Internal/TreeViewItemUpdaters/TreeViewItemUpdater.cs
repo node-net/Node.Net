@@ -77,7 +77,11 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
                 var value = dictionary[key];
                 if(value != null && value.GetType() != typeof(string) && typeof(IEnumerable).IsAssignableFrom(value.GetType()))
                 {
-                    keys.Add(key);
+                    if (value.GetType() != typeof(double[]) && value.GetType() != typeof(string[]) &&
+                       value.GetType() != typeof(double[,]))
+                    {
+                        keys.Add(key);
+                    }
                 }
             }
             return keys.ToArray();

@@ -39,7 +39,8 @@ namespace Node.Net.Controls.Internal.GridUpdaters
                         var value = dictionary[key];
                         if (value != null)
                         {
-                            var keyValue = new Label { Content = GetStringValue(value) };
+                            //var keyValue = new Label { Content = GetStringValue(value) };
+                            var keyValue = new TextBox { Text = GetStringValue(value), TextWrapping = TextWrapping.Wrap, VerticalContentAlignment = VerticalAlignment.Center, BorderBrush=null  };
                             grid.Children.Add(keyValue);
                             Grid.SetColumn(keyValue, ShowKeys ? 1 : 0);
                             Grid.SetRow(keyValue, rowIndex);
