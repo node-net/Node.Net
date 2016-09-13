@@ -17,5 +17,7 @@ namespace Node.Net.Controls
             base.OnInitialized(e);
             _updater.UpdateTreeView(this);
         }
+
+        public void Update() { _updater.UpdateTreeView(this); }
     }
 }
