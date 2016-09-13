@@ -16,6 +16,7 @@ namespace Node.Net.Controls.Internal
             UpdateTreeView(sender as System.Windows.Controls.TreeView);
         }
 
+        private object treeViewDataContext = null;
         private Dictionary<string, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<string, System.Windows.Controls.TreeViewItem>();
         public void UpdateTreeView(System.Windows.Controls.TreeView treeView)
         {
@@ -24,6 +25,11 @@ namespace Node.Net.Controls.Internal
             treeView.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             treeView.Items.Clear();
 
+            if(treeViewDataContext != treeView.DataContext)
+            {
+                treeViewDataContext = treeView.DataContext;
+                treeViewItems.Clear();
+            }
             var dictionary = GetItems(treeView);
             foreach(string key in dictionary.Keys)
             {
@@ -35,19 +41,28 @@ namespace Node.Net.Controls.Internal
                     tvi.Tag = new Internal.TreeViewItemUpdaters.TreeViewItemUpdater(tvi);
                     treeViewItems[key] = tvi;
                 }
-                treeView.Items.Add(tvi);
+                if(!treeView.Items.Contains(tvi))
+                {
+                    treeView.Items.Add(tvi);
+                }
             }  
         }
         
         private Dictionary<string,dynamic> GetItems(System.Windows.Controls.TreeView treeView)
         {
+            var result = new Dictionary<string, dynamic>();
             if (treeView.DataContext != null)
             {
-                var result = new Dictionary<string, dynamic>();
-                result.Add(treeView.DataContext.GetKey(), treeView.DataContext.GetValue());
-                return result;
+                if (Internal.KeyValuePair.IsKeyValuePair(treeView.DataContext))
+                {
+                    result.Add(treeView.DataContext.GetKey(), treeView.DataContext.GetValue());
+                }
+                else
+                {
+                    return GetChildren(treeView);
+                }
             }
-            return GetChildren(treeView);
+            return result;
         }
         private Dictionary<string,dynamic> GetChildren(System.Windows.Controls.TreeView treeView)
         {

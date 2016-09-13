@@ -39,6 +39,15 @@ namespace Node.Net.Controls
             if (DataContext != null)
             {
                 var sContent = DataContext.GetKey().ToString();
+                var idictionary = DataContext.GetValue() as IDictionary;
+                if(idictionary != null)
+                {
+                    sContent = "Dictionary";
+                    if(idictionary.Contains("Type") && idictionary["Type"].ToString().Length > 0)
+                    {
+                        sContent = idictionary["Type"].ToString();
+                    }
+                }
                 Children.Add(new Label { Content = sContent, ToolTip = toolTipText, VerticalAlignment = VerticalAlignment.Center });
             }
         }
