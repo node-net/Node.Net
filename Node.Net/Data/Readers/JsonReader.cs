@@ -149,7 +149,9 @@ namespace Node.Net.Data.Readers
 
         private object ConvertArray(IList list)
         {
+            if (list.Count == 0) return list;
             var hasNull = false;
+            var allTypesConvertToDouble = true;
             var types = new List<Type>();
             foreach (var item in list)
             {
@@ -157,6 +159,7 @@ namespace Node.Net.Data.Readers
                 else
                 {
                     if (!types.Contains(item.GetType())) types.Add(item.GetType());
+                    if (!item.GetType().IsPrimitive) allTypesConvertToDouble = false;
                 }
             }
             if (types.Count == 1 && !hasNull)
@@ -167,16 +170,10 @@ namespace Node.Net.Data.Readers
                     foreach (string value in list) { strings.Add(value); }
                     return strings.ToArray();
                 }
-                if (types[0] == typeof(double) || types[0] == typeof(int))
-                {
-                    var doubles = new List<double>();
-                    foreach (var value in list) { doubles.Add(Convert.ToDouble(value)); }
-                    return doubles.ToArray();
-                }
-                if(types[0] == typeof(double[]))
+                if (types[0] == typeof(double[]))
                 {
                     var length = 0;
-                    foreach(double[] dar in list)
+                    foreach (double[] dar in list)
                     {
                         if (length == 0) length = dar.Length;
                         if (length != dar.Length) length = -1;
@@ -186,7 +183,7 @@ namespace Node.Net.Data.Readers
                         double[,] array = new double[list.Count, length];
                         for (int i = 0; i < list.Count; ++i)
                         {
-                            for(int j = 0; j < length; ++j)
+                            for (int j = 0; j < length; ++j)
                             {
                                 array[i, j] = ((double[])list[i])[j];
                             }
@@ -194,6 +191,16 @@ namespace Node.Net.Data.Readers
                         return array;
                     }
                 }
+            }
+            if(allTypesConvertToDouble)
+            { 
+                if (types[0] == typeof(double) || types[0] == typeof(int) || types[0] == typeof(float))
+                {
+                    var doubles = new List<double>();
+                    foreach (var value in list) { doubles.Add(Convert.ToDouble(value)); }
+                    return doubles.ToArray();
+                }
+                
             }
 
             return list;
