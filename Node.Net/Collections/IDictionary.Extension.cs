@@ -122,12 +122,32 @@ namespace Node.Net.Collections
             return results.ToArray();
         }
 
+        private static Dictionary<WeakReference, WeakReference> parentMap = new Dictionary<WeakReference, WeakReference>();
+        private static void CleanParentReferences()
+        {
+            var deadKeys = new List<WeakReference>();
+            foreach(var wr in parentMap.Keys)
+            {
+                if (!wr.IsAlive) deadKeys.Add(wr);
+            }
+            foreach(var deadKey in deadKeys) { parentMap.Remove(deadKey); }
+        }
         public static object GetParent(IDictionary dictionary)
         {
             var parentProperty = dictionary.GetType().GetProperty("Parent");
             if(parentProperty != null)
             {
                 return parentProperty.GetValue(dictionary);
+            }
+            else
+            {
+                foreach(var wr in parentMap.Keys)
+                {
+                    if(wr.Target == dictionary)
+                    {
+                        return parentMap[wr].Target;
+                    }
+                }
             }
             return null;
         }
@@ -140,6 +160,10 @@ namespace Node.Net.Collections
                 if (parentProperty != null)
                 {
                     parentProperty.SetValue(dictionary, parent);
+                }
+                else
+                {
+                    parentMap.Add(new WeakReference(dictionary), new WeakReference(parent));
                 }
             }
         }
@@ -179,6 +203,46 @@ namespace Node.Net.Collections
             {
                 destination.Add(CopyChild(child));
             }
+        }
+
+        public static T GetNearestAncestor<T>(IDictionary child)
+        {
+            var parent = child.GetParent();
+            if (child != null && parent != null)
+            {
+                if (typeof(T).IsAssignableFrom(parent.GetType()))
+                {
+                    var ancestor = (T)parent;
+                    if (ancestor != null) return ancestor;
+                }
+                return GetNearestAncestor<T>(parent as IDictionary);
+            }
+            return default(T);
+        }
+        public static T GetFurthestAncestor<T>(IDictionary child)
+        {
+            if (child != null)
+            {
+                var ancestor = GetNearestAncestor<T>(child);
+                if (ancestor != null)
+                {
+                    var further_ancestor = GetFurthestAncestor<T>(ancestor as IDictionary);
+                    if (further_ancestor != null) return further_ancestor;
+                }
+                if (ancestor == null)
+                {
+                    if (typeof(T).IsAssignableFrom(child.GetType()))
+                    {
+                        ancestor = (T)child;
+                    }
+                }
+                return ancestor;
+            }
+            return default(T);
+        }
+        public static IDictionary GetRootAncestor(IDictionary child)
+        {
+            return child.GetFurthestAncestor<IDictionary>();
         }
     }
 }

@@ -14,5 +14,9 @@ namespace Node.Net.Collections
         public static string[] CollectUniqueStrings(this IDictionary dictionary, string key) => IDictionaryExtension.CollectUniqueStrings(dictionary, key);
         public static object GetParent(this IDictionary dictionary) => IDictionaryExtension.GetParent(dictionary);
         public static void Copy(this IDictionary destination, IDictionary source) => IDictionaryExtension.Copy(destination, source);
+        public static T GetNearestAncestor<T>(this IDictionary child) => IDictionaryExtension.GetNearestAncestor<T>(child);
+        public static T GetFurthestAncestor<T>(this IDictionary child) => IDictionaryExtension.GetFurthestAncestor<T>(child);
+        public static IDictionary GetRootAncestor(this IDictionary child) => IDictionaryExtension.GetRootAncestor(child);
+
     }
 }
