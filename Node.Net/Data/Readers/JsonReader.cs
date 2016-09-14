@@ -144,6 +144,58 @@ namespace Node.Net.Data.Readers
                     done = true;
                 }
             }
+            return ConvertArray(list);
+        }
+
+        private object ConvertArray(IList list)
+        {
+            var hasNull = false;
+            var types = new List<Type>();
+            foreach (var item in list)
+            {
+                if (item == null) hasNull = true;
+                else
+                {
+                    if (!types.Contains(item.GetType())) types.Add(item.GetType());
+                }
+            }
+            if (types.Count == 1 && !hasNull)
+            {
+                if (types[0] == typeof(string))
+                {
+                    var strings = new List<string>();
+                    foreach (string value in list) { strings.Add(value); }
+                    return strings.ToArray();
+                }
+                if (types[0] == typeof(double) || types[0] == typeof(int))
+                {
+                    var doubles = new List<double>();
+                    foreach (var value in list) { doubles.Add(Convert.ToDouble(value)); }
+                    return doubles.ToArray();
+                }
+                if(types[0] == typeof(double[]))
+                {
+                    var length = 0;
+                    foreach(double[] dar in list)
+                    {
+                        if (length == 0) length = dar.Length;
+                        if (length != dar.Length) length = -1;
+                    }
+                    if (length > -1)
+                    {
+                        double[,] array = new double[list.Count, length];
+                        for (int i = 0; i < list.Count; ++i)
+                        {
+                            for(int j = 0; j < length; ++j)
+                            {
+                                array[i, j] = ((double[])list[i])[j];
+                            }
+                        }
+                        return array;
+                    }
+                }
+            }
+
             return list;
         }
         private IDictionary ReadObject(System.IO.TextReader reader)

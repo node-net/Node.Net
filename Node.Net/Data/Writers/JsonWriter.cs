@@ -67,6 +67,7 @@ namespace Node.Net.Data.Writers
             else if (typeof(byte[]).IsAssignableFrom(value.GetType())) WriteBytes(writer, (byte[])(value));
             else if (typeof(string).IsAssignableFrom(value.GetType())) WriteString(writer, value);
             else if (typeof(IDictionary).IsAssignableFrom(value.GetType())) WriteIDictionary(writer, value);
+            else if (typeof(double[,]).IsAssignableFrom(value.GetType())) WriteDoubleArray2D(writer, value);
             else if (typeof(IEnumerable).IsAssignableFrom(value.GetType())) WriteIEnumerable(writer, value);
             else
             {
@@ -92,6 +93,22 @@ namespace Node.Net.Data.Writers
         {
             if (value.GetType() == typeof(bool)) writer.Write($"{GetIndent()}{value.ToString().ToLower()}");
             else writer.Write($"{GetIndent()}{value}");
+        }
+        private void WriteDoubleArray2D(System.IO.TextWriter writer,object value)
+        {
+            double[,] array = value as double[,];
+            var length0 = array.GetLength(0);
+            var length1 = array.GetLength(1);
+            var equivalentList = new List<List<double>>();
+            for (int i = 0; i < length0; ++i)
+            {
+                equivalentList.Add(new List<double>());
+                for(int j =0; j < length1;++j)
+                {
+                    equivalentList[i].Add(array[i, j]);
+                }
+            }
+            WriteIEnumerable(writer, equivalentList);
         }
         private void WriteIEnumerable(System.IO.TextWriter writer, object value)
         {
