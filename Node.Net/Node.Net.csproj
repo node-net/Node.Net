@@ -111,6 +111,7 @@
     <Compile Include="Data\Readers\PrimitiveReader.cs" />
     <Compile Include="Data\Readers\Reader.cs" />
     <Compile Include="Data\Readers\StringReader.cs" />
+    <Compile Include="Data\Readers\WordReader.cs" />
     <Compile Include="Data\Readers\XamlReader.cs" />
     <Compile Include="Data\Readers\XmlReader.cs" />
     <Compile Include="Data\Repositories\DirectoryRepository.cs" />
