@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
 namespace Node.Net.Collections
 {
@@ -17,9 +12,9 @@ namespace Node.Net.Collections
         public bool Include(object value)
         {
             var dictionary = value as IDictionary;
-            if(dictionary != null)
+            if (dictionary != null)
             {
-                if(dictionary.Contains("Type"))
+                if (dictionary.Contains("Type"))
                 {
                     var tvalue = dictionary["Type"];
                     if (tvalue != null)

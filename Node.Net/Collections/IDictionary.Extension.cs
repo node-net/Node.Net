@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Node.Net.Collections
 {
@@ -13,7 +12,7 @@ namespace Node.Net.Collections
             var value = dictionary[name];
             if (value == null) return default(T);
 
-            if (typeof(T) == typeof(DateTime) && value.GetType()== typeof(string))
+            if (typeof(T) == typeof(DateTime) && value.GetType() == typeof(string))
             {
                 return (T)((object)DateTime.Parse(value.ToString()));
             }
@@ -21,7 +20,7 @@ namespace Node.Net.Collections
 
         }
 
-        public static void Set(IDictionary dictionary,string key,object value)
+        public static void Set(IDictionary dictionary, string key, object value)
         {
             if (value != null && value.GetType() == typeof(DateTime))
             {
@@ -30,7 +29,7 @@ namespace Node.Net.Collections
             else { dictionary[key] = value; }
         }
 
-        public static Dictionary<string,T> Collect<T>(IDictionary dictionary,IFilter filter = null)
+        public static Dictionary<string, T> Collect<T>(IDictionary dictionary, IFilter filter = null)
         {
             var children = new Dictionary<string, T>();
             if (dictionary != null)
@@ -58,7 +57,7 @@ namespace Node.Net.Collections
             return children;
         }
 
-        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary,IFilter filter = null)
+        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null)
         {
             var children = new Dictionary<string, T>();
             if (dictionary != null)
@@ -82,7 +81,7 @@ namespace Node.Net.Collections
                             }
                         }
 
-                        var deep_children = DeepCollect<T>(child as IDictionary,filter);
+                        var deep_children = DeepCollect<T>(child as IDictionary, filter);
                         foreach (var deep_child_key in deep_children.Keys)
                         {
                             var deep_child = deep_children[deep_child_key];
@@ -94,10 +93,10 @@ namespace Node.Net.Collections
             return children;
         }
 
-        public static string[] CollectUniqueStrings(IDictionary dictionary,string key)
+        public static string[] CollectUniqueStrings(IDictionary dictionary, string key)
         {
             var results = new List<string>();
-            if(dictionary.Contains(key))
+            if (dictionary.Contains(key))
             {
                 var value = dictionary[key];
                 if (value != null)
@@ -108,12 +107,12 @@ namespace Node.Net.Collections
                     }
                 }
             }
-            foreach(var child_key in dictionary.Keys)
+            foreach (var child_key in dictionary.Keys)
             {
                 var child_dictionary = dictionary[child_key] as IDictionary;
-                if(child_dictionary != null)
+                if (child_dictionary != null)
                 {
-                    foreach(var value in CollectUniqueStrings(child_dictionary,key))
+                    foreach (var value in CollectUniqueStrings(child_dictionary, key))
                     {
                         if (!results.Contains(value)) results.Add(value);
                     }
@@ -122,37 +121,26 @@ namespace Node.Net.Collections
             return results.ToArray();
         }
 
-        private static Dictionary<WeakReference, WeakReference> parentMap = new Dictionary<WeakReference, WeakReference>();
+        private static Node.Net.Collections.Internal.ParentMap parentMap = new Node.Net.Collections.Internal.ParentMap();
         private static void CleanParentReferences()
         {
-            var deadKeys = new List<WeakReference>();
-            foreach(var wr in parentMap.Keys)
-            {
-                if (!wr.IsAlive) deadKeys.Add(wr);
-            }
-            foreach(var deadKey in deadKeys) { parentMap.Remove(deadKey); }
+            parentMap.Clean();
         }
         public static object GetParent(IDictionary dictionary)
         {
             var parentProperty = dictionary.GetType().GetProperty("Parent");
-            if(parentProperty != null)
+            if (parentProperty != null)
             {
                 return parentProperty.GetValue(dictionary);
             }
             else
             {
-                foreach(var wr in parentMap.Keys)
-                {
-                    if(wr.Target == dictionary)
-                    {
-                        return parentMap[wr].Target;
-                    }
-                }
+                return parentMap.GetParent(dictionary);
             }
             return null;
         }
 
-        public static void SetParent(IDictionary dictionary,object parent)
+        public static void SetParent(IDictionary dictionary, object parent)
         {
             if (dictionary != null)
             {
@@ -163,15 +151,15 @@ namespace Node.Net.Collections
                 }
                 else
                 {
-                    parentMap.Add(new WeakReference(dictionary), new WeakReference(parent));
+                    parentMap.SetParent(dictionary, parent);
                 }
             }
         }
 
-        public static void Copy(IDictionary destination,IDictionary source)
+        public static void Copy(IDictionary destination, IDictionary source)
         {
             destination.Clear();
-            foreach(string key in source.Keys)
+            foreach (string key in source.Keys)
             {
                 destination[key] = CopyChild(source[key]);
             }
@@ -197,9 +185,9 @@ namespace Node.Net.Collections
             return copy;
         }
 
-        public static void Copy(IList destination,IEnumerable source)
+        public static void Copy(IList destination, IEnumerable source)
         {
-            foreach(var child in source)
+            foreach (var child in source)
             {
                 destination.Add(CopyChild(child));
             }

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\Interfaces.cs" />
+    <Compile Include="Collections\Internal\ParentMap.cs" />
     <Compile Include="Collections\TypeValueFilter.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Data\Extension\Matrix3D.Extension.cs" />
     <Compile Include="Data\Extension\Regex.Extension.cs" />
     <Compile Include="Data\Interfaces.cs" />
+    <Compile Include="Data\Internal\IFactory.Extension.cs" />
     <Compile Include="Data\Model\IModel.cs" />
     <Compile Include="Data\Model\IModel.Extension.cs" />
     <Compile Include="Data\Model\MailMessage.cs" />

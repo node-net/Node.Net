@@ -10,15 +10,6 @@ namespace Node.Net.Collections
             {
                 if (item.GetType() == typeof(System.Collections.DictionaryEntry)) return true;
                 if (item.GetType().IsGenericType && item.GetType().GetGenericTypeDefinition() == typeof(System.Collections.Generic.KeyValuePair<,>)) return true;
-                /*
-                if (item.GetType().IsGenericType &&
-                    !object.ReferenceEquals(null, item.GetType().GetGenericTypeDefinition()))
-                {
-                    if (item.GetType().GetGenericTypeDefinition() == typeof(System.Collections.Generic.KeyValuePair<,>))
-                    {
-                        return true;
-                    }
-                }*/
             }
             return false;
         }
