@@ -40,8 +40,14 @@ namespace Node.Net.Data.Readers
         }
         #endregion
 
-        public double ReadDouble() => Convert.ToDouble(ReadWord(), System.Globalization.CultureInfo.CurrentCulture);
-        public int ReadInt32() => Convert.ToInt32(ReadWord(), System.Globalization.CultureInfo.CurrentCulture);
+        public double ReadDouble()
+        {
+            return Convert.ToDouble(ReadWord(), System.Globalization.CultureInfo.CurrentCulture);
+        }
+        public int ReadInt32()
+        {
+            return Convert.ToInt32(ReadWord(), System.Globalization.CultureInfo.CurrentCulture);
+        }
 
         public string ReadLine()
         {
@@ -65,7 +71,7 @@ namespace Node.Net.Data.Readers
                 var line = _sr.ReadLine();
                 while (line != null && word.Length == 0)
                 {
-                    var wordsA = line.Split(_delimiters.ToArray());
+                    var wordsA = line.Split(Delimiters.ToArray());
                     var wordsB = new System.Collections.Generic.List<string>();
                     foreach (string w in wordsA)
                     {
