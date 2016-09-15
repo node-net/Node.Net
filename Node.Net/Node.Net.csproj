@@ -171,7 +171,6 @@
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\Type.Extension.cs" />
     <Compile Include="Factories\Extensions.cs" />
-    <Compile Include="Factories\Extension\HitTester.cs" />
     <Compile Include="Factories\Extension\Stream.Extension.cs" />
     <Compile Include="Factories\Extension\Visual.Extension.cs" />
     <Compile Include="Factories\Extension\Visual3D.Extension.cs" />
@@ -200,6 +199,7 @@
     <Compile Include="Factories\Factories\TypeSourceFactories\ObjectFromString.cs" />
     <Compile Include="Factories\Factories\TypeSourceFactories\StreamFromString.cs" />
     <Compile Include="Factories\Factory.cs" />
+    <Compile Include="Factories\Helpers\HitTester.cs" />
     <Compile Include="Factories\Interfaces.cs" />
     <Compile Include="Factories\Internal\IChild.Extension.cs" />
     <Compile Include="Factories\Internal\IFactory.Extension.cs" />

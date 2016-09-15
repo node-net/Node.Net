@@ -1,9 +1,9 @@
 ﻿using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Factories.Extension
+namespace Node.Net.Factories.Helpers
 {
-    class HitTester
+    public class HitTester
     {
         public Point3D? HitTest(Visual3D reference, Point3D point, Vector3D direction)
         {

@@ -9,7 +9,7 @@ namespace Node.Net.Factories.Factories.Helpers
     {
         class ConcreteColor : IColor { public Color Color { get; set; } }
         private static ConcreteColor concreteColor = new ConcreteColor();
-        public static IColor FromString(string source,IFactory factory)
+        public static IColor FromString(string source, IFactory factory)
         {
             if (source == null) return null;
             if (NamedColors.ContainsKey(source))
@@ -20,7 +20,7 @@ namespace Node.Net.Factories.Factories.Helpers
             var words = source.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (words.Length == 3)
             {
-                concreteColor.Color= Color.FromRgb(Convert.ToByte(words[0]), Convert.ToByte(words[1]), Convert.ToByte(words[2]));
+                concreteColor.Color = Color.FromRgb(Convert.ToByte(words[0]), Convert.ToByte(words[1]), Convert.ToByte(words[2]));
                 return concreteColor;
             }
             if (words.Length == 4)

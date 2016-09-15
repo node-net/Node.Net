@@ -7,7 +7,7 @@ namespace Node.Net.Factories.Factories.Helpers
     public static class IScaleHelper
     {
         class ConcreteScale : IScale { public Vector3D Scale { get; set; } = new Vector3D(1, 1, 1); }
-        public static IScale FromIDictionary(IDictionary source,IFactory factory)
+        public static IScale FromIDictionary(IDictionary source, IFactory factory)
         {
             var concreteScale = new ConcreteScale();
             if (source != null)
@@ -15,17 +15,17 @@ namespace Node.Net.Factories.Factories.Helpers
                 concreteScale = new ConcreteScale
                 {
                     Scale = new Vector3D(
-                        GetScaleMeters(source, "ScaleX,Length",factory),
-                        GetScaleMeters(source, "ScaleY,Width",factory),
-                        GetScaleMeters(source, "ScaleZ,Height",factory))
+                        GetScaleMeters(source, "ScaleX,Length", factory),
+                        GetScaleMeters(source, "ScaleY,Width", factory),
+                        GetScaleMeters(source, "ScaleZ,Height", factory))
                 };
             }
             return concreteScale;
         }
 
-        private static double GetScaleMeters(IDictionary source, string key,IFactory factory)
+        private static double GetScaleMeters(IDictionary source, string key, IFactory factory)
         {
-            var lengthMeters = IDictionaryHelper.GetLengthMeters(source, key,factory);
+            var lengthMeters = IDictionaryHelper.GetLengthMeters(source, key, factory);
             if (source.Contains(key)) return lengthMeters;
             if (key.Contains(","))
             {

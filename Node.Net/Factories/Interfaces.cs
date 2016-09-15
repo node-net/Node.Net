@@ -7,7 +7,7 @@ namespace Node.Net.Factories
 {
     public interface ITypeName { string TypeName { get; } }
     public interface IFactory { object Create(Type targetType, object source); }
-    public interface IChild {  IFactory Parent { get; set; } }
+    public interface IChild { IFactory Parent { get; set; } }
     public interface IChildFactory : IFactory, IChild { }
     public interface IFactoryAdapter : IChildFactory { string Name { get; } }
     public interface IHelperFactory { IFactory HelperFactory { get; set; } }
@@ -19,7 +19,7 @@ namespace Node.Net.Factories
     public interface ITranslation { Vector3D Translation { get; } }
     public interface IRotations { Vector3D RotationsXYZ { get; } }
     public interface IScale { Vector3D Scale { get; } }
-    public interface IMatrix3D {  Matrix3D Matrix3D { get;} }
+    public interface IMatrix3D { Matrix3D Matrix3D { get; } }
     public interface ILength { double Length { get; } }
     public interface IAngle { double Angle { get; } }
     public interface IColor { Color Color { get; } }

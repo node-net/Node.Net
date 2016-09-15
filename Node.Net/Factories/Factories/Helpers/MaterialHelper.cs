@@ -5,9 +5,9 @@ namespace Node.Net.Factories.Factories.Helpers
 {
     public static class MaterialHelper
     {
-        public static Material FromString(string source,IFactory factory)
+        public static Material FromString(string source, IFactory factory)
         {
-            if(factory != null)
+            if (factory != null)
             {
                 var icolor = factory.Create<IColor>(source);
                 if (icolor != null) return new DiffuseMaterial { Brush = new SolidColorBrush(icolor.Color) };

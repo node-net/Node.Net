@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Factories.Factories.Helpers
 {
@@ -28,12 +24,12 @@ namespace Node.Net.Factories.Factories.Helpers
             return string.Empty;
         }
 
-        public static double GetLengthMeters(IDictionary source, string name,IFactory factory)
+        public static double GetLengthMeters(IDictionary source, string name, IFactory factory)
         {
             return factory.Create<ILength>(GetDictionaryValueAsString(source, name)).Length;
         }
 
-        public static double GetAngleDegrees(IDictionary source, string name,IFactory factory)
+        public static double GetAngleDegrees(IDictionary source, string name, IFactory factory)
         {
             return factory.Create<IAngle>(GetDictionaryValueAsString(source, name)).Angle;
         }

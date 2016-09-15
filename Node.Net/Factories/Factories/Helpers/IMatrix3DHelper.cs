@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factories.Factories.Helpers
@@ -11,20 +6,20 @@ namespace Node.Net.Factories.Factories.Helpers
     public static class IMatrix3DHelper
     {
         class ConcreteMatrix3D : IMatrix3D { public Matrix3D Matrix3D { get; set; } = new Matrix3D(); }
-        public static IMatrix3D FromIDictionary(IDictionary source,IFactory factory)
+        public static IMatrix3D FromIDictionary(IDictionary source, IFactory factory)
         {
             var matrix3D = new Matrix3D();
             var irotations = factory.Create<IRotations>(source);
             var iscale = factory.Create<IScale>(source);
             var itranslation = factory.Create<ITranslation>(source);
-            if(irotations != null)
+            if (irotations != null)
             {
                 matrix3D = RotateXYZ(new Matrix3D(), irotations.RotationsXYZ);
             }
-            if(iscale != null) matrix3D.Scale(iscale.Scale);
+            if (iscale != null) matrix3D.Scale(iscale.Scale);
             if (itranslation != null) matrix3D.Translate(itranslation.Translation);
 
-            if(!matrix3D.IsIdentity)
+            if (!matrix3D.IsIdentity)
             {
                 return new ConcreteMatrix3D { Matrix3D = matrix3D };
             }

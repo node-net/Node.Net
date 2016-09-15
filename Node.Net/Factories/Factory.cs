@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Node.Net.Factories.Factories.Generic;
-using Node.Net.Factories.Factories.Helpers;
-using System.Windows.Media;
 
 namespace Node.Net.Factories
 {
     public sealed class Factory : Factories.CompositeFactory
     {
-        public Factory() {}
+        public Factory() { }
         public Factory(Assembly resource_assembly) { ResourceAssemblies.Add(resource_assembly); }
 
         public Func<string, object> GetFunction
@@ -52,7 +49,7 @@ namespace Node.Net.Factories
         {
             get
             {
-                if(_default == null)
+                if (_default == null)
                 {
                     _default = Factories.Helpers.IFactoryHelper.CreateDefaultFactory();
                 }
