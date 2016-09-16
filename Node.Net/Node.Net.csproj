@@ -234,7 +234,6 @@
     <Compile Include="Measurement\Length.cs" />
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
-    <Compile Include="Model2D\Viewer.cs" />
     <Compile Include="_Model3D\IModel3DGroupTransformer.cs" />
     <Compile Include="_Model3D\IModel3DTransformer.cs" />
     <Compile Include="_Model3D\IRenderer.cs" />
