@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using static System.Math;
 
-namespace Node.Net.Extensions
+namespace Node.Net.Deprecated.Extensions
 {
     public static class IModel3DExtension
     {

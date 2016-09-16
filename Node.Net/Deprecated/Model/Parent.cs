@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Node.Net.Model
+namespace Node.Net.Deprecated.Model
 {
     public class Parent : Generic.Parent<dynamic>
     {

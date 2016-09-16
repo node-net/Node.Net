@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Node.Net.Model
+namespace Node.Net.Deprecated.Model
 {
     public class Element : Generic.Element<dynamic>
     {

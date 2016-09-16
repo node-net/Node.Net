@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Media3D;
 
-namespace Node.Net.Model
+namespace Node.Net.Deprecated.Model
 {
     public class SpatialElement : Element, IModel3D, ITranslation3D,IRotation3D
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Node.Net.Extensions
+namespace Node.Net.Deprecated.Extensions
 {
     public static class IChildExtension
     {

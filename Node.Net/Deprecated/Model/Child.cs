@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Model
+﻿namespace Node.Net.Deprecated.Model
 {
     public class Child : IChild
     {

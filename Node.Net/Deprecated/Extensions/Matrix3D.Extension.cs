@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Media3D;
 
-namespace Node.Net.Extensions
+namespace Node.Net.Deprecated.Extensions
 {
     public static class Matrix3DExtension
     {

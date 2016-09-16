@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Model.Generic
+namespace Node.Net.Deprecated.Model.Generic
 {
     public class Element<T> : Parent<T>, IChild, IMetaData
     {

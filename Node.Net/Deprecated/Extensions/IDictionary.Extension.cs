@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Node.Net.Extensions
+namespace Node.Net.Deprecated.Extensions
 {
     public class IDictionaryExtension
     {
