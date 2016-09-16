@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Transformers
+namespace Node.Net.Deprecated.Transformers
 {
     public class Transform3DTransformer : TypeTransformer
     {

@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Plugin
+﻿namespace Node.Net.Deprecated.Plugin
 {
     public class Plugins : System.Collections.Generic.Dictionary<string,System.Reflection.Assembly>
     {

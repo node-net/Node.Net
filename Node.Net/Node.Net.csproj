@@ -252,17 +252,17 @@
     <Compile Include="Model\Generic\Parent.cs" />
     <Compile Include="Model\Parent.cs" />
     <Compile Include="Model\SpatialElement.cs" />
-    <Compile Include="Plugin\Plugins.cs" />
+    <Compile Include="Deprecated\Plugin\Plugins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Resources\MaterialResources.cs" />
     <Compile Include="Resources\Resources.cs" />
-    <Compile Include="Transformer.cs" />
-    <Compile Include="Transformers\BrushTransformer.cs" />
-    <Compile Include="Transformers\ColorTransformer.cs" />
-    <Compile Include="Transformers\MaterialTransformer.cs" />
-    <Compile Include="Transformers\Transform3DTransformer.cs" />
-    <Compile Include="Transformers\TypeTransformer.cs" />
+    <Compile Include="Deprecated\Transformer.cs" />
+    <Compile Include="Deprecated\Transformers\BrushTransformer.cs" />
+    <Compile Include="Deprecated\Transformers\ColorTransformer.cs" />
+    <Compile Include="Deprecated\Transformers\MaterialTransformer.cs" />
+    <Compile Include="Deprecated\Transformers\Transform3DTransformer.cs" />
+    <Compile Include="Deprecated\Transformers\TypeTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Node.Net.snk" />

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace Node.Net.Transformers
+namespace Node.Net.Deprecated.Transformers
 {
     public class BrushTransformer : TypeTransformer
     {

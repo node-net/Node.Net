@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Media;
 
-namespace Node.Net.Transformers
+namespace Node.Net.Deprecated.Transformers
 {
     public class ColorTransformer : TypeTransformer
     {

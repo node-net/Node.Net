@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Media;
 
-namespace Node.Net
+namespace Node.Net.Deprecated
 {
     public class Transformer : ITransformer
     {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Transformers
+namespace Node.Net.Deprecated.Transformers
 {
     public class MaterialTransformer : TypeTransformer
     {
