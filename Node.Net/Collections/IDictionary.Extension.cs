@@ -29,6 +29,22 @@ namespace Node.Net.Collections
             else { dictionary[key] = value; }
         }
 
+        public static void RemoveKey(IDictionary dictionary,string key)
+        {
+            if(key.Contains("/"))
+            {
+
+            }
+            else
+            {
+                dictionary.Remove(key);
+            }
+        }
+        public static void RemoveKeys(IDictionary dictionary,string[] keys)
+        {
+            foreach (var key in keys) { RemoveKey(dictionary, key); }
+        }
+
         public static Dictionary<string, T> Collect<T>(IDictionary dictionary, IFilter filter = null)
         {
             var children = new Dictionary<string, T>();
@@ -55,6 +71,48 @@ namespace Node.Net.Collections
                 }
             }
             return children;
+        }
+
+        public static void Remove<T>(IDictionary dictionary)
+        {
+            if (dictionary != null)
+            {
+                var remove_keys = new List<string>();
+                foreach (var key in dictionary.Keys)
+                {
+                    var child = dictionary[key];
+                    if (child != null)
+                    {
+                        //SetParent(child as IDictionary, dictionary);
+                        if (typeof(T).IsAssignableFrom(child.GetType()))
+                        {
+                            
+                            var instance = (T)child;
+                            if (instance != null)
+                            {
+                                remove_keys.Add(key.ToString());
+                            }
+                        }
+                    }
+                }
+                foreach(var remove_key in remove_keys)
+                {
+                    dictionary.Remove(remove_key);
+                }
+            }
+        }
+
+        public static void DeepRemove<T>(IDictionary dictionary)
+        {
+            dictionary.Remove<T>();
+            foreach(var key in dictionary.Keys)
+            {
+                var child_dictionary = dictionary[key] as IDictionary;
+                if(child_dictionary != null)
+                {
+                    child_dictionary.DeepRemove<T>();
+                }
+            }
         }
 
         public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null)

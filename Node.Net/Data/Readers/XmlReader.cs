@@ -5,6 +5,7 @@ namespace Node.Net.Data.Readers
 {
     sealed class XmlReader : IRead
     {
+        public static XmlReader Default { get; } = new XmlReader();
         public object Read(Stream stream)
         {
             var xdoc = new XmlDocument();

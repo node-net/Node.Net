@@ -7,10 +7,13 @@ namespace Node.Net.Collections
     {
         public static T Get<T>(this IDictionary dictionary, string name) => IDictionaryExtension.Get<T>(dictionary, name);
         public static void Set(this IDictionary dictionary, string name, object value) => IDictionaryExtension.Set(dictionary, name, value);
+        public static void RemoveKeys(this IDictionary dictionary, string[] keys) => IDictionaryExtension.RemoveKeys(dictionary, keys);
         public static Dictionary<string, T> Collect<T>(this IDictionary dictionary) => IDictionaryExtension.Collect<T>(dictionary);
         public static Dictionary<string, T> Collect<T>(this IDictionary dictionary, IFilter filter) => IDictionaryExtension.Collect<T>(dictionary, filter);
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary) => IDictionaryExtension.DeepCollect<T>(dictionary);
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary, IFilter filter) => IDictionaryExtension.DeepCollect<T>(dictionary, filter);
+        public static void Remove<T>(this IDictionary dictionary) => IDictionaryExtension.Remove<T>(dictionary);
+        public static void DeepRemove<T>(this IDictionary dictionary) => IDictionaryExtension.DeepRemove<T>(dictionary);
         public static string[] CollectUniqueStrings(this IDictionary dictionary, string key) => IDictionaryExtension.CollectUniqueStrings(dictionary, key);
         public static object GetParent(this IDictionary dictionary) => IDictionaryExtension.GetParent(dictionary);
         public static void Copy(this IDictionary destination, IDictionary source) => IDictionaryExtension.Copy(destination, source);

@@ -40,7 +40,7 @@ namespace Node.Net.Data.Readers
                     textSignatureReadFunctions = new Dictionary<string, Func<Stream, object>>();
                     textSignatureReadFunctions.Add("{", jsonReader.Read);
                     textSignatureReadFunctions.Add("[", jsonReader.Read);
-                    textSignatureReadFunctions.Add("<", XamlReader.Default.Read);
+                    textSignatureReadFunctions.Add("<", XmlReader.Default.Read);
                     textSignatureReadFunctions.Add(":Primitive:", PrimitiveReader.Default.Read);
                 }
                 return textSignatureReadFunctions;
