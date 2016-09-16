@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Environment.Internal
+﻿namespace Node.Net.Deprecated.Environment.Internal
 {
     public class Executor : System.IDisposable
     {

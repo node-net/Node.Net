@@ -151,11 +151,11 @@
     <Compile Include="Diagnostics\FileSystem.cs" />
     <Compile Include="Diagnostics\ICommand.cs" />
     <Compile Include="Diagnostics\IDictionary.Extension.cs" />
-    <Compile Include="Environment\Command.cs" />
-    <Compile Include="Environment\Environment.cs" />
-    <Compile Include="Environment\Internal\Executor.cs" />
-    <Compile Include="Environment\MyDocuments.cs" />
-    <Compile Include="Environment\Resources.cs" />
+    <Compile Include="Deprecated\Environment\Command.cs" />
+    <Compile Include="Deprecated\Environment\Environment.cs" />
+    <Compile Include="Deprecated\Environment\Internal\Executor.cs" />
+    <Compile Include="Deprecated\Environment\MyDocuments.cs" />
+    <Compile Include="Deprecated\Environment\Resources.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
     <Compile Include="Extensions\IChild.Extension.cs" />

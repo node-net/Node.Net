@@ -1,4 +1,4 @@
-﻿namespace Node.Net.Environment
+﻿namespace Node.Net.Deprecated.Environment
 {
     [System.Serializable]
     #if NET35
