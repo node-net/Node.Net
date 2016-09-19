@@ -25,7 +25,7 @@ namespace Node.Net.Controls.Internal.GridUpdaters
                 if (keys.Count > 0)
                 {
                     var rowIndex = 0;
-                    grid.ColumnDefinitions.Add(new ColumnDefinition());
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                     if (ShowKeys) grid.ColumnDefinitions.Add(new ColumnDefinition());
                     foreach (string key in keys)
                     {
