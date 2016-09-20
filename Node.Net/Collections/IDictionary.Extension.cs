@@ -290,5 +290,21 @@ namespace Node.Net.Collections
         {
             return child.GetFurthestAncestor<IDictionary>();
         }
+
+        public static T Find<T>(IDictionary dictionary,string key)
+        {
+            var items = DeepCollect<T>(dictionary);
+            foreach(var child_key in items.Keys)
+            {
+                if (child_key == key) return items[child_key];
+            }
+
+            foreach (var child_key in items.Keys)
+            {
+                if (child_key.Contains(key)) return items[child_key];
+            }
+
+            return default(T);
+        }
     }
 }

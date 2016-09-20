@@ -20,6 +20,6 @@ namespace Node.Net.Collections
         public static T GetNearestAncestor<T>(this IDictionary child) => IDictionaryExtension.GetNearestAncestor<T>(child);
         public static T GetFurthestAncestor<T>(this IDictionary child) => IDictionaryExtension.GetFurthestAncestor<T>(child);
         public static IDictionary GetRootAncestor(this IDictionary child) => IDictionaryExtension.GetRootAncestor(child);
-
+        public static T Find<T>(this IDictionary dictionary, string key) => IDictionaryExtension.Find<T>(dictionary, key);
     }
 }
