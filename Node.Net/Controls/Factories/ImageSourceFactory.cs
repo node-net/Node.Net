@@ -34,6 +34,11 @@ namespace Node.Net.Controls.Factories
         public Dictionary<string, string> AliasMap = new Dictionary<string, string>();
         private Dictionary<string, ImageSource> ImageSourceMap = new Dictionary<string, ImageSource>();
 
+        public void AddImageSource(string name,ImageSource source)
+        {
+            ImageSourceMap.Add(name, source);
+        }
+
         public ImageSource GetImageSource(string name)
         {
             if (AliasMap.ContainsKey(name))
@@ -68,14 +73,19 @@ namespace Node.Net.Controls.Factories
 
         public ImageSource GetImageSource(IDictionary dictionary)
         {
-            if (dictionary != null && dictionary.Contains("Type"))
+            if (dictionary != null)
             {
-                var value = dictionary["Type"];
-                var result = GetImageSource(value.ToString());
-                if(result == null)
+                ImageSource result = null;
+                if (dictionary.Contains("Type"))
                 {
-
+                    result = GetImageSource(dictionary["Type"].ToString());
+                    if (result != null) return result;
                 }
+                result = GetImageSource(dictionary.GetType().FullName);
+                if (result != null) return result;
+                result = GetImageSource(dictionary.GetType().Name);
+                if (result != null) return result;
+                result = GetImageSource("IDictionary");
                 return result;
             }
 

@@ -29,28 +29,6 @@ namespace Node.Net.Controls.Internal
                 imageSource = Internal.Extensions.IconExtensions.GetIcon("Question").ToImageSource();
             }
             return imageSource;
-            
-            //return Factories.ImageSourceFactory.Default.Create<ImageSource>(typeof(object));
-            /*
-            ImageSource imageSource = null;
-            if (value != null)
-            {
-
-                var dictionary = value.GetValue() as IDictionary;
-                if (dictionary != null)
-                {
-                    if (dictionary.Contains("Type"))
-                    {
-                        var stype = dictionary["Type"].ToString();
-
-                    }
-                }
-                if(imageSource == null)
-                {
-                    imageSource = Internal.Extensions.IconExtensions.GetIcon("Question").ToImageSource();
-                }
-            }
-            return imageSource;*/
         }
     }
 }
