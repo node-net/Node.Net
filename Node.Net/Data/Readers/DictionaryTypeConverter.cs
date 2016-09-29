@@ -145,7 +145,8 @@ namespace Node.Net.Data.Readers
                             arrayCopy = new System.Collections.Generic.List<dynamic>();
                         }
                         Copy(enumerable, arrayCopy);
-                        destination[key] = arrayCopy;
+                        destination[key] = JsonReader.ConvertArray(arrayCopy);
+                        //destination[key] = arrayCopy;
                     }
                     else
                     {

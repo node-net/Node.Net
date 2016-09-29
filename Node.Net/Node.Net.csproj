@@ -183,6 +183,7 @@
     <Compile Include="Factories\Factories\Generic\FunctionAdapter3.cs" />
     <Compile Include="Factories\Factories\Generic\TypeFactory.cs" />
     <Compile Include="Factories\Factories\Generic\TypeSourceFactory.cs" />
+    <Compile Include="Factories\Factories\Helpers\ArrayHelper.cs" />
     <Compile Include="Factories\Factories\Helpers\IAngleHelper.cs" />
     <Compile Include="Factories\Factories\Helpers\IColorHelper.cs" />
     <Compile Include="Factories\Factories\Helpers\IDictionaryHelper.cs" />
