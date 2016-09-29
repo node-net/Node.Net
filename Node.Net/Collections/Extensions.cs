@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net.Collections
 {
@@ -21,5 +22,7 @@ namespace Node.Net.Collections
         public static T GetFurthestAncestor<T>(this IDictionary child) => IDictionaryExtension.GetFurthestAncestor<T>(child);
         public static IDictionary GetRootAncestor(this IDictionary child) => IDictionaryExtension.GetRootAncestor(child);
         public static T Find<T>(this IDictionary dictionary, string key) => IDictionaryExtension.Find<T>(dictionary, key);
+        public static Matrix3D GetLocalToParent(this IDictionary dictionary) => IDictionaryExtension.GetLocalToParent(dictionary);
+        public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => IDictionaryExtension.GetLocalToParent(dictionary);
     }
 }

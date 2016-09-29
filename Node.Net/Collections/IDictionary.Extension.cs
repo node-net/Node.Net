@@ -1,11 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net.Collections
 {
     public static class IDictionaryExtension
     {
+        public static Func<IDictionary, Matrix3D> GetLocalToParentFunction;
+        public static Func<IDictionary, Matrix3D> GetLocalToWorldFunction;
+        public static Matrix3D GetLocalToParent(IDictionary dictionary)
+        {
+            if (GetLocalToParentFunction != null) return GetLocalToParentFunction(dictionary);
+            return new Matrix3D();
+        }
+        public static Matrix3D GetLocalToWorld(IDictionary dictionary)
+        {
+            if (GetLocalToWorldFunction != null) return GetLocalToWorldFunction(dictionary);
+            return new Matrix3D();
+        }
         public static T Get<T>(IDictionary dictionary, string name)
         {
             if (!dictionary.Contains(name)) return default(T);
