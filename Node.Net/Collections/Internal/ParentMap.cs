@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Node.Net.Collections.Internal
 {
+    /*
     class ParentMap : Dictionary<WeakReference, WeakReference>
     {
         public void Clean()
@@ -46,5 +47,5 @@ namespace Node.Net.Collections.Internal
             Add(new WeakReference(source), new WeakReference(parent));
             foreach (var deadKey in deadKeys) { Remove(deadKey); }
         }
-    }
+    }*/
 }

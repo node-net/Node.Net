@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Collections\Interfaces.cs" />
     <Compile Include="Collections\Internal\ParentMap.cs" />
+    <Compile Include="Collections\MetaDataMap.cs" />
     <Compile Include="Collections\TypeValueFilter.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Factories\Internal\IChild.Extension.cs" />
     <Compile Include="Factories\Internal\IFactory.Extension.cs" />
     <Compile Include="Factories\Internal\ParentMap.cs" />
+    <Compile Include="Factories\MetaDataMap.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Filters\TypeFilter.cs" />
     <Compile Include="IChild.cs" />

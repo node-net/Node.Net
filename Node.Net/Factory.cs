@@ -7,6 +7,10 @@ namespace Node.Net
 {
     public sealed class Factory : IFactory
     {
+        static Factory()
+        {
+            //Node.Net.Factories.Me
+        }
         public Factory() { }
         public Factory(Assembly assembly)
         {

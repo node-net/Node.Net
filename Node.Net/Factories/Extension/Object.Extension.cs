@@ -4,15 +4,30 @@ namespace Node.Net.Factories.Extension
 {
     static class ObjectExtension
     {
-        private static Internal.ParentMap parentMap = new Internal.ParentMap();
+        //private static Internal.ParentMap parentMap = new Internal.ParentMap();
         public static object GetParent(object item)
         {
-            return parentMap.GetParent(item);
+            if(MetaDataMap.GetMetaDataFunction != null)
+            {
+                if(MetaDataMap.GetMetaDataFunction(item).ContainsKey("Parent"))
+                {
+                    return MetaDataMap.GetMetaDataFunction(item)["Parent"];
+                }
+            }
+            return null;
+            //return parentMap.GetParent(item);
         }
 
         public static void SetParent(object item, object parent)
         {
-            parentMap.SetParent(item, parent);
+            if(item != null)
+            {
+                if(MetaDataMap.GetMetaDataFunction != null)
+                {
+                    MetaDataMap.GetMetaDataFunction(item)["Parent"] = parent;
+                }
+            }
+            //parentMap.SetParent(item, parent);
         }
 
         public static T GetNearestAncestor<T>(object child)

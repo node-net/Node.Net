@@ -179,13 +179,22 @@ namespace Node.Net.Collections
             return results.ToArray();
         }
 
-        private static Node.Net.Collections.Internal.ParentMap parentMap = new Node.Net.Collections.Internal.ParentMap();
+        //private static Node.Net.Collections.Internal.ParentMap parentMap = new Node.Net.Collections.Internal.ParentMap();
         private static void CleanParentReferences()
         {
-            parentMap.Clean();
+            //parentMap.Clean();
         }
         public static object GetParent(IDictionary dictionary)
         {
+            if(MetaDataMap.GetMetaDataFunction != null)
+            {
+                if(MetaDataMap.GetMetaDataFunction(dictionary).ContainsKey("Parent"))
+                {
+                    return MetaDataMap.GetMetaDataFunction(dictionary)["Parent"];
+                }
+            }
+            return null;
+            /*
             var parentProperty = dictionary.GetType().GetProperty("Parent");
             if (parentProperty != null)
             {
@@ -193,15 +202,22 @@ namespace Node.Net.Collections
             }
             else
             {
+
                 return parentMap.GetParent(dictionary);
             }
             return null;
+            */
         }
 
         public static void SetParent(IDictionary dictionary, object parent)
         {
             if (dictionary != null)
             {
+                if(MetaDataMap.GetMetaDataFunction != null)
+                {
+                    MetaDataMap.GetMetaDataFunction(dictionary)["Parent"] = parent;
+                }
+                /*
                 var parentProperty = dictionary.GetType().GetProperty("Parent");
                 if (parentProperty != null)
                 {
@@ -210,7 +226,7 @@ namespace Node.Net.Collections
                 else
                 {
                     parentMap.SetParent(dictionary, parent);
-                }
+                }*/
             }
         }
 

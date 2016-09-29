@@ -8,6 +8,8 @@ namespace Node.Net.Factories.Factories.Helpers
         class ConcreteLocalToParent : ILocalToParent { public Matrix3D LocalToParent { get; set; } = new Matrix3D(); }
         public static ILocalToParent FromIDictionary(IDictionary dictionary, IFactory factory)
         {
+            if (dictionary == null) throw new System.NullReferenceException("IDictionary dictionary is null");
+            if (factory == null) throw new System.NullReferenceException("IFactory factory is null");
             IMatrix3D imatrix = IMatrix3DHelper.FromIDictionary(dictionary, factory);
             if (imatrix != null)
             {
