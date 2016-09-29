@@ -147,7 +147,7 @@ namespace Node.Net.Data.Readers
             return ConvertArray(list);
         }
 
-        private object ConvertArray(IList list)
+        public static object ConvertArray(IList list)
         {
             if (list.Count == 0) return list;
             var hasNull = false;

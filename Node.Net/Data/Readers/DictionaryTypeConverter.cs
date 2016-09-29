@@ -14,6 +14,10 @@ namespace Node.Net.Data.Readers
         }
         public Dictionary<string, Type> Types { get; set; } = new Dictionary<string, Type>();
 
+        public static object Convert(IList source)
+        {
+            return JsonReader.ConvertArray(source);
+        }
         public IDictionary Convert(IDictionary source)
         {
             if (source != null && source.Contains(nameof(Type)))
