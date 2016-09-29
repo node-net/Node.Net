@@ -42,7 +42,7 @@ namespace Node.Net.Data.Readers
             }
             if(source != null)
             {
-                var result = new Dictionary<string, dynamic>();
+                var result = Activator.CreateInstance(source.GetType()) as IDictionary;
                 Copy(source, result);
                 return result;
             }
