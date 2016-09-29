@@ -38,6 +38,13 @@ namespace Node.Net.Data.Readers
                         throw new Exception($"Exception while converting type '{type}', fullname {Types[type].FullName}", ex);
                     }
                 }
+                
+            }
+            if(source != null)
+            {
+                var result = new Dictionary<string, dynamic>();
+                Copy(source, result);
+                return result;
             }
             return source;
         }
