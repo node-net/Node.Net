@@ -13,5 +13,9 @@ namespace Node.Net.Factories
         public static T GetNearestAncestor<T>(this IChild child) => Internal.IChildExtension.GetNearestAncestor<T>(child);
         public static T GetFurthestAncestor<T>(this IChild child) => Internal.IChildExtension.GetFurthestAncestor<T>(child);
         public static IFactory GetRootAncestor(this IChild child) => Internal.IChildExtension.GetRootAncestor(child);
+        public static object GetParent(this object item) => Extension.ObjectExtension.GetParent(item);
+        public static void SetParent(this object item, object parent) => Extension.ObjectExtension.SetParent(item, parent);
+        public static void UpdateParentBindings(this object item) => Extension.ObjectExtension.UpdateParentBindings(item);
+        public static T GetNearestAncestor<T>(this object child) => Extension.ObjectExtension.GetNearestAncestor<T>(child);
     }
 }

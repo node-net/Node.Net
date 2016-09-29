@@ -29,6 +29,8 @@ namespace Node.Net.Factories.Factories.Helpers
             factory.Add(new FunctionAdapter3<Visual3D, IDictionary>(Visual3DHelper.FromIDictionary));
             factory.Add(new FunctionAdapter3<double[], IList>(ArrayHelper.DoubleArrayFromIList));
             factory.Add(new FunctionAdapter3<double[,], IList>(ArrayHelper.DoubleArray2DFromIList));
+            factory.Add(new FunctionAdapter3<ILocalToParent, IDictionary>(ILocalToParentHelper.FromIDictionary));
+            factory.Add(new FunctionAdapter3<ILocalToWorld, IDictionary>(ILocalToWorldHelper.FromIDictionary));
             return factory;
         }
     }

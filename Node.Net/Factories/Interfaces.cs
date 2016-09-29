@@ -24,4 +24,6 @@ namespace Node.Net.Factories
     public interface IAngle { double Angle { get; } }
     public interface IColor { Color Color { get; } }
     public interface IPrimaryModel { Model3D Model3D { get; } }
+    public interface ILocalToParent { Matrix3D LocalToParent { get; } }
+    public interface ILocalToWorld { Matrix3D LocalToWorld { get; } }
 }
