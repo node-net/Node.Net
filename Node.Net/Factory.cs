@@ -9,7 +9,7 @@ namespace Node.Net
     {
         static Factory()
         {
-            //Node.Net.Factories.Me
+            Node.Net.Factories.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.MetaDataMap.GetMetaDataFunction;
         }
         public Factory() { }
         public Factory(Assembly assembly)
