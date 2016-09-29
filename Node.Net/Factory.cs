@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
@@ -35,9 +36,20 @@ namespace Node.Net
             set { factory.ResourceAssemblies = value; }
         }
 
-
+        class ConcreteLocalToParent : ILocalToParent { public Matrix3D LocalToParent { get; set; } = new Matrix3D(); }
+        class ConcreteLocalToWorld : ILocalToWorld { public Matrix3D LocalToWorld { get; set; } = new Matrix3D(); }
         public object Create(Type targetType, object source)
         {
+            if(targetType == typeof(ILocalToParent))
+            {
+                var localToParent = Node.Net.Factories.Factory.Default.Create(typeof(Node.Net.Factories.ILocalToParent), source) as Node.Net.Factories.ILocalToParent;
+                return new ConcreteLocalToParent { LocalToParent = localToParent.LocalToParent };
+            }
+            if (targetType == typeof(ILocalToWorld))
+            {
+                var localToWorld = Node.Net.Factories.Factory.Default.Create(typeof(Node.Net.Factories.ILocalToWorld), source) as Node.Net.Factories.ILocalToWorld;
+                return new ConcreteLocalToWorld { LocalToWorld = localToWorld.LocalToWorld };
+            }
             return factory.Create(targetType, source);
         }
 
