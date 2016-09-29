@@ -9,7 +9,11 @@ namespace Node.Net.Factories.Factories.Helpers
         public static ILocalToParent FromIDictionary(IDictionary dictionary, IFactory factory)
         {
             IMatrix3D imatrix = IMatrix3DHelper.FromIDictionary(dictionary, factory);
-            return new ConcreteLocalToParent { LocalToParent = imatrix.Matrix3D };
+            if (imatrix != null)
+            {
+                return new ConcreteLocalToParent { LocalToParent = imatrix.Matrix3D };
+            }
+            return new ConcreteLocalToParent();
         }
     }
 }

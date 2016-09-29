@@ -6,12 +6,17 @@ namespace Node.Net.Factories.Factories.Helpers
     public static class IMatrix3DHelper
     {
         class ConcreteMatrix3D : IMatrix3D { public Matrix3D Matrix3D { get; set; } = new Matrix3D(); }
-        public static IMatrix3D FromIDictionary(IDictionary source, IFactory factory)
+        public static IMatrix3D FromIDictionary(IDictionary source, IFactory factory_in)
         {
+            IFactory factory = factory_in;
+            if (factory == null) factory = Node.Net.Factories.Factory.Default;
             var matrix3D = new Matrix3D();
             var irotations = factory.Create<IRotations>(source);
+            if (irotations == null) irotations = Node.Net.Factories.Factory.Default.Create<IRotations>(source);
             var iscale = factory.Create<IScale>(source);
+            if (iscale == null) iscale = Node.Net.Factories.Factory.Default.Create<IScale>(source);
             var itranslation = factory.Create<ITranslation>(source);
+            if (itranslation == null) itranslation = factory.Create<ITranslation>(source);
             if (irotations != null)
             {
                 matrix3D = RotateXYZ(new Matrix3D(), irotations.RotationsXYZ);
@@ -36,5 +41,7 @@ namespace Node.Net.Factories.Factories.Helpers
             matrix.Rotate(new Quaternion(localZ, rotationsXYZ.Z));
             return matrix;
         }
+
+      
     }
 }
