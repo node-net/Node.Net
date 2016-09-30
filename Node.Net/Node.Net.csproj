@@ -186,6 +186,8 @@
     <Compile Include="Factories\Factories\Helpers\IDictionaryHelper.cs" />
     <Compile Include="Factories\Factories\Helpers\IFactoryHelper.cs" />
     <Compile Include="Factories\Factories\Helpers\ILengthHelper.cs" />
+    <Compile Include="Factories\Factories\Helpers\ILocalToParentHelper.cs" />
+    <Compile Include="Factories\Factories\Helpers\ILocalToWorldHelper.cs" />
     <Compile Include="Factories\Factories\Helpers\IMatrix3DHelper.cs" />
     <Compile Include="Factories\Factories\Helpers\IPrimaryModelHelper.cs" />
     <Compile Include="Factories\Factories\Helpers\IRotationsHelper.cs" />
@@ -202,8 +204,6 @@
     <Compile Include="Factories\Factories\TypeSourceFactories\StreamFromString.cs" />
     <Compile Include="Factories\Factory.cs" />
     <Compile Include="Factories\Helpers\HitTester.cs" />
-    <Compile Include="Factories\ILocalToParentHelper.cs" />
-    <Compile Include="Factories\ILocalToWorldHelper.cs" />
     <Compile Include="Factories\Interfaces.cs" />
     <Compile Include="Factories\Internal\IChild.Extension.cs" />
     <Compile Include="Factories\Internal\IFactory.Extension.cs" />
