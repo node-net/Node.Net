@@ -28,7 +28,7 @@ namespace Node.Net.Factories.Factories.Helpers
             {
                 return new ConcreteMatrix3D { Matrix3D = matrix3D };
             }
-            return null;
+            return new ConcreteMatrix3D();
         }
         public static Matrix3D RotateXYZ(Matrix3D matrix, Vector3D rotationsXYZ)
         {
