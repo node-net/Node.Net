@@ -72,6 +72,7 @@ namespace Node.Net
         public static void DeepRemove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepRemove<T>(dictionary);
         public static string[] CollectUniqueStrings(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.CollectUniqueStrings(dictionary, key);
         public static object GetParent(this IDictionary dictionary) => Collections.IDictionaryExtension.GetParent(dictionary);
+        public static void SetParent(this IDictionary dictionary, object parent) => Collections.IDictionaryExtension.SetParent(dictionary, parent);
         public static void Copy(this IDictionary destination, IDictionary source) => Collections.IDictionaryExtension.Copy(destination, source);
         public static T GetNearestAncestor<T>(this IDictionary child) => Collections.IDictionaryExtension.GetNearestAncestor<T>(child);
         public static T GetFurthestAncestor<T>(this IDictionary child) => Collections.IDictionaryExtension.GetFurthestAncestor<T>(child);
