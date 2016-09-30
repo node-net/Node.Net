@@ -14,7 +14,7 @@ namespace Node.Net.Factories.Factories.Helpers
             var irotations = factory.Create<IRotations>(source);
             if (irotations == null) irotations = Node.Net.Factories.Factory.Default.Create<IRotations>(source);
             var iscale = factory.Create<IScale>(source);
-            if (iscale == null) iscale = Node.Net.Factories.Factory.Default.Create<IScale>(source);
+            //if (iscale == null) iscale = Node.Net.Factories.Factory.Default.Create<IScale>(source);
             var itranslation = factory.Create<ITranslation>(source);
             if (itranslation == null) itranslation = factory.Create<ITranslation>(source);
             if (irotations != null)

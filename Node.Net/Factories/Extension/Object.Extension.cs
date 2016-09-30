@@ -57,6 +57,7 @@ namespace Node.Net.Factories.Extension
                     if(child != null && typeof(IDictionary).IsAssignableFrom(child.GetType()))
                     {
                         SetParent(child, item);
+                        UpdateParentBindings(child);
                     }
                 }
             }
@@ -70,6 +71,7 @@ namespace Node.Net.Factories.Extension
                         if(child != null && typeof(IDictionary).IsAssignableFrom(child.GetType()))
                         {
                             SetParent(child, item);
+                            UpdateParentBindings(child);
                         }
                     }
                 }

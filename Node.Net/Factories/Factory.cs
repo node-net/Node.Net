@@ -7,8 +7,11 @@ namespace Node.Net.Factories
 {
     public sealed class Factory : Factories.CompositeFactory
     {
-        public Factory() { }
-        public Factory(Assembly resource_assembly) { ResourceAssemblies.Add(resource_assembly); }
+        public Factory() {  }
+        public Factory(Assembly resource_assembly)
+        {
+            ResourceAssemblies.Add(resource_assembly);
+        }
 
         public Func<string, object> GetFunction
         {
@@ -29,6 +32,7 @@ namespace Node.Net.Factories
         }
 
         private readonly Factories.TypeSourceFactories.ObjectFromString objectFromString = new Factories.TypeSourceFactories.ObjectFromString();
+        private IFactory _fallback = Factories.Helpers.IFactoryHelper.CreateDefaultFactory();
         public override object Create(Type targetType, object source)
         {
             var instance = base.Create(targetType, source);
@@ -42,6 +46,7 @@ namespace Node.Net.Factories
                 // Partial matches
                 return objectFromString.CreatePartialMatch(targetType, source.ToString());
             }
+            if (instance == null && _fallback != null) return _fallback.Create(targetType, source);
             return null;
         }
         private static IFactory _default;
