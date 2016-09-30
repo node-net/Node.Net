@@ -431,7 +431,8 @@ namespace Node.Net.Deprecated.Extensions
             if (worldXDirectionVector.Z > 0) worldTilt *= -1;
             adjust.ZAxisRotation = "0 deg";
             adjust.YAxisRotation = $"{-worldTilt} deg";
-            worldYDirectionVector = adjust.TransformLocalToParent(worldYDirectionVector);
+            worldYDirectionVector = adjust.
+                TransformLocalToParent(worldYDirectionVector);
 
 
             var spin = Vector3D.AngleBetween(

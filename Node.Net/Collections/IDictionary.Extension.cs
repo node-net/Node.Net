@@ -99,7 +99,7 @@ namespace Node.Net.Collections
                         //SetParent(child as IDictionary, dictionary);
                         if (typeof(T).IsAssignableFrom(child.GetType()))
                         {
-                            
+
                             var instance = (T)child;
                             if (instance != null)
                             {
@@ -117,13 +117,15 @@ namespace Node.Net.Collections
 
         public static void DeepRemove<T>(IDictionary dictionary)
         {
-            dictionary.Remove<T>();
+            Remove<T>(dictionary);
+            //dictionary.Remove<T>();
             foreach(var key in dictionary.Keys)
             {
                 var child_dictionary = dictionary[key] as IDictionary;
                 if(child_dictionary != null)
                 {
-                    child_dictionary.DeepRemove<T>();
+                    DeepRemove<T>(child_dictionary);
+                    //child_dictionary.DeepRemove<T>();
                 }
             }
         }
@@ -192,11 +194,7 @@ namespace Node.Net.Collections
             return results.ToArray();
         }
 
-        //private static Node.Net.Collections.Internal.ParentMap parentMap = new Node.Net.Collections.Internal.ParentMap();
-        private static void CleanParentReferences()
-        {
-            //parentMap.Clean();
-        }
+
         public static object GetParent(IDictionary dictionary)
         {
             if(MetaDataMap.GetMetaDataFunction != null)
@@ -254,13 +252,14 @@ namespace Node.Net.Collections
 
         public static object CopyChild(object instance)
         {
-            object copy = instance;
+            var copy = instance;
             var child_dictionary = instance as IDictionary;
             var child_enumerable = instance as IEnumerable;
             if (child_dictionary != null)
             {
                 var new_child_dictionary = Activator.CreateInstance(child_dictionary.GetType()) as IDictionary;
-                new_child_dictionary.Copy(child_dictionary);
+                IDictionaryExtension.Copy(new_child_dictionary, child_dictionary);
+                //new_child_dictionary.Copy(child_dictionary);
                 copy = new_child_dictionary;
             }
             else if (child_enumerable != null && child_enumerable.GetType() != typeof(string))
@@ -282,7 +281,7 @@ namespace Node.Net.Collections
 
         public static T GetNearestAncestor<T>(IDictionary child)
         {
-            var parent = child.GetParent();
+            var parent = GetParent(child);
             if (child != null && parent != null)
             {
                 if (typeof(T).IsAssignableFrom(parent.GetType()))
@@ -317,7 +316,8 @@ namespace Node.Net.Collections
         }
         public static IDictionary GetRootAncestor(IDictionary child)
         {
-            return child.GetFurthestAncestor<IDictionary>();
+            return GetFurthestAncestor<IDictionary>(child);
+            //return child.GetFurthestAncestor<IDictionary>();
         }
 
         public static T Find<T>(IDictionary dictionary,string key)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -11,6 +12,8 @@ namespace Node.Net
         static Factory()
         {
             Node.Net.Factories.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.MetaDataMap.GetMetaDataFunction;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToParentFunction = Node.Net.Factories.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToWorldFunction = Node.Net.Factories.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
         }
         public Factory() { }
         public Factory(Assembly assembly)
@@ -50,7 +53,10 @@ namespace Node.Net
                 var localToWorld = Node.Net.Factories.Factory.Default.Create(typeof(Node.Net.Factories.ILocalToWorld), source) as Node.Net.Factories.ILocalToWorld;
                 return new ConcreteLocalToWorld { LocalToWorld = localToWorld.LocalToWorld };
             }
-            return factory.Create(targetType, source);
+            var result = factory.Create(targetType, source);
+            var idictionary = result as IDictionary;
+            if (idictionary != null) idictionary.DeepCollect<IDictionary>();
+            return result;
         }
 
         private readonly Node.Net.Reader reader = new Reader();

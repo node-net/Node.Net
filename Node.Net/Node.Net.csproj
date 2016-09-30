@@ -89,7 +89,6 @@
     <Compile Include="Controls\Properties.cs" />
     <Compile Include="Controls\TreeView.cs" />
     <Compile Include="Controls\ValuesGrid.cs" />
-    <Compile Include="Collections\Extensions.cs" />
     <Compile Include="Collections\IDictionary.Extension.cs" />
     <Compile Include="Collections\KeyValuePair.cs" />
     <Compile Include="Data\Assembly.Extension.cs" />
@@ -145,7 +144,6 @@
     <Compile Include="Data\Writers\Writer.cs" />
     <Compile Include="Data\Writers\XmlWriter.cs" />
     <Compile Include="Deprecated\Collections\MetaDataManager.cs" />
-    <Compile Include="Deprecated\Extension.cs" />
     <Compile Include="Diagnostics\Command.cs" />
     <Compile Include="Diagnostics\CommandGroup.cs" />
     <Compile Include="Diagnostics\ConsoleCommand.cs" />
@@ -160,7 +158,6 @@
     <Compile Include="Deprecated\Environment\Resources.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
-    <Compile Include="Deprecated\Extensions\IChild.Extension.cs" />
     <Compile Include="Deprecated\Extensions\IDictionary.Extension.cs" />
     <Compile Include="Extensions\IFactory.Extension.cs" />
     <Compile Include="Extensions\IGetDataSet.Extension.cs" />
@@ -168,10 +165,8 @@
     <Compile Include="Extensions\ImageSource.cs" />
     <Compile Include="Extensions\IMetaData.Extension.cs" />
     <Compile Include="Extensions\IMetaDataManager.Extension.cs" />
-    <Compile Include="Deprecated\Extensions\IModel3D.Extension.cs" />
     <Compile Include="Extensions\IParent.Extension.cs" />
     <Compile Include="Extensions\IRead.Extension.cs" />
-    <Compile Include="Deprecated\Extensions\Matrix3D.Extension.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\Type.Extension.cs" />
