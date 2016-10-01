@@ -21,7 +21,8 @@ namespace Node.Net.Measurement
         {
             if (value == "") return new Angle();
             var angleValue = System.Convert.ToDouble(value.Split(' ')[0]);
-            var unit = value.Split(' ')[1];
+            var unit = "";
+            if(value.Split(' ').Length > 1) unit = value.Split(' ')[1];
             foreach (AngularUnit aunit in abbreviations.Keys)
             {
                 if (unit == abbreviations[aunit])
