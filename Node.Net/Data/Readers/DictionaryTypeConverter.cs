@@ -138,7 +138,12 @@ namespace Node.Net.Data.Readers
                         // Copy by value
                         try
                         {
-                            arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
+                            var constructor = enumerable.GetType().GetConstructor(Type.EmptyTypes);
+                            if (constructor != null)
+                            {
+                                arrayCopy = System.Activator.CreateInstance(enumerable.GetType()) as System.Collections.IList;
+                            }
+                            else { arrayCopy = new System.Collections.Generic.List<dynamic>(); }
                         }
                         catch
                         {

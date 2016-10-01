@@ -41,7 +41,6 @@ namespace Node.Net.Factories.Factories.Helpers
         private static Transform3D GetTransform3D(IDictionary source, IFactory factory)
         {
             // transform should NOT include Scale
-
             ITranslation itranslation = null;
             IRotations irotations = null;
             if (factory != null)
