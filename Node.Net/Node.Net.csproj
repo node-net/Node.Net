@@ -87,10 +87,12 @@
     <Compile Include="Controls\Internal\TreeViewItemUpdaters\TreeViewItemUpdater.cs" />
     <Compile Include="Controls\Internal\TreeViewUpdater.cs" />
     <Compile Include="Controls\Properties.cs" />
+    <Compile Include="Controls\SDILayoutGrid.cs" />
     <Compile Include="Controls\TreeView.cs" />
     <Compile Include="Controls\ValuesGrid.cs" />
     <Compile Include="Collections\IDictionary.Extension.cs" />
     <Compile Include="Collections\KeyValuePair.cs" />
+    <Compile Include="Controls\ViewFrame.cs" />
     <Compile Include="Data\Assembly.Extension.cs" />
     <Compile Include="Data\Extensions.cs" />
     <Compile Include="Data\Extension\Matrix3D.Extension.cs" />
