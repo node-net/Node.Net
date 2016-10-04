@@ -9,6 +9,7 @@ namespace Node.Net.Collections
     {
         public static Func<IDictionary, Matrix3D> GetLocalToParentFunction;
         public static Func<IDictionary, Matrix3D> GetLocalToWorldFunction;
+        public static Func<IDictionary, Rect3D> GetBoundsFunction;
         public static Matrix3D GetLocalToParent(IDictionary dictionary)
         {
             if (GetLocalToParentFunction != null) return GetLocalToParentFunction(dictionary);
@@ -18,6 +19,11 @@ namespace Node.Net.Collections
         {
             if (GetLocalToWorldFunction != null) return GetLocalToWorldFunction(dictionary);
             return new Matrix3D();
+        }
+        public static Rect3D GetBounds(IDictionary dictionary)
+        {
+            if (GetBoundsFunction != null) return GetBoundsFunction(dictionary);
+            return new Rect3D();
         }
         public static T Get<T>(IDictionary dictionary, string name)
         {
