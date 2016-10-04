@@ -124,14 +124,12 @@ namespace Node.Net.Collections
         public static void DeepRemove<T>(IDictionary dictionary)
         {
             Remove<T>(dictionary);
-            //dictionary.Remove<T>();
             foreach(var key in dictionary.Keys)
             {
                 var child_dictionary = dictionary[key] as IDictionary;
                 if(child_dictionary != null)
                 {
                     DeepRemove<T>(child_dictionary);
-                    //child_dictionary.DeepRemove<T>();
                 }
             }
         }
@@ -211,19 +209,6 @@ namespace Node.Net.Collections
                 }
             }
             return null;
-            /*
-            var parentProperty = dictionary.GetType().GetProperty("Parent");
-            if (parentProperty != null)
-            {
-                return parentProperty.GetValue(dictionary);
-            }
-            else
-            {
-
-                return parentMap.GetParent(dictionary);
-            }
-            return null;
-            */
         }
 
         public static void SetParent(IDictionary dictionary, object parent)
@@ -234,16 +219,6 @@ namespace Node.Net.Collections
                 {
                     MetaDataMap.GetMetaDataFunction(dictionary)["Parent"] = parent;
                 }
-                /*
-                var parentProperty = dictionary.GetType().GetProperty("Parent");
-                if (parentProperty != null)
-                {
-                    parentProperty.SetValue(dictionary, parent);
-                }
-                else
-                {
-                    parentMap.SetParent(dictionary, parent);
-                }*/
             }
         }
 
@@ -323,7 +298,7 @@ namespace Node.Net.Collections
         public static IDictionary GetRootAncestor(IDictionary child)
         {
             return GetFurthestAncestor<IDictionary>(child);
-            //return child.GetFurthestAncestor<IDictionary>();
+
         }
 
         public static T Find<T>(IDictionary dictionary,string key)

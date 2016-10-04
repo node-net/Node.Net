@@ -14,8 +14,24 @@ namespace Node.Net.Controls
     {
         public SDILayoutGrid()
         {
+            _treeView = new Node.Net.Controls.TreeView();
+            _treeView.SelectedItemChanged += TreeView_SelectedItemChanged;
+            NavigationFrame.Views.Add("TreeView", _treeView);
+            _properties = new Node.Net.Controls.Properties();
+            SelectionFrame.Views.Add("Properties", _properties);
             DataContextChanged += _DataContextChanged;
         }
+
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var tvi = _treeView.SelectedItem as TreeViewItem;
+            if (tvi != null)
+            {
+                _properties.DataContext = tvi.DataContext;
+            }
+        }
+        private TreeView _treeView;
+        private Node.Net.Controls.Properties _properties;
 
         private void _DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) => Update();
 
@@ -32,6 +48,7 @@ namespace Node.Net.Controls
         {
             base.OnInitialized(e);
 
+
             RowDefinitions.Add(new RowDefinition());
             RowDefinitions.Add(new RowDefinition());
 
@@ -41,13 +58,15 @@ namespace Node.Net.Controls
 
             Children.Add(NavigationFrame);
             Children.Add(SelectionFrame);
-            Grid.SetRow(SelectionFrame, 1);
+            Grid.SetRow(SelectionFrame, 2);
             Children.Add(ViewFrame);
             var gridSplitter = new GridSplitter { Width = 5, HorizontalAlignment = HorizontalAlignment.Stretch };
             Children.Add(gridSplitter);
+            
+            
             Grid.SetColumn(gridSplitter, 1);
             Grid.SetColumn(ViewFrame, 2);
-            Grid.SetRowSpan(ViewFrame, 2);
+            Grid.SetRowSpan(ViewFrame, 3);
             Update();
         }
     }
