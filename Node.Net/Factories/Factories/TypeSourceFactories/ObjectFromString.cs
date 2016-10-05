@@ -30,10 +30,10 @@ namespace Node.Net.Factories.Factories.TypeSourceFactories
                 if (value != null) return value;
             }
             if (readCache.ContainsKey(source)) return readCache[source];
-            var stream = streamFromString.Create<Stream>(source);
+            var stream = streamFromString.Create<Stream>(source,null);
             if(stream != null)
             {
-                var item =  objectFromStream.Create<object>(stream);
+                var item =  objectFromStream.Create<object>(stream,null);
                 if(item != null && CacheReadItems)
                 {
                     readCache.Add(source, item);
@@ -64,7 +64,7 @@ namespace Node.Net.Factories.Factories.TypeSourceFactories
                             if (stream != null && targetType.IsAssignableFrom(stream.GetType())) return stream;
                             try
                             {
-                                var instance = objectFromStream.Create<object>(stream);
+                                var instance = objectFromStream.Create<object>(stream,null);
                                 if (instance != null && targetType.IsAssignableFrom(instance.GetType()))
                                 {
                                     readCache.Add(source, instance);

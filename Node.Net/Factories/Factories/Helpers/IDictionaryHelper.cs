@@ -27,23 +27,23 @@ namespace Node.Net.Factories.Factories.Helpers
 
         public static double GetLengthMeters(IDictionary source, string name, IFactory factory)
         {
-            return factory.Create<ILength>(GetDictionaryValueAsString(source, name)).Length;
+            return factory.Create<ILength>(GetDictionaryValueAsString(source, name),null).Length;
         }
 
         public static double GetAngleDegrees(IDictionary source, string name, IFactory factory)
         {
-            return factory.Create<IAngle>(GetDictionaryValueAsString(source, name)).Angle;
+            return factory.Create<IAngle>(GetDictionaryValueAsString(source, name),null).Angle;
         }
 
         public static Matrix3D GetLocalToParent(IDictionary dictionary)
         {
-            var localToParent = Factory.Default.Create<ILocalToWorld>(dictionary);
+            var localToParent = Factory.Default.Create<ILocalToWorld>(dictionary,null);
             if (localToParent != null) return localToParent.LocalToWorld;
             return new Matrix3D();
         }
         public static Matrix3D GetLocalToWorld(IDictionary dictionary)
         {
-            var localToWorld = Factory.Default.Create<ILocalToWorld>(dictionary);
+            var localToWorld = Factory.Default.Create<ILocalToWorld>(dictionary,null);
             if (localToWorld != null) return localToWorld.LocalToWorld;
             return new Matrix3D();
         }

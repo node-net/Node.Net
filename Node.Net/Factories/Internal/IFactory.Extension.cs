@@ -8,13 +8,13 @@ namespace Node.Net.Factories.Internal
 {
     static class IFactoryExtension
     {
-        public static T Create<T>(IFactory factory,object value)
+        public static T Create<T>(IFactory factory,object value,IFactory helper)
         {
-            return (T)(object)factory.Create(typeof(T), value);
+            return (T)(object)factory.Create(typeof(T), value,helper);
         }
-        public static object Create(IFactory factory,object value)
+        public static object Create(IFactory factory,object value,IFactory helper)
         {
-            return factory.Create(null, value);
+            return factory.Create(null, value,helper);
         }
     }
 }

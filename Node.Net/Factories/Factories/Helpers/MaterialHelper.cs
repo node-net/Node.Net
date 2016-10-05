@@ -9,7 +9,7 @@ namespace Node.Net.Factories.Factories.Helpers
         {
             if (factory != null)
             {
-                var icolor = factory.Create<IColor>(source);
+                var icolor = factory.Create<IColor>(source,null);
                 if (icolor != null) return new DiffuseMaterial { Brush = new SolidColorBrush(icolor.Color) };
             }
             return null;

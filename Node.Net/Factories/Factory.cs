@@ -33,20 +33,20 @@ namespace Node.Net.Factories
 
         private readonly Factories.TypeSourceFactories.ObjectFromString objectFromString = new Factories.TypeSourceFactories.ObjectFromString();
         private IFactory _fallback = Factories.Helpers.IFactoryHelper.CreateDefaultFactory();
-        public override object Create(Type targetType, object source)
+        public override object Create(Type targetType, object source,IFactory helper)
         {
-            var instance = base.Create(targetType, source);
+            var instance = base.Create(targetType, source,helper);
             if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
 
             if (source != null && source.GetType() == typeof(string))
             {
-                instance = objectFromString.Create(targetType, source.ToString());
+                instance = objectFromString.Create(targetType, source.ToString(),helper);
                 if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
 
                 // Partial matches
                 return objectFromString.CreatePartialMatch(targetType, source.ToString());
             }
-            if (instance == null && _fallback != null) return _fallback.Create(targetType, source);
+            if (instance == null && _fallback != null) return _fallback.Create(targetType, source,helper);
             return null;
         }
         private static IFactory _default;

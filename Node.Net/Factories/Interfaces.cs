@@ -6,7 +6,7 @@ using System.Windows.Media.Media3D;
 namespace Node.Net.Factories
 {
     public interface ITypeName { string TypeName { get; } }
-    public interface IFactory { object Create(Type targetType, object source); }
+    public interface IFactory { object Create(Type targetType, object source, IFactory helper); }
     public interface IChild { IFactory Parent { get; set; } }
     public interface IChildFactory : IFactory, IChild { }
     public interface IFactoryAdapter : IChildFactory { string Name { get; } }

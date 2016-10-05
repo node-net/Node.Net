@@ -32,7 +32,7 @@ namespace Node.Net.Factories.Factories.Helpers
             IPrimaryModel primaryModel = null;
             if (factory != null)
             {
-                primaryModel = factory.Create<IPrimaryModel>(source);
+                primaryModel = factory.Create<IPrimaryModel>(source,null);
             }
             if (primaryModel != null) return primaryModel.Model3D;
             return null;
@@ -45,8 +45,8 @@ namespace Node.Net.Factories.Factories.Helpers
             IRotations irotations = null;
             if (factory != null)
             {
-                itranslation = factory.Create<ITranslation>(source);
-                irotations = factory.Create<IRotations>(source);
+                itranslation = factory.Create<ITranslation>(source,null);
+                irotations = factory.Create<IRotations>(source,null);
                 var matrix3D = new Matrix3D();
                 if (irotations != null) matrix3D = IMatrix3DHelper.RotateXYZ(new Matrix3D(), irotations.RotationsXYZ);
                 if (itranslation != null) matrix3D.Translate(itranslation.Translation);

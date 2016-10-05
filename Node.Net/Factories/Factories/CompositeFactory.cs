@@ -6,7 +6,7 @@ namespace Node.Net.Factories.Factories
     public class CompositeFactory : Dictionary<string, IFactory>, ICompositeFactory
     {
         public IFactory Parent { get; set; } = null;
-        public virtual object Create(Type targetType, object source)
+        public virtual object Create(Type targetType, object source, IFactory helper)
         {
             foreach (var name in Keys)
             {
@@ -23,21 +23,21 @@ namespace Node.Net.Factories.Factories
                         {
                             if(source == null || isourceType.SourceType.IsAssignableFrom(source.GetType()))
                             {
-                                var instance = this[name].Create(targetType, source);
+                                var instance = this[name].Create(targetType, source,helper);
                                 if (instance != null) return instance;
                             }
                         }
                         else
                         {
 
-                            var instance = this[name].Create(targetType, source);
+                            var instance = this[name].Create(targetType, source,helper);
                             if (instance != null) return instance;
                         }
                     }
                 }
                 else
                 {
-                    var instance = this[name].Create(targetType, source);
+                    var instance = this[name].Create(targetType, source,helper);
                     if (instance != null) return instance;
                 }
             }

@@ -10,11 +10,11 @@ namespace Node.Net.Factories.Factories.Helpers
         {
             if (source == null) return null;
 
-            var itypeName = factory.Create<ITypeName>(source);
+            var itypeName = factory.Create<ITypeName>(source,null);
             if (itypeName != null)
             {
                 var typeName = itypeName.TypeName;
-                var model3D = factory.Create<Model3D>(typeName);
+                var model3D = factory.Create<Model3D>(typeName,null);
                 if (model3D != null)
                 {
                     var material = GetMaterial(source, factory);
@@ -39,7 +39,7 @@ namespace Node.Net.Factories.Factories.Helpers
             var typeName = string.Empty;
             if (factory != null)
             {
-                var iTypeName = factory.Create<ITypeName>(source);
+                var iTypeName = factory.Create<ITypeName>(source,null);
                 if (iTypeName != null) typeName = iTypeName.TypeName;
             }
             return typeName;
@@ -47,7 +47,7 @@ namespace Node.Net.Factories.Factories.Helpers
 
         private static Transform3D GetTransform(IDictionary source, IFactory factory)
         {
-            IScale iscale = factory.Create<IScale>(source);
+            IScale iscale = factory.Create<IScale>(source,null);
             if (iscale != null)
             {
                 return new ScaleTransform3D { ScaleX = iscale.Scale.X, ScaleY = iscale.Scale.Y, ScaleZ = iscale.Scale.Z };
@@ -60,7 +60,7 @@ namespace Node.Net.Factories.Factories.Helpers
 
             if (factory != null)
             {
-                return factory.Create<Model3D>(typeName);
+                return factory.Create<Model3D>(typeName,null);
             }
 
             return null;
@@ -71,7 +71,7 @@ namespace Node.Net.Factories.Factories.Helpers
 
             if (factory != null)
             {
-                return factory.Create<Material>(source);
+                return factory.Create<Material>(source,null);
             }
             return null;
         }

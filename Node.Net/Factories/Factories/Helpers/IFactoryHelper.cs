@@ -4,7 +4,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factories.Factories.Helpers
 {
-    class IFactoryHelper
+    public class IFactoryHelper
     {
         public static IFactory FromObject(object source, IFactory factory)
         {

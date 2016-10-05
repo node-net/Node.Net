@@ -11,7 +11,7 @@ namespace Node.Net.Factories.Factories.Generic
         private readonly Func<S, IFactory, T> FactoryFunction;
         public FunctionAdapter3(Func<S, IFactory, T> factoryFunction) { FactoryFunction = factoryFunction; }
 
-        public object Create(Type type, object source)
+        public object Create(Type type, object source,IFactory helper)
         {
             var instance = FactoryFunction((S)source, this.GetRootAncestor());
             if (instance != null)
