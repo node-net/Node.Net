@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factories.Factories.Helpers
@@ -6,6 +7,8 @@ namespace Node.Net.Factories.Factories.Helpers
     public static class IPrimaryModelHelper
     {
         class PrimaryModel : IPrimaryModel { public Model3D Model3D { get; set; } = null; }
+
+        public static List<string> IgnoreTypes { get; set; } = new List<string>();
         public static IPrimaryModel FromIDictionary(IDictionary source, IFactory factory)
         {
             if (source == null) return null;
@@ -14,21 +17,24 @@ namespace Node.Net.Factories.Factories.Helpers
             if (itypeName != null)
             {
                 var typeName = itypeName.TypeName;
-                var model3D = factory.Create<Model3D>(typeName,null);
-                if (model3D != null)
+                if (!IgnoreTypes.Contains(typeName))
                 {
-                    var material = GetMaterial(source, factory);
-                    if (material != null)
+                    var model3D = factory.Create<Model3D>(typeName, null);
+                    if (model3D != null)
                     {
-                        var geoModel = model3D as GeometryModel3D;
-                        if (geoModel != null)
+                        var material = GetMaterial(source, factory);
+                        if (material != null)
                         {
-                            geoModel.Material = material;
+                            var geoModel = model3D as GeometryModel3D;
+                            if (geoModel != null)
+                            {
+                                geoModel.Material = material;
+                            }
                         }
+                        var model3DGroup = new Model3DGroup { Transform = GetTransform(source, factory) };
+                        model3DGroup.Children.Add(model3D);
+                        return new PrimaryModel { Model3D = model3DGroup };
                     }
-                    var model3DGroup = new Model3DGroup { Transform = GetTransform(source, factory) };
-                    model3DGroup.Children.Add(model3D);
-                    return new PrimaryModel { Model3D = model3DGroup };
                 }
             }
             return null;
