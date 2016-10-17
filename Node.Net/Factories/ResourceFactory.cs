@@ -9,6 +9,7 @@ namespace Node.Net.Factories
     public sealed class ResourceFactory : ResourceDictionary, IFactory
     {
         public Func<Stream, object> ReadFunction { get; set; } = DefaultRead;
+        public FrameworkElement FrameworkElement { get; set; }
         public bool RequireExactMatch { get; set; } = false;
         public object Create(Type targetType, object source)
         {
@@ -22,6 +23,12 @@ namespace Node.Net.Factories
         private object CreateFromString(Type targetType,string name)
         {
             object instance = null;
+            if (FrameworkElement != null)
+            {
+                instance = FrameworkElement.FindResource(name);
+                if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
+                instance = null;
+            }
             if(Contains(name))
             {
                 instance = this[name];
