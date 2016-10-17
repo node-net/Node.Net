@@ -50,7 +50,6 @@ namespace Node.Net.Controls
                         }
                     }
                 }
-                
                 Children.Add(new Label { Content = sContent, ToolTip = toolTipText, VerticalAlignment = VerticalAlignment.Center });
             }
         }

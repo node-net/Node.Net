@@ -74,15 +74,7 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
             var keys = new List<string>();
             foreach(string key in dictionary.Keys)
             {
-                var ignoreKey = false;
                 var value = dictionary[key];
-                if (value == null) ignoreKey = true;
-                else
-                {
-                    if (value.GetType() == typeof(string)) ignoreKey = true;
-                    if (value.GetType().IsPrimitive) ignoreKey = true;
-                }
-                /*
                 if(value != null && value.GetType() != typeof(string) && typeof(IEnumerable).IsAssignableFrom(value.GetType()))
                 {
                     if (value.GetType() != typeof(double[]) && value.GetType() != typeof(string[]) &&
@@ -91,8 +83,6 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
                         keys.Add(key);
                     }
                 }
-                */
-                if (!ignoreKey) keys.Add(key);
             }
             return keys.ToArray();
         }

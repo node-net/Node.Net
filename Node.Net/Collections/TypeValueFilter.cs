@@ -4,7 +4,7 @@ namespace Node.Net.Collections
 {
     public class TypeValueFilter : IFilter
     {
-        private readonly string _typeValue = "";
+        private string _typeValue = "";
         public TypeValueFilter(string typeValue)
         {
             _typeValue = typeValue;
