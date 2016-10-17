@@ -1,65 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 
 namespace Node.Net.Factories
 {
-    public sealed class Factory : Factories.CompositeFactory
+    public class Factory : Dictionary<string,IFactory>, IFactory
     {
-        public Factory() {  }
-        public Factory(Assembly resource_assembly)
+        public object Create(Type targetType, object source)
         {
-            ResourceAssemblies.Add(resource_assembly);
-        }
-
-        public Func<string, object> GetFunction
-        {
-            get { return objectFromString.GetFunction; }
-            set { objectFromString.GetFunction = value; }
-        }
-
-        public Func<Stream, object> ReadFunction
-        {
-            get { return objectFromString.ReadFunction; }
-            set { objectFromString.ReadFunction = value; }
-        }
-
-        public List<Assembly> ResourceAssemblies
-        {
-            get { return objectFromString.ResourceAssemblies; }
-            set { objectFromString.ResourceAssemblies = value; }
-        }
-
-        private readonly Factories.TypeSourceFactories.ObjectFromString objectFromString = new Factories.TypeSourceFactories.ObjectFromString();
-        private IFactory _fallback = Factories.Helpers.IFactoryHelper.CreateDefaultFactory();
-        public override object Create(Type targetType, object source,IFactory helper)
-        {
-            var instance = base.Create(targetType, source,helper);
-            if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
-
-            if (source != null && source.GetType() == typeof(string))
+            object item = null;
+            foreach(var key in Keys)
             {
-                instance = objectFromString.Create(targetType, source.ToString(),helper);
-                if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
+                var child_factory = this[key];
+                var ifactoryHelper = child_factory as IFactoryHelper;
+                if (ifactoryHelper != null) ifactoryHelper.Helper = this;
 
-                // Partial matches
-                return objectFromString.CreatePartialMatch(targetType, source.ToString());
+                var itargetType = child_factory as ITargetType;
+                if (itargetType == null || targetType.IsAssignableFrom(itargetType.TargetType))
+                {
+                    if (!IsLocked(key))
+                    {
+                        try
+                        {
+                            Lock(key);
+                            item = child_factory.Create(targetType, source);
+                        }
+                        finally
+                        {
+                            Unlock(key);
+                        }
+                        if (item != null && targetType.IsAssignableFrom(item.GetType())) return item;
+                    }
+                }
             }
-            if (instance == null && _fallback != null) return _fallback.Create(targetType, source,helper);
             return null;
         }
-        private static IFactory _default;
-        public static IFactory Default
+
+        private List<string> lockedKeys = new List<string>();
+        private void Lock(string key)
         {
-            get
-            {
-                if (_default == null)
-                {
-                    _default = Factories.Helpers.IFactoryHelper.CreateDefaultFactory();
-                }
-                return _default;
-            }
+            lockedKeys.Add(key);
+        }
+        private bool IsLocked(string key)
+        {
+            if (lockedKeys.Contains(key)) return true;
+            return false;
+        }
+        private void Unlock(string key)
+        {
+            lockedKeys.Remove(key);
         }
     }
 }

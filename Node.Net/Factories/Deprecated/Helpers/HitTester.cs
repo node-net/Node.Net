@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Factories.Helpers
+namespace Node.Net.Factories.Deprecated.Helpers
 {
-    class HitTester
+    public class HitTester
     {
         public Point3D? HitTest(Visual3D reference, Point3D point, Vector3D direction)
         {

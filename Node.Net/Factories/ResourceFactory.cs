@@ -1,75 +1,73 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Markup;
 
 namespace Node.Net.Factories
 {
-    public sealed class ResourceFactory : IFactory
+    public sealed class ResourceFactory : ResourceDictionary, IFactory
     {
-        public object Create(Type targetType, object source,IFactory helper)
+        public Func<Stream, object> ReadFunction { get; set; } = DefaultRead;
+        public bool RequireExactMatch { get; set; } = false;
+        public object Create(Type targetType, object source)
         {
-            if (source != null)
+            if(source != null && source.GetType() == typeof(string))
             {
-                if (source.GetType() == typeof(string))
+                return CreateFromString(targetType,source.ToString());
+            }
+            return null;
+        }
+
+        private object CreateFromString(Type targetType,string name)
+        {
+            object instance = null;
+            if(Contains(name))
+            {
+                instance = this[name];
+                if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
+                instance = null;
+            }
+            if (!RequireExactMatch)
+            {
+                foreach (string key in Keys)
                 {
-                    var key = source.ToString();
-                    if (cache.ContainsKey(key)) return cache[key];
-                    if (Assembly != null)
+                    if (key.Contains(name))
                     {
-                        var manifestResourceName = GetManifestResourceName(key);
-                        if(manifestResourceName != null)
-                        {
-                            var value = ReadFunction(Assembly.GetManifestResourceStream(manifestResourceName));
-                            if(value != null)
-                            {
-                                cache.Add(key, value);
-                                return value;
-                            }
-                        }
+                        instance = this[key];
+                        if (instance != null && targetType.IsAssignableFrom(instance.GetType())) return instance;
                     }
                 }
             }
             return null;
         }
 
-        private string GetManifestResourceName(string key)
+        public void ImportResources(ResourceDictionary resourceDictionary)
         {
-            foreach (var manifestResourceName in Assembly.GetManifestResourceNames())
+            foreach(string key in resourceDictionary.Keys)
             {
-                if (key == manifestResourceName) return manifestResourceName;
-            }
-            if(AllowPartialMatch)
-            {
-                foreach(var manifestResourceName in Assembly.GetManifestResourceNames())
-                {
-                    if (manifestResourceName.Contains(key)) return manifestResourceName;
-                }
-            }
-            return null;
-        }
-
-        public bool AllowPartialMatch { get; set; } = true;
-        public Func<Stream, object> ReadFunction { get; set; } = DefaultReadFunction;
-        private Assembly assembly = null;
-        public Assembly Assembly
-        {
-            get { return assembly; }
-            set
-            {
-                if(assembly != value)
-                {
-                    assembly = value;
-                    cache.Clear();
-                }
+                if (!Contains(key)) Add(key, resourceDictionary[key]);
             }
         }
-        private Dictionary<string, object> cache = new Dictionary<string, object>();
+        public void ImportManifestResources(Assembly assembly)
+        {
+            foreach(var manifestResourceName in assembly.GetManifestResourceNames())
+            {
+                try
+                {
+                    var instance = ReadFunction(assembly.GetManifestResourceStream(manifestResourceName));
+                    if(instance != null)
+                    {
+                        Add(manifestResourceName, instance);
+                    }
+                }
+                catch { }
+            }
+        }
 
-        public static object DefaultReadFunction(Stream stream) { return XamlReader.Load(stream); }
+        public static object DefaultRead(Stream stream)
+        {
+            return XamlReader.Load(stream);
+        }
     }
 }

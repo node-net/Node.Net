@@ -11,9 +11,9 @@ namespace Node.Net
     {
         static Factory()
         {
-            Node.Net.Factories.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.MetaDataMap.GetMetaDataFunction;
-            Node.Net.Collections.IDictionaryExtension.GetLocalToParentFunction = Node.Net.Factories.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
-            Node.Net.Collections.IDictionaryExtension.GetLocalToWorldFunction = Node.Net.Factories.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
+            Node.Net.Factories.Deprecated.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.MetaDataMap.GetMetaDataFunction;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToParentFunction = Node.Net.Factories.Deprecated.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToWorldFunction = Node.Net.Factories.Deprecated.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
         }
         public Factory() { }
         public Factory(Assembly assembly)
@@ -45,12 +45,12 @@ namespace Node.Net
         {
             if(targetType == typeof(ILocalToParent))
             {
-                var localToParent = Node.Net.Factories.Factory.Default.Create(typeof(Node.Net.Factories.ILocalToParent), source,null) as Node.Net.Factories.ILocalToParent;
+                var localToParent = Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(Node.Net.Factories.Deprecated.ILocalToParent), source,null) as Node.Net.Factories.Deprecated.ILocalToParent;
                 return new ConcreteLocalToParent { LocalToParent = localToParent.LocalToParent };
             }
             if (targetType == typeof(ILocalToWorld))
             {
-                var localToWorld = Node.Net.Factories.Factory.Default.Create(typeof(Node.Net.Factories.ILocalToWorld), source,null) as Node.Net.Factories.ILocalToWorld;
+                var localToWorld = Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(Node.Net.Factories.Deprecated.ILocalToWorld), source,null) as Node.Net.Factories.Deprecated.ILocalToWorld;
                 return new ConcreteLocalToWorld { LocalToWorld = localToWorld.LocalToWorld };
             }
             var result = factory.Create(targetType, source,null);
@@ -60,14 +60,14 @@ namespace Node.Net
         }
 
         private readonly Node.Net.Reader reader = new Reader();
-        private Node.Net.Factories.Factory _factory;
-        private Node.Net.Factories.Factory factory
+        private Node.Net.Factories.Deprecated.Factory _factory;
+        private Node.Net.Factories.Deprecated.Factory factory
         {
             get
             {
                 if(_factory == null)
                 {
-                    _factory = new Factories.Factory { ReadFunction = reader.Read };
+                    _factory = new Factories.Deprecated.Factory { ReadFunction = reader.Read };
                 }
                 return _factory;
             }

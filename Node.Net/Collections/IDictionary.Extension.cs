@@ -102,7 +102,6 @@ namespace Node.Net.Collections
                     var child = dictionary[key];
                     if (child != null)
                     {
-                        //SetParent(child as IDictionary, dictionary);
                         if (typeof(T).IsAssignableFrom(child.GetType()))
                         {
 
@@ -240,7 +239,6 @@ namespace Node.Net.Collections
             {
                 var new_child_dictionary = Activator.CreateInstance(child_dictionary.GetType()) as IDictionary;
                 IDictionaryExtension.Copy(new_child_dictionary, child_dictionary);
-                //new_child_dictionary.Copy(child_dictionary);
                 copy = new_child_dictionary;
             }
             else if (child_enumerable != null && child_enumerable.GetType() != typeof(string))
