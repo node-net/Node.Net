@@ -7,7 +7,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factories.Helpers
 {
-    class Matrix3DHelper
+    public class Matrix3DHelper
     {
         public static Matrix3D RotateXYZ(Matrix3D matrix, Vector3D rotationsXYZ)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Factories.Helpers
 {
-    class AngleHelper
+    public class AngleHelper
     {
         public static double GetAngleDegrees(string value)
         {

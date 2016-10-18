@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Factories.Helpers
 {
-    class LengthHelper
+    public class LengthHelper
     {
         public static double GetLengthMeters(string value)
         {
