@@ -160,7 +160,6 @@
     <Compile Include="Deprecated\Environment\Resources.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
-    <Compile Include="Deprecated\Extensions\IDictionary.Extension.cs" />
     <Compile Include="Extensions\IFactory.Extension.cs" />
     <Compile Include="Extensions\IGetDataSet.Extension.cs" />
     <Compile Include="Extensions\Image.cs" />
@@ -175,7 +174,6 @@
     <Compile Include="Factories\BrushFactory.cs" />
     <Compile Include="Factories\ColorFactory.cs" />
     <Compile Include="Factories\Deprecated\Extensions.cs" />
-    <Compile Include="Factories\Deprecated\Extension\Object.Extension.cs" />
     <Compile Include="Factories\Deprecated\Extension\Stream.Extension.cs" />
     <Compile Include="Factories\Deprecated\Extension\Visual.Extension.cs" />
     <Compile Include="Factories\Deprecated\Extension\Visual3D.Extension.cs" />
@@ -213,9 +211,9 @@
     <Compile Include="Factories\Deprecated\Internal\IChild.Extension.cs" />
     <Compile Include="Factories\Deprecated\Internal\IFactory.Extension.cs" />
     <Compile Include="Factories\Deprecated\Internal\ParentMap.cs" />
-    <Compile Include="Factories\Deprecated\MetaDataMap.cs" />
     <Compile Include="Factories\Deprecated\RenderFactory.cs" />
     <Compile Include="Factories\Deprecated\ResourceFactory.cs" />
+    <Compile Include="Factories\Extension\Object.Extension.cs" />
     <Compile Include="Factories\Factory.cs" />
     <Compile Include="Factories\Generic\TargetTypeFactory.cs" />
     <Compile Include="Factories\Generic\TargetTypeFromSourceTypeFactory.cs" />
@@ -229,6 +227,7 @@
     <Compile Include="Factories\ManifestResourceFactory.cs" />
     <Compile Include="Factories\MaterialFactory.cs" />
     <Compile Include="Factories\MeshGeometry3DFactory.cs" />
+    <Compile Include="Factories\MetaDataMap.cs" />
     <Compile Include="Factories\Model3DFactory.cs" />
     <Compile Include="Factories\ResourceFactory.cs" />
     <Compile Include="Factories\StandardFactory.cs" />
@@ -294,7 +293,9 @@
   <ItemGroup>
     <None Include="Node.Net.snk" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Deprecated\Extensions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

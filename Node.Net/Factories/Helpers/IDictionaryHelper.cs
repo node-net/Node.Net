@@ -52,6 +52,7 @@ namespace Node.Net.Factories.Helpers
 
         public static double GetAngleDegrees(IDictionary source, string name)
         {
+            if (source == null) return 0.0;
             if (name.Contains(','))
             {
                 var names = name.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -66,41 +67,33 @@ namespace Node.Net.Factories.Helpers
             }
             else return Helpers.AngleHelper.GetAngleDegrees(GetDictionaryValueAsString(source, name));
         }
-
-        /*
-        public static double GetAngleDegrees(IDictionary source, string name, IFactory factory)
-        {
-            return factory.Create<IAngle>(GetDictionaryValueAsString(source, name), null).Angle;
-        }*/
-        /*
+        
         public static Matrix3D GetLocalToParent(IDictionary dictionary)
         {
-            var localToParent = Factory.Default.Create<ILocalToWorld>(dictionary, null);
-            if (localToParent != null) return localToParent.LocalToWorld;
-            return new Matrix3D();
-        }*/
-        /*
+            var matrix3D = new Matrix3D();
+            if (dictionary != null)
+            {
+                var rotations = Helpers.IDictionaryHelper.GetRotationsXYZ(dictionary);
+                matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), Helpers.IDictionaryHelper.GetRotationsXYZ(dictionary));
+                matrix3D.Translate(Helpers.IDictionaryHelper.GetTranslation(dictionary));
+            }
+            return matrix3D;
+        }
+
         public static Matrix3D GetLocalToWorld(IDictionary dictionary)
         {
-            var localToWorld = Factory.Default.Create<ILocalToWorld>(dictionary, null);
-            if (localToWorld != null) return localToWorld.LocalToWorld;
-            return new Matrix3D();
-        }*/
-        /*
-        public static Rect3D GetBounds(IDictionary dictionary)
-        {
-            var localToParent = GetLocalToParent(dictionary);
-            var bounds = new Rect3D(localToParent.Transform(new Point3D(0, 0, 0)), new Size3D(0, 0, 0));
-            foreach (var key in dictionary.Keys)
+            Matrix3D localToWorld = GetLocalToParent(dictionary);
+            if (dictionary != null)
             {
-                var childDictionary = dictionary[key] as IDictionary;
-                if (childDictionary != null)
+
+                var parent = Node.Net.Factories.Extension.ObjectExtension.GetParent(dictionary);
+                if (parent != null)
                 {
-                    var childBounds = GetBounds(childDictionary);
-                    bounds.Union(localToParent.Transform(childBounds.Location));
+                    localToWorld.Append(GetLocalToWorld(parent as IDictionary));
                 }
             }
-            return bounds;
-        }*/
+
+            return localToWorld;
+        }
     }
 }

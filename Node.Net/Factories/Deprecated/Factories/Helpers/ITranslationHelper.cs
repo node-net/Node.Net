@@ -12,9 +12,9 @@ namespace Node.Net.Factories.Deprecated.Factories.Helpers
             var concreteTranslation = new ConcreteTranslation
             {
                 Translation = new Vector3D(
-                    IDictionaryHelper.GetLengthMeters(source, "X", factory),
-                    IDictionaryHelper.GetLengthMeters(source, "Y", factory),
-                    IDictionaryHelper.GetLengthMeters(source, "Z", factory))
+                    Node.Net.Factories.Helpers.IDictionaryHelper.GetLengthMeters(source, "X"),
+                    Node.Net.Factories.Helpers.IDictionaryHelper.GetLengthMeters(source, "Y"),
+                    Node.Net.Factories.Helpers.IDictionaryHelper.GetLengthMeters(source, "Z"))
             };
             return concreteTranslation;
         }

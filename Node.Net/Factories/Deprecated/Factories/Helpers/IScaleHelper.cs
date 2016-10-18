@@ -25,7 +25,7 @@ namespace Node.Net.Factories.Deprecated.Factories.Helpers
 
         private static double GetScaleMeters(IDictionary source, string key, IFactory factory)
         {
-            var lengthMeters = IDictionaryHelper.GetLengthMeters(source, key, factory);
+            var lengthMeters = Node.Net.Factories.Helpers.IDictionaryHelper.GetLengthMeters(source, key);
             if (source.Contains(key)) return lengthMeters;
             if (key.Contains(","))
             {
