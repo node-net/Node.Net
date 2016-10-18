@@ -16,6 +16,11 @@ namespace Node.Net.Factories
                     result = CreateFromString(source.ToString());
                     if (result != null) return result;
                 }
+                if(typeof(ImageSource).IsAssignableFrom(source.GetType()))
+                {
+                    result = CreateFromImageSource(source as ImageSource);
+                    if (result != null) return result;
+                }
             }
             
 
@@ -41,6 +46,15 @@ namespace Node.Net.Factories
                 {
                     return (Brush)property.GetValue(null, null);
                 }
+            }
+            return null;
+        }
+
+        private Brush CreateFromImageSource(ImageSource source)
+        {
+            if(source != null)
+            {
+                return new ImageBrush { ImageSource = source, TileMode = TileMode.Tile };
             }
             return null;
         }
