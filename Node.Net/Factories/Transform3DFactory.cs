@@ -22,9 +22,9 @@ namespace Node.Net.Factories
         {
             var matrix3D = new Matrix3D();
 
-            var rotations = Helpers.IDictionaryHelper.GetRotationsXYZ(source);
-            matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), Helpers.IDictionaryHelper.GetRotationsXYZ(source));
-            matrix3D.Translate(Helpers.IDictionaryHelper.GetTranslation(source));
+            var rotations = Extension.IDictionaryExtension.GetRotationsXYZ(source);
+            matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), Extension.IDictionaryExtension.GetRotationsXYZ(source));
+            matrix3D.Translate(Extension.IDictionaryExtension.GetTranslation(source));
 
             if (!matrix3D.IsIdentity)
             {

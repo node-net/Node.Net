@@ -11,9 +11,9 @@ namespace Node.Net.Factories.Deprecated.Factories.Helpers
             var concreteRotations = new ConcreteRotations
             {
                 RotationsXYZ = new Vector3D(
-                    Node.Net.Factories.Helpers.IDictionaryHelper.GetAngleDegrees(source, "RotationX,Spin,Roll"),
-                    Node.Net.Factories.Helpers.IDictionaryHelper.GetAngleDegrees(source, "RotationY,Tilt,Pitch"),
-                    Node.Net.Factories.Helpers.IDictionaryHelper.GetAngleDegrees(source, "RotationZ,Orientation,Yaw"))
+                    Node.Net.Factories.Extension.IDictionaryExtension.GetAngleDegrees(source, "RotationX,Spin,Roll"),
+                    Node.Net.Factories.Extension.IDictionaryExtension.GetAngleDegrees(source, "RotationY,Tilt,Pitch"),
+                    Node.Net.Factories.Extension.IDictionaryExtension.GetAngleDegrees(source, "RotationZ,Orientation,Yaw"))
             };
             return concreteRotations;
         }

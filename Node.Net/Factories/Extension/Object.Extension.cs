@@ -2,7 +2,7 @@
 
 namespace Node.Net.Factories.Extension
 {
-    static class ObjectExtension
+    public static class ObjectExtension
     {
         public static object GetParent(object item)
         {

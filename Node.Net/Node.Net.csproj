@@ -185,7 +185,6 @@
     <Compile Include="Factories\Deprecated\Factories\Helpers\ArrayHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\IAngleHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\IColorHelper.cs" />
-    <Compile Include="Factories\Deprecated\Factories\Helpers\IDictionaryHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\IFactoryHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\ILengthHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\ILocalToParentHelper.cs" />
@@ -213,6 +212,7 @@
     <Compile Include="Factories\Deprecated\Internal\ParentMap.cs" />
     <Compile Include="Factories\Deprecated\RenderFactory.cs" />
     <Compile Include="Factories\Deprecated\ResourceFactory.cs" />
+    <Compile Include="Factories\Extension\IDictionary.Extension.cs" />
     <Compile Include="Factories\Extension\Object.Extension.cs" />
     <Compile Include="Factories\Factory.cs" />
     <Compile Include="Factories\Generic\TargetTypeFactory.cs" />
