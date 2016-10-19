@@ -61,11 +61,6 @@ namespace Node.Net
 
         #endregion
 
-        /*
-        #region IWriter
-        public static void Save(this IWriter writer, string filename, object value) => Extensions.IWriterExtension.Save(writer, filename, value);
-        #endregion
-        */
         #region IDictionary
         public static T Get<T>(this IDictionary dictionary, string name) => Collections.IDictionaryExtension.Get<T>(dictionary, name);
         public static void Set(this IDictionary dictionary, string name, object value) => Collections.IDictionaryExtension.Set(dictionary, name, value);

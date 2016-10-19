@@ -71,6 +71,39 @@ namespace Node.Net.Factories
                 catch { }
             }
         }
+        public void ImportResources(string directory)
+        {
+            if(Directory.Exists(directory))
+            {
+                foreach(var filename in Directory.GetFiles(directory))
+                {
+                    var fileInfo = new FileInfo(filename);
+                    var key = fileInfo.Name.Replace(fileInfo.Extension,"");
+                    if(fileInfo.Extension == ".xaml")
+                    {
+                        if (!Contains(key))
+                        {
+                            using (FileStream fs = new FileStream(filename, FileMode.Open))
+                            {
+                                var item = XamlReader.Load(fs);
+                                var resourceDictionary = item as ResourceDictionary;
+                                if(resourceDictionary != null)
+                                {
+                                    ImportResources(resourceDictionary);
+                                }
+                                else
+                                {
+                                    if(item != null)
+                                    {
+                                        Add(key, item);
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
+        }
 
         public static object DefaultRead(Stream stream)
         {
