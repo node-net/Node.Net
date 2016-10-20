@@ -74,7 +74,7 @@ namespace Node.Net.Collections
                     var child = dictionary[key];
                     if (child != null)
                     {
-                        SetParent(child as IDictionary, dictionary);
+                        ObjectExtension.SetParent(child as IDictionary, dictionary);
                         if (typeof(T).IsAssignableFrom(child.GetType()))
                         {
                             var instance = (T)child;
@@ -143,7 +143,7 @@ namespace Node.Net.Collections
                     var child = dictionary[child_key];
                     if (child != null)
                     {
-                        SetParent(child as IDictionary, dictionary);
+                        ObjectExtension.SetParent(child as IDictionary, dictionary);
 
                         if (typeof(T).IsAssignableFrom(child.GetType()))
                         {
@@ -197,30 +197,6 @@ namespace Node.Net.Collections
             return results.ToArray();
         }
 
-
-        public static object GetParent(IDictionary dictionary)
-        {
-            if(MetaDataMap.GetMetaDataFunction != null)
-            {
-                if(MetaDataMap.GetMetaDataFunction(dictionary).ContainsKey("Parent"))
-                {
-                    return MetaDataMap.GetMetaDataFunction(dictionary)["Parent"];
-                }
-            }
-            return null;
-        }
-
-        public static void SetParent(IDictionary dictionary, object parent)
-        {
-            if (dictionary != null)
-            {
-                if(MetaDataMap.GetMetaDataFunction != null)
-                {
-                    MetaDataMap.GetMetaDataFunction(dictionary)["Parent"] = parent;
-                }
-            }
-        }
-
         public static void Copy(IDictionary destination, IDictionary source)
         {
             destination.Clear();
@@ -258,46 +234,7 @@ namespace Node.Net.Collections
             }
         }
 
-        public static T GetNearestAncestor<T>(IDictionary child)
-        {
-            var parent = GetParent(child);
-            if (child != null && parent != null)
-            {
-                if (typeof(T).IsAssignableFrom(parent.GetType()))
-                {
-                    var ancestor = (T)parent;
-                    if (ancestor != null) return ancestor;
-                }
-                return GetNearestAncestor<T>(parent as IDictionary);
-            }
-            return default(T);
-        }
-        public static T GetFurthestAncestor<T>(IDictionary child)
-        {
-            if (child != null)
-            {
-                var ancestor = GetNearestAncestor<T>(child);
-                if (ancestor != null)
-                {
-                    var further_ancestor = GetFurthestAncestor<T>(ancestor as IDictionary);
-                    if (further_ancestor != null) return further_ancestor;
-                }
-                if (ancestor == null)
-                {
-                    if (typeof(T).IsAssignableFrom(child.GetType()))
-                    {
-                        ancestor = (T)child;
-                    }
-                }
-                return ancestor;
-            }
-            return default(T);
-        }
-        public static IDictionary GetRootAncestor(IDictionary child)
-        {
-            return GetFurthestAncestor<IDictionary>(child);
-
-        }
+        
 
         public static T Find<T>(IDictionary dictionary,string key)
         {
