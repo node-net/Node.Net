@@ -63,6 +63,7 @@
     <Compile Include="Collections\Interfaces.cs" />
     <Compile Include="Collections\Internal\ParentMap.cs" />
     <Compile Include="Collections\MetaDataMap.cs" />
+    <Compile Include="Collections\Object.Extension.cs" />
     <Compile Include="Collections\TypeValueFilter.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />
@@ -160,7 +161,6 @@
     <Compile Include="Deprecated\Environment\Resources.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
-    <Compile Include="Deprecated\Extensions\IDictionary.Extension.cs" />
     <Compile Include="Extensions\IFactory.Extension.cs" />
     <Compile Include="Extensions\IGetDataSet.Extension.cs" />
     <Compile Include="Extensions\Image.cs" />
@@ -172,8 +172,9 @@
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\Type.Extension.cs" />
+    <Compile Include="Factories\BrushFactory.cs" />
+    <Compile Include="Factories\ColorFactory.cs" />
     <Compile Include="Factories\Deprecated\Extensions.cs" />
-    <Compile Include="Factories\Deprecated\Extension\Object.Extension.cs" />
     <Compile Include="Factories\Deprecated\Extension\Stream.Extension.cs" />
     <Compile Include="Factories\Deprecated\Extension\Visual.Extension.cs" />
     <Compile Include="Factories\Deprecated\Extension\Visual3D.Extension.cs" />
@@ -185,7 +186,6 @@
     <Compile Include="Factories\Deprecated\Factories\Helpers\ArrayHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\IAngleHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\IColorHelper.cs" />
-    <Compile Include="Factories\Deprecated\Factories\Helpers\IDictionaryHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\IFactoryHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\ILengthHelper.cs" />
     <Compile Include="Factories\Deprecated\Factories\Helpers\ILocalToParentHelper.cs" />
@@ -211,9 +211,29 @@
     <Compile Include="Factories\Deprecated\Internal\IChild.Extension.cs" />
     <Compile Include="Factories\Deprecated\Internal\IFactory.Extension.cs" />
     <Compile Include="Factories\Deprecated\Internal\ParentMap.cs" />
-    <Compile Include="Factories\Deprecated\MetaDataMap.cs" />
     <Compile Include="Factories\Deprecated\RenderFactory.cs" />
     <Compile Include="Factories\Deprecated\ResourceFactory.cs" />
+    <Compile Include="Factories\Extension\IDictionary.Extension.cs" />
+    <Compile Include="Factories\Extension\Object.Extension.cs" />
+    <Compile Include="Factories\Factory.cs" />
+    <Compile Include="Factories\Generic\TargetTypeFactory.cs" />
+    <Compile Include="Factories\Generic\TargetTypeFromSourceTypeFactory.cs" />
+    <Compile Include="Factories\GeometryModel3DFactory.cs" />
+    <Compile Include="Factories\Helpers\AngleHelper.cs" />
+    <Compile Include="Factories\Helpers\HitTester.cs" />
+    <Compile Include="Factories\Helpers\IDictionaryHelper.cs" />
+    <Compile Include="Factories\Helpers\LengthHelper.cs" />
+    <Compile Include="Factories\Helpers\Matrix3DHelper.cs" />
+    <Compile Include="Factories\Interfaces.cs" />
+    <Compile Include="Factories\ManifestResourceFactory.cs" />
+    <Compile Include="Factories\MaterialFactory.cs" />
+    <Compile Include="Factories\MeshGeometry3DFactory.cs" />
+    <Compile Include="Factories\MetaDataMap.cs" />
+    <Compile Include="Factories\Model3DFactory.cs" />
+    <Compile Include="Factories\ResourceFactory.cs" />
+    <Compile Include="Factories\StandardFactory.cs" />
+    <Compile Include="Factories\Transform3DFactory.cs" />
+    <Compile Include="Factories\Visual3DFactory.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Filters\TypeFilter.cs" />
     <Compile Include="IChild.cs" />
@@ -274,7 +294,9 @@
   <ItemGroup>
     <None Include="Node.Net.snk" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Deprecated\Extensions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -11,9 +11,9 @@ namespace Node.Net
     {
         static Factory()
         {
-            Node.Net.Factories.Deprecated.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.MetaDataMap.GetMetaDataFunction;
-            Node.Net.Collections.IDictionaryExtension.GetLocalToParentFunction = Node.Net.Factories.Deprecated.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
-            Node.Net.Collections.IDictionaryExtension.GetLocalToWorldFunction = Node.Net.Factories.Deprecated.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
+            Node.Net.Factories.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.MetaDataMap.GetMetaDataFunction;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToParentFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToWorldFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
         }
         public Factory() { }
         public Factory(Assembly assembly)

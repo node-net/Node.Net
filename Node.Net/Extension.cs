@@ -11,6 +11,12 @@ namespace Node.Net
 {
     public static class Extension
     {
+        static Extension()
+        {
+            Node.Net.Factories.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.MetaDataMap.GetMetaDataFunction;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToParentFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToWorldFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
+        }
         public static T Create<T>(this IFactory factory, object source) => Extensions.IFactoryExtension.Create<T>(factory, source);
         
 
@@ -55,11 +61,15 @@ namespace Node.Net
 
         #endregion
 
-        /*
-        #region IWriter
-        public static void Save(this IWriter writer, string filename, object value) => Extensions.IWriterExtension.Save(writer, filename, value);
+        #region Object
+        public static object GetKey(this object item) => Collections.ObjectExtension.GetKey(item);
+        public static object GetParent(this object item) => Collections.ObjectExtension.GetParent(item);
+        public static void SetParent(this object item, object parent) => Collections.ObjectExtension.SetParent(item, parent);
+        public static T GetNearestAncestor<T>(this object child) => Collections.ObjectExtension.GetNearestAncestor<T>(child);
+        public static T GetFurthestAncestor<T>(this object child) => Collections.ObjectExtension.GetFurthestAncestor<T>(child);
+        public static object GetRootAncestor(this object child) => Collections.ObjectExtension.GetRootAncestor(child);
         #endregion
-        */
+
         #region IDictionary
         public static T Get<T>(this IDictionary dictionary, string name) => Collections.IDictionaryExtension.Get<T>(dictionary, name);
         public static void Set(this IDictionary dictionary, string name, object value) => Collections.IDictionaryExtension.Set(dictionary, name, value);
@@ -71,15 +81,11 @@ namespace Node.Net
         public static void Remove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.Remove<T>(dictionary);
         public static void DeepRemove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepRemove<T>(dictionary);
         public static string[] CollectUniqueStrings(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.CollectUniqueStrings(dictionary, key);
-        public static object GetParent(this IDictionary dictionary) => Collections.IDictionaryExtension.GetParent(dictionary);
-        public static void SetParent(this IDictionary dictionary, object parent) => Collections.IDictionaryExtension.SetParent(dictionary, parent);
+        
         public static void Copy(this IDictionary destination, IDictionary source) => Collections.IDictionaryExtension.Copy(destination, source);
-        public static T GetNearestAncestor<T>(this IDictionary child) => Collections.IDictionaryExtension.GetNearestAncestor<T>(child);
-        public static T GetFurthestAncestor<T>(this IDictionary child) => Collections.IDictionaryExtension.GetFurthestAncestor<T>(child);
-        public static IDictionary GetRootAncestor(this IDictionary child) => Collections.IDictionaryExtension.GetRootAncestor(child);
         public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
-        public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Collections.IDictionaryExtension.GetLocalToParent(dictionary);
-        public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Collections.IDictionaryExtension.GetLocalToParent(dictionary);
+        public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Factories.Extension.IDictionaryExtension.GetLocalToParent(dictionary);
+        public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Factories.Extension.IDictionaryExtension.GetLocalToWorld(dictionary);
         #endregion
 
     }

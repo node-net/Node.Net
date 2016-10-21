@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Reflection;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Node.Net.Controls.Factories
 {
@@ -106,6 +110,54 @@ namespace Node.Net.Controls.Factories
                     result = GetImageSource(type.BaseType);
                 }
                 return result;
+            }
+            return null;
+        }
+
+        public void Import(string name)
+        {
+            if(File.Exists(name))
+            {
+                var fileInfo = new FileInfo(name);
+                if (fileInfo.Extension == ".png")
+                {
+                    var key = fileInfo.Name.Replace(fileInfo.Extension, "");
+                    if (!ImageSourceMap.ContainsKey(key))
+                    {
+                        using (FileStream fs = new FileStream(name, FileMode.Open))
+                        {
+                            ImageSourceMap.Add(key, GetImageSource(System.Drawing.Image.FromStream(fs)));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if(Directory.Exists(name))
+                {
+                    foreach(var filename in Directory.GetFiles(name))
+                    {
+                        Import(filename);
+                    }
+                }
+            }
+        }
+
+        public static ImageSource GetImageSource(System.Drawing.Image image)
+        {
+            //var image = value as Image;
+            if (!object.ReferenceEquals(null, image))
+            {
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+
+                var memory = new System.IO.MemoryStream();
+                image.Save(memory, ImageFormat.Bmp);
+                memory.Seek(0, SeekOrigin.Begin);
+
+                bitmapImage.StreamSource = memory;
+                bitmapImage.EndInit();
+                return bitmapImage;
             }
             return null;
         }
