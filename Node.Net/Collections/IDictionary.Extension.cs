@@ -133,35 +133,41 @@ namespace Node.Net.Collections
             }
         }
 
-        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null)
+        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null)
         {
             var children = new Dictionary<string, T>();
             if (dictionary != null)
             {
-                foreach (var child_key in dictionary.Keys)
+                if (parent_filter == null || parent_filter.Include(dictionary))
                 {
-                    var child = dictionary[child_key];
-                    if (child != null)
+                    foreach (var child_key in dictionary.Keys)
                     {
-                        ObjectExtension.SetParent(child as IDictionary, dictionary);
-
-                        if (typeof(T).IsAssignableFrom(child.GetType()))
+                        var child = dictionary[child_key];
+                        if (child != null)
                         {
-                            var instance = (T)child;
-                            if (instance != null)
+                            ObjectExtension.SetParent(child as IDictionary, dictionary);
+
+                            if (typeof(T).IsAssignableFrom(child.GetType()))
                             {
-                                if (filter == null || filter.Include(instance))
+                                var instance = (T)child;
+                                if (instance != null)
                                 {
-                                    children.Add(child_key.ToString(), instance);
+                                    if (filter == null || filter.Include(instance))
+                                    {
+                                        children.Add(child_key.ToString(), instance);
+                                    }
                                 }
                             }
-                        }
 
-                        var deep_children = DeepCollect<T>(child as IDictionary, filter);
-                        foreach (var deep_child_key in deep_children.Keys)
-                        {
-                            var deep_child = deep_children[deep_child_key];
-                            children.Add($"{child_key}/{deep_child_key}", deep_child);
+                            if (parent_filter == null || parent_filter.Include(child))
+                            {
+                                var deep_children = DeepCollect<T>(child as IDictionary, filter);
+                                foreach (var deep_child_key in deep_children.Keys)
+                                {
+                                    var deep_child = deep_children[deep_child_key];
+                                    children.Add($"{child_key}/{deep_child_key}", deep_child);
+                                }
+                            }
                         }
                     }
                 }
