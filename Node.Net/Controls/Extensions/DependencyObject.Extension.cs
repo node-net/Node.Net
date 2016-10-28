@@ -55,7 +55,6 @@ namespace Node.Net.Controls.Extensions
 
         public static void RemoveFromParent(DependencyObject child)
         {
-            if (child == null) return;
             var parent = VisualTreeHelper.GetParent(child);
             if (parent != null)
             {
