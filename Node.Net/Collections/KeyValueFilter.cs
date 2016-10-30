@@ -12,6 +12,7 @@ namespace Node.Net.Collections
         public string Key { get; set; } = string.Empty;
         public bool ExactMatch { get; set; } = false;
         public List<string> Values { get; set; } = new List<string>();
+        public List<string> ExcludeValues { get; set; } = new List<string>();
         public bool Include(object source)
         {
             var dictionary = source as IDictionary;
@@ -23,6 +24,17 @@ namespace Node.Net.Collections
 
                     if (tvalue.Length > 0)
                     {
+                        foreach(var excludeValue in ExcludeValues)
+                        {
+                            if(ExactMatch)
+                            {
+                                if (excludeValue == tvalue) return false;
+                            }
+                            else
+                            {
+                                if (tvalue.Contains(excludeValue)) return false;
+                            }
+                        }
                         foreach (var value in Values)
                         {
                             if (ExactMatch)
