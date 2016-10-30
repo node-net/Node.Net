@@ -1,29 +1,13 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Node.Net.Collections
 {
-    public class TypeValueFilter : IFilter
+    public class TypeValueFilter : KeyValueFilter
     {
-        private readonly string _typeValue = "";
-        public TypeValueFilter(string typeValue)
+        public TypeValueFilter()
         {
-            _typeValue = typeValue;
-        }
-        public bool Include(object value)
-        {
-            var dictionary = value as IDictionary;
-            if (dictionary != null)
-            {
-                if (dictionary.Contains("Type"))
-                {
-                    var tvalue = dictionary["Type"];
-                    if (tvalue != null)
-                    {
-                        if (tvalue.ToString() == _typeValue) return true;
-                    }
-                }
-            }
-            return false;
+            Key = "Type";
         }
     }
 }

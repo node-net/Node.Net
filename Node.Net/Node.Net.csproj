@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Collections\Interfaces.cs" />
     <Compile Include="Collections\Internal\ParentMap.cs" />
+    <Compile Include="Collections\KeyValueFilter.cs" />
     <Compile Include="Collections\MetaDataMap.cs" />
     <Compile Include="Collections\Object.Extension.cs" />
     <Compile Include="Collections\TypeValueFilter.cs" />
