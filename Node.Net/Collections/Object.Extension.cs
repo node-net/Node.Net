@@ -17,25 +17,6 @@ namespace Node.Net.Collections
             }
             return null;
         }
-
-        public static string GetFullKey(object instance)
-        {
-            var key = GetKey(instance);
-            if (key != null)
-            {
-                var parent = GetParent(instance);
-                if (parent != null)
-                {
-                    var parent_full_key = GetFullKey(parent);
-                    if (parent_full_key.Length > 0)
-                    {
-                        return $"{parent_full_key}/{key.ToString()}";
-                    }
-                }
-                return key.ToString();
-            }
-            return string.Empty;
-        }
         public static object GetValue(object instance) => KeyValuePair.GetValue(instance);
         public static object GetParent(object item)
         {
