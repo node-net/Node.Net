@@ -9,5 +9,10 @@ namespace Node.Net.Collections
         {
             Key = "Type";
         }
+        public TypeValueFilter(string value)
+        {
+            Key = "Type";
+            Values.Add(value);
+        }
     }
 }

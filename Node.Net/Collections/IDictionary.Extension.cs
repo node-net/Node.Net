@@ -257,5 +257,36 @@ namespace Node.Net.Collections
 
             return default(T);
         }
+
+        public static List<string> DeepCollectKeys(IDictionary dictionary)
+        {
+            var keys = new List<string>();
+            if(dictionary != null)
+            {
+                foreach (var key in dictionary.Keys)
+                {
+                    if(key.GetType() == typeof(string))
+                    {
+                        if(!keys.Contains(key.ToString()))
+                        {
+                            keys.Add(key.ToString());
+                        }
+                    }
+                    var child = dictionary[key] as IDictionary;
+                    if(child != null)
+                    {
+                        var childKeys = DeepCollectKeys(child);
+                        foreach(var child_key in childKeys)
+                        {
+                            if(!keys.Contains(child_key))
+                            {
+                                keys.Add(child_key);
+                            }
+                        }
+                    }
+                }
+            }
+            return keys;
+        }
     }
 }
