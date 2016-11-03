@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -67,6 +68,17 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
                     }
                 }
             }
+            else
+            {
+                var directoryInfo = treeViewItem.DataContext.GetValue() as DirectoryInfo;
+                if(directoryInfo !=null)
+                {
+                    foreach(var childDirectory in directoryInfo.GetDirectories())
+                    {
+
+                    }
+                }
+            }
         }
 
         public static string[] GetChildKeys(IDictionary dictionary)
@@ -82,16 +94,6 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
                     if (value.GetType() == typeof(string)) ignoreKey = true;
                     if (value.GetType().IsPrimitive) ignoreKey = true;
                 }
-                /*
-                if(value != null && value.GetType() != typeof(string) && typeof(IEnumerable).IsAssignableFrom(value.GetType()))
-                {
-                    if (value.GetType() != typeof(double[]) && value.GetType() != typeof(string[]) &&
-                       value.GetType() != typeof(double[,]))
-                    {
-                        keys.Add(key);
-                    }
-                }
-                */
                 if (!ignoreKey) keys.Add(key);
             }
             return keys.ToArray();

@@ -175,6 +175,7 @@ namespace Node.Net.Collections
             return children;
         }
 
+        // TODO: replace with signature T[] CollectValues<T>(IDictionary dictionary,string key)
         public static string[] CollectUniqueStrings(IDictionary dictionary, string key)
         {
             var results = new List<string>();
@@ -197,6 +198,56 @@ namespace Node.Net.Collections
                     foreach (var value in CollectUniqueStrings(child_dictionary, key))
                     {
                         if (!results.Contains(value)) results.Add(value);
+                    }
+                }
+            }
+            return results.ToArray();
+        }
+
+        public static T[] CollectValues<T>(IDictionary dictionary)
+        {
+            var results = new List<T>();
+            foreach(var key in dictionary.Keys)
+            {
+                var value = dictionary[key];
+                if(value != null && typeof(T).IsAssignableFrom(value.GetType()))
+                {
+                    T result = (T)value;
+                    if (!results.Contains(result)) results.Add(result);
+                }
+            }
+            foreach (var child_key in dictionary.Keys)
+            {
+                var child_dictionary = dictionary[child_key] as IDictionary;
+                if (child_dictionary != null)
+                {
+                    foreach (var value in CollectValues<T>(child_dictionary))
+                    {
+                        if (!results.Contains(value)) results.Add(value);
+                    }
+                }
+            }
+            return results.ToArray();
+        }
+
+        public static Type[] CollectTypes<T>(IDictionary dictionary)
+        {
+            var results = new List<Type>();
+            if (dictionary != null)
+            {
+                foreach (var key in dictionary.Keys)
+                {
+                    var value = dictionary[key];
+                    if(value != null)
+                    {
+                        if(typeof(T).IsAssignableFrom(value.GetType()))
+                        {
+                            if (!results.Contains(value.GetType())) results.Add(value.GetType());
+                        }
+                    }
+                    foreach(var child_type in CollectTypes<T>(value as IDictionary))
+                    {
+                        if (!results.Contains(child_type)) results.Add(child_type);
                     }
                 }
             }
@@ -240,7 +291,11 @@ namespace Node.Net.Collections
             }
         }
 
-        
+        public static string[] Search<T>(IDictionary dictionary,string search_pattern)
+        {
+            var results = new List<string>();
+            return results.ToArray();
+        }
 
         public static T Find<T>(IDictionary dictionary,string key)
         {
