@@ -24,7 +24,7 @@ namespace Node.Net.Controls
 
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            var tvi = _treeView.SelectedItem as TreeViewItem;
+            var tvi = _treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
             if (tvi != null)
             {
                 _properties.DataContext = tvi.DataContext;

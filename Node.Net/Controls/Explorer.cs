@@ -88,7 +88,7 @@ namespace Node.Net.Controls
             object dataContext = null;
             if(_treeView != null)
             {
-                var tvi = _treeView.SelectedItem as TreeViewItem;
+                var tvi = _treeView.SelectedItem as System.Windows.Controls.TreeViewItem;
                 if (tvi != null)
                 {
                     dataContext = tvi.DataContext;
