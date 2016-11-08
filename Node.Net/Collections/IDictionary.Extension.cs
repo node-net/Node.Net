@@ -343,5 +343,42 @@ namespace Node.Net.Collections
             }
             return keys;
         }
+        public static object GetValue(IDictionary dictionary,string key)
+        {
+            if (dictionary.Contains(key)) return dictionary[key];
+            if(key.Contains("/"))
+            {
+                var parts = key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                if(parts.Length > 1 && dictionary.Contains(parts[0]))
+                {
+                    var child = dictionary[parts[0]] as IDictionary;
+
+                    if (child != null) return GetValue(child, String.Join("/", parts, 1, parts.Length - 1));  
+                }
+            }
+            return null;
+        }
+        public static void SetValue(IDictionary dictionary,string key,object value)
+        {
+            if(dictionary != null)
+            {
+                if(key.Contains("/"))
+                {
+                    var parts = key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    if(parts.Length > 1)
+                    {
+                        IDictionary child = null;
+                        if (dictionary.Contains(parts[0])) child = dictionary[parts[0]] as IDictionary;
+                        if(child == null)
+                        {
+                            child = new Dictionary<string, dynamic>();
+                            dictionary[parts[0]] = child;
+                        }
+                        SetValue(child, String.Join("/", parts, 1, parts.Length - 1),value);
+                    }
+                }
+                dictionary[key] = value;
+            }
+        }
     }
 }

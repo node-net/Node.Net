@@ -60,6 +60,8 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Controls\InstanceList.cs" />
+    <Compile Include="Collections\Controls\ListBox.cs" />
     <Compile Include="Collections\Interfaces.cs" />
     <Compile Include="Collections\Internal\ParentMap.cs" />
     <Compile Include="Collections\KeyValueFilter.cs" />
