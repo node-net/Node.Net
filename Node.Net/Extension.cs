@@ -79,6 +79,7 @@ namespace Node.Net
         public static Dictionary<string, T> Collect<T>(this IDictionary dictionary, Collections.IFilter filter) => Collections.IDictionaryExtension.Collect<T>(dictionary, filter);
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepCollect<T>(dictionary);
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary, Collections.IFilter filter) => Collections.IDictionaryExtension.DeepCollect<T>(dictionary, filter);
+        public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary, Collections.IFilter filter, Collections.IFilter parentFilter) => Collections.IDictionaryExtension.DeepCollect<T>(dictionary, filter, parentFilter);
         public static void Remove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.Remove<T>(dictionary);
         public static void DeepRemove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepRemove<T>(dictionary);
         public static string[] CollectUniqueStrings(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.CollectUniqueStrings(dictionary, key);
