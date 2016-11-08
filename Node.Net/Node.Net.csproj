@@ -65,7 +65,6 @@
     <Compile Include="Collections\KeyValueFilter.cs" />
     <Compile Include="Collections\MetaDataMap.cs" />
     <Compile Include="Collections\Object.Extension.cs" />
-    <Compile Include="Collections\Point.Extension.cs" />
     <Compile Include="Collections\TypeValueFilter.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />
