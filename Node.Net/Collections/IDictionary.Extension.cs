@@ -133,6 +133,32 @@ namespace Node.Net.Collections
             }
         }
 
+        public static int DeepCount<T>(IDictionary dictionary)
+        {
+            var visited = new List<object>();
+            return DeepCount<T>(visited,dictionary);
+        }
+        private static int DeepCount<T>(List<object> visited,IDictionary dictionary)
+        {
+            var count = 0;
+            if (dictionary != null)
+            {
+                if (!visited.Contains(dictionary))
+                {
+                    visited.Add(dictionary);
+                    foreach (var key in dictionary.Keys)
+                    {
+                        var value = dictionary[key];
+                        if (value != null && typeof(T).IsAssignableFrom(value.GetType()) && !visited.Contains(value))
+                        {
+                            ++count;
+                        }
+                        count += DeepCount<T>(visited,value as IDictionary);
+                    }
+                }
+            }
+            return count;
+        }
         public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null,bool deep_update_parents = false)
         {
             var visited = new List<object>();

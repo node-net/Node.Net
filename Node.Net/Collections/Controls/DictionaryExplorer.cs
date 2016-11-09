@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -104,7 +105,13 @@ namespace Node.Net.Collections.Controls
         {
             if (!initialized) return;
             if (DataContext == null) keyLabel.Content = "";
-            else keyLabel.Content = KeyValuePair.GetKey(DataContext).ToString();
+            else
+            {
+                int count = 0;
+                var d = KeyValuePair.GetValue(DataContext) as IDictionary;
+                if (d != null) count = IDictionaryExtension.DeepCount<IDictionary>(d);
+                keyLabel.Content = $"{KeyValuePair.GetKey(DataContext)} {count}";
+            }
             instanceStackPanel.DataContext = DataContext;
             parentInstanceStackPanel.Key = instanceStackPanel.Key;
         }
