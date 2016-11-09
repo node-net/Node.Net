@@ -12,6 +12,7 @@ namespace Node.Net.Collections
             {
                 if (wr.Target != null)
                 {
+                    /*
                     if (wr.Target.GetType().IsValueType)
                     {
                         if (wr.Target.Equals(item)) return this[wr];
@@ -19,8 +20,8 @@ namespace Node.Net.Collections
                     else
                     {
                         if (wr.Target == item) return this[wr];
-                    }
-
+                    }*/
+                    if (wr.Target == item) return this[wr];
                 }
             }
             var metaData = new Dictionary<string, dynamic>();

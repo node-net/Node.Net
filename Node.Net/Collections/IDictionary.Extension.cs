@@ -219,14 +219,23 @@ namespace Node.Net.Collections
 
         public static void DeepUpdateParents(IDictionary dictionary)
         {
+            var visited = new List<object>();
+            DeepUpdateParents(visited, dictionary);
+        }
+        private static void DeepUpdateParents(List<object> visited,IDictionary dictionary)
+        {
             if (dictionary == null) return;
             foreach (var child_key in dictionary.Keys)
             {
                 var child = dictionary[child_key];
                 if (child != null)
                 {
-                    ObjectExtension.SetParent(child as IDictionary, dictionary);
-                    DeepUpdateParents(child as IDictionary);
+                    if (!visited.Contains(child))
+                    {
+                        visited.Add(child);
+                        ObjectExtension.SetParent(child as IDictionary, dictionary);
+                        DeepUpdateParents(visited,child as IDictionary);
+                    }
                 }
             }
         }
