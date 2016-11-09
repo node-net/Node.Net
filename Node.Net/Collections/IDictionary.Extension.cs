@@ -154,7 +154,10 @@ namespace Node.Net.Collections
                                 {
                                     if (filter == null || filter.Include(instance))
                                     {
-                                        children.Add(child_key.ToString(), instance);
+                                        if (!children.ContainsKey(child_key.ToString()))
+                                        {
+                                            children.Add(child_key.ToString(), instance);
+                                        }
                                     }
                                 }
                             }
@@ -165,7 +168,11 @@ namespace Node.Net.Collections
                                 foreach (var deep_child_key in deep_children.Keys)
                                 {
                                     var deep_child = deep_children[deep_child_key];
-                                    children.Add($"{child_key}/{deep_child_key}", deep_child);
+                                    var ckey = $"{child_key}/{deep_child_key}";
+                                    if (!children.ContainsKey(ckey))
+                                    {
+                                        children.Add(ckey, deep_child);
+                                    }
                                 }
                             }
                         }

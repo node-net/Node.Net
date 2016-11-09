@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Node.Net.Collections
 {
@@ -98,6 +99,27 @@ namespace Node.Net.Collections
         {
             return GetFurthestAncestor<object>(child);
 
+        }
+        public static Dictionary<string, dynamic> GetAncestors(object child)
+        {
+            var ancestors = new Dictionary<string, dynamic>();
+            var parent = ObjectExtension.GetParent(child);
+            if (parent != null)
+            {
+                ancestors.Add(ObjectExtension.GetFullKey(parent), parent);
+                var parent_ancestors = GetAncestors(parent);
+                foreach(var key in parent_ancestors.Keys)
+                {
+                    if (!ancestors.ContainsKey(key))
+                    {
+                        ancestors.Add(key, parent_ancestors[key]);
+                    }
+                }
+            }
+            //public static object GetParent(object item)
+            //public static T GetNearestAncestor<T>(object child)
+
+            return ancestors;
         }
     }
 }
