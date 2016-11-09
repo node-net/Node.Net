@@ -55,7 +55,11 @@ namespace Node.Net
             }
             var result = factory.Create(targetType, source,null);
             var idictionary = result as IDictionary;
-            if (idictionary != null) idictionary.DeepCollect<IDictionary>();
+            if (idictionary != null)
+            {
+                idictionary.DeepUpdateParents();
+                //idictionary.DeepCollect<IDictionary>();
+            }
             return result;
         }
 

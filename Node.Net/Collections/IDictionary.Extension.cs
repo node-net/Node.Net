@@ -133,7 +133,14 @@ namespace Node.Net.Collections
             }
         }
 
-        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null)
+        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null,bool deep_update_parents = false)
+        {
+            var visited = new List<object>();
+            if (deep_update_parents) DeepUpdateParents(dictionary);
+            return DeepCollect<T>(visited, dictionary, filter, parent_filter);
+        }
+
+        private static Dictionary<string, T> DeepCollect<T>(List<object> visited,IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null)
         {
             var children = new Dictionary<string, T>();
             if (dictionary != null)
@@ -145,8 +152,6 @@ namespace Node.Net.Collections
                         var child = dictionary[child_key];
                         if (child != null)
                         {
-                            ObjectExtension.SetParent(child as IDictionary, dictionary);
-
                             if (typeof(T).IsAssignableFrom(child.GetType()))
                             {
                                 var instance = (T)child;
@@ -164,14 +169,18 @@ namespace Node.Net.Collections
 
                             if (parent_filter == null || parent_filter.Include(child))
                             {
-                                var deep_children = DeepCollect<T>(child as IDictionary, filter);
-                                foreach (var deep_child_key in deep_children.Keys)
+                                if (!visited.Contains(child))
                                 {
-                                    var deep_child = deep_children[deep_child_key];
-                                    var ckey = $"{child_key}/{deep_child_key}";
-                                    if (!children.ContainsKey(ckey))
+                                    visited.Add(child);
+                                    var deep_children = DeepCollect<T>(visited,child as IDictionary, filter);
+                                    foreach (var deep_child_key in deep_children.Keys)
                                     {
-                                        children.Add(ckey, deep_child);
+                                        var deep_child = deep_children[deep_child_key];
+                                        var ckey = $"{child_key}/{deep_child_key}";
+                                        if (!children.ContainsKey(ckey))
+                                        {
+                                            children.Add(ckey, deep_child);
+                                        }
                                     }
                                 }
                             }
@@ -180,6 +189,20 @@ namespace Node.Net.Collections
                 }
             }
             return children;
+        }
+
+        public static void DeepUpdateParents(IDictionary dictionary)
+        {
+            if (dictionary == null) return;
+            foreach (var child_key in dictionary.Keys)
+            {
+                var child = dictionary[child_key];
+                if (child != null)
+                {
+                    ObjectExtension.SetParent(child as IDictionary, dictionary);
+                    DeepUpdateParents(child as IDictionary);
+                }
+            }
         }
 
         // TODO: replace with signature T[] CollectValues<T>(IDictionary dictionary,string key)

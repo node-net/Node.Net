@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,7 +17,7 @@ namespace Node.Net
             Node.Net.Collections.IDictionaryExtension.GetLocalToWorldFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
         }
         public static T Create<T>(this IFactory factory, object source) => Extensions.IFactoryExtension.Create<T>(factory, source);
-        
+
 
         #region TextReader
         public static void EatWhiteSpace(this TextReader reader) => Extensions.TextReaderExtension.EatWhiteSpace(reader);
@@ -44,13 +43,13 @@ namespace Node.Net
         #endregion
 
         #region IParent
-        public static Dictionary<string,T> Collect<T>(this IParent parent) => Extensions.IParentExtension.Collect<T>(parent);
-        public static Dictionary<string,T> DeepCollect<T>(this IParent parent) => Extensions.IParentExtension.DeepCollect<T>(parent);
+        public static Dictionary<string, T> Collect<T>(this IParent parent) => Extensions.IParentExtension.Collect<T>(parent);
+        public static Dictionary<string, T> DeepCollect<T>(this IParent parent) => Extensions.IParentExtension.DeepCollect<T>(parent);
         #endregion
 
-        
 
-        
+
+
 
         #region IGetDataSet
         public static string[] GetStringArray(this IGetDataSet getDataSet, string sql) => Extensions.IGetDataSetExtension.GetStringArray(getDataSet, sql);
@@ -80,10 +79,11 @@ namespace Node.Net
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepCollect<T>(dictionary);
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary, Collections.IFilter filter) => Collections.IDictionaryExtension.DeepCollect<T>(dictionary, filter);
         public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary, Collections.IFilter filter, Collections.IFilter parentFilter) => Collections.IDictionaryExtension.DeepCollect<T>(dictionary, filter, parentFilter);
+        public static void DeepUpdateParents(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepUpdateParents(dictionary);
         public static void Remove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.Remove<T>(dictionary);
         public static void DeepRemove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepRemove<T>(dictionary);
         public static string[] CollectUniqueStrings(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.CollectUniqueStrings(dictionary, key);
-        
+
         public static void Copy(this IDictionary destination, IDictionary source) => Collections.IDictionaryExtension.Copy(destination, source);
         public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
         public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Factories.Extension.IDictionaryExtension.GetLocalToParent(dictionary);
