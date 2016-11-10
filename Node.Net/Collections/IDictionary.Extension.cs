@@ -159,12 +159,103 @@ namespace Node.Net.Collections
             }
             return count;
         }
-        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null,bool deep_update_parents = false)
+
+        public static Dictionary<string,T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null)
         {
+            var results = new Dictionary<string, T>();
+            DeepCollect2<T>(results, dictionary, "", filter, parent_filter);
+            return results;
+        }
+        public static Dictionary<string, T> DeepCollectSafe<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null,bool deep_update_parents = false)
+        {
+
+            // guards against recusive object graphs
             var visited = new List<object>();
             if (deep_update_parents) DeepUpdateParents(dictionary);
-            return DeepCollect<T>(visited, dictionary, filter, parent_filter);
+            var results = new Dictionary<string, T>();
+            DeepCollect2<T>(visited, results, dictionary, "",filter, parent_filter);
+            return results;
         }
+
+        private static void DeepCollect2<T>(Dictionary<string, T> results, IDictionary dictionary, string key = "", IFilter filter = null, IFilter parent_filter = null)
+        {
+            if (dictionary != null)
+            {
+                foreach (var child_key in dictionary.Keys)
+                {
+                    var child = dictionary[child_key];
+
+                    if (child != null)
+                    {
+                        if (typeof(T).IsAssignableFrom(child.GetType()))
+                        {
+                            if (filter == null || filter.Include(child))
+                            {
+                                var full_key = $"{key}/{child_key}";
+                                if (key.Length == 0) full_key = child_key.ToString();
+                                if (!results.ContainsKey(full_key))
+                                {
+                                    results.Add(full_key, (T)child);
+                                }
+                            }
+                        }
+
+                        var childDictionary = child as IDictionary;
+                        if (childDictionary != null)
+                        {
+                            if (parent_filter == null || parent_filter.Include(child))
+                            {
+                                var full_key = $"{key}/{child_key}";
+                                if (key.Length == 0) full_key = child_key.ToString();
+                                DeepCollect2<T>(results, child as IDictionary, full_key, filter, parent_filter);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private static void DeepCollect2<T>(List<object> visited, Dictionary<string,T> results,IDictionary dictionary, string key = "",IFilter filter = null, IFilter parent_filter = null)
+        {
+            if (dictionary != null)
+            {
+                foreach (var child_key in dictionary.Keys)
+                {
+                    var child = dictionary[child_key];
+                    
+                    if (child != null)
+                    {
+                        if (typeof(T).IsAssignableFrom(child.GetType()))
+                        {
+                            if (filter == null || filter.Include(child))
+                            {
+                                var full_key = $"{key}/{child_key}";
+                                if (key.Length == 0) full_key = child_key.ToString();
+                                if (!results.ContainsKey(full_key))
+                                {
+                                    results.Add(full_key, (T)child);
+                                }
+                            }
+                        }
+
+                        var childDictionary = child as IDictionary;
+                        if (childDictionary != null)
+                        {
+                            if (parent_filter == null || parent_filter.Include(child))
+                            {
+                                if (!visited.Contains(child))
+                                {
+                                    visited.Add(child);
+                                    var full_key = $"{key}/{child_key}";
+                                    if (key.Length == 0) full_key = child_key.ToString();
+                                    DeepCollect2<T>(visited, results, child as IDictionary, full_key, filter, parent_filter);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         private static Dictionary<string, T> DeepCollect<T>(List<object> visited,IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null)
         {
