@@ -12,7 +12,7 @@ namespace Node.Net.Collections
         public bool ExactMatch { get; set; } = false;
         public List<string> Values { get; set; } = new List<string>();
         public List<string> ExcludeValues { get; set; } = new List<string>();
-        public bool Include(object item)
+        public bool? Include(object item)
         {
             var dictionary = item as IDictionary;
             if (dictionary != null)

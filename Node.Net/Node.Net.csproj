@@ -60,10 +60,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Collector.cs" />
     <Compile Include="Collections\Controls\DictionaryExplorer.cs" />
     <Compile Include="Collections\Controls\DictionarySearch.xaml.cs">
       <DependentUpon>DictionarySearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Collections\Controls\InstanceCounts.cs" />
     <Compile Include="Collections\Controls\InstanceExpander.cs" />
     <Compile Include="Collections\Controls\InstanceList.cs" />
     <Compile Include="Collections\Controls\InstanceStackPanel.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Collections\MetaDataMap.cs" />
     <Compile Include="Collections\Object.Extension.cs" />
     <Compile Include="Collections\Point.Extension.cs" />
+    <Compile Include="Collections\TypeFilter.cs" />
     <Compile Include="Collections\TypeValueFilter.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />

@@ -7,6 +7,19 @@ namespace Node.Net.Collections
 {
     public static class IDictionaryExtension
     {
+        public static Dictionary<string, dynamic> Collect(IDictionary dictionary, Func<object, bool?> filter = null)
+        {
+            return new Collector { Filter = filter }.Collect(dictionary);
+        }
+        public static Dictionary<string, T> Collect<T>(IDictionary dictionary, Func<object, bool?> filter = null)
+        {
+            return new Collector { Filter = filter }.Collect<T>(dictionary);
+        }
+        public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary,Func<object,bool?> filter = null, Func<object,bool?> deepFilter = null)// IFilter filter = null, IFilter parent_filter = null)
+        {
+            return new Collector { Filter = filter, DeepFilter = deepFilter }.DeepCollect<T>(dictionary);
+        }
+
         public static Func<IDictionary, Matrix3D> GetLocalToParentFunction;
         public static Func<IDictionary, Matrix3D> GetLocalToWorldFunction;
         public static Func<IDictionary, Rect3D> GetBoundsFunction;
@@ -25,28 +38,7 @@ namespace Node.Net.Collections
             if (GetBoundsFunction != null) return GetBoundsFunction(dictionary);
             return new Rect3D();
         }
-        public static T Get<T>(IDictionary dictionary, string name)
-        {
-            if (!dictionary.Contains(name)) return default(T);
-            var value = dictionary[name];
-            if (value == null) return default(T);
-
-            if (typeof(T) == typeof(DateTime) && value.GetType() == typeof(string))
-            {
-                return (T)((object)DateTime.Parse(value.ToString()));
-            }
-            return (T)dictionary[name];
-
-        }
-
-        public static void Set(IDictionary dictionary, string key, object value)
-        {
-            if (value != null && value.GetType() == typeof(DateTime))
-            {
-                dictionary[key] = ((DateTime)value).ToString("o");
-            }
-            else { dictionary[key] = value; }
-        }
+        
 
         public static void RemoveKey(IDictionary dictionary,string key)
         {
@@ -64,33 +56,17 @@ namespace Node.Net.Collections
             foreach (var key in keys) { RemoveKey(dictionary, key); }
         }
 
-        public static Dictionary<string, T> Collect<T>(IDictionary dictionary, IFilter filter = null)
+        
+        /*
+        public static bool Include(IFilter filter, object target)
         {
-            var children = new Dictionary<string, T>();
-            if (dictionary != null)
-            {
-                foreach (var key in dictionary.Keys)
-                {
-                    var child = dictionary[key];
-                    if (child != null)
-                    {
-                        ObjectExtension.SetParent(child as IDictionary, dictionary);
-                        if (typeof(T).IsAssignableFrom(child.GetType()))
-                        {
-                            var instance = (T)child;
-                            if (instance != null)
-                            {
-                                if (filter == null || filter.Include(instance))
-                                {
-                                    children.Add(key.ToString(), instance);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return children;
-        }
+            if (filter == null) return true;
+            var include = filter.Include(target);
+            if (include.HasValue && !include.Value) return false;
+            return true;
+        }*/
+
+
 
         public static void Remove<T>(IDictionary dictionary)
         {
@@ -160,12 +136,8 @@ namespace Node.Net.Collections
             return count;
         }
 
-        public static Dictionary<string,T> DeepCollect<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null)
-        {
-            var results = new Dictionary<string, T>();
-            DeepCollect2<T>(results, dictionary, "", filter, parent_filter);
-            return results;
-        }
+        
+        /*
         public static Dictionary<string, T> DeepCollectSafe<T>(IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null,bool deep_update_parents = false)
         {
 
@@ -176,7 +148,8 @@ namespace Node.Net.Collections
             DeepCollect2<T>(visited, results, dictionary, "",filter, parent_filter);
             return results;
         }
-
+        */
+        /*
         private static void DeepCollect2<T>(Dictionary<string, T> results, IDictionary dictionary, string key = "", IFilter filter = null, IFilter parent_filter = null)
         {
             if (dictionary != null)
@@ -189,7 +162,9 @@ namespace Node.Net.Collections
                     {
                         if (typeof(T).IsAssignableFrom(child.GetType()))
                         {
-                            if (filter == null || filter.Include(child))
+
+                            if(Include(filter,child))
+                            //if (filter == null || filter.Include(child))
                             {
                                 var full_key = $"{key}/{child_key}";
                                 if (key.Length == 0) full_key = child_key.ToString();
@@ -203,7 +178,8 @@ namespace Node.Net.Collections
                         var childDictionary = child as IDictionary;
                         if (childDictionary != null)
                         {
-                            if (parent_filter == null || parent_filter.Include(child))
+                            if(Include(parent_filter,child))
+                            //if (parent_filter == null || parent_filter.Include(child))
                             {
                                 var full_key = $"{key}/{child_key}";
                                 if (key.Length == 0) full_key = child_key.ToString();
@@ -213,7 +189,8 @@ namespace Node.Net.Collections
                     }
                 }
             }
-        }
+        }*/
+        /*
         private static void DeepCollect2<T>(List<object> visited, Dictionary<string,T> results,IDictionary dictionary, string key = "",IFilter filter = null, IFilter parent_filter = null)
         {
             if (dictionary != null)
@@ -226,7 +203,8 @@ namespace Node.Net.Collections
                     {
                         if (typeof(T).IsAssignableFrom(child.GetType()))
                         {
-                            if (filter == null || filter.Include(child))
+                            if(Include(filter,child))
+                            //if (filter == null || filter.Include(child))
                             {
                                 var full_key = $"{key}/{child_key}";
                                 if (key.Length == 0) full_key = child_key.ToString();
@@ -240,7 +218,8 @@ namespace Node.Net.Collections
                         var childDictionary = child as IDictionary;
                         if (childDictionary != null)
                         {
-                            if (parent_filter == null || parent_filter.Include(child))
+                            if(Include(parent_filter,child))
+                            //if (parent_filter == null || parent_filter.Include(child))
                             {
                                 if (!visited.Contains(child))
                                 {
@@ -255,14 +234,15 @@ namespace Node.Net.Collections
                 }
             }
         }
-
-
+        */
+        /*
         private static Dictionary<string, T> DeepCollect<T>(List<object> visited,IDictionary dictionary, IFilter filter = null, IFilter parent_filter = null)
         {
             var children = new Dictionary<string, T>();
             if (dictionary != null)
             {
-                if (parent_filter == null || parent_filter.Include(dictionary))
+                if(Include(parent_filter,dictionary))
+                //if (parent_filter == null || parent_filter.Include(dictionary))
                 {
                     foreach (var child_key in dictionary.Keys)
                     {
@@ -274,7 +254,8 @@ namespace Node.Net.Collections
                                 var instance = (T)child;
                                 if (instance != null)
                                 {
-                                    if (filter == null || filter.Include(instance))
+                                    if(Include(filter,instance))
+                                    //if (filter == null || filter.Include(instance))
                                     {
                                         if (!children.ContainsKey(child_key.ToString()))
                                         {
@@ -284,7 +265,8 @@ namespace Node.Net.Collections
                                 }
                             }
 
-                            if (parent_filter == null || parent_filter.Include(child))
+                            if(Include(parent_filter,child))
+                            //if (parent_filter == null || parent_filter.Include(child))
                             {
                                 if (!visited.Contains(child))
                                 {
@@ -306,7 +288,7 @@ namespace Node.Net.Collections
                 }
             }
             return children;
-        }
+        }*/
 
         public static void DeepUpdateParents(IDictionary dictionary)
         {
@@ -385,6 +367,8 @@ namespace Node.Net.Collections
             }
             return results.ToArray();
         }
+
+
 
         public static Type[] CollectTypes<T>(IDictionary dictionary)
         {
@@ -499,7 +483,31 @@ namespace Node.Net.Collections
             }
             return keys;
         }
-        public static object GetValue(IDictionary dictionary,string key)
+
+        public static T Get<T>(IDictionary dictionary, string name)
+        {
+            if (!dictionary.Contains(name))
+            {
+                var value = GetValue(dictionary, name);
+                if(value != null && typeof(T).IsAssignableFrom(value.GetType()))
+                {
+                    return (T)value;
+                }
+                return default(T);
+            }
+            else
+            {
+                var value = dictionary[name];
+                if (value == null) return default(T);
+
+                if (typeof(T) == typeof(DateTime) && value.GetType() == typeof(string))
+                {
+                    return (T)((object)DateTime.Parse(value.ToString()));
+                }
+                return (T)dictionary[name];
+            }
+        }
+        private static object GetValue(IDictionary dictionary,string key)
         {
             if (dictionary.Contains(key)) return dictionary[key];
             if(key.Contains("/"))
@@ -514,7 +522,20 @@ namespace Node.Net.Collections
             }
             return null;
         }
-        public static void SetValue(IDictionary dictionary,string key,object value)
+
+        public static void Set(IDictionary dictionary, string key, object value)
+        {
+            if (key.Contains("/")) SetValue(dictionary, key, value);
+            else
+            {
+                if (value != null && value.GetType() == typeof(DateTime))
+                {
+                    dictionary[key] = ((DateTime)value).ToString("o");
+                }
+                else { dictionary[key] = value; }
+            }
+        }
+        private static void SetValue(IDictionary dictionary,string key,object value)
         {
             if(dictionary != null)
             {
@@ -523,18 +544,23 @@ namespace Node.Net.Collections
                     var parts = key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     if(parts.Length > 1)
                     {
+                        var child_key = parts[0];
+                        var child_subkey = String.Join("/", parts, 1, parts.Length - 1);
                         IDictionary child = null;
-                        if (dictionary.Contains(parts[0])) child = dictionary[parts[0]] as IDictionary;
+                        if (dictionary.Contains(child_key)) child = dictionary[child_key] as IDictionary;
                         if(child == null)
                         {
                             child = new Dictionary<string, dynamic>();
-                            dictionary[parts[0]] = child;
+                            //dictionary[parts[0]] = child;
                         }
-                        SetValue(child, String.Join("/", parts, 1, parts.Length - 1),value);
+                        SetValue(child, child_subkey,value);
+                        dictionary[child_key] = child;
                     }
                 }
-                dictionary[key] = value;
+                else Set(dictionary, key, value);
+                //dictionary[key] = value;
             }
         }
+
     }
 }

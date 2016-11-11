@@ -39,7 +39,7 @@ namespace Node.Net.Collections.Controls
                 {
                     Key = Key,
                     Values = { ValuePattern }
-                });
+                }.Include);
         }
     }
 }

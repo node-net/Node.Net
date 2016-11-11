@@ -60,7 +60,7 @@ namespace Node.Net.Collections.Controls
                     if (type.Contains(ValuePattern))
                     {
                         var instances = IDictionaryExtension.DeepCollect<IDictionary>(dictionary,
-                                new KeyValueFilter { Key = Key, Values = { type } });
+                                new KeyValueFilter { Key = Key, Values = { type } }.Include);
                         if (instances.Count > 0)
                         {
                             var expander = new InstanceExpander
@@ -107,14 +107,12 @@ namespace Node.Net.Collections.Controls
                         }
                     }
                 }
-                //string[] unique_types = IDictionaryExtension.CollectUniqueStrings(dictionary, Key);
-                //Array.Sort(unique_types, (x, y) => String.Compare(x, y));
                 foreach (var type in unique_types)
                 {
                     if (type.Contains(ValuePattern))
                     {
                         var instances = IDictionaryExtension.Collect<IDictionary>(dictionary,
-                                new KeyValueFilter { Key = Key, Values = { type } });
+                                new KeyValueFilter { Key = Key, Values = { type } }.Include);
                         
                         if (instances.Count > 0)
                         {
