@@ -29,7 +29,7 @@ namespace Node.Net.Collections.Controls
         {
             base.OnInitialized(e);
             initialized = true;
-            ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(250) });
+            ColumnDefinitions.Add(new ColumnDefinition ());
             ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5) });
             ColumnDefinitions.Add(new ColumnDefinition());
 
