@@ -28,6 +28,12 @@ namespace Node.Net.Collections
             }
             return true;
         }
+        public bool Include<T>(object value)
+        {
+            if (value == null) return false;
+            if (!typeof(T).IsAssignableFrom(value.GetType())) return false;
+            return Include((T)value);
+        }
         public bool DeepInclude(object value)
         {
             var dictionary = value as IDictionary;
@@ -60,9 +66,9 @@ namespace Node.Net.Collections
                 foreach (var key in dictionary.Keys)
                 {
                     var child = dictionary[key];
-                    if (child != null && typeof(T).IsAssignableFrom(child.GetType()))
+                    if(Include<T>(child))
                     {
-                        if (Include(child)) children.Add(key.ToString(), (T)child);
+                        children.Add(key.ToString(), (T)child);
                     }
                 }
             }
@@ -75,9 +81,10 @@ namespace Node.Net.Collections
             {
                 foreach(var key in dictionary.Keys)
                 {
-                    if (DeepInclude(dictionary[key]))
+                    var child = dictionary[key];
+                    if (DeepInclude(child))
                     {
-                        var children = DeepCollect(dictionary[key] as IDictionary);
+                        var children = DeepCollect(child as IDictionary);
                         foreach (var childKey in children.Keys)
                         {
                             results.Add($"{key}/{childKey}", children[childKey]);
@@ -105,6 +112,37 @@ namespace Node.Net.Collections
                 }
             }
             return results;
+        }
+
+        public string[] DeepCollectKeys(IDictionary dictionary)
+        {
+            var keys = new List<string>();
+            if (dictionary != null)
+            {
+                foreach (var key in dictionary.Keys)
+                {
+                    if (key.GetType() == typeof(string))
+                    {
+                        if (!keys.Contains(key.ToString()))
+                        {
+                            keys.Add(key.ToString());
+                        }
+                    }
+                    var child = dictionary[key] as IDictionary;
+                    if (child != null)
+                    {
+                        var childKeys = DeepCollectKeys(child);
+                        foreach (var child_key in childKeys)
+                        {
+                            if (!keys.Contains(child_key))
+                            {
+                                keys.Add(child_key);
+                            }
+                        }
+                    }
+                }
+            }
+            return keys.ToArray();
         }
     }
 }

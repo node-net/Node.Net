@@ -18,15 +18,20 @@ namespace Node.Net.Collections.Controls
             get { return searchTextBox.Text; }
             set { searchTextBox.Text = value; }
         }
-        public bool ShowInstanceKeys { get; set; } = true;
+        public bool ShowInstanceKeys { get; set; } = false;
 
         private void _DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) => Update();
 
-        //private Label TotalLabel = new Label { Content = "0 instances" };
         private Frame controlsFrame = new Frame { JournalOwnership = JournalOwnership.UsesParentJournal };
         private ComboBox keyComboBox = new ComboBox { IsEditable = true };
         private TextBox searchTextBox = new TextBox();
-        private CheckBox showInstancesCheckBox = new CheckBox { Content = "Show Instances", IsChecked = false };
+        private CheckBox showInstancesCheckBox = new CheckBox
+        {
+            Content = "Show Instances",
+            IsChecked = false,
+            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(10,0,0,0)
+        };
         private Grid controlGrid = null;
         private ScrollViewer scrollViewer = new ScrollViewer
         {
@@ -37,17 +42,13 @@ namespace Node.Net.Collections.Controls
         {
             base.OnInitialized(e);
             RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            //RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition());
             Children.Add(controlsFrame);
-            //Children.Add(searchTextBox);
-            //Grid.SetRow(searchTextBox, 1);
             Children.Add(scrollViewer);
             Grid.SetRow(scrollViewer, 1);
             searchTextBox.TextChanged += SearchTextBox_TextChanged;
             showInstancesCheckBox.Checked += ShowInstancesCheckBox_Checked;
             showInstancesCheckBox.Unchecked += ShowInstancesCheckBox_Unchecked;
-            //keyComboBox.SelectionChanged += KeyComboBox_SelectionChanged;
             Update();
         }
 
@@ -95,17 +96,21 @@ namespace Node.Net.Collections.Controls
             if (controlGrid == null)
             {
                 controlGrid = new Grid();
+                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                 controlGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                controlGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width =GridLength.Auto });
                 controlGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 controlGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 controlGrid.Children.Add(new Label { Content = "Key" });
                 controlGrid.Children.Add(keyComboBox);
                 Grid.SetColumn(keyComboBox, 1);
+                var searchLabel = new Label { Content = "Search" };
+                controlGrid.Children.Add(searchLabel);
+                Grid.SetColumn(searchLabel, 2);
                 controlGrid.Children.Add(searchTextBox);
-                Grid.SetColumn(searchTextBox, 2);
+                Grid.SetColumn(searchTextBox, 3);
                 controlGrid.Children.Add(showInstancesCheckBox);
-                Grid.SetColumn(showInstancesCheckBox, 3);
+                Grid.SetColumn(showInstancesCheckBox, 4);
             }
             return controlGrid;
         }
@@ -136,16 +141,24 @@ namespace Node.Net.Collections.Controls
             var typeName = instances.First().Value[Key].ToString();
             if (ShowInstanceKeys)
             {
+                var listBox = new ListBox { DataContext = instances };
+                listBox.SelectionChanged += ListBox_SelectionChanged;
                 return new Expander
                 {
                     Header = typeName,
-                    Content = new ListBox { DataContext = instances }
+                    Content = listBox
                 };
             }
             else
             {
                 return new Label { Content = typeName };
             }
+        }
+
+        public event SelectionChangedEventHandler SelectionChanged;
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectionChanged != null) SelectionChanged(sender, e);
         }
 
         private List<Dictionary<string, IDictionary>> GetOrderedInstances()
