@@ -62,21 +62,9 @@
   <ItemGroup>
     <Compile Include="Collections\Collector.cs" />
     <Compile Include="Collections\Controls\DictionaryExplorer.cs" />
-    <Compile Include="Collections\Controls\DictionarySearch.xaml.cs">
-      <DependentUpon>DictionarySearch.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Collections\Controls\InstanceCounts.cs" />
-    <Compile Include="Collections\Controls\InstanceExpander.cs" />
-    <Compile Include="Collections\Controls\InstanceList.cs" />
-    <Compile Include="Collections\Controls\InstanceStackPanel.cs" />
     <Compile Include="Collections\Controls\ListBox.cs" />
     <Compile Include="Collections\Controls\Properties.cs" />
-    <Compile Include="Collections\Controls\SearchResults.xaml.cs">
-      <DependentUpon>SearchResults.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Collections\Controls\SearchTextBox.xaml.cs">
-      <DependentUpon>SearchTextBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Collections\Interfaces.cs" />
     <Compile Include="Collections\Internal\ParentMap.cs" />
     <Compile Include="Collections\KeyValueFilter.cs" />
@@ -316,20 +304,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Deprecated\Extensions\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Collections\Controls\DictionarySearch.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Collections\Controls\SearchResults.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Collections\Controls\SearchTextBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

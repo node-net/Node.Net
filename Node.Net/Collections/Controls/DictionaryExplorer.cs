@@ -13,12 +13,17 @@ namespace Node.Net.Collections.Controls
             DataContextChanged += _DataContextChanged;
         }
 
+        public string Key
+        {
+            get { return instances.Key; }
+            set { instances.Key = value; }
+        }
         private void _DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
             Update();
         }
         private bool initialized = false;
-        InstanceCounts instances = null;
+        InstanceCounts instances = new InstanceCounts { Key = "Type" };
         Properties properties = null;
         protected override void OnInitialized(EventArgs e)
         {
@@ -28,7 +33,6 @@ namespace Node.Net.Collections.Controls
             ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5) });
             ColumnDefinitions.Add(new ColumnDefinition());
 
-            instances = new InstanceCounts { Key = "Type" };
             Children.Add(instances);
             instances.SelectionChanged += Instances_SelectionChanged;
 
