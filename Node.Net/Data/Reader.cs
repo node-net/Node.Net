@@ -15,7 +15,13 @@ namespace Node.Net.Data
             reader = new Readers.Reader { IDictionaryTypeConversionFunction = dictionaryTypeConverter.Convert };
         }
         private Readers.DictionaryTypeConverter dictionaryTypeConverter;
-
+        public object Read(string filename)
+        {
+            using (FileStream fs = new FileStream(filename, FileMode.Open))
+            {
+                return Read(fs);
+            }
+        }
         public object Read(Stream stream)
         {
             return reader.Read(stream);
