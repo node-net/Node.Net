@@ -71,6 +71,13 @@ namespace Node.Net.Data.Readers
 
         public Func<IDictionary,IDictionary> IDictionaryTypeConversionFunction { get; set; }
 
+        public object Read(string filename)
+        {
+            using (FileStream fs = new FileStream(filename, FileMode.Open))
+            {
+                return Read(fs);
+            }
+        }
         public object Read(Stream stream_original)
         {
             var kvp = BytesReader.GetStreamSignature(stream_original);

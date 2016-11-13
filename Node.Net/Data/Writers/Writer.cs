@@ -46,6 +46,13 @@ namespace Node.Net.Data.Writers
             }
             set { writersMap = value; }
         }
+        public void Write(string filename,object value)
+        {
+            using (FileStream fs = new FileStream(filename, FileMode.Create))
+            {
+                Write(fs, value);
+            }
+        }
         public void Write(Stream stream, object value)
         {
             if (value == null) return;
