@@ -175,8 +175,8 @@ namespace Node.Net.Collections.Controls
                 var typeInstances = new Dictionary<string, Dictionary<string, IDictionary>>();
                 foreach (var typeName in typeNames)
                 {
-                    var instances = IDictionaryExtension.DeepCollect<IDictionary>(
-                        dictionary,
+                    var instances = IDictionaryExtension.Collect<IDictionary>(
+                        dictionary,true,
                         new Node.Net.Collections.KeyValueFilter
                         {
                             Key = Key,

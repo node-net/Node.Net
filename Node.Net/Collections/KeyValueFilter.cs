@@ -17,10 +17,15 @@ namespace Node.Net.Collections
         public bool ExactMatch { get; set; } = false;
         public List<string> Values { get; set; } = new List<string>();
         public List<string> ExcludeValues { get; set; } = new List<string>();
+        //private TypeFilter typeFilter = new TypeFilter
         public bool? Include(object source)
         {
             var dictionary = source as IDictionary;
-            if (dictionary != null)
+            if (dictionary == null)
+            {
+                return false;
+            }
+            else
             {
                 if (dictionary.Contains(Key))
                 {

@@ -65,13 +65,16 @@
     <Compile Include="Collections\Controls\InstanceCounts.cs" />
     <Compile Include="Collections\Controls\ListBox.cs" />
     <Compile Include="Collections\Controls\Properties.cs" />
+    <Compile Include="Collections\Filter.cs" />
+    <Compile Include="Collections\Filters\IDictionaryFilter.cs" />
+    <Compile Include="Collections\Filters\StringFilter.cs" />
+    <Compile Include="Collections\Filters\ValueFilter.cs" />
     <Compile Include="Collections\Interfaces.cs" />
     <Compile Include="Collections\Internal\ParentMap.cs" />
     <Compile Include="Collections\KeyValueFilter.cs" />
     <Compile Include="Collections\MetaDataMap.cs" />
     <Compile Include="Collections\Object.Extension.cs" />
     <Compile Include="Collections\Point.Extension.cs" />
-    <Compile Include="Collections\TypeFilter.cs" />
     <Compile Include="Collections\TypeValueFilter.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />

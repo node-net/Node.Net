@@ -7,18 +7,23 @@ namespace Node.Net.Collections
 {
     public static class IDictionaryExtension
     {
+        /*
         public static Dictionary<string, dynamic> Collect(IDictionary dictionary, Func<object, bool?> filter = null)
         {
             return new Collector { Filter = filter }.Collect(dictionary);
-        }
-        public static Dictionary<string, T> Collect<T>(IDictionary dictionary, Func<object, bool?> filter = null)
+        }*/
+        public static Dictionary<string, T> Collect<T>(IDictionary dictionary, bool deep = true,
+                                                       Func<object, bool?> keyFilter = null, 
+                                                       Func<object,bool?> valueFilter = null,
+                                                       Func<object,bool?> deepFilter = null)
         {
-            return new Collector { Filter = filter }.Collect<T>(dictionary);
+            return new Collector { KeyFilter = keyFilter, ValueFilter = valueFilter, DeepFilter = deepFilter }.Collect<T>(dictionary,deep);
         }
+        /*
         public static Dictionary<string, T> DeepCollect<T>(IDictionary dictionary,Func<object,bool?> filter = null, Func<object,bool?> deepFilter = null)// IFilter filter = null, IFilter parent_filter = null)
         {
-            return new Collector { Filter = filter, DeepFilter = deepFilter }.DeepCollect<T>(dictionary);
-        }
+            return new Collector { Filter = filter, DeepFilter = deepFilter }.Collect<T>(dictionary, true);
+        }*/
 
         public static Func<IDictionary, Matrix3D> GetLocalToParentFunction;
         public static Func<IDictionary, Matrix3D> GetLocalToWorldFunction;
@@ -439,7 +444,7 @@ namespace Node.Net.Collections
 
         public static T Find<T>(IDictionary dictionary,string key)
         {
-            var items = DeepCollect<T>(dictionary);
+            var items = Collect<T>(dictionary);
             foreach(var child_key in items.Keys)
             {
                 if (child_key == key) return items[child_key];
