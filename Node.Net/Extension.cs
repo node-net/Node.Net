@@ -74,7 +74,7 @@ namespace Node.Net
         public static T Get<T>(this IDictionary dictionary, string name) => Collections.IDictionaryExtension.Get<T>(dictionary, name);
         public static void Set(this IDictionary dictionary, string name, object value) => Collections.IDictionaryExtension.Set(dictionary, name, value);
         public static void RemoveKeys(this IDictionary dictionary, string[] keys) => Collections.IDictionaryExtension.RemoveKeys(dictionary, keys);
-        public static Dictionary<string, T> Collect<T>(IDictionary dictionary, bool deep = true,
+        public static Dictionary<string, T> Collect<T>(this IDictionary dictionary, bool deep = true,
                                                        Func<object, bool?> keyFilter = null,
                                                        Func<object, bool?> valueFilter = null,
                                                        Func<object, bool?> deepFilter = null) =>
