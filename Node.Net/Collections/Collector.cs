@@ -6,7 +6,15 @@ namespace Node.Net.Collections
 {
     public class Collector
     {
-        public Collector() { }
+        #region State
+        public Func<object, bool?> KeyFilter { get; set; }
+        public Func<object, bool?> ValueFilter { get; set; }
+        //public Func<object, bool?> Filter { get; set; }
+        public Func<object, bool?> DeepFilter { get; set; }
+        #endregion
+        #region Construction
+        //public Collector() { }
+        /*
         public Collector(IFilter filter)
         {
             if(filter != null) Filter = filter.Include;
@@ -15,26 +23,95 @@ namespace Node.Net.Collections
         {
             if (filter != null) Filter = filter.Include;
             if (deepFilter != null) DeepFilter = deepFilter.Include;
-        }
-    
-        public Func<object, bool?> Filter { get; set; }
-        public Func<object,bool?> DeepFilter { get; set; }
-        public bool Include(object value)
+        }*/
+        #endregion
+
+        
+
+        #region CollectKeys
+        public string[] CollectKeys(IDictionary dictionary,bool deep)
         {
-            if (Filter != null)
+            var keys = new List<string>();
+            if (dictionary != null)
             {
-                var include = Filter(value);
-                if (include.HasValue && !include.Value) return false;
+                foreach (string key in dictionary.Keys)
+                {
+                    if (IncludeKey(key) && !keys.Contains(key)) keys.Add(key);
+                    if(deep)
+                    {
+                        var child = dictionary[key] as IDictionary;
+                        if(child != null)
+                        {
+                            var child_keys = CollectKeys(child, deep);
+                            foreach(var child_key in child_keys)
+                            {
+                                if (IncludeKey(child_key) && !keys.Contains(child_key)) keys.Add(child_key);
+                            }
+                        }
+                    }
+                }
             }
-            return true;
+            return keys.ToArray();
         }
-        public bool Include<T>(object value)
+        
+        #endregion
+
+        #region Collect
+        
+        public Dictionary<string, T> Collect<T>(IDictionary dictionary,bool deep)
+        {
+            var children = new Dictionary<string, T>();
+            if (dictionary != null)
+            {
+                foreach (string key in dictionary.Keys)
+                {
+                    if (IncludeKey(key))
+                    {
+                        var child = dictionary[key];
+                        if (IncludeValue<T>(child))// && Include<T>(child))
+                        {
+                            children.Add(key.ToString(), (T)child);
+                        }
+                    }
+                    if(deep)
+                    {
+                        var child_dictonary = dictionary[key] as IDictionary;
+                        if(child_dictonary != null)
+                        {
+                            if (DeepInclude(child_dictonary))
+                            {
+                                var deep_children = Collect<T>(child_dictonary,deep);
+                                foreach (var child_key in deep_children.Keys)
+                                {
+                                    children.Add($"{key}/{child_key}", deep_children[child_key]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return children;
+        }
+        #endregion
+
+        #region Internal
+        private bool IncludeKey(string key)
+        {
+            if (KeyFilter == null || KeyFilter(key) == true)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool IncludeValue<T>(object value)
         {
             if (value == null) return false;
             if (!typeof(T).IsAssignableFrom(value.GetType())) return false;
-            return Include((T)value);
+            if (ValueFilter == null || ValueFilter(value) == true) return true;
+            return false;
         }
-        public bool DeepInclude(object value)
+
+        private bool DeepInclude(object value)
         {
             var dictionary = value as IDictionary;
             if (dictionary == null) return false;
@@ -45,6 +122,30 @@ namespace Node.Net.Collections
             }
             return true;
         }
+        #endregion
+
+
+
+
+        #region Legacy
+        /*
+        public bool Include(object value)
+        {
+            if (Filter != null)
+            {
+                var include = Filter(value);
+                if (include.HasValue && !include.Value) return false;
+            }
+            return true;
+        }*/
+        /*
+public bool Include<T>(object value)
+{
+    if (value == null) return false;
+    if (!typeof(T).IsAssignableFrom(value.GetType())) return false;
+    return Include((T)value);
+}*/
+        /*
         public Dictionary<string, dynamic> Collect(IDictionary dictionary)
         {
             var children = new Dictionary<string, object>();
@@ -57,63 +158,8 @@ namespace Node.Net.Collections
                 }
             }
             return children;
-        }
-        public Dictionary<string, T> Collect<T>(IDictionary dictionary)
-        {
-            var children = new Dictionary<string, T>();
-            if (dictionary != null)
-            {
-                foreach (var key in dictionary.Keys)
-                {
-                    var child = dictionary[key];
-                    if(Include<T>(child))
-                    {
-                        children.Add(key.ToString(), (T)child);
-                    }
-                }
-            }
-            return children;
-        }
-        public Dictionary<string, dynamic> DeepCollect(IDictionary dictionary)
-        {
-            var results = Collect(dictionary);
-            if(dictionary != null)
-            {
-                foreach(var key in dictionary.Keys)
-                {
-                    var child = dictionary[key];
-                    if (DeepInclude(child))
-                    {
-                        var children = DeepCollect(child as IDictionary);
-                        foreach (var childKey in children.Keys)
-                        {
-                            results.Add($"{key}/{childKey}", children[childKey]);
-                        }
-                    }
-                }
-            }
-            return results;
-        }
-        public Dictionary<string, T> DeepCollect<T>(IDictionary dictionary)
-        {
-            var results = Collect<T>(dictionary);
-            if (dictionary != null)
-            {
-                foreach (var key in dictionary.Keys)
-                {
-                    if (DeepInclude(dictionary[key]))
-                    {
-                        var children = DeepCollect<T>(dictionary[key] as IDictionary);
-                        foreach (var childKey in children.Keys)
-                        {
-                            results.Add($"{key}/{childKey}", children[childKey]);
-                        }
-                    }
-                }
-            }
-            return results;
-        }
-
+        }*/
+        /*
         public string[] DeepCollectKeys(IDictionary dictionary)
         {
             var keys = new List<string>();
@@ -143,6 +189,48 @@ namespace Node.Net.Collections
                 }
             }
             return keys.ToArray();
-        }
+        }*/
+        /*
+        public Dictionary<string, dynamic> DeepCollect(IDictionary dictionary)
+        {
+            var results = Collect(dictionary);
+            if (dictionary != null)
+            {
+                foreach (var key in dictionary.Keys)
+                {
+                    var child = dictionary[key];
+                    if (DeepInclude(child))
+                    {
+                        var children = DeepCollect(child as IDictionary);
+                        foreach (var childKey in children.Keys)
+                        {
+                            results.Add($"{key}/{childKey}", children[childKey]);
+                        }
+                    }
+                }
+            }
+            return results;
+        }*/
+        /*
+        public Dictionary<string, T> DeepCollect<T>(IDictionary dictionary)
+        {
+            var results = Collect<T>(dictionary,false);
+            if (dictionary != null)
+            {
+                foreach (var key in dictionary.Keys)
+                {
+                    if (DeepInclude(dictionary[key]))
+                    {
+                        var children = DeepCollect<T>(dictionary[key] as IDictionary);
+                        foreach (var childKey in children.Keys)
+                        {
+                            results.Add($"{key}/{childKey}", children[childKey]);
+                        }
+                    }
+                }
+            }
+            return results;
+        }*/
+        #endregion
     }
 }
