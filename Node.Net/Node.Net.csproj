@@ -261,7 +261,6 @@
     <Compile Include="IO\TextReader.Extension.cs" />
     <Compile Include="IO\WordReader.cs" />
     <Compile Include="IParent.cs" />
-    <Compile Include="IReader.cs" />
     <Compile Include="IResources.cs" />
     <Compile Include="IRotation3D.cs" />
     <Compile Include="ITransformer.cs" />

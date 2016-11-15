@@ -18,7 +18,6 @@ namespace Node.Net.Collections
             }
             return null;
         }
-
         public static string GetFullKey(object instance)
         {
             var key = GetKey(instance);
@@ -38,6 +37,7 @@ namespace Node.Net.Collections
             return string.Empty;
         }
         public static object GetValue(object instance) => Internal.KeyValuePair.GetValue(instance);
+        public static bool IsKeyValuePair(object instance) => Internal.KeyValuePair.IsKeyValuePair(instance);
         //public static Func<object, Dictionary<string, dynamic>> MetaDataFunctionGetMetaDataFunction = Default.GetMetaData;
         public static object GetParent(object item)
         {
