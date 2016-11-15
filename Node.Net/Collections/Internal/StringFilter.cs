@@ -1,6 +1,6 @@
-﻿namespace Node.Net.Collections.Filters
+﻿namespace Node.Net.Collections.Internal
 {
-    public class StringFilter : ValueFilter<string>
+    class StringFilter : ValueFilter<string>
     {
         public string Pattern { get; set; } = null;
         public override bool? Include(object value)

@@ -8,26 +8,26 @@ namespace Node.Net._Model3D.Transform
     {
         public static Visual3D ToVisual3D(IRenderer renderer, object value)
         {
-            var dictionary = Collections.KeyValuePair.GetValue(value) as IDictionary;
+            var dictionary = Collections.ObjectExtension.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToVisual3D(renderer, dictionary);
             return null;
         }
         public static ModelVisual3D ToModelVisual3D(IRenderer renderer, object value)
         {
-            var dictionary = Collections.KeyValuePair.GetValue(value) as IDictionary;
+            var dictionary = Collections.ObjectExtension.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModelVisual3D(renderer, dictionary);
             return null;
         }
         public static System.Windows.Media.Media3D.Model3D ToModel3D(IRenderer renderer, object value)
         {
-            var dictionary = Collections.KeyValuePair.GetValue(value) as IDictionary;
+            var dictionary = Collections.ObjectExtension.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModel3D(renderer, dictionary);
             return null;
         }
 
         public static System.Windows.Media.Media3D.Model3DGroup ToModel3DGroup(IRenderer renderer,object value)
         {
-            var dictionary = Collections.KeyValuePair.GetValue(value) as IDictionary;
+            var dictionary = Collections.ObjectExtension.GetValue(value) as IDictionary;
             if (!ReferenceEquals(null, dictionary)) return IDictionaryTransform.ToModel3DGroup(renderer, dictionary);
             return null;
         }

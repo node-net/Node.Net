@@ -88,7 +88,8 @@ namespace Node.Net.Collections.Controls
             controlsFrame.Content = GetControls(orderedInstances);
             scrollViewer.Content = GetInstanceGrid(orderedInstances);
             if (keyComboBox.Text != Key) keyComboBox.Text = Key;
-            keyComboBox.ItemsSource = IDictionaryExtension.DeepCollectKeys(Node.Net.Collections.KeyValuePair.GetValue(DataContext) as IDictionary);
+            //keyComboBox.ItemsSource = IDictionaryExtension.DeepCollectKeys(Node.Net.Collections.KeyValuePair.GetValue(DataContext) as IDictionary);
+            keyComboBox.ItemsSource = IDictionaryExtension.CollectKeys(ObjectExtension.GetValue(DataContext) as IDictionary);
         }
 
         private FrameworkElement GetControls(List<Dictionary<string, IDictionary>> orderedInstances)
@@ -163,10 +164,10 @@ namespace Node.Net.Collections.Controls
 
         private List<Dictionary<string, IDictionary>> GetOrderedInstances()
         {
-            var dictionary = KeyValuePair.GetValue(DataContext) as IDictionary;
+            var dictionary = ObjectExtension.GetValue(DataContext) as IDictionary;
             if (dictionary != null)
             {
-                var uniqueTypeNames = IDictionaryExtension.CollectUniqueStrings(dictionary, Key);
+                var uniqueTypeNames = IDictionaryExtension.CollectValues<string>(dictionary, Key);// IDictionaryExtension.CollectUniqueStrings(dictionary, Key);
                 var typeNames = new List<string>();
                 foreach (var utn in uniqueTypeNames)
                 {
@@ -176,13 +177,21 @@ namespace Node.Net.Collections.Controls
                 foreach (var typeName in typeNames)
                 {
                     var instances = IDictionaryExtension.Collect<IDictionary>(
-                        dictionary,true,
+                        dictionary, null,
+                        Filters.GetIDictionaryFilter<IDictionary>(Key, typeName));
+                    /*
+                        new Filters.IDictionaryFilter<IDictionary>
+                        {
+                            Key = Key,
+                            KeyStringValue = typeName
+                        }.Include);*/
+                    /*
                         new Node.Net.Collections.KeyValueFilter
                         {
                             Key = Key,
                             Values = { typeName },
                             ExactMatch = true
-                        }.Include);
+                        }.Include);*/
                     if (instances.Count > 0)
                     {
                         typeInstances.Add(typeName, instances);

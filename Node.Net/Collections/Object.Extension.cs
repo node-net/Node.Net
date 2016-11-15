@@ -7,7 +7,7 @@ namespace Node.Net.Collections
     {
         public static object GetKey(object instance)
         {
-            if(KeyValuePair.IsKeyValuePair(instance)) return KeyValuePair.GetKey(instance);
+            if(Internal.KeyValuePair.IsKeyValuePair(instance)) return Internal.KeyValuePair.GetKey(instance);
             var parent = GetParent(instance) as IDictionary;
             if(parent != null)
             {
@@ -37,14 +37,15 @@ namespace Node.Net.Collections
             }
             return string.Empty;
         }
-        public static object GetValue(object instance) => KeyValuePair.GetValue(instance);
+        public static object GetValue(object instance) => Internal.KeyValuePair.GetValue(instance);
+        //public static Func<object, Dictionary<string, dynamic>> MetaDataFunctionGetMetaDataFunction = Default.GetMetaData;
         public static object GetParent(object item)
         {
-            if (MetaDataMap.GetMetaDataFunction != null)
+            if (GlobalFunctions.GetMetaDataFunction != null)
             {
-                if (MetaDataMap.GetMetaDataFunction(item).ContainsKey("Parent"))
+                if (GlobalFunctions.GetMetaDataFunction(item).ContainsKey("Parent"))
                 {
-                    return MetaDataMap.GetMetaDataFunction(item)["Parent"];
+                    return GlobalFunctions.GetMetaDataFunction(item)["Parent"];
                 }
             }
             return null;
@@ -53,9 +54,9 @@ namespace Node.Net.Collections
         {
             if (item != null)
             {
-                if (MetaDataMap.GetMetaDataFunction != null)
+                if (GlobalFunctions.GetMetaDataFunction != null)
                 {
-                    MetaDataMap.GetMetaDataFunction(item)["Parent"] = parent;
+                    GlobalFunctions.GetMetaDataFunction(item)["Parent"] = parent;
                 }
             }
         }

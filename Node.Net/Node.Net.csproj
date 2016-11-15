@@ -60,22 +60,22 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\Collector.cs" />
     <Compile Include="Collections\Controls\DictionaryExplorer.cs" />
     <Compile Include="Collections\Controls\InstanceCounts.cs" />
     <Compile Include="Collections\Controls\ListBox.cs" />
     <Compile Include="Collections\Controls\Properties.cs" />
-    <Compile Include="Collections\Filter.cs" />
-    <Compile Include="Collections\Filters\IDictionaryFilter.cs" />
-    <Compile Include="Collections\Filters\StringFilter.cs" />
-    <Compile Include="Collections\Filters\ValueFilter.cs" />
-    <Compile Include="Collections\Interfaces.cs" />
+    <Compile Include="Collections\Filters.cs" />
+    <Compile Include="Collections\GlobalFunctions.cs" />
+    <Compile Include="Collections\Internal\Collector.cs" />
+    <Compile Include="Collections\Internal\IDictionaryFilter.cs" />
+    <Compile Include="Collections\Internal\IFilter.cs" />
+    <Compile Include="Collections\Internal\KeyValuePair.cs" />
+    <Compile Include="Collections\Internal\MetaDataMap.cs" />
     <Compile Include="Collections\Internal\ParentMap.cs" />
-    <Compile Include="Collections\KeyValueFilter.cs" />
-    <Compile Include="Collections\MetaDataMap.cs" />
+    <Compile Include="Collections\Internal\StringFilter.cs" />
+    <Compile Include="Collections\Internal\ValueFilter.cs" />
     <Compile Include="Collections\Object.Extension.cs" />
     <Compile Include="Collections\Point.Extension.cs" />
-    <Compile Include="Collections\TypeValueFilter.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\Factories\ImageSourceFactory.cs" />
@@ -103,7 +103,6 @@
     <Compile Include="Controls\TreeView.cs" />
     <Compile Include="Controls\ValuesGrid.cs" />
     <Compile Include="Collections\IDictionary.Extension.cs" />
-    <Compile Include="Collections\KeyValuePair.cs" />
     <Compile Include="Controls\ViewFrame.cs" />
     <Compile Include="Data\Assembly.Extension.cs" />
     <Compile Include="Data\Extensions.cs" />
@@ -246,8 +245,10 @@
     <Compile Include="Factories\Transform3DFactory.cs" />
     <Compile Include="Factories\Visual3DFactory.cs" />
     <Compile Include="Factory.cs" />
-    <Compile Include="Filters\TypeFilter.cs" />
+    <Compile Include="Filters.cs" />
+    <Compile Include="GlobalFunctions.cs" />
     <Compile Include="IChild.cs" />
+    <Compile Include="IDictionary.Extension.cs" />
     <Compile Include="IGetDataSet.cs" />
     <Compile Include="IMetaData.cs" />
     <Compile Include="IMetaDataManager.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Measurement\Length.cs" />
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
+    <Compile Include="Object.Extension.cs" />
     <Compile Include="_Model3D\IModel3DGroupTransformer.cs" />
     <Compile Include="_Model3D\IModel3DTransformer.cs" />
     <Compile Include="_Model3D\IRenderer.cs" />

@@ -1,6 +1,6 @@
-﻿namespace Node.Net.Collections.Filters
+﻿namespace Node.Net.Collections.Internal
 {
-    public class ValueFilter<T> : IFilter
+    class ValueFilter<T> : IFilter
     {
         public bool? DefaultResult { get; set; } = false;
         public T Value { get; set; } = default(T);

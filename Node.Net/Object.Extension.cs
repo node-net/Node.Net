@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Collections
+namespace Node.Net
 {
-    class Filter
+    public static class ObjectExtension
     {
     }
 }

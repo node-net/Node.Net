@@ -35,7 +35,7 @@ namespace Node.Net.Collections.Controls
             Children.Clear();
 
             //if (grid.DataContext == null) return;
-            var dictionary = KeyValuePair.GetValue(DataContext) as IDictionary;
+            var dictionary = ObjectExtension.GetValue(DataContext) as IDictionary;
             if (dictionary != null)
             {
                 var keys = new List<string>(GetKeys(dictionary));

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Node.Net.Collections
@@ -13,12 +12,12 @@ namespace Node.Net.Collections
         {
             var points = new List<Point>();
             var words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach(var word in words)
+            foreach (var word in words)
             {
-                if(word.Contains(','))
+                if (word.Contains(','))
                 {
                     var parts = word.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                    if(parts.Length == 2)
+                    if (parts.Length == 2)
                     {
                         points.Add(new Point(Convert.ToDouble(parts[0]), Convert.ToDouble(parts[1])));
                     }
@@ -29,7 +28,7 @@ namespace Node.Net.Collections
         public static string ToString(Point[] points)
         {
             var builder = new StringBuilder();
-            foreach(var point in points)
+            foreach (var point in points)
             {
                 if (builder.Length > 0) builder.Append(' ');
                 builder.Append($"{point.X},{point.Y}");

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Collections
 {
@@ -35,12 +31,12 @@ namespace Node.Net.Collections
                         }
                     }
                 }
-                foreach(var include_value in Values)
+                foreach (var include_value in Values)
                 {
-                    foreach(var key in dictionary.Keys)
+                    foreach (var key in dictionary.Keys)
                     {
                         var value = dictionary[key];
-                        if(value != null)
+                        if (value != null)
                         {
                             if (ExactMatch)
                             {

@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 
-namespace Node.Net.Collections.Filters
+namespace Node.Net.Collections.Internal
 {
-    public class IDictionaryFilter<T> : ValueFilter<T> where T : IDictionary
+    class IDictionaryFilter<T> : ValueFilter<T> where T : IDictionary
     {
         public string Key { get; set; }
         public string KeyStringValue { get; set; }

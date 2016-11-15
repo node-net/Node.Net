@@ -16,7 +16,7 @@ namespace Node.Net.Collections.Controls
         private void Update()
         {
             Items.Clear();
-            var dictionary = KeyValuePair.GetValue(DataContext) as IDictionary;
+            var dictionary = ObjectExtension.GetValue(DataContext) as IDictionary;
             if (dictionary != null)
             {
                 foreach (var key in dictionary.Keys)
