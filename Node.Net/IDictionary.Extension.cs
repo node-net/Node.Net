@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
     public static class IDictionaryExtension
     {
+        //////////////////////////////////////////////////////////////////
+        /// Collections
         public static string[] CollectKeys(this IDictionary dictionary) => Collections.IDictionaryExtension.CollectKeys(dictionary);
         public static Dictionary<string, T> Collect<T>(this IDictionary dictionary,
                                                       Func<object, bool?> valueFilter = null,
@@ -35,7 +34,7 @@ namespace Node.Net
 
         //public static Dictionary<string, T> Collect<T>(this IDictionary dictionary, Func<object, bool?> filter = null) => Collections.IDictionaryExtension.Collect<T>(dictionary, filter);
         //public static Dictionary<string, T> DeepCollect<T>(this IDictionary dictionary, Func<object, bool?> filter = null, Func<object, bool?> deepFilter = null)
-          //  => Collections.IDictionaryExtension.DeepCollect<T>(dictionary, filter, deepFilter);
+        //  => Collections.IDictionaryExtension.DeepCollect<T>(dictionary, filter, deepFilter);
 
         public static void DeepUpdateParents(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepUpdateParents(dictionary);
         public static void Remove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.Remove<T>(dictionary);
@@ -46,5 +45,10 @@ namespace Node.Net
         public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
         public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Factories.Extension.IDictionaryExtension.GetLocalToParent(dictionary);
         public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Factories.Extension.IDictionaryExtension.GetLocalToWorld(dictionary);
+
+        //////////////////////////////////////////////////////////////////
+        /// Readers
+        public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Readers.IDictionaryExtension.ConvertTypes(source, types, typeKey);
+
     }
 }

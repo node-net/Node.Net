@@ -60,6 +60,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembly.Extension.cs" />
     <Compile Include="Collections\Controls\DictionaryExplorer.cs" />
     <Compile Include="Collections\Controls\InstanceCounts.cs" />
     <Compile Include="Collections\Controls\ListBox.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="GlobalFunctions.cs" />
     <Compile Include="IChild.cs" />
     <Compile Include="IDictionary.Extension.cs" />
+    <Compile Include="IEnumerable.Extension.cs" />
     <Compile Include="IGetDataSet.cs" />
     <Compile Include="IMetaData.cs" />
     <Compile Include="IMetaDataManager.cs" />
@@ -273,6 +275,7 @@
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Object.Extension.cs" />
+    <Compile Include="Readers\Assembly.Extension.cs" />
     <Compile Include="Readers\IDictionary.Extension.cs" />
     <Compile Include="Readers\IEnumerable.Extension.cs" />
     <Compile Include="Readers\ImageSourceReader.cs" />

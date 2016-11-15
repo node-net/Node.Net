@@ -6,7 +6,7 @@ namespace Node.Net.Readers
 {
     public static class IEnumerableExtension
     {
-        public static IEnumerable ConvertTypes(IEnumerable source, Dictionary<string, Type> types)
+        public static IEnumerable ConvertTypes(IEnumerable source, Dictionary<string, Type> types,string typeKey="Type")
         {
             if (source == null) return null;
             IList copy = new List<dynamic>();
@@ -23,7 +23,7 @@ namespace Node.Net.Readers
                 var childDictionary = value as IDictionary;
                 if (childDictionary != null)
                 {
-                    copy.Add(IDictionaryExtension.ConvertTypes(childDictionary, types));
+                    copy.Add(IDictionaryExtension.ConvertTypes(childDictionary, types,typeKey));
                 }
                 else
                 {
@@ -38,7 +38,8 @@ namespace Node.Net.Readers
                     }
                 }
             }
-            return copy;
+            return Simplify(copy);
+            //return copy;
         }
         public static int GetCount(IEnumerable source)
         {
@@ -120,7 +121,8 @@ namespace Node.Net.Readers
 
             }
 
-            return Simplify(list);
+            return list;
+            //return Simplify(list);
         }
     }
 }
