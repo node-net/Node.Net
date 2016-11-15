@@ -42,7 +42,6 @@ namespace Node.Net.Readers
         }
         public Dictionary<string, Type> Types { get; set; } = null;
         private SignatureReader signatureReader = new SignatureReader();
-        //private Dictionary<string, IRead> readers = new Dictionary<string, IRead>();
         private Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
         private Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
         public void Add(string name,string[] signatures,Func<Stream,object> readFunction)
@@ -50,7 +49,10 @@ namespace Node.Net.Readers
             readers.Add(name, readFunction);
             foreach(var signature in signatures)
             {
-                signatureReaders.Add(signature, name);
+                if (!signatureReaders.ContainsKey(signature))
+                {
+                    signatureReaders.Add(signature, name);
+                }
             }
         }
         public void SetReader(string name,Func<Stream,object> readFunction)
