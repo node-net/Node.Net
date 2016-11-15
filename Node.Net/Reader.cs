@@ -14,6 +14,7 @@ namespace Node.Net
         public object Read(Stream stream) => reader.Read(stream);
         public void Add(string name, string[] signatures, Func<Stream, object> readFunction) => reader.Add(name, signatures, readFunction);
         public void Clear() => reader.Clear();
+        public void SetReader(string name, Func<Stream, object> readFunction) => reader.SetReader(name, readFunction);
     }
     /*
     public sealed class Reader : IRead

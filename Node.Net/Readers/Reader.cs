@@ -41,6 +41,10 @@ namespace Node.Net.Readers
                 signatureReaders.Add(signature, name);
             }
         }
+        public void SetReader(string name,Func<Stream,object> readFunction)
+        {
+            readers[name] = readFunction;
+        }
         public void Clear()
         {
             readers.Clear();
