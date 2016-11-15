@@ -16,7 +16,11 @@ namespace Node.Net
                                                       Func<object, bool?> keyFilter = null,
                                                       Func<object, bool?> deepFilter = null,
                                                       bool deep = true) => Collections.IDictionaryExtension.Collect<T>(dictionary, valueFilter, keyFilter, deepFilter, deep);
-
+        public static Dictionary<string, IDictionary> Collect(this IDictionary dictionary,
+                                                       Func<object, bool?> valueFilter = null,
+                                                       Func<object, bool?> keyFilter = null,
+                                                       Func<object, bool?> deepFilter = null,
+                                                       bool deep = true) => Collections.IDictionaryExtension.Collect(dictionary, valueFilter, keyFilter, deepFilter, deep);
         public static T[] CollectValues<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.CollectValues<T>(dictionary, key);
         public static Type[] CollectTypes(this IDictionary dictionary) => Collections.IDictionaryExtension.CollectTypes(dictionary);
         /*

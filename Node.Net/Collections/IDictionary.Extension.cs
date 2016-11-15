@@ -16,6 +16,14 @@ namespace Node.Net.Collections
         {
             return new Internal.Collector { KeyFilter = keyFilter, ValueFilter = valueFilter, DeepFilter = deepFilter }.Collect<T>(dictionary,deep);
         }
+        public static Dictionary<string, IDictionary> Collect(IDictionary dictionary,
+                                                       Func<object, bool?> valueFilter = null,
+                                                       Func<object, bool?> keyFilter = null,
+                                                       Func<object, bool?> deepFilter = null,
+                                                       bool deep = true)
+        {
+            return new Internal.Collector { KeyFilter = keyFilter, ValueFilter = valueFilter, DeepFilter = deepFilter }.Collect<IDictionary>(dictionary, deep);
+        }
         public static string[] CollectKeys(this IDictionary dictionary) => Internal.Collector.CollectKeys(dictionary);
         public static T[] CollectValues<T>(IDictionary dictionary, string key) => Internal.Collector.CollectValues<T>(dictionary, key);
         public static Type[] CollectTypes(IDictionary dictionary) => Internal.Collector.CollectTypes(dictionary);

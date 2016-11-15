@@ -18,5 +18,9 @@ namespace Node.Net.Collections
         {
             return new Internal.IDictionaryFilter<T> { Key = key, KeyStringValue = keyStringValue, KeyStringPattern = keyStringPattern, DefaultResult = default_result }.Include;
         }
+        public static Func<object,bool?> GetIDictionaryFilter(string key,string keyStringValue,string keyStringPattern = null,bool? default_result = false)
+        {
+            return new Internal.IDictionaryFilter<IDictionary> { Key = key, KeyStringValue = keyStringValue, KeyStringPattern = keyStringPattern, DefaultResult = default_result }.Include;
+        }
     }
 }
