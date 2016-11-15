@@ -10,12 +10,14 @@ namespace Node.Net.Readers
         public static Reader Default { get; } = new Reader();
         public Reader()
         {
-            readers.Add("Json", new JsonReader());
-            signatureReaders.Add("{", "Json");
-            signatureReaders.Add("[", "Json");
-            readers.Add("Xml", new XmlReader());
-            signatureReaders.Add("<", "Xml");
-            readers.Add("ImageSource", new ImageSourceReader());
+            Add("Json", new List<string> { "{", "[" }.ToArray(), new JsonReader().Read);
+            //readers.Add("Json", new JsonReader().Read);
+            //signatureReaders.Add("{", "Json");
+            //signatureReaders.Add("[", "Json");
+            Add("Xml", new List<string> { "<" }.ToArray(), new XmlReader().Read);
+            //readers.Add("Xml", new XmlReader().Read);
+            //signatureReaders.Add("<", "Xml");
+            readers.Add("ImageSource", new ImageSourceReader().Read);
             signatureReaders.Add("42 4D", "ImageSource");                       // .bmp
             signatureReaders.Add("47 49 46 38 37 61", "ImageSource");           // .gif
             signatureReaders.Add("47 49 46 38 39 61", "ImageSource");           // .gif
@@ -28,8 +30,22 @@ namespace Node.Net.Readers
         public string TypeKey { get; set; } = "Type";
         public Dictionary<string, Type> Types { get; set; } = null;
         private SignatureReader signatureReader = new SignatureReader();
-        private Dictionary<string, IRead> readers = new Dictionary<string, IRead>();
+        //private Dictionary<string, IRead> readers = new Dictionary<string, IRead>();
+        private Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
         private Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
+        public void Add(string name,string[] signatures,Func<Stream,object> readFunction)
+        {
+            readers.Add(name, readFunction);
+            foreach(var signature in signatures)
+            {
+                signatureReaders.Add(signature, name);
+            }
+        }
+        public void Clear()
+        {
+            readers.Clear();
+            signatureReaders.Clear();
+        }
         public object Read(Stream original_stream)
         {
             var signature = signatureReader.Read(original_stream) as Signature;
@@ -40,7 +56,7 @@ namespace Node.Net.Readers
                 if (signature.Text.IndexOf(signature_key) == 0 ||
                    signature.HexString.IndexOf(signature_key) == 0)
                 {
-                    var instance = readers[signatureReaders[signature_key]].Read(stream);
+                    var instance = readers[signatureReaders[signature_key]](stream);
                     if(instance != null && Types != null && typeof(IDictionary).IsAssignableFrom(instance.GetType()))
                     {
                         instance = IDictionaryExtension.ConvertTypes(instance as IDictionary, Types, TypeKey);
