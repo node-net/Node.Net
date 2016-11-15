@@ -17,6 +17,7 @@ namespace Node.Net
             set { reader.Types = value; }
         }
         public object Read(Stream stream) => reader.Read(stream);
+        public string[] Signatures { get { return reader.Signatures; } }
         public void Add(string name, string[] signatures, Func<Stream, object> readFunction) => reader.Add(name, signatures, readFunction);
         public void Clear() => reader.Clear();
         public void SetReader(string name, Func<Stream, object> readFunction) => reader.SetReader(name, readFunction);

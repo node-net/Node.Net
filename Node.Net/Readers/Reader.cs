@@ -28,6 +28,18 @@ namespace Node.Net.Readers
             signatureReaders.Add("89 50 4E 47 0D 0A 1A 0A", "ImageSource");     // .png
         }
         public string TypeKey { get; set; } = "Type";
+        public string[] Signatures
+        {
+            get
+            {
+                var signatures = new List<string>();
+                foreach(var signature in signatureReaders.Keys)
+                {
+                    if (!signatures.Contains(signature)) signatures.Add(signature);
+                }
+                return signatures.ToArray();
+            }
+        }
         public Dictionary<string, Type> Types { get; set; } = null;
         private SignatureReader signatureReader = new SignatureReader();
         //private Dictionary<string, IRead> readers = new Dictionary<string, IRead>();
