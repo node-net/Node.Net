@@ -10,6 +10,13 @@ namespace Node.Net
     public sealed class Reader : IRead
     {
         public static Reader Default { get; } = new Reader();
+        private Readers.Reader reader = new Readers.Reader();
+        public object Read(Stream stream) => reader.Read(stream);
+    }
+    /*
+    public sealed class Reader : IRead
+    {
+        public static Reader Default { get; } = new Reader();
 
         public Reader() { }
         public Reader(Assembly assembly)
@@ -53,5 +60,5 @@ namespace Node.Net
         }
 
         private readonly Node.Net.Data.Reader reader = new Node.Net.Data.Reader();
-    }
+    }*/
 }

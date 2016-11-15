@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace Node.Net.Readers
 {
-    public class SignatureReader : IRead
+    public sealed class SignatureReader : IRead
     {
         public int MinimumBytes = 1024;
 

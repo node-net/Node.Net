@@ -17,14 +17,14 @@ namespace Node.Net.Readers
         {
             get
             {
-                if(text.Length == 0 && bytes != null)
+                if (text.Length == 0 && bytes != null)
                 {
                     var sb = new StringBuilder();
                     var memory = new MemoryStream(bytes);
                     using (StreamReader sr = new StreamReader(memory))
                     {
                         var all_text = sr.ReadToEnd();
-                            
+
                         for (int i = 0; i < all_text.Length; ++i)
                         {
                             var ch = all_text[i];
@@ -45,7 +45,7 @@ namespace Node.Net.Readers
             get
             {
                 var t = Text;
-                foreach(var ch in Text)
+                foreach (var ch in Text)
                 {
                     bool isDigit = Char.IsLetterOrDigit(ch);
                     bool isSymbol = Char.IsSymbol(ch);

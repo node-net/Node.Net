@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace Node.Net.Readers
 {
-    public class XmlReader : IRead
+    public sealed class XmlReader : IRead
     {
         private SignatureReader signatureReader = new SignatureReader();
         public object Read(Stream original_stream)
@@ -16,7 +11,7 @@ namespace Node.Net.Readers
             var stream = original_stream;
             if (!stream.CanSeek) stream = signatureReader.MemoryStream;
 
-            if(signature.Text.Contains("http://schemas.microsoft.com/winfx/2006/xaml/presentation"))
+            if (signature.Text.Contains("http://schemas.microsoft.com/winfx/2006/xaml/presentation"))
             {
                 return System.Windows.Markup.XamlReader.Load(stream);
             }

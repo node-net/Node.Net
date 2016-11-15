@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Node.Net.Readers
 {
-    public class ImageSourceReader : IRead
+    public sealed class ImageSourceReader : IRead
     {
         public object Read(Stream stream)
         {

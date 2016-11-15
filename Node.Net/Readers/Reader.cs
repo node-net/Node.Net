@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -24,6 +25,7 @@ namespace Node.Net.Readers
             signatureReaders.Add("4D 4D 00 2A", "ImageSource");                 // .tif
             signatureReaders.Add("89 50 4E 47 0D 0A 1A 0A", "ImageSource");     // .png
         }
+        public string TypeKey { get; set; } = "Type";
         public Dictionary<string, Type> Types { get; set; } = null;
         private SignatureReader signatureReader = new SignatureReader();
         private Dictionary<string, IRead> readers = new Dictionary<string, IRead>();
@@ -38,7 +40,12 @@ namespace Node.Net.Readers
                 if (signature.Text.IndexOf(signature_key) == 0 ||
                    signature.HexString.IndexOf(signature_key) == 0)
                 {
-                    return readers[signatureReaders[signature_key]].Read(stream);
+                    var instance = readers[signatureReaders[signature_key]].Read(stream);
+                    if(instance != null && Types != null && typeof(IDictionary).IsAssignableFrom(instance.GetType()))
+                    {
+                        instance = IDictionaryExtension.ConvertTypes(instance as IDictionary, Types, TypeKey);
+                    }
+                    return instance;
                 }
             }
             throw new System.Exception($"unrecognized signature '{signature.HexString}' {signature.Text}");

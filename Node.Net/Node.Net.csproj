@@ -274,6 +274,17 @@
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Object.Extension.cs" />
+    <Compile Include="Readers\IDictionary.Extension.cs" />
+    <Compile Include="Readers\IEnumerable.Extension.cs" />
+    <Compile Include="Readers\ImageSourceReader.cs" />
+    <Compile Include="Readers\IRead.cs" />
+    <Compile Include="Readers\IRead.Extension.cs" />
+    <Compile Include="Readers\JsonReader.cs" />
+    <Compile Include="Readers\Reader.cs" />
+    <Compile Include="Readers\Signature.cs" />
+    <Compile Include="Readers\SignatureReader.cs" />
+    <Compile Include="Readers\WordReader.cs" />
+    <Compile Include="Readers\XmlReader.cs" />
     <Compile Include="_Model3D\IModel3DGroupTransformer.cs" />
     <Compile Include="_Model3D\IModel3DTransformer.cs" />
     <Compile Include="_Model3D\IRenderer.cs" />
