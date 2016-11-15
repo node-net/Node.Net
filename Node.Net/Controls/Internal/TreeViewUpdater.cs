@@ -55,7 +55,7 @@ namespace Node.Net.Controls.Internal
             {
                 if (Internal.KeyValuePair.IsKeyValuePair(treeView.DataContext))
                 {
-                    result.Add(treeView.DataContext.GetKey(), treeView.DataContext.GetValue());
+                    result.Add(Internal.KeyValuePair.GetKey(treeView.DataContext).ToString(), Internal.KeyValuePair.GetValue(treeView.DataContext));
                 }
                 else
                 {
@@ -69,16 +69,16 @@ namespace Node.Net.Controls.Internal
             var children = new Dictionary<string, dynamic>();
             if(treeView.DataContext != null)
             {
-                var dictionary = treeView.DataContext.GetValue() as IDictionary;
+                var dictionary = Internal.KeyValuePair.GetValue(treeView.DataContext) as IDictionary;
                 if (dictionary != null)
                 {
 
                     var keys = new List<string>(Internal.TreeViewItemUpdaters.TreeViewItemUpdater.GetChildKeys(dictionary));
                     foreach (var item in dictionary)
                     {
-                        if (keys.Contains(item.GetKey()))
+                        if (keys.Contains(Internal.KeyValuePair.GetKey(item).ToString()))
                         {
-                            children.Add(item.GetKey(), item.GetValue());
+                            children.Add(Internal.KeyValuePair.GetKey(item).ToString(), Internal.KeyValuePair.GetValue(item));
                         }
                     }
                 }

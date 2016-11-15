@@ -28,8 +28,8 @@ namespace Node.Net.Controls
             var toolTipText = "";
             if(DataContext != null)
             {
-                toolTipText = DataContext.GetValue().GetType().FullName;
-                var dictionary = DataContext.GetValue() as IDictionary;
+                toolTipText = Internal.KeyValuePair.GetValue(DataContext).GetType().FullName;
+                var dictionary = Internal.KeyValuePair.GetValue(DataContext) as IDictionary;
                 if(dictionary != null && dictionary.Contains("Type"))
                 {
                     toolTipText = dictionary["Type"].ToString();
@@ -38,8 +38,8 @@ namespace Node.Net.Controls
             Children.Add(new Node.Net.Controls.Image { DataContext = DataContext, Width = 16, Height = 16, ToolTip = toolTipText });
             if (DataContext != null)
             {
-                var sContent = DataContext.GetKey().ToString();
-                var idictionary = DataContext.GetValue() as IDictionary;
+                var sContent = Internal.KeyValuePair.GetKey(DataContext).ToString();
+                var idictionary = Internal.KeyValuePair.GetValue(DataContext) as IDictionary;
                 if(idictionary != null)
                 {
                     if (sContent.Length == 0)

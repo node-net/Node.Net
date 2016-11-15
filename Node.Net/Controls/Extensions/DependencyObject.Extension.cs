@@ -60,7 +60,11 @@ namespace Node.Net.Controls.Extensions
             if (parent != null)
             {
                 var uielement = child as UIElement;
-                if (uielement != null) parent.RemoveChild(uielement);
+                if (uielement != null)
+                {
+                    Extensions.DependencyObjectExtension.RemoveChild(parent, uielement);
+                    //parent.RemoveChild(uielement);
+                }
                 //parent.RemoveChild(child);
             }
         }

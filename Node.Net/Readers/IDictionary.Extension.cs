@@ -36,7 +36,8 @@ namespace Node.Net.Readers
                     }
                     else
                     {
-                        copy.Add(key, value);
+                        if (copy.Contains(key)) copy[key] = value;
+                        else copy.Add(key, value);
                     }
                 }
             }

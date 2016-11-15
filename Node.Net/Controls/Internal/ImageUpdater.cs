@@ -26,7 +26,8 @@ namespace Node.Net.Controls.Internal
             ImageSource imageSource = Factories.ImageSourceFactory.Default.Create<ImageSource>(value);
             if(imageSource == null)
             {
-                imageSource = Internal.Extensions.IconExtensions.GetIcon("Question").ToImageSource();
+                imageSource = Internal.Extensions.IconExtensions.ToImageSource(Internal.Extensions.IconExtensions.GetIcon("Question"));
+                //imageSource = Internal.Extensions.IconExtensions.GetIcon("Question").ToImageSource();
             }
             return imageSource;
         }

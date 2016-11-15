@@ -26,7 +26,7 @@ namespace Node.Net.Controls.Internal.GridUpdaters
             grid.Children.Clear();
 
             if (grid.DataContext == null) return;
-            var dictionary = grid.DataContext.GetValue() as IDictionary;
+            var dictionary = Internal.KeyValuePair.GetValue(grid.DataContext) as IDictionary;
             if (dictionary != null)
             {
                 var keys = new List<string>(GetKeys(dictionary));
@@ -60,7 +60,7 @@ namespace Node.Net.Controls.Internal.GridUpdaters
             grid.Children.Clear();
 
             if (grid.DataContext == null) return;
-            var dictionary = grid.DataContext.GetValue() as IDictionary;
+            var dictionary = Internal.KeyValuePair.GetValue(grid.DataContext) as IDictionary;
             if (dictionary != null)
             {
                 var keys = new List<string>(GetKeys(dictionary));

@@ -27,8 +27,8 @@ namespace Node.Net.Controls.Factories
             {
                 object result = null;
                 if (value.GetType() == typeof(string)) return (T)(object)GetImageSource(value.ToString());
-                result = GetImageSource(value.GetValue() as IDictionary);
-                if (result == null) result = GetImageSource(value.GetValue().GetType());
+                result = GetImageSource(Internal.KeyValuePair.GetValue(value) as IDictionary);
+                if (result == null) result = GetImageSource(Internal.KeyValuePair.GetValue(value).GetType());
                 return (T)result;
             }
             return default(T);
@@ -58,7 +58,11 @@ namespace Node.Net.Controls.Factories
 
             
             var icon = Internal.Extensions.IconExtensions.GetIcon(name);
-            if (icon != null) return icon.ToImageSource();
+            if (icon != null)
+            {
+                return Internal.Extensions.IconExtensions.ToImageSource(icon);
+                //return icon.ToImageSource();
+            }
 
             foreach(Assembly assembly in ResourceAssemblies)
             {

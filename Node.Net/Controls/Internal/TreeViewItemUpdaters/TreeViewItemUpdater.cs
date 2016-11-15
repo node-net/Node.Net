@@ -31,11 +31,11 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
         {
             if (treeViewItem.DataContext != null)
             {
-                var key = treeViewItem.DataContext.GetKey();
-                var value = treeViewItem.DataContext.GetValue();
-                if (value == null) treeViewItem.Header = $"{treeViewItem.DataContext.GetKey()} null";
-                else if (value.GetType().IsValueType) treeViewItem.Header = $"{treeViewItem.DataContext.GetKey()} {value.ToString()}";
-                else if (value.GetType() == typeof(string)) treeViewItem.Header = $"{treeViewItem.DataContext.GetKey()} {value.ToString()}";
+                var key = Internal.KeyValuePair.GetKey(treeViewItem.DataContext);
+                var value = Internal.KeyValuePair.GetValue(treeViewItem.DataContext);
+                if (value == null) treeViewItem.Header = $"{Internal.KeyValuePair.GetKey(treeViewItem.DataContext)} null";
+                else if (value.GetType().IsValueType) treeViewItem.Header = $"{Internal.KeyValuePair.GetKey(treeViewItem.DataContext)} {value.ToString()}";
+                else if (value.GetType() == typeof(string)) treeViewItem.Header = $"{Internal.KeyValuePair.GetKey(treeViewItem.DataContext)} {value.ToString()}";
                 else
                 {
                     treeViewItem.Header = new Header { DataContext = treeViewItem.DataContext };
@@ -47,13 +47,13 @@ namespace Node.Net.Controls.Internal.TreeViewItemUpdaters
         private void UpdateChildren(System.Windows.Controls.TreeViewItem treeViewItem)
         {
             treeViewItem.Items.Clear();
-            var dictionary = treeViewItem.DataContext.GetValue() as IDictionary;
+            var dictionary = Internal.KeyValuePair.GetValue(treeViewItem.DataContext) as IDictionary;
             if (dictionary != null)
             {
                 var keys = new List<string>(TreeViewItemUpdater.GetChildKeys(dictionary));
                 foreach (var item in dictionary)
                 {
-                    if (keys.Contains(item.GetKey()))
+                    if (keys.Contains(Internal.KeyValuePair.GetKey(item).ToString()))
                     {
                         System.Windows.Controls.TreeViewItem tvi = null;
                         if (treeViewItems.ContainsKey(item)) tvi = treeViewItems[item];
