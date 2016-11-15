@@ -9,14 +9,18 @@ namespace Node.Net.Readers
         public static IDictionary ConvertTypes(IDictionary source, Dictionary<string, Type> types,string typeKey = "Type")
         {
             if (source == null) return null;
+            if (types == null) return source;
             var copy = Activator.CreateInstance(source.GetType()) as IDictionary;
+            if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
             var typename = GetTypeName(source,typeKey);
             if (typename.Length > 0 && types.ContainsKey(typename))
             {
                 var targetType = types[typename];
+                if (targetType == null) throw new Exception($"types['{typename}'] was null");
                 if (source.GetType() != targetType)
                 {
                     copy = Activator.CreateInstance(targetType) as IDictionary;
+                    if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
                 }
             }
             foreach (var key in source.Keys)
@@ -25,14 +29,14 @@ namespace Node.Net.Readers
                 var childDictionary = value as IDictionary;
                 if (childDictionary != null)
                 {
-                    copy[key] = ConvertTypes(childDictionary, types);
+                    copy[key] = ConvertTypes(childDictionary, types,typeKey);
                 }
                 else
                 {
                     var childEnumerable = value as IEnumerable;
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
-                        copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types);
+                        copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types,typeKey);
                     }
                     else
                     {
