@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.IO
+namespace Node.Net._IO
 {
     public class WordReader : System.IDisposable
     {

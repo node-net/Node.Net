@@ -157,7 +157,7 @@
     <Compile Include="Data\Writers\StringWriter.cs" />
     <Compile Include="Data\Writers\Writer.cs" />
     <Compile Include="Data\Writers\XmlWriter.cs" />
-    <Compile Include="Deprecated\Collections\MetaDataManager.cs" />
+    <Compile Include="_Deprecated\Collections\MetaDataManager.cs" />
     <Compile Include="Diagnostics\Command.cs" />
     <Compile Include="Diagnostics\CommandGroup.cs" />
     <Compile Include="Diagnostics\ConsoleCommand.cs" />
@@ -165,11 +165,11 @@
     <Compile Include="Diagnostics\FileSystem.cs" />
     <Compile Include="Diagnostics\ICommand.cs" />
     <Compile Include="Diagnostics\IDictionary.Extension.cs" />
-    <Compile Include="Deprecated\Environment\Command.cs" />
-    <Compile Include="Deprecated\Environment\Environment.cs" />
-    <Compile Include="Deprecated\Environment\Internal\Executor.cs" />
-    <Compile Include="Deprecated\Environment\MyDocuments.cs" />
-    <Compile Include="Deprecated\Environment\Resources.cs" />
+    <Compile Include="_Deprecated\Environment\Command.cs" />
+    <Compile Include="_Deprecated\Environment\Environment.cs" />
+    <Compile Include="_Deprecated\Environment\Internal\Executor.cs" />
+    <Compile Include="_Deprecated\Environment\MyDocuments.cs" />
+    <Compile Include="_Deprecated\Environment\Resources.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Factories\BrushFactory.cs" />
     <Compile Include="Factories\ColorFactory.cs" />
@@ -245,11 +245,11 @@
     <Compile Include="IFilter.cs" />
     <Compile Include="IModel3D.cs" />
     <Compile Include="Interfaces.cs" />
-    <Compile Include="IO\Directory.cs" />
-    <Compile Include="IO\FileList.cs" />
-    <Compile Include="IO\TemporaryDirectory.cs" />
-    <Compile Include="IO\TextReader.Extension.cs" />
-    <Compile Include="IO\WordReader.cs" />
+    <Compile Include="_IO\Directory.cs" />
+    <Compile Include="_IO\FileList.cs" />
+    <Compile Include="_IO\TemporaryDirectory.cs" />
+    <Compile Include="_IO\TextReader.Extension.cs" />
+    <Compile Include="_IO\WordReader.cs" />
     <Compile Include="IParent.cs" />
     <Compile Include="IResources.cs" />
     <Compile Include="IRotation3D.cs" />
@@ -292,29 +292,29 @@
     <Compile Include="_Model3D\Transform3DHelper.cs" />
     <Compile Include="_Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="_Model3D\Transform\ObjectTransform.cs" />
-    <Compile Include="Deprecated\Model\Child.cs" />
-    <Compile Include="Deprecated\Model\Element.cs" />
-    <Compile Include="Deprecated\Model\Generic\Element.cs" />
-    <Compile Include="Deprecated\Model\Generic\Parent.cs" />
-    <Compile Include="Deprecated\Model\Parent.cs" />
-    <Compile Include="Deprecated\Model\SpatialElement.cs" />
-    <Compile Include="Deprecated\Plugin\Plugins.cs" />
+    <Compile Include="_Deprecated\Model\Child.cs" />
+    <Compile Include="_Deprecated\Model\Element.cs" />
+    <Compile Include="_Deprecated\Model\Generic\Element.cs" />
+    <Compile Include="_Deprecated\Model\Generic\Parent.cs" />
+    <Compile Include="_Deprecated\Model\Parent.cs" />
+    <Compile Include="_Deprecated\Model\SpatialElement.cs" />
+    <Compile Include="_Deprecated\Plugin\Plugins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Resources\MaterialResources.cs" />
     <Compile Include="Resources\Resources.cs" />
-    <Compile Include="Deprecated\Transformer.cs" />
-    <Compile Include="Deprecated\Transformers\BrushTransformer.cs" />
-    <Compile Include="Deprecated\Transformers\ColorTransformer.cs" />
-    <Compile Include="Deprecated\Transformers\MaterialTransformer.cs" />
-    <Compile Include="Deprecated\Transformers\Transform3DTransformer.cs" />
-    <Compile Include="Deprecated\Transformers\TypeTransformer.cs" />
+    <Compile Include="_Deprecated\Transformer.cs" />
+    <Compile Include="_Deprecated\Transformers\BrushTransformer.cs" />
+    <Compile Include="_Deprecated\Transformers\ColorTransformer.cs" />
+    <Compile Include="_Deprecated\Transformers\MaterialTransformer.cs" />
+    <Compile Include="_Deprecated\Transformers\Transform3DTransformer.cs" />
+    <Compile Include="_Deprecated\Transformers\TypeTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Node.Net.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Deprecated\Extensions\" />
+    <Folder Include="_Deprecated\Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

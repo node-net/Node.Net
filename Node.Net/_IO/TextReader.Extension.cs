@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Node.Net.IO
+namespace Node.Net._IO
 {
     public static class TextReaderExtension
     {
