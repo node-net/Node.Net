@@ -19,10 +19,10 @@ namespace Node.Net._Model3D
         {
             if (!ReferenceEquals(null, dictionary))
             {
-                Extensions.IMetaDataManagerExtension.SetTransformMetaData(MetaData, dictionary);
+                _Extensions.IMetaDataManagerExtension.SetTransformMetaData(MetaData, dictionary);
                 foreach(string key in dictionary.Keys)
                 {
-                    Extensions.IMetaDataManagerExtension.SetTransformMetaData(MetaData, dictionary[key] as IDictionary);
+                    _Extensions.IMetaDataManagerExtension.SetTransformMetaData(MetaData, dictionary[key] as IDictionary);
                 }
             }
         }

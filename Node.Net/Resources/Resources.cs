@@ -53,7 +53,7 @@ namespace Node.Net.Resources
 
         public void ImportManifestResources<T>(Type type, string pattern, KeyValuePair<string, string>[] searchReplacePatterns = null)
         {
-            var results = Extensions.TypeExtension.CollectManifestResources<T>(type, pattern);
+            var results = _Extensions.TypeExtension.CollectManifestResources<T>(type, pattern);
             foreach(string key in results.Keys)
             {
                 var name = key;
