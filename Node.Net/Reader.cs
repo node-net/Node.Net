@@ -16,7 +16,16 @@ namespace Node.Net
             get { return reader.Types; }
             set { reader.Types = value; }
         }
-        public object Read(Stream stream) => reader.Read(stream);
+        public object Read(Stream stream)
+        {
+            var instance = reader.Read(stream);
+            var dictionary = instance as IDictionary;
+            if(dictionary != null)
+            {
+                Node.Net.IDictionaryExtension.DeepUpdateParents(dictionary);
+            }
+            return instance;
+        }
         public string[] Signatures { get { return reader.Signatures; } }
         public void Add(string name, string[] signatures, Func<Stream, object> readFunction) => reader.Add(name, signatures, readFunction);
         public void Clear() => reader.Clear();
