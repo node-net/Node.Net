@@ -20,63 +20,17 @@ namespace Node.Net
         {
             var instance = reader.Read(stream);
             var dictionary = instance as IDictionary;
-            if(dictionary != null)
+            if (dictionary != null)
             {
                 Node.Net.IDictionaryExtension.DeepUpdateParents(dictionary);
             }
             return instance;
         }
+        public object Read(Assembly assembly, string name) => Read(Extensions.AssemblyExtension.GetStream(assembly, name));
+        public object Read(Type type, string name) => Read(Extensions.AssemblyExtension.GetStream(type.Assembly, name));
         public string[] Signatures { get { return reader.Signatures; } }
         public void Add(string name, string[] signatures, Func<Stream, object> readFunction) => reader.Add(name, signatures, readFunction);
         public void Clear() => reader.Clear();
         public void SetReader(string name, Func<Stream, object> readFunction) => reader.SetReader(name, readFunction);
     }
-    /*
-    public sealed class Reader : IRead
-    {
-        public static Reader Default { get; } = new Reader();
-
-        public Reader() { }
-        public Reader(Assembly assembly)
-        {
-            reader = new Data.Reader(assembly);
-        }
-
-        public object Read(Stream stream)
-        {
-            return reader.Read(stream);
-        }
-        public object Read(string value)
-        {
-            return reader.Read(value);
-        }
-
-        public Type DefaultArrayType
-        {
-            get { return reader.DefaultArrayType; }
-            set { reader.DefaultArrayType = value; }
-        }
-        public Type DefaultObjectType
-        {
-            get { return reader.DefaultObjectType; }
-            set { reader.DefaultObjectType = value; }
-        }
-        public Func<IDictionary, IDictionary> IDictionaryTypeConversionFunction
-        {
-            get { return reader.IDictionaryTypeConversionFunction; }
-            set { reader.IDictionaryTypeConversionFunction = value; }
-        }
-        public Dictionary<string, Func<Stream, object>> TextSignatureReadFunctions
-        {
-            get { return reader.TextSignatureReadFunctions; }
-            set { reader.TextSignatureReadFunctions = value; }
-        }
-        public Dictionary<byte[], Func<Stream, object>> BinarySignatureReadFunctions
-        {
-            get { return reader.BinarySignatureReadFunctions; }
-            set { reader.BinarySignatureReadFunctions = value; }
-        }
-
-        private readonly Node.Net.Data.Reader reader = new Node.Net.Data.Reader();
-    }*/
 }
