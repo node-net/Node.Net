@@ -157,6 +157,28 @@
     <Compile Include="Data\Writers\StringWriter.cs" />
     <Compile Include="Data\Writers\Writer.cs" />
     <Compile Include="Data\Writers\XmlWriter.cs" />
+    <Compile Include="Deprecated\_Deprecated\Collections\MetaDataManager.cs" />
+    <Compile Include="Deprecated\_Extensions\IFactory.Extension.cs" />
+    <Compile Include="Deprecated\_Extensions\IGetDataSet.Extension.cs" />
+    <Compile Include="Deprecated\_Extensions\IMetaData.Extension.cs" />
+    <Compile Include="Deprecated\_Extensions\IMetaDataManager.Extension.cs" />
+    <Compile Include="Deprecated\_Extensions\IParent.Extension.cs" />
+    <Compile Include="Deprecated\_Extensions\IRead.Extension.cs" />
+    <Compile Include="Deprecated\_Extensions\Stream.Extension.cs" />
+    <Compile Include="Deprecated\_Extensions\TextReader.Extension.cs" />
+    <Compile Include="Deprecated\_Extensions\Type.Extension.cs" />
+    <Compile Include="Deprecated\_Model3D\IModel3DGroupTransformer.cs" />
+    <Compile Include="Deprecated\_Model3D\IModel3DTransformer.cs" />
+    <Compile Include="Deprecated\_Model3D\IRenderer.cs" />
+    <Compile Include="Deprecated\_Model3D\IVisual3DTransformer.cs" />
+    <Compile Include="Deprecated\_Model3D\MaterialHelper.cs" />
+    <Compile Include="Deprecated\_Model3D\MeshHelper.cs" />
+    <Compile Include="Deprecated\_Model3D\Renderer.cs" />
+    <Compile Include="Deprecated\_Model3D\RenderHelper.cs" />
+    <Compile Include="Deprecated\_Model3D\Transform3D.cs" />
+    <Compile Include="Deprecated\_Model3D\Transform3DHelper.cs" />
+    <Compile Include="Deprecated\_Model3D\Transform\IDictionaryTransform.cs" />
+    <Compile Include="Deprecated\_Model3D\Transform\ObjectTransform.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
     <Compile Include="Extensions\Image.Extension.cs" />
     <Compile Include="Extensions\ImageSource.Extension.cs" />
@@ -171,7 +193,6 @@
     <Compile Include="Repositories\DirectoryRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UriRepository.cs" />
-    <Compile Include="Deprecated\_Deprecated\Collections\MetaDataManager.cs" />
     <Compile Include="Diagnostics\Command.cs" />
     <Compile Include="Diagnostics\CommandGroup.cs" />
     <Compile Include="Diagnostics\ConsoleCommand.cs" />
@@ -179,11 +200,6 @@
     <Compile Include="Diagnostics\FileSystem.cs" />
     <Compile Include="Diagnostics\ICommand.cs" />
     <Compile Include="Diagnostics\IDictionary.Extension.cs" />
-    <Compile Include="Deprecated\_Deprecated\Environment\Command.cs" />
-    <Compile Include="Deprecated\_Deprecated\Environment\Environment.cs" />
-    <Compile Include="Deprecated\_Deprecated\Environment\Internal\Executor.cs" />
-    <Compile Include="Deprecated\_Deprecated\Environment\MyDocuments.cs" />
-    <Compile Include="Deprecated\_Deprecated\Environment\Resources.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Factories\BrushFactory.cs" />
     <Compile Include="Factories\ColorFactory.cs" />
@@ -259,11 +275,6 @@
     <Compile Include="IFilter.cs" />
     <Compile Include="IModel3D.cs" />
     <Compile Include="Interfaces.cs" />
-    <Compile Include="Deprecated\_IO\Directory.cs" />
-    <Compile Include="Deprecated\_IO\FileList.cs" />
-    <Compile Include="Deprecated\_IO\TemporaryDirectory.cs" />
-    <Compile Include="Deprecated\_IO\TextReader.Extension.cs" />
-    <Compile Include="Deprecated\_IO\WordReader.cs" />
     <Compile Include="IParent.cs" />
     <Compile Include="IResources.cs" />
     <Compile Include="IRotation3D.cs" />
@@ -271,11 +282,6 @@
     <Compile Include="ITranslation3D.cs" />
     <Compile Include="ITypeTransformer.cs" />
     <Compile Include="IUpdate.cs" />
-    <Compile Include="Deprecated\_Measurement\Angle.cs" />
-    <Compile Include="Deprecated\_Measurement\AngularUnit.cs" />
-    <Compile Include="Deprecated\_Measurement\Length.cs" />
-    <Compile Include="Deprecated\_Measurement\LengthConverter.cs" />
-    <Compile Include="Deprecated\_Measurement\LengthUnit.cs" />
     <Compile Include="Object.Extension.cs" />
     <Compile Include="Readers\Assembly.Extension.cs" />
     <Compile Include="Readers\IDictionary.Extension.cs" />
@@ -289,47 +295,15 @@
     <Compile Include="Readers\SignatureReader.cs" />
     <Compile Include="Readers\WordReader.cs" />
     <Compile Include="Readers\XmlReader.cs" />
-    <Compile Include="Deprecated\_Extensions\IFactory.Extension.cs" />
-    <Compile Include="Deprecated\_Extensions\IMetaDataManager.Extension.cs" />
-    <Compile Include="Deprecated\_Extensions\Stream.Extension.cs" />
-    <Compile Include="Deprecated\_Extensions\TextReader.Extension.cs" />
-    <Compile Include="Deprecated\_Extensions\Type.Extension.cs" />
-    <Compile Include="Deprecated\_Model3D\IModel3DGroupTransformer.cs" />
-    <Compile Include="Deprecated\_Model3D\IModel3DTransformer.cs" />
-    <Compile Include="Deprecated\_Model3D\IRenderer.cs" />
-    <Compile Include="Deprecated\_Model3D\IVisual3DTransformer.cs" />
-    <Compile Include="Deprecated\_Model3D\MaterialHelper.cs" />
-    <Compile Include="Deprecated\_Model3D\MeshHelper.cs" />
-    <Compile Include="Deprecated\_Model3D\Renderer.cs" />
-    <Compile Include="Deprecated\_Model3D\RenderHelper.cs" />
-    <Compile Include="Deprecated\_Model3D\Transform3D.cs" />
-    <Compile Include="Deprecated\_Model3D\Transform3DHelper.cs" />
-    <Compile Include="Deprecated\_Model3D\Transform\IDictionaryTransform.cs" />
-    <Compile Include="Deprecated\_Model3D\Transform\ObjectTransform.cs" />
-    <Compile Include="Deprecated\_Deprecated\Model\Child.cs" />
-    <Compile Include="Deprecated\_Deprecated\Model\Element.cs" />
-    <Compile Include="Deprecated\_Deprecated\Model\Generic\Element.cs" />
-    <Compile Include="Deprecated\_Deprecated\Model\Generic\Parent.cs" />
-    <Compile Include="Deprecated\_Deprecated\Model\Parent.cs" />
-    <Compile Include="Deprecated\_Deprecated\Model\SpatialElement.cs" />
-    <Compile Include="Deprecated\_Deprecated\Plugin\Plugins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reader.cs" />
     <Compile Include="Resources\MaterialResources.cs" />
     <Compile Include="Resources\Resources.cs" />
-    <Compile Include="Deprecated\_Deprecated\Transformer.cs" />
-    <Compile Include="Deprecated\_Deprecated\Transformers\BrushTransformer.cs" />
-    <Compile Include="Deprecated\_Deprecated\Transformers\ColorTransformer.cs" />
-    <Compile Include="Deprecated\_Deprecated\Transformers\MaterialTransformer.cs" />
-    <Compile Include="Deprecated\_Deprecated\Transformers\Transform3DTransformer.cs" />
-    <Compile Include="Deprecated\_Deprecated\Transformers\TypeTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Node.Net.snk" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Deprecated\_Deprecated\Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
