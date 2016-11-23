@@ -180,6 +180,7 @@
     <Compile Include="Deprecated\_Model3D\Transform\IDictionaryTransform.cs" />
     <Compile Include="Deprecated\_Model3D\Transform\ObjectTransform.cs" />
     <Compile Include="Extensions\Assembly.Extension.cs" />
+    <Compile Include="Extensions\DependencyObject.Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
     <Compile Include="Extensions\Image.Extension.cs" />
     <Compile Include="Extensions\ImageSource.Extension.cs" />
