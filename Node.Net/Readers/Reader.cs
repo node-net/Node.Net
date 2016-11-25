@@ -64,6 +64,7 @@ namespace Node.Net.Readers
             readers.Clear();
             signatureReaders.Clear();
         }
+        public object Read(string filename) { return IReadExtension.Read(this, filename); }
         public object Read(Stream original_stream)
         {
             var signature = signatureReader.Read(original_stream) as Signature;

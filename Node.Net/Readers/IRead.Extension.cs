@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
 
 namespace Node.Net.Readers
 {
@@ -11,6 +12,18 @@ namespace Node.Net.Readers
                 if (manifestResourceName.Contains(name))
                 {
                     return read.Read(assembly.GetManifestResourceStream(manifestResourceName));
+                }
+            }
+            return null;
+        }
+
+        public static object Read(IRead read,string filename)
+        {
+            if(File.Exists(filename))
+            {
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                {
+                    return read.Read(fs);
                 }
             }
             return null;
