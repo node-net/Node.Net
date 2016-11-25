@@ -12,21 +12,12 @@ namespace Node.Net.Readers
         public Reader()
         {
             Add("Json", new List<string> { "{", "[" }.ToArray(), new JsonReader().Read);
-            //readers.Add("Json", new JsonReader().Read);
-            //signatureReaders.Add("{", "Json");
-            //signatureReaders.Add("[", "Json");
             Add("Xml", new List<string> { "<" }.ToArray(), new XmlReader().Read);
-            //readers.Add("Xml", new XmlReader().Read);
-            //signatureReaders.Add("<", "Xml");
             readers.Add("ImageSource", new ImageSourceReader().Read);
-            signatureReaders.Add("42 4D", "ImageSource");                       // .bmp
-            signatureReaders.Add("47 49 46 38 37 61", "ImageSource");           // .gif
-            signatureReaders.Add("47 49 46 38 39 61", "ImageSource");           // .gif
-            signatureReaders.Add("FF D8 FF E0", "ImageSource");                 // .jpg
-            signatureReaders.Add("FF D8 FF E1", "ImageSource");                 // .jpg
-            signatureReaders.Add("49 49 2A 00", "ImageSource");                 // .tif
-            signatureReaders.Add("4D 4D 00 2A", "ImageSource");                 // .tif
-            signatureReaders.Add("89 50 4E 47 0D 0A 1A 0A", "ImageSource");     // .png
+            foreach(var signature in ImageSourceReader.Default.Signatures)
+            {
+                signatureReaders.Add(signature, "ImageSource");
+            }
         }
         public string TypeKey { get; set; } = "Type";
         public string[] Signatures
