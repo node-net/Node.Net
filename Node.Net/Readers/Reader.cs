@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace Node.Net.Readers
 {
@@ -65,6 +66,8 @@ namespace Node.Net.Readers
             signatureReaders.Clear();
         }
         public object Read(string filename) { return IReadExtension.Read(this, filename); }
+        public object Read(Type type,string name) { return IReadExtension.Read(this, type, name); }
+        public object Read(Assembly assembly,string name) { return IReadExtension.Read(this, assembly, name); }
         public object Read(Stream original_stream)
         {
             var signature = signatureReader.Read(original_stream) as Signature;

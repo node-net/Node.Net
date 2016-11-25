@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 
 namespace Node.Net.Readers
@@ -28,5 +29,7 @@ namespace Node.Net.Readers
             }
             return null;
         }
+
+        public static object Read(IRead read, Type type, string name) => Read(read, type.Assembly, name);
     }
 }
