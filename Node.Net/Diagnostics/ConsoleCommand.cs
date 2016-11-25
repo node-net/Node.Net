@@ -17,11 +17,12 @@ namespace Node.Net.Diagnostics
             this[nameof(Type)] = nameof(ConsoleCommand);
         }
 
-        public override int Execute()
+        public override ICommand Execute()
         {
             using (Executor executor = new Executor(this))
             {
-                return executor.Execute();
+                executor.Execute();
+                return this;
             }
         }
     }

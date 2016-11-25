@@ -7,7 +7,7 @@ namespace Node.Net.Diagnostics
 {
     public abstract class Command : Dictionary<string, dynamic>, ICommand
     {
-        public abstract int Execute();
+        public abstract ICommand Execute();
         public int ExitCode
         {
             get { return IDictionaryExtension.Get<int>(this, nameof(ExitCode), 0); }

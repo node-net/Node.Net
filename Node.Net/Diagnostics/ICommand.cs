@@ -2,7 +2,7 @@
 {
     public interface ICommand
     {
-        int Execute();
+        ICommand Execute();
         int ExitCode { get; }
         string Name { get; }
         string Output { get; set; }

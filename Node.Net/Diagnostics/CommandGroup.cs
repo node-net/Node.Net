@@ -9,7 +9,7 @@ namespace Node.Net.Diagnostics
         {
             this[nameof(Type)] = nameof(CommandGroup);
         }
-        public override int Execute()
+        public override ICommand Execute()
         {
             StartTime = DateTime.Now;
 
@@ -43,7 +43,7 @@ namespace Node.Net.Diagnostics
                 EndTime = DateTime.Now;
             }
 
-            return ExitCode;
+            return this;
         }
     }
 }
