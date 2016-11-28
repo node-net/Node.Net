@@ -12,7 +12,7 @@ using System.Xml;
 
 namespace Node.Net.Writers
 {
-    public class Writer
+    public class Writer : IWrite
     {
         public static Writer Default { get; } = new Writer();
         public void Write(Stream stream, object value)
@@ -27,6 +27,7 @@ namespace Node.Net.Writers
                 }
             }
         }
+        public void Write(string filename, object value) => IWriteExtension.Write(this, filename, value);
 
         private Dictionary<Type, IWrite> writersMap;
         public Dictionary<Type, IWrite> WritersMap
