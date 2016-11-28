@@ -302,6 +302,13 @@
     <Compile Include="Reader.cs" />
     <Compile Include="Resources\MaterialResources.cs" />
     <Compile Include="Resources\Resources.cs" />
+    <Compile Include="Writers\BitmapSourceWriter.cs" />
+    <Compile Include="Writers\IWrite.cs" />
+    <Compile Include="Writers\IWrite.Extension.cs" />
+    <Compile Include="Writers\JsonWriter.cs" />
+    <Compile Include="Writers\Writer.cs" />
+    <Compile Include="Writers\XmlWriter.cs" />
+    <Compile Include="Writer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Node.Net.snk" />
