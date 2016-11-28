@@ -1,9 +1,30 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Node.Net.Readers
 {
-    public sealed class XmlReader : IRead
+    public sealed class XmlReader : IRead, IDisposable
     {
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~XmlReader()
+        {
+            Dispose(false);
+        }
+        void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (signatureReader != null)
+                {
+                    signatureReader.Dispose();
+                    signatureReader = null;
+                }
+            }
+        }
         private SignatureReader signatureReader = new SignatureReader();
         public object Read(Stream original_stream)
         {

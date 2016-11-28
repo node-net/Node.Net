@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Node.Net.Readers
 {
-    public sealed class Reader : IRead
+    public sealed class Reader : IRead, IDisposable
     {
         public static Reader Default { get; } = new Reader();
         public Reader()
@@ -17,6 +17,26 @@ namespace Node.Net.Readers
             foreach(var signature in ImageSourceReader.Default.Signatures)
             {
                 signatureReaders.Add(signature, "ImageSource");
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~Reader()
+        {
+            Dispose(false);
+        }
+        void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (signatureReader != null)
+                {
+                    signatureReader.Dispose();
+                    signatureReader = null;
+                }
             }
         }
         public string TypeKey { get; set; } = "Type";

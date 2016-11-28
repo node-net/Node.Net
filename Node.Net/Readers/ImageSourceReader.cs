@@ -7,8 +7,29 @@ using System.Windows.Media.Imaging;
 
 namespace Node.Net.Readers
 {
-    public sealed class ImageSourceReader : IRead
+    public sealed class ImageSourceReader : IRead, IDisposable
     {
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~ImageSourceReader()
+        {
+            Dispose(false);
+        }
+        void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (signatureReader != null)
+                {
+                    signatureReader.Dispose();
+                    signatureReader = null;
+                }
+            }
+        }
+
         public static ImageSourceReader Default { get; } = new ImageSourceReader();
         public ImageSourceReader()
         {
@@ -51,7 +72,6 @@ namespace Node.Net.Readers
                    signature.HexString.IndexOf(signature_key) == 0)
                 {
                     var instance = readers[signatureReaders[signature_key]](stream);
-                   
                     return instance;
                 }
             }
@@ -60,34 +80,28 @@ namespace Node.Net.Readers
         public object ReadPng(Stream stream)
         {
             var decoder = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            return decoder.Frames[0];
+            return decoder.Frames[0].Clone();
         }
         public object ReadTif(Stream stream)
         {
             var decoder = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            return decoder.Frames[0];
+            return decoder.Frames[0].Clone();
         }
         public object ReadJpg(Stream stream)
         {
             var decoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            return decoder.Frames[0];
+            return decoder.Frames[0].Clone();
         }
         public object ReadGif(Stream stream)
         {
             var decoder = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            return decoder.Frames[0];
+            return decoder.Frames[0].Clone();
         }
         public object ReadBmp(Stream stream)
         {
             var decoder = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            return decoder.Frames[0];
+            return decoder.Frames[0].Clone();
         }
-        /*
-        public object Read(Stream stream)
-        {
-            
-            return GetImageSource(System.Drawing.Image.FromStream(stream));
-        }*/
 
         public static ImageSource GetImageSource(System.Drawing.Image image)
         {

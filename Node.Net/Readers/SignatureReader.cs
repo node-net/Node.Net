@@ -1,13 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace Node.Net.Readers
 {
-    public sealed class SignatureReader : IRead
+    public sealed class SignatureReader : IRead, IDisposable
     {
         public int MinimumBytes = 1024;
-
+        
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~SignatureReader()
+        {
+            Dispose(false);
+        }
+        void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if(memoryStream != null)
+                {
+                    memoryStream.Dispose();
+                    memoryStream = null;
+                }
+            }
+        }
         private MemoryStream memoryStream = null;
         public MemoryStream MemoryStream { get { return memoryStream; } }
         public object Read(Stream original_stream)
