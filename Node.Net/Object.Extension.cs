@@ -4,6 +4,7 @@
     {
         public static object GetKey(this object item) => Collections.ObjectExtension.GetKey(item);
         public static object GetValue(this object item) => Collections.ObjectExtension.GetValue(item);
+        public static string GetFullKey(this object item) => Collections.ObjectExtension.GetFullKey(item);
         public static T GetValue<T>(this object item)
         {
             var instance = GetValue(item);
