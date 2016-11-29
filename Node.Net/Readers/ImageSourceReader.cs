@@ -89,8 +89,10 @@ namespace Node.Net.Readers
         }
         public object ReadJpg(Stream stream)
         {
+            return GetImageSource(System.Drawing.Image.FromStream(stream));
+            /*
             var decoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            return decoder.Frames[0].Clone();
+            return decoder.Frames[0].Clone();*/
         }
         public object ReadGif(Stream stream)
         {
