@@ -18,7 +18,7 @@ namespace Node.Net.Extensions
                 }
             }
         }
-        /*
+
         public static void DeepClear(IMetaData metadata, string name)
         {
             Clear(metadata, name);
@@ -32,6 +32,6 @@ namespace Node.Net.Extensions
                 }
             }
 
-        }*/
+        }
     }
 }
