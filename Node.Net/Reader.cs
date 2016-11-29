@@ -28,6 +28,7 @@ namespace Node.Net
         }
         public object Read(Assembly assembly, string name) => Read(Extensions.AssemblyExtension.GetStream(assembly, name));
         public object Read(Type type, string name) => Read(Extensions.AssemblyExtension.GetStream(type.Assembly, name));
+        public object Read(string name) => reader.Read(name);
         public string[] Signatures { get { return reader.Signatures; } }
         public void Add(string name, string[] signatures, Func<Stream, object> readFunction) => reader.Add(name, signatures, readFunction);
         public void Clear() => reader.Clear();
