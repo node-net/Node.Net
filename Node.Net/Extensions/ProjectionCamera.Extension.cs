@@ -11,6 +11,8 @@ namespace Node.Net.Extensions
             target.UpDirection = source.UpDirection;
         }
 
+       
+
         private static Dictionary<string, ProjectionCamera> namedCameras;
         public static Dictionary<string, ProjectionCamera> NamedCameras
         {

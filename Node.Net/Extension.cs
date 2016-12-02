@@ -62,12 +62,16 @@ namespace Node.Net
         #endregion
 
         #region Object
-        
+
         #endregion
 
         #region IDictionary
-        
+
         #endregion
 
+        #region PerspectiveCamera
+        public static PerspectiveCamera GetTransformedPerspectiveCamera(PerspectiveCamera camera, Transform3D transform)
+            => Extensions.PerspectiveCameraExtension.GetTransformedPerspectiveCamera(camera, transform);
+        #endregion
     }
 }
