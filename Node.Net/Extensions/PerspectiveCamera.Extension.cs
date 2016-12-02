@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Extensions
@@ -36,7 +32,7 @@ namespace Node.Net.Extensions
                             LookDirection = new Vector3D(0, 0, -1),
                             UpDirection = new Vector3D(0, 1, 0)
                         });
-                    perspectiveCameras.Add("Top", perspectiveCameras["Default"]);
+                    perspectiveCameras.Add("Default", perspectiveCameras["Plan"]);
                 }
                 return perspectiveCameras;
             }
