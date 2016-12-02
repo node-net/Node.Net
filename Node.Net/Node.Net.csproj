@@ -191,6 +191,7 @@
     <Compile Include="GlobalProperties.cs" />
     <Compile Include="Measurement\Angle.cs" />
     <Compile Include="Measurement\AngularUnit.cs" />
+    <Compile Include="Measurement\IDictionary.Extension.cs" />
     <Compile Include="Measurement\Length.cs" />
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
