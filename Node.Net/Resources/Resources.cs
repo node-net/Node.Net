@@ -56,7 +56,7 @@ namespace Node.Net.Resources
 
         public void ImportManifestResources<T>(Type type, string pattern, KeyValuePair<string, string>[] searchReplacePatterns = null)
         {
-            var results = _Extensions.TypeExtension.CollectManifestResources<T>(type, pattern);
+            var results = CollectManifestResources<T>(type, pattern);
             foreach(string key in results.Keys)
             {
                 var name = key;
@@ -69,6 +69,23 @@ namespace Node.Net.Resources
                 }
                 Add(name, results[key]);
             }
+        }
+
+        public static Dictionary<string, T> CollectManifestResources<T>(Type type, string pattern)
+        {
+            var results = new Dictionary<string, T>();
+            foreach (var manifest_resource_name in type.Assembly.GetManifestResourceNames())
+            {
+                if (manifest_resource_name.Contains(pattern))
+                {
+                    var item = (T)Reader.Default.Read(type.GetStream(manifest_resource_name));
+                    if (item != null)
+                    {
+                        results.Add(manifest_resource_name, item);
+                    }
+                }
+            }
+            return results;
         }
     }
 }

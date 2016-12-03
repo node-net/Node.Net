@@ -1,9 +1,9 @@
 // Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
 using System.Drawing;
 using System.IO;
-
 using System.Net;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using System.Windows.Media.Imaging;
 
 namespace Node.Net
@@ -85,6 +85,29 @@ namespace Node.Net
                 if (y < 0) y = 0;
                 return new CroppedBitmap(source, new System.Windows.Int32Rect(x, y, width, height));
 
+            }
+            public static Material GetMaterial(ImageSource imageSource,System.Windows.Media.Brush specularBrush = null,double specularPower=10)
+            {
+                var material = new MaterialGroup();
+                var diffuse = new DiffuseMaterial
+                {
+                    Brush = new ImageBrush
+                    {
+                        ImageSource = imageSource,
+                        TileMode = TileMode.Tile
+                    }
+                };
+                material.Children.Add(diffuse);
+                if (!ReferenceEquals(null, specularBrush))
+                {
+                    var specular = new SpecularMaterial
+                    {
+                        Brush = specularBrush,
+                        SpecularPower = specularPower
+                    };
+                    material.Children.Add(specular);
+                }
+                return material;
             }
         }
     }
