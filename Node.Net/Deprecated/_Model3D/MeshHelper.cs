@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿//
+// Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
+//
+using System.Windows;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net._Model3D

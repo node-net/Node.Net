@@ -99,5 +99,23 @@ namespace Node.Net.Readers
             }
             throw new System.Exception($"unrecognized signature '{signature.HexString}' {signature.Text}");
         }
+
+        public object Open(string openFileDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*")
+        {
+            var ofd = new Microsoft.Win32.OpenFileDialog { Filter = openFileDialogFilter };
+            var result = ofd.ShowDialog();
+            if (result == true)
+            {
+                try
+                {
+                    return Read(ofd.FileName);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Unable to open file {ofd.FileName}", ex);
+                }
+            }
+            return null;
+        }
     }
 }

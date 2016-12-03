@@ -1,4 +1,7 @@
-﻿using Node.Net.Data;
+﻿//
+// Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
+//
+using Node.Net.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,5 +36,7 @@ namespace Node.Net
         public void Add(string name, string[] signatures, Func<Stream, object> readFunction) => reader.Add(name, signatures, readFunction);
         public void Clear() => reader.Clear();
         public void SetReader(string name, Func<Stream, object> readFunction) => reader.SetReader(name, readFunction);
+        public object Open(string openFileDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*") => reader.Open(openFileDialogFilter);
+
     }
 }

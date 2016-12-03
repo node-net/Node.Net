@@ -1,4 +1,7 @@
-﻿namespace Node.Net._Model3D
+﻿//
+// Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
+//
+namespace Node.Net._Model3D
 {
     public class Transform3D
     {

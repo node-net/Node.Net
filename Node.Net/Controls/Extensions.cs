@@ -1,4 +1,7 @@
-﻿using Node.Net.Controls.Internal.Extensions;
+﻿//
+// Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
+//
+using Node.Net.Controls.Internal.Extensions;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Media;

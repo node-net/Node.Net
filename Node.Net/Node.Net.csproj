@@ -314,6 +314,7 @@
     <Compile Include="Writer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Node.Net.licenseheader" />
     <None Include="Node.Net.snk" />
   </ItemGroup>
   <ItemGroup />

@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//
+// Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
+//
+using System.Collections;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net._Extensions
