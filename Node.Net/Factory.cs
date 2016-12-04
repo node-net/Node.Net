@@ -67,6 +67,19 @@ namespace Node.Net
             return result;
         }
 
+        public T Create<T>()
+        {
+            var instance = Activator.CreateInstance<T>();
+            var idictionary = instance as IDictionary;
+            if(idictionary != null)
+            {
+                if(!idictionary.Contains("Type"))
+                {
+                    idictionary["Type"] = instance.GetType().Name;
+                }
+            }
+            return (T)instance;
+        }
         private readonly Node.Net.Reader reader = new Reader();
         private Node.Net.Factories.Deprecated.Factory _factory;
         private Node.Net.Factories.Deprecated.Factory factory
