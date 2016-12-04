@@ -15,6 +15,11 @@ namespace Node.Net.Repositories
         public Dictionary<string,Func<string,object>> RelativeGetFunctions { get; set; }
         public object Get(string name)
         {
+            if(AbsoluteGetFunction != null)
+            {
+                var result = AbsoluteGetFunction(name);
+                if (result != null) return result;
+            }
             if (RelativeGetFunctions != null)
             {
                 var parts = name.Split('/');
@@ -24,7 +29,7 @@ namespace Node.Net.Repositories
                     return RelativeGetFunctions[parts[0]](subname);
                 }
             }
-            if (AbsoluteGetFunction != null) return AbsoluteGetFunction(name);
+            //if (AbsoluteGetFunction != null) return AbsoluteGetFunction(name);
             return null;
         }
     }
