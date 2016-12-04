@@ -1,5 +1,5 @@
 ﻿//
-// Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
+// Copyright (c) 2016 Lou Parslow. Subject to the Apache 2.0 license, see LICENSE.txt.
 //
 namespace Node.Net
 {
