@@ -32,5 +32,9 @@ namespace Node.Net.Repositories
             //if (AbsoluteGetFunction != null) return AbsoluteGetFunction(name);
             return null;
         }
+        public void Set(string name,object value)
+        {
+
+        }
     }
 }

@@ -2,11 +2,9 @@
 {
     public class Repository
     {
-        private static IRepository _default = null;
-        public static IRepository Default
-        {
-            get { return _default; }
-            set { _default = value; }
-        }
+        public static Repository Default { get; } = new Repository();
+        public object Get(string name) => repository.Get(name);
+        public void Set(string name, object value) => repository.Set(name, value);
+        private Node.Net.Repositories.MemoryRepository repository = new Repositories.MemoryRepository();
     }
 }
