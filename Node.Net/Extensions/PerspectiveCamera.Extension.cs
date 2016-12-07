@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
+using static System.Math;
 
 namespace Node.Net.Extensions
 {
@@ -37,6 +38,19 @@ namespace Node.Net.Extensions
                 }
                 return perspectiveCameras;
             }
+        }
+
+        public static bool IsVisible(PerspectiveCamera camera, Point3D worldPoint)
+        {
+            var local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
+            // camera lookdirection is along -Z axis
+            if (local.Z >= 0.0) return false;
+            var deg2rad = 0.01745329;
+            var distance = Abs(local.Z);
+            var frustrumHeight = 2.0 * distance * Tan(camera.FieldOfView*deg2rad*0.5);
+            if (Abs(local.X) > frustrumHeight / 2.0) return false;
+            if(Abs(local.Y) > frustrumHeight/2.0) return false;
+            return true;
         }
     }
 }
