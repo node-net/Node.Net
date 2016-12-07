@@ -35,6 +35,21 @@ namespace Node.Net.Extensions
                             UpDirection = new Vector3D(0, 1, 0)
                         });
                     perspectiveCameras.Add("Default", perspectiveCameras["Plan"]);
+                    perspectiveCameras.Add("Top", perspectiveCameras["Plan"]);
+                    perspectiveCameras.Add("Front", 
+                        new PerspectiveCamera
+                        {
+                            Position = new Point3D(0, -50, 0),
+                            LookDirection = new Vector3D(0, 1, 0),
+                            UpDirection = new Vector3D(0, 0, 1)
+                        });
+                    perspectiveCameras.Add("Right",
+                        new PerspectiveCamera
+                        {
+                            Position = new Point3D(0, -50, 0),
+                            LookDirection = new Vector3D(0, 1, 0),
+                            UpDirection = new Vector3D(0, 0, 1)
+                        });
                 }
                 return perspectiveCameras;
             }
