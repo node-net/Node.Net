@@ -64,9 +64,9 @@ namespace Node.Net
         #endregion
 
         #region PerspectiveCamera
-        public static PerspectiveCamera GetTransformedPerspectiveCamera(PerspectiveCamera camera, Transform3D transform)
+        public static PerspectiveCamera GetTransformedPerspectiveCamera(this PerspectiveCamera camera, Transform3D transform)
             => Extensions.PerspectiveCameraExtension.GetTransformedPerspectiveCamera(camera, transform);
-        public static bool IsVisible(PerspectiveCamera camera, Point3D worldPoint) => Extensions.PerspectiveCameraExtension.IsVisible(camera, worldPoint);
+        public static bool IsVisible(this PerspectiveCamera camera, Point3D worldPoint) => Extensions.PerspectiveCameraExtension.IsVisible(camera, worldPoint);
         #endregion
     }
 }
