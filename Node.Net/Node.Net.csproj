@@ -77,6 +77,8 @@
     <Compile Include="Collections\Internal\ValueFilter.cs" />
     <Compile Include="Collections\Object.Extension.cs" />
     <Compile Include="Collections\Point.Extension.cs" />
+    <Compile Include="Controls\AutoSizeGrid.cs" />
+    <Compile Include="Controls\ComboBox.cs" />
     <Compile Include="Controls\Explorer.cs" />
     <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\Factories\ImageSourceFactory.cs" />
