@@ -10,6 +10,16 @@ namespace Node.Net.Controls
 {
     public class AutoSizeGrid : Grid
     {
+        public AutoSizeGrid()
+        {
+            DataContextChanged += AutoSizeGrid_DataContextChanged;
+        }
+
+        private void AutoSizeGrid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (element != null) element.DataContext = DataContext;
+        }
+
         private FrameworkElement element = null;
         public System.Windows.FrameworkElement Element
         {
