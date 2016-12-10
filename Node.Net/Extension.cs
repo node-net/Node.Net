@@ -13,16 +13,24 @@ namespace Node.Net
 {
     public static class Extension
     {
+        /*
+        static Extension()
+        {
+            Node.Net.Factories.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.MetaDataMap.GetMetaDataFunction;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToParentFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
+            Node.Net.Collections.IDictionaryExtension.GetLocalToWorldFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
+        }*/
+        //public static T Create<T>(this IFactory factory, object source) => _Extensions.IFactoryExtension.Create<T>(factory, source);
         public static T Create<T>(this IFactory factory,object source)
         {
             return (T)(object)factory.Create(typeof(T), source);
         }
 
         #region TextReader
-        public static void EatWhiteSpace(this TextReader reader) => Extensions.TextReaderExtension.EatWhiteSpace(reader);
+        public static void EatWhiteSpace(this TextReader reader) => Extensions.TextReaderExtension.EatWhiteSpace(reader);//  _Extensions.TextReaderExtension.EatWhiteSpace(reader);
 
-        public static string Seek(this TextReader reader, char value) => Extensions.TextReaderExtension.Seek(reader, value);
-        public static string Seek(this TextReader reader, char[] values) => Extensions.TextReaderExtension.Seek(reader, values);
+        public static string Seek(this TextReader reader, char value) => Extensions.TextReaderExtension.Seek(reader, value);// _Extensions.TextReaderExtension.Seek(reader, value);
+        public static string Seek(this TextReader reader, char[] values) => Extensions.TextReaderExtension.Seek(reader, values);// _Extensions.TextReaderExtension.Seek(reader, values);
         #endregion
 
         #region ImageSource
@@ -32,9 +40,13 @@ namespace Node.Net
         #endregion
 
         #region Type
-        public static Stream GetStream(this Type type, string name) => Extensions.AssemblyExtension.GetStream(type.Assembly, name);
-        public static string[] GetManifestResourceNames(this Type type, string name) => Extensions.AssemblyExtension.GetManifestResourceNames(type.Assembly, name);
+        public static Stream GetStream(this Type type, string name) => Extensions.AssemblyExtension.GetStream(type.Assembly, name);// _Extensions.TypeExtension.GetStream(type, name);
+        public static string[] GetManifestResourceNames(this Type type, string name) => Extensions.AssemblyExtension.GetManifestResourceNames(type.Assembly, name);// => _Extensions.TypeExtension.GetManifestResourceNames(type, name);
         public static Dictionary<string, T> CollectManifestResources<T>(this Type type, string pattern) => Node.Net.Resources.Resources.CollectManifestResources<T>(type, pattern);
+        #endregion
+
+        #region IMetaData
+        //public static void SetTransformMetaData(this IMetaDataManager metaData, IDictionary dictionary) => _Extensions.IMetaDataManagerExtension.SetTransformMetaData(metaData, dictionary);
         #endregion
 
         #region IParent
@@ -64,9 +76,8 @@ namespace Node.Net
         #endregion
 
         #region PerspectiveCamera
-        public static PerspectiveCamera GetTransformedPerspectiveCamera(this PerspectiveCamera camera, Transform3D transform)
+        public static PerspectiveCamera GetTransformedPerspectiveCamera(PerspectiveCamera camera, Transform3D transform)
             => Extensions.PerspectiveCameraExtension.GetTransformedPerspectiveCamera(camera, transform);
-        public static bool IsVisible(this PerspectiveCamera camera, Point3D worldPoint) => Extensions.PerspectiveCameraExtension.IsVisible(camera, worldPoint);
         #endregion
     }
 }
