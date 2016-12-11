@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Repositories
 {
-    interface Interfaces
-    {
-    }
+    public interface IGet { object Get(string name); }
+    public interface ISet { void Set(string name, object value); }
 }
