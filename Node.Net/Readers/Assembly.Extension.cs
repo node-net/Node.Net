@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 
 namespace Node.Net.Readers
@@ -25,15 +24,6 @@ namespace Node.Net.Readers
                 if (!types.ContainsKey(type.FullName)) types.Add(type.FullName, type);
             }
             return types;
-        }
-
-        public static Stream GetStream(Assembly assembly,string name)
-        {
-            foreach(string resource in assembly.GetManifestResourceNames())
-            {
-                if (resource.Contains(name)) return assembly.GetManifestResourceStream(resource);
-            }
-            return null;
         }
     }
 }
