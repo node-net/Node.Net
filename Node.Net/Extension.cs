@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -67,6 +68,10 @@ namespace Node.Net
         public static PerspectiveCamera GetTransformedPerspectiveCamera(this PerspectiveCamera camera, Transform3D transform)
             => Extensions.PerspectiveCameraExtension.GetTransformedPerspectiveCamera(camera, transform);
         public static bool IsVisible(this PerspectiveCamera camera, Point3D worldPoint) => Extensions.PerspectiveCameraExtension.IsVisible(camera, worldPoint);
+        #endregion
+
+        #region UIElement
+        public static void Refresh(UIElement element) => Extensions.UIElementExtension.Refresh(element);
         #endregion
     }
 }
