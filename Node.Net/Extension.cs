@@ -73,5 +73,8 @@ namespace Node.Net
         #region UIElement
         public static void Refresh(UIElement element) => Extensions.UIElementExtension.Refresh(element);
         #endregion
+
+        public static Matrix3D RotateXYZ(this Matrix3D matrix, Vector3D rotationsXYZ) => Extensions.Matrix3DExtension.RotateXYZ(matrix, rotationsXYZ);
+        public static Point3D[] Transform(this Matrix3D matrix, Point3D[] points) => Extensions.Matrix3DExtension.Transform(matrix, points);
     }
 }

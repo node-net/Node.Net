@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Extensions
@@ -19,6 +15,17 @@ namespace Node.Net.Extensions
             var localX = matrix.Transform(new Vector3D(1, 0, 0));
             matrix.Rotate(new Quaternion(localX, rotationsXYZ.X));
             return matrix;
+        }
+
+        public static Point3D[] Transform(Matrix3D matrix, Point3D[] points)
+        {
+            var transformed_points = new List<Point3D>();
+            foreach (var point in points)
+            {
+                transformed_points.Add(matrix.Transform(point));
+            }
+
+            return transformed_points.ToArray();
         }
     }
 }
