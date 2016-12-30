@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Repositories
 {
-    public class MemoryRepository : Dictionary<string,MemoryStream>
+    public class MemoryRepository : Dictionary<string,MemoryStream>, IRepository
     {
         public Func<Stream, object> ReadFunction { get; set; } = Repository.DefaultReadFunction;
         public Action<Stream, object> WriteFunction { get; set; } = Repository.DefaultWriteFunction;
 
+        public string Name { get; set; } = "Memory";
         public object Get(string name)
         {
             if (ReadFunction == null) return null;
@@ -21,6 +22,18 @@ namespace Node.Net.Repositories
                 return ReadFunction(this[name]);
             }
             return null;
+        }
+        public string[] GetNames(string filter)
+        {
+            var results = new List<string>();
+            foreach(var name in Keys)
+            {
+                if(filter == null || name.Contains(filter))
+                {
+                    results.Add(name);
+                }
+            }
+            return results.ToArray();
         }
         public void Set(string name, object value)
         {

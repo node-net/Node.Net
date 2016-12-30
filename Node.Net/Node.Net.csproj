@@ -166,6 +166,7 @@
     <Compile Include="Extensions\Image.Extension.cs" />
     <Compile Include="Extensions\ImageSource.Extension.cs" />
     <Compile Include="Extensions\Matrix3D.Extension.cs" />
+    <Compile Include="Extensions\Object.Extension.cs" />
     <Compile Include="Extensions\PerspectiveCamera.Extension.cs" />
     <Compile Include="Extensions\ProjectionCamera.Extension.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Repositories\AssemblyRepository.cs" />
     <Compile Include="Repositories\DirectoryRepository.cs" />
+    <Compile Include="Repositories\Interfaces.cs" />
     <Compile Include="Repositories\MemoryRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UriRepository.cs" />
