@@ -24,12 +24,25 @@ namespace Node.Net.Readers
             {
                 using (FileStream fs = new FileStream(filename, FileMode.Open))
                 {
-                    return read.Read(fs);
+                    var item = read.Read(fs);
+                    SetPropertyValue(item, "FileName", filename);
+                    return item;
                 }
             }
             return null;
         }
 
+        private static void SetPropertyValue(object item, string propertyName, object propertyValue)
+        {
+            if (item != null)
+            {
+                var propertyInfo = item.GetType().GetProperty(propertyName);
+                if (propertyInfo != null)
+                {
+                    propertyInfo.SetValue(item, propertyValue);
+                }
+            }
+        }
         public static object Read(IRead read, Type type, string name) => Read(read, type.Assembly, name);
     }
 }
