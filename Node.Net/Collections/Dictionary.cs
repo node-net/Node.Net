@@ -43,5 +43,13 @@ namespace Node.Net.Collections
                 return itemsSource;
             }
         }
+
+        public string JSON
+        {
+            get
+            {
+                return "TODO insert JSON....";
+            }
+        }
     }
 }
