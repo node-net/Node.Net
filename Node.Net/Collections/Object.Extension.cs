@@ -39,7 +39,7 @@ namespace Node.Net.Collections
         public static object GetValue(object instance) => Internal.KeyValuePair.GetValue(instance);
         public static bool IsKeyValuePair(object instance) => Internal.KeyValuePair.IsKeyValuePair(instance);
         //public static Func<object, Dictionary<string, dynamic>> MetaDataFunctionGetMetaDataFunction = Default.GetMetaData;
-        public static object GetParent(object item)
+        public static object GetParent(this object item)
         {
             if (GlobalFunctions.GetMetaDataFunction != null)
             {
@@ -50,7 +50,7 @@ namespace Node.Net.Collections
             }
             return null;
         }
-        public static void SetParent(object item, object parent)
+        public static void SetParent(this object item, object parent)
         {
             if (item != null)
             {

@@ -275,6 +275,10 @@ namespace Node.Net.Collections
                     var item = dictionary[key];
                     if(item != null)
                     {
+                        if(item.GetParent() != dictionary)
+                        {
+                            item.SetParent(dictionary);
+                        }
                         items.Add(item);
                     }
                 }
