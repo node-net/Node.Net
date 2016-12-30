@@ -6,7 +6,7 @@ namespace Node.Net.Collections
     public class Dictionary : Dictionary<string, dynamic>
     {
         public Dictionary() { }
-        public Dictionary(string type) { Add("Type", type); }
+        public Dictionary(string type) { Add(nameof(Type), type); }
         public string Type
         {
             get
@@ -26,7 +26,7 @@ namespace Node.Net.Collections
         public string FullKey => ObjectExtension.GetFullKey(this);
         public string[] Types => IDictionaryExtension.CollectValues<string>(this, nameof(Type));
         public void UpdateParentReferences() => IDictionaryExtension.DeepUpdateParents(this);
-        public ObservableCollection<Dictionary> ItemsSource
+        public ObservableCollection<Node.Net.Collections.Dictionary> ItemsSource
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Node.Net.Collections
                 var items = this.GetItemsSource();
                 foreach(var item in items)
                 {
-                    var d = item as Dictionary;
+                    var d = item as Node.Net.Collections.Dictionary;
                     if(d != null)
                     {
                         itemsSource.Add(d);
