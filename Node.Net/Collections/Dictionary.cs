@@ -2,7 +2,7 @@
 
 namespace Node.Net.Collections
 {
-    public sealed class Dictionary : Dictionary<string, dynamic>
+    public class Dictionary : Dictionary<string, dynamic>
     {
         public Dictionary() { }
         public Dictionary(string type) { Add("Type", type); }
@@ -10,7 +10,7 @@ namespace Node.Net.Collections
         {
             get
             {
-                var value = IDictionaryExtension.Get<string>(this, "Type");
+                var value = IDictionaryExtension.Get<string>(this, nameof(Type));
                 return (value == null) ? string.Empty : value.ToString();
             }
         }
@@ -23,7 +23,8 @@ namespace Node.Net.Collections
             }
         }
         public string FullKey => ObjectExtension.GetFullKey(this);
-        public string[] Types => IDictionaryExtension.CollectValues<string>(this, "Type");
+        public string[] Types => IDictionaryExtension.CollectValues<string>(this, nameof(Type));
         public void UpdateParentReferences() => IDictionaryExtension.DeepUpdateParents(this);
+        
     }
 }

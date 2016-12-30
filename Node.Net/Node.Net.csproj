@@ -65,6 +65,8 @@
     <Compile Include="Collections\Controls\InstanceCounts.cs" />
     <Compile Include="Collections\Controls\ListBox.cs" />
     <Compile Include="Collections\Controls\Properties.cs" />
+    <Compile Include="Collections\Dictionary.cs" />
+    <Compile Include="Collections\Document.cs" />
     <Compile Include="Collections\Filters.cs" />
     <Compile Include="Collections\GlobalFunctions.cs" />
     <Compile Include="Collections\Internal\Collector.cs" />
@@ -179,6 +181,7 @@
     <Compile Include="Measurement\Length.cs" />
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
+    <Compile Include="Readers\Document.cs" />
     <Compile Include="Repositories\AssemblyRepository.cs" />
     <Compile Include="Repositories\DirectoryRepository.cs" />
     <Compile Include="Repositories\Interfaces.cs" />

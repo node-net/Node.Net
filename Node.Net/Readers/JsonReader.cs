@@ -11,12 +11,15 @@ namespace Node.Net.Readers
         public static JsonReader Default { get; } = new JsonReader();
         public Type DefaultArrayType = typeof(List<dynamic>);
         public Type DefaultObjectType = typeof(Dictionary<string, dynamic>);
+        public Type DefaultDocumentType = typeof(Document);
+        public int ObjectCount { get; set; }
         public object Read(Stream stream)
         {
             using (System.IO.TextReader reader = new StreamReader(stream, Encoding.Default, true, 1024, true))
             {
                 try
                 {
+                    ObjectCount = 0;
                     return Read(reader);
                 }
                 catch (Exception e)
@@ -149,7 +152,10 @@ namespace Node.Net.Readers
 
         private IDictionary ReadObject(System.IO.TextReader reader)
         {
-            var dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
+            IDictionary dictionary = null;
+            if(ObjectCount == 0) dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
+            else dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
+            ObjectCount++;
             Seek(reader, '{');
             reader.Read(); // consume the '{'
             EatWhiteSpace(reader);

@@ -265,6 +265,21 @@ namespace Node.Net.Collections
                 //dictionary[key] = value;
             }
         }
-
+        public static object[] GetItemsSource(this IDictionary dictionary)
+        {
+            var items = new List<object>();
+            if(dictionary != null)
+            {
+                foreach(string key in dictionary.Keys)
+                {
+                    var item = dictionary[key];
+                    if(item != null)
+                    {
+                        items.Add(item);
+                    }
+                }
+            }
+            return items.ToArray();
+        }
     }
 }
