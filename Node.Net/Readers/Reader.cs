@@ -11,13 +11,24 @@ namespace Node.Net.Readers
         public static Reader Default { get; } = new Reader();
         public Reader()
         {
-            Add("Json", new List<string> { "{", "[" }.ToArray(), new JsonReader().Read);
+            Add("Json", new List<string> { "{", "[" }.ToArray(), JsonReader.Read);
             Add("Xml", new List<string> { "<" }.ToArray(), new XmlReader().Read);
             readers.Add("ImageSource", new ImageSourceReader().Read);
             foreach(var signature in ImageSourceReader.Default.Signatures)
             {
                 signatureReaders.Add(signature, "ImageSource");
             }
+        }
+        public JsonReader JsonReader { get; } = new JsonReader();
+        public Type DefaultObjectType
+        {
+            get { return JsonReader.DefaultObjectType; }
+            set { JsonReader.DefaultObjectType = value; }
+        }
+        public Type DefaultDocumentType
+        {
+            get { return JsonReader.DefaultDocumentType; }
+            set { JsonReader.DefaultDocumentType = value; }
         }
         public void Dispose()
         {
