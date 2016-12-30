@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Node.Net.Collections
 {
@@ -25,6 +26,12 @@ namespace Node.Net.Collections
         public string FullKey => ObjectExtension.GetFullKey(this);
         public string[] Types => IDictionaryExtension.CollectValues<string>(this, nameof(Type));
         public void UpdateParentReferences() => IDictionaryExtension.DeepUpdateParents(this);
-        
+        public ObservableCollection<object> ItemsSource
+        {
+            get
+            {
+                return new ObservableCollection<object>(this.GetItemsSource());
+            }
+        }
     }
 }
