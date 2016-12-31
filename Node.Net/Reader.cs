@@ -13,7 +13,11 @@ namespace Node.Net
     public sealed class Reader : IRead
     {
         public static Reader Default { get; } = new Reader();
-        private Readers.Reader reader = new Readers.Reader();
+        private Readers.Reader reader = new Readers.Reader
+        {
+            DefaultObjectType = typeof(Collections.Dictionary),
+            DefaultDocumentType = typeof(Collections.Document)
+        };
         public Dictionary<string, Type> Types
         {
             get { return reader.Types; }
