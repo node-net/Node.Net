@@ -23,6 +23,17 @@ namespace Node.Net
             get { return reader.Types; }
             set { reader.Types = value; }
         }
+
+        public Type DefaultObjectType
+        {
+            get { return reader.DefaultObjectType; }
+            set { reader.DefaultObjectType = value; }
+        }
+        public Type DefaultDocumentType
+        {
+            get { return reader.DefaultDocumentType; }
+            set { reader.DefaultDocumentType = value; }
+        }
         public object Read(Stream stream)
         {
             var instance = reader.Read(stream);
