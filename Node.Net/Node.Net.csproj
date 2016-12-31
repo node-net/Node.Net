@@ -65,8 +65,6 @@
     <Compile Include="Collections\Controls\InstanceCounts.cs" />
     <Compile Include="Collections\Controls\ListBox.cs" />
     <Compile Include="Collections\Controls\Properties.cs" />
-    <Compile Include="Collections\Dictionary.cs" />
-    <Compile Include="Collections\Document.cs" />
     <Compile Include="Collections\Filters.cs" />
     <Compile Include="Collections\GlobalFunctions.cs" />
     <Compile Include="Collections\Internal\Collector.cs" />
@@ -162,18 +160,14 @@
     <Compile Include="Data\Writers\Writer.cs" />
     <Compile Include="Data\Writers\XmlWriter.cs" />
     <Compile Include="Extensions\Assembly.Extension.cs" />
-    <Compile Include="Extensions\Camera.Extension.cs" />
     <Compile Include="Extensions\DependencyObject.Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
     <Compile Include="Extensions\Image.Extension.cs" />
     <Compile Include="Extensions\ImageSource.Extension.cs" />
-    <Compile Include="Extensions\Matrix3D.Extension.cs" />
-    <Compile Include="Extensions\Object.Extension.cs" />
     <Compile Include="Extensions\PerspectiveCamera.Extension.cs" />
     <Compile Include="Extensions\ProjectionCamera.Extension.cs" />
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
-    <Compile Include="Extensions\UIElement.Extension.cs" />
     <Compile Include="GlobalProperties.cs" />
     <Compile Include="Measurement\Angle.cs" />
     <Compile Include="Measurement\AngularUnit.cs" />

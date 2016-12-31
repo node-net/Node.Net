@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -45,7 +44,9 @@ namespace Node.Net
 
 
 
-
+        #region IWrite
+        public static string WriteToString(this Writers.IWrite write, object value) => Writers.IWriteExtension.WriteToString(write, value);
+        #endregion
 
         #region IGetDataSet
         //public static string[] GetStringArray(this IGetDataSet getDataSet, string sql) => Extensions.IGetDataSetExtension.GetStringArray(getDataSet, sql);
@@ -57,25 +58,7 @@ namespace Node.Net
         #endregion
 
         #region Object
-        public static object GetKey(this object item) => Collections.ObjectExtension.GetKey(item);
-        public static object GetValue(this object item) => Collections.ObjectExtension.GetValue(item);
-        public static string GetFullKey(this object item) => Collections.ObjectExtension.GetFullKey(item);
-        public static T GetValue<T>(this object item)
-        {
-            var instance = GetValue(item);
-            if (instance != null && typeof(T).IsAssignableFrom(instance.GetType())) return (T)instance;
-            return default(T);
-        }
-        public static bool IsKeyValuePair(this object item) => Collections.ObjectExtension.IsKeyValuePair(item);
-        public static object GetParent(this object item) => Collections.ObjectExtension.GetParent(item);
-        public static void SetParent(this object item, object parent) => Collections.ObjectExtension.SetParent(item, parent);
-        public static T GetNearestAncestor<T>(this object child) => Collections.ObjectExtension.GetNearestAncestor<T>(child);
-        public static T GetFurthestAncestor<T>(this object child) => Collections.ObjectExtension.GetFurthestAncestor<T>(child);
-        public static object GetRootAncestor(this object child) => Collections.ObjectExtension.GetRootAncestor(child);
 
-        public static object GetPropertyValue(this object item, string propertyName) => Extensions.ObjectExtension.GetPropertyValue(item, propertyName);
-        public static T GetPropertyValue<T>(this object item, string propertyName) => Extensions.ObjectExtension.GetPropertyValue<T>(item, propertyName);
-        public static void SetPropertyValue(this object item, string propertyName, object propertyValue) => Extensions.ObjectExtension.SetPropertyValue(item, propertyName, propertyValue);
         #endregion
 
         #region IDictionary
@@ -87,12 +70,5 @@ namespace Node.Net
             => Extensions.PerspectiveCameraExtension.GetTransformedPerspectiveCamera(camera, transform);
         public static bool IsVisible(this PerspectiveCamera camera, Point3D worldPoint) => Extensions.PerspectiveCameraExtension.IsVisible(camera, worldPoint);
         #endregion
-
-        #region UIElement
-        public static void Refresh(UIElement element) => Extensions.UIElementExtension.Refresh(element);
-        #endregion
-
-        public static Matrix3D RotateXYZ(this Matrix3D matrix, Vector3D rotationsXYZ) => Extensions.Matrix3DExtension.RotateXYZ(matrix, rotationsXYZ);
-        public static Point3D[] Transform(this Matrix3D matrix, Point3D[] points) => Extensions.Matrix3DExtension.Transform(matrix, points);
     }
 }
