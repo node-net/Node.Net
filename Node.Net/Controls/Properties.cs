@@ -15,14 +15,6 @@ namespace Node.Net.Controls
             DataContextChanged += _DataContextChanged;
         }
 
-        public bool ShowHeader
-        {
-            get { return (_header.Visibility == Visibility.Visible) ? true : false; }
-            set
-            {
-                _header.Visibility = value ? Visibility.Visible : Visibility.Hidden;
-            }
-        }
         private Header _header = new Header();
         private ValuesGrid _values = new ValuesGrid();
         protected override void OnInitialized(EventArgs e)

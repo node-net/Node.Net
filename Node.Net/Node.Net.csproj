@@ -77,6 +77,7 @@
     <Compile Include="Collections\Internal\ParentMap.cs" />
     <Compile Include="Collections\Internal\StringFilter.cs" />
     <Compile Include="Collections\Internal\ValueFilter.cs" />
+    <Compile Include="Collections\Item.cs" />
     <Compile Include="Collections\Object.Extension.cs" />
     <Compile Include="Collections\Point.Extension.cs" />
     <Compile Include="Controls\AutoSizeGrid.cs" />
