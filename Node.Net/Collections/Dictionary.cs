@@ -26,30 +26,21 @@ namespace Node.Net.Collections
         public string FullKey => ObjectExtension.GetFullKey(this);
         public string[] Types => IDictionaryExtension.CollectValues<string>(this, nameof(Type));
         public void UpdateParentReferences() => IDictionaryExtension.DeepUpdateParents(this);
-        public ObservableCollection<dynamic> ItemsSource
-        //public ObservableCollection<Node.Net.Collections.Dictionary> ItemsSource
+        public ObservableCollection<Node.Net.Collections.Dictionary> ItemsSource
         {
             get
             {
-                var itemsSource = new ObservableCollection<dynamic>(this.GetItemsSource());
-                return itemsSource;
-                //var itemsSource = new ObservableCollection<Dictionary>();
-                //var items = this.GetItemsSource();
-                //foreach(var item in items)
-                //{
-                    /*
+                var itemsSource = new ObservableCollection<Dictionary>();
+                var items = this.GetItemsSource();
+                foreach(var item in items)
+                {
                     var d = item as Node.Net.Collections.Dictionary;
                     if(d != null)
                     {
                         itemsSource.Add(d);
                     }
-                    else
-                    {
-                        itemsSource.Add(new Item { Key = item.})
-                    }*/
-
-                //}
-                //return itemsSource;
+                }
+                return itemsSource;
             }
         }
 
