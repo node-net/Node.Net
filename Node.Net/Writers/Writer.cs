@@ -78,6 +78,7 @@ namespace Node.Net.Writers
                 try
                 {
                     Write(sfd.FileName, value);
+                    SetPropertyValue(value, "FileName", sfd.FileName);
                 }
                 catch(Exception ex)
                 {
@@ -98,6 +99,17 @@ namespace Node.Net.Writers
                 }
             }
             return string.Empty;
+        }
+        private static void SetPropertyValue(object item, string propertyName, object propertyValue)
+        {
+            if (item != null)
+            {
+                var propertyInfo = item.GetType().GetProperty(propertyName);
+                if (propertyInfo != null)
+                {
+                    propertyInfo.SetValue(item, propertyValue);
+                }
+            }
         }
     }
 }
