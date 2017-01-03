@@ -48,5 +48,56 @@ namespace Node.Net.Writers
             }
             set { writersMap = value; }
         }
+
+        public void Save(object value,string saveFileDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*")
+        {
+            var filename = GetPropertyValue(value, "FileName");
+            if(filename.Length == 0 || filename.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
+            {
+                SaveAs(value, saveFileDialogFilter);
+            }
+            else
+            {
+                try
+                {
+                    Write(filename, value);
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception($"Unable to Save '{filename}'", ex);
+                }
+            }
+        }
+
+        public void SaveAs(object value,string saveFileDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*")
+        {
+            var sfd = new Microsoft.Win32.SaveFileDialog { Filter = saveFileDialogFilter };
+            var result = sfd.ShowDialog();
+            if(result == true)
+            {
+                try
+                {
+                    Write(sfd.FileName, value);
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception($"Unable to SaveAs '{sfd.FileName}'",ex);
+                }
+            }
+        }
+
+        private static string GetPropertyValue(object item, string propertyName)
+        {
+            if (item != null)
+            {
+                var propertyInfo = item.GetType().GetProperty(propertyName);
+                if (propertyInfo != null)
+                {
+                    var value = propertyInfo.GetValue(item);
+                    if (value != null) return value.ToString();
+                }
+            }
+            return string.Empty;
+        }
     }
 }
