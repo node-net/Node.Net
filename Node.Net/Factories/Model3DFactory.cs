@@ -9,14 +9,8 @@ namespace Node.Net.Factories
         public Func<IDictionary,Model3D> PrimaryModel3DHelperFunction { get; set; }
         public override Model3D Create(object source)
         {
-            if (source != null)
-            {
-                if(typeof(IDictionary).IsAssignableFrom(source.GetType()))
-                {
-                    var instance = CreateFromDictionary(source as IDictionary);
-                    if (instance != null) return instance;
-                }
-            }
+            var instance = CreateFromDictionary(source as IDictionary);
+            if (instance != null) return instance;
 
             if (Helper != null)
             {
@@ -28,9 +22,14 @@ namespace Node.Net.Factories
 
         private Model3D CreateFromDictionary(IDictionary source)
         {
-            var model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
+            if (source == null) return null;
+            Model3DGroup model3DGroup = null;
             var primaryModel = GetPrimaryModel3D(source);
-            if (primaryModel != null) model3DGroup.Children.Add(primaryModel);
+            if (primaryModel != null)
+            {
+                model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
+                model3DGroup.Children.Add(primaryModel);
+            }
             
             foreach(var key in source.Keys)
             {
@@ -38,11 +37,17 @@ namespace Node.Net.Factories
                 if(child_dictionary != null)
                 {
                     var child_model = Create(child_dictionary);
-                    if (child_model != null) model3DGroup.Children.Add(child_model);
+                    if (child_model != null)
+                    {
+                        if(model3DGroup == null)
+                        {
+                            model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
+                        }
+                        model3DGroup.Children.Add(child_model);
+                    }
                 }
             }
-            if (model3DGroup.Children.Count > 0) return model3DGroup;
-            return null;
+            return model3DGroup;
         }
 
         private Model3D GetPrimaryModel3D(IDictionary source)

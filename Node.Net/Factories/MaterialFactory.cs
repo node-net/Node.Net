@@ -9,13 +9,16 @@ namespace Node.Net.Factories
         public override Material Create(object source)
         {
             if (source == null) return DefaultMaterial;
+            var material = CreateFromBrush(source as Brush);
+            if (material != null) return material;
+            /*
             if (source != null)
             {
                 if (typeof(Brush).IsAssignableFrom(source.GetType()))
                 {
                     return CreateFromBrush(source as Brush);
                 }
-            }
+            }*/
             
             //if(Helper != null)
             //{
@@ -30,6 +33,7 @@ namespace Node.Net.Factories
 
         private Material CreateFromBrush(Brush brush)
         {
+            if (brush == null) return null;
             return new DiffuseMaterial(brush);
         }
 

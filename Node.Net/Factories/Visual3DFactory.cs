@@ -7,24 +7,12 @@ namespace Node.Net.Factories
     {
         public override Visual3D Create(object source)
         {
-            if (source != null)
-            {
-                if (typeof(IDictionary).IsAssignableFrom(source.GetType()))
-                {
-                    var instance = CreateFromDictionary(source as IDictionary);
-                    if (instance != null) return instance;
-                }
-            }
-
-            if (Helper != null)
-            {
-
-            }
-            return null;
+            return CreateFromDictionary(source as IDictionary);
         }
 
         private Visual3D CreateFromDictionary(IDictionary source)
         {
+            if (source == null) return null;
             if (Helper != null)
             {
                 var model = Helper.Create(typeof(Model3D), source) as Model3D;

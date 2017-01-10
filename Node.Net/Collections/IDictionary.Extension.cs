@@ -197,6 +197,7 @@ namespace Node.Net.Collections
                 {
                     return (T)value;
                 }
+                if (typeof(string) == typeof(T)) return (T)(object)string.Empty;
                 return default(T);
             }
             else
@@ -273,13 +274,19 @@ namespace Node.Net.Collections
                 foreach(string key in dictionary.Keys)
                 {
                     var item = dictionary[key];
-                    if(item != null)
+                    if (item != null)
                     {
-                        if(item.GetParent() != dictionary)
+                        if (item.GetParent() != dictionary)
                         {
                             item.SetParent(dictionary);
                         }
-                        items.Add(item);
+                        if((item as IDictionary) != null) items.Add(item);
+                        else items.Add(new Item { Key = key, Value = item });
+                        //items.Add(item);
+                    }
+                    else
+                    {
+                        //items.Add(new Item { Key = key, Value = item });
                     }
                 }
             }
