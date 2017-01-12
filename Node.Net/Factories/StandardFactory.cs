@@ -15,6 +15,11 @@
             Add("Transform3D", new Transform3DFactory());
         }
 
+        public bool Cache
+        {
+            get { return Model3DFactory.Cache; }
+            set { Model3DFactory.Cache = value; }
+        }
         public ResourceFactory ResourceFactory { get; } = new ResourceFactory();
         public Model3DFactory Model3DFactory { get; } = new Model3DFactory();
     }

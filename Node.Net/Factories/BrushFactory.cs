@@ -11,12 +11,11 @@ namespace Node.Net.Factories
             Brush result = null;
             if (source != null)
             {
-                /*
                 if (source.GetType() == typeof(string))
                 {
                     result = CreateFromString(source.ToString());
                     if (result != null) return result;
-                }*/
+                }
                 if(typeof(ImageSource).IsAssignableFrom(source.GetType()))
                 {
                     result = CreateFromImageSource(source as ImageSource);
@@ -39,7 +38,6 @@ namespace Node.Net.Factories
             if (Helper != null) return Helper;
             return new ColorFactory();
         }
-        /*
         private Brush CreateFromString(string name)
         {
             foreach (PropertyInfo property in typeof(Brushes).GetProperties(BindingFlags.Public | BindingFlags.Static))
@@ -50,7 +48,7 @@ namespace Node.Net.Factories
                 }
             }
             return null;
-        }*/
+        }
 
         private Brush CreateFromImageSource(ImageSource source)
         {

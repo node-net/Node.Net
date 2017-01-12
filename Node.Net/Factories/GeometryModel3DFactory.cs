@@ -8,8 +8,6 @@ namespace Node.Net.Factories
     {
         public override GeometryModel3D Create(object source)
         {
-            return CreateFromDictionary(source as IDictionary);
-            /*
             if (source != null)
             {
                 if (typeof(IDictionary).IsAssignableFrom(source.GetType()))
@@ -21,7 +19,6 @@ namespace Node.Net.Factories
 
 
             return null;
-            */
         }
 
         private bool _helperCreating = false;
@@ -44,7 +41,6 @@ namespace Node.Net.Factories
         }
         private GeometryModel3D CreateFromDictionary(IDictionary source)
         {
-            if (source == null) return null;
             if (source.Contains("Type"))
             {
                 var mesh = HelperCreate(typeof(MeshGeometry3D), source["Type"].ToString()) as MeshGeometry3D;
@@ -58,13 +54,11 @@ namespace Node.Net.Factories
                         if (dictionary.Contains("Material")) materialName = dictionary["Material"].ToString();
                         if (dictionary.Contains("BackMaterial")) backMaterialName = dictionary["BackMaterial"].ToString();
                     }
-                    var material = Helper.Create(typeof(Material), materialName) as Material;
-                    var backMaterial = Helper.Create(typeof(Material), backMaterialName) as Material;
                     return new GeometryModel3D
                     {
                         Geometry = mesh,
-                        Material = material,
-                        BackMaterial = material,
+                        Material = Helper.Create(typeof(Material), materialName) as Material,
+                        BackMaterial = Helper.Create(typeof(Material), backMaterialName) as Material,
                         Transform = GetTransform(source)
                     };
                 }

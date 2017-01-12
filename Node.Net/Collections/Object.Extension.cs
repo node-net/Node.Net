@@ -5,7 +5,7 @@ namespace Node.Net.Collections
 {
     public static class ObjectExtension
     {
-        public static object GetKey(object instance)
+        public static object GetKey(this object instance)
         {
             if(Internal.KeyValuePair.IsKeyValuePair(instance)) return Internal.KeyValuePair.GetKey(instance);
             var parent = GetParent(instance) as IDictionary;
@@ -18,7 +18,7 @@ namespace Node.Net.Collections
             }
             return null;
         }
-        public static string GetFullKey(object instance)
+        public static string GetFullKey(this object instance)
         {
             var key = GetKey(instance);
             if (key != null)

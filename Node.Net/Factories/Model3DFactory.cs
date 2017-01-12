@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Factories
@@ -9,8 +10,14 @@ namespace Node.Net.Factories
         public Func<IDictionary,Model3D> PrimaryModel3DHelperFunction { get; set; }
         public override Model3D Create(object source)
         {
-            var instance = CreateFromDictionary(source as IDictionary);
-            if (instance != null) return instance;
+            if (source != null)
+            {
+                if(typeof(IDictionary).IsAssignableFrom(source.GetType()))
+                {
+                    var instance = CreateFromDictionary(source as IDictionary);
+                    if (instance != null) return instance;
+                }
+            }
 
             if (Helper != null)
             {
@@ -20,16 +27,29 @@ namespace Node.Net.Factories
             return null;
         }
 
+        private bool cache = false;
+        private Dictionary<IDictionary, Model3D> model3DCache = new Dictionary<IDictionary, Model3D>();
+        public bool Cache
+        {
+            get { return cache; }
+            set
+            {
+                if(cache != value)
+                {
+                    cache = value;
+                    model3DCache.Clear();
+                }
+            }
+        }
         private Model3D CreateFromDictionary(IDictionary source)
         {
-            if (source == null) return null;
-            Model3DGroup model3DGroup = null;
-            var primaryModel = GetPrimaryModel3D(source);
-            if (primaryModel != null)
+            if(cache)
             {
-                model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
-                model3DGroup.Children.Add(primaryModel);
+                if (model3DCache.ContainsKey(source)) return model3DCache[source];
             }
+            var model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
+            var primaryModel = GetPrimaryModel3D(source);
+            if (primaryModel != null) model3DGroup.Children.Add(primaryModel);
             
             foreach(var key in source.Keys)
             {
@@ -37,17 +57,15 @@ namespace Node.Net.Factories
                 if(child_dictionary != null)
                 {
                     var child_model = Create(child_dictionary);
-                    if (child_model != null)
-                    {
-                        if(model3DGroup == null)
-                        {
-                            model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
-                        }
-                        model3DGroup.Children.Add(child_model);
-                    }
+                    if (child_model != null) model3DGroup.Children.Add(child_model);
                 }
             }
-            return model3DGroup;
+            if (model3DGroup.Children.Count > 0)
+            {
+                if (cache) model3DCache.Add(source, model3DGroup);
+                return model3DGroup;
+            }
+            return null;
         }
 
         private Model3D GetPrimaryModel3D(IDictionary source)

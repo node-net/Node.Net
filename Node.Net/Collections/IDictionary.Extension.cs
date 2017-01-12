@@ -8,7 +8,7 @@ namespace Node.Net.Collections
 {
     public static class IDictionaryExtension
     {
-        public static Dictionary<string, T> Collect<T>(IDictionary dictionary,
+        public static Dictionary<string, T> Collect<T>(this IDictionary dictionary,
                                                        Func<object, bool?> valueFilter = null,
                                                        Func<object, bool?> keyFilter = null, 
                                                        Func<object,bool?> deepFilter = null, 
@@ -16,7 +16,7 @@ namespace Node.Net.Collections
         {
             return new Internal.Collector { KeyFilter = keyFilter, ValueFilter = valueFilter, DeepFilter = deepFilter }.Collect<T>(dictionary,deep);
         }
-        public static Dictionary<string, IDictionary> Collect(IDictionary dictionary,
+        public static Dictionary<string, IDictionary> Collect(this IDictionary dictionary,
                                                        Func<object, bool?> valueFilter = null,
                                                        Func<object, bool?> keyFilter = null,
                                                        Func<object, bool?> deepFilter = null,
@@ -25,29 +25,29 @@ namespace Node.Net.Collections
             return new Internal.Collector { KeyFilter = keyFilter, ValueFilter = valueFilter, DeepFilter = deepFilter }.Collect<IDictionary>(dictionary, deep);
         }
         public static string[] CollectKeys(this IDictionary dictionary) => Internal.Collector.CollectKeys(dictionary);
-        public static T[] CollectValues<T>(IDictionary dictionary, string key) => Internal.Collector.CollectValues<T>(dictionary, key);
-        public static Type[] CollectTypes(IDictionary dictionary) => Internal.Collector.CollectTypes(dictionary);
+        public static T[] CollectValues<T>(this IDictionary dictionary, string key) => Internal.Collector.CollectValues<T>(dictionary, key);
+        public static Type[] CollectTypes(this IDictionary dictionary) => Internal.Collector.CollectTypes(dictionary);
 
 
         
-        public static Matrix3D GetLocalToParent(IDictionary dictionary)
+        public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             if (GlobalFunctions.GetLocalToParentFunction != null) return GlobalFunctions.GetLocalToParentFunction(dictionary);
             return new Matrix3D();
         }
-        public static Matrix3D GetLocalToWorld(IDictionary dictionary)
+        public static Matrix3D GetLocalToWorld(this IDictionary dictionary)
         {
             if (GlobalFunctions.GetLocalToWorldFunction != null) return GlobalFunctions.GetLocalToWorldFunction(dictionary);
             return new Matrix3D();
         }
-        public static Rect3D GetBounds(IDictionary dictionary)
+        public static Rect3D GetBounds(this IDictionary dictionary)
         {
             if (GlobalFunctions.GetBoundsFunction != null) return GlobalFunctions.GetBoundsFunction(dictionary);
             return new Rect3D();
         }
         
 
-        public static void RemoveKey(IDictionary dictionary,string key)
+        public static void RemoveKey(this IDictionary dictionary,string key)
         {
             if(key.Contains("/"))
             {
@@ -58,13 +58,13 @@ namespace Node.Net.Collections
                 dictionary.Remove(key);
             }
         }
-        public static void RemoveKeys(IDictionary dictionary,string[] keys)
+        public static void RemoveKeys(this IDictionary dictionary,string[] keys)
         {
             foreach (var key in keys) { RemoveKey(dictionary, key); }
         }
 
        
-        public static void Remove<T>(IDictionary dictionary)
+        public static void Remove<T>(this IDictionary dictionary)
         {
             if (dictionary != null)
             {
@@ -92,7 +92,7 @@ namespace Node.Net.Collections
             }
         }
 
-        public static void DeepRemove<T>(IDictionary dictionary)
+        public static void DeepRemove<T>(this IDictionary dictionary)
         {
             Remove<T>(dictionary);
             foreach(var key in dictionary.Keys)
@@ -104,7 +104,7 @@ namespace Node.Net.Collections
                 }
             }
         }
-        public static void DeepUpdateParents(IDictionary dictionary)
+        public static void DeepUpdateParents(this IDictionary dictionary)
         {
             var visited = new List<object>();
             DeepUpdateParents(visited, dictionary);
@@ -188,7 +188,7 @@ namespace Node.Net.Collections
             return default(T);
         }
 
-        public static T Get<T>(IDictionary dictionary, string name)
+        public static T Get<T>(this IDictionary dictionary, string name)
         {
             if (!dictionary.Contains(name))
             {
@@ -212,7 +212,7 @@ namespace Node.Net.Collections
                 return (T)dictionary[name];
             }
         }
-        private static object GetValue(IDictionary dictionary,string key)
+        private static object GetValue(this IDictionary dictionary,string key)
         {
             if (dictionary.Contains(key)) return dictionary[key];
             if(key.Contains("/"))
@@ -228,7 +228,7 @@ namespace Node.Net.Collections
             return null;
         }
 
-        public static void Set(IDictionary dictionary, string key, object value)
+        public static void Set(this IDictionary dictionary, string key, object value)
         {
             if (key.Contains("/")) SetValue(dictionary, key, value);
             else

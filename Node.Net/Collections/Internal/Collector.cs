@@ -101,7 +101,13 @@ namespace Node.Net.Collections.Internal
             {
                 KeyFilter = Filters.GetStringFilter(key)// new Filters.StringFilter { Value = key }.Include
             };
-            return collector.Collect<T>(dictionary).Values.ToArray();
+            var results = new List<T>();
+            foreach (T value in collector.Collect<T>(dictionary).Values.ToArray()) 
+            {
+                if (!results.Contains(value)) results.Add(value);
+            }
+            //return collector.Collect<T>(dictionary).Values.ToArray();
+            return results.ToArray();
         }
         #endregion
 

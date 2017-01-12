@@ -13,19 +13,15 @@ namespace Node.Net.Factories
         public bool RequireExactMatch { get; set; } = false;
         public object Create(Type targetType, object source)
         {
-            return CreateFromString(targetType, source as string);
-            /*
             if(source != null && source.GetType() == typeof(string))
             {
                 return CreateFromString(targetType,source.ToString());
             }
             return null;
-            */
         }
 
         private object CreateFromString(Type targetType,string name)
         {
-            if (name == null) return null;
             object instance = null;
             if (FrameworkElement != null)
             {
