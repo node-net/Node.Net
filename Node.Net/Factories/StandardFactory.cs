@@ -10,17 +10,18 @@
             Add("Material", new MaterialFactory());
             Add("MeshGeometry3D", new MeshGeometry3DFactory());
             Add("Model3D", Model3DFactory);
-            Add("Visual3D", new Visual3DFactory());
+            Add("Visual3D", Visual3DFactory);
             Add("GeometryModel3D", new GeometryModel3DFactory());
             Add("Transform3D", new Transform3DFactory());
         }
 
         public bool Cache
         {
-            get { return Model3DFactory.Cache; }
-            set { Model3DFactory.Cache = value; }
+            get { return Visual3DFactory.Cache; }
+            set { Visual3DFactory.Cache = value; }
         }
         public ResourceFactory ResourceFactory { get; } = new ResourceFactory();
         public Model3DFactory Model3DFactory { get; } = new Model3DFactory();
+        public Visual3DFactory Visual3DFactory { get; } = new Visual3DFactory();
     }
 }

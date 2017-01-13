@@ -12,7 +12,11 @@ namespace Node.Net.Factories.Generic
         public IFactory Helper { get; set; }
         public object Create(Type targetType,object source)
         {
-            return Create(source);
+            if (typeof(T).IsAssignableFrom(targetType))
+            {
+                return Create(source);
+            }
+            return null;
         }
 
         public abstract T Create(object source);
