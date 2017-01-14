@@ -91,9 +91,10 @@ namespace Node.Net.Extensions
             }
         }
 
-        public static Matrix3D GetCameraMatrix3D(Vector3D lookDirection,Vector3D upDirection)
+        public static Matrix3D GetCameraMatrix3D(Point3D position,Vector3D lookDirection,Vector3D upDirection)
         {
             var matrix = new Matrix3D();
+            //matrix.Translate(new Vector3D(position.X, position.Y, position.Z));
             // LookDirection = Local -Z Axis
             // UpDirection   = Local Y Axis
             var zAngle = Vector3D.AngleBetween(lookDirection, new Vector3D(0, 0, -1));
@@ -104,6 +105,7 @@ namespace Node.Net.Extensions
                 if(Round(matrix.Transform(new Vector3D(0,0,-1)).Z,4) != -1.0)
                 {
                     matrix = new Matrix3D();
+                   // matrix.Translate(new Vector3D(position.X, position.Y, position.Z));
                     matrix.Rotate(new Quaternion(normal, -zAngle));
                 }
 
@@ -134,12 +136,14 @@ namespace Node.Net.Extensions
                     matrix.Rotate(new Quaternion(normal, zAngle*-2.0));
                 }
             }
+
+            matrix.Translate(new Vector3D(position.X, position.Y, position.Z));
             return matrix;
         }
 
         public static Matrix3D GetLocalToWorld(ProjectionCamera camera)
         {
-            return GetCameraMatrix3D(camera.LookDirection, camera.UpDirection);
+            return GetCameraMatrix3D(camera.Position,camera.LookDirection, camera.UpDirection);
         }
         public static Matrix3D GetWorldToLocal(ProjectionCamera camera)
         {
