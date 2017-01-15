@@ -64,6 +64,7 @@ namespace Node.Net.Readers
             }
         }
         public Dictionary<string, Type> Types { get; set; } = null;
+        public IRead UnrecognizedSignatureReader { get; set; } = null;
         private SignatureReader signatureReader = new SignatureReader();
         private Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
         private Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
@@ -108,6 +109,7 @@ namespace Node.Net.Readers
                     return instance;
                 }
             }
+            if (UnrecognizedSignatureReader != null) return UnrecognizedSignatureReader.Read(original_stream);
             throw new System.Exception($"unrecognized signature '{signature.HexString}' {signature.Text}");
         }
 

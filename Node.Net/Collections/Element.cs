@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Node.Net.Collections
 {
@@ -21,7 +18,7 @@ namespace Node.Net.Collections
             }
             set
             {
-                if(model != value)
+                if (model != value)
                 {
                     model = value;
                     if (model != null) model.DeepUpdateParents();
@@ -55,11 +52,11 @@ namespace Node.Net.Collections
             {
                 Model.Set(name, value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-                if(value != null)
+                if (value != null)
                 {
-                    if(value.GetType() != typeof(string))
+                    if (value.GetType() != typeof(string))
                     {
-                        if(typeof(IEnumerable).IsAssignableFrom(value.GetType()))
+                        if (typeof(IEnumerable).IsAssignableFrom(value.GetType()))
                         {
                             itemsSource = null;
                             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -70,7 +67,7 @@ namespace Node.Net.Collections
         }
         public void Remove(string name)
         {
-            if(HasKey(name))
+            if (HasKey(name))
             {
                 var value = Get(name);
                 Model.Remove(name);
@@ -93,7 +90,7 @@ namespace Node.Net.Collections
         {
             get
             {
-                if(itemsSource == null)
+                if (itemsSource == null)
                 {
                     itemsSource = new ObservableCollection<Element>();
                     foreach (string key in Model.Keys)
@@ -109,5 +106,13 @@ namespace Node.Net.Collections
             }
         }
         private ObservableCollection<Element> itemsSource;
+
+        public ImageSource ImageSource
+        {
+            get
+            {
+                return null;
+            }
+        }
     }
 }

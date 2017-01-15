@@ -17,12 +17,10 @@ namespace Node.Net.Readers
                     case "http":
                         {
                             return new WebClient().OpenRead(name);
-                            break;
                         }
                     case "ftp":
                         {
                             return FtpWebRequest.Create(name).GetResponse().GetResponseStream();
-                            break;
                         }
                 }
             }
