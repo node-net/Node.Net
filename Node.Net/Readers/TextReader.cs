@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,9 +12,23 @@ namespace Node.Net.Readers
     public class TextReader : IRead
     {
         public static TextReader Default { get; } = new TextReader();
+        public Type DefaultTextType
+        {
+            get { return defaultTextType; }
+            set
+            {
+                if(defaultTextType != value)
+                {
+                    if (value == null) throw new ArgumentNullException(nameof(DefaultTextType));
+                    if (typeof(IList<string>).IsAssignableFrom(value.GetType())) throw new ArgumentOutOfRangeException(nameof(DefaultTextType), "DefaultTextType must be assignable to System.Collections.Generic.IList<string>");
+                    defaultTextType = value;
+                }
+            }
+        }
+        private Type defaultTextType = typeof(List<string>);
         public object Read(Stream stream)
         {
-            var text = new List<string>();
+            var text = Activator.CreateInstance(DefaultTextType) as IList<string>;
             string line;
             using (StreamReader reader = new StreamReader(stream))
             {
