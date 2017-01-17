@@ -8,7 +8,7 @@ using static System.Environment;
 namespace Node.Net.Writers
 {
     public enum JsonFormat { Compact, Indented };
-    class JsonWriter : IWrite
+    public class JsonWriter : IWrite
     {
         public JsonFormat Format = JsonFormat.Indented;
         private int IndentLevel;
@@ -87,12 +87,21 @@ namespace Node.Net.Writers
             var escaped_value = svalue.Replace("\\", "\\u005c");
             // Escape '"'
             escaped_value = escaped_value.Replace("\"", "\\u0022");
-            writer.Write($"{GetIndent()}\"{escaped_value}\"");
+            if (writingPrimitiveValue) writer.Write($"\"{escaped_value}\"");
+            else writer.Write($"{GetIndent()}\"{escaped_value}\"");
         }
         private void WriteValueType(System.IO.TextWriter writer, object value)
         {
-            if (value.GetType() == typeof(bool)) writer.Write($"{GetIndent()}{value.ToString().ToLower()}");
-            else writer.Write($"{GetIndent()}{value}");
+            if (value.GetType() == typeof(bool))
+            {
+                if (writingPrimitiveValue) writer.Write(value.ToString().ToLower());
+                else writer.Write($"{GetIndent()}{value.ToString().ToLower()}");
+            }
+            else
+            {
+                if (writingPrimitiveValue) writer.Write(value.ToString());
+                else writer.Write($"{GetIndent()}{value}");
+            }
         }
         private void WriteDoubleArray2D(System.IO.TextWriter writer, object value)
         {
@@ -136,10 +145,14 @@ namespace Node.Net.Writers
             writer.Write($"{GetLineFeed()}{GetIndent()}]{GetLineFeed()}");
 
         }
+
+        private bool writingPrimitiveValue = false;
         private void WriteIDictionary(System.IO.TextWriter writer, object value)
         {
             var index = 0;
-            writer.Write($"{GetIndent()}{{{GetLineFeed()}");
+            //writer.Write($"{GetIndent()}{{{GetLineFeed()}");
+            //writer.Write($"{GetIndent()}{{");
+            writer.Write("{");
             PushIndent();
 
             var dictionary = value as System.Collections.IDictionary;
@@ -156,17 +169,26 @@ namespace Node.Net.Writers
                     {
                         writer.Write($",{GetLineFeed()}{GetIndent()}");
                     }
+                    else
+                    {
+                        writer.Write($"{GetLineFeed()}{GetIndent()}");
+                    }
+                    writingPrimitiveValue = true;
                     Write(writer, key.ToString());
+                    writingPrimitiveValue = false;
 
                     var tmp = dictionary[key];
                     if (tmp == null || tmp.GetType().IsPrimitive || tmp.GetType() == typeof(string))
                     {
-                        writer.Write(":");
+                        writer.Write(": ");
+                        writingPrimitiveValue = true;
                         Write(writer, dictionary[key]);
+                        writingPrimitiveValue =false;
                     }
                     else
                     {
-                        writer.Write($":{GetLineFeed()}");
+                        //writer.Write($":{GetLineFeed()}");
+                        writer.Write($": ");
                         Write(writer, dictionary[key]);
 
                     }
@@ -175,7 +197,10 @@ namespace Node.Net.Writers
                 }
             }
             PopIndent();
-            writer.Write($"{GetIndent()}}}{GetLineFeed()}");
+            if (dictionary.Count > 0) writer.Write(GetLineFeed());
+            //if (IndentLevel == 0) writer.Write($"{GetIndent()}}}");
+            //else writer.Write($"{GetIndent()}}}{GetLineFeed()}");
+            writer.Write($"{GetIndent()}}}");
         }
     }
 }
