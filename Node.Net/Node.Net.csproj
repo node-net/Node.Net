@@ -183,6 +183,7 @@
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Readers\Document.cs" />
+    <Compile Include="Readers\TextReader.cs" />
     <Compile Include="Repositories\AssemblyRepository.cs" />
     <Compile Include="Repositories\DirectoryRepository.cs" />
     <Compile Include="Repositories\Interfaces.cs" />
