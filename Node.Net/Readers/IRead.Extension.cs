@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -27,6 +28,20 @@ namespace Node.Net.Readers
                     var item = read.Read(fs);
                     SetPropertyValue(item, "FileName", filename);
                     return item;
+                }
+            }
+            else
+            {
+                var stackTrace = new StackTrace();
+                foreach(var assembly in stackTrace.GetAssemblies())
+                {
+                    var stream = assembly.GetStream(filename);
+                    if (stream != null)
+                    {
+                        var item = read.Read(stream);
+                        SetPropertyValue(item, "FileName", filename);
+                        return item;
+                    }
                 }
             }
             return null;

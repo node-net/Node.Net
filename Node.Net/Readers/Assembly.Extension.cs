@@ -7,7 +7,7 @@ namespace Node.Net.Readers
 {
     public static class AssemblyExtension
     {
-        public static Dictionary<string, Type> GetNameTypeDictionary(Assembly assembly)
+        public static Dictionary<string, Type> GetNameTypeDictionary(this Assembly assembly)
         {
             var types = new Dictionary<string, Type>();
             foreach (var type in assembly.GetTypes())
@@ -17,7 +17,7 @@ namespace Node.Net.Readers
             return types;
         }
 
-        public static Dictionary<string, Type> GetFullNameTypeDictionary(Assembly assembly)
+        public static Dictionary<string, Type> GetFullNameTypeDictionary(this Assembly assembly)
         {
             var types = new Dictionary<string, Type>();
             foreach (var type in assembly.GetTypes())
@@ -27,7 +27,7 @@ namespace Node.Net.Readers
             return types;
         }
 
-        public static Stream GetStream(Assembly assembly,string name)
+        public static Stream GetStream(this Assembly assembly,string name)
         {
             foreach(string resource in assembly.GetManifestResourceNames())
             {
