@@ -18,7 +18,7 @@ namespace Node.Net
             get { return repository.WriteFunction; }
             set { repository.WriteFunction = value; }
         }
-        private Node.Net.Repositories.MemoryRepository repository 
+        private global::Node.Net.Repositories.MemoryRepository repository 
             = new Repositories.MemoryRepository
             {
                 ReadFunction = Reader.Default.Read,

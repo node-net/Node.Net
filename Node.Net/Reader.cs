@@ -10,14 +10,29 @@ using System.Reflection;
 
 namespace Node.Net
 {
-    public sealed class Reader : IRead
+    public sealed class Reader : IRead, IDisposable
     {
         public static Reader Default { get; } = new Reader();
+
+        public void Dispose()
+        {
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                reader.Dispose();
+            }
+        }
         private Readers.Reader reader = new Readers.Reader
         {
-            DefaultObjectType = typeof(Collections.Dictionary),
-            DefaultDocumentType = typeof(Collections.Document)
+            DefaultObjectType = typeof(Element),
+            DefaultDocumentType = typeof(Document)
         };
+        
         public Dictionary<string, Type> Types
         {
             get { return reader.Types; }
@@ -40,7 +55,7 @@ namespace Node.Net
             var dictionary = instance as IDictionary;
             if (dictionary != null)
             {
-                Node.Net.IDictionaryExtension.DeepUpdateParents(dictionary);
+                global::Node.Net.IDictionaryExtension.DeepUpdateParents(dictionary);
             }
             return instance;
         }
@@ -51,7 +66,7 @@ namespace Node.Net
         public void Add(string name, string[] signatures, Func<Stream, object> readFunction) => reader.Add(name, signatures, readFunction);
         public void Clear() => reader.Clear();
         public void SetReader(string name, Func<Stream, object> readFunction) => reader.SetReader(name, readFunction);
-        public object Open(string openFileDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*") => reader.Open(openFileDialogFilter);
+        public object Open(string name = "JSON Files (.json)|*.json|All Files (*.*)|*.*") => reader.Open(name);
 
     }
 }

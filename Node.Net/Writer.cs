@@ -16,6 +16,6 @@ namespace Node.Net
         public void Write(string filename,object value){ writer.Write(filename, value); }
         public void Save(object value,string saveAsDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*") { writer.Save(value, saveAsDialogFilter); }
         public void SaveAs(object value,string saveAsDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*") { writer.SaveAs(value, saveAsDialogFilter); }
-        private Node.Net.Writers.Writer writer = new Node.Net.Writers.Writer();
+        private global::Node.Net.Writers.Writer writer = new global::Node.Net.Writers.Writer();
     }
 }

@@ -10,19 +10,33 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
-    public sealed class Factory : IFactory
+    public sealed class Factory : IFactory, IDisposable
     {
         static Factory()
         {
-            Node.Net.Factories.MetaDataMap.GetMetaDataFunction = Node.Net.Collections.GlobalFunctions.GetMetaDataFunction;
-            Node.Net.Collections.GlobalFunctions.GetLocalToParentFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
-            Node.Net.Collections.GlobalFunctions.GetLocalToWorldFunction = Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
+            global::Node.Net.Factories.MetaDataMap.GetMetaDataFunction = global::Node.Net.Collections.GlobalFunctions.GetMetaDataFunction;
+            global::Node.Net.Collections.GlobalFunctions.GetLocalToParentFunction = global::Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
+            global::Node.Net.Collections.GlobalFunctions.GetLocalToWorldFunction = global::Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
 
         }
         public Factory() { }
         public Factory(Assembly assembly)
         {
             factory.ResourceAssemblies.Add(assembly);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                reader.Dispose();
+            }
         }
 
         public Func<string, object> GetFunction
@@ -49,12 +63,12 @@ namespace Node.Net
         {
             if(targetType == typeof(ILocalToParent))
             {
-                var localToParent = Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(Node.Net.Factories.Deprecated.ILocalToParent), source,null) as Node.Net.Factories.Deprecated.ILocalToParent;
+                var localToParent = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToParent), source,null) as global::Node.Net.Factories.Deprecated.ILocalToParent;
                 return new ConcreteLocalToParent { LocalToParent = localToParent.LocalToParent };
             }
             if (targetType == typeof(ILocalToWorld))
             {
-                var localToWorld = Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(Node.Net.Factories.Deprecated.ILocalToWorld), source,null) as Node.Net.Factories.Deprecated.ILocalToWorld;
+                var localToWorld = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToWorld), source,null) as global::Node.Net.Factories.Deprecated.ILocalToWorld;
                 return new ConcreteLocalToWorld { LocalToWorld = localToWorld.LocalToWorld };
             }
             var result = factory.Create(targetType, source,null);
@@ -62,7 +76,6 @@ namespace Node.Net
             if (idictionary != null)
             {
                 idictionary.DeepUpdateParents();
-                //idictionary.DeepCollect<IDictionary>();
             }
             return result;
         }
@@ -80,9 +93,23 @@ namespace Node.Net
             }
             return (T)instance;
         }
-        private readonly Node.Net.Reader reader = new Reader();
-        private Node.Net.Factories.Deprecated.Factory _factory;
-        private Node.Net.Factories.Deprecated.Factory factory
+        private readonly global::Node.Net.Reader reader = new Reader();
+        /*
+        private global::Node.Net.Factories.Factory _factory;
+        private global::Node.Net.Factories.Factory factory
+        {
+            get
+            {
+                if(_factory == null)
+                {
+                    _factory = new Factories.Factory { ReadFunction = reader.Read };
+                }
+                return _factory;
+            }
+        }*/
+        
+        private global::Node.Net.Factories.Deprecated.Factory _factory;
+        private global::Node.Net.Factories.Deprecated.Factory factory
         {
             get
             {

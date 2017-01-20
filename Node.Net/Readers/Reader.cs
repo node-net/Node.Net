@@ -12,13 +12,15 @@ namespace Node.Net.Readers
         public Reader()
         {
             Add("Json", new List<string> { "{", "[" }.ToArray(), JsonReader.Read);
-            Add("Xml", new List<string> { "<" }.ToArray(), new XmlReader().Read);
-            readers.Add("ImageSource", new ImageSourceReader().Read);
+            Add("Xml", new List<string> { "<" }.ToArray(), xmlReader.Read);
+            readers.Add("ImageSource", imageSourceReader.Read);
             foreach(var signature in ImageSourceReader.Default.Signatures)
             {
                 signatureReaders.Add(signature, "ImageSource");
             }
         }
+        private XmlReader xmlReader = new XmlReader();
+        private ImageSourceReader imageSourceReader = new ImageSourceReader();
         public JsonReader JsonReader { get; } = new JsonReader();
         public Type DefaultObjectType
         {
@@ -48,6 +50,8 @@ namespace Node.Net.Readers
                     signatureReader.Dispose();
                     signatureReader = null;
                 }
+                xmlReader.Dispose();
+                imageSourceReader.Dispose();
             }
         }
         public string TypeKey { get; set; } = "Type";
@@ -113,19 +117,30 @@ namespace Node.Net.Readers
             throw new System.Exception($"unrecognized signature '{signature.HexString}' {signature.Text}");
         }
 
-        public object Open(string openFileDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*")
+        public object Open(string name)//string openFileDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*")
         {
-            var ofd = new Microsoft.Win32.OpenFileDialog { Filter = openFileDialogFilter };
-            var result = ofd.ShowDialog();
-            if (result == true)
+            if (name.IsFileDialogFilter())
             {
-                try
+                var openFileDialogFilter = name;
+                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = openFileDialogFilter };
+                var result = ofd.ShowDialog();
+                if (result == true)
                 {
-                    return Read(ofd.FileName);
+                    try
+                    {
+                        return Read(ofd.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Unable to open file {ofd.FileName}", ex);
+                    }
                 }
-                catch (Exception ex)
+            }
+            else
+            {
+                if(name.IsValidFileName())
                 {
-                    throw new Exception($"Unable to open file {ofd.FileName}", ex);
+                    return Read(name);
                 }
             }
             return null;

@@ -35,7 +35,7 @@ namespace Node.Net
         #region Type
         public static Stream GetStream(this Type type, string name) => Extensions.AssemblyExtension.GetStream(type.Assembly, name);
         public static string[] GetManifestResourceNames(this Type type, string name) => Extensions.AssemblyExtension.GetManifestResourceNames(type.Assembly, name);
-        public static Dictionary<string, T> CollectManifestResources<T>(this Type type, string pattern) => Node.Net.Resources.Resources.CollectManifestResources<T>(type, pattern);
+        public static Dictionary<string, T> CollectManifestResources<T>(this Type type, string pattern) => global::Node.Net.Resources.Resources.CollectManifestResources<T>(type, pattern);
         #endregion
 
         #region IParent

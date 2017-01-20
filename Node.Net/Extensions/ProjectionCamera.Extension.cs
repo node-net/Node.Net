@@ -151,5 +151,24 @@ namespace Node.Net.Extensions
             tmp.Invert();
             return tmp;
         }
+
+        public static PerspectiveCamera GetPerspectiveCamera(ProjectionCamera camera)
+        {
+            return camera.GetType() == typeof(PerspectiveCamera) ? camera.Clone() as PerspectiveCamera : new PerspectiveCamera
+            {
+                LookDirection = camera.LookDirection,
+                UpDirection = camera.UpDirection,
+                Position = camera.Position
+            };
+        }
+        public static OrthographicCamera GetOrthographicCamera(ProjectionCamera camera)
+        {
+            return camera.GetType() == typeof(OrthographicCamera) ? camera.Clone() as OrthographicCamera : new OrthographicCamera
+            {
+                LookDirection = camera.LookDirection,
+                UpDirection = camera.UpDirection,
+                Position = camera.Position
+            };
+        }
     }
 }

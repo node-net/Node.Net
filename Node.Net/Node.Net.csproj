@@ -162,6 +162,8 @@
     <Compile Include="Data\Writers\StringWriter.cs" />
     <Compile Include="Data\Writers\Writer.cs" />
     <Compile Include="Data\Writers\XmlWriter.cs" />
+    <Compile Include="Document.cs" />
+    <Compile Include="Element.cs" />
     <Compile Include="Extensions\Assembly.Extension.cs" />
     <Compile Include="Extensions\Camera.Extension.cs" />
     <Compile Include="Extensions\DependencyObject.Extension.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Readers\Document.cs" />
     <Compile Include="Readers\StackTrace.Extension.cs" />
+    <Compile Include="Readers\String.Extension.cs" />
     <Compile Include="Readers\TextReader.cs" />
     <Compile Include="Repositories\AssemblyRepository.cs" />
     <Compile Include="Repositories\DirectoryRepository.cs" />
