@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
@@ -47,6 +48,20 @@ namespace Node.Net
         //////////////////////////////////////////////////////////////////
         /// Readers
         public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Readers.IDictionaryExtension.ConvertTypes(source, types, typeKey);
+        public static string GetJSON(this IDictionary source)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                var writer = new Node.Net.Writers.JsonWriter { Format = Writers.JsonFormat.Indented };
+                writer.Write(memory, source);
+                memory.Flush();
+                memory.Seek(0, SeekOrigin.Begin);
+                using (StreamReader sr = new StreamReader(memory))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+        }
 
     }
 }
