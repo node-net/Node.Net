@@ -16,7 +16,7 @@ namespace Node.Net.Extensions
             return null;
         }
 
-        public static string[] GetManifestResourceNames(this Assembly assembly,string name)
+        public static string[] GetManifestResourceNames(Assembly assembly,string name)
         {
             var results = new List<string>();
             foreach (string resource in assembly.GetManifestResourceNames())
