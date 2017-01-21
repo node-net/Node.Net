@@ -33,7 +33,7 @@ namespace Node.Net
                 return string.Empty;
             }
         }
-
+        [Browsable(false)]
         public string JSON
         {
             get
