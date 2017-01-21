@@ -23,7 +23,9 @@ namespace Node.Net
         {
             using (var reader = new Node.Net.Reader { DefaultDocumentType = typeof(Document) })
             {
-                return reader.Open(name) as Document;
+                var doc = reader.Open(name) as Document;
+                if (doc != null) doc.DeepUpdateParents();
+                return doc;
             }
         }
     }

@@ -61,12 +61,24 @@ namespace Node.Net
         }
         public object Read(Assembly assembly, string name) => Read(Extensions.AssemblyExtension.GetStream(assembly, name));
         public object Read(Type type, string name) => Read(Extensions.AssemblyExtension.GetStream(type.Assembly, name));
-        public object Read(string name) => reader.Read(name);
+        public object Read(string name)
+        {
+            var item = reader.Read(name);
+            var dictionary = item as IDictionary;
+            if (dictionary != null) dictionary.DeepUpdateParents();
+            return item;
+        }
         public string[] Signatures { get { return reader.Signatures; } }
         public void Add(string name, string[] signatures, Func<Stream, object> readFunction) => reader.Add(name, signatures, readFunction);
         public void Clear() => reader.Clear();
         public void SetReader(string name, Func<Stream, object> readFunction) => reader.SetReader(name, readFunction);
-        public object Open(string name = "JSON Files (.json)|*.json|All Files (*.*)|*.*") => reader.Open(name);
+        public object Open(string name = "JSON Files (.json)|*.json|All Files (*.*)|*.*")
+        {
+            var item = reader.Open(name);
+            var dictionary = item as IDictionary;
+            if (dictionary != null) dictionary.DeepUpdateParents();
+            return item;
+        }
 
     }
 }

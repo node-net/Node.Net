@@ -36,6 +36,13 @@ namespace Node.Net.Collections
             }
             return string.Empty;
         }
+        public static string GetName(this object instance)
+        {
+            var key = GetKey(instance);
+            if (key != null) return key.ToString();
+            return string.Empty;
+        }
+        public static string GetFullName(this object instance) => GetFullKey(instance);
         public static object GetValue(object instance) => Internal.KeyValuePair.GetValue(instance);
         public static bool IsKeyValuePair(object instance) => Internal.KeyValuePair.IsKeyValuePair(instance);
         //public static Func<object, Dictionary<string, dynamic>> MetaDataFunctionGetMetaDataFunction = Default.GetMetaData;

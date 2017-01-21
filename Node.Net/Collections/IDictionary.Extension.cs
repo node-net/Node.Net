@@ -165,12 +165,12 @@ namespace Node.Net.Collections
                 destination.Add(CopyChild(child));
             }
         }
-
+        /*
         public static string[] Search<T>(IDictionary dictionary,string search_pattern)
         {
             var results = new List<string>();
             return results.ToArray();
-        }
+        }*/
 
         public static T Find<T>(IDictionary dictionary,string key)
         {

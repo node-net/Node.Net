@@ -268,7 +268,7 @@
     <Compile Include="Filters.cs" />
     <Compile Include="GlobalFunctions.cs" />
     <Compile Include="IChild.cs" />
-    <Compile Include="IDictionary.Extension.cs" />
+    <Compile Include="Extensions\IDictionary.Extension.cs" />
     <Compile Include="IEnumerable.Extension.cs" />
     <Compile Include="IGetDataSet.cs" />
     <Compile Include="IMetaData.cs" />
@@ -283,7 +283,6 @@
     <Compile Include="ITranslation3D.cs" />
     <Compile Include="ITypeTransformer.cs" />
     <Compile Include="IUpdate.cs" />
-    <Compile Include="Object.Extension.cs" />
     <Compile Include="Readers\Assembly.Extension.cs" />
     <Compile Include="Readers\IDictionary.Extension.cs" />
     <Compile Include="Readers\IEnumerable.Extension.cs" />
