@@ -13,16 +13,19 @@ namespace Node.Net.Readers
         {
             if (Uri.IsWellFormedUriString(name, UriKind.RelativeOrAbsolute))
             {
-                switch (new Uri(name).Scheme)
+                if (name.Contains("http:") || name.Contains("https:") || name.Contains("ftp:"))
                 {
-                    case "http":
-                        {
-                            return new WebClient().OpenRead(name);
-                        }
-                    case "ftp":
-                        {
-                            return FtpWebRequest.Create(name).GetResponse().GetResponseStream();
-                        }
+                    switch (new Uri(name).Scheme)
+                    {
+                        case "http":
+                            {
+                                return new WebClient().OpenRead(name);
+                            }
+                        case "ftp":
+                            {
+                                return FtpWebRequest.Create(name).GetResponse().GetResponseStream();
+                            }
+                    }
                 }
             }
             if (File.Exists(name)) return new FileStream(name, FileMode.Open);
