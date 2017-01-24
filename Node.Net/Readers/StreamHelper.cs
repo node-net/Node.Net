@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -25,6 +26,16 @@ namespace Node.Net.Readers
                 }
             }
             if (File.Exists(name)) return new FileStream(name, FileMode.Open);
+            else
+            {
+                var stackTrace = new StackTrace();
+                foreach (var assembly in stackTrace.GetAssemblies())
+                {
+                    var stream = assembly.GetStream(name);
+                    if (stream != null) return stream;
+                }
+
+            }
             return new MemoryStream(Encoding.UTF8.GetBytes(name));
 
         }
