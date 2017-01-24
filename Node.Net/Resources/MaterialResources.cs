@@ -28,7 +28,7 @@ namespace Node.Net.Resources
                 if(imageSource != null)
                 {
                     // Given ImageSource, Get a Brush
-                    var material = Extensions.ImageSourceExtension.GetMaterial(imageSource);// _Model3D.MaterialHelper.GetImageMaterial(imageSource);
+                    var material = ImageSourceExtension.GetMaterial(imageSource);// _Model3D.MaterialHelper.GetImageMaterial(imageSource);
                     Add(name, material);
                     return material;
                 }

@@ -9,11 +9,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Node.Net.Extensions
+namespace Node.Net
 {
     public static class DependencyObjectExtension
     {
-        public static void RemoveChild(DependencyObject parent, UIElement child)
+        public static void RemoveChild(this DependencyObject parent, UIElement child)
         {
             var panel = parent as Panel;
             if (panel != null)
@@ -55,7 +55,7 @@ namespace Node.Net.Extensions
             // maybe more
         }
 
-        public static void RemoveFromParent(DependencyObject child)
+        public static void RemoveFromParent(this DependencyObject child)
         {
             var parent = VisualTreeHelper.GetParent(child);
             if (parent != null)

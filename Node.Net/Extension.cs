@@ -33,8 +33,8 @@ namespace Node.Net
         #endregion
 
         #region Type
-        public static Stream GetStream(this Type type, string name) => Extensions.AssemblyExtension.GetStream(type.Assembly, name);
-        public static string[] GetManifestResourceNames(this Type type, string name) => Extensions.AssemblyExtension.GetManifestResourceNames(type.Assembly, name);
+        public static Stream GetStream(this Type type, string name) => AssemblyExtension.GetStream(type.Assembly, name);
+        public static string[] GetManifestResourceNames(this Type type, string name) => AssemblyExtension.GetManifestResourceNames(type.Assembly, name);
         public static Dictionary<string, T> CollectManifestResources<T>(this Type type, string pattern) => global::Node.Net.Resources.Resources.CollectManifestResources<T>(type, pattern);
         #endregion
 
@@ -77,9 +77,9 @@ namespace Node.Net
         public static T GetFurthestAncestor<T>(this object child) => Collections.ObjectExtension.GetFurthestAncestor<T>(child);
         public static object GetRootAncestor(this object child) => Collections.ObjectExtension.GetRootAncestor(child);
 
-        public static object GetPropertyValue(this object item, string propertyName) => Extensions.ObjectExtension.GetPropertyValue(item, propertyName);
-        public static T GetPropertyValue<T>(this object item, string propertyName) => Extensions.ObjectExtension.GetPropertyValue<T>(item, propertyName);
-        public static void SetPropertyValue(this object item, string propertyName, object propertyValue) => Extensions.ObjectExtension.SetPropertyValue(item, propertyName, propertyValue);
+        public static object GetPropertyValue(this object item, string propertyName) => ObjectExtension.GetPropertyValue(item, propertyName);
+        public static T GetPropertyValue<T>(this object item, string propertyName) => ObjectExtension.GetPropertyValue<T>(item, propertyName);
+        public static void SetPropertyValue(this object item, string propertyName, object propertyValue) => ObjectExtension.SetPropertyValue(item, propertyName, propertyValue);
         #endregion
 
         #region IDictionary
@@ -96,7 +96,7 @@ namespace Node.Net
         public static void Refresh(UIElement element) => Extensions.UIElementExtension.Refresh(element);
         #endregion
 
-        public static Matrix3D RotateXYZ(this Matrix3D matrix, Vector3D rotationsXYZ) => Extensions.Matrix3DExtension.RotateXYZ(matrix, rotationsXYZ);
-        public static Point3D[] Transform(this Matrix3D matrix, Point3D[] points) => Extensions.Matrix3DExtension.Transform(matrix, points);
+        public static Matrix3D RotateXYZ(this Matrix3D matrix, Vector3D rotationsXYZ) => Matrix3DExtension.RotateXYZ(matrix, rotationsXYZ);
+        public static Point3D[] Transform(this Matrix3D matrix, Point3D[] points) => Matrix3DExtension.Transform(matrix, points);
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Extensions
+namespace Node.Net
 {
     public static class Matrix3DExtension
     {
-        public static Matrix3D RotateXYZ(Matrix3D matrix, Vector3D rotationsXYZ)
+        public static Matrix3D RotateXYZ(this Matrix3D matrix, Vector3D rotationsXYZ)
         {
             matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), rotationsXYZ.Z));
 
@@ -17,7 +17,7 @@ namespace Node.Net.Extensions
             return matrix;
         }
 
-        public static Point3D[] Transform(Matrix3D matrix, Point3D[] points)
+        public static Point3D[] Transform(this Matrix3D matrix, Point3D[] points)
         {
             var transformed_points = new List<Point3D>();
             foreach (var point in points)

@@ -8,24 +8,23 @@ using System.Windows.Media.Imaging;
 
 namespace Node.Net
 {
-    namespace Extensions
+
+    public static class ImageExtension
     {
-        class ImageExtension
+        public static ImageSource GetImageSource(this System.Drawing.Image image)
         {
-            public static ImageSource GetImageSource(System.Drawing.Image image)
-            {
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
 
-                var memory = new System.IO.MemoryStream();
-                image.Save(memory, ImageFormat.Bmp);
-                memory.Seek(0, SeekOrigin.Begin);
+            var memory = new System.IO.MemoryStream();
+            image.Save(memory, ImageFormat.Bmp);
+            memory.Seek(0, SeekOrigin.Begin);
 
-                bitmapImage.StreamSource = memory;
-                bitmapImage.EndInit();
-                memory = null;
-                return bitmapImage;
-            }
+            bitmapImage.StreamSource = memory;
+            bitmapImage.EndInit();
+            memory = null;
+            return bitmapImage;
         }
     }
+
 }

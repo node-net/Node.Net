@@ -3,11 +3,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Node.Net.Extensions
+namespace Node.Net
 {
     public static class GridExtension
     {
-        public static void AddRow(Grid grid, string[] content, Brush backgroundBrush = null, Brush foregroundBrush = null)
+        public static void AddRow(this Grid grid, string[] content, Brush backgroundBrush = null, Brush foregroundBrush = null)
         {
             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 

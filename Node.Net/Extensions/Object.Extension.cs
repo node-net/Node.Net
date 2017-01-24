@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Extensions
+namespace Node.Net
 {
     public static class ObjectExtension
     {

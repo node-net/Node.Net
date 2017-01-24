@@ -1,9 +1,10 @@
 ﻿// Copyright (c) 2016 Lou Parslow. Subject to the MIT license, see LICENSE.txt.
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Node.Net.Extensions
+namespace Node.Net
 {
     public static class AssemblyExtension
     {
@@ -16,7 +17,7 @@ namespace Node.Net.Extensions
             return null;
         }
 
-        public static string[] GetManifestResourceNames(Assembly assembly,string name)
+        public static string[] GetManifestResourceNames(this Assembly assembly,string name)
         {
             var results = new List<string>();
             foreach (string resource in assembly.GetManifestResourceNames())
@@ -24,6 +25,26 @@ namespace Node.Net.Extensions
                 if (resource.Contains(name)) results.Add(resource);
             }
             return results.ToArray();
+        }
+
+        public static Dictionary<string, Type> GetNameTypeDictionary(this Assembly assembly)
+        {
+            var types = new Dictionary<string, Type>();
+            foreach (var type in assembly.GetTypes())
+            {
+                if (!types.ContainsKey(type.Name)) types.Add(type.Name, type);
+            }
+            return types;
+        }
+
+        public static Dictionary<string, Type> GetFullNameTypeDictionary(this Assembly assembly)
+        {
+            var types = new Dictionary<string, Type>();
+            foreach (var type in assembly.GetTypes())
+            {
+                if (!types.ContainsKey(type.FullName)) types.Add(type.FullName, type);
+            }
+            return types;
         }
     }
 }

@@ -59,8 +59,8 @@ namespace Node.Net
             }
             return instance;
         }
-        public object Read(Assembly assembly, string name) => Read(Extensions.AssemblyExtension.GetStream(assembly, name));
-        public object Read(Type type, string name) => Read(Extensions.AssemblyExtension.GetStream(type.Assembly, name));
+        public object Read(Assembly assembly, string name) => Read(AssemblyExtension.GetStream(assembly, name));
+        public object Read(Type type, string name) => Read(AssemblyExtension.GetStream(type.Assembly, name));
         public object Read(string name)
         {
             var item = reader.Read(name);
