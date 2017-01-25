@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Node.Net.Factories
 {
@@ -39,8 +40,25 @@ namespace Node.Net.Factories
                     }
                 }
             }
+            if (ResourceAssemblies != null)
+            {
+                foreach (var assembly in ResourceAssemblies)
+                {
+                    var resourceFactory = new ResourceFactory();
+                    resourceFactory.ImportManifestResources(assembly);
+                    item = resourceFactory.Create(targetType, source);
+                    if (item != null) return item;
+                }
+            }
             return null;
         }
+
+        public List<Assembly> ResourceAssemblies { get; set; } = new List<Assembly>();
+        /*
+        {
+            get { return objectFromString.ResourceAssemblies; }
+            set { objectFromString.ResourceAssemblies = value; }
+        }*/
 
         private List<string> lockedKeys = new List<string>();
         private void Lock(string key)
