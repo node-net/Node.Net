@@ -8,6 +8,7 @@ namespace Node.Net.Factories
         public StandardFactory()
         {
             Add("Resources", ResourceFactory);
+            Add("ManifestResources", ManifestResourceFactory);
             Add("Color", new ColorFactory());
             Add("Brush", new BrushFactory());
             Add("Material", new MaterialFactory());
@@ -26,9 +27,25 @@ namespace Node.Net.Factories
         public Func<Stream, object> ReadFunction
         {
             get { return ResourceFactory.ReadFunction; }
-            set { ResourceFactory.ReadFunction = value; }
+            set
+            {
+                ResourceFactory.ReadFunction = value;
+                ManifestResourceFactory.ReadFunction = value;
+            }
         }
         public ResourceFactory ResourceFactory { get; } = new ResourceFactory();
+        public ManifestResourceFactory ManifestResourceFactory
+        {
+            get
+            {
+                if(manifestResourceFactory == null)
+                {
+                    manifestResourceFactory = new ManifestResourceFactory { ReadFunction = ReadFunction };
+                }
+                return manifestResourceFactory;
+            }
+        }
+        private ManifestResourceFactory manifestResourceFactory;
         public Model3DFactory Model3DFactory { get; } = new Model3DFactory();
         public Visual3DFactory Visual3DFactory { get; } = new Visual3DFactory();
     }

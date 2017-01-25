@@ -22,8 +22,8 @@ namespace Node.Net
         public Factory2() { }
         public Factory2(Assembly assembly)
         {
-            
-            factory.ResourceFactory.ImportManifestResources(assembly);
+            factory.ManifestResourceFactory.Assemblies.Add(assembly);
+            //factory.ResourceFactory.ImportManifestResources(assembly);
             /*
             var mrf = new Node.Net.Factories.ManifestResourceFactory { ReadFunction = reader.Read };
             mrf.Assemblies.Add(assembly);
@@ -54,8 +54,8 @@ namespace Node.Net
         */
         public Func<Stream, object> ReadFunction
         {
-            get { return factory.ResourceFactory.ReadFunction; }
-            set { factory.ResourceFactory.ReadFunction = value; }
+            get { return factory.ReadFunction; }
+            set { factory.ReadFunction = value; }
         }
         /*
         public List<Assembly> ResourceAssemblies
