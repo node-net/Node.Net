@@ -22,9 +22,13 @@ namespace Node.Net
         public Factory2() { }
         public Factory2(Assembly assembly)
         {
+            
+            factory.ResourceFactory.ImportManifestResources(assembly);
+            /*
             var mrf = new Node.Net.Factories.ManifestResourceFactory { ReadFunction = reader.Read };
             mrf.Assemblies.Add(assembly);
             factory.Add("manifestResources", mrf);
+            */
             //factory.ResourceAssemblies.Add(assembly);
         }
 
@@ -38,7 +42,7 @@ namespace Node.Net
         {
             if (disposing)
             {
-                reader.Dispose();
+                //reader.Dispose();
             }
         }
         /*
@@ -47,18 +51,18 @@ namespace Node.Net
             get { return factory.GetFunction; }
             set { factory.GetFunction = value; }
         }
-
+        */
         public Func<Stream, object> ReadFunction
         {
-            get { return factory.ReadFunction; }
-            set { factory.ReadFunction = value; }
+            get { return factory.ResourceFactory.ReadFunction; }
+            set { factory.ResourceFactory.ReadFunction = value; }
         }
-        */
+        /*
         public List<Assembly> ResourceAssemblies
         {
             get { return factory.ResourceAssemblies; }
             set { factory.ResourceAssemblies = value; }
-        }
+        }*/
 
         class ConcreteLocalToParent : ILocalToParent { public Matrix3D LocalToParent { get; set; } = new Matrix3D(); }
         class ConcreteLocalToWorld : ILocalToWorld { public Matrix3D LocalToWorld { get; set; } = new Matrix3D(); }
@@ -96,9 +100,12 @@ namespace Node.Net
             }
             return (T)instance;
         }
-        private readonly global::Node.Net.Reader reader = new Reader();
+        //private readonly global::Node.Net.Reader reader = new Reader();
 
-        private global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory();
+        private global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory
+        {
+            ReadFunction = new Reader().Read
+        };
         /*
         private global::Node.Net.Factories.Deprecated.Factory _factory;
         private global::Node.Net.Factories.Deprecated.Factory factory

@@ -1,4 +1,7 @@
-﻿namespace Node.Net.Factories
+﻿using System;
+using System.IO;
+
+namespace Node.Net.Factories
 {
     public sealed class StandardFactory : Factory
     {
@@ -19,6 +22,11 @@
         {
             get { return Visual3DFactory.Cache; }
             set { Visual3DFactory.Cache = value; }
+        }
+        public Func<Stream, object> ReadFunction
+        {
+            get { return ResourceFactory.ReadFunction; }
+            set { ResourceFactory.ReadFunction = value; }
         }
         public ResourceFactory ResourceFactory { get; } = new ResourceFactory();
         public Model3DFactory Model3DFactory { get; } = new Model3DFactory();

@@ -40,6 +40,7 @@ namespace Node.Net.Factories
                     }
                 }
             }
+            /*
             if (ResourceAssemblies != null)
             {
                 foreach (var assembly in ResourceAssemblies)
@@ -49,11 +50,11 @@ namespace Node.Net.Factories
                     item = resourceFactory.Create(targetType, source);
                     if (item != null) return item;
                 }
-            }
+            }*/
             return null;
         }
 
-        public List<Assembly> ResourceAssemblies { get; set; } = new List<Assembly>();
+        //public List<Assembly> ResourceAssemblies { get; set; } = new List<Assembly>();
         /*
         {
             get { return objectFromString.ResourceAssemblies; }
