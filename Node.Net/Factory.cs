@@ -20,7 +20,10 @@ namespace Node.Net
 
         }
         public Factory() { }
-        public Factory(Assembly assembly) { factory.ResourceAssemblies.Add(assembly); }
+        public Factory(Assembly assembly)
+        {
+            factory.ManifestResourceFactory.Assemblies.Add(assembly);
+        }
 
         public void Dispose()
         {
@@ -32,14 +35,8 @@ namespace Node.Net
         {
             if (disposing)
             {
-                reader.Dispose();
+                //reader.Dispose();
             }
-        }
-
-        public Func<string, object> GetFunction
-        {
-            get { return factory.GetFunction; }
-            set { factory.GetFunction = value; }
         }
 
         public Func<Stream, object> ReadFunction
@@ -47,28 +44,24 @@ namespace Node.Net
             get { return factory.ReadFunction; }
             set { factory.ReadFunction = value; }
         }
-        
-        public List<Assembly> ResourceAssemblies
-        {
-            get { return factory.ResourceAssemblies; }
-            set { factory.ResourceAssemblies = value; }
-        }
+
 
         class ConcreteLocalToParent : ILocalToParent { public Matrix3D LocalToParent { get; set; } = new Matrix3D(); }
         class ConcreteLocalToWorld : ILocalToWorld { public Matrix3D LocalToWorld { get; set; } = new Matrix3D(); }
         public object Create(Type targetType, object source)
         {
-            if(targetType == typeof(ILocalToParent))
+            /*
+            if (targetType == typeof(ILocalToParent))
             {
-                var localToParent = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToParent), source,null) as global::Node.Net.Factories.Deprecated.ILocalToParent;
+                var localToParent = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToParent), source, null) as global::Node.Net.Factories.Deprecated.ILocalToParent;
                 return new ConcreteLocalToParent { LocalToParent = localToParent.LocalToParent };
             }
             if (targetType == typeof(ILocalToWorld))
             {
-                var localToWorld = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToWorld), source,null) as global::Node.Net.Factories.Deprecated.ILocalToWorld;
+                var localToWorld = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToWorld), source, null) as global::Node.Net.Factories.Deprecated.ILocalToWorld;
                 return new ConcreteLocalToWorld { LocalToWorld = localToWorld.LocalToWorld };
-            }
-            var result = factory.Create(targetType, source,null);
+            }*/
+            var result = factory.Create(targetType, source);
             var idictionary = result as IDictionary;
             if (idictionary != null)
             {
@@ -81,41 +74,20 @@ namespace Node.Net
         {
             var instance = Activator.CreateInstance<T>();
             var idictionary = instance as IDictionary;
-            if(idictionary != null)
+            if (idictionary != null)
             {
-                if(!idictionary.Contains("Type"))
+                if (!idictionary.Contains("Type"))
                 {
                     idictionary["Type"] = instance.GetType().Name;
                 }
             }
             return (T)instance;
         }
-        private readonly global::Node.Net.Reader reader = new Reader();
-        /*
-        private global::Node.Net.Factories.StandardFactory _factory;
-        private global::Node.Net.Factories.StandardFactory factory
+
+        private global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory
         {
-            get
-            {
-                if(_factory == null)
-                {
-                    _factory = new Factories.Factory { ReadFunction = reader.Read };
-                }
-                return _factory;
-            }
-        }*/
-        
-        private global::Node.Net.Factories.Deprecated.Factory _factory;
-        private global::Node.Net.Factories.Deprecated.Factory factory
-        {
-            get
-            {
-                if(_factory == null)
-                {
-                    _factory = new Factories.Deprecated.Factory { ReadFunction = reader.Read };
-                }
-                return _factory;
-            }
-        }
+            ReadFunction = new Reader().Read
+        };
+
     }
 }

@@ -23,13 +23,6 @@ namespace Node.Net
         public Factory2(Assembly assembly)
         {
             factory.ManifestResourceFactory.Assemblies.Add(assembly);
-            //factory.ResourceFactory.ImportManifestResources(assembly);
-            /*
-            var mrf = new Node.Net.Factories.ManifestResourceFactory { ReadFunction = reader.Read };
-            mrf.Assemblies.Add(assembly);
-            factory.Add("manifestResources", mrf);
-            */
-            //factory.ResourceAssemblies.Add(assembly);
         }
 
         public void Dispose()
@@ -45,31 +38,22 @@ namespace Node.Net
                 //reader.Dispose();
             }
         }
-        /*
-        public Func<string, object> GetFunction
-        {
-            get { return factory.GetFunction; }
-            set { factory.GetFunction = value; }
-        }
-        */
+
         public Func<Stream, object> ReadFunction
         {
             get { return factory.ReadFunction; }
             set { factory.ReadFunction = value; }
         }
-        /*
-        public List<Assembly> ResourceAssemblies
-        {
-            get { return factory.ResourceAssemblies; }
-            set { factory.ResourceAssemblies = value; }
-        }*/
+
 
         class ConcreteLocalToParent : ILocalToParent { public Matrix3D LocalToParent { get; set; } = new Matrix3D(); }
         class ConcreteLocalToWorld : ILocalToWorld { public Matrix3D LocalToWorld { get; set; } = new Matrix3D(); }
         public object Create(Type targetType, object source)
         {
+            /*
             if (targetType == typeof(ILocalToParent))
             {
+                
                 var localToParent = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToParent), source, null) as global::Node.Net.Factories.Deprecated.ILocalToParent;
                 return new ConcreteLocalToParent { LocalToParent = localToParent.LocalToParent };
             }
@@ -77,7 +61,7 @@ namespace Node.Net
             {
                 var localToWorld = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToWorld), source, null) as global::Node.Net.Factories.Deprecated.ILocalToWorld;
                 return new ConcreteLocalToWorld { LocalToWorld = localToWorld.LocalToWorld };
-            }
+            }*/
             var result = factory.Create(targetType, source);
             var idictionary = result as IDictionary;
             if (idictionary != null)
@@ -100,24 +84,11 @@ namespace Node.Net
             }
             return (T)instance;
         }
-        //private readonly global::Node.Net.Reader reader = new Reader();
 
         private global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory
         {
             ReadFunction = new Reader().Read
         };
-        /*
-        private global::Node.Net.Factories.Deprecated.Factory _factory;
-        private global::Node.Net.Factories.Deprecated.Factory factory
-        {
-            get
-            {
-                if (_factory == null)
-                {
-                    _factory = new Factories.Deprecated.Factory { ReadFunction = reader.Read };
-                }
-                return _factory;
-            }
-        }*/
+
     }
 }
