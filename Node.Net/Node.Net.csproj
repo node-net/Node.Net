@@ -177,7 +177,6 @@
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\UIElement.Extension.cs" />
     <Compile Include="Factories\Extension\ImageSource.Extension.cs" />
-    <Compile Include="Factory2.cs" />
     <Compile Include="GlobalProperties.cs" />
     <Compile Include="Measurement\Angle.cs" />
     <Compile Include="Measurement\AngularUnit.cs" />

@@ -43,6 +43,7 @@ namespace Node.Net.Readers
                         return item;
                     }
                 }
+                throw new Exception($"{filename} not found");
             }
             return null;
         }
