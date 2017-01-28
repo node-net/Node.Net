@@ -27,7 +27,7 @@ namespace Node.Net
                                                       Func<object, bool?> keyFilter = null,
                                                       Func<object, bool?> deepFilter = null,
                                                       bool deep = true) => Collections.IDictionaryExtension.Collect<T>(dictionary, valueFilter, keyFilter, deepFilter, deep);
-        public static Dictionary<string, IDictionary> Collect(this IDictionary dictionary,
+        public static Dictionary<string, dynamic> Collect(this IDictionary dictionary,
                                                        Func<object, bool?> valueFilter = null,
                                                        Func<object, bool?> keyFilter = null,
                                                        Func<object, bool?> deepFilter = null,
