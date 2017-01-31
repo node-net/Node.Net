@@ -89,7 +89,7 @@ namespace Node.Net.Factories.Helpers
             if (dictionary != null)
             {
 
-                var parent = global::Node.Net.Factories.Extension.ObjectExtension.GetParent(dictionary);
+                var parent = global::Node.Net.Factories.ObjectExtension.GetParent(dictionary);
                 if (parent != null)
                 {
                     localToWorld.Append(GetLocalToWorld(parent as IDictionary));

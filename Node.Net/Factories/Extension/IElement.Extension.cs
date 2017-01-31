@@ -62,5 +62,32 @@ namespace Node.Net.Factories
             }
             return string.Empty;
         }
+        public static Matrix3D GetLocalToParent(this Node.Net.Factories.IElement source)
+        {
+            var matrix3D = new Matrix3D();
+            if (source != null)
+            {
+                var rotations = source.GetRotationsXYZ();// Extension.IDictionaryExtension.GetRotationsXYZ(dictionary);
+                matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), source.GetRotationsXYZ());// Extension.IDictionaryExtension.GetRotationsXYZ(dictionary));
+                matrix3D.Translate(source.GetTranslation());// Extension.IDictionaryExtension.GetTranslation(dictionary));
+            }
+            return matrix3D;
+        }
+
+        public static Matrix3D GetLocalToWorld(this Node.Net.Factories.IElement source)
+        {
+            var localToWorld = source.GetLocalToParent();// GetLocalToParent(dictionary);
+            if (source != null)
+            {
+
+                var parent = source.Parent;// Node.Net.Factories.Extension.ObjectExtension.GetParent(source);
+                if (parent != null)
+                {
+                    localToWorld.Append(parent.GetLocalToWorld());// GetLocalToWorld(parent as IDictionary));
+                }
+            }
+
+            return localToWorld;
+        }
     }
 }

@@ -56,7 +56,7 @@ namespace Node.Net
         [Browsable(false)]
         public string JSON { get { return this.GetJSON(); } }
 
-        public IElement Parent { get; private set; }
+        public object Parent { get; private set; }
         public IDocument Document { get; private set; }
 
         [Browsable(false)]

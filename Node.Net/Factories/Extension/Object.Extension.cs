@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using System.Windows.Media.Media3D;
 
-namespace Node.Net.Factories.Extension
+namespace Node.Net.Factories
 {
     public static class ObjectExtension
     {
-        public static object GetParent(object item)
+        public static object GetParent(this object item)
         {
             if(MetaDataMap.GetMetaDataFunction != null)
             {
@@ -16,7 +17,7 @@ namespace Node.Net.Factories.Extension
             return null;
         }
 
-        public static void SetParent(object item, object parent)
+        public static void SetParent(this object item, object parent)
         {
             if(item != null)
             {
@@ -27,7 +28,7 @@ namespace Node.Net.Factories.Extension
             }
         }
 
-        public static T GetNearestAncestor<T>(object child)
+        public static T GetNearestAncestor<T>(this object child)
         {
             var parent = GetParent(child);
             if (child != null && parent != null)
@@ -43,7 +44,7 @@ namespace Node.Net.Factories.Extension
         }
 
 
-        public static void UpdateParentBindings(object item)
+        public static void UpdateParentBindings(this object item)
         {
             var dictionary = item as IDictionary;
             if(dictionary != null)
@@ -73,6 +74,24 @@ namespace Node.Net.Factories.Extension
                     }
                 }
             }
+        }
+
+        public static Matrix3D GetLocalToParent(this object source)
+        {
+            var element = source as IElement;
+            if (element != null) return element.GetLocalToParent();
+            var dictionary = source as IDictionary;
+            if (dictionary != null) return dictionary.GetLocalToParent();
+            return new Matrix3D();
+        }
+
+        public static Matrix3D GetLocalToWorld(this object source)
+        {
+            var element = source as IElement;
+            if (element != null) return element.GetLocalToWorld();
+            var dictionary = source as IDictionary;
+            if (dictionary != null) return dictionary.GetLocalToWorld();
+            return new Matrix3D();
         }
     }
 }

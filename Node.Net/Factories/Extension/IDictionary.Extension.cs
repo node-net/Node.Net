@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Factories.Extension
+namespace Node.Net.Factories
 {
     public static class IDictionaryExtension
     {
-        public static string GetDictionaryValueAsString(IDictionary source, string name)
+        public static string GetDictionaryValueAsString(this IDictionary source, string name)
         {
             if (source != null && source.Contains(name))
             {
@@ -29,12 +29,12 @@ namespace Node.Net.Factories.Extension
             return string.Empty;
         }
 
-        public static double GetLengthMeters(IDictionary source, string name)
+        public static double GetLengthMeters(this IDictionary source, string name)
         {
             return Helpers.LengthHelper.GetLengthMeters(GetDictionaryValueAsString(source, name));
         }
 
-        public static Vector3D GetTranslation(IDictionary source)
+        public static Vector3D GetTranslation(this IDictionary source)
         {
             return new Vector3D(
                 GetLengthMeters(source, "X"),
@@ -42,7 +42,7 @@ namespace Node.Net.Factories.Extension
                 GetLengthMeters(source,"Z"));
         }
 
-        public static Vector3D GetRotationsXYZ(IDictionary source)
+        public static Vector3D GetRotationsXYZ(this IDictionary source)
         {
             return new Vector3D(
                 GetAngleDegrees(source, "RotationX,Spin,Roll"),
@@ -50,7 +50,7 @@ namespace Node.Net.Factories.Extension
                 GetAngleDegrees(source, "RotationZ,Orientation,Yaw"));
         }
 
-        public static double GetAngleDegrees(IDictionary source, string name)
+        public static double GetAngleDegrees(this IDictionary source, string name)
         {
             if (source == null) return 0.0;
             if (name.Contains(','))
@@ -68,25 +68,25 @@ namespace Node.Net.Factories.Extension
             else return Helpers.AngleHelper.GetAngleDegrees(GetDictionaryValueAsString(source, name));
         }
         
-        public static Matrix3D GetLocalToParent(IDictionary dictionary)
+        public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             var matrix3D = new Matrix3D();
             if (dictionary != null)
             {
-                var rotations = Extension.IDictionaryExtension.GetRotationsXYZ(dictionary);
-                matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), Extension.IDictionaryExtension.GetRotationsXYZ(dictionary));
-                matrix3D.Translate(Extension.IDictionaryExtension.GetTranslation(dictionary));
+                var rotations = dictionary.GetRotationsXYZ();// Extension.IDictionaryExtension.GetRotationsXYZ(dictionary);
+                matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), dictionary.GetRotationsXYZ());// Extension.IDictionaryExtension.GetRotationsXYZ(dictionary));
+                matrix3D.Translate(dictionary.GetTranslation());// Extension.IDictionaryExtension.GetTranslation(dictionary));
             }
             return matrix3D;
         }
 
-        public static Matrix3D GetLocalToWorld(IDictionary dictionary)
+        public static Matrix3D GetLocalToWorld(this IDictionary dictionary)
         {
             Matrix3D localToWorld = GetLocalToParent(dictionary);
             if (dictionary != null)
             {
 
-                var parent = Node.Net.Factories.Extension.ObjectExtension.GetParent(dictionary);
+                var parent = dictionary.GetParent();// Node.Net.Factories.Extension.ObjectExtension.GetParent(dictionary);
                 if (parent != null)
                 {
                     localToWorld.Append(GetLocalToWorld(parent as IDictionary));

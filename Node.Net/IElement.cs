@@ -16,7 +16,7 @@ namespace Node.Net
         T Get<T>(string name);
         void Set(string name, dynamic value);
         ICollection<string> Keys { get; }
-        IElement Parent { get; }
+        object Parent { get; }
         IDocument Document { get; }
         string Name { get; }
         string FullName { get; }

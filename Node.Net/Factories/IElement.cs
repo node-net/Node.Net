@@ -12,5 +12,6 @@ namespace Node.Net.Factories
         bool Contains(string name);
         ICollection<string> Keys { get; }
         dynamic Get(string name);
+        object Parent { get; }
     }
 }

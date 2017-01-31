@@ -92,12 +92,16 @@ namespace Node.Net
         {
             if (element.Parent != null)
             {
-                foreach (string key in element.Parent.Keys)
+                var eparent = element.Parent as IElement;
+                if (eparent != null)
                 {
-                    var test_element = element.Parent.Get<IElement>(key);
-                    if (test_element != null)
+                    foreach (string key in eparent.Keys)
                     {
-                        if (object.ReferenceEquals(test_element, element)) return key;
+                        var test_element = eparent.Get<IElement>(key);
+                        if (test_element != null)
+                        {
+                            if (object.ReferenceEquals(test_element, element)) return key;
+                        }
                     }
                 }
             }
@@ -109,7 +113,7 @@ namespace Node.Net
             var name = GetName(element);
             if (name != null)
             {
-                var parent = element.Parent;
+                var parent = element.Parent as IElement;
                 if (parent != null)
                 {
                     var parent_full_key = GetFullName(parent);
@@ -125,7 +129,7 @@ namespace Node.Net
 
         public static IDocument GetDocument(this IElement element)
         {
-            var parent = element.Parent;
+            var parent = element.Parent as IElement;
             if (parent != null)
             {
                 var document = parent as IDocument;
@@ -137,7 +141,7 @@ namespace Node.Net
 
         public static T GetAncestor<T>(this IElement element)
         {
-            var parent = element.Parent;
+            var parent = element.Parent as IElement;
             if (element != null && parent != null)
             {
                 if (typeof(T).IsAssignableFrom(parent.GetType()))

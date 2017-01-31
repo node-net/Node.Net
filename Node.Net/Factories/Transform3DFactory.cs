@@ -23,9 +23,9 @@ namespace Node.Net.Factories
         {
             var matrix3D = new Matrix3D();
 
-            var rotations = Extension.IDictionaryExtension.GetRotationsXYZ(source);
-            matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), Extension.IDictionaryExtension.GetRotationsXYZ(source));
-            matrix3D.Translate(Extension.IDictionaryExtension.GetTranslation(source));
+            var rotations = source.GetRotationsXYZ();// Extension.IDictionaryExtension.GetRotationsXYZ(source);
+            matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), source.GetRotationsXYZ());// Extension.IDictionaryExtension.GetRotationsXYZ(source));
+            matrix3D.Translate(source.GetTranslation());// Extension.IDictionaryExtension.GetTranslation(source));
 
             if (!matrix3D.IsIdentity)
             {

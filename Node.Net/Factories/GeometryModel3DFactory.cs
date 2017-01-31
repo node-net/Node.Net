@@ -77,11 +77,11 @@ namespace Node.Net.Factories
             var scaleY = 1.0;
             var scaleZ = 1.0;
 
-            var tmp = Extension.IDictionaryExtension.GetLengthMeters(source, "Height");
+            var tmp = source.GetLengthMeters("Height");// Extension.IDictionaryExtension.GetLengthMeters(source, "Height");
             if (tmp != 0.0) scaleZ = tmp;
-            tmp = Extension.IDictionaryExtension.GetLengthMeters(source, "Width");
+            tmp = source.GetLengthMeters("Width");// Extension.IDictionaryExtension.GetLengthMeters(source, "Width");
             if (tmp != 0.0) scaleY = tmp;
-            tmp = Extension.IDictionaryExtension.GetLengthMeters(source, "Length");
+            tmp = source.GetLengthMeters("Length");// Extension.IDictionaryExtension.GetLengthMeters(source, "Length");
             if (tmp != 0.0) scaleX = tmp;
             if (scaleX != 1.0 || scaleY != 1.0 || scaleZ != 1.0)
             {
