@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net
 {
-    public class Document : Element, IDocument
+    public class Document : Element, IDocument, Node.Net.Readers.IElement
     {
         public string FileName
         {

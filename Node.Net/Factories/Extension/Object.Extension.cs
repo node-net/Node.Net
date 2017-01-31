@@ -7,7 +7,9 @@ namespace Node.Net.Factories
     {
         public static object GetParent(this object item)
         {
-            if(MetaDataMap.GetMetaDataFunction != null)
+            var element = item as IElement;
+            if (element != null) return element.Parent;
+            if (MetaDataMap.GetMetaDataFunction != null)
             {
                 if(MetaDataMap.GetMetaDataFunction(item).ContainsKey("Parent"))
                 {
@@ -19,11 +21,16 @@ namespace Node.Net.Factories
 
         public static void SetParent(this object item, object parent)
         {
-            if(item != null)
+            var element = item as IElement;
+            if (element != null) element.Parent = parent;
+            else
             {
-                if(MetaDataMap.GetMetaDataFunction != null)
+                if (item != null)
                 {
-                    MetaDataMap.GetMetaDataFunction(item)["Parent"] = parent;
+                    if (MetaDataMap.GetMetaDataFunction != null)
+                    {
+                        MetaDataMap.GetMetaDataFunction(item)["Parent"] = parent;
+                    }
                 }
             }
         }
@@ -78,6 +85,64 @@ namespace Node.Net.Factories
 
         public static Matrix3D GetLocalToParent(this object source)
         {
+            var matrix3D = new Matrix3D();
+            if (source != null)
+            {
+                var rotations = source.GetRotationsXYZ();// Extension.IDictionaryExtension.GetRotationsXYZ(dictionary);
+                matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), source.GetRotationsXYZ());// Extension.IDictionaryExtension.GetRotationsXYZ(dictionary));
+                matrix3D.Translate(source.GetTranslation());// Extension.IDictionaryExtension.GetTranslation(dictionary));
+            }
+            return matrix3D;
+        }
+
+        public static Matrix3D GetLocalToWorld(this object source)
+        {
+            var localToWorld = source.GetLocalToParent();// GetLocalToParent(dictionary);
+            if (source != null)
+            {
+
+                var parent = source.GetParent();// Node.Net.Factories.Extension.ObjectExtension.GetParent(source);
+                if (parent != null)
+                {
+                    localToWorld.Append(parent.GetLocalToWorld());// GetLocalToWorld(parent as IDictionary));
+                }
+            }
+
+            return localToWorld;
+        }
+        public static Vector3D GetRotationsXYZ(this object source)
+        {
+            return new Vector3D(
+                GetAngleDegrees(source, "RotationX,Spin,Roll"),
+                GetAngleDegrees(source, "RotationY,Tilt,Pitch"),
+                GetAngleDegrees(source, "RotationZ,Orientation,Yaw"));
+        }
+        public static Vector3D GetTranslation(this object source)
+        {
+            return new Vector3D(
+                GetLengthMeters(source, "X"),
+                GetLengthMeters(source, "Y"),
+                GetLengthMeters(source, "Z"));
+        }
+        public static double GetLengthMeters(this object source, string name)
+        {
+            var element = source as IElement;
+            if (element != null) return element.GetLengthMeters(name);
+            var dictionary = source as IDictionary;
+            if (dictionary != null) return dictionary.GetLengthMeters(name);
+            return 0;
+        }
+        public static double GetAngleDegrees(this object source, string name)
+        {
+            var element = source as IElement;
+            if (element != null) return element.GetAngleDegrees(name);
+            var dictionary = source as IDictionary;
+            if (dictionary != null) return dictionary.GetAngleDegrees(name);
+            return 0;
+        }
+        /*
+        public static Matrix3D GetLocalToParent(this object source)
+        {
             var element = source as IElement;
             if (element != null) return element.GetLocalToParent();
             var dictionary = source as IDictionary;
@@ -92,6 +157,6 @@ namespace Node.Net.Factories
             var dictionary = source as IDictionary;
             if (dictionary != null) return dictionary.GetLocalToWorld();
             return new Matrix3D();
-        }
+        }*/
     }
 }

@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Node.Net
 {
-    public class Element : INotifyPropertyChanged, IElement
+    public class Element : INotifyPropertyChanged, IElement, Node.Net.Readers.IElement
     {
         private Dictionary<string, dynamic> data = new Dictionary<string, dynamic>();
         public event PropertyChangedEventHandler PropertyChanged;
@@ -56,7 +56,7 @@ namespace Node.Net
         [Browsable(false)]
         public string JSON { get { return this.GetJSON(); } }
 
-        public object Parent { get; private set; }
+        public object Parent { get; set; }
         public IDocument Document { get; private set; }
 
         [Browsable(false)]
@@ -85,5 +85,10 @@ namespace Node.Net
             private set { fullName = value; }
         }
         private string fullName = null;
+
+        public void DeepUpdateParents()
+        {
+
+        }
     }
 }

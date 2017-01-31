@@ -48,6 +48,8 @@ namespace Node.Net.Collections
         //public static Func<object, Dictionary<string, dynamic>> MetaDataFunctionGetMetaDataFunction = Default.GetMetaData;
         public static object GetParent(this object item)
         {
+            var element = item as IElement;
+            if (element != null) return element.Parent;
             if (GlobalFunctions.GetMetaDataFunction != null)
             {
                 if (GlobalFunctions.GetMetaDataFunction(item).ContainsKey("Parent"))
@@ -59,11 +61,16 @@ namespace Node.Net.Collections
         }
         public static void SetParent(this object item, object parent)
         {
-            if (item != null)
+            var element = item as IElement;
+            if (element != null) element.Parent = parent;
+            else
             {
-                if (GlobalFunctions.GetMetaDataFunction != null)
+                if (item != null)
                 {
-                    GlobalFunctions.GetMetaDataFunction(item)["Parent"] = parent;
+                    if (GlobalFunctions.GetMetaDataFunction != null)
+                    {
+                        GlobalFunctions.GetMetaDataFunction(item)["Parent"] = parent;
+                    }
                 }
             }
         }

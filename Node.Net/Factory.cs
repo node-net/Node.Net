@@ -67,6 +67,11 @@ namespace Node.Net
             {
                 idictionary.DeepUpdateParents();
             }
+            var element = result as Element;
+            if(element != null)
+            {
+                element.DeepUpdateParents();
+            }
             return result;
         }
 

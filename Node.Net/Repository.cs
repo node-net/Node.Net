@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Node.Net
@@ -18,11 +19,15 @@ namespace Node.Net
             get { return repository.WriteFunction; }
             set { repository.WriteFunction = value; }
         }
-        private global::Node.Net.Repositories.MemoryRepository repository 
+        private global::Node.Net.Repositories.MemoryRepository repository
             = new Repositories.MemoryRepository
             {
-                ReadFunction = Reader.Default.Read,
-                WriteFunction =Writer.Default.Write
+                ReadFunction = new Reader
+                {
+                    DefaultDocumentType = typeof(Dictionary<string, dynamic>),
+                    DefaultObjectType = typeof(Dictionary<string, dynamic>)
+                }.Read,
+                WriteFunction = Writer.Default.Write
             };
     }
 }

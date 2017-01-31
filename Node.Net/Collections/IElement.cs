@@ -16,11 +16,11 @@ namespace Node.Net.Collections
         T Get<T>(string name);
         void Set(string name, dynamic value);
         ICollection<string> Keys { get; }
-        IElement Parent { get; }
+        object Parent { get; set; }
         IDocument Document { get; }
         string Name { get; }
         string FullName { get; }
         string JSON { get; }
-        IEnumerable Find(Type target_type, string pattern = "");
+        IList Find(Type target_type, string pattern = "");
     }
 }

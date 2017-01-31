@@ -206,7 +206,44 @@ namespace Node.Net
             return string.Empty;
         }
 
-        public static Matrix3D GetLocalToParent(this IElement element) => Node.Net.Factories.IElementExtension.GetLocalToParent(element);
-        public static Matrix3D GetLocalToWorld(this IElement element) => Node.Net.Factories.IElementExtension.GetLocalToParent(element);
+        public static Matrix3D GetLocalToParent(this IElement element) => Node.Net.Factories.ObjectExtension.GetLocalToParent(element);
+        public static Matrix3D GetLocalToWorld(this IElement element) => Node.Net.Factories.ObjectExtension.GetLocalToWorld(element);
+
+        public static void DeepUpdateParents(this IElement element)
+        {
+            foreach(var key in element.Keys)
+            {
+                var child_dictionary = element.Get(key) as IDictionary;
+                if(child_dictionary != null)
+                {
+                    Node.Net.Collections.ObjectExtension.SetParent(child_dictionary, element);
+                    DeepUpdateParents(child_dictionary);
+                }
+                var child_element = element.Get(key) as IElement;
+                if(child_element != null)
+                {
+                    child_element.Parent = element;
+                    DeepUpdateParents(child_element);
+                }
+            }
+        }
+        private static void DeepUpdateParents(IDictionary dictionary)
+        {
+            foreach(string key in dictionary.Keys)
+            {
+                var child_dictionary = dictionary[key] as IDictionary;
+                if (child_dictionary != null)
+                {
+                    Node.Net.Collections.ObjectExtension.SetParent(child_dictionary, dictionary);
+                    DeepUpdateParents(child_dictionary);
+                }
+                var child_element = dictionary[key] as IElement;
+                if (child_element != null)
+                {
+                    child_element.Parent = dictionary;
+                    DeepUpdateParents(child_element);
+                }
+            }
+        }
     }
 }

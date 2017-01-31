@@ -115,6 +115,10 @@ namespace Node.Net.Readers
                         }*/
                         instance = IDictionaryExtension.ConvertTypes(instance as IDictionary, Types, TypeKey);
                     }
+                    if (instance != null && Types != null && typeof(Node.Net.Readers.IElement).IsAssignableFrom(instance.GetType()))
+                    {
+                        instance = Node.Net.Readers.IElementExtension.ConvertTypes(instance as Node.Net.Readers.IElement, Types, TypeKey);
+                    }
                     return instance;
                 }
             }

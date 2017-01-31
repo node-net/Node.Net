@@ -68,6 +68,7 @@
     <Compile Include="Collections\Document.cs" />
     <Compile Include="Collections\Filters.cs" />
     <Compile Include="Collections\GlobalFunctions.cs" />
+    <Compile Include="Collections\IElement.cs" />
     <Compile Include="Collections\Internal\Collector.cs" />
     <Compile Include="Collections\Internal\IDictionaryFilter.cs" />
     <Compile Include="Collections\Internal\IFilter.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Readers\Document.cs" />
     <Compile Include="Readers\IElement.cs" />
+    <Compile Include="Readers\IElement.Extension.cs" />
     <Compile Include="Readers\StackTrace.Extension.cs" />
     <Compile Include="Readers\StreamHelper.cs" />
     <Compile Include="Readers\String.Extension.cs" />
