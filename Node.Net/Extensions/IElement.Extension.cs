@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
@@ -204,5 +205,8 @@ namespace Node.Net
             }
             return string.Empty;
         }
+
+        public static Matrix3D GetLocalToParent(this IElement element) => Node.Net.Factories.IElementExtension.GetLocalToParent(element);
+        public static Matrix3D GetLocalToWorld(this IElement element) => Node.Net.Factories.IElementExtension.GetLocalToParent(element);
     }
 }
