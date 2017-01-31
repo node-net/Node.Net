@@ -167,6 +167,7 @@
     <Compile Include="Extensions\Camera.Extension.cs" />
     <Compile Include="Extensions\DependencyObject.Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
+    <Compile Include="Extensions\IElement.Extension.cs" />
     <Compile Include="Extensions\Image.Extension.cs" />
     <Compile Include="Extensions\ImageSource.Extension.cs" />
     <Compile Include="Extensions\Matrix3D.Extension.cs" />
@@ -176,8 +177,12 @@
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\UIElement.Extension.cs" />
+    <Compile Include="Factories\Extension\IElement.Extension.cs" />
     <Compile Include="Factories\Extension\ImageSource.Extension.cs" />
+    <Compile Include="Factories\IElement.cs" />
     <Compile Include="GlobalProperties.cs" />
+    <Compile Include="IDocument.cs" />
+    <Compile Include="IElement.cs" />
     <Compile Include="Measurement\Angle.cs" />
     <Compile Include="Measurement\AngularUnit.cs" />
     <Compile Include="Measurement\IDictionary.Extension.cs" />
@@ -185,6 +190,7 @@
     <Compile Include="Measurement\LengthConverter.cs" />
     <Compile Include="Measurement\LengthUnit.cs" />
     <Compile Include="Readers\Document.cs" />
+    <Compile Include="Readers\IElement.cs" />
     <Compile Include="Readers\StackTrace.Extension.cs" />
     <Compile Include="Readers\StreamHelper.cs" />
     <Compile Include="Readers\String.Extension.cs" />
@@ -263,6 +269,7 @@
     <Compile Include="Resources\MaterialResources.cs" />
     <Compile Include="Resources\Resources.cs" />
     <Compile Include="Writers\BitmapSourceWriter.cs" />
+    <Compile Include="Writers\IElement.cs" />
     <Compile Include="Writers\IWrite.cs" />
     <Compile Include="Writers\IWrite.Extension.cs" />
     <Compile Include="Writers\JsonWriter.cs" />

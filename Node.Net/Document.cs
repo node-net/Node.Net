@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Node.Net
 {
-    public class Document : Element
+    public class Document : Element, IDocument
     {
         public string FileName
         {
@@ -18,7 +19,7 @@ namespace Node.Net
             }
         }
         private string fileName;
-
+        /*
         public static Document Open(string name = "")
         {
             using (var reader = new Node.Net.Reader { DefaultDocumentType = typeof(Document) })
@@ -27,6 +28,35 @@ namespace Node.Net
                 if (doc != null) doc.DeepUpdateParents();
                 return doc;
             }
+        }*/
+
+        public IDocument Load(string name)
+        {
+            var doc = reader.Read(name) as IDocument;
+            Clear();
+            FileName = doc.FileName;
+            foreach(var key in doc.Keys)
+            {
+                Set(key, doc.Get(key));
+            }
+            return this;
         }
+        public IDocument Load(Stream stream)
+        {
+            var doc = reader.Read(stream) as IDocument;
+            Clear();
+            FileName = doc.FileName;
+            foreach (var key in doc.Keys)
+            {
+                Set(key, doc.Get(key));
+            }
+            return this;
+        }
+        public Dictionary<string, Type> ConversionTypeNames { get { return reader.Types; } }
+        private readonly Reader reader = new Reader
+        {
+            DefaultDocumentType = typeof(Document),
+            DefaultObjectType = typeof(Element)
+        };
     }
 }

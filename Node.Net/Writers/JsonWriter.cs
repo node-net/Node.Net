@@ -66,6 +66,7 @@ namespace Node.Net.Writers
             if (ReferenceEquals(null, value)) WriteNull(writer);
             else if (typeof(byte[]).IsAssignableFrom(value.GetType())) WriteBytes(writer, (byte[])(value));
             else if (typeof(string).IsAssignableFrom(value.GetType())) WriteString(writer, value);
+            else if (typeof(Node.Net.Writers.IElement).IsAssignableFrom(value.GetType())) WriteIElement(writer, value);
             else if (typeof(IDictionary).IsAssignableFrom(value.GetType())) WriteIDictionary(writer, value);
             else if (typeof(double[,]).IsAssignableFrom(value.GetType())) WriteDoubleArray2D(writer, value);
             else if (typeof(IEnumerable).IsAssignableFrom(value.GetType())) WriteIEnumerable(writer, value);
@@ -147,6 +148,54 @@ namespace Node.Net.Writers
         }
 
         private bool writingPrimitiveValue = false;
+
+        private void WriteIElement(System.IO.TextWriter writer, object value)
+        {
+            var index = 0;
+            writer.Write("{");
+            PushIndent();
+
+            var element = value as Node.Net.Writers.IElement;
+
+            foreach (string key in element.Keys)
+            {
+                var item = element.Get(key);
+                var skip = false;
+                if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
+                if (!skip)
+                {
+                    if (index > 0)
+                    {
+                        writer.Write($",{GetLineFeed()}{GetIndent()}");
+                    }
+                    else
+                    {
+                        writer.Write($"{GetLineFeed()}{GetIndent()}");
+                    }
+                    writingPrimitiveValue = true;
+                    Write(writer, key.ToString());
+                    writingPrimitiveValue = false;
+
+                    var tmp = element.Get(key);
+                    if (tmp == null || tmp.GetType().IsPrimitive || tmp.GetType() == typeof(string))
+                    {
+                        writer.Write(": ");
+                        writingPrimitiveValue = true;
+                        Write(writer, element.Get(key));
+                        writingPrimitiveValue = false;
+                    }
+                    else
+                    {
+                        writer.Write($": ");
+                        Write(writer, element.Get(key));
+                    }
+                    ++index;
+                }
+            }
+            PopIndent();
+            if (element.Count > 0) writer.Write(GetLineFeed());
+            writer.Write($"{GetIndent()}}}");
+        }
         private void WriteIDictionary(System.IO.TextWriter writer, object value)
         {
             var index = 0;

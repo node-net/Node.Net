@@ -47,7 +47,7 @@ namespace Node.Net
 
         //////////////////////////////////////////////////////////////////
         /// Readers
-        public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Readers.IDictionaryExtension.ConvertTypes(source, types, typeKey);
+        public static object ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Readers.IDictionaryExtension.ConvertTypes(source, types, typeKey);
        
         public static string GetJSON(this IDictionary source)
         {

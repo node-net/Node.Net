@@ -27,11 +27,11 @@ namespace Node.Net
                 reader.Dispose();
             }
         }
-        private Readers.Reader reader = new Readers.Reader
-        {
-            DefaultObjectType = typeof(Element),
-            DefaultDocumentType = typeof(Document)
-        };
+        private Readers.Reader reader = new Readers.Reader();
+        //{
+        //    DefaultObjectType = typeof(Element)//,
+            //DefaultDocumentType = typeof(Document)
+        //};
         
         public Dictionary<string, Type> Types
         {

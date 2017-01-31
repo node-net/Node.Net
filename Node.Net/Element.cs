@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace Node.Net
 {
-    public class Element : Dictionary<string, dynamic>, INotifyPropertyChanged
+    public class Element : INotifyPropertyChanged, IElement
     {
+        private Dictionary<string, dynamic> data = new Dictionary<string, dynamic>();
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName]string caller = null)
@@ -24,40 +27,63 @@ namespace Node.Net
             OnPropertyChanged(propertyName);
             return true;
         }
+        /*
         public string Name
         {
             get
             {
-                var key = global::Node.Net.Extension.GetKey(this);
+                var key = data.GetKey();
                 if (key != null) return key.ToString();
                 return string.Empty;
             }
-        }
-        [Browsable(false)]
-        public string JSON
+        }*/
+        public void Clear() { data.Clear(); }
+        public bool Contains(string name) { return data.ContainsKey(name); }
+        public dynamic Get(string name) { return data[name]; }
+        public T Get<T>(string name) { return IElementExtension.Get<T>(this,name); }
+        public void Set(string name, dynamic value)
         {
-            get
+            data[name] = value;
+            var element = value as Element;
+            if (element != null && element.Parent != this)
             {
-                var writer = new global::Node.Net.Writers.JsonWriter { Format = Writers.JsonFormat.Indented };
-                using (MemoryStream memory = new MemoryStream())
-                {
-                    writer.Write(memory, this);
-                    memory.Flush();
-                    memory.Seek(0, SeekOrigin.Begin);
-                    using (StreamReader sr = new StreamReader(memory))
-                    {
-                        return sr.ReadToEnd();
-                    }
-                }
+                element.Parent = this;
+                element.Document = IElementExtension.GetDocument(element);
+                element.Name = null;
+                element.FullName = null;
             }
         }
         [Browsable(false)]
-        public new IEqualityComparer<string> Comparer { get { return base.Comparer; } }
+        public string JSON { get { return this.GetJSON(); } }
+
+        public IElement Parent { get; private set; }
+        public IDocument Document { get; private set; }
+
         [Browsable(false)]
-        public new int Count { get { return base.Count; } }
+        public int Count { get { return data.Count; } }
         [Browsable(false)]
-        public new Dictionary<string, dynamic>.KeyCollection Keys { get { return base.Keys; } }
-        [Browsable(false)]
-        public new Dictionary<string, dynamic>.ValueCollection Values { get { return base.Values; } }
+        public ICollection<string> Keys { get { return data.Keys; } }
+
+        public IList Find(Type target_type, string pattern = "") { return IElementExtension.Find(this, target_type, pattern); }
+        public string Name
+        {
+            get
+            {
+                if (name == null) name = IElementExtension.GetName(this);
+                return name;
+            }
+            private set { name = value; }
+        }
+        private string name = null;
+        public string FullName
+        {
+            get
+            {
+                if (fullName == null) fullName = IElementExtension.GetFullName(this);
+                return fullName;
+            }
+            private set { fullName = value; }
+        }
+        private string fullName = null;
     }
 }

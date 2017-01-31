@@ -165,12 +165,6 @@ namespace Node.Net.Collections
                 destination.Add(CopyChild(child));
             }
         }
-        /*
-        public static string[] Search<T>(IDictionary dictionary,string search_pattern)
-        {
-            var results = new List<string>();
-            return results.ToArray();
-        }*/
 
         public static T Find<T>(IDictionary dictionary,string key)
         {
@@ -291,6 +285,90 @@ namespace Node.Net.Collections
                 }
             }
             return items.ToArray();
+        }
+
+        public static object ConvertTypes(IDictionary source, Dictionary<string, Type> types, string typeKey = "Type")
+        {
+            if (source == null) return null;
+            if (types == null) return source;
+            var copy = Activator.CreateInstance(source.GetType());// as IDictionary;
+            if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
+            var typename = GetTypeName(source, typeKey);
+            if (typename.Length > 0 && types.ContainsKey(typename))
+            {
+                var targetType = types[typename];
+                if (targetType == null) throw new Exception($"types['{typename}'] was null");
+                if (source.GetType() != targetType)
+                {
+                    copy = Activator.CreateInstance(targetType);// as IDictionary;
+                    if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
+                }
+            }
+            foreach (var key in source.Keys)
+            {
+                var copy_dictionary = copy as IDictionary;
+                var copy_element = copy as IElement;
+                var value = source[key];
+                var childDictionary = value as IDictionary;
+                if (childDictionary != null)
+                {
+                    if (copy_dictionary != null)
+                    {
+                        copy_dictionary[key] = ConvertTypes(childDictionary, types, typeKey);
+                    }
+                    else
+                    {
+                        if(copy_element != null)
+                        {
+                            copy_element.Set(key.ToString(), ConvertTypes(childDictionary, types, typeKey));
+                        }
+                    }
+                }
+                else
+                {
+                    var childEnumerable = value as IEnumerable;
+                    if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
+                    {
+                        if (copy_dictionary != null)
+                        {
+                            copy_dictionary[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
+                        }
+                        else
+                        {
+                            if(copy_element != null)
+                            {
+                                copy_element.Set(key.ToString(), IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (copy_dictionary != null)
+                        {
+                            if (copy_dictionary.Contains(key)) copy_dictionary[key] = value;
+                            else copy_dictionary.Add(key, value);
+                        }
+                        else
+                        {
+                            if(copy_element != null)
+                            {
+                                if (copy_element.Contains(key.ToString())) copy_element.Set(key.ToString(),value);
+                                else copy_element.Set(key.ToString(), value);
+                            }
+                        }
+                    }
+                }
+            }
+            return copy;
+        }
+
+        private static string GetTypeName(IDictionary source, string typeKey)
+        {
+            if (source != null)
+            {
+                if (source.Contains(typeKey)) return source[typeKey].ToString();
+            }
+            return string.Empty;
         }
     }
 }

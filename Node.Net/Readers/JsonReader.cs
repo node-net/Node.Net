@@ -150,11 +150,20 @@ namespace Node.Net.Readers
             return IEnumerableExtension.Simplify(list);
         }
 
-        private IDictionary ReadObject(System.IO.TextReader reader)
+        private object ReadObject(System.IO.TextReader reader)
         {
             IDictionary dictionary = null;
             if(ObjectCount == 0) dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
             else dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
+            if (dictionary != null) return ReadDictionary(reader, dictionary);
+
+            Node.Net.Readers.IElement element = null;
+            if (ObjectCount == 0) element = Activator.CreateInstance(DefaultDocumentType) as Node.Net.Readers.IElement;
+            else element = Activator.CreateInstance(DefaultObjectType) as Node.Net.Readers.IElement;
+            if (element != null) return ReadElement(reader, element);
+
+            return null;
+            /*
             ObjectCount++;
             Seek(reader, '{');
             reader.Read(); // consume the '{'
@@ -187,6 +196,78 @@ namespace Node.Net.Readers
                 }
             }
             return dictionary;
+            */
+        }
+        private object ReadDictionary(System.IO.TextReader reader,IDictionary dictionary)
+        {
+            ObjectCount++;
+            Seek(reader, '{');
+            reader.Read(); // consume the '{'
+            EatWhiteSpace(reader);
+            var done = false;
+            if ((char)(reader.Peek()) == '}')
+            {
+                done = true;
+                reader.Read(); // consume the '}'
+            }
+            while (!done)
+            {
+                EatWhiteSpace(reader);
+                var key = ReadString(reader) as string;
+                var lastKey = key;
+                EatWhiteSpace(reader);
+                var ch = (char)reader.Peek();
+                reader.Read(); //consume ':'
+                dictionary[key] = Read(reader);
+                EatWhiteSpace(reader);
+                ch = (char)reader.Peek();
+                if (ch == ',') reader.Read(); // consume ','
+
+                EatWhiteSpace(reader);
+                ch = (char)reader.Peek();
+                if (ch == '}')
+                {
+                    reader.Read();
+                    done = true;
+                }
+            }
+            return dictionary;
+        }
+        private object ReadElement(System.IO.TextReader reader, IElement element)
+        {
+            ObjectCount++;
+            Seek(reader, '{');
+            reader.Read(); // consume the '{'
+            EatWhiteSpace(reader);
+            var done = false;
+            if ((char)(reader.Peek()) == '}')
+            {
+                done = true;
+                reader.Read(); // consume the '}'
+            }
+            while (!done)
+            {
+                EatWhiteSpace(reader);
+                var key = ReadString(reader) as string;
+                var lastKey = key;
+                EatWhiteSpace(reader);
+                var ch = (char)reader.Peek();
+                reader.Read(); //consume ':'
+                element.Set(key, Read(reader));
+                //dictionary[key] = Read(reader);
+                EatWhiteSpace(reader);
+                ch = (char)reader.Peek();
+                if (ch == ',') reader.Read(); // consume ','
+
+                EatWhiteSpace(reader);
+                ch = (char)reader.Peek();
+                if (ch == '}')
+                {
+                    reader.Read();
+                    done = true;
+                }
+            }
+            return element;
         }
         #region TextReader Helper Methods
         private static void EatWhiteSpace(System.IO.TextReader reader)
