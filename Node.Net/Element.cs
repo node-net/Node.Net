@@ -7,9 +7,18 @@ using System.Runtime.CompilerServices;
 
 namespace Node.Net
 {
-    public class Element : INotifyPropertyChanged, IElement, Node.Net.Readers.IElement
+    public class Element : Dictionary<string,dynamic>, INotifyPropertyChanged, IElement
+    //public class Element : INotifyPropertyChanged, IElement, Node.Net.Readers.IElement
     {
-        private Dictionary<string, dynamic> data = new Dictionary<string, dynamic>();
+        private Dictionary<string,dynamic> Data
+        {
+            get
+            {
+                return this;
+                //return _data;
+            }
+        }
+        private Dictionary<string, dynamic> _data = new Dictionary<string, dynamic>();
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName]string caller = null)
@@ -37,13 +46,13 @@ namespace Node.Net
                 return string.Empty;
             }
         }*/
-        public void Clear() { data.Clear(); }
-        public bool Contains(string name) { return data.ContainsKey(name); }
-        public dynamic Get(string name) { return data[name]; }
+        public void Clear() { Data.Clear(); }
+        public bool Contains(string name) { return Data.ContainsKey(name); }
+        public dynamic Get(string name) { return Data[name]; }
         public T Get<T>(string name) { return IElementExtension.Get<T>(this,name); }
         public void Set(string name, dynamic value)
         {
-            data[name] = value;
+            Data[name] = value;
             var element = value as Element;
             if (element != null && element.Parent != this)
             {
@@ -54,15 +63,15 @@ namespace Node.Net
             }
         }
         [Browsable(false)]
-        public string JSON { get { return this.GetJSON(); } }
+        public string JSON { get { return Data.GetJSON(); } }
 
         public object Parent { get; set; }
         public IDocument Document { get; private set; }
 
         [Browsable(false)]
-        public int Count { get { return data.Count; } }
+        public int Count { get { return Data.Count; } }
         [Browsable(false)]
-        public ICollection<string> Keys { get { return data.Keys; } }
+        public ICollection<string> Keys { get { return Data.Keys; } }
 
         public IList Find(Type target_type, string pattern = "") { return IElementExtension.Find(this, target_type, pattern); }
         public string Name

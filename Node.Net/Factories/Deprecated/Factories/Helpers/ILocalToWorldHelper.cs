@@ -22,7 +22,7 @@ namespace Node.Net.Factories.Deprecated.Factories.Helpers
                 ILocalToWorld parentLocalToWorld = transformFactory.Create<ILocalToWorld>(parent,null);
                 localToWorld.Append(parentLocalToWorld.LocalToWorld);
             }
-            
+
             return new ConcreteLocalToWorld { LocalToWorld = localToWorld };
         }
     }

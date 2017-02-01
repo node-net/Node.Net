@@ -67,7 +67,7 @@ namespace Node.Net.Factories
             }
             else return Helpers.AngleHelper.GetAngleDegrees(GetDictionaryValueAsString(source, name));
         }
-        
+
         public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             var matrix3D = new Matrix3D();

@@ -117,7 +117,7 @@ namespace Node.Net.Readers
                     }
                     if (instance != null && Types != null && typeof(Node.Net.Readers.IElement).IsAssignableFrom(instance.GetType()))
                     {
-                        instance = Node.Net.Readers.IElementExtension.ConvertTypes(instance as Node.Net.Readers.IElement, Types, TypeKey);
+                        instance = IElementExtension.ConvertTypes(instance as Node.Net.Readers.IElement, Types, TypeKey);
                     }
                     return instance;
                 }
