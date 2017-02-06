@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net
 {
-    public class Document : Element, IDocument, Node.Net.Readers.IElement
+    public class Document : Element, IDocument//, Node.Net.Readers.IElement
     {
         public string FileName
         {
@@ -37,8 +37,10 @@ namespace Node.Net
             FileName = doc.FileName;
             foreach(var key in doc.Keys)
             {
-                Set(key, doc.Get(key));
+                this[key] = doc[key];
+                //Set(key, doc.Get(key));
             }
+            this.DeepUpdateParents();
             return this;
         }
         public IDocument Load(Stream stream)
@@ -48,8 +50,10 @@ namespace Node.Net
             FileName = doc.FileName;
             foreach (var key in doc.Keys)
             {
-                Set(key, doc.Get(key));
+                this[key] = doc[key];
+                //Set(key, doc.Get(key));
             }
+            this.DeepUpdateParents();
             return this;
         }
         public Dictionary<string, Type> ConversionTypeNames { get { return reader.Types; } }

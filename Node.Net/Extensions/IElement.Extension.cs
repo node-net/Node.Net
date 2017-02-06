@@ -16,7 +16,7 @@ namespace Node.Net
             var count = element.Count;
             foreach (string key in element.Keys)
             {
-                var child_element = element.Get(key) as IElement;
+                var child_element = element[key] as IElement;
                 if (child_element != null)
                 {
                     count += child_element.GetDeepCount();
@@ -40,7 +40,7 @@ namespace Node.Net
         {
             if (element.Contains(name))
             {
-                var value = element.Get(name);
+                var value = element[name];
                 if (value != null && typeof(T).IsAssignableFrom(value.GetType()))
                 {
                     return (T)value;
@@ -57,7 +57,7 @@ namespace Node.Net
             if (element.GetFullName().Contains(pattern)) return true;
             foreach (var key in element.Keys)
             {
-                var string_value = element.Get<string>(key);
+                var string_value = element.Get<string>(key.ToString());
                 if (string_value.Length > 0)
                 {
                     if (string_value.Contains(pattern)) return true;
@@ -72,7 +72,7 @@ namespace Node.Net
             if (element == null) return results;
             foreach (var key in element.Keys)
             {
-                var child_element = element.Get(key) as IElement;
+                var child_element = element[key] as IElement;
                 if (child_element != null)
                 {
                     if (target_type.IsAssignableFrom(child_element.GetType()))
@@ -174,23 +174,23 @@ namespace Node.Net
             }
             foreach (var key in source.Keys)
             {
-                var value = source.Get(key);
+                var value = source[key];
                 var childDictionary = value as IElement;
                 if (childDictionary != null)
                 {
-                    copy.Set(key, ConvertTypes(childDictionary, types, typeKey));
+                    copy.Set(key.ToString(), ConvertTypes(childDictionary, types, typeKey));
                 }
                 else
                 {
                     var childEnumerable = value as IEnumerable;
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
-                        copy.Set(key, IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey));
+                        copy.Set(key.ToString(), IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey));
                     }
                     else
                     {
-                        if (copy.Contains(key)) copy.Set(key, value);
-                        else copy.Set(key, value);
+                        if (copy.Contains(key)) copy.Set(key.ToString(), value);
+                        else copy.Set(key.ToString(), value);
                     }
                 }
             }
@@ -213,13 +213,13 @@ namespace Node.Net
         {
             foreach(var key in element.Keys)
             {
-                var child_dictionary = element.Get(key) as IDictionary;
+                var child_dictionary = element[key] as IDictionary;
                 if(child_dictionary != null)
                 {
                     Node.Net.Collections.ObjectExtension.SetParent(child_dictionary, element);
                     DeepUpdateParents(child_dictionary);
                 }
-                var child_element = element.Get(key) as IElement;
+                var child_element = element[key] as IElement;
                 if(child_element != null)
                 {
                     child_element.Parent = element;
