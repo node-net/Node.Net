@@ -15,11 +15,12 @@ namespace Node.Net.Factories
                     var instance = CreateFromDictionary(source as IDictionary);
                     if (instance != null) return instance;
                 }
+                /*
                 if(typeof(Node.Net.Factories.IElement).IsAssignableFrom(source.GetType()))
                 {
                     var instance = CreateFromIElement(source as Node.Net.Factories.IElement);
                     if (instance != null) return instance;
-                }
+                }*/
             }
 
             if (Helper != null)
@@ -62,6 +63,7 @@ namespace Node.Net.Factories
             }
             return null;
         }
+        /*
         private Visual3D CreateFromIElement(Node.Net.Factories.IElement source)
         {
 
@@ -80,6 +82,6 @@ namespace Node.Net.Factories
                 }
             }
             return null;
-        }
+        }*/
     }
 }

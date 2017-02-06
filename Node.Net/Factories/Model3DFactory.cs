@@ -12,11 +12,13 @@ namespace Node.Net.Factories
         {
             if (source != null)
             {
+                /*
                 if(typeof(Node.Net.Factories.IElement).IsAssignableFrom(source.GetType()))
                 {
                     var instance = CreateFromIElement(source as Node.Net.Factories.IElement);
                     if (instance != null) return instance;
                 }
+                */
                 if(typeof(IDictionary).IsAssignableFrom(source.GetType()))
                 {
                     var instance = CreateFromDictionary(source as IDictionary);
@@ -72,7 +74,7 @@ namespace Node.Net.Factories
             }
             return null;
         }
-
+        /*
         private Model3D CreateFromIElement(Node.Net.Factories.IElement source)
         {
             if (cache)
@@ -98,7 +100,7 @@ namespace Node.Net.Factories
                 return model3DGroup;
             }
             return null;
-        }
+        }*/
 
         private Model3D GetPrimaryModel3D(object source)
         {
