@@ -41,7 +41,7 @@ namespace Node.Net
         public static void Remove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.Remove<T>(dictionary);
         public static void DeepRemove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepRemove<T>(dictionary);
         public static void Copy(this IDictionary destination, IDictionary source) => Collections.IDictionaryExtension.Copy(destination, source);
-        public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
+        //public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
         public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Factories.IDictionaryExtension.GetLocalToParent(dictionary);
         public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Factories.IDictionaryExtension.GetLocalToWorld(dictionary);
 
