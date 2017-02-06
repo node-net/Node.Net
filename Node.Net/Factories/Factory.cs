@@ -15,7 +15,7 @@ namespace Node.Net.Factories
                 item = CreateHelperFunction(targetType, source);
                 if (item != null) return item;
             }
-
+            
             foreach(var key in Keys)
             {
                 var child_factory = this[key];

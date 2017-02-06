@@ -30,7 +30,7 @@ namespace Node.Net.Factories.Deprecated.Factories.Helpers
             }
             return new ConcreteMatrix3D();
         }
-
+        
         public static Matrix3D RotateXYZ(Matrix3D matrix, Vector3D rotationsXYZ)
         {
             matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), rotationsXYZ.Z));

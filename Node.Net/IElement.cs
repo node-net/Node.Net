@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net
 {
-    public interface IElement //: Node.Net.Readers.IElement, Node.Net.Writers.IElement, Node.Net.Factories.IElement, Node.Net.Collections.IElement
+    public interface IElement : Node.Net.Readers.IElement, Node.Net.Writers.IElement, Node.Net.Factories.IElement, Node.Net.Collections.IElement
     {
         void Clear();
         int Count { get; }
