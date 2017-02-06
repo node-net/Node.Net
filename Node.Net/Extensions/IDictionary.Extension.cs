@@ -21,6 +21,7 @@ namespace Node.Net
         public static void SetAngle(this IDictionary dictionary, string name, double angle_degrees) => Measurement.IDictionaryExtension.SetAngle(dictionary, name, angle_degrees);
         //////////////////////////////////////////////////////////////////
         /// Collections
+        public static IList Collect(this IDictionary dictionary, Type type) => Collections.IDictionaryExtension.Collect(dictionary, type);
         public static string[] CollectKeys(this IDictionary dictionary) => Collections.IDictionaryExtension.CollectKeys(dictionary);
         public static Dictionary<string, T> Collect<T>(this IDictionary dictionary,
                                                       Func<object, bool?> valueFilter = null,

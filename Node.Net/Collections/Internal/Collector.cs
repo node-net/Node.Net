@@ -57,7 +57,31 @@ namespace Node.Net.Collections.Internal
         }
         #endregion
         #region Collect
-
+        public IList Collect(IDictionary dictionary,Type type)
+        {
+            var results = new List<object>();
+            foreach(var key in dictionary.Keys)
+            {
+                var item = dictionary[key];
+                if(item != null)
+                {
+                    if(type.IsAssignableFrom(item.GetType()))
+                    {
+                        results.Add(item);
+                    }
+                    var child_dictionary = item as IDictionary;
+                    if(child_dictionary != null)
+                    {
+                        var child_results = Collect(child_dictionary, type);
+                        foreach(var cr in child_results)
+                        {
+                            if (!results.Contains(cr)) results.Add(cr);
+                        }
+                    }
+                }
+            }
+            return results;
+        }
         public Dictionary<string, T> Collect<T>(IDictionary dictionary,bool deep = true)
         {
             var children = new Dictionary<string, T>();
