@@ -45,6 +45,7 @@ namespace Node.Net
         //public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
         public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Factories.IDictionaryExtension.GetLocalToParent(dictionary);
         public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Factories.IDictionaryExtension.GetLocalToWorld(dictionary);
+        public static Point3D GetWorldOrigin(this IDictionary dictionary) => Factories.IDictionaryExtension.GetWorldOrigin(dictionary);
 
         //////////////////////////////////////////////////////////////////
         /// Readers
