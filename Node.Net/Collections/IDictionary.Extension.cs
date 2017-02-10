@@ -8,6 +8,8 @@ namespace Node.Net.Collections
 {
     public static class IDictionaryExtension
     {
+        public static IList Collect(this IDictionary dictionary, string typeName) => new Internal.Collector().Collect(dictionary, typeName);
+        public static IList Collect(this IDictionary dictionary, Type type) => new Internal.Collector().Collect(dictionary, type);
         public static Dictionary<string, T> Collect<T>(this IDictionary dictionary,
                                                        Func<object, bool?> valueFilter = null,
                                                        Func<object, bool?> keyFilter = null, 

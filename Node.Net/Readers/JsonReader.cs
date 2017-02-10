@@ -157,10 +157,12 @@ namespace Node.Net.Readers
             else dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
             if (dictionary != null) return ReadDictionary(reader, dictionary);
 
+            /*
             Node.Net.Readers.IElement element = null;
             if (ObjectCount == 0) element = Activator.CreateInstance(DefaultDocumentType) as Node.Net.Readers.IElement;
             else element = Activator.CreateInstance(DefaultObjectType) as Node.Net.Readers.IElement;
             if (element != null) return ReadElement(reader, element);
+            */
 
             return null;
             /*
@@ -233,6 +235,7 @@ namespace Node.Net.Readers
             }
             return dictionary;
         }
+        /*
         private object ReadElement(System.IO.TextReader reader, IElement element)
         {
             ObjectCount++;
@@ -269,6 +272,7 @@ namespace Node.Net.Readers
             }
             return element;
         }
+        */
         #region TextReader Helper Methods
         private static void EatWhiteSpace(System.IO.TextReader reader)
         {

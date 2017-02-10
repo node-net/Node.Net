@@ -13,7 +13,7 @@ namespace Node.Net
     {
         public static string GetLengthAsString(this IDictionary dictionary, string name) => Measurement.IDictionaryExtension.GetLengthAsString(dictionary, name);
         public static double GetLengthMeters(this IDictionary dictionary, string name) => Measurement.IDictionaryExtension.GetLengthMeters(dictionary, name);
-        public static void SetLength(this IDictionary dictionary, string name,string value) => Measurement.IDictionaryExtension.SetLength(dictionary, name,value);
+        public static void SetLength(this IDictionary dictionary, string name, string value) => Measurement.IDictionaryExtension.SetLength(dictionary, name, value);
         public static void SetLength(this IDictionary dictionary, string name, double length_meters) => Measurement.IDictionaryExtension.SetLength(dictionary, name, length_meters);
         public static string GetAngleAsString(this IDictionary dictionary, string name) => Measurement.IDictionaryExtension.GetAngleAsString(dictionary, name);
         public static double GetAngleDegrees(this IDictionary dictionary, string name) => Measurement.IDictionaryExtension.GetAngleDegrees(dictionary, name);
@@ -21,6 +21,8 @@ namespace Node.Net
         public static void SetAngle(this IDictionary dictionary, string name, double angle_degrees) => Measurement.IDictionaryExtension.SetAngle(dictionary, name, angle_degrees);
         //////////////////////////////////////////////////////////////////
         /// Collections
+        public static IList Collect(this IDictionary dictionary, string typeName) => Collections.IDictionaryExtension.Collect(dictionary, typeName);
+        public static IList Collect(this IDictionary dictionary, Type type) => Collections.IDictionaryExtension.Collect(dictionary, type);
         public static string[] CollectKeys(this IDictionary dictionary) => Collections.IDictionaryExtension.CollectKeys(dictionary);
         public static Dictionary<string, T> Collect<T>(this IDictionary dictionary,
                                                       Func<object, bool?> valueFilter = null,
@@ -44,11 +46,12 @@ namespace Node.Net
         //public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
         public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Factories.IDictionaryExtension.GetLocalToParent(dictionary);
         public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Factories.IDictionaryExtension.GetLocalToWorld(dictionary);
+        public static Point3D GetWorldOrigin(this IDictionary dictionary) => Factories.IDictionaryExtension.GetWorldOrigin(dictionary);
 
         //////////////////////////////////////////////////////////////////
         /// Readers
         public static object ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Readers.IDictionaryExtension.ConvertTypes(source, types, typeKey);
-       
+
         public static string GetJSON(this IDictionary source)
         {
             using (MemoryStream memory = new MemoryStream())

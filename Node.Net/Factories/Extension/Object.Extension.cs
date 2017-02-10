@@ -7,8 +7,8 @@ namespace Node.Net.Factories
     {
         public static object GetParent(this object item)
         {
-            var element = item as IElement;
-            if (element != null) return element.Parent;
+            //var element = item as IElement;
+            //if (element != null) return element.Parent;
             if (MetaDataMap.GetMetaDataFunction != null)
             {
                 if(MetaDataMap.GetMetaDataFunction(item).ContainsKey("Parent"))
@@ -21,10 +21,10 @@ namespace Node.Net.Factories
 
         public static void SetParent(this object item, object parent)
         {
-            var element = item as IElement;
-            if (element != null) element.Parent = parent;
-            else
-            {
+            //var element = item as IElement;
+            //if (element != null) element.Parent = parent;
+            //else
+            //{
                 if (item != null)
                 {
                     if (MetaDataMap.GetMetaDataFunction != null)
@@ -32,7 +32,7 @@ namespace Node.Net.Factories
                         MetaDataMap.GetMetaDataFunction(item)["Parent"] = parent;
                     }
                 }
-            }
+            //}
         }
 
         public static T GetNearestAncestor<T>(this object child)
@@ -126,16 +126,16 @@ namespace Node.Net.Factories
         }
         public static double GetLengthMeters(this object source, string name)
         {
-            var element = source as IElement;
-            if (element != null) return element.GetLengthMeters(name);
+            //var element = source as IElement;
+            //if (element != null) return element.GetLengthMeters(name);
             var dictionary = source as IDictionary;
             if (dictionary != null) return dictionary.GetLengthMeters(name);
             return 0;
         }
         public static double GetAngleDegrees(this object source, string name)
         {
-            var element = source as IElement;
-            if (element != null) return element.GetAngleDegrees(name);
+            //var element = source as IElement;
+            //if (element != null) return element.GetAngleDegrees(name);
             var dictionary = source as IDictionary;
             if (dictionary != null) return dictionary.GetAngleDegrees(name);
             return 0;

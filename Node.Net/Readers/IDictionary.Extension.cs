@@ -27,18 +27,18 @@ namespace Node.Net.Readers
             }
 
             var copy_dictionary = copy as IDictionary;
-            var copy_element = copy as Node.Net.Readers.IElement;
+           // var copy_element = copy as Node.Net.Readers.IElement;
             foreach (var key in source.Keys)
             {
                 var value = source[key];
                 var childDictionary = value as IDictionary;
                 if (childDictionary != null)
                 {
-                    if (copy_element != null) copy_element.Set(key.ToString(), ConvertTypes(childDictionary, types, typeKey));
-                    else if (copy_dictionary != null)
-                    {
+                    //if (copy_element != null) copy_element.Set(key.ToString(), ConvertTypes(childDictionary, types, typeKey));
+                    //else if (copy_dictionary != null)
+                    //{
                         copy_dictionary[key] = ConvertTypes(childDictionary, types, typeKey);
-                    }
+                    //}
                     
                 }
                 else
@@ -46,27 +46,27 @@ namespace Node.Net.Readers
                     var childEnumerable = value as IEnumerable;
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
-                        if (copy_element != null) copy_element.Set(key.ToString(), IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey));
-                        else
-                        {
+                        //if (copy_element != null) copy_element.Set(key.ToString(), IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey));
+                        //else
+                        //{
                             if(copy_dictionary != null)
                             {
                                 copy_dictionary[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
                             }
-                        }
+                        //}
                         
                     }
                     else
                     {
-                        if (copy_element != null) copy_element.Set(key.ToString(), value);
-                        else
-                        {
+                        //if (copy_element != null) copy_element.Set(key.ToString(), value);
+                        //else
+                        //{
                             if (copy_dictionary != null)
                             {
                                 if (copy_dictionary.Contains(key)) copy_dictionary[key] = value;
                                 else copy_dictionary.Add(key, value);
                             }
-                        }
+                        //}
                         
                     }
                 }
@@ -83,11 +83,12 @@ namespace Node.Net.Readers
                 {
                     if (dictionary.Contains(typeKey)) return dictionary[typeKey].ToString();
                 }
+                /*
                 var element = source as Node.Net.Readers.IElement;
                 if(element != null)
                 {
                     if (element.Contains(typeKey)) return element.Get(typeKey).ToString();
-                }
+                }*/
             }
             return string.Empty;
         }

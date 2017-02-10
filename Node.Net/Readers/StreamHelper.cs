@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -9,6 +10,7 @@ namespace Node.Net.Readers
 {
     public static class StreamHelper
     {
+        public static List<Assembly> ResourceAssemblies { get; } = new List<Assembly>();
         public static Stream GetStream(string name)
         {
             if (Uri.IsWellFormedUriString(name, UriKind.RelativeOrAbsolute))
@@ -31,6 +33,13 @@ namespace Node.Net.Readers
             if (File.Exists(name)) return new FileStream(name, FileMode.Open);
             else
             {
+                foreach (var assembly in ResourceAssemblies)
+                {
+                    foreach (var manifestResourceName in assembly.GetManifestResourceNames())
+                    {
+                        if (manifestResourceName.Contains(name)) return assembly.GetManifestResourceStream(manifestResourceName);
+                    }
+                }
                 var stackTrace = new StackTrace();
                 foreach (var assembly in stackTrace.GetAssemblies())
                 {

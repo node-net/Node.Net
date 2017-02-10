@@ -66,7 +66,7 @@ namespace Node.Net.Writers
             if (ReferenceEquals(null, value)) WriteNull(writer);
             else if (typeof(byte[]).IsAssignableFrom(value.GetType())) WriteBytes(writer, (byte[])(value));
             else if (typeof(string).IsAssignableFrom(value.GetType())) WriteString(writer, value);
-            else if (typeof(Node.Net.Writers.IElement).IsAssignableFrom(value.GetType())) WriteIElement(writer, value);
+            //else if (typeof(Node.Net.Writers.IElement).IsAssignableFrom(value.GetType())) WriteIElement(writer, value);
             else if (typeof(IDictionary).IsAssignableFrom(value.GetType())) WriteIDictionary(writer, value);
             else if (typeof(double[,]).IsAssignableFrom(value.GetType())) WriteDoubleArray2D(writer, value);
             else if (typeof(IEnumerable).IsAssignableFrom(value.GetType())) WriteIEnumerable(writer, value);
@@ -148,7 +148,7 @@ namespace Node.Net.Writers
         }
 
         private bool writingPrimitiveValue = false;
-
+        /*
         private void WriteIElement(System.IO.TextWriter writer, object value)
         {
             var index = 0;
@@ -195,7 +195,7 @@ namespace Node.Net.Writers
             PopIndent();
             if (element.Count > 0) writer.Write(GetLineFeed());
             writer.Write($"{GetIndent()}}}");
-        }
+        }*/
         private void WriteIDictionary(System.IO.TextWriter writer, object value)
         {
             var index = 0;

@@ -23,6 +23,20 @@ namespace Node.Net.Factories
                 GetLengthMeters(source, "Y"),
                 GetLengthMeters(source, "Z"));
         }
+        public static T Get<T>(this Node.Net.Factories.IElement element, string name)
+        {
+            if (element.Contains(name))
+            {
+                var value = element.Get(name);
+                if (value != null && typeof(T).IsAssignableFrom(value.GetType()))
+                {
+                    return (T)value;
+                }
+
+            }
+            if (typeof(string) == typeof(T)) return (T)(object)string.Empty;
+            return default(T);
+        }
         public static double GetLengthMeters(this Node.Net.Factories.IElement source, string name)
         {
             return Helpers.LengthHelper.GetLengthMeters(GetValueAsString(source, name));
@@ -88,6 +102,44 @@ namespace Node.Net.Factories
             }
 
             return localToWorld;
+        }
+        public static string GetName(this Node.Net.Factories.IElement element)
+        {
+            if (element.Parent != null)
+            {
+                var eparent = element.Parent as IElement;
+                if (eparent != null)
+                {
+                    foreach (string key in eparent.Keys)
+                    {
+                        var test_element = eparent.Get<IElement>(key);
+                        if (test_element != null)
+                        {
+                            if (object.ReferenceEquals(test_element, element)) return key;
+                        }
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        public static string GetFullName(this Node.Net.Factories.IElement element)
+        {
+            var name = GetName(element);
+            if (name != null)
+            {
+                var parent = element.Parent as IElement;
+                if (parent != null)
+                {
+                    var parent_full_key = GetFullName(parent);
+                    if (parent_full_key.Length > 0)
+                    {
+                        return $"{parent_full_key}/{name}";
+                    }
+                }
+                return name;
+            }
+            return string.Empty;
         }
     }
 }

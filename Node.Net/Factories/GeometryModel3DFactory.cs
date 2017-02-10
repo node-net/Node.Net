@@ -10,11 +10,12 @@ namespace Node.Net.Factories
         {
             if (source != null)
             {
+                /*
                 if(typeof(Node.Net.Factories.IElement).IsAssignableFrom(source.GetType()))
                 {
                     var instance = CreateFromIElement(source as Node.Net.Factories.IElement);
                     if (instance != null) return instance;
-                }
+                }*/
                 if (typeof(IDictionary).IsAssignableFrom(source.GetType()))
                 {
                     var instance = CreateFromDictionary(source as IDictionary);
@@ -91,7 +92,7 @@ namespace Node.Net.Factories
             }
             return null;
         }
-
+        /*
         private GeometryModel3D CreateFromIElement(Node.Net.Factories.IElement source)
         {
             if (source.Contains("Type"))
@@ -117,7 +118,8 @@ namespace Node.Net.Factories
                 }
             }
             return null;
-        }
+        }*/
+        /*
         private Transform3D GetTransform(Node.Net.Factories.IElement source)
         {
             var scaleX = 1.0;
@@ -137,6 +139,6 @@ namespace Node.Net.Factories
                 return new MatrixTransform3D { Matrix = matrix3D };
             }
             return null;
-        }
+        }*/
     }
 }
