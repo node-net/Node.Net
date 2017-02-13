@@ -50,17 +50,6 @@ namespace Node.Net
         class ConcreteLocalToWorld : ILocalToWorld { public Matrix3D LocalToWorld { get; set; } = new Matrix3D(); }
         public object Create(Type targetType, object source)
         {
-            /*
-            if (targetType == typeof(ILocalToParent))
-            {
-                var localToParent = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToParent), source, null) as global::Node.Net.Factories.Deprecated.ILocalToParent;
-                return new ConcreteLocalToParent { LocalToParent = localToParent.LocalToParent };
-            }
-            if (targetType == typeof(ILocalToWorld))
-            {
-                var localToWorld = global::Node.Net.Factories.Deprecated.Factory.Default.Create(typeof(global::Node.Net.Factories.Deprecated.ILocalToWorld), source, null) as global::Node.Net.Factories.Deprecated.ILocalToWorld;
-                return new ConcreteLocalToWorld { LocalToWorld = localToWorld.LocalToWorld };
-            }*/
             var result = factory.Create(targetType, source);
             var idictionary = result as IDictionary;
             if (idictionary != null)
@@ -74,7 +63,7 @@ namespace Node.Net
             }
             return result;
         }
-
+        /*
         public T Create<T>()
         {
             var instance = Activator.CreateInstance<T>();
@@ -87,12 +76,12 @@ namespace Node.Net
                 }
             }
             return (T)instance;
-        }
+        }*/
 
         private global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory
         {
             ReadFunction = new Reader().Read
         };
-
+        public Dictionary<Type,Type> AbstractTypes { get { return factory.AbstractFactory; } }
     }
 }

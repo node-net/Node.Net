@@ -14,6 +14,7 @@ namespace Node.Net
 {
     public static class Extension
     {
+        public static T Create<T>(this IFactory factory) => Create<T>(factory, null);
         public static T Create<T>(this IFactory factory,object source)
         {
             return (T)(object)factory.Create(typeof(T), source);

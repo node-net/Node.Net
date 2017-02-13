@@ -4,29 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Factories
+namespace Node.Net
 {
-    public sealed class AbstractFactory : Dictionary<Type, Type>, IFactory
+    public static class TypeExtension
     {
-        public object Create(Type target_type, object source)
-        {
-            foreach (var targetType in Keys)
-            {
-                var concreteType = this[targetType];
-                if (targetType.IsAssignableFrom(target_type))
-                {
-                    return Construct(concreteType,source);
-                }
-            }
-            return Construct(target_type,source);
-        }
-
-        public static object Construct(Type type, object value)
+        public static object Construct(this Type type, object value)
         {
             object[] parameters = { value };
             return Construct(type, parameters);
         }
-        public static object Construct(Type type, object[] parameters = null)
+        public static object Construct(this Type type, object[] parameters = null)
         {
             Type[] types = Type.EmptyTypes;
             if (parameters != null)
