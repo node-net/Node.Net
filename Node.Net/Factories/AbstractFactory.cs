@@ -10,6 +10,7 @@ namespace Node.Net.Factories
     {
         public object Create(Type target_type, object source)
         {
+            if (target_type == null) return null;
             foreach (var targetType in Keys)
             {
                 var concreteType = this[targetType];
