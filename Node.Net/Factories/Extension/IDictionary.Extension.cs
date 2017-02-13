@@ -98,7 +98,7 @@ namespace Node.Net.Factories
 
         public static Point3D GetWorldOrigin(this IDictionary dictionary)
         {
-            return GetLocalToWorld(dictionary).Transform(new System.Windows.Media.Media3D.Point3D(0, 0, 0));
+            return GetLocalToWorld(dictionary).Transform(new Point3D(0, 0, 0));
         }
     }
 }
