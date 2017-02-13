@@ -82,6 +82,17 @@ namespace Node.Net
         {
             ReadFunction = new Reader().Read
         };
-        public Dictionary<Type,Type> AbstractTypes { get { return factory.AbstractFactory; } }
+        public Dictionary<Type,Type> AbstractTypes
+        {
+            get { return factory.AbstractFactory; }
+            set
+            {
+                factory.AbstractFactory.Clear();
+                foreach(var key in value.Keys)
+                {
+                    factory.AbstractFactory.Add(key, value[key]);
+                }
+            }
+        }
     }
 }
