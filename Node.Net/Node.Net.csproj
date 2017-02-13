@@ -178,6 +178,7 @@
     <Compile Include="Extensions\Stream.Extension.cs" />
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\UIElement.Extension.cs" />
+    <Compile Include="Factories\AbstractFactory.cs" />
     <Compile Include="Factories\Extension\ImageSource.Extension.cs" />
     <Compile Include="GlobalProperties.cs" />
     <Compile Include="IDocument.cs" />

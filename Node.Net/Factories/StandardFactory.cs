@@ -9,6 +9,7 @@ namespace Node.Net.Factories
         {
             Add("Resources", ResourceFactory);
             Add("ManifestResources", ManifestResourceFactory);
+            Add("Abstract", AbstractFactory);
             Add("Color", new ColorFactory());
             Add("Brush", new BrushFactory());
             Add("Material", new MaterialFactory());
@@ -48,5 +49,6 @@ namespace Node.Net.Factories
         private ManifestResourceFactory manifestResourceFactory;
         public Model3DFactory Model3DFactory { get; } = new Model3DFactory();
         public Visual3DFactory Visual3DFactory { get; } = new Visual3DFactory();
+        public AbstractFactory AbstractFactory { get; } = new AbstractFactory();
     }
 }
