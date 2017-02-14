@@ -27,12 +27,12 @@ namespace Node.Net
                 reader.Dispose();
             }
         }
-        private Readers.Reader reader = new Readers.Reader()
+        private readonly Readers.Reader reader = new Readers.Reader()
         {
             DefaultObjectType = typeof(Element),
             DefaultDocumentType = typeof(Document)
         };
-        
+
         public Dictionary<string, Type> Types
         {
             get { return reader.Types; }

@@ -63,22 +63,8 @@ namespace Node.Net
             }
             return result;
         }
-        /*
-        public T Create<T>()
-        {
-            var instance = Activator.CreateInstance<T>();
-            var idictionary = instance as IDictionary;
-            if (idictionary != null)
-            {
-                if (!idictionary.Contains("Type"))
-                {
-                    idictionary["Type"] = instance.GetType().Name;
-                }
-            }
-            return (T)instance;
-        }*/
 
-        private global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory
+        private readonly global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory
         {
             ReadFunction = new Reader().Read
         };
@@ -93,6 +79,12 @@ namespace Node.Net
                     factory.AbstractFactory.Add(key, value[key]);
                 }
             }
+        }
+
+        public List<Assembly> ManifestResourceAssemblies
+        {
+            get { return factory.ManifestResourceFactory.Assemblies; }
+            set { factory.ManifestResourceFactory.Assemblies = value; }
         }
     }
 }
