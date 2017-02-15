@@ -169,6 +169,7 @@
     <Compile Include="Extensions\DependencyObject.Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
     <Compile Include="Extensions\IElement.Extension.cs" />
+    <Compile Include="Extensions\IFactory.Extension.cs" />
     <Compile Include="Extensions\Image.Extension.cs" />
     <Compile Include="Extensions\ImageSource.Extension.cs" />
     <Compile Include="Extensions\Matrix3D.Extension.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Extensions\UIElement.Extension.cs" />
     <Compile Include="Factories\AbstractFactory.cs" />
     <Compile Include="Factories\Extension\ImageSource.Extension.cs" />
+    <Compile Include="Factories\StreamFactory.cs" />
     <Compile Include="GlobalProperties.cs" />
     <Compile Include="IDocument.cs" />
     <Compile Include="IElement.cs" />

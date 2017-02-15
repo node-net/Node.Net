@@ -22,7 +22,8 @@ namespace Node.Net
         public Factory() { }
         public Factory(Assembly assembly)
         {
-            factory.ManifestResourceFactory.Assemblies.Add(assembly);
+            factory.ResourceAssemblies.Add(assembly);
+            //factory.ManifestResourceFactory.Assemblies.Add(assembly);
         }
 
         public void Dispose()
@@ -83,8 +84,8 @@ namespace Node.Net
 
         public List<Assembly> ManifestResourceAssemblies
         {
-            get { return factory.ManifestResourceFactory.Assemblies; }
-            set { factory.ManifestResourceFactory.Assemblies = value; }
+            get { return factory.ResourceAssemblies; }
+            set { factory.ResourceAssemblies = value; }
         }
     }
 }

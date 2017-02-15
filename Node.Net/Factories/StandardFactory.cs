@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.IO;
 
 namespace Node.Net.Factories
@@ -7,8 +9,10 @@ namespace Node.Net.Factories
     {
         public StandardFactory()
         {
+            AbstractFactory.ParentFactory = this;
             Add("Resources", ResourceFactory);
-            Add("ManifestResources", ManifestResourceFactory);
+            Add("Stream", streamFactory);
+            //Add("ManifestResources", ManifestResourceFactory);
             Add("Abstract", AbstractFactory);
             Add("Color", new ColorFactory());
             Add("Brush", new BrushFactory());
@@ -31,10 +35,18 @@ namespace Node.Net.Factories
             set
             {
                 ResourceFactory.ReadFunction = value;
-                ManifestResourceFactory.ReadFunction = value;
+                AbstractFactory.ReadFunction = value;
+                //ManifestResourceFactory.ReadFunction = value;
             }
         }
+        private StreamFactory streamFactory = new StreamFactory();
+        public List<Assembly> ResourceAssemblies
+        {
+            get { return streamFactory.ResourceAssemblies; }
+            set { streamFactory.ResourceAssemblies = value; }
+        }
         public ResourceFactory ResourceFactory { get; } = new ResourceFactory();
+        /*
         public ManifestResourceFactory ManifestResourceFactory
         {
             get
@@ -46,7 +58,7 @@ namespace Node.Net.Factories
                 return manifestResourceFactory;
             }
         }
-        private ManifestResourceFactory manifestResourceFactory;
+        private ManifestResourceFactory manifestResourceFactory;*/
         public Model3DFactory Model3DFactory { get; } = new Model3DFactory();
         public Visual3DFactory Visual3DFactory { get; } = new Visual3DFactory();
         public AbstractFactory AbstractFactory { get; } = new AbstractFactory();

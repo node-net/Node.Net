@@ -100,5 +100,70 @@ namespace Node.Net.Factories
         {
             return GetLocalToWorld(dictionary).Transform(new Point3D(0, 0, 0));
         }
+        public static T Get<T>(this IDictionary dictionary, string name)
+        {
+            if (dictionary.Contains(name))
+            {
+                var value = dictionary[name];
+                if (value != null)
+                {
+                    if (typeof(T).IsAssignableFrom(value.GetType())) return (T)value;
+                }
+            }
+            if (name.Contains(","))
+            {
+                var names = name.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                foreach (var n in names)
+                {
+                    if (dictionary.Contains(n)) return dictionary.Get<T>(n);
+                }
+            }
+            if (typeof(T) == typeof(string)) return (T)(object)string.Empty;
+            return default(T);
+        }
+        public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type")
+        {
+            if (source == null) return null;
+            if (types == null) return source;
+            var copy = Activator.CreateInstance(source.GetType()) as IDictionary;
+            if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
+            var typename = source.Get<string>(typeKey);
+            if (typename.Length > 0 && types.ContainsKey(typename))
+            {
+                var targetType = types[typename];
+                if (targetType == null) throw new Exception($"types['{typename}'] was null");
+                if (source.GetType() != targetType)
+                {
+                    copy = Activator.CreateInstance(targetType) as IDictionary;
+                    if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
+                }
+            }
+            foreach (string key in source.Keys)
+            {
+                var value = source[key];// source.Get(key);
+                var childDictionary = value as IDictionary;
+                if (childDictionary != null)
+                {
+                    copy[key] = ConvertTypes(childDictionary, types, typeKey);
+                    //copy.Set(key, ConvertTypes(childDictionary, types, typeKey));
+                }
+                else
+                {
+                    var childEnumerable = value as IEnumerable;
+                    if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
+                    {
+                        copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
+                        //copy.Set(key, IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey));
+                    }
+                    else
+                    {
+                        copy[key] = value;
+                        //if (copy.Contains(key)) copy.Set(key, value);
+                        //else copy.Set(key, value);
+                    }
+                }
+            }
+            return copy;
+        }
     }
 }

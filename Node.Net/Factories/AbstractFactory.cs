@@ -1,52 +1,78 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 
 namespace Node.Net.Factories
 {
     public sealed class AbstractFactory : Dictionary<Type, Type>, IFactory
     {
+        public IFactory ParentFactory { get; set; }
+        public Func<Stream, object> ReadFunction { get; set; } = DefaultRead;
+        public Dictionary<string, Type> IDictionaryTypes { get; set; } = new Dictionary<string, Type>();
+        public string TypeKey = "Type";
+
+        private bool callingParent = false;
         public object Create(Type target_type, object source)
         {
             if (target_type == null) return null;
+
+            if (source != null && ParentFactory != null && !callingParent)
+            {
+                callingParent = true;
+                try
+                {
+                    var stream = ParentFactory.Create<Stream>(source);
+                    var item = CreateFromStream(target_type, stream, source);
+                    if (item != null) return item;
+                }
+                finally { callingParent = false; }
+            }
+
             foreach (var targetType in Keys)
             {
                 var concreteType = this[targetType];
                 if (targetType.IsAssignableFrom(target_type))
                 {
-                    return Construct(concreteType,source);
+                    return concreteType.Construct(source);
                 }
             }
-            return Construct(target_type,source);
+            var instance = target_type.Construct(source);
+            if (instance != null) return instance;
+
+            //if (ParentFactory != null) return CreateFromStream(target_type, ParentFactory.Create<Stream>(source),source);
+            return null;
         }
 
-        public static object Construct(Type type, object value)
+        public static object DefaultRead(Stream stream)
         {
-            object[] parameters = { value };
-            return Construct(type, parameters);
+            return XamlReader.Load(stream);
         }
-        public static object Construct(Type type, object[] parameters = null)
+        private object CreateFromStream(Type target_type, Stream stream, object source)
         {
-            Type[] types = Type.EmptyTypes;
-            if (parameters != null)
+            if (stream == null) return null;
+            if (ReadFunction != null)
             {
-                var typesList = new List<Type>();
-                foreach (var item in parameters)
+                var instance = ReadFunction(stream);
+                var dictionary = instance as IDictionary;
+                if (dictionary != null)
                 {
-                    if (item != null)
+                    var new_dictionary = IDictionaryExtension.ConvertTypes(dictionary, IDictionaryTypes, TypeKey);
+                    if (source != null && source.GetType() == typeof(string))
                     {
-                        typesList.Add(item.GetType());
+                        //new_dictionary.SetFileName(source.ToString());
                     }
+                    instance = new_dictionary;
                 }
-                if (typesList.Count == parameters.Length) types = typesList.ToArray();
-            }
-            var constructor = type.GetConstructor(types);
-            if (constructor != null)
-            {
-                if (parameters == null || parameters.Length == 0 || parameters[0] == null) return constructor.Invoke(null);
-                else return constructor.Invoke(parameters);
+                if (instance != null)
+                {
+                    if (target_type.IsAssignableFrom(instance.GetType())) return instance;
+                    if (ParentFactory != null) return ParentFactory.Create(target_type, instance);
+                }
             }
             return null;
         }
