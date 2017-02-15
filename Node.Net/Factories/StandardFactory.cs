@@ -13,7 +13,7 @@ namespace Node.Net.Factories
             Add("Resources", ResourceFactory);
             Add("Stream", streamFactory);
             //Add("ManifestResources", ManifestResourceFactory);
-            Add("Abstract", AbstractFactory);
+            
             Add("Color", new ColorFactory());
             Add("Brush", new BrushFactory());
             Add("Material", new MaterialFactory());
@@ -22,6 +22,7 @@ namespace Node.Net.Factories
             Add("Visual3D", Visual3DFactory);
             Add("GeometryModel3D", new GeometryModel3DFactory());
             Add("Transform3D", new Transform3DFactory());
+            Add("Abstract", AbstractFactory);
         }
 
         public bool Cache
