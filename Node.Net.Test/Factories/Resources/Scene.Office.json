@@ -1,0 +1,39 @@
+{
+  "sunlight": { "Type": "Sunlight" },
+  "Type": "Floor",
+  "Length": "14 ft",
+  "Width": "10 ft",
+  "bookshelf_0": {
+    "Type": "Bookshelf",
+    "Length": "1 ft",
+    "Width": "3 ft",
+    "Height": "4 ft"
+  },
+  "cube_0": {
+    "Type": "Cube",
+    "Length": "1 ft",
+    "Width": "3 ft",
+    "Height": "4 ft"
+  },
+  "cube_1": {
+    "Type": "Cube",
+    "X": "6 ft",
+    "Length": "1 ft",
+    "Width": "3 ft",
+    "Height": "4 ft"
+  },
+  "cube_2": {
+    "Type": "Cube",
+    "X": "12 ft",
+    "Length": "1 ft",
+    "Width": "3 ft",
+    "Height": "4 ft"
+  },
+  "cube_3": {
+    "Type": "Cube",
+    "X": "18 ft",
+    "Length": "1 ft",
+    "Width": "3 ft",
+    "Height": "4 ft"
+  }
+}

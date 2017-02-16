@@ -1,0 +1,21 @@
+{ 
+	"Sunlight" : { "Type" : "Sunlight"},
+    "Cube": { "Type": "Cube", "Material": "Red" },
+    "Pyramid": { "Type": "Pyramid", "Material": "Blue", "X": "2 m" },
+    "Cylinder": { "Type": "Cylinder", "Material": "Green", "X": "4 m" },
+    "Cone": { "Type": "Cone", "Material": "Purple", "BackMaterial": "White","X": "6 m" },
+    "Hemisphere" :  {"Type" :  "Hemisphere","Material" : "Orange", "X": "8 m"},
+    "Sphere": { "Type": "Sphere", "Material": "Yellow", "X": "10 m" },
+    "Cube.Top": { "Type": "Cube.Top", "Material": "Red" ,"Y": "2 m"},
+    "Pyramid.Top": { "Type": "Pyramid.Top", "Material": "Blue", "X": "2 m" ,"Y": "2 m"},
+    "Cylinder.Top": { "Type": "Cylinder.Top", "Material": "Green", "X": "4 m" ,"Y": "2 m"},
+    "Cone.Top": { "Type": "Cone.Top", "Material": "Purple", "X": "6 m" ,"Y": "2 m"},
+    "Hemisphere.Top" :  {"Type" :  "Hemisphere.Top","Material" : "Orange", "X": "8 m","Y": "2 m"},
+    "Sphere.Top": { "Type": "Sphere.Top", "Material": "Yellow", "X": "10 m", "Y": "2 m" },
+    "Cube.Bottom": { "Type": "Cube.Bottom", "Material": "Red" ,"Y": "-2 m"},
+    "Pyramid.Bottom": { "Type": "Pyramid.Bottom", "Material": "Blue", "X": "2 m" ,"Y": "-2 m"},
+    "Cylinder.Bottom": { "Type": "Cylinder.Bottom", "Material": "Green", "X": "4 m" ,"Y": "-2 m"},
+    "Cone.Bottom": { "Type": "Cone.Bottom", "Material": "Purple", "X": "6 m" ,"Y": "-2 m"},
+    "Hemisphere.Bottom" :  {"Type" :  "Hemisphere.Bottom","Material" : "Orange", "BackMaterial": "White","X": "8 m","Y": "-2 m"},
+    "Sphere.Bottom" : {"Type":"Sphere.Bottom","Material":"Yellow", "X": "10 m","Y": "-2 m"}
+}

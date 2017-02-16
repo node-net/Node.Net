@@ -1,0 +1,12 @@
+{
+  "string_0": "abc",
+  "bool_true": true,
+  "null": null,
+  "double_0": 1.23,
+  "widget": {
+    "Type": "Widget",
+    "foo": {
+      "Type": "Foo"
+    }
+  }
+}
