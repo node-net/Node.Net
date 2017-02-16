@@ -44,7 +44,7 @@ namespace Node.Net
             }
         }
 
-        [Test]
+        [Test,Explicit]
         public void Reader_Open_Document()
         {
             var stream = typeof(ReaderTest).Assembly.GetStream("States.json");

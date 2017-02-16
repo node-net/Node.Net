@@ -10,7 +10,7 @@ namespace Node.Net
     [TestFixture]
     class IDocumentTest
     {
-        [Test]
+        [Test,Explicit]
         public void IDocument_Usage()
         {
             var document = new Document();
