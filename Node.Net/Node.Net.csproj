@@ -169,6 +169,7 @@
     <Compile Include="Extensions\DependencyObject.Extension.cs" />
     <Compile Include="Extensions\Grid.Extension.cs" />
     <Compile Include="Extensions\IElement.Extension.cs" />
+    <Compile Include="Extensions\IEnumerable.Extension.cs" />
     <Compile Include="Extensions\IFactory.Extension.cs" />
     <Compile Include="Extensions\Image.Extension.cs" />
     <Compile Include="Extensions\ImageSource.Extension.cs" />
@@ -277,7 +278,6 @@
     <Compile Include="GlobalFunctions.cs" />
     <Compile Include="IChild.cs" />
     <Compile Include="Extensions\IDictionary.Extension.cs" />
-    <Compile Include="IEnumerable.Extension.cs" />
     <Compile Include="IGetDataSet.cs" />
     <Compile Include="IMetaData.cs" />
     <Compile Include="IMetaDataManager.cs" />

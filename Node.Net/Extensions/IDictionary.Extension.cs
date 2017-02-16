@@ -50,8 +50,51 @@ namespace Node.Net
 
         //////////////////////////////////////////////////////////////////
         /// Readers
-        public static object ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Readers.IDictionaryExtension.ConvertTypes(source, types, typeKey);
+        //public static object ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Readers.IDictionaryExtension.ConvertTypes(source, types, typeKey);
+        public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type")
+        {
+            if (source == null) return null;
 
+            var temp = new Dictionary<string, dynamic>();
+            foreach (var key in source.Keys)
+            {
+                var value = source[key];
+                var childDictionary = value as IDictionary;
+                if (childDictionary != null)
+                {
+                    temp.Add(key.ToString(), ConvertTypes(childDictionary, types, typeKey));
+                }
+                else
+                {
+                    var childEnumerable = value as IEnumerable;
+                    if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
+                    {
+                        temp.Add(key.ToString(), childEnumerable.ConvertTypes(types, typeKey));
+                    }
+                    else
+                    {
+                        temp.Add(key.ToString(), value);
+                    }
+                }
+            }
+
+            IDictionary copy = new Dictionary<string, dynamic>();//new Internal.Element(temp);
+            if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
+            var typename = source.Get<string>(typeKey);// source.GetTypeName(typeKey);
+            if (typename.Length > 0 && types.ContainsKey(typename))
+            {
+                var targetType = types[typename];
+                if (targetType == null) throw new Exception($"types['{typename}'] was null");
+                if (source.GetType() != targetType)
+                {
+                    object[] args = { temp };
+                    copy = Activator.CreateInstance(targetType, args) as IDictionary;
+                    if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
+                }
+            }
+
+            return copy;
+        }
         public static string GetJSON(this IDictionary source)
         {
             using (MemoryStream memory = new MemoryStream())

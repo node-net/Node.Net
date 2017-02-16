@@ -1,4 +1,4 @@
-VERSION='1.0.312'
+VERSION='1.0.313'
 require 'dev'
 
 #SERVER_DIR=File.dirname(File.dirname(__FILE__))
