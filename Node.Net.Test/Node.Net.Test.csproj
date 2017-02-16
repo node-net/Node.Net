@@ -62,6 +62,11 @@
   <ItemGroup>
     <Compile Include="Element.Test.cs" />
     <Compile Include="Extensions_Test.cs" />
+    <Compile Include="Factories\Prototype\Factory.Test.cs" />
+    <Compile Include="Factories\Prototype\Foo.cs" />
+    <Compile Include="Factories\Prototype\IFoo.cs" />
+    <Compile Include="Factories\Prototype\IWidget.cs" />
+    <Compile Include="Factories\Prototype\Widget.cs" />
     <Compile Include="Factory.Test.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="GlobalProperties.Test.cs" />
@@ -168,6 +173,9 @@
     <EmbeddedResource Include="Resources\States.json" />
     <EmbeddedResource Include="Resources\info.json" />
     <EmbeddedResource Include="Resources\corrupt.json" />
+    <EmbeddedResource Include="Resources\IWidget.0.json" />
+    <EmbeddedResource Include="Resources\Widget.0.json" />
+    <EmbeddedResource Include="Resources\Widget.1.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />

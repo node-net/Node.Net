@@ -1,9 +1,5 @@
 {
   "cube0": {
-    "Type": "Cube"
+    "Type" : "Cube"
   }
-  "cube1": {
-    "Type": "Cube"
-  },
-  "group": { "cube0": { "Type": "Cube" } }
 }

@@ -180,6 +180,7 @@
     <Compile Include="Extensions\TextReader.Extension.cs" />
     <Compile Include="Extensions\Type.Extension.cs" />
     <Compile Include="Extensions\UIElement.Extension.cs" />
+    <Compile Include="Extensions\Visual3D.Extension.cs" />
     <Compile Include="Factories\AbstractFactory.cs" />
     <Compile Include="Factories\Extension\ImageSource.Extension.cs" />
     <Compile Include="Factories\Prototype\Factory.cs" />
