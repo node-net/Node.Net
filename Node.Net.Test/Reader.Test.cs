@@ -17,7 +17,7 @@ namespace Node.Net
         [TestCase("{}", typeof(IElement))]
         [TestCase("[]", typeof(IEnumerable))]
         [TestCase("simple.json", typeof(IElement))]
-        [TestCase("States.json", typeof(IElement))]
+        //[TestCase("States.json", typeof(IElement))]
         [TestCase("image.jpg", typeof(ImageSource))]
         [TestCase("image.png", typeof(ImageSource))]
         [TestCase("image.bmp", typeof(ImageSource))]
@@ -80,7 +80,7 @@ namespace Node.Net
         [Test]
         public void Reader_Parent_References()
         {
-            var value = new Reader().Read(typeof(ReaderTest).Assembly.GetStream("States.json")) as IDictionary;
+            var value = new Reader().Read(typeof(ReaderTest).Assembly.GetStream("Scene.Cubes.json")) as IDictionary;
             var instances = value.Collect();
             foreach(var key in instances.Keys)
             {

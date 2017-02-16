@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Node.Net.Collections.Controls.SearchTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Node.Net.Collections.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="100">
+    <Border CornerRadius="8" BorderBrush="Gray" BorderThickness="3">
+        <Grid>
+            <Label Background="Gray"/>
+            <TextBox x:Name="textBox" VerticalContentAlignment="Center" TextChanged="TextBox_TextChanged"></TextBox>
+            <Label x:Name="backgroundLabel" Foreground="Gray">Search</Label>
+        </Grid>
+    </Border>
+</UserControl>

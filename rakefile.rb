@@ -61,42 +61,42 @@ task :setup => [:update]
 #	}
 #end
 
-task :publish_to_github do
-	
-	url='http://github.com/node-net/Node.Net.git'
-	dir="#{Environment.dev_root}/work/github/node-net/Node.Net"
+#task :publish_to_github do
+#	
+#	url='http://github.com/node-net/Node.Net.git'
+#	dir="#{Environment.dev_root}/work/github/node-net/Node.Net"
+#
+#	puts `git clone #{url} #{dir}` if(!Dir.exists?(dir))
+#	Dir.chdir(dir) do
+#		puts `git pull`
+#	end
+#	FileUtils.rm_rf("#{dir}/Node.Net")
+#
+#	files = FileList.new('LICENSE.txt','README.md','Node.Net.sln','Node.Net/**/*')
+#	files.each{|f|
+#		dest="#{dir}/#{f}"
+#		if(File.file?(f))
+#		  parent_dir = File.dirname(dest)
+#		  if(parent_dir.length > 0 && !Dir.exists?(parent_dir))
+#			FileUtils.mkdir_p(parent_dir)
+#		  end
+#		  #puts "copying #{f} to #{dest}"
+#		  FileUtils.cp(f,dest)
+#		end
+#	}
+#
+#	Dir.chdir(dir) do
+#		puts "(#{dir})"
+#		puts `git add --all`
+#		puts `git tag #{VERSION} -m#{VERSION}`
+#		puts `git commit -m'#{VERSION}'`
+#		puts `git push --tags`
+#		puts `git push`
+#	end
+#
+#end
 
-	puts `git clone #{url} #{dir}` if(!Dir.exists?(dir))
-	Dir.chdir(dir) do
-		puts `git pull`
-	end
-	FileUtils.rm_rf("#{dir}/Node.Net")
-
-	files = FileList.new('LICENSE.txt','README.md','Node.Net.sln','Node.Net/**/*')
-	files.each{|f|
-		dest="#{dir}/#{f}"
-		if(File.file?(f))
-		  parent_dir = File.dirname(dest)
-		  if(parent_dir.length > 0 && !Dir.exists?(parent_dir))
-			FileUtils.mkdir_p(parent_dir)
-		  end
-		  #puts "copying #{f} to #{dest}"
-		  FileUtils.cp(f,dest)
-		end
-	}
-
-	Dir.chdir(dir) do
-		puts "(#{dir})"
-		puts `git add --all`
-		puts `git tag #{VERSION} -m#{VERSION}`
-		puts `git commit -m'#{VERSION}'`
-		puts `git push --tags`
-		puts `git push`
-	end
-
-end
-
-task :publish => [:publish_to_github] do
+task :publish  do
 	if(__FILE__.include?('/work/') && Git.user_email.length > 0)
 		puts `nuget push Node.Net.#{VERSION}.nupkg -Source https://api.nuget.org/v3/index.json`
 		Git.tag File.dirname(__FILE__), VERSION

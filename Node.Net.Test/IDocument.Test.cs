@@ -15,8 +15,6 @@ namespace Node.Net
         {
             var document = new Document();
             Assert.True(typeof(Node.Net.IElement).IsAssignableFrom(document.GetType()));
-            //Assert.True(typeof(Node.Net.Readers.IElement).IsAssignableFrom(document.GetType()));
-
             document.Load("States.json");
             
             Assert.AreEqual("States.json", document.FileName);
@@ -31,7 +29,6 @@ namespace Node.Net
             Assert.AreSame(document, colorado.Parent, "colorado.Parent");
             Assert.AreEqual("Colorado", colorado.Name);
             Assert.AreSame(document, colorado.Parent);
-            //Assert.AreSame(document, colorado.Document);
 
             var states = document.Find<IElement>("State");
             Assert.AreEqual(50, states.Count);
