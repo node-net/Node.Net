@@ -19,7 +19,11 @@ namespace Node.Net.Factories.Prototype
         {
             get { return factory.FactoryFunctions; }
         }
-        public List<Assembly> ManifestResourceAssemblies { get { return factory.ManifestResourceAssemblies; } }
+        public List<Assembly> ManifestResourceAssemblies
+        {
+            get { return factory.ManifestResourceAssemblies; }
+            set { factory.ManifestResourceAssemblies = value; }
+        }
         public Dictionary<string, Type> IDictionaryTypes { get { return factory.IDictionaryTypes; } }
         public Dictionary<Type, Type> AbstractTypes
         {
