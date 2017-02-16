@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 
@@ -37,7 +38,11 @@ namespace Node.Net.Factories.Prototype
                 }
             }
         }
-
+        public Func<Stream, object> ReadFunction
+        {
+            get { return factory.ReadFunction; }
+            set { factory.ReadFunction = value; }
+        }
         private Internal.Factories.Factory factory = new Internal.Factories.Factory();
     }
 }

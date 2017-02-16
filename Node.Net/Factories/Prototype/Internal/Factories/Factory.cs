@@ -35,8 +35,17 @@ namespace Node.Net.Factories.Prototype.Internal.Factories
         public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
         public Dictionary<Type, Func<Type, object, object>> FactoryFunctions { get; private set; }
         private StreamFactory StreamFactory { get; } = new StreamFactory();
-        public List<Assembly> ManifestResourceAssemblies { get { return StreamFactory.ResourceAssemblies; } }
+        public List<Assembly> ManifestResourceAssemblies
+        {
+            get { return StreamFactory.ResourceAssemblies; }
+            set { StreamFactory.ResourceAssemblies = value; }
+        }
         public CollectionsFactory CollectionsFactory { get; } = new CollectionsFactory();
+        public Func<Stream,object> ReadFunction
+        {
+            get { return AbstractFactory.ReadFunction; }
+            set { AbstractFactory.ReadFunction = value; }
+        }
         public Dictionary<Type,Type> AbstractTypes { get { return AbstractFactory; } }
         private AbstractFactory AbstractFactory { get; } = new AbstractFactory();
         //private ReaderFactory ReaderFactory { get; } = new ReaderFactory();

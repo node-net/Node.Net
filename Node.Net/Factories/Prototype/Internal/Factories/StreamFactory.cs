@@ -8,7 +8,7 @@ namespace Node.Net.Factories.Prototype.Internal.Factories
 {
     sealed class StreamFactory : IFactory
     {
-        public List<Assembly> ResourceAssemblies { get; } = new List<Assembly>();
+        public List<Assembly> ResourceAssemblies { get; set; } = new List<Assembly>();
         public bool ExactMatch { get; set; } = false;
         public object Create(Type target_type, object source)
         {
