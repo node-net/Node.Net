@@ -1,7 +1,4 @@
-﻿//
-// Copyright (c) 2016 Lou Parslow. Subject to the Apache 2.0 license, see LICENSE.txt.
-//
-using Node.Net.Controls.Internal.Extensions;
+﻿using Node.Net.Controls.Internal.Extensions;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Media;

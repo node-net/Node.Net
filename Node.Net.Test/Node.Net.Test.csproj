@@ -158,7 +158,9 @@
     <EmbeddedResource Include="Resources\Dictionary.Traverser.B.json" />
     <EmbeddedResource Include="Resources\Dictionary.Scene.A.json" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Text.Sample.A.txt" />
   </ItemGroup>

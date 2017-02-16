@@ -1,7 +1,4 @@
-﻿//
-// Copyright (c) 2016 Lou Parslow. Subject to the Apache 2.0 license, see LICENSE.txt.
-//
-using Node.Net.Data;
+﻿using Node.Net.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;

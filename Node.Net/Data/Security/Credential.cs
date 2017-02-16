@@ -4,10 +4,10 @@ using System.Security;
 
 namespace Node.Net.Data.Security
 {
-    public class Credential : Dictionary<string, string>, ICredential, Model.IModel
+    public class Credential : Dictionary<string, string>, ICredential//, Model.IModel
     {
-        public Credential() { this.SetTypeName(); }// this.Set(nameof(Type),nameof(Credential)); }
-        public Credential(IProtection protection) { this.SetTypeName();  _protection = protection; }
+        public Credential() { this["Type"] = "Credentail"; }// this.Set(nameof(Type),nameof(Credential)); }
+        public Credential(IProtection protection) { this["Type"] = "Credential";  _protection = protection; }
         private readonly IProtection _protection = new CurrentUserProtection();
         public IProtection Protection
         {

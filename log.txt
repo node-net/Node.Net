@@ -1,5 +1,0 @@
-commit 730bc07139f4764ec75fac267da1e7163d24a0fd
-Author: Lou Parslow <lou.parslow@gmail.com>
-Date:   Tue Jul 19 10:58:53 2016 -0600
-
-    'all'
