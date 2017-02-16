@@ -60,23 +60,24 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Element.Test.cs" />
-    <Compile Include="Extensions_Test.cs" />
+    <Compile Include="Beta\Factory.Test.cs" />
+    <Compile Include="Release\Element.Test.cs" />
+    <Compile Include="Release\Extensions_Test.cs" />
     <Compile Include="Factories\Prototype\Factory.Test.cs" />
     <Compile Include="Factories\Prototype\Foo.cs" />
     <Compile Include="Factories\Prototype\IFoo.cs" />
     <Compile Include="Factories\Prototype\IWidget.cs" />
     <Compile Include="Factories\Prototype\Widget.cs" />
-    <Compile Include="Factory.Test.cs" />
+    <Compile Include="Release\Factory.Test.cs" />
     <Compile Include="Fixture.cs" />
-    <Compile Include="GlobalProperties.Test.cs" />
-    <Compile Include="IDictionary.Test.cs" />
-    <Compile Include="IDocument.Test.cs" />
-    <Compile Include="Object.Test.cs" />
-    <Compile Include="Reader.Test.cs" />
-    <Compile Include="Repository.Test.cs" />
+    <Compile Include="Release\GlobalProperties.Test.cs" />
+    <Compile Include="Release\IDictionary.Test.cs" />
+    <Compile Include="Release\IDocument.Test.cs" />
+    <Compile Include="Release\Object.Test.cs" />
+    <Compile Include="Release\Reader.Test.cs" />
+    <Compile Include="Release\Repository.Test.cs" />
     <Compile Include="Resources\MaterialResources.Test.cs" />
-    <Compile Include="Writer.Test.cs" />
+    <Compile Include="Release\Writer.Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Test.Resources\Hash\Model.Cube.Blue.json">
