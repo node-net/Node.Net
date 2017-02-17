@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta
@@ -43,7 +44,8 @@ namespace Node.Net.Beta
             var ibar = factory.Create<IBar>("Bar.0.json");
             Interfaces.IFactoryTest.IFactory_Test_CreateMedia3DFromIDictionary(factory, ibar);
 
-
+            var image = factory.Create<ImageSource>("image.jpg");
+            Assert.NotNull(image, nameof(image));
         }
 
         public Model3D GetModel3D(IDictionary data)

@@ -15,6 +15,11 @@ namespace Node.Net.Beta
         {
             Add("<", ReadXml);
             Add("[", ReadJSON);
+            Add("{", ReadJSON);
+            foreach(var signature in Internal.Readers.ImageSourceReader.Default.Signatures)
+            {
+                Add(signature, ReadImageSource);
+            }
         }
         /*
          * Add("Json", new List<string> { "{", "[" }.ToArray(), JsonReader.Read);
@@ -68,9 +73,7 @@ namespace Node.Net.Beta
             }
             return null;
         }
-        public static object ReadJSON(Stream stream)
-        {
-            return null;
-        }
+        public static object ReadJSON(Stream stream) => Internal.Readers.JSONReader.Default.Read(stream);
+        public static object ReadImageSource(Stream stream) => Internal.Readers.ImageSourceReader.Default.Read(stream);
     }
 }
