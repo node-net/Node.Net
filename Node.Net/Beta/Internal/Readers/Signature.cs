@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Node.Net.Beta.Internal.Readers
 {
-    class Signature
+    class Signature : IStreamSignature
     {
         public Signature(byte[] bytesSignature)
         {
@@ -70,6 +70,11 @@ namespace Node.Net.Beta.Internal.Readers
                     hex.AppendFormat("{0:x2} ", b);
                 return hex.ToString().ToUpper().Trim();
             }
+        }
+
+        public override string ToString()
+        {
+            return IsText ? Text : HexString;
         }
     }
 }

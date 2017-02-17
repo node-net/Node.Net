@@ -20,6 +20,7 @@ namespace Node.Net.Beta.Internal.Factories
             FactoryFunctions = new Dictionary<Type, Func<Type, object, object>>
             {
                 {typeof(Stream), StreamFactory.Create },
+                {typeof(IStreamSignature),StreamFactory.Create },
                 {typeof(String),new StringFactory().Create },
                 {typeof(Color),new ColorFactory().Create },
                 {typeof(Brush),new BrushFactory {ParentFactory=this }.Create },

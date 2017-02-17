@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
+using System.Xml;
 
 namespace Node.Net.Beta
 {
@@ -17,7 +18,8 @@ namespace Node.Net.Beta
         {
             var data = new Dictionary<string, Type>
             {
-                {"Widget.MeshGeometry3D.xaml" , typeof(MeshGeometry3D) }
+                {"Widget.MeshGeometry3D.xaml" , typeof(MeshGeometry3D) },
+                {"index.html", typeof(XmlDocument) }
             };
             var factory = new Factory();
             factory.ManifestResourceAssemblies.Add(typeof(ReaderTest).Assembly);
@@ -28,9 +30,9 @@ namespace Node.Net.Beta
                 Assert.NotNull(stream, $"null stream for '{name}'");
 
                 var instance = reader.Read(stream);
-                //Assert.NotNull(instance, $"null instance for '{name}'");
+                Assert.NotNull(instance, $"null instance for '{name}'");
 
-                //Assert.True(data[name].IsAssignableFrom(instance.GetType()), $"type {data[name].FullName} not assignable from instance");
+                Assert.True(data[name].IsAssignableFrom(instance.GetType()), $"type {data[name].FullName} not assignable from instance");
             }
         }
     }

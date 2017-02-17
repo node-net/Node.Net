@@ -19,6 +19,20 @@ namespace Node.Net.Beta.Internal.Factories
                     if (source.GetType() == typeof(string)) return Create(source.ToString());
                 }
             }
+            if(typeof(IStreamSignature).IsAssignableFrom(target_type))
+            {
+                if(source != null)
+                {
+                    if(typeof(Stream).IsAssignableFrom(source.GetType()))
+                    {
+                        return Internal.Readers.SignatureReader.GetSignature(source as Stream);
+                        /*
+                        var sr = new Internal.Readers.SignatureReader();
+                        return sr.Read(source as Stream) as Internal.Readers.Signature;*/
+                    }
+                    return Create(target_type, Create(typeof(Stream), source));
+                }
+            }
             return null;
         }
 

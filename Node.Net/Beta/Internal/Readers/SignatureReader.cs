@@ -9,6 +9,15 @@ namespace Node.Net.Beta.Internal.Readers
 {
     class SignatureReader : IDisposable
     {
+        private SignatureReader() { }
+        public SignatureReader(Stream original_stream)
+        {
+            Signature = (Read(original_stream) as Signature).ToString();
+            if (!original_stream.CanSeek) Stream = MemoryStream;
+            else Stream = original_stream;
+        }
+        public string Signature { get; set; }
+        public Stream Stream { get; set; }
         public int MinimumBytes = 1024;
 
         public void Dispose()
@@ -33,7 +42,13 @@ namespace Node.Net.Beta.Internal.Readers
         }
         private MemoryStream memoryStream = null;
         public MemoryStream MemoryStream { get { return memoryStream; } }
-        public object Read(Stream original_stream)
+
+        public static Signature GetSignature(Stream stream)
+        {
+            var sr = new SignatureReader();
+            return sr.Read(stream) as Signature;
+        }
+        private object Read(Stream original_stream)
         {
             memoryStream = null;
             if (!original_stream.CanSeek)
