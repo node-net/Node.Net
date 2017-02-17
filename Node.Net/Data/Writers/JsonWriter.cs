@@ -96,7 +96,7 @@ namespace Node.Net.Data.Writers
         }
         private void WriteDoubleArray2D(System.IO.TextWriter writer,object value)
         {
-            double[,] array = value as double[,];
+            var array = value as double[,];
             var length0 = array.GetLength(0);
             var length1 = array.GetLength(1);
             var equivalentList = new List<List<double>>();

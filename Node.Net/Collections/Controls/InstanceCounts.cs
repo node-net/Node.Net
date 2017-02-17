@@ -102,7 +102,7 @@ namespace Node.Net.Collections.Controls
                 controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width =GridLength.Auto });
                 controlGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 controlGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                controlGrid.Children.Add(new Label { Content = "Key" });
+                controlGrid.Children.Add(new Label { Content = nameof(Key) });
                 controlGrid.Children.Add(keyComboBox);
                 Grid.SetColumn(keyComboBox, 1);
                 var searchLabel = new Label { Content = "Search" };

@@ -23,7 +23,7 @@ namespace Node.Net.Data.Writers
                 if (_target != null)
                 {
                     Type[] types = { typeof(Stream), typeof(object) };
-                    var writeMethodInfo = _target.GetType().GetMethod("Write", types);
+                    var writeMethodInfo = _target.GetType().GetMethod(nameof(Write), types);
                     if (writeMethodInfo != null)
                     {
                         object[] parameters = { stream, value };

@@ -6,7 +6,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta
 {
-    [TestFixture, Category("Beta")]
+    [TestFixture, Category(nameof(Beta))]
     class FactoryTest
     {
         [Test]
@@ -50,7 +50,7 @@ namespace Node.Net.Beta
         {
             var factory = new Factory();
             factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
-            if (data != null && data.Contains("Type") && data["Type"].ToString() == "Bar")
+            if (data != null && data.Contains("Type") && data["Type"].ToString() == nameof(Bar))
             {
                 return factory.Create<Model3D>("Foo.Model3D.xaml");
             }
@@ -70,9 +70,9 @@ namespace Node.Net.Beta
                 },
                 IDictionaryTypes = new Dictionary<string, Type>
                 {
-                    {"Widget" , typeof(Widget) },
-                    {"Foo", typeof(Foo) },
-                    {"Bar",typeof(Bar) }
+                    {nameof(Widget) , typeof(Widget) },
+                    {nameof(Foo), typeof(Foo) },
+                    {nameof(Bar),typeof(Bar) }
                 }
             };
             factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);

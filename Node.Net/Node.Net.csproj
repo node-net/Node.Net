@@ -133,6 +133,14 @@
     <Compile Include="Data\Security\IProtection.cs" />
     <Compile Include="Data\Security\IProtection.Extension.cs" />
     <Compile Include="Data\Security\SymmetricAlgorithm.Extension.cs" />
+    <Compile Include="Data\Writers\BitmapImageWriter.cs" />
+    <Compile Include="Data\Writers\IWrite.Extension.cs" />
+    <Compile Include="Data\Writers\IWriteAdapter.cs" />
+    <Compile Include="Data\Writers\JsonWriter.cs" />
+    <Compile Include="Data\Writers\PrimitiveWriter.cs" />
+    <Compile Include="Data\Writers\StringWriter.cs" />
+    <Compile Include="Data\Writers\Writer.cs" />
+    <Compile Include="Data\Writers\XmlWriter.cs" />
     <Compile Include="Interfaces\IFactory.cs" />
     <Compile Include="Release\Document.cs" />
     <Compile Include="Release\Element.cs" />

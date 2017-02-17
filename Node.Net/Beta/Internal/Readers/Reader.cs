@@ -46,10 +46,5 @@ namespace Node.Net.Beta.Internal.Readers
         }
 
         private readonly JSONReader jsonReader = new JSONReader();
-        /*
-        {
-            DefaultDocumentType = typeof(Collections.E.Document),
-            DefaultObjectType = typeof(Collections.Extended.Element)
-        };*/
     }
 }

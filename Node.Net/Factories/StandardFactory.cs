@@ -10,7 +10,7 @@ namespace Node.Net.Factories
         public StandardFactory()
         {
             AbstractFactory.ParentFactory = this;
-            Add("Resources", ResourceFactory);
+            Add(nameof(Resources), ResourceFactory);
             Add("Stream", streamFactory);
             //Add("ManifestResources", ManifestResourceFactory);
             

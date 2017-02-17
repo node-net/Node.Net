@@ -180,7 +180,7 @@ namespace Node.Net.Data.Readers
                     }
                     if (length > -1)
                     {
-                        double[,] array = new double[list.Count, length];
+                        var array = new double[list.Count, length];
                         for (int i = 0; i < list.Count; ++i)
                         {
                             for (int j = 0; j < length; ++j)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Resources
 {
-    [TestFixture,Category("Resources")]
+    [TestFixture,Category(nameof(Resources))]
     class MaterialResourcesTest
     {
         [Test]

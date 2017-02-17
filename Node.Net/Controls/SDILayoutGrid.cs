@@ -16,9 +16,9 @@ namespace Node.Net.Controls
         {
             _treeView = new Node.Net.Controls.TreeView();
             _treeView.SelectedItemChanged += TreeView_SelectedItemChanged;
-            NavigationFrame.Views.Add("TreeView", _treeView);
+            NavigationFrame.Views.Add(nameof(TreeView), _treeView);
             _properties = new Node.Net.Controls.Properties();
-            SelectionFrame.Views.Add("Properties", _properties);
+            SelectionFrame.Views.Add(nameof(Properties), _properties);
             DataContextChanged += _DataContextChanged;
         }
 
