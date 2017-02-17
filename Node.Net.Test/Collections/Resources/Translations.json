@@ -1,0 +1,22 @@
+{
+  "Type": "Widget",
+  "X": "1 m",
+  "Y": "2 m",
+  "Z": "3 m",
+  "Height": "50 ft",
+  "Enabled": false,
+  "Hidden": true,
+  "Reference" :  null,
+  "foo": {
+    "Type": "Foo",
+    "X": "0.1 m",
+    "Y": "0.2 m",
+    "Z": "0.3 m",
+    "bar": {
+      "Type": "Bar",
+      "X": "0.01 m",
+      "Y": "0.02 m",
+      "Z": "0.03 m"
+    }
+  }
+}

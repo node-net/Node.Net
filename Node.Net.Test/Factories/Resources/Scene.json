@@ -1,0 +1,16 @@
+{
+  "sun": {
+    "Type" : "Sun"
+  },
+  "cube_0": {
+    "Type": "Cube"
+  },
+  "area_0": {
+    "Type": "Area",
+    "sphere_0": {
+      "Type": "Sphere",
+      "X": "1 m",
+      "Orientation" :  "45 degrees"
+    }
+  }
+}

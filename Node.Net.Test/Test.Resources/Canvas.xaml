@@ -1,0 +1,4 @@
+<Canvas Background="Yellow" Width="150" Height="100" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<TextBlock Canvas.Left="10" Canvas.Top="20">Hello</TextBlock>
+	<TextBlock Canvas.Right="10" Canvas.Bottom="20">World!</TextBlock>
+</Canvas>

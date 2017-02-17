@@ -1,0 +1,13 @@
+{
+  "Type": "Cylinder",
+  "X": "-100 ft",
+  "Y": "150 ft",
+  "Orientation": "-90 deg",
+  "Height": "70 ft",
+  "box": {
+    "Type": "Cube",
+    "X": "3 in",
+    "Z": "10 ft",
+    "Orientation": "0 deg"
+  }
+}

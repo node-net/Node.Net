@@ -1,0 +1,7 @@
+{
+  "Name": "ExampleA",
+  "childA": {
+    "Name": "childA",
+    "X" :  "1 m"
+  }
+}
