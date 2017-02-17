@@ -60,14 +60,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Beta\Factory.Test.cs" />
     <Compile Include="Release\Element.Test.cs" />
     <Compile Include="Release\Extensions_Test.cs" />
-    <Compile Include="Factories\Prototype\Factory.Test.cs" />
-    <Compile Include="Factories\Prototype\Foo.cs" />
-    <Compile Include="Factories\Prototype\IFoo.cs" />
-    <Compile Include="Factories\Prototype\IWidget.cs" />
-    <Compile Include="Factories\Prototype\Widget.cs" />
+    <Compile Include="Beta\Prototype\Factory.Test.cs" />
+    <Compile Include="Beta\Prototype\Foo.cs" />
+    <Compile Include="Beta\Prototype\IFoo.cs" />
+    <Compile Include="Beta\Prototype\IWidget.cs" />
+    <Compile Include="Beta\Prototype\Widget.cs" />
     <Compile Include="Release\Factory.Test.cs" />
     <Compile Include="Fixture.cs" />
     <Compile Include="Release\GlobalProperties.Test.cs" />
@@ -160,6 +159,7 @@
     <EmbeddedResource Include="Resources\Dictionary.Scene.A.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Factories\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
