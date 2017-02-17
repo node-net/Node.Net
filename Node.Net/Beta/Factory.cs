@@ -58,9 +58,6 @@ namespace Node.Net.Beta
             get { return factory.PrimaryModel3DHelperFunction; }
             set { factory.PrimaryModel3DHelperFunction = value; }
         }
-        private Internal.Factories.Factory factory = new Internal.Factories.Factory();
-
-        //public static ICollection Collect(this IDictionary dictionary, string typeName) => new Internal.IDictionaryExtension.Collect(dictionary, typeName);
-        
+        private Internal.Factories.Factory factory = new Internal.Factories.Factory();        
     }
 }

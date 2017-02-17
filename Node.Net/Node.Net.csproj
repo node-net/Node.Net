@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Beta\IDictionary.Extension.cs" />
     <Compile Include="Beta\Internal\Factories\ResourceFactory.cs" />
+    <Compile Include="Beta\Reader.cs" />
     <Compile Include="Collections\Controls\DictionaryExplorer.cs" />
     <Compile Include="Collections\Controls\InstanceCounts.cs" />
     <Compile Include="Collections\Controls\ListBox.cs" />
@@ -307,7 +308,6 @@
     <Compile Include="Release\Writer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Beta\Prototype\" />
     <Folder Include="Data\Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
