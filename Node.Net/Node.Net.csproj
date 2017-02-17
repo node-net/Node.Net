@@ -61,6 +61,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Beta\IDictionary.Extension.cs" />
     <Compile Include="Beta\Internal\Factories\ResourceFactory.cs" />
     <Compile Include="Collections\Controls\DictionaryExplorer.cs" />
     <Compile Include="Collections\Controls\InstanceCounts.cs" />

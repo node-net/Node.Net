@@ -13,19 +13,7 @@ namespace Node.Net.Collections.Internal
         //public Func<object, bool?> Filter { get; set; }
         public Func<object, bool?> DeepFilter { get; set; }
         #endregion
-        #region Construction
-        //public Collector() { }
-        /*
-        public Collector(IFilter filter)
-        {
-            if(filter != null) Filter = filter.Include;
-        }
-        public Collector(IFilter filter,IFilter deepFilter)
-        {
-            if (filter != null) Filter = filter.Include;
-            if (deepFilter != null) DeepFilter = deepFilter.Include;
-        }*/
-        #endregion
+
         #region CollectKeys
         public string[] CollectKeys(IDictionary dictionary,bool deep)
         {

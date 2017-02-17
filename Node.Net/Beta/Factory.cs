@@ -31,7 +31,11 @@ namespace Node.Net.Beta
             get { return factory.ManifestResourceAssemblies; }
             set { factory.ManifestResourceAssemblies = value; }
         }
-        public Dictionary<string, Type> IDictionaryTypes { get { return factory.IDictionaryTypes; } }
+        public Dictionary<string, Type> IDictionaryTypes
+        {
+            get { return factory.IDictionaryTypes; }
+            set { factory.IDictionaryTypes = value; }
+        }
         public Dictionary<Type, Type> AbstractTypes
         {
             get { return factory.AbstractTypes; }
@@ -55,5 +59,8 @@ namespace Node.Net.Beta
             set { factory.PrimaryModel3DHelperFunction = value; }
         }
         private Internal.Factories.Factory factory = new Internal.Factories.Factory();
+
+        //public static ICollection Collect(this IDictionary dictionary, string typeName) => new Internal.IDictionaryExtension.Collect(dictionary, typeName);
+        
     }
 }

@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Beta
 {
-    interface IBar : IDictionary { }
+    interface IBar : IDictionary
+    {
+        object Parent { get; }
+        string Name { get; }
+    }
     class Bar : Dictionary<string,dynamic> , IBar
     {
         public Bar() { Add("Type", nameof(Bar)); }
@@ -18,5 +22,8 @@ namespace Node.Net.Beta
                 Add(key.ToString(), data[key]);
             }
         }
+
+        public object Parent { get { return this.GetParent(); } }
+        public string Name { get { return this.GetName(); } }
     }
 }

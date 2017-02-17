@@ -1,4 +1,7 @@
 {
   "Type": "Widget",
-  "foo0": { "Type": "Foo" }
+  "foo0": {
+    "Type": "Foo",
+    "bar0": { "Type": "Bar" }
+  }
 }

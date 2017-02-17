@@ -53,7 +53,11 @@ namespace Node.Net.Beta.Internal.Factories
             set { AbstractFactory.ReadFunction = value; }
         }
         public Dictionary<Type,Type> AbstractTypes { get { return AbstractFactory; } }
-        public Dictionary<string,Type> IDictionaryTypes { get { return AbstractFactory.IDictionaryTypes; } }
+        public Dictionary<string,Type> IDictionaryTypes
+        {
+            get { return AbstractFactory.IDictionaryTypes; }
+            set { AbstractFactory.IDictionaryTypes = value; }
+        }
         public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction
         {
             get { return Model3DFactory.PrimaryModel3DHelperFunction; }

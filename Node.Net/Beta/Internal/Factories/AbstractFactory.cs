@@ -57,6 +57,7 @@ namespace Node.Net.Beta.Internal.Factories
                 if (dictionary != null)
                 {
                     var new_dictionary = IDictionaryExtension.ConvertTypes(dictionary, IDictionaryTypes, TypeKey);
+                    new_dictionary.DeepUpdateParents();
                     if (source != null && source.GetType() == typeof(string))
                     {
                         new_dictionary.SetFileName(source.ToString());

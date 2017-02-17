@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Beta
 {
-    interface IFoo : IDictionary { }
+    interface IFoo : IDictionary { object Parent { get; } }
     class Foo : Dictionary<string,dynamic>, IFoo
     {
         public Foo() { Add("Type", nameof(Foo)); }
@@ -18,5 +18,7 @@ namespace Node.Net.Beta
                 Add(key.ToString(), data[key]);
             }
         }
+
+        public object Parent { get { return this.GetParent(); } }
     }
 }

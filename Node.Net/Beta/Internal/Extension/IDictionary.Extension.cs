@@ -62,7 +62,14 @@ namespace Node.Net.Beta.Internal
             memory.Seek(0, SeekOrigin.Begin);
             return memory;
         }
-        public static ICollection Collect<T>(this IDictionary idictionary)
+        
+        public static IList Collect(this IDictionary idictionary,Type type)
+        {
+            var results = new List<object>();
+            _Collect(idictionary, type, results);
+            return results;
+        }
+        public static IList Collect<T>(this IDictionary idictionary)
         {
             var results = new List<object>();
             _Collect<T>(idictionary, results);
@@ -84,6 +91,22 @@ namespace Node.Net.Beta.Internal
                 }
             }
         }
+        private static void _Collect(this IDictionary idictionary, Type type,IList results)
+        {
+            foreach (var item in idictionary.Values)
+            {
+                if (item != null)
+                {
+                    if (type.IsAssignableFrom(item.GetType()))
+                    {
+                        if (!results.Contains(item)) results.Add(item);
+                    }
+                    var child_idictionary = item as IDictionary;
+                    if (child_idictionary != null) _Collect(child_idictionary, type,results);
+                }
+            }
+        }
+
 
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source)
         {
