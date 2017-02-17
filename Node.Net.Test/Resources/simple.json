@@ -1,7 +1,0 @@
-{
-  "string_0": "abc",
-  "bool_true": true,
-  "null": null,
-  "double_0": 1.23,
-  "array" :  [0,1,2,3,4]
-}
