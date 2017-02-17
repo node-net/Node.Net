@@ -119,6 +119,9 @@
     <Compile Include="Data\Extension\Regex.Extension.cs" />
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\Internal\IFactory.Extension.cs" />
+    <Compile Include="Data\Readers\DictionaryTypeConverter.cs" />
+    <Compile Include="Data\Readers\IDictionaryTypeConverter.cs" />
+    <Compile Include="Data\Readers\JsonReader.cs" />
     <Compile Include="Data\Security\Credential.cs" />
     <Compile Include="Data\Security\Credentials.cs" />
     <Compile Include="Data\Security\CredentialsList.cs" />
