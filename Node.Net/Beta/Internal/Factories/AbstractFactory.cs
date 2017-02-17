@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 
 namespace Node.Net.Beta.Internal.Factories
 {
@@ -41,9 +42,11 @@ namespace Node.Net.Beta.Internal.Factories
             if (instance != null) return instance;
 
             //if (ParentFactory != null) return CreateFromStream(target_type, ParentFactory.Create<Stream>(source),source);
-            return null;
+            return ResourceFactory.Create(target_type,source);
         }
 
+        public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
+        private ResourceFactory ResourceFactory = new ResourceFactory();
         private object CreateFromStream(Type target_type,Stream stream,object source)
         {
             if (stream == null) return null;

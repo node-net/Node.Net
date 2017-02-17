@@ -180,6 +180,7 @@
     <EmbeddedResource Include="Resources\Widget.0.json" />
     <EmbeddedResource Include="Resources\Widget.1.json" />
     <EmbeddedResource Include="Resources\Dictionary.0.json" />
+    <EmbeddedResource Include="Resources\Widget.2.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />
@@ -190,6 +191,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\mesh.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Widget.MeshGeometry.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

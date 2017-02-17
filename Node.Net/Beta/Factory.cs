@@ -8,6 +8,10 @@ namespace Node.Net.Beta
 {
     public sealed class Factory : IFactory
     {
+        public Factory()
+        {
+            ReadFunction = new Readers.Reader().Read;
+        }
         public T Create<T>() => Internal.IFactoryExtension.Create<T>(this);
         public T Create<T>(object source) => Internal.IFactoryExtension.Create<T>(this, source);
         public object Create(Type targetType, object source) => factory.Create(targetType, source);

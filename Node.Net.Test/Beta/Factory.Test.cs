@@ -23,11 +23,18 @@ namespace Node.Net.Beta
                 }
             };
             factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+            //var mesh = factory.Create<MeshGeometry3D>("Widget.MeshGeometry3D.xaml");
+            //Assert.NotNull(mesh, nameof(mesh));
+            //factory.Resources.Add("Widget", factory.Create<MeshGeometry3D>("Widget.MeshGeometry3D.xaml"));
+            //Assert.NotNull(factory.Resources["Widget"] as MeshGeometry3D,"Widget MeshGeometry3D");
 
-            Type[] types = { typeof(IDictionary)};
+            Type[] types = { typeof(IDictionary),typeof(IWidget)};
             Interfaces.IFactoryTest.Factory_Test_DefaultConstructor(factory, types);
             Interfaces.IFactoryTest.Factory_Test_IDictionaryConstructor(factory, types);
             Interfaces.IFactoryTest.Factory_Test_CreateFromManifestResourceStream(factory, types);
+
+            //mesh = factory.Create<MeshGeometry3D>("Widget");
+            //Assert.NotNull(mesh, "MeshGeometry3D 'Widget'");
         }
         [Test]
         public void Factory_Create()
@@ -93,7 +100,7 @@ namespace Node.Net.Beta
         {
             Assert.True(TestFactory.AbstractTypes.Count > 0);
             Assert.True(TestFactory.FactoryFunctions.Count > 0);
-            Assert.AreEqual(1,TestFactory.Resources.Count);
+            Assert.AreEqual(2,TestFactory.Resources.Count);
         }
         [Test]
         public void Prototype_Factory_States()
@@ -135,6 +142,11 @@ namespace Node.Net.Beta
             Assert.NotNull(widget1,nameof(widget1));
             var foo = widget1["foo0"] as IFoo;
             Assert.NotNull(foo, nameof(foo));
+
+            factory.Resources.Add("Widget", factory.Create<MeshGeometry3D>("Widget.MeshGeometry3D.xaml"));
+            var mesh = factory.Create<MeshGeometry3D>(widget1);
+            //Assert.NotNull(mesh, nameof(mesh));
         }
+      
     }
 }
