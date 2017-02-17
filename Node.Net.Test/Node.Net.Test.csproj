@@ -60,13 +60,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Beta\Bar.cs" />
     <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Release\Element.Test.cs" />
     <Compile Include="Release\Extensions_Test.cs" />
     <Compile Include="Beta\Factory.Test.cs" />
     <Compile Include="Beta\Foo.cs" />
-    <Compile Include="Beta\IFoo.cs" />
-    <Compile Include="Beta\IWidget.cs" />
     <Compile Include="Beta\Widget.cs" />
     <Compile Include="Release\Factory.Test.cs" />
     <Compile Include="Fixture.cs" />
@@ -181,6 +180,8 @@
     <EmbeddedResource Include="Resources\Widget.1.json" />
     <EmbeddedResource Include="Resources\Dictionary.0.json" />
     <EmbeddedResource Include="Resources\Widget.2.json" />
+    <EmbeddedResource Include="Resources\Foo.0.json" />
+    <EmbeddedResource Include="Resources\Bar.0.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />
@@ -196,7 +197,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Widget.MeshGeometry.xaml">
+    <EmbeddedResource Include="Resources\Widget.MeshGeometry3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Foo.Model3D.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

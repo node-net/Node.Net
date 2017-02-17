@@ -14,21 +14,24 @@ namespace Node.Net.Beta.Internal.Factories
         public static Factory Default { get; } = new Factory();
         public Factory()
         {
+            Model3DFactory.ParentFactory = this;
             CollectionsFactory.StreamFactory = StreamFactory;
             AbstractFactory.ParentFactory = this;
             FactoryFunctions = new Dictionary<Type, Func<Type, object, object>>
             {
-                
+                {typeof(Stream), StreamFactory.Create },
                 {typeof(String),new StringFactory().Create },
                 {typeof(Color),new ColorFactory().Create },
                 {typeof(Brush),new BrushFactory {ParentFactory=this }.Create },
                 {typeof(Matrix3D),new Matrix3DFactory().Create },
                 {typeof(Transform3D), new Transform3DFactory {ParentFactory = this }.Create },
                 {typeof(MeshGeometry3D),new MeshGeometry3DFactory {ParentFactory=this }.Create },
+                {typeof(GeometryModel3D),new GeometryModel3DFactory {ParentFactory=this }.Create },
+                {typeof(Model3D),Model3DFactory.Create },
                 {typeof(Visual3D), new Visual3DFactory {ParentFactory = this }.Create },
                 {typeof(IReadOnlyDocument), CollectionsFactory.Create },
-                {typeof(object), AbstractFactory.Create },
-                {typeof(Stream), StreamFactory.Create }
+                {typeof(object), AbstractFactory.Create }
+                
             };
         }
         public ResourceDictionary Resources
@@ -36,9 +39,8 @@ namespace Node.Net.Beta.Internal.Factories
             get { return AbstractFactory.Resources; }
             set { AbstractFactory.Resources = value; }
         }
-        //private ResourceFactory ResourceFactory = new ResourceFactory();
         public Dictionary<Type, Func<Type, object, object>> FactoryFunctions { get; private set; }
-        private StreamFactory StreamFactory { get; } = new StreamFactory();
+        
         public List<Assembly> ManifestResourceAssemblies
         {
             get { return StreamFactory.ResourceAssemblies; }
@@ -51,8 +53,12 @@ namespace Node.Net.Beta.Internal.Factories
             set { AbstractFactory.ReadFunction = value; }
         }
         public Dictionary<Type,Type> AbstractTypes { get { return AbstractFactory; } }
-        private AbstractFactory AbstractFactory { get; } = new AbstractFactory();
         public Dictionary<string,Type> IDictionaryTypes { get { return AbstractFactory.IDictionaryTypes; } }
+        public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction
+        {
+            get { return Model3DFactory.PrimaryModel3DHelperFunction; }
+            set { Model3DFactory.PrimaryModel3DHelperFunction = value; }
+        }
         public object Create(Type target_type, object source)
         {
             foreach (var type in FactoryFunctions.Keys)
@@ -66,5 +72,9 @@ namespace Node.Net.Beta.Internal.Factories
             if (source != null && Resources.Contains(source)) return Resources[source];
             return null;
         }
+
+        private Model3DFactory Model3DFactory { get; } = new Model3DFactory();
+        private StreamFactory StreamFactory { get; } = new StreamFactory();
+        private AbstractFactory AbstractFactory { get; } = new AbstractFactory();
     }
 }

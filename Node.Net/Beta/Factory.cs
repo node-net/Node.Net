@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta
 {
@@ -46,6 +48,11 @@ namespace Node.Net.Beta
         {
             get { return factory.ReadFunction; }
             set { factory.ReadFunction = value; }
+        }
+        public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction
+        {
+            get { return factory.PrimaryModel3DHelperFunction; }
+            set { factory.PrimaryModel3DHelperFunction = value; }
         }
         private Internal.Factories.Factory factory = new Internal.Factories.Factory();
     }

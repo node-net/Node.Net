@@ -6,12 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net.Interfaces
 {
     class IFactoryTest
     {
-        public static void Factory_Test_DefaultConstructor(IFactory factory,Type[] types)
+        public static void IFactory_Test_DefaultConstructor(IFactory factory,Type[] types)
         {
             foreach (var type in types)
             {
@@ -22,7 +23,7 @@ namespace Node.Net.Interfaces
             }
         }
 
-        public static void Factory_Test_IDictionaryConstructor(IFactory factory,Type[] types)
+        public static void IFactory_Test_IDictionaryConstructor(IFactory factory,Type[] types)
         {
             foreach (var type in types)
             {
@@ -34,7 +35,7 @@ namespace Node.Net.Interfaces
             }
         }
 
-        public static void Factory_Test_CreateFromManifestResourceStream(IFactory factory, Type[] types)
+        public static void IFactory_Test_CreateFromManifestResourceStream(IFactory factory, Type[] types)
         {
             foreach (var type in types)
             {
@@ -64,6 +65,18 @@ namespace Node.Net.Interfaces
             }
         }
 
+        public static void IFactory_Test_CreateMedia3DFromIDictionary(IFactory factory,IDictionary data)
+        {
+            Assert.NotNull(data);
 
+            var v3d = factory.Create<Visual3D>(data);
+            Assert.NotNull(v3d, nameof(v3d));
+
+            var m3d = factory.Create<Model3D>(data);
+            Assert.NotNull(m3d, nameof(m3d));
+
+            
+
+        }
     }
 }

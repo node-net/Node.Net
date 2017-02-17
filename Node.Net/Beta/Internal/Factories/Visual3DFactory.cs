@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -12,6 +7,8 @@ namespace Node.Net.Beta.Internal.Factories
     {
         public object Create(Type target_type, object source)
         {
+            if (target_type == null) return null;
+            if (target_type != typeof(Visual3D)) return null;
             if (ParentFactory != null)
             {
                 var model3D = ParentFactory.Create<Model3D>(source);

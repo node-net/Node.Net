@@ -12,6 +12,8 @@ namespace Node.Net.Beta.Internal.Factories
     {
         public object Create(Type target_type, object source)
         {
+            if (target_type == null) return null;
+            if (target_type != typeof(Model3D)) return null;
             if (source != null)
             {
                 if (typeof(IDictionary).IsAssignableFrom(source.GetType())) return CreateFromDictionary(source as IDictionary);
@@ -78,6 +80,10 @@ namespace Node.Net.Beta.Internal.Factories
             {
                 var geometry3D = ParentFactory.Create(typeof(GeometryModel3D), source) as GeometryModel3D;
                 if (geometry3D != null) return geometry3D;
+
+                var type = source.Get<string>("Type");
+                var model3D = ParentFactory.Create<Model3D>($"{type}.Model3D.");
+                if (model3D != null) return model3D;
             }
             return null;
         }

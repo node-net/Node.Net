@@ -17,8 +17,8 @@ namespace Node.Net.Beta.Internal.Factories
             {
                 if(source != null)
                 {
-                    var stream = ParentFactory.Create<Stream>(source);
-
+                    //var stream = ParentFactory.Create<Stream>(source);
+                    return Create(target_type, ParentFactory.Create<IDictionary>(source));
                 }
             }
             return null;
@@ -33,9 +33,8 @@ namespace Node.Net.Beta.Internal.Factories
                 if (source != null)
                 {
                     var type = source.Get<string>("Type");
-                    return ParentFactory.Create<MeshGeometry3D>(type);
+                    return ParentFactory.Create<MeshGeometry3D>($"{type}.MeshGeometry3D.");
                 }
-
             }
 
             return null;

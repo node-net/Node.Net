@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Beta
 {
-    interface IFoo : IDictionary { }
-    class Foo : Dictionary<string,dynamic>, IFoo
+    interface IBar : IDictionary { }
+    class Bar : Dictionary<string,dynamic> , IBar
     {
-        public Foo() { Add("Type", nameof(Foo)); }
-        public Foo(IDictionary data)
+        public Bar() { Add("Type", nameof(Bar)); }
+        public Bar(IDictionary data)
         {
             foreach (var key in data.Keys)
             {
