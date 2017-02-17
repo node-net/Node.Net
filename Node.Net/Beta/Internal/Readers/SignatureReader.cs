@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Node.Net.Readers
+namespace Node.Net.Beta.Internal.Readers
 {
-    public sealed class SignatureReader : IRead, IDisposable
+    class SignatureReader : IDisposable
     {
         public int MinimumBytes = 1024;
-        
+
         public void Dispose()
         {
             Dispose(true);
@@ -22,7 +24,7 @@ namespace Node.Net.Readers
         {
             if (disposing)
             {
-                if(memoryStream != null)
+                if (memoryStream != null)
                 {
                     memoryStream.Dispose();
                     memoryStream = null;

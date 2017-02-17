@@ -108,32 +108,15 @@ namespace Node.Net.Readers
                     var instance = readers[signatureReaders[signature_key]](stream);
                     if(instance != null && Types != null && typeof(IDictionary).IsAssignableFrom(instance.GetType()))
                     {
-                        /*
-                        if(ConvertTypesFunction != null)
-                        {
-                            return ConvertTypesFunction(instance as IDictionary, Types, TypeKey);
-                        }*/
                         instance = IDictionaryExtension.ConvertTypes(instance as IDictionary, Types, TypeKey);
                     }
-                    /*
-                    if (instance != null && Types != null && typeof(Node.Net.Readers.IElement).IsAssignableFrom(instance.GetType()))
-                    {
-                        instance = Node.Net.Readers.IElementExtension.ConvertTypes(instance as Node.Net.Readers.IElement, Types, TypeKey);
-                    }
-                    */
                     return instance;
                 }
             }
             if (UnrecognizedSignatureReader != null) return UnrecognizedSignatureReader.Read(original_stream);
             throw new System.Exception($"unrecognized signature '{signature.HexString}' {signature.Text}");
         }
-        /*
-        public Func<IDictionary, Dictionary<string, Type>, string,object> ConvertTypesFunction { get; set; } = DefaultConvertTypesFunction;
-        public static object DefaultConvertTypesFunction(IDictionary source,Dictionary<string,Type> types,string typeKey)
-        {
-            return IDictionaryExtension.ConvertTypes(source, types, typeKey);
-        }*/
-        public object Open(string name)//string openFileDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*")
+        public object Open(string name)
         {
             if (name.IsFileDialogFilter())
             {
