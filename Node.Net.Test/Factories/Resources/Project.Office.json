@@ -1,0 +1,37 @@
+{
+  "Type": "Project",
+  "floor": {
+    "Type": "Floor",
+    "Length": 6,
+    "Width": 4,
+    "desk": {
+      "Type": "Desk",
+      "X": "1 m",
+      "Y": "1 m",
+      "Z": "0 m"
+    },
+    "paper_airplane": {
+      "Type": "PaperAirplane",
+      "X": "3 m",
+      "Y": "4 m",
+      "Z": "2 m",
+      "Yaw": "5 degrees",
+      "Pitch": "30 degrees",
+      "Roll" : "5 degrees"
+    }
+  },
+  "diagnostic": {
+    "internal": {
+      "code_coverage": {
+        "null": null,
+        "bool_false": false,
+        "bool_true": true,
+        "number_a": 25,
+        "int64": 2147483658,
+        "single": 1.23,
+        "double": 3.5e38,
+        "tags": [ "test", "example" ]
+      }
+    }
+  }
+}

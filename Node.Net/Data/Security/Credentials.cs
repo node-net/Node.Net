@@ -2,9 +2,9 @@
 
 namespace Node.Net.Data.Security
 {
-    public class Credentials : Dictionary<string, dynamic>, ICredentials,Model.IModel
+    public class Credentials : Dictionary<string, dynamic>, ICredentials//,Model.IModel
     {
-        public Credentials() { this.SetTypeName(); }
+        public Credentials() { this["Type"] = "Credentials"; }
 
         private readonly IProtection _protection = new CurrentUserProtection();
         public IProtection Protection

@@ -1,0 +1,10 @@
+{
+    "Sunlight": { "Type": "Sunlight" },
+    "Table": {
+        "Top": { "Type": "Cube.Bottom", "Length": "3 ft", "Width": "3 ft", "Height": "1 in" },
+        "Leg0": { "Type": "Cube.Top", "X": "-1.25 ft", "Y": "-1.25 ft", "Length": "6 in", "Width": "6 in", "Height": "3 ft" },
+        "Leg1": { "Type": "Cube.Top", "X": "-1.25 ft", "Y": "1.25 ft", "Length": "6 in", "Width": "6 in", "Height": "3 ft" },
+        "Leg2": { "Type": "Cube.Top", "X": "1.25 ft", "Y": "1.25 ft", "Length": "6 in", "Width": "6 in", "Height": "3 ft" },
+        "Leg3": { "Type": "Cube.Top", "X": "1.25 ft", "Y": "-1.25 ft","Length": "6 in", "Width": "6 in", "Height": "3 ft" }
+    }
+}

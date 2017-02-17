@@ -1,0 +1,20 @@
+﻿using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+
+namespace Node.Net
+{
+    [TestFixture]
+    class WriterTest
+    {
+        [Test, Explicit, Apartment(ApartmentState.STA)]
+        public void Writer_Save()
+        {
+            var data = new Dictionary<string, dynamic>();
+            Writer.Default.Save(data);
+        }
+    }
+}

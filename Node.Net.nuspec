@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Node.Net</id>
+    <version>1.0.315</version>
+    <authors>Node.Net</authors>
+    <owners>Node.Net</owners>
+    <licenseUrl>https://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/node-net/Node.Net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# Library</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2015-2016</copyright>
+    <tags>JSON</tags>
+  </metadata>
+  <files>
+    <file src="lib/Net4.6/Node.Net.dll" target="lib/net46"/>
+    <file src="LICENSE"/>
+  </files>
+</package>
