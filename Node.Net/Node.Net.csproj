@@ -120,6 +120,7 @@
     <Compile Include="Data\Extension\Regex.Extension.cs" />
     <Compile Include="Data\Interfaces.cs" />
     <Compile Include="Data\Internal\IFactory.Extension.cs" />
+    <Compile Include="Data\Reader.cs" />
     <Compile Include="Data\Readers\BytesReader.cs" />
     <Compile Include="Data\Readers\DictionaryTypeConverter.cs" />
     <Compile Include="Data\Readers\IDictionaryTypeConverter.cs" />

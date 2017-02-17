@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Beta\Bar.cs" />
+    <Compile Include="Beta\Reader.Test.cs" />
     <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Release\Element.Test.cs" />
     <Compile Include="Release\Extensions_Test.cs" />
