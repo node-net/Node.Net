@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace Node.Net.Beta.Internal.Factories
 {
-    sealed class BrushFactory : Node.Net.Beta.IFactory
+    sealed class BrushFactory : IFactory
     {
         public object Create(Type target_type, object source)
         {

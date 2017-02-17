@@ -8,9 +8,59 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta
 {
-    [TestFixture]
+    [TestFixture,Category("Beta")]
     class FactoryTest
     {
+        [Test]
+        public void Factory_Test()
+        {
+            var factory = new Factory
+            {
+                AbstractTypes = new Dictionary<Type, Type>
+                {
+                    {typeof(IWidget),typeof(Widget) },
+                    {typeof(IDictionary),typeof(Dictionary<string,dynamic>) }
+                }
+            };
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+            Type[] types = { typeof(IDictionary)};
+            Interfaces.IFactoryTest.Factory_Test_DefaultConstructor(factory, types);
+            Interfaces.IFactoryTest.Factory_Test_IDictionaryConstructor(factory, types);
+            Interfaces.IFactoryTest.Factory_Test_CreateFromManifestResourceStream(factory, types);
+        }
+        [Test]
+        public void Factory_Create()
+        {
+            var factory = new Beta.Factory
+            {
+                AbstractTypes = new Dictionary<Type, Type>
+                {
+                    {typeof(IDictionary),typeof(Dictionary<string,dynamic>) }
+                }
+            };
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+            Type[] types = { typeof(IDictionary) };
+            foreach (var type in types)
+            {
+                // Default Construction
+                var instance = factory.Create(type, null);
+                Assert.NotNull(instance, $"Default Construction of {type.FullName}");
+                Assert.True(type.IsAssignableFrom(instance.GetType()), $"Default Construction {type.FullName} is not assignable from {instance.GetType().FullName}");
+
+                // IDictionary Constructor
+                var name = type.Name.Substring(1);
+                instance = factory.Create(type, new Dictionary<string, dynamic> { { "Type", name } });
+                Assert.NotNull(instance, $"IDictionary Construction of {type.FullName}");
+                Assert.True(type.IsAssignableFrom(instance.GetType()), $"IDictionary Construction {type.FullName} is not assignable from {instance.GetType().FullName}");
+
+                // ManifestResource Construction
+                var manifestResourceName = $"{name}.0.json";
+                instance = factory.Create(type, manifestResourceName);
+                Assert.NotNull(instance, $"ManifestResource Construction of {type.FullName} from {manifestResourceName}");
+                Assert.True(type.IsAssignableFrom(instance.GetType()), $"ManifestResource Construction {type.FullName} is not assignable from {instance.GetType().FullName} {manifestResourceName}");
+            }
+        }
         static Dictionary<Type, Type> AbstractTypes = new Dictionary<Type, Type>
         {
             {typeof(IWidget),typeof(Widget) },
@@ -58,35 +108,7 @@ namespace Node.Net.Beta
         public void Prototype_Factory_Create_Null()
         {
             Assert.IsNull(TestFactory.Create(null,null));
-        }
-
-        [Test]
-        public void Prototype_Factory_Create_Default()
-        {
-            Assert.NotNull(TestFactory.Create<IWidget>());
-            foreach(var type in DefaultTypes)
-            {
-                var instance = TestFactory.Create(type, null);
-                Assert.NotNull(instance, $"{type.FullName}");
-            }
-        }
-        [Test]
-        public void Prototype_Factory_Create_From_IDictionary()
-        {
-            foreach(var type in FromIDictionaryTypes)
-            {
-                var idictionaries = GetIDictionaries(type);
-                Assert.True(idictionaries.Count > 0,$"no test dictionaries for type {type.FullName}");
-
-                foreach(var dictionary in idictionaries)
-                {
-                    var instance = TestFactory.Create(type, dictionary);
-                    Assert.NotNull(instance, $"unable to create  of type {type.FullName} from IDictionary");
-
-                    var matrix3d = TestFactory.Create<Matrix3D>(instance);
-                }
-            }
-        }
+        }     
 
         private List<IDictionary> GetIDictionaries(Type type)
         {

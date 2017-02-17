@@ -127,6 +127,7 @@
     <Compile Include="Data\Security\IProtection.cs" />
     <Compile Include="Data\Security\IProtection.Extension.cs" />
     <Compile Include="Data\Security\SymmetricAlgorithm.Extension.cs" />
+    <Compile Include="Interfaces\IFactory.cs" />
     <Compile Include="Release\Document.cs" />
     <Compile Include="Release\Element.cs" />
     <Compile Include="Extensions\Assembly.Extension.cs" />
@@ -152,7 +153,6 @@
     <Compile Include="Beta\Factory.cs" />
     <Compile Include="Beta\IDocument.cs" />
     <Compile Include="Beta\IElement.cs" />
-    <Compile Include="Beta\IFactory.cs" />
     <Compile Include="Beta\Internal\Collections\Dictionary.cs" />
     <Compile Include="Beta\Internal\Collections\MetaData.cs" />
     <Compile Include="Beta\Internal\Collections\ReadOnlyDictionary.cs" />

@@ -60,6 +60,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Release\Element.Test.cs" />
     <Compile Include="Release\Extensions_Test.cs" />
     <Compile Include="Beta\Factory.Test.cs" />
@@ -159,9 +160,7 @@
     <EmbeddedResource Include="Resources\Dictionary.Scene.A.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Beta\Prototype\" />
     <Folder Include="Factories\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Text.Sample.A.txt" />
@@ -180,6 +179,7 @@
     <EmbeddedResource Include="Resources\IWidget.0.json" />
     <EmbeddedResource Include="Resources\Widget.0.json" />
     <EmbeddedResource Include="Resources\Widget.1.json" />
+    <EmbeddedResource Include="Resources\Dictionary.0.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />

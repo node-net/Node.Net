@@ -7,3 +7,5 @@ task :publish  do
 		Git.tag File.dirname(__FILE__), VERSION
 	end
 end
+
+# version 1.0.314 LOC 5312
