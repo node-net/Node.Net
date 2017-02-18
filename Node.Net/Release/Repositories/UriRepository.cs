@@ -16,10 +16,12 @@ namespace Node.Net.Repositories
                 case "http":
                 case "https":
                     {
-                        var webClient = new WebClient();
-                        using (Stream stream = webClient.OpenRead(name))
+                        using (var webClient = new WebClient())
                         {
-                            return ReadFunction(stream);
+                            using (Stream stream = webClient.OpenRead(name))
+                            {
+                                return ReadFunction(stream);
+                            }
                         }
                     }
                 case "file":

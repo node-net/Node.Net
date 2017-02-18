@@ -10,7 +10,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta
 {
-    [TestFixture,Category("Beta")]
+    [TestFixture,Category(nameof(Beta))]
     class View3DTest
     {
         [Test,Apartment(ApartmentState.STA),Explicit]

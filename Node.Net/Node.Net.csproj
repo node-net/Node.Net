@@ -278,7 +278,7 @@
     <Compile Include="Release\GlobalFunctions.cs" />
     <Compile Include="Deprecated\Interfaces\IChild.cs" />
     <Compile Include="Extensions\IDictionary.Extension.cs" />
-    <Compile Include="Interfaces\IGetDataSet.cs" />
+    <Compile Include="Deprecated\Interfaces\IGetDataSet.cs" />
     <Compile Include="Interfaces\IMetaData.cs" />
     <Compile Include="Interfaces\IMetaDataManager.cs" />
     <Compile Include="Interfaces\IFilter.cs" />
