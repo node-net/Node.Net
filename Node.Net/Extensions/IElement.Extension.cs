@@ -28,7 +28,7 @@ namespace Node.Net
         {
             using (MemoryStream memory = new MemoryStream())
             {
-                new Writers.JsonWriter { Format = Writers.JsonFormat.Indented }.Write(memory, element);
+                new Deprecated.Writers.JsonWriter { Format = Deprecated.Writers.JsonFormat.Indented }.Write(memory, element);
                 memory.Seek(0, SeekOrigin.Begin);
                 using (StreamReader sr = new StreamReader(memory))
                 {

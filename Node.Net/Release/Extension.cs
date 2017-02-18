@@ -47,7 +47,7 @@ namespace Node.Net
 
 
         #region IWrite
-        public static string WriteToString(this Writers.IWrite write, object value) => Writers.IWriteExtension.WriteToString(write, value);
+        public static string WriteToString(this Deprecated.Writers.IWrite write, object value) => Deprecated.Writers.IWriteExtension.WriteToString(write, value);
         #endregion
 
         #region IGetDataSet

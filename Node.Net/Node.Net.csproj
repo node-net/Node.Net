@@ -310,13 +310,13 @@
     <Compile Include="Release\Repository.cs" />
     <Compile Include="Resources\MaterialResources.cs" />
     <Compile Include="Resources\Resources.cs" />
-    <Compile Include="Writers\BitmapSourceWriter.cs" />
-    <Compile Include="Writers\IWrite.cs" />
-    <Compile Include="Writers\IWrite.Extension.cs" />
-    <Compile Include="Writers\JsonWriter.cs" />
-    <Compile Include="Writers\Writer.cs" />
-    <Compile Include="Writers\XmlWriter.cs" />
-    <Compile Include="Release\Writer.cs" />
+    <Compile Include="Deprecated\Writers\BitmapSourceWriter.cs" />
+    <Compile Include="Deprecated\Writers\IWrite.cs" />
+    <Compile Include="Deprecated\Writers\IWrite.Extension.cs" />
+    <Compile Include="Deprecated\Writers\JsonWriter.cs" />
+    <Compile Include="Deprecated\Writers\Writer.cs" />
+    <Compile Include="Deprecated\Writers\XmlWriter.cs" />
+    <Compile Include="Deprecated\Writer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Deprecated\Data\Services\" />

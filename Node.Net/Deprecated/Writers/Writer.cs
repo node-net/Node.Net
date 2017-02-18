@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
 
-namespace Node.Net.Writers
+namespace Node.Net.Deprecated.Writers
 {
     public class Writer : IWrite
     {

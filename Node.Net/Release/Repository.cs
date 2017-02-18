@@ -27,7 +27,7 @@ namespace Node.Net
                     DefaultDocumentType = typeof(Dictionary<string, dynamic>),
                     DefaultObjectType = typeof(Dictionary<string, dynamic>)
                 }.Read,
-                WriteFunction = Writer.Default.Write
+                WriteFunction = Deprecated.Writer.Default.Write
             };
     }
 }

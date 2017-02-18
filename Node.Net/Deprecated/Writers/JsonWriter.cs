@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using static System.Environment;
 
-namespace Node.Net.Writers
+namespace Node.Net.Deprecated.Writers
 {
     public enum JsonFormat { Compact, Indented };
     public class JsonWriter : IWrite

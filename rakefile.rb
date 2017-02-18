@@ -1,4 +1,4 @@
-VERSION='1.0.328'
+VERSION='1.0.329'
 require 'dev'
 
 task :publish  do
@@ -9,3 +9,4 @@ task :publish  do
 end
 
 # version 1.0.314 LOC 5312
+# version 1.0.328 LOC 6287

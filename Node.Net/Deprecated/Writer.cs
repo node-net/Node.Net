@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net
+namespace Node.Net.Deprecated
 {
     public sealed class Writer
     {
@@ -16,6 +16,6 @@ namespace Node.Net
         public void Write(string filename,object value){ writer.Write(filename, value); }
         public void Save(object value,string saveAsDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*") { writer.Save(value, saveAsDialogFilter); }
         public void SaveAs(object value,string saveAsDialogFilter = "JSON Files (.json)|*.json|All Files (*.*)|*.*") { writer.SaveAs(value, saveAsDialogFilter); }
-        private readonly global::Node.Net.Writers.Writer writer = new global::Node.Net.Writers.Writer();
+        private readonly global::Node.Net.Deprecated.Writers.Writer writer = new global::Node.Net.Deprecated.Writers.Writer();
     }
 }

@@ -96,7 +96,7 @@ namespace Node.Net
         {
             using (MemoryStream memory = new MemoryStream())
             {
-                var writer = new Node.Net.Writers.JsonWriter { Format = Writers.JsonFormat.Indented };
+                var writer = new Node.Net.Deprecated.Writers.JsonWriter { Format = Deprecated.Writers.JsonFormat.Indented };
                 writer.Write(memory, source);
                 memory.Flush();
                 memory.Seek(0, SeekOrigin.Begin);

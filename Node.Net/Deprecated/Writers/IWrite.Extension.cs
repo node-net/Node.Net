@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Writers
+namespace Node.Net.Deprecated.Writers
 {
     public static class IWriteExtension
     {

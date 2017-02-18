@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Node.Net.Writers
+namespace Node.Net.Deprecated.Writers
 {
     public class BitmapSourceWriter : IWrite
     {

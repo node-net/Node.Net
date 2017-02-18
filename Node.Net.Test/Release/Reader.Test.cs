@@ -36,7 +36,7 @@ namespace Node.Net
 
                     // Should be able to write what was read
                     var tmp_filename = Path.GetTempFileName();
-                    Writer.Default.Write(tmp_filename, value);
+                    Deprecated.Writer.Default.Write(tmp_filename, value);
                     File.Delete(tmp_filename);
                 }
             }

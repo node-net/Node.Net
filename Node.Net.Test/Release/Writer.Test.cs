@@ -14,7 +14,7 @@ namespace Node.Net
         public void Writer_Save()
         {
             var data = new Dictionary<string, dynamic>();
-            Writer.Default.Save(data);
+            Deprecated.Writer.Default.Save(data);
         }
     }
 }
