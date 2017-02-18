@@ -1,13 +1,11 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Xml;
 
 namespace Node.Net
 {
@@ -54,7 +52,7 @@ namespace Node.Net
             Assert.NotNull(document, nameof(document));
 
             //var itemsSource = document.ItemsSource;
-            foreach(var item in document.Keys)
+            foreach (var item in document.Keys)
             {
                 var d = document[item] as IElement;
                 //var d = item as Collections.Dictionary;
@@ -73,24 +71,28 @@ namespace Node.Net
         public void Reader_Open()
         {
             Assert.NotNull(Reader.Default.Open("simple.json"), "simple.json");
-            Assert.Throws<Exception>(()=>Reader.Default.Open("doesNotExist.json"), "doesNotExist.json");
+            Assert.Throws<Exception>(() => Reader.Default.Open("doesNotExist.json"), "doesNotExist.json");
             Assert.Throws<Exception>(() => Reader.Default.Open("corrupt.json"), "corrupt.json");
         }
 
         [Test]
         public void Reader_Parent_References()
         {
-            var value = new Reader().Read(typeof(ReaderTest).Assembly.GetStream("Scene.Cubes.json")) as IDictionary;
+            IDictionary value;
+            using (var reader = new Reader())
+            {
+                value = reader.Read(typeof(ReaderTest).Assembly.GetStream("Scene.Cubes.json")) as IDictionary;
+            }
             var instances = value.Collect();
-            foreach(var key in instances.Keys)
+            foreach (var key in instances.Keys)
             {
                 var child = instances[key] as IDictionary;
-                if(child != null)
+                if (child != null)
                 {
                     Assert.NotNull(child.GetParent());
                     Assert.AreSame(value, child.GetRootAncestor());
                 }
-               
+
             }
         }
 

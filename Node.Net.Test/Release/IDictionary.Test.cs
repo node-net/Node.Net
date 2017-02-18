@@ -16,16 +16,18 @@ namespace Node.Net.Tests
         [TestCase("States.Partial.json", "Softball", false)]
         public void IDictionary_CollectKeys_Value(string name, string key_value, bool contains_value)
         {
-            var reader = new Node.Net.Reader
+            using (var reader = new Node.Net.Reader
             {
                 DefaultDocumentType = typeof(Dictionary<string, dynamic>),
                 DefaultObjectType = typeof(Dictionary<string, dynamic>)
-            };
+            })
+            {
 
-            // abc
-            var data = reader.Read(name) as IDictionary;
-            var keys = new List<string>(data.CollectKeys());
-            Assert.AreEqual(contains_value, keys.Contains(key_value));
+                // abc
+                var data = reader.Read(name) as IDictionary;
+                var keys = new List<string>(data.CollectKeys());
+                Assert.AreEqual(contains_value, keys.Contains(key_value));
+            }
         }
         #endregion
         #region Collect
@@ -35,16 +37,18 @@ namespace Node.Net.Tests
         [TestCase("States.Partial.json", "Name", 127)]
         public void IDictionary_Collect_StringValues(string name, string key_value, int count)
         {
-            var reader = new Node.Net.Reader
+            using (var reader = new Node.Net.Reader
             {
                 DefaultDocumentType = typeof(Dictionary<string, dynamic>),
                 DefaultObjectType = typeof(Dictionary<string, dynamic>)
-            };
+            })
+            {
 
-            // abc
-            var dictionary = reader.Read(name) as IDictionary;
-            var keys = dictionary.Collect<string>(null,Filters.GetStringFilter(key_value));
-            Assert.AreEqual(count, keys.Count);
+                // abc
+                var dictionary = reader.Read(name) as IDictionary;
+                var keys = dictionary.Collect<string>(null, Filters.GetStringFilter(key_value));
+                Assert.AreEqual(count, keys.Count);
+            }
         }
         [Test]
         [TestCase("States.Partial.json", "State", false, 2)]

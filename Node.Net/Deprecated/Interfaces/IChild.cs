@@ -1,4 +1,4 @@
-﻿namespace Node.Net
+﻿namespace Node.Net.Deprecated
 {
     public interface IChild
     {

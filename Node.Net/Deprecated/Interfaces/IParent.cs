@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-namespace Node.Net
+namespace Node.Net.Deprecated
 {
     public interface IParent
     {
