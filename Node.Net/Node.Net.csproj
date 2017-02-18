@@ -163,6 +163,7 @@
     <Compile Include="Deprecated\Data\Writers\Writer.cs" />
     <Compile Include="Deprecated\Data\Writers\XmlWriter.cs" />
     <Compile Include="Interfaces\IFactory.cs" />
+    <Compile Include="Interfaces\IWrite.cs" />
     <Compile Include="Interfaces\IRead.cs" />
     <Compile Include="Release\Document.cs" />
     <Compile Include="Release\Element.cs" />
