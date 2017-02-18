@@ -184,6 +184,7 @@
     <EmbeddedResource Include="Resources\Widget.2.json" />
     <EmbeddedResource Include="Resources\Foo.0.json" />
     <EmbeddedResource Include="Resources\Bar.0.json" />
+    <EmbeddedResource Include="Resources\States.Partial.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />

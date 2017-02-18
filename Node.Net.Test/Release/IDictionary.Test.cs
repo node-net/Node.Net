@@ -11,9 +11,9 @@ namespace Node.Net.Tests
         #region CollectKeys
         [Test]
         [TestCase("Translations.json", "Type", true)]
-        [TestCase("States.json", "Colorado", true)]
-        [TestCase("States.json", "Jefferson", true)]
-        [TestCase("States.json", "Softball", false)]
+        [TestCase("States.Partial.json", "Colorado", true)]
+        [TestCase("States.Partial.json", "Jefferson", true)]
+        [TestCase("States.Partial.json", "Softball", false)]
         public void IDictionary_CollectKeys_Value(string name, string key_value, bool contains_value)
         {
             var reader = new Node.Net.Reader
@@ -32,7 +32,7 @@ namespace Node.Net.Tests
         [Test]
         [TestCase("Translations.json", "Type", 3)]
         [TestCase("info.json", "path", 2)]
-        [TestCase("States.json", "Name", 3155)]
+        [TestCase("States.Partial.json", "Name", 127)]
         public void IDictionary_Collect_StringValues(string name, string key_value, int count)
         {
             var reader = new Node.Net.Reader
@@ -47,9 +47,9 @@ namespace Node.Net.Tests
             Assert.AreEqual(count, keys.Count);
         }
         [Test]
-        [TestCase("States.json", "State", false, 50)]
-        [TestCase("States.json", "County", false, 0)]
-        [TestCase("States.json", "County", true, 3105)]
+        [TestCase("States.Partial.json", "State", false, 2)]
+        [TestCase("States.Partial.json", "County", false, 0)]
+        [TestCase("States.Partial.json", "County", true, 125)]
         public void IDictionaryExtension_Collect_IDictionary(string name, string type_name, bool deep, int count)
         {
             
@@ -90,7 +90,7 @@ namespace Node.Net.Tests
         [Test]
         [TestCase("Translations.json", 3)]
         [TestCase("info.json", 3)]
-        [TestCase("States.json", 2)]
+        [TestCase("States.Partial.json", 2)]
         public void IDictionaryExtension_CollectTypes(string name, int count)
         {
             var dictionary = Read(name) as IDictionary;
@@ -106,28 +106,6 @@ namespace Node.Net.Tests
                 var dictionary = new Dictionary<string, dynamic>();
                 Assert.True(dictionary.GetLocalToParent().IsIdentity);
             }
-        }
-
-        [Test]
-        [TestCase("States.json", "Type", "State", 50)]
-        [TestCase("States.json", "Type", "County", 3105)]
-        [TestCase("States.json", "Name", "Jefferson", 28)]
-        public void IDictionary_Key_Type_Count(string name, string key, string value, int count)
-        {
-            var data = Read(name) as IDictionary;
-            Assert.NotNull(data, nameof(data));
-            //Assert.AreEqual(count,data.Collect<IDictionary>()
-
-
-
-
-
-
-
-
-            /*
-            Assert.AreEqual(count, data.DeepCollect<IDictionary>(
-                new Node.Net.Collections.KeyValueFilter { Key = key, Values = { value } }.Include).Count);*/
         }
     }
 }

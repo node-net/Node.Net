@@ -34,8 +34,6 @@ namespace Node.Net.Beta
                 //if (UnrecognizedSignatureReader != null) return UnrecognizedSignatureReader.Read(original_stream);
                 throw new System.Exception($"unrecognized signature '{signature}'");
             }
-            
-            return null;
         }
 
         public static object ReadXml(Stream original_stream)

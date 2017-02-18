@@ -47,7 +47,7 @@ namespace Node.Net
         [Test]
         public void Reader_Open_Document()
         {
-            var stream = typeof(ReaderTest).Assembly.GetStream("States.json");
+            var stream = typeof(ReaderTest).Assembly.GetStream("States.Partial.json");
             var doc = Reader.Default.Read(stream);
             Assert.NotNull(doc, nameof(doc));
             var document = doc as IElement;

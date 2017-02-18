@@ -21,7 +21,6 @@ namespace Node.Net.Repositories
                         {
                             return ReadFunction(stream);
                         }
-                        break;
                     }
                 case "file":
                     {
@@ -29,7 +28,6 @@ namespace Node.Net.Repositories
                         {
                             return ReadFunction(fs);
                         }
-                        break;
                     }
             }
 
