@@ -1,0 +1,7 @@
+<Model3DGroup xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Model3DGroup.Children>
+        <DirectionalLight Direction="-0.32139380484327,0.383022221559489,-0.866025403784439" Color="#FF999999" />
+        <AmbientLight Color="#FF666666" />
+    </Model3DGroup.Children>
+</Model3DGroup>
+ 

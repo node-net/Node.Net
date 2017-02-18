@@ -151,5 +151,41 @@ namespace Node.Net.Beta
             Assert.NotNull(imageMaterial, nameof(imageMaterial));
 
         }
+
+        [Test]
+        public void Factory_Visual3D()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+            var scene = factory.Create<IDictionary>("Scene.Cubes.json");
+            Assert.NotNull(scene, nameof(scene));
+
+            var m3d = factory.Create<Model3D>(scene);
+            Assert.NotNull(m3d, nameof(m3d));
+
+            var v3d = factory.Create<Visual3D>(scene);
+            Assert.NotNull(v3d, nameof(v3d));
+        }
+
+        [Test]
+        public void Factory_Transform3D()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+            var widget = factory.Create<IDictionary>("Widget.1.json");
+            Assert.NotNull(widget, nameof(widget));
+
+            var matrix3D = factory.Create<Matrix3D>(widget);
+            Assert.NotNull(matrix3D,nameof(matrix3D));
+            Assert.False(matrix3D.IsIdentity);
+
+            var transform3D = factory.Create<Transform3D>(widget);
+            Assert.NotNull(transform3D,nameof(transform3D));
+
+            var origin = transform3D.Transform(new Point3D(0, 0, 0));
+            Assert.AreEqual(2, origin.X);
+        }
     }
 }

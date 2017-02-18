@@ -37,10 +37,13 @@ namespace Node.Net.Beta.Internal.Factories
                 if (source != null)
                 {
                     var type = source.Get<string>("Type");
-                    var geometryModel3D = ParentFactory.Create<GeometryModel3D>($"{type}.GeometryModel3D.");
-                    if (geometryModel3D != null) return geometryModel3D;
-                    var mesh = ParentFactory.Create<MeshGeometry3D>(source);
-                    if (mesh != null) return CreateFromMeshGeometry3D(mesh);
+                    if (type.Length > 0)
+                    {
+                        var geometryModel3D = ParentFactory.Create<GeometryModel3D>($"{type}.GeometryModel3D.");
+                        if (geometryModel3D != null) return geometryModel3D;
+                        var mesh = ParentFactory.Create<MeshGeometry3D>(source);
+                        if (mesh != null) return CreateFromMeshGeometry3D(mesh);
+                    }
                 }
             }
 

@@ -27,7 +27,7 @@ namespace Node.Net.Beta.Internal.Factories
         }
         public IFactory ParentFactory { get; set; }
         public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction { get; set; }
-
+        public bool ScalePrimaryModel { get; set; } = true;
         private bool cache = false;
         private Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
         public bool Cache
@@ -71,6 +71,21 @@ namespace Node.Net.Beta.Internal.Factories
 
         private Model3D GetPrimaryModel3D(IDictionary source)
         {
+            var model3D = GetUnscaledPrimaryModel3D(source);
+            if(ScalePrimaryModel)
+            {
+                var scaleTransform = GetScalingTransform(source);
+                if(scaleTransform != null)
+                {
+                    var scaledModel3D = new Model3DGroup { Transform = scaleTransform };
+                    scaledModel3D.Children.Add(model3D);
+                    return scaledModel3D;  
+                }
+            }
+            return model3D;
+        }
+        private Model3D GetUnscaledPrimaryModel3D(IDictionary source)
+        {
             if (PrimaryModel3DHelperFunction != null)
             {
                 var model = PrimaryModel3DHelperFunction(source);
@@ -82,8 +97,11 @@ namespace Node.Net.Beta.Internal.Factories
                 if (geometry3D != null) return geometry3D;
 
                 var type = source.Get<string>("Type");
-                var model3D = ParentFactory.Create<Model3D>($"{type}.Model3D.");
-                if (model3D != null) return model3D;
+                if (type.Length > 0)
+                {
+                    var model3D = ParentFactory.Create<Model3D>($"{type}.Model3D.");
+                    if (model3D != null) return model3D;
+                }
             }
             return null;
         }
@@ -95,6 +113,26 @@ namespace Node.Net.Beta.Internal.Factories
             }
             return null;
         }
+        private Transform3D GetScalingTransform(IDictionary source)
+        {
+            var scaleX = 1.0;
+            var scaleY = 1.0;
+            var scaleZ = 1.0;
 
+            var tmp = source.GetLengthMeters("Height");
+            if (tmp != 0.0) scaleZ = tmp;
+            tmp = source.GetLengthMeters("Width");
+            if (tmp != 0.0) scaleY = tmp;
+            tmp = source.GetLengthMeters("Length");
+            if (tmp != 0.0) scaleX = tmp;
+            if (scaleX != 1.0 || scaleY != 1.0 || scaleZ != 1.0)
+            {
+                var matrix3D = new Matrix3D();
+                matrix3D.Scale(new Vector3D(scaleX, scaleY, scaleZ));
+                if (!matrix3D.IsIdentity) return new MatrixTransform3D { Matrix = matrix3D };
+                //return new MatrixTransform3D { Matrix = matrix3D };
+            }
+            return null;
+        }
     }
 }

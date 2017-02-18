@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Beta\Bar.cs" />
     <Compile Include="Beta\Reader.Test.cs" />
+    <Compile Include="Beta\View3D.Test.cs" />
     <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Release\Element.Test.cs" />
     <Compile Include="Release\Extensions_Test.cs" />
@@ -211,6 +212,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Cube.MeshGeometry3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Sun.Model3D.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

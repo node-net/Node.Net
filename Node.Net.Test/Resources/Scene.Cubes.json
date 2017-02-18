@@ -1,5 +1,12 @@
 {
   "cube0": {
-    "Type" : "Cube"
-  }
+    "Type": "Cube",
+    "Y": "2 m"
+  },
+  "cube1": {
+    "Type": "Cube",
+    "X": "2 m",
+    "Height": "2 m"
+  },
+  "sun": {"Type": "Sun"}
 }
