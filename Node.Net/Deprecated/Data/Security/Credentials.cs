@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Node.Net.Data.Deprecated.Security
+namespace Node.Net.Deprecated.Data.Security
 {
     public class Credentials : Dictionary<string, dynamic>, ICredentials//,Model.IModel
     {

@@ -1,8 +1,8 @@
 ﻿using System.Windows.Media.Media3D;
 
-namespace Node.Net.Data.Deprecated.Extension
+namespace Node.Net.Deprecated.Data
 {
-    static class Matrix3DExtension
+    public static class Matrix3DExtension
     {
         public static Matrix3D RotateXYZ(Matrix3D matrix, double xRotationDegrees, double yRotationDegrees, double zRotationDegrees)
         {

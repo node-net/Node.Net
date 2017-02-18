@@ -5,7 +5,7 @@ using System.Security;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Data.Deprecated
+namespace Node.Net.Deprecated.Data
 {
     public static class Extensions
     {
@@ -20,9 +20,9 @@ namespace Node.Net.Data.Deprecated
         //public static T Get<T>(this Model.IModel model, string key) => Model.IModelExtension.Get<T>(model, key);
         //public static void Set(this Model.IModel model, string key, object value) => Model.IModelExtension.Set(model, key, value);
         //public static void SetTypeName(this Model.IModel model) => Model.IModelExtension.SetTypeName(model);
-        public static string[] GetGroupMatches(this Regex regex, string text, int group_index = 0) => Extension.RegexExtension.GetGroupMatches(regex, text, group_index);
+        public static string[] GetGroupMatches(this Regex regex, string text, int group_index = 0) => Deprecated.Data.RegexExtension.GetGroupMatches(regex, text, group_index);
         //public static void Import(this IRepository destination, IReadOnlyRepository sourceRepository) => Repositories.IRepositoryExtension.Import(destination, sourceRepository);
         //public static void Import(this IRepository destination, IDictionary source) => Repositories.IRepositoryExtension.Import(destination, source);
-        public static Matrix3D RotateXYZ(this Matrix3D matrix, double xRotationDegrees, double yRotationDegrees, double zRotationDegrees) => Extension.Matrix3DExtension.RotateXYZ(matrix, xRotationDegrees, yRotationDegrees, zRotationDegrees);
+        public static Matrix3D RotateXYZ(this Matrix3D matrix, double xRotationDegrees, double yRotationDegrees, double zRotationDegrees) => Node.Net.Deprecated.Data.Matrix3DExtension.RotateXYZ(matrix, xRotationDegrees, yRotationDegrees, zRotationDegrees);
     }
 }

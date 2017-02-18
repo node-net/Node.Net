@@ -1,5 +1,5 @@
 ﻿using System.Security;
-namespace Node.Net.Data.Deprecated.Security
+namespace Node.Net.Deprecated.Data.Security
 {
     public interface ICredential
     {

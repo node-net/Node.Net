@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace Node.Net.Data.Deprecated.Security
+namespace Node.Net.Deprecated.Data.Security
 {
     public static class SymmetricAlgorithmExtension
     {

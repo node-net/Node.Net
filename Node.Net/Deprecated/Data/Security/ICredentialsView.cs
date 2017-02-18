@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Node.Net.Data.Deprecated.Security
+namespace Node.Net.Deprecated.Data.Security
 {
     public class ICredentialsView : Grid
     {

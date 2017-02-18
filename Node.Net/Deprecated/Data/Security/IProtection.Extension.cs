@@ -3,7 +3,7 @@ using System.Net;
 using System.Security;
 using System.Text;
 
-namespace Node.Net.Data.Deprecated.Security
+namespace Node.Net.Deprecated.Data.Security
 {
     static class IProtectionExtension
     {

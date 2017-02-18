@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security;
 
-namespace Node.Net.Data.Deprecated.Security
+namespace Node.Net.Deprecated.Data.Security
 {
     public class Credential : Dictionary<string, string>, ICredential//, Model.IModel
     {

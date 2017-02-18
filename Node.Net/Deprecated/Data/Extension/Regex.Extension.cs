@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Node.Net.Data.Deprecated.Extension
+namespace Node.Net.Deprecated.Data
 {
     public class RegexExtension
     {
