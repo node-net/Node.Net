@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Beta\IDictionary.Extension.cs" />
+    <Compile Include="Beta\Internal\Factories\DoubleFactory.cs" />
     <Compile Include="Beta\Internal\Factories\ResourceFactory.cs" />
     <Compile Include="Beta\Internal\Readers\ImageSourceReader.cs" />
     <Compile Include="Beta\IStreamSignature.cs" />

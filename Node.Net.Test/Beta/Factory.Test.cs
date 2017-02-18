@@ -112,5 +112,15 @@ namespace Node.Net.Beta
                 Assert.True(signature.ToString().Contains(data[resource_name]), $"{resource_name} {data[resource_name]} {signature.ToString()}");
             }
         }
+
+        [Test]
+        public void Factory_Units_Conversion()
+        {
+            var factory = new Factory();
+            Assert.AreEqual(2, factory.Create<double>("2"));
+            Assert.AreEqual(1, factory.Create<double>("1 m"));
+            Assert.AreEqual(1, factory.Create<double>("100 cm"));
+            Assert.AreEqual(45, factory.Create<double>("45 degrees"));
+        }
     }
 }
