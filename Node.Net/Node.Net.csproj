@@ -62,7 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Beta\IDictionary.Extension.cs" />
+    <Compile Include="Beta\Internal\Extension\Color.Extension.cs" />
     <Compile Include="Beta\Internal\Factories\DoubleFactory.cs" />
+    <Compile Include="Beta\Internal\Factories\LightFactory.cs" />
     <Compile Include="Beta\Internal\Factories\MaterialFactory.cs" />
     <Compile Include="Beta\Internal\Factories\ResourceFactory.cs" />
     <Compile Include="Beta\Internal\Readers\ImageSourceReader.cs" />

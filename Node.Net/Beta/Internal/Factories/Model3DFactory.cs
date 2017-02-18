@@ -116,7 +116,7 @@ namespace Node.Net.Beta.Internal.Factories
             }
             return null;
         }
-        private Transform3D GetScalingTransform(IDictionary source)
+        private static Transform3D GetScalingTransform(IDictionary source)
         {
             var scaleX = 1.0;
             var scaleY = 1.0;

@@ -48,7 +48,7 @@ namespace Node.Net.Beta
             Assert.NotNull(image, nameof(image));
         }
 
-        public Model3D GetModel3D(IDictionary data)
+        public static Model3D GetModel3D(IDictionary data)
         {
             var factory = new Factory();
             factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);

@@ -12,7 +12,7 @@ namespace Node.Net.Beta
     {
         public Factory()
         {
-            ReadFunction = new Readers.Reader().Read;
+            ReadFunction = new Beta.Reader().Read;// new Readers.Reader().Read;
         }
         public T Create<T>() => Internal.IFactoryExtension.Create<T>(this);
         public T Create<T>(object source) => Internal.IFactoryExtension.Create<T>(this, source);

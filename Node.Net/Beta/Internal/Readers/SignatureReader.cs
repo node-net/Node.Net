@@ -45,8 +45,10 @@ namespace Node.Net.Beta.Internal.Readers
 
         public static Signature GetSignature(Stream stream)
         {
-            var sr = new SignatureReader();
-            return sr.Read(stream) as Signature;
+            using (var sr = new SignatureReader())
+            {
+                return sr.Read(stream) as Signature;
+            }
         }
         private object Read(Stream original_stream)
         {

@@ -49,7 +49,7 @@ namespace Node.Net.Beta.Internal.Factories
 
             return null;
         }
-        private GeometryModel3D CreateFromMeshGeometry3D(MeshGeometry3D mesh)
+        private static GeometryModel3D CreateFromMeshGeometry3D(MeshGeometry3D mesh)
         {
             if (mesh == null) return null;
             return new GeometryModel3D

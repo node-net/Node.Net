@@ -45,7 +45,6 @@ namespace Node.Net.Readers
                 }
                 throw new Exception($"{filename} not found");
             }
-            return null;
         }
 
         private static void SetPropertyValue(object item, string propertyName, object propertyValue)
