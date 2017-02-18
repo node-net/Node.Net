@@ -58,6 +58,11 @@ namespace Node.Net.Beta
             get { return factory.PrimaryModel3DHelperFunction; }
             set { factory.PrimaryModel3DHelperFunction = value; }
         }
+        public bool ScalePrimaryModel3D
+        {
+            get { return factory.ScalePrimaryModel3D; }
+            set { factory.ScalePrimaryModel3D = value; }
+        }
         private Internal.Factories.Factory factory = new Internal.Factories.Factory();        
     }
 }

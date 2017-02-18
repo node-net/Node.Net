@@ -66,6 +66,11 @@ namespace Node.Net.Beta.Internal.Factories
             get { return Model3DFactory.PrimaryModel3DHelperFunction; }
             set { Model3DFactory.PrimaryModel3DHelperFunction = value; }
         }
+        public bool ScalePrimaryModel3D
+        {
+            get { return Model3DFactory.ScalePrimaryModel; }
+            set { Model3DFactory.ScalePrimaryModel = value; }
+        }
         public object Create(Type target_type, object source)
         {
             foreach (var type in FactoryFunctions.Keys)
