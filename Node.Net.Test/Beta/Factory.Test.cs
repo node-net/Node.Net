@@ -122,5 +122,34 @@ namespace Node.Net.Beta
             Assert.AreEqual(1, factory.Create<double>("100 cm"));
             Assert.AreEqual(45, factory.Create<double>("45 degrees"));
         }
+
+        [Test]
+        public void Factory_Brushes()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+            var solidColor = factory.Create<Brush>("Blue");
+            Assert.NotNull(solidColor, nameof(solidColor));
+
+            var image = factory.Create<ImageSource>("image.bmp");
+            Assert.NotNull(image, nameof(image));
+
+            var imageBrush = factory.Create<Brush>("image.bmp");
+            Assert.NotNull(imageBrush, nameof(imageBrush));
+        }
+        [Test]
+        public void Factory_Materials()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+            var diffuseBlue = factory.Create<Material>("Blue");
+            Assert.NotNull(diffuseBlue, nameof(diffuseBlue));
+
+            var imageMaterial = factory.Create<Material>("image.bmp");
+            Assert.NotNull(imageMaterial, nameof(imageMaterial));
+
+        }
     }
 }

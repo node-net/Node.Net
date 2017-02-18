@@ -10,12 +10,15 @@ namespace Node.Net.Beta.Internal.Factories
             if (source != null)
             {
                 if (source.GetType() == typeof(Color)) return new SolidColorBrush((Color)source);
-                if (source.GetType() == typeof(ImageSource)) return CreateFromImageSource(source as ImageSource);
+                if (typeof(ImageSource).IsAssignableFrom(source.GetType())) return CreateFromImageSource(source as ImageSource);
             }
             if (ParentFactory != null)
             {
                 var color = ParentFactory.Create(typeof(Color), source);
                 if (color != null) return Create(target_type, color);
+
+                var image = ParentFactory.Create(typeof(ImageSource), source);
+                if (image != null) return Create(target_type, image);
             }
             return null;
         }
