@@ -72,14 +72,17 @@ namespace Node.Net.Beta.Internal.Factories
         private Model3D GetPrimaryModel3D(IDictionary source)
         {
             var model3D = GetUnscaledPrimaryModel3D(source);
-            if(ScalePrimaryModel)
+            if(model3D != null && ScalePrimaryModel)
             {
                 var scaleTransform = GetScalingTransform(source);
                 if(scaleTransform != null)
                 {
                     var scaledModel3D = new Model3DGroup { Transform = scaleTransform };
-                    scaledModel3D.Children.Add(model3D);
-                    return scaledModel3D;  
+                    if (scaledModel3D != null)
+                    {
+                        scaledModel3D.Children.Add(model3D);
+                        return scaledModel3D;
+                    }
                 }
             }
             return model3D;
