@@ -12,7 +12,7 @@ using System.Xml;
 
 namespace Node.Net.Beta
 {
-    [TestFixture,Category("Beta")]
+    [TestFixture,Category(nameof(Beta))]
     class ReaderTest
     {
         [Test]

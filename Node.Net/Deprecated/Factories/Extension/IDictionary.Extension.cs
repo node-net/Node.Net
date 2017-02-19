@@ -82,7 +82,7 @@ namespace Node.Net.Deprecated.Factories
 
         public static Matrix3D GetLocalToWorld(this IDictionary dictionary)
         {
-            Matrix3D localToWorld = GetLocalToParent(dictionary);
+            var localToWorld = GetLocalToParent(dictionary);
             if (dictionary != null)
             {
 

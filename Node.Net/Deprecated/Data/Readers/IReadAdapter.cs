@@ -18,7 +18,7 @@ namespace Node.Net.Deprecated.Data.Readers
             if (_target != null)
             {
                 Type[] types = { typeof(Stream) };
-                var readMethodInfo = _target.GetType().GetMethod("Read", types);
+                var readMethodInfo = _target.GetType().GetMethod(nameof(Read), types);
                 if (readMethodInfo != null && readMethodInfo.ReturnType == typeof(object))
                 {
                     object[] parameters = { stream };

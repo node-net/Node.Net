@@ -53,7 +53,7 @@ namespace Node.Net.Beta.Internal.Readers
                     bool isSeperator = Char.IsSeparator(ch);
                     bool isPunctuation = Char.IsPunctuation(ch);
                     */
-                    bool isControl = Char.IsControl(ch);
+                    var isControl = Char.IsControl(ch);
                     if (isControl) return false;
                 }
 

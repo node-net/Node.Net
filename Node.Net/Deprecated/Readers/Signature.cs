@@ -47,12 +47,12 @@ namespace Node.Net.Deprecated.Readers
                 var t = Text;
                 foreach (var ch in Text)
                 {
-                    bool isDigit = Char.IsLetterOrDigit(ch);
-                    bool isSymbol = Char.IsSymbol(ch);
-                    bool isWhiteSpace = Char.IsWhiteSpace(ch);
-                    bool isSeperator = Char.IsSeparator(ch);
-                    bool isPunctuation = Char.IsPunctuation(ch);
-                    bool isControl = Char.IsControl(ch);
+                    var isDigit = Char.IsLetterOrDigit(ch);
+                    var isSymbol = Char.IsSymbol(ch);
+                    var isWhiteSpace = Char.IsWhiteSpace(ch);
+                    var isSeperator = Char.IsSeparator(ch);
+                    var isPunctuation = Char.IsPunctuation(ch);
+                    var isControl = Char.IsControl(ch);
                     if (isControl) return false;
                 }
 

@@ -38,8 +38,8 @@ namespace Node.Net.Deprecated.Factories
                 {
                     foreach (var manifestResourceName in assembly.GetManifestResourceNames())
                     {
-                        bool ignore = false;
-                        if(ManifestResourceNameIgnorePatterns != null)
+                        var ignore = false;
+                        if (ManifestResourceNameIgnorePatterns != null)
                         {
                             foreach(var ignore_pattern in ManifestResourceNameIgnorePatterns)
                             {

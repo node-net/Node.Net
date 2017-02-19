@@ -19,7 +19,7 @@ namespace Node.Net.Deprecated.Factories
             return null;
         }
 
-        private Transform3D CreateFromIDictionary(IDictionary source)
+        private static Transform3D CreateFromIDictionary(IDictionary source)
         {
             var matrix3D = new Matrix3D();
 

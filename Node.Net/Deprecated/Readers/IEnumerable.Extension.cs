@@ -98,7 +98,7 @@ namespace Node.Net.Deprecated.Readers
                     }
                     if (length > -1)
                     {
-                        double[,] array = new double[count, length];
+                        var array = new double[count, length];
                         for (int i = 0; i < count; ++i)
                         {
                             for (int j = 0; j < length; ++j)

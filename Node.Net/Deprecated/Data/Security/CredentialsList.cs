@@ -29,7 +29,7 @@ namespace Node.Net.Deprecated.Data.Security
         private void Update()
         {
             Items.Clear();
-            IDictionary dictionary = DataContext as IDictionary;
+            var dictionary = DataContext as IDictionary;
             if (dictionary != null)
             {
                 foreach(var key in dictionary.Keys)

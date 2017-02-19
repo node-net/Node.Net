@@ -198,7 +198,7 @@ namespace Node.Net.Collections.Controls
                     }
                 }
 
-                List<Dictionary<string, IDictionary>> orderedInstances = typeInstances.OrderBy(data => data.Key)
+                var orderedInstances = typeInstances.OrderBy(data => data.Key)
                     .Select(data => data.Value).ToList();
                 orderedInstances = orderedInstances.OrderByDescending(data => data.Count)
                 .Select(data => data).ToList();

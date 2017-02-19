@@ -15,7 +15,7 @@ namespace Node.Net
         }
         public static object Construct(this Type type, object[] parameters = null)
         {
-            Type[] types = Type.EmptyTypes;
+            var types = Type.EmptyTypes;
             if (parameters != null)
             {
                 var typesList = new List<Type>();

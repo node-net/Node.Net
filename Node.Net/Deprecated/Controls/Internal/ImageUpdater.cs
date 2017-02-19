@@ -23,8 +23,8 @@ namespace Node.Net.Deprecated.Controls.Internal
         private ImageSource GetImageSource(object value)
         {
             
-            ImageSource imageSource = Factories.ImageSourceFactory.Default.Create<ImageSource>(value);
-            if(imageSource == null)
+            var imageSource = Factories.ImageSourceFactory.Default.Create<ImageSource>(value);
+            if (imageSource == null)
             {
                 imageSource = Internal.Extensions.IconExtensions.ToImageSource(Internal.Extensions.IconExtensions.GetIcon("Question"));
                 //imageSource = Internal.Extensions.IconExtensions.GetIcon("Question").ToImageSource();
