@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Interfaces
+namespace Node.Net
 {
     class IFactoryTest
     {

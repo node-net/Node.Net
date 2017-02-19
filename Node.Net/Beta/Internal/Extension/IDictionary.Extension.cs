@@ -24,6 +24,11 @@ namespace Node.Net.Beta.Internal
                 }
             }
         }
+        public static double GetLengthMeters(this IDictionary dictionary,string name)
+        {
+            var svalue = dictionary.Get<string>(name);
+            return Units.Length.GetMeters(svalue);
+        }
         public static int ComputeHashCode(this IDictionary dictionary)
         {
             var hashCode = dictionary.Count;

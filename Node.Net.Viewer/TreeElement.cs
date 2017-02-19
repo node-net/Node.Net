@@ -11,7 +11,7 @@ namespace Node.Net.Viewer
     public class TreeElement
     {
         
-        public Node.Net.Element Element;
+        public Node.Net.Deprecated.Element Element;
         public string Name { get { return Element.Name; } }
         public ObservableCollection<object> ItemsSource
         {
@@ -22,7 +22,7 @@ namespace Node.Net.Viewer
                     itemsSource = new ObservableCollection<object>();
                     foreach(string key in Element.Keys)
                     {
-                        var child = Element[key] as Node.Net.Element;
+                        var child = Element[key] as Node.Net.Deprecated.Element;
                         if (child != null) itemsSource.Add(new TreeElement { Element = child });
                     }
                 }

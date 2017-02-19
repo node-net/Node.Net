@@ -55,7 +55,7 @@ namespace Node.Net.Deprecated
             var dictionary = instance as IDictionary;
             if (dictionary != null)
             {
-                global::Node.Net.IDictionaryExtension.DeepUpdateParents(dictionary);
+                global::Node.Net.Deprecated.IDictionaryExtension.DeepUpdateParents(dictionary);
             }
             var element = instance as IElement;
             if(element != null)

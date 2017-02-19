@@ -58,7 +58,7 @@ namespace Node.Net.Deprecated
                 //var d = item as Collections.Dictionary;
                 Assert.NotNull(d, nameof(d));
 
-                var parent = global::Node.Net.Collections.ObjectExtension.GetParent(d);
+                var parent = global::Node.Net.Deprecated.Collections.ObjectExtension.GetParent(d);
                 Assert.NotNull(parent, nameof(parent));
 
                 Assert.NotNull(d.Parent, "d.Parent");

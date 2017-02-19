@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Viewer
 {
-    public class Document : Node.Net.Document
+    public class Document : Node.Net.Deprecated.Document
     {
         public static Document Open()
         {
@@ -32,7 +32,7 @@ namespace Node.Net.Viewer
                     treeViewItemsSource = new ObservableCollection<object>();
                     foreach(string key in Keys)
                     {
-                        var element = this[key] as Node.Net.Element;
+                        var element = this[key] as Node.Net.Deprecated.Element;
                         if(element != null)
                         {
                             treeViewItemsSource.Add(new TreeElement { Element = element });

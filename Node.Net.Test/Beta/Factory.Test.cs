@@ -27,22 +27,22 @@ namespace Node.Net.Beta
             factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
 
             Type[] types = { typeof(IDictionary), typeof(IWidget), typeof(IFoo), typeof(IBar) };
-            Interfaces.IFactoryTest.IFactory_Test_DefaultConstructor(factory, types);
-            Interfaces.IFactoryTest.IFactory_Test_IDictionaryConstructor(factory, types);
-            Interfaces.IFactoryTest.IFactory_Test_CreateFromManifestResourceStream(factory, types);
+            IFactoryTest.IFactory_Test_DefaultConstructor(factory, types);
+            IFactoryTest.IFactory_Test_IDictionaryConstructor(factory, types);
+            IFactoryTest.IFactory_Test_CreateFromManifestResourceStream(factory, types);
 
             var iwidget = factory.Create<IWidget>("Widget.0.json");
             Assert.NotNull(iwidget, nameof(iwidget));
-            Interfaces.IFactoryTest.IFactory_Test_CreateMedia3DFromIDictionary(factory, iwidget);
+            IFactoryTest.IFactory_Test_CreateMedia3DFromIDictionary(factory, iwidget);
             Assert.NotNull(factory.Create<GeometryModel3D>(iwidget), "GeometryModel3D from iwidget");
             Assert.NotNull(factory.Create<MeshGeometry3D>(iwidget), "MeshGeometry3D from iwidget");
 
             var ifoo = factory.Create<IFoo>("Foo.0.json");
             Assert.NotNull(ifoo, nameof(ifoo));
-            Interfaces.IFactoryTest.IFactory_Test_CreateMedia3DFromIDictionary(factory, ifoo);
+            IFactoryTest.IFactory_Test_CreateMedia3DFromIDictionary(factory, ifoo);
 
             var ibar = factory.Create<IBar>("Bar.0.json");
-            Interfaces.IFactoryTest.IFactory_Test_CreateMedia3DFromIDictionary(factory, ibar);
+            IFactoryTest.IFactory_Test_CreateMedia3DFromIDictionary(factory, ibar);
 
             var image = factory.Create<ImageSource>("image.jpg");
             Assert.NotNull(image, nameof(image));
