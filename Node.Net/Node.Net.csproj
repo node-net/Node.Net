@@ -309,8 +309,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Deprecated\Reader.cs" />
     <Compile Include="Deprecated\Repository.cs" />
-    <Compile Include="Resources\MaterialResources.cs" />
-    <Compile Include="Resources\Resources.cs" />
+    <Compile Include="Deprecated\Resources\MaterialResources.cs" />
+    <Compile Include="Deprecated\Resources\Resources.cs" />
     <Compile Include="Deprecated\Writers\BitmapSourceWriter.cs" />
     <Compile Include="Deprecated\Writers\IWrite.cs" />
     <Compile Include="Deprecated\Writers\IWrite.Extension.cs" />

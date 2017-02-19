@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Resources
+namespace Node.Net.Deprecated.Resources
 {
     [TestFixture,Category(nameof(Resources))]
     class MaterialResourcesTest

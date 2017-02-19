@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Resources
+namespace Node.Net.Deprecated.Resources
 {
     public class MaterialResources : Resources
     {

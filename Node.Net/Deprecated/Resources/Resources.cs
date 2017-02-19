@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Markup;
 
-namespace Node.Net.Resources
+namespace Node.Net.Deprecated.Resources
 {
     public class Resources : ResourceDictionary, IResources
     {

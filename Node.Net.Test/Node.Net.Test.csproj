@@ -77,7 +77,7 @@
     <Compile Include="Release\IDocument.Test.cs" />
     <Compile Include="Release\Object.Test.cs" />
     <Compile Include="Release\Repository.Test.cs" />
-    <Compile Include="Resources\MaterialResources.Test.cs" />
+    <Compile Include="Deprecated\Resources\MaterialResources.Test.cs" />
     <Compile Include="Release\Writer.Test.cs" />
   </ItemGroup>
   <ItemGroup>
