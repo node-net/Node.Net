@@ -64,7 +64,7 @@ namespace Node.Net.Deprecated.Controls.Internal
             }
             return result;
         }
-        private Dictionary<string,dynamic> GetChildren(System.Windows.Controls.TreeView treeView)
+        private static Dictionary<string,dynamic> GetChildren(System.Windows.Controls.TreeView treeView)
         {
             var children = new Dictionary<string, dynamic>();
             if(treeView.DataContext != null)

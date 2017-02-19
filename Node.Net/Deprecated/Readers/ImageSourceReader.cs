@@ -77,29 +77,29 @@ namespace Node.Net.Deprecated.Readers
             }
             throw new System.Exception($"unrecognized signature '{signature.HexString}' {signature.Text}");
         }
-        public object ReadPng(Stream stream)
+        public static object ReadPng(Stream stream)
         {
             var decoder = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();
         }
-        public object ReadTif(Stream stream)
+        public static object ReadTif(Stream stream)
         {
             var decoder = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();
         }
-        public object ReadJpg(Stream stream)
+        public static object ReadJpg(Stream stream)
         {
             return GetImageSource(System.Drawing.Image.FromStream(stream));
             /*
             var decoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();*/
         }
-        public object ReadGif(Stream stream)
+        public static object ReadGif(Stream stream)
         {
             var decoder = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();
         }
-        public object ReadBmp(Stream stream)
+        public static object ReadBmp(Stream stream)
         {
             var decoder = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();

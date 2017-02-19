@@ -62,10 +62,13 @@ namespace Node.Net.Deprecated.Factories
             {
                 try
                 {
-                    var instance = ReadFunction(assembly.GetManifestResourceStream(manifestResourceName));
-                    if(instance != null)
+                    if (ReadFunction != null)
                     {
-                        Add(manifestResourceName, instance);
+                        var instance = ReadFunction(assembly.GetManifestResourceStream(manifestResourceName));
+                        if (instance != null)
+                        {
+                            Add(manifestResourceName, instance);
+                        }
                     }
                 }
                 catch { }
