@@ -57,7 +57,7 @@ namespace Node.Net
             return this;
         }
         public Dictionary<string, Type> ConversionTypeNames { get { return reader.Types; } }
-        private readonly Reader reader = new Reader
+        private readonly Deprecated.Reader reader = new Deprecated.Reader
         {
             DefaultDocumentType = typeof(Document),
             DefaultObjectType = typeof(Element)

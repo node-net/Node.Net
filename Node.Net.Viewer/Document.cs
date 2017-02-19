@@ -11,7 +11,7 @@ namespace Node.Net.Viewer
     {
         public static Document Open()
         {
-            using (var reader = new Node.Net.Reader { DefaultDocumentType = typeof(Document) })
+            using (var reader = new Node.Net.Deprecated.Reader { DefaultDocumentType = typeof(Document) })
             {
                 return reader.Open() as Document;
             }

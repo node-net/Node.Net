@@ -67,7 +67,7 @@ namespace Node.Net
 
         private readonly global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory
         {
-            ReadFunction = new Reader().Read
+            ReadFunction = new Deprecated.Reader().Read
         };
         public Dictionary<Type,Type> AbstractTypes
         {

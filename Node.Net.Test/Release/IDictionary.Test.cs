@@ -16,7 +16,7 @@ namespace Node.Net.Tests
         [TestCase("States.Partial.json", "Softball", false)]
         public void IDictionary_CollectKeys_Value(string name, string key_value, bool contains_value)
         {
-            using (var reader = new Node.Net.Reader
+            using (var reader = new Node.Net.Deprecated.Reader
             {
                 DefaultDocumentType = typeof(Dictionary<string, dynamic>),
                 DefaultObjectType = typeof(Dictionary<string, dynamic>)
@@ -37,7 +37,7 @@ namespace Node.Net.Tests
         [TestCase("States.Partial.json", "Name", 127)]
         public void IDictionary_Collect_StringValues(string name, string key_value, int count)
         {
-            using (var reader = new Node.Net.Reader
+            using (var reader = new Node.Net.Deprecated.Reader
             {
                 DefaultDocumentType = typeof(Dictionary<string, dynamic>),
                 DefaultObjectType = typeof(Dictionary<string, dynamic>)

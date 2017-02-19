@@ -75,7 +75,7 @@ namespace Node.Net.Resources
             {
                 if (manifest_resource_name.Contains(pattern))
                 {
-                    var item = (T)Reader.Default.Read(type.GetStream(manifest_resource_name));
+                    var item = (T)Deprecated.Reader.Default.Read(type.GetStream(manifest_resource_name));
                     if (item != null)
                     {
                         results.Add(manifest_resource_name, item);
