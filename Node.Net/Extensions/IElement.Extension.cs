@@ -206,8 +206,8 @@ namespace Node.Net
             return string.Empty;
         }
 
-        public static Matrix3D GetLocalToParent(this IElement element) => Node.Net.Factories.ObjectExtension.GetLocalToParent(element);
-        public static Matrix3D GetLocalToWorld(this IElement element) => Node.Net.Factories.ObjectExtension.GetLocalToWorld(element);
+        public static Matrix3D GetLocalToParent(this IElement element) => Node.Net.Deprecated.Factories.ObjectExtension.GetLocalToParent(element);
+        public static Matrix3D GetLocalToWorld(this IElement element) => Node.Net.Deprecated.Factories.ObjectExtension.GetLocalToWorld(element);
 
         public static void DeepUpdateParents(this IElement element)
         {

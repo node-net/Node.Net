@@ -14,9 +14,9 @@ namespace Node.Net
     {
         static Factory()
         {
-            global::Node.Net.Factories.MetaDataMap.GetMetaDataFunction = global::Node.Net.Collections.GlobalFunctions.GetMetaDataFunction;
-            global::Node.Net.Collections.GlobalFunctions.GetLocalToParentFunction = global::Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
-            global::Node.Net.Collections.GlobalFunctions.GetLocalToWorldFunction = global::Node.Net.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
+            global::Node.Net.Deprecated.Factories.MetaDataMap.GetMetaDataFunction = global::Node.Net.Collections.GlobalFunctions.GetMetaDataFunction;
+            global::Node.Net.Collections.GlobalFunctions.GetLocalToParentFunction = global::Node.Net.Deprecated.Factories.Helpers.IDictionaryHelper.GetLocalToParent;
+            global::Node.Net.Collections.GlobalFunctions.GetLocalToWorldFunction = global::Node.Net.Deprecated.Factories.Helpers.IDictionaryHelper.GetLocalToWorld;
 
         }
         public Factory() { }
@@ -65,7 +65,7 @@ namespace Node.Net
             return result;
         }
 
-        private readonly global::Node.Net.Factories.StandardFactory factory = new Factories.StandardFactory
+        private readonly global::Node.Net.Deprecated.Factories.StandardFactory factory = new Deprecated.Factories.StandardFactory
         {
             ReadFunction = new Deprecated.Reader().Read
         };

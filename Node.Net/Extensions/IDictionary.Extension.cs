@@ -8,14 +8,14 @@ namespace Node.Net
 {
     public static class IDictionaryExtension
     {
-        public static string GetLengthAsString(this IDictionary dictionary, string name) => Measurement.IDictionaryExtension.GetLengthAsString(dictionary, name);
-        public static double GetLengthMeters(this IDictionary dictionary, string name) => Measurement.IDictionaryExtension.GetLengthMeters(dictionary, name);
-        public static void SetLength(this IDictionary dictionary, string name, string value) => Measurement.IDictionaryExtension.SetLength(dictionary, name, value);
-        public static void SetLength(this IDictionary dictionary, string name, double length_meters) => Measurement.IDictionaryExtension.SetLength(dictionary, name, length_meters);
-        public static string GetAngleAsString(this IDictionary dictionary, string name) => Measurement.IDictionaryExtension.GetAngleAsString(dictionary, name);
-        public static double GetAngleDegrees(this IDictionary dictionary, string name) => Measurement.IDictionaryExtension.GetAngleDegrees(dictionary, name);
-        public static void SetAngle(this IDictionary dictionary, string name, string value) => Measurement.IDictionaryExtension.SetAngle(dictionary, name, value);
-        public static void SetAngle(this IDictionary dictionary, string name, double angle_degrees) => Measurement.IDictionaryExtension.SetAngle(dictionary, name, angle_degrees);
+        public static string GetLengthAsString(this IDictionary dictionary, string name) => Deprecated.Measurement.IDictionaryExtension.GetLengthAsString(dictionary, name);
+        public static double GetLengthMeters(this IDictionary dictionary, string name) => Deprecated.Measurement.IDictionaryExtension.GetLengthMeters(dictionary, name);
+        public static void SetLength(this IDictionary dictionary, string name, string value) => Deprecated.Measurement.IDictionaryExtension.SetLength(dictionary, name, value);
+        public static void SetLength(this IDictionary dictionary, string name, double length_meters) => Deprecated.Measurement.IDictionaryExtension.SetLength(dictionary, name, length_meters);
+        public static string GetAngleAsString(this IDictionary dictionary, string name) => Deprecated.Measurement.IDictionaryExtension.GetAngleAsString(dictionary, name);
+        public static double GetAngleDegrees(this IDictionary dictionary, string name) => Deprecated.Measurement.IDictionaryExtension.GetAngleDegrees(dictionary, name);
+        public static void SetAngle(this IDictionary dictionary, string name, string value) => Deprecated.Measurement.IDictionaryExtension.SetAngle(dictionary, name, value);
+        public static void SetAngle(this IDictionary dictionary, string name, double angle_degrees) => Deprecated.Measurement.IDictionaryExtension.SetAngle(dictionary, name, angle_degrees);
         //////////////////////////////////////////////////////////////////
         /// Collections
         public static IList Collect(this IDictionary dictionary, string typeName) => Collections.IDictionaryExtension.Collect(dictionary, typeName);
@@ -41,9 +41,9 @@ namespace Node.Net
         public static void DeepRemove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepRemove<T>(dictionary);
         public static void Copy(this IDictionary destination, IDictionary source) => Collections.IDictionaryExtension.Copy(destination, source);
         //public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
-        public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Factories.IDictionaryExtension.GetLocalToParent(dictionary);
-        public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Factories.IDictionaryExtension.GetLocalToWorld(dictionary);
-        public static Point3D GetWorldOrigin(this IDictionary dictionary) => Factories.IDictionaryExtension.GetWorldOrigin(dictionary);
+        public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Deprecated.Factories.IDictionaryExtension.GetLocalToParent(dictionary);
+        public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Deprecated.Factories.IDictionaryExtension.GetLocalToWorld(dictionary);
+        public static Point3D GetWorldOrigin(this IDictionary dictionary) => Deprecated.Factories.IDictionaryExtension.GetWorldOrigin(dictionary);
 
         //////////////////////////////////////////////////////////////////
         /// Readers
