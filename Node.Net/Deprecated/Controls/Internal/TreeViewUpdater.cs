@@ -45,9 +45,9 @@ namespace Node.Net.Deprecated.Controls.Internal
                 {
                     treeView.Items.Add(tvi);
                 }
-            }  
+            }
         }
-        
+
         private Dictionary<string,dynamic> GetItems(System.Windows.Controls.TreeView treeView)
         {
             var result = new Dictionary<string, dynamic>();
@@ -84,6 +84,6 @@ namespace Node.Net.Deprecated.Controls.Internal
                 }
             }
             return children;
-        }        
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Node.Net.Deprecated.Factories
                     if (result != null) return result;
                 }
             }
-            
+
 
             var instance = GetHelper().Create(typeof(Color), source);
             if(instance != null)

@@ -62,8 +62,8 @@ namespace Node.Net.Deprecated.Controls
             Children.Add(ViewFrame);
             var gridSplitter = new GridSplitter { Width = 5, HorizontalAlignment = HorizontalAlignment.Stretch };
             Children.Add(gridSplitter);
-            
-            
+
+
             Grid.SetColumn(gridSplitter, 1);
             Grid.SetColumn(ViewFrame, 2);
             Grid.SetRowSpan(ViewFrame, 3);

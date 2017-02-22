@@ -8,7 +8,7 @@ namespace Node.Net.Deprecated.Readers
     public sealed class SignatureReader : IRead, IDisposable
     {
         public int MinimumBytes = 1024;
-        
+
         public void Dispose()
         {
             Dispose(true);

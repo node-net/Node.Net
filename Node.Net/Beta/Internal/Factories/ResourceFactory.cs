@@ -19,7 +19,7 @@ namespace Node.Net.Beta.Internal.Factories
                 {
                     return instance;
                 }
-       
+
             }
             return null;
         }

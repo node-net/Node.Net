@@ -34,7 +34,7 @@ namespace Node.Net.Beta.Internal.Factories
                 {typeof(Visual3D), new Visual3DFactory {ParentFactory = this }.Create },
                 {typeof(IReadOnlyDocument), CollectionsFactory.Create },
                 {typeof(object), AbstractFactory.Create }
-                
+
             };
         }
         public ResourceDictionary Resources
@@ -43,7 +43,7 @@ namespace Node.Net.Beta.Internal.Factories
             set { AbstractFactory.Resources = value; }
         }
         public Dictionary<Type, Func<Type, object, object>> FactoryFunctions { get; private set; }
-        
+
         public List<Assembly> ManifestResourceAssemblies
         {
             get { return StreamFactory.ResourceAssemblies; }

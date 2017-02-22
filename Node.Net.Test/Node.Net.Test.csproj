@@ -64,6 +64,7 @@
     <Compile Include="Beta\Reader.Test.cs" />
     <Compile Include="Beta\View3D.Test.cs" />
     <Compile Include="Deprecated\Reader.Test.cs" />
+    <Compile Include="Extension\IDictionary.Extension.Test.cs" />
     <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Deprecated\Element.Test.cs" />
     <Compile Include="Deprecated\Extensions_Test.cs" />
@@ -185,6 +186,7 @@
     <EmbeddedResource Include="Resources\Foo.0.json" />
     <EmbeddedResource Include="Resources\Bar.0.json" />
     <EmbeddedResource Include="Resources\States.Partial.json" />
+    <EmbeddedResource Include="Resources\Array.Nested.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />

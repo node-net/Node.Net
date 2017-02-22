@@ -35,7 +35,7 @@ namespace Node.Net.Deprecated.Extensions
                         });
                     perspectiveCameras.Add("Default", perspectiveCameras["Plan"]);
                     perspectiveCameras.Add("Top", perspectiveCameras["Plan"]);
-                    perspectiveCameras.Add("Front", 
+                    perspectiveCameras.Add("Front",
                         new PerspectiveCamera
                         {
                             Position = new Point3D(0, -50, 0),

@@ -20,7 +20,7 @@ namespace Node.Net.Beta.Internal.Factories
                 {
                     return new DiffuseMaterial(source as Brush);
                 }
-                
+
             }
             if (ParentFactory != null)
             {

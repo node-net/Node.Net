@@ -46,7 +46,7 @@ namespace Node.Net.Deprecated.Factories
         private readonly Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
         private Visual3D CreateFromDictionary(IDictionary source)
         {
-            
+
             if (Helper != null)
             {
                 Model3D model = null;

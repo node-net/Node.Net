@@ -13,7 +13,7 @@ namespace Node.Net.Deprecated.Readers
             var copy = Activator.CreateInstance(source.GetType());// as IDictionary;
             if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
 
-            
+
             var typename = GetTypeName(source,typeKey);
             if (typename.Length > 0 && types.ContainsKey(typename))
             {
@@ -39,7 +39,7 @@ namespace Node.Net.Deprecated.Readers
                     //{
                         copy_dictionary[key] = ConvertTypes(childDictionary, types, typeKey);
                     //}
-                    
+
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Node.Net.Deprecated.Readers
                                 copy_dictionary[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
                             }
                         //}
-                        
+
                     }
                     else
                     {
@@ -67,7 +67,7 @@ namespace Node.Net.Deprecated.Readers
                                 else copy_dictionary.Add(key, value);
                             }
                         //}
-                        
+
                     }
                 }
             }

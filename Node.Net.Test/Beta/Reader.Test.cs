@@ -43,5 +43,25 @@ namespace Node.Net.Beta
                 Assert.True(data[name].IsAssignableFrom(instance.GetType()), $"type {data[name].FullName} not assignable from instance");
             }
         }
+
+        [Test]
+        public void Reader_Read_Nested_Arrays()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(ReaderTest).Assembly);
+            var reader = new Reader();
+            var stream = factory.Create<Stream>("Array.Nested.json");
+            var instance = reader.Read(stream);
+            Assert.NotNull(instance,nameof(instance));
+            var ienumerable = instance as IEnumerable;
+            Assert.NotNull(ienumerable, nameof(ienumerable));
+            var array_0 = ienumerable.GetAt(0) as IEnumerable;
+            Assert.NotNull(array_0, nameof(array_0));
+            Assert.AreEqual(1, array_0.GetAt(0));
+            var array_1 = ienumerable.GetAt(1) as IEnumerable;
+            Assert.NotNull(array_1, nameof(array_1));
+            Assert.AreEqual(2, array_1.GetAt(0));
+            Assert.AreEqual(3, array_1.GetAt(1));
+        }
     }
 }

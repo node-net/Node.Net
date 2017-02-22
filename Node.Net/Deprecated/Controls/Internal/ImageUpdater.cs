@@ -22,7 +22,7 @@ namespace Node.Net.Deprecated.Controls.Internal
 
         private ImageSource GetImageSource(object value)
         {
-            
+
             var imageSource = Factories.ImageSourceFactory.Default.Create<ImageSource>(value);
             if (imageSource == null)
             {

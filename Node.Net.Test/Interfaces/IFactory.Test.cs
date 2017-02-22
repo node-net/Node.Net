@@ -75,7 +75,7 @@ namespace Node.Net
             var m3d = factory.Create<Model3D>(data);
             Assert.NotNull(m3d, nameof(m3d));
 
-            
+
 
         }
     }

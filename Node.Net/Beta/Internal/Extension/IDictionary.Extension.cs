@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta.Internal
 {
@@ -67,7 +68,7 @@ namespace Node.Net.Beta.Internal
             memory.Seek(0, SeekOrigin.Begin);
             return memory;
         }
-        
+
         public static IList Collect(this IDictionary idictionary,Type type)
         {
             var results = new List<object>();
@@ -168,6 +169,11 @@ namespace Node.Net.Beta.Internal
             }
             return string.Empty;
         }
+        public static string GetTypeName(this IDictionary source, string typeKey = "Type")
+        {
+            if (source.Contains(typeKey)) return source.Get<string>(typeKey);
+            return string.Empty;
+        }
         public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type")
         {
             if (source == null) return null;
@@ -187,12 +193,11 @@ namespace Node.Net.Beta.Internal
             }
             foreach (string key in source.Keys)
             {
-                var value = source[key];// source.Get(key);
+                var value = source[key];
                 var childDictionary = value as IDictionary;
                 if (childDictionary != null)
                 {
                     copy[key] = ConvertTypes(childDictionary, types, typeKey);
-                    //copy.Set(key, ConvertTypes(childDictionary, types, typeKey));
                 }
                 else
                 {
@@ -200,17 +205,43 @@ namespace Node.Net.Beta.Internal
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
                         copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
-                        //copy.Set(key, IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey));
                     }
                     else
                     {
                         copy[key] = value;
-                        //if (copy.Contains(key)) copy.Set(key, value);
-                        //else copy.Set(key, value);
                     }
                 }
             }
             return copy;
+        }
+
+        public static Matrix3D GetLocalToParent(this IDictionary dictionary)
+        {
+            var matrix3D = new Matrix3D();
+            if (dictionary != null)
+            {
+                matrix3D = Factory.Default.Create<Matrix3D>(dictionary);
+            }
+            return matrix3D;
+        }
+        public static Matrix3D GetLocalToWorld(this IDictionary dictionary)
+        {
+            var localToWorld = GetLocalToParent(dictionary);
+            if (dictionary != null)
+            {
+
+                var parent = dictionary.GetParent();
+                if (parent != null)
+                {
+                    localToWorld.Append(GetLocalToWorld(parent as IDictionary));
+                }
+            }
+
+            return localToWorld;
+        }
+        public static Point3D GetWorldOrigin(this IDictionary dictionary)
+        {
+            return GetLocalToWorld(dictionary).Transform(new Point3D(0, 0, 0));
         }
     }
 }

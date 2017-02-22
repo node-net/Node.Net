@@ -61,7 +61,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Beta\IDictionary.Extension.cs" />
+    <Compile Include="Beta\Internal\Extension\PerspectiveCamera.Extension.cs" />
+    <Compile Include="Beta\Internal\Extension\ProjectionCamera.Extension.cs" />
+    <Compile Include="Extension\IDictionary.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\Color.Extension.cs" />
     <Compile Include="Beta\Internal\Factories\DoubleFactory.cs" />
     <Compile Include="Beta\Internal\Factories\LightFactory.cs" />
@@ -163,6 +165,8 @@
     <Compile Include="Deprecated\Data\Writers\Writer.cs" />
     <Compile Include="Deprecated\Data\Writers\XmlWriter.cs" />
     <Compile Include="Deprecated\Factories\Extension\IFactory.Extension.cs" />
+    <Compile Include="Extension\IEnumerable.Extension.cs" />
+    <Compile Include="Extension\PerspectiveCamera.Extension.cs" />
     <Compile Include="Interfaces\IFactory.cs" />
     <Compile Include="Interfaces\IWrite.cs" />
     <Compile Include="Interfaces\IRead.cs" />

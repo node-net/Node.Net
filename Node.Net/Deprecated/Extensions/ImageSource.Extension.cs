@@ -108,5 +108,5 @@ namespace Node.Net.Deprecated
             return material;
         }
     }
-    
+
 }

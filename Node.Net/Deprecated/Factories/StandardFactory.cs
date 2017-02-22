@@ -13,7 +13,7 @@ namespace Node.Net.Deprecated.Factories
             Add(nameof(Resources), ResourceFactory);
             Add("Stream", streamFactory);
             //Add("ManifestResources", ManifestResourceFactory);
-            
+
             Add("Color", new ColorFactory());
             Add("Brush", new BrushFactory());
             Add("Material", new MaterialFactory());

@@ -22,7 +22,7 @@ namespace Node.Net.Viewer
             set { SetField<object>(ref selectedItem, value); }
         }
         private object selectedItem = null;
-        
+
         public ObservableCollection<object> TreeViewItemsSource
         {
             get

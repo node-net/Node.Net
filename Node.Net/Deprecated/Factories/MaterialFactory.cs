@@ -16,7 +16,7 @@ namespace Node.Net.Deprecated.Factories
                     return CreateFromBrush(source as Brush);
                 }
             }
-            
+
             //if(Helper != null)
             //{
                 var instance = GetHelper().Create(typeof(Brush), source);

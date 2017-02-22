@@ -18,7 +18,7 @@ namespace Node.Net.Deprecated
             //Assert.True(typeof(Node.Net.Readers.IElement).IsAssignableFrom(document.GetType()));
 
             document.Load("States.json");
-            
+
             Assert.AreEqual("States.json", document.FileName);
             Assert.AreEqual(50, document.Count);
             Assert.AreEqual(12720, document.GetDeepCount());

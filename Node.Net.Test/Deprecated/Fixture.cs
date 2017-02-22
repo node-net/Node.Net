@@ -9,7 +9,7 @@ namespace Node.Net.Deprecated
 {
     public class Fixture
     {
-        
+
         public static object Read(string name)
         {
             var reader = new Node.Net.Deprecated.Reader

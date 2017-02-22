@@ -10,7 +10,7 @@ namespace Node.Net.Viewer
 {
     public class TreeElement
     {
-        
+
         public Node.Net.Deprecated.Element Element;
         public string Name { get { return Element.Name; } }
         public ObservableCollection<object> ItemsSource

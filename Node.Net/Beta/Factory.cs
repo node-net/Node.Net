@@ -10,6 +10,7 @@ namespace Node.Net.Beta
 {
     public sealed class Factory : IFactory
     {
+        public static Factory Default { get; } = new Factory();
         public Factory()
         {
             ReadFunction = new Beta.Reader().Read;// new Readers.Reader().Read;
@@ -63,6 +64,6 @@ namespace Node.Net.Beta
             get { return factory.ScalePrimaryModel3D; }
             set { factory.ScalePrimaryModel3D = value; }
         }
-        private Internal.Factories.Factory factory = new Internal.Factories.Factory();        
+        private Internal.Factories.Factory factory = new Internal.Factories.Factory();
     }
 }

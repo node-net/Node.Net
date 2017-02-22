@@ -50,7 +50,7 @@ namespace Node.Net.Deprecated.Factories
             var model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
             var primaryModel = GetPrimaryModel3D(source);
             if (primaryModel != null) model3DGroup.Children.Add(primaryModel);
-            
+
             foreach(var key in source.Keys)
             {
                 var child_dictionary = source[key] as IDictionary;
