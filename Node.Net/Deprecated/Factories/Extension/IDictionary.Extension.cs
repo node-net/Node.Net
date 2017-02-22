@@ -67,7 +67,7 @@ namespace Node.Net.Deprecated.Factories
             }
             else return Helpers.AngleHelper.GetAngleDegrees(GetDictionaryValueAsString(source, name));
         }
-        
+
         public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             var matrix3D = new Matrix3D();
@@ -140,12 +140,11 @@ namespace Node.Net.Deprecated.Factories
             }
             foreach (string key in source.Keys)
             {
-                var value = source[key];// source.Get(key);
+                var value = source[key];
                 var childDictionary = value as IDictionary;
                 if (childDictionary != null)
                 {
                     copy[key] = ConvertTypes(childDictionary, types, typeKey);
-                    //copy.Set(key, ConvertTypes(childDictionary, types, typeKey));
                 }
                 else
                 {
@@ -153,13 +152,10 @@ namespace Node.Net.Deprecated.Factories
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
                         copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
-                        //copy.Set(key, IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey));
                     }
                     else
                     {
                         copy[key] = value;
-                        //if (copy.Contains(key)) copy.Set(key, value);
-                        //else copy.Set(key, value);
                     }
                 }
             }

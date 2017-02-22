@@ -13,7 +13,7 @@ namespace Node.Net.Deprecated.Extensions
             target.UpDirection = source.UpDirection;
         }
 
-       
+
 
         private static Dictionary<string, ProjectionCamera> namedCameras;
         public static Dictionary<string, ProjectionCamera> NamedCameras
@@ -108,7 +108,7 @@ namespace Node.Net.Deprecated.Extensions
                     matrix.Rotate(new Quaternion(normal, -zAngle));
                 }
 
-                
+
             }
             var localYAxis = matrix.Transform(new Vector3D(0, 1, 0));
             var yAngle = Vector3D.AngleBetween(upDirection, localYAxis);

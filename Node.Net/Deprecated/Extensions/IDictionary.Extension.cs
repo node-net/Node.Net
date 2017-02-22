@@ -40,14 +40,9 @@ namespace Node.Net.Deprecated
         public static void Remove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.Remove<T>(dictionary);
         public static void DeepRemove<T>(this IDictionary dictionary) => Collections.IDictionaryExtension.DeepRemove<T>(dictionary);
         public static void Copy(this IDictionary destination, IDictionary source) => Collections.IDictionaryExtension.Copy(destination, source);
-        //public static T Find<T>(this IDictionary dictionary, string key) => Collections.IDictionaryExtension.Find<T>(dictionary, key);
         public static Matrix3D GetLocalToParent(this IDictionary dictionary) => Deprecated.Factories.IDictionaryExtension.GetLocalToParent(dictionary);
         public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Deprecated.Factories.IDictionaryExtension.GetLocalToWorld(dictionary);
         public static Point3D GetWorldOrigin(this IDictionary dictionary) => Deprecated.Factories.IDictionaryExtension.GetWorldOrigin(dictionary);
-
-        //////////////////////////////////////////////////////////////////
-        /// Readers
-        //public static object ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Readers.IDictionaryExtension.ConvertTypes(source, types, typeKey);
         public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type")
         {
             if (source == null) return null;
@@ -106,6 +101,6 @@ namespace Node.Net.Deprecated
                 }
             }
         }
-        
+
     }
 }
