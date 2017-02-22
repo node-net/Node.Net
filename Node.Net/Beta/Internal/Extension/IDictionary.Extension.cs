@@ -169,6 +169,24 @@ namespace Node.Net.Beta.Internal
             }
             return string.Empty;
         }
+        public static string GetFullName(this IDictionary dictionary)
+        {
+            var key = GetName(dictionary);
+            if (key != null)
+            {
+                var parent = GetParent(dictionary) as IDictionary;
+                if (parent != null)
+                {
+                    var parent_full_key = GetFullName(parent);
+                    if (parent_full_key.Length > 0)
+                    {
+                        return $"{parent_full_key}/{key.ToString()}";
+                    }
+                }
+                return key.ToString();
+            }
+            return string.Empty;
+        }
         public static string GetTypeName(this IDictionary source, string typeKey = "Type")
         {
             if (source.Contains(typeKey)) return source.Get<string>(typeKey);

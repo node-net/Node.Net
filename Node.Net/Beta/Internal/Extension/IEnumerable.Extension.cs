@@ -118,7 +118,7 @@ namespace Node.Net.Beta.Internal
             return 0;
         }
 
-        public static IEnumerable ConvertTypes(IEnumerable source, Dictionary<string, Type> types, string typeKey = "Type")
+        public static IEnumerable ConvertTypes(this IEnumerable source, Dictionary<string, Type> types, string typeKey = "Type")
         {
             if (source == null) return null;
             IList copy = new List<dynamic>();

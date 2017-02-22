@@ -4,6 +4,6 @@ namespace Node.Net
 {
     public static class PerspectiveCameraExtension
     {
-        public static bool IsVisibleTo(this PerspectiveCamera camera, Point3D point) => Beta.Internal.PerspectiveCameraExtension.IsVisible(camera, point);
+        public static bool IsVisible(this PerspectiveCamera camera, Point3D point) => Beta.Internal.PerspectiveCameraExtension.IsVisible(camera, point);
     }
 }
