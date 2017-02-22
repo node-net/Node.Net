@@ -27,9 +27,10 @@ namespace Node.Net
             {
                 var stream = signatureReader.Stream;
                 var signature = signatureReader.Signature;
-                foreach (string siqnature_key in Keys)
+                foreach (string signature_key in Keys)
                 {
-                    if (signature.Contains(siqnature_key)) return this[siqnature_key](stream);
+                    //if (signature.Contains(siqnature_key)) return this[siqnature_key](stream);
+                    if (signature.IndexOf(signature_key) == 0) return this[signature_key](stream);
                 }
                 //if (UnrecognizedSignatureReader != null) return UnrecognizedSignatureReader.Read(original_stream);
                 throw new System.Exception($"unrecognized signature '{signature}'");
