@@ -42,7 +42,7 @@ namespace Node.Net.Deprecated.Controls.Internal.TreeViewItemUpdaters
                 }
             }
         }
-        private Dictionary<object, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<object, System.Windows.Controls.TreeViewItem>();
+        private readonly Dictionary<object, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<object, System.Windows.Controls.TreeViewItem>();
 
         private void UpdateChildren(System.Windows.Controls.TreeViewItem treeViewItem)
         {

@@ -17,7 +17,7 @@ namespace Node.Net.Deprecated.Controls.Internal
         }
 
         private object treeViewDataContext = null;
-        private Dictionary<string, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<string, System.Windows.Controls.TreeViewItem>();
+        private readonly Dictionary<string, System.Windows.Controls.TreeViewItem> treeViewItems = new Dictionary<string, System.Windows.Controls.TreeViewItem>();
         public void UpdateTreeView(System.Windows.Controls.TreeView treeView)
         {
             treeView.Background = Brushes.Azure;

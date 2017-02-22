@@ -64,6 +64,6 @@ namespace Node.Net.Beta
             get { return factory.ScalePrimaryModel3D; }
             set { factory.ScalePrimaryModel3D = value; }
         }
-        private Internal.Factories.Factory factory = new Internal.Factories.Factory();
+        private readonly Internal.Factories.Factory factory = new Internal.Factories.Factory();
     }
 }

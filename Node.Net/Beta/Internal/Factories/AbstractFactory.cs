@@ -46,7 +46,7 @@ namespace Node.Net.Beta.Internal.Factories
         }
 
         public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
-        private ResourceFactory ResourceFactory = new ResourceFactory();
+        private readonly ResourceFactory ResourceFactory = new ResourceFactory();
         private object CreateFromStream(Type target_type,Stream stream,object source)
         {
             if (stream == null) return null;

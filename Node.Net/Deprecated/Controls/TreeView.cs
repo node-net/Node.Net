@@ -4,7 +4,7 @@ namespace Node.Net.Deprecated.Controls
 {
     public class TreeView : System.Windows.Controls.TreeView
     {
-        private Internal.TreeViewUpdater _updater;
+        private readonly Internal.TreeViewUpdater _updater;
         public TreeView()
         {
             HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;

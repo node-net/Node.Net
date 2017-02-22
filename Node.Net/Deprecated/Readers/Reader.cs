@@ -19,8 +19,8 @@ namespace Node.Net.Deprecated.Readers
                 signatureReaders.Add(signature, "ImageSource");
             }
         }
-        private XmlReader xmlReader = new XmlReader();
-        private ImageSourceReader imageSourceReader = new ImageSourceReader();
+        private readonly XmlReader xmlReader = new XmlReader();
+        private readonly ImageSourceReader imageSourceReader = new ImageSourceReader();
         public JsonReader JsonReader { get; } = new JsonReader();
         public Type DefaultObjectType
         {
@@ -70,8 +70,8 @@ namespace Node.Net.Deprecated.Readers
         public Dictionary<string, Type> Types { get; set; } = null;
         public IRead UnrecognizedSignatureReader { get; set; } = null;
         private SignatureReader signatureReader = new SignatureReader();
-        private Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
-        private Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
+        private readonly Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
+        private readonly Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
         public void Add(string name,string[] signatures,Func<Stream,object> readFunction)
         {
             readers.Add(name, readFunction);

@@ -14,7 +14,7 @@ namespace Node.Net.Deprecated.Data
             dictionaryTypeConverter = new Readers.DictionaryTypeConverter(assembly);
             reader = new Readers.Reader { IDictionaryTypeConversionFunction = dictionaryTypeConverter.Convert };
         }
-        private Readers.DictionaryTypeConverter dictionaryTypeConverter;
+        private readonly Readers.DictionaryTypeConverter dictionaryTypeConverter;
         public object Read(string filename)
         {
             using (FileStream fs = new FileStream(filename, FileMode.Open))
@@ -52,7 +52,7 @@ namespace Node.Net.Deprecated.Data
             get { return reader.BinarySignatureReadFunctions; }
             set { reader.BinarySignatureReadFunctions = value; }
         }
-        private Readers.Reader reader = new Readers.Reader();
+        private readonly Readers.Reader reader = new Readers.Reader();
 
         public static Reader Default { get; } = new Reader();
     }

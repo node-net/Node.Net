@@ -28,7 +28,7 @@ namespace Node.Net.Deprecated.Factories
         }
 
         private bool cache = false;
-        private Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
+        private readonly Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
         public bool Cache
         {
             get { return cache; }

@@ -15,7 +15,7 @@ namespace Node.Net.Beta.Internal
             var local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
             // camera lookdirection is along -Z axis
             if (local.Z >= 0.0) return false;
-            var deg2rad = 0.01745329;
+            const double deg2rad = 0.01745329;
             var distance = Abs(local.Z);
             var frustrumHeight = 2.0 * distance * Tan(camera.FieldOfView * deg2rad * 0.5);
             if (Abs(local.X) > frustrumHeight / 2.0) return false;

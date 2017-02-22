@@ -30,8 +30,8 @@ namespace Node.Net.Deprecated.Controls
                 _properties.DataContext = tvi.DataContext;
             }
         }
-        private TreeView _treeView;
-        private Node.Net.Deprecated.Controls.Properties _properties;
+        private readonly TreeView _treeView;
+        private readonly Node.Net.Deprecated.Controls.Properties _properties;
 
         private void _DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) => Update();
 

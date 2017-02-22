@@ -61,7 +61,7 @@ namespace Node.Net.Deprecated.Factories
             set { objectFromString.ResourceAssemblies = value; }
         }*/
 
-        private List<string> lockedKeys = new List<string>();
+        private readonly List<string> lockedKeys = new List<string>();
         private void Lock(string key)
         {
             lockedKeys.Add(key);

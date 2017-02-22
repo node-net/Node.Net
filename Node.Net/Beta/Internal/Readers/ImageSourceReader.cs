@@ -59,8 +59,8 @@ namespace Node.Net.Beta.Internal.Readers
             }
         }
         //private SignatureReader signatureReader = new SignatureReader();
-        private Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
-        private Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
+        private readonly Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
+        private readonly Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
 
         public object Read(Stream original_stream)
         {
