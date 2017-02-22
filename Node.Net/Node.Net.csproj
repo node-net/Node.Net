@@ -322,6 +322,7 @@
     <Compile Include="Deprecated\Writers\Writer.cs" />
     <Compile Include="Deprecated\Writers\XmlWriter.cs" />
     <Compile Include="Deprecated\Writer.cs" />
+    <Compile Include="WordReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Deprecated\Data\Services\" />
