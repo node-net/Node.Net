@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Beta
+namespace Node.Net
 {
-    [TestFixture, Category(nameof(Beta))]
+    [TestFixture]
     class FactoryTest
     {
         [Test]

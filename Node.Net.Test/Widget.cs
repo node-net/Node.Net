@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Node.Net.Beta
+namespace Node.Net
 {
     interface IWidget : IDictionary
     {

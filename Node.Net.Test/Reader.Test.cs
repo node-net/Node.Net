@@ -10,9 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Xml;
 
-namespace Node.Net.Beta
+namespace Node.Net
 {
-    [TestFixture,Category(nameof(Beta))]
+    [TestFixture]
     class ReaderTest
     {
         [Test]

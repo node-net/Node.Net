@@ -5,10 +5,10 @@ using System.IO;
 using System.Text;
 using static System.Environment;
 
-namespace Node.Net.Beta.Internal.Writers
+namespace Node.Net
 {
-    enum JSONFormat { Compact, Indented };
-    sealed class JSONWriter
+    public enum JSONFormat { Compact, Indented };
+    public sealed class JSONWriter
     {
         public JSONFormat Format = JSONFormat.Indented;
         private int IndentLevel;

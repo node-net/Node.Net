@@ -60,17 +60,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Beta\Bar.cs" />
-    <Compile Include="Beta\Reader.Test.cs" />
+    <Compile Include="Bar.cs" />
+    <Compile Include="Reader.Test.cs" />
     <Compile Include="Beta\View3D.Test.cs" />
     <Compile Include="Deprecated\Reader.Test.cs" />
     <Compile Include="Extension\IDictionary.Extension.Test.cs" />
     <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Deprecated\Element.Test.cs" />
     <Compile Include="Deprecated\Extensions_Test.cs" />
-    <Compile Include="Beta\Factory.Test.cs" />
-    <Compile Include="Beta\Foo.cs" />
-    <Compile Include="Beta\Widget.cs" />
+    <Compile Include="Factory.Test.cs" />
+    <Compile Include="Foo.cs" />
+    <Compile Include="Widget.cs" />
     <Compile Include="Deprecated\Factory.Test.cs" />
     <Compile Include="Deprecated\Fixture.cs" />
     <Compile Include="Deprecated\GlobalProperties.Test.cs" />

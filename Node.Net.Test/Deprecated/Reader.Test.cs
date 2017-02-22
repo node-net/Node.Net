@@ -9,7 +9,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net.Deprecated
 {
-    [TestFixture]
+    [TestFixture,Category("Deprecated")]
     class ReaderTest
     {
         [TestCase("{}", typeof(IElement))]
@@ -51,19 +51,15 @@ namespace Node.Net.Deprecated
             var document = doc as IElement;
             Assert.NotNull(document, nameof(document));
 
-            //var itemsSource = document.ItemsSource;
             foreach (var item in document.Keys)
             {
                 var d = document[item] as IElement;
-                //var d = item as Collections.Dictionary;
                 Assert.NotNull(d, nameof(d));
 
                 var parent = global::Node.Net.Deprecated.Collections.ObjectExtension.GetParent(d);
                 Assert.NotNull(parent, nameof(parent));
 
                 Assert.NotNull(d.Parent, "d.Parent");
-                //var key = d.Key;
-                //Assert.True(key.Length > 0);
             }
         }
 

@@ -6,14 +6,14 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
-namespace Node.Net.Beta
+namespace Node.Net
 {
     public sealed class Factory : IFactory
     {
         public static Factory Default { get; } = new Factory();
         public Factory()
         {
-            ReadFunction = new Beta.Reader().Read;// new Readers.Reader().Read;
+            ReadFunction = new Reader().Read;// new Readers.Reader().Read;
         }
         public T Create<T>() => IFactoryExtension.Create<T>(this);
         public T Create<T>(object source) => IFactoryExtension.Create<T>(this, source);
@@ -64,6 +64,6 @@ namespace Node.Net.Beta
             get { return factory.ScalePrimaryModel3D; }
             set { factory.ScalePrimaryModel3D = value; }
         }
-        private readonly Internal.Factories.Factory factory = new Internal.Factories.Factory();
+        private readonly Beta.Internal.Factories.Factory factory = new Beta.Internal.Factories.Factory();
     }
 }

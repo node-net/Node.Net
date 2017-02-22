@@ -70,10 +70,10 @@
     <Compile Include="Beta\Internal\Factories\MaterialFactory.cs" />
     <Compile Include="Beta\Internal\Factories\ResourceFactory.cs" />
     <Compile Include="Beta\Internal\Readers\ImageSourceReader.cs" />
-    <Compile Include="Beta\IStreamSignature.cs" />
+    <Compile Include="Interfaces\IStreamSignature.cs" />
     <Compile Include="Beta\Internal\Readers\Signature.cs" />
     <Compile Include="Beta\Internal\Readers\SignatureReader.cs" />
-    <Compile Include="Beta\Reader.cs" />
+    <Compile Include="Reader.cs" />
     <Compile Include="Deprecated\Collections\Controls\DictionaryExplorer.cs" />
     <Compile Include="Deprecated\Collections\Controls\InstanceCounts.cs" />
     <Compile Include="Deprecated\Collections\Controls\ListBox.cs" />
@@ -191,7 +191,7 @@
     <Compile Include="Deprecated\Extensions\Visual3D.Extension.cs" />
     <Compile Include="Deprecated\Factories\AbstractFactory.cs" />
     <Compile Include="Deprecated\Factories\Extension\ImageSource.Extension.cs" />
-    <Compile Include="Beta\Factory.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="Beta\IDocument.cs" />
     <Compile Include="Beta\IElement.cs" />
     <Compile Include="Beta\Internal\Collections\Dictionary.cs" />
@@ -224,7 +224,7 @@
     <Compile Include="Beta\Internal\Readers\Reader.cs" />
     <Compile Include="Beta\Internal\Units\Angle.cs" />
     <Compile Include="Beta\Internal\Units\Length.cs" />
-    <Compile Include="Beta\Internal\Writers\JSONWriter.cs" />
+    <Compile Include="JSONWriter.cs" />
     <Compile Include="Beta\IReadOnlyDocument.cs" />
     <Compile Include="Beta\IReadOnlyElement.cs" />
     <Compile Include="Deprecated\Factories\StreamFactory.cs" />

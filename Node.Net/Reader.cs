@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Node.Net.Beta
+namespace Node.Net
 {
     // Example signatures
     // "{"                           // ,json
@@ -16,14 +16,14 @@ namespace Node.Net.Beta
             Add("<", ReadXml);
             Add("[", ReadJSON);
             Add("{", ReadJSON);
-            foreach(var signature in Internal.Readers.ImageSourceReader.Default.Signatures)
+            foreach(var signature in Beta.Internal.Readers.ImageSourceReader.Default.Signatures)
             {
                 Add(signature, ReadImageSource);
             }
         }
         public object Read(Stream original_stream)
         {
-            using (var signatureReader = new Internal.Readers.SignatureReader(original_stream))
+            using (var signatureReader = new Beta.Internal.Readers.SignatureReader(original_stream))
             {
                 var stream = signatureReader.Stream;
                 var signature = signatureReader.Signature;
@@ -38,7 +38,7 @@ namespace Node.Net.Beta
 
         public static object ReadXml(Stream original_stream)
         {
-            using (var signatureReader = new Internal.Readers.SignatureReader(original_stream))
+            using (var signatureReader = new Beta.Internal.Readers.SignatureReader(original_stream))
             {
                 var stream = signatureReader.Stream;
                 var signature_string = signatureReader.Signature;
@@ -55,7 +55,7 @@ namespace Node.Net.Beta
             }
             return null;
         }
-        public static object ReadJSON(Stream stream) => Internal.Readers.JSONReader.Default.Read(stream);
-        public static object ReadImageSource(Stream stream) => Internal.Readers.ImageSourceReader.Default.Read(stream);
+        public static object ReadJSON(Stream stream) => Beta.Internal.Readers.JSONReader.Default.Read(stream);
+        public static object ReadImageSource(Stream stream) => Beta.Internal.Readers.ImageSourceReader.Default.Read(stream);
     }
 }
