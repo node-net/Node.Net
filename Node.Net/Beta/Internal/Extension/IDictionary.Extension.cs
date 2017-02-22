@@ -222,7 +222,8 @@ namespace Node.Net.Beta.Internal
                     var childEnumerable = value as IEnumerable;
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
-                        copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
+                        //copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
+                        copy[key] = childEnumerable.ConvertTypes(types, typeKey);
                     }
                     else
                     {
@@ -260,6 +261,47 @@ namespace Node.Net.Beta.Internal
         public static Point3D GetWorldOrigin(this IDictionary dictionary)
         {
             return GetLocalToWorld(dictionary).Transform(new Point3D(0, 0, 0));
+        }
+
+        public static T GetNearestAncestor<T>(this IDictionary child)
+        {
+            var parent = child.GetParent() as IDictionary;
+            if (child != null && parent != null)
+            {
+                if (typeof(T).IsAssignableFrom(parent.GetType()))
+                {
+                    var ancestor = (T)parent;
+                    if (ancestor != null) return ancestor;
+                }
+                return GetNearestAncestor<T>(parent);
+            }
+            return default(T);
+        }
+        public static T GetFurthestAncestor<T>(this IDictionary child)
+        {
+            if (child != null)
+            {
+                var ancestor = GetNearestAncestor<T>(child) as IDictionary;
+                if (ancestor != null)
+                {
+                    var further_ancestor = GetFurthestAncestor<T>(ancestor);
+                    if (further_ancestor != null) return further_ancestor;
+                }
+                if (ancestor == null)
+                {
+                    if (typeof(T).IsAssignableFrom(child.GetType()))
+                    {
+                        ancestor = (IDictionary)(T)(object)child;
+                    }
+                }
+                return (T)ancestor;
+            }
+            return default(T);
+        }
+        public static object GetRootAncestor(this IDictionary child)
+        {
+            return GetFurthestAncestor<IDictionary>(child);
+
         }
     }
 }

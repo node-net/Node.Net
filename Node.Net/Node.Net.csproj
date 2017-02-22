@@ -70,6 +70,7 @@
     <Compile Include="Beta\Internal\Factories\MaterialFactory.cs" />
     <Compile Include="Beta\Internal\Factories\ResourceFactory.cs" />
     <Compile Include="Beta\Internal\Readers\ImageSourceReader.cs" />
+    <Compile Include="Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Interfaces\IStreamSignature.cs" />
     <Compile Include="Beta\Internal\Readers\Signature.cs" />
     <Compile Include="Beta\Internal\Readers\SignatureReader.cs" />

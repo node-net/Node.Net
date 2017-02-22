@@ -45,7 +45,6 @@ namespace Node.Net.Deprecated.Collections
         public static string GetFullName(this object instance) => GetFullKey(instance);
         public static object GetValue(object instance) => Internal.KeyValuePair.GetValue(instance);
         public static bool IsKeyValuePair(object instance) => Internal.KeyValuePair.IsKeyValuePair(instance);
-        //public static Func<object, Dictionary<string, dynamic>> MetaDataFunctionGetMetaDataFunction = Default.GetMetaData;
         public static object GetParent(this object item)
         {
             var element = item as IElement;

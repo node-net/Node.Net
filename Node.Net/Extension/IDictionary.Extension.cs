@@ -13,6 +13,9 @@ namespace Node.Net
         public static IList Collect(this IDictionary dictionary, Type type) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type);
         public static object GetParent(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetParent(dictionary);
         public static void SetParent(this IDictionary dictionary, object parent) => Beta.Internal.IDictionaryExtension.SetParent(dictionary, parent);
+        public static object GetRootAncestor(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetRootAncestor(child);
+        public static T GetFurthestAncestor<T>(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetFurthestAncestor<T>(child);
+        public static T GetNearestAncestor<T>(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetNearestAncestor<T>(child);
         public static string GetName(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetName(dictionary);
         public static string GetFullName(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetFullName(dictionary);
         public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Beta.Internal.IDictionaryExtension.ConvertTypes(source, types, typeKey);
