@@ -44,5 +44,39 @@ namespace Node.Net
             var worldOrigin = matrix.Transform(new Point3D(0, 0, 0));
             Assert.AreEqual(11, worldOrigin.X);
         }
+
+        [Test]
+        public void IDictonary_Collect()
+        {
+            var factory = new Factory
+            {
+                AbstractTypes = new Dictionary<Type, Type>
+                {
+                    {typeof(IWidget),typeof(Widget) },
+                    {typeof(IFoo), typeof(Foo) },
+                    {typeof(IBar),typeof(Bar) }
+                },
+                IDictionaryTypes = new Dictionary<string, Type>
+                {
+                    {nameof(Widget) , typeof(Widget) },
+                    {nameof(Foo), typeof(Foo) },
+                    {nameof(Bar),typeof(Bar) }
+                }
+            };
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+
+            var iwidget = factory.Create<IWidget>("Widget.1.json");
+            Assert.NotNull(iwidget, "iwidget Widget.1.json");
+            var foos = iwidget.Collect(typeof(IFoo));
+            Assert.AreEqual(1, foos.Count);
+            var ifoo = foos[0] as IFoo;
+            Assert.AreSame(iwidget, ifoo.Parent);
+            var bars = iwidget.Collect("Bar");
+            Assert.AreEqual(1, bars.Count);
+            var ibar = bars[0] as IBar;
+            Assert.AreSame(ifoo, ibar.Parent);
+            Assert.AreEqual("bar0", ibar.Name);
+        }
     }
 }

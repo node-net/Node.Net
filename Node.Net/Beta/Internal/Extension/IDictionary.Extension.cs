@@ -68,7 +68,12 @@ namespace Node.Net.Beta.Internal
             memory.Seek(0, SeekOrigin.Begin);
             return memory;
         }
-
+        public static IList Collect(this IDictionary idictionary,string type)
+        {
+            var results = new List<object>();
+            _Collect(idictionary, type, results);
+            return results;
+        }
         public static IList Collect(this IDictionary idictionary,Type type)
         {
             var results = new List<object>();
@@ -109,6 +114,21 @@ namespace Node.Net.Beta.Internal
                     }
                     var child_idictionary = item as IDictionary;
                     if (child_idictionary != null) _Collect(child_idictionary, type,results);
+                }
+            }
+        }
+        private static void _Collect(this IDictionary idictionary, string type, IList results)
+        {
+            foreach (var item in idictionary.Values)
+            {
+                if (item != null)
+                {
+                    if (item.GetType().Name == type)
+                    {
+                        if (!results.Contains(item)) results.Add(item);
+                    }
+                    var child_idictionary = item as IDictionary;
+                    if (child_idictionary != null) _Collect(child_idictionary, type, results);
                 }
             }
         }
