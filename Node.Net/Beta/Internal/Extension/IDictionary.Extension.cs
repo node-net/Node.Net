@@ -80,9 +80,9 @@ namespace Node.Net.Beta.Internal
             _Collect(idictionary, type, results);
             return results;
         }
-        public static IList Collect<T>(this IDictionary idictionary)
+        public static IList<T> Collect<T>(this IDictionary idictionary)
         {
-            var results = new List<object>();
+            var results = new List<T>();
             _Collect<T>(idictionary, results);
 
             return results;

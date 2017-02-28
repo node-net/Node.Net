@@ -20,7 +20,7 @@ namespace Node.Net
             }
             set { _delimiters = value; }
         }
-        private readonly System.IO.StreamReader _sr = null;
+        private readonly System.IO.StreamReader _sr;
         private readonly System.Collections.Generic.List<string> _words = new System.Collections.Generic.List<string>();
 
         public WordReader(System.IO.StreamReader sr) { _sr = sr; }
@@ -31,7 +31,7 @@ namespace Node.Net
             Dispose(true);
             System.GC.SuppressFinalize(this);
         }
-        protected void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             if (disposing)
             {
