@@ -152,7 +152,7 @@ namespace Node.Net.Beta.Internal
             }
             return dictionary;
         }
-        public static T Get<T>(this IDictionary dictionary, string name)
+        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T))
         {
             if (dictionary.Contains(name))
             {
@@ -170,8 +170,15 @@ namespace Node.Net.Beta.Internal
                     if (dictionary.Contains(n)) return dictionary.Get<T>(n);
                 }
             }
-            if (typeof(T) == typeof(string)) return (T)(object)string.Empty;
-            return default(T);
+            if (typeof(T) == typeof(string))
+            {
+                if (defaultValue == null)
+                {
+                    return (T)(object)string.Empty;
+                }
+            }
+            //return default(T);
+            return defaultValue;
         }
         public static string GetName(this IDictionary dictionary)
         {
