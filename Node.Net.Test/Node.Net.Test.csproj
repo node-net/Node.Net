@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bar.cs" />
+    <Compile Include="Extension\Visual.Extension.Test.cs" />
+    <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
     <Compile Include="Reader.Test.cs" />
     <Compile Include="Beta\View3D.Test.cs" />
     <Compile Include="Deprecated\Reader.Test.cs" />
