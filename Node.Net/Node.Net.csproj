@@ -61,6 +61,8 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Beta\Internal\Extension\Image.Extension.cs" />
+    <Compile Include="Beta\Internal\Extension\ImageSource.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\PerspectiveCamera.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\Visual3D.Extension.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Beta\Internal\Factories\MaterialFactory.cs" />
     <Compile Include="Beta\Internal\Factories\ResourceFactory.cs" />
     <Compile Include="Beta\Internal\Readers\ImageSourceReader.cs" />
+    <Compile Include="Extension\ImageSource.Extension.cs" />
     <Compile Include="Extension\Matrix3D.Extension.cs" />
     <Compile Include="Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Extension\Visual.Extension.cs" />
