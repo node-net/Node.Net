@@ -10,6 +10,7 @@ namespace Node.Net
     [TestFixture]
     class FactoryTest
     {
+       
         [Test]
         public void Factory_Test()
         {
@@ -46,6 +47,10 @@ namespace Node.Net
 
             var image = factory.Create<ImageSource>("image.jpg");
             Assert.NotNull(image, nameof(image));
+
+            var bar = factory.Create(typeof(IBar), "Bar.0.json");
+            bar = factory.Create<IBar>(bar);
+            bar = factory.Create<IBar>();
         }
 
         public static Model3D GetModel3D(IDictionary data)
