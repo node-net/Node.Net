@@ -116,7 +116,7 @@ namespace Node.Net.Beta.Internal.Factories
             }
             return null;
         }
-        private static Transform3D GetScalingTransform(IDictionary source)
+        public static Transform3D GetScalingTransform(IDictionary source)
         {
             var scaleX = 1.0;
             var scaleY = 1.0;
@@ -133,7 +133,6 @@ namespace Node.Net.Beta.Internal.Factories
                 var matrix3D = new Matrix3D();
                 matrix3D.Scale(new Vector3D(scaleX, scaleY, scaleZ));
                 if (!matrix3D.IsIdentity) return new MatrixTransform3D { Matrix = matrix3D };
-                //return new MatrixTransform3D { Matrix = matrix3D };
             }
             return null;
         }
