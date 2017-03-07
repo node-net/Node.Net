@@ -176,14 +176,22 @@ namespace Node.Net.Controls
         [Browsable(false)]
         public new BitmapEffect BitmapEffect
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             get { return base.BitmapEffect; }
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
             set { base.BitmapEffect = value; }
+#pragma warning restore CS0618 // Type or member is obsolete
         }
         [Browsable(false)]
         public new BitmapEffectInput BitmapEffectInput
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             get { return base.BitmapEffectInput; }
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
             set { base.BitmapEffectInput = value; }
+#pragma warning restore CS0618 // Type or member is obsolete
         }
         [Browsable(false)]
         public new CacheMode CacheMode
@@ -469,7 +477,9 @@ namespace Node.Net.Controls
         [Browsable(false)]
         public new int PersistId
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             get { return base.PersistId; }
+#pragma warning restore CS0618 // Type or member is obsolete
         }
         [Browsable(false)]
         public new Size RenderSize

@@ -13,7 +13,7 @@ namespace Node.Net
         public static Factory Default { get; } = new Factory();
         public Factory()
         {
-            ReadFunction = new Reader().Read;// new Readers.Reader().Read;
+            ReadFunction = new Reader().Read;
         }
         public T Create<T>() => IFactoryExtension.Create<T>(this);
         public T Create<T>(object source) => IFactoryExtension.Create<T>(this, source);
