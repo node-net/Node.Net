@@ -10,7 +10,13 @@ namespace Node.Net
     [TestFixture]
     class FactoryTest
     {
-       
+       [Test]
+       public void Factory_Create_Abstract()
+        {
+            var factory = new Factory();
+            Assert.NotNull(factory.Create<IDictionary>(), "factory.Create<IDictionary>()");
+            Assert.NotNull(factory.Create<IList>(), "factory.Crate<IList>()");
+        }
         [Test]
         public void Factory_Test()
         {

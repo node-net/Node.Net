@@ -87,6 +87,10 @@ namespace Node.Net.Beta.Internal.Factories
 
         private Model3DFactory Model3DFactory { get; } = new Model3DFactory();
         private StreamFactory StreamFactory { get; } = new StreamFactory();
-        private AbstractFactory AbstractFactory { get; } = new AbstractFactory();
+        private AbstractFactory AbstractFactory { get; } = new AbstractFactory
+        {
+            {typeof(IDictionary),typeof(Dictionary<string,dynamic>) },
+            {typeof(IList),typeof(List<dynamic>) }
+        };
     }
 }
