@@ -77,6 +77,7 @@
     <Compile Include="Extension\ImageSource.Extension.cs" />
     <Compile Include="Extension\Matrix3D.Extension.cs" />
     <Compile Include="Extension\ProjectionCamera.Extension.cs" />
+    <Compile Include="Extension\Rect3D.Extension.cs" />
     <Compile Include="Extension\Visual.Extension.cs" />
     <Compile Include="Extension\Visual3D.Extension.cs" />
     <Compile Include="Interfaces\IStreamSignature.cs" />

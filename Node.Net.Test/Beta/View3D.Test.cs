@@ -12,7 +12,7 @@ namespace Node.Net.Beta
 {
     [TestFixture,Category(nameof(Beta))]
     class View3DTest
-    {
+    {/*
         [Test,Apartment(ApartmentState.STA),Explicit]
 
         public void View3D_ShowDialog()
@@ -33,6 +33,6 @@ namespace Node.Net.Beta
                 Title = "View3D Test",
                 Content = viewport
             }.ShowDialog();
-        }
+        }*/
     }
 }

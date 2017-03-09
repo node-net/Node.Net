@@ -91,13 +91,13 @@ namespace Node.Net.Deprecated
 
             }
         }
-
+        /*
         [Test, Explicit, Apartment(ApartmentState.STA)]
         public void Reader_Open_OpenFileDialogFilter()
         {
             var document = Reader.Default.Open("JSON Files (.json)|*.json|All Files (*.*)|*.*");
             Assert.NotNull(document, nameof(document));
-        }
+        }*/
         [Test]
         public void Reader_Open_ManifestResourceName()
         {

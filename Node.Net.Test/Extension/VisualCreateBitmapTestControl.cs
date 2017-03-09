@@ -13,6 +13,7 @@ namespace Node.Net.Tests.Extension
         public UIElement UIElement { get; set; }
         protected override void OnInitialized(EventArgs e)
         {
+            this.KeyDown += VisualCreateBitmapTestControl_KeyDown;
             base.OnInitialized(e);
             ColumnDefinitions.Add(new ColumnDefinition());
             ColumnDefinitions.Add(new ColumnDefinition());
@@ -20,6 +21,11 @@ namespace Node.Net.Tests.Extension
             image = new Image();
             Children.Add(image);
             Grid.SetColumn(image, 1);
+            UpdateImage();
+        }
+
+        private void VisualCreateBitmapTestControl_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
             UpdateImage();
         }
 

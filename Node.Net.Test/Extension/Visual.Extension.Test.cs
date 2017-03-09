@@ -14,6 +14,7 @@ namespace Node.Net
     [TestFixture]
     class VisualExtensionTest
     {
+        /*
         [Test,Apartment(ApartmentState.STA),Explicit]
         public void Visual_CreateBitmapSource()
         {
@@ -37,15 +38,6 @@ namespace Node.Net
                 Content = new Node.Net.Tests.Extension.VisualCreateBitmapTestControl { UIElement = viewport },
                 WindowState = WindowState.Maximized
             }.ShowDialog();
-            /*
-            var bitmap = viewport.CreateBitmapSource(300, 300);
-            new Window
-            {
-                Title = "Visual_CreateBitmapSource_Bitmap",
-                Content = new Image { Source = bitmap },
-                WindowState = WindowState.Maximized
-            }.ShowDialog();
-            */
-        }
+        }*/
     }
 }

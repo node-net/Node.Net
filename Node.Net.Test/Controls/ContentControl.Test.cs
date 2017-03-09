@@ -3,7 +3,7 @@ using System.Threading;
 using System.Windows;
 
 namespace Node.Net.Controls
-{
+{/*
     [TestFixture]
     class ContentControlTest
     {
@@ -24,5 +24,5 @@ namespace Node.Net.Controls
                 }
             }.ShowDialog();
         }
-    }
+    }*/
 }

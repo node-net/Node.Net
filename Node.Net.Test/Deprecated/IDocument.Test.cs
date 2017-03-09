@@ -9,7 +9,7 @@ namespace Node.Net.Deprecated
 {
     [TestFixture]
     class IDocumentTest
-    {
+    {/*
         [Test,Explicit]
         public void IDocument_Usage()
         {
@@ -35,7 +35,7 @@ namespace Node.Net.Deprecated
 
             var states = document.Find<IElement>("State");
             Assert.AreEqual(50, states.Count);
-        }
+        }*/
 
     }
 }

@@ -10,11 +10,12 @@ namespace Node.Net.Deprecated
     [TestFixture]
     class WriterTest
     {
+        /*
         [Test, Explicit, Apartment(ApartmentState.STA)]
         public void Writer_Save()
         {
             var data = new Dictionary<string, dynamic>();
             Deprecated.Writer.Default.Save(data);
-        }
+        }*/
     }
 }
