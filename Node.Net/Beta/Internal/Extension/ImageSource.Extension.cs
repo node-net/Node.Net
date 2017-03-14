@@ -106,5 +106,10 @@ namespace Node.Net.Beta.Internal
             }
             return material;
         }
+
+        public static System.Windows.Media.Brush GetBrush(ImageSource imageSource)
+        {
+            return new ImageBrush { ImageSource = imageSource, TileMode = TileMode.Tile };
+        }
     }
 }
