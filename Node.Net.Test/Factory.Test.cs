@@ -198,5 +198,13 @@ namespace Node.Net
             var origin = transform3D.Transform(new Point3D(0, 0, 0));
             Assert.AreEqual(2, origin.X);
         }
+
+        [Test]
+        public void Factory_Resources()
+        {
+            var factory = new Factory();
+            var camera = factory.Create<Camera>("Plan");
+            Assert.NotNull(camera, nameof(camera));
+        }
     }
 }

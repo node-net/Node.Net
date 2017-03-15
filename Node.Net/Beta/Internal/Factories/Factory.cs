@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -36,6 +37,8 @@ namespace Node.Net.Beta.Internal.Factories
                 {typeof(object), AbstractFactory.Create }
 
             };
+            Resources = XamlReader.Load(typeof(Factory).Assembly.GetManifestResourceStream
+                                        ("Node.Net.Resources.Factory.Resources.xaml")) as ResourceDictionary;
         }
         public ResourceDictionary Resources
         {
