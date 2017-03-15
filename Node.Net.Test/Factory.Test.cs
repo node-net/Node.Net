@@ -203,7 +203,7 @@ namespace Node.Net
         public void Factory_Resources()
         {
             var factory = new Factory();
-            var camera = factory.Create<Camera>("Plan");
+            var camera = factory.Create<Camera>("Top");
             Assert.NotNull(camera, nameof(camera));
         }
     }
