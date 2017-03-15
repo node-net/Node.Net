@@ -47,6 +47,16 @@ namespace Node.Net.Beta.Internal.Factories
                     if (!ExactMatch && manifestResourceName.Contains(name)) return assembly.GetManifestResourceStream(manifestResourceName);
                 }
             }
+            if(name.Contains("(") || name.Contains("*") && name.Contains(".") && name.Contains(")") || name.Contains("|"))
+            {
+                // open file dialog filter
+                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
+                var result = ofd.ShowDialog();
+                if (result == true)
+                {
+                    if (File.Exists(ofd.FileName)) return new FileStream(ofd.FileName, FileMode.Open);
+                }
+            }
             return new StackTrace().GetStream(name);
         }
     }

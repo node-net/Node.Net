@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using System.Threading;
 
 namespace Node.Net
 {
@@ -205,6 +206,13 @@ namespace Node.Net
             var factory = new Factory();
             var camera = factory.Create<Camera>("Top");
             Assert.NotNull(camera, nameof(camera));
+        }
+
+        [Test,Explicit,Apartment(ApartmentState.STA)]
+        public void Factory_Create_From_OpenFileDialogFilter()
+        {
+            var factory = new Factory();
+            var item = factory.Create<object>("Text Files(.txt)|*.txt|All Files(*.*)|*.*");
         }
     }
 }
