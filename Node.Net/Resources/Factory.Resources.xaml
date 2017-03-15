@@ -1,13 +1,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <PerspectiveCamera x:Key="Top" LookDirection="0,0,-1" UpDirection="0,1,0"/>
-    <PerspectiveCamera x:Key="Bottom" LookDirection="0,0,1" UpDirection="0,-1,0"/>
-    <PerspectiveCamera x:Key="Front" LookDirection="0,1,0" UpDirection="0,0,1"/>
-    <PerspectiveCamera x:Key="Back" LookDirection="0,-1,0" UpDirection="0,0,1"/>
-    <PerspectiveCamera x:Key="Left" LookDirection="1,0,0" UpDirection="0,0,1"/>
-    <PerspectiveCamera x:Key="Right" LookDirection="-1,0,0" UpDirection="0,0,1"/>
-    <PerspectiveCamera x:Key="SW" LookDirection="1,1,-1" UpDirection="1,1,1"/>
-    <PerspectiveCamera x:Key="NW" LookDirection="1,-1,-1" UpDirection="1,-1,1"/>
-    <PerspectiveCamera x:Key="NE" LookDirection="-1,-1,-1" UpDirection="-1,-1,1"/>
-    <PerspectiveCamera x:Key="SE" LookDirection="-1,1,-1" UpDirection="-1,1,1"/>
+    <PerspectiveCamera x:Key="Top" LookDirection="0,0,-1" UpDirection="0,1,0" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="Bottom" LookDirection="0,0,1" UpDirection="0,-1,0" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="Front" LookDirection="0,1,0" UpDirection="0,0,1" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="Back" LookDirection="0,-1,0" UpDirection="0,0,1" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="Left" LookDirection="1,0,0" UpDirection="0,0,1" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="Right" LookDirection="-1,0,0" UpDirection="0,0,1" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="SW" LookDirection="1,1,-1" UpDirection="1,1,1" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="NW" LookDirection="1,-1,-1" UpDirection="1,-1,1" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="NE" LookDirection="-1,-1,-1" UpDirection="-1,-1,1" Position="0,0,1000001"/>
+    <PerspectiveCamera x:Key="SE" LookDirection="-1,1,-1" UpDirection="-1,1,1" Position="0,0,1000001"/>
 </ResourceDictionary>
