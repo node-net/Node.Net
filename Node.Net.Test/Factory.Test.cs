@@ -58,6 +58,9 @@ namespace Node.Net
             var bar = factory.Create(typeof(IBar), "Bar.0.json");
             bar = factory.Create<IBar>(bar);
             bar = factory.Create<IBar>();
+
+            bar = factory.Create<IBar>("Bar.not.there.json");
+            Assert.IsNull(bar, nameof(bar));
         }
 
         public static Model3D GetModel3D(IDictionary data)

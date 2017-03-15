@@ -23,9 +23,13 @@ namespace Node.Net.Beta.Internal.Factories
                 callingParent = true;
                 try
                 {
-                    var stream = ParentFactory.Create<Stream>(source);
-                    var item = CreateFromStream(target_type, stream, source);
-                    if (item != null) return item;
+                    //var stream = ParentFactory.Create<Stream>(source);
+                    var stream = ParentFactory.Create(typeof(Stream), source) as Stream;
+                    if (stream != null)
+                    {
+                        var item = CreateFromStream(target_type, stream, source);
+                        if (item != null) return item;
+                    }
                 }
                 finally { callingParent = false; }
             }
