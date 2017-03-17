@@ -67,6 +67,7 @@
     <Compile Include="Beta\Internal\Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\Visual3D.Extension.cs" />
     <Compile Include="Controls\ContentControl.cs" />
+    <Compile Include="Controls\StaticViewport3D.cs" />
     <Compile Include="Extension\IDictionary.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\Color.Extension.cs" />
     <Compile Include="Beta\Internal\Factories\DoubleFactory.cs" />
