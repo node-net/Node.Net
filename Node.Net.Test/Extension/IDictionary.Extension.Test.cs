@@ -9,7 +9,7 @@ using System.Windows.Media.Media3D;
 namespace Node.Net
 {
     [TestFixture]
-    class IDictionaryExtensionTest
+    public class IDictionaryExtensionTest
     {
         [Test]
         public void IDictionary_Extension_GetLocalToParent()
@@ -43,6 +43,28 @@ namespace Node.Net
             Assert.False(matrix.IsIdentity);
             var worldOrigin = matrix.Transform(new Point3D(0, 0, 0));
             Assert.AreEqual(11, worldOrigin.X);
+        }
+
+        [Test,Explicit]
+        public void IDictionary_Extension_Profile_GetLocalToWorld()
+        {
+            var foo = new Dictionary<string, dynamic>
+            {
+                {"X","1 m" }
+            };
+            var dictionary = new Dictionary<string, dynamic>
+            {
+                {"X","10 m" },
+                {"foo",foo}
+            };
+            dictionary.DeepUpdateParents();
+            
+            for(int x = 0; x < 1000000; x++)
+            {
+                dictionary["X"] = $"{x} m";
+                var matrix = foo.GetLocalToWorld();
+            }
+            //var matrix = foo.GetLocalToWorld();
         }
 
         [Test]

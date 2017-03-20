@@ -26,30 +26,22 @@ namespace Node.Net.Beta.Internal.Factories
 
         private static Matrix3D? CreateFromIDictionary(IDictionary dictionary)
         {
-
             var matrix3D = new Matrix3D();
-            //var rotations = GetRotationsXYZ(dictionary);
             matrix3D = RotateXYZ(matrix3D, GetRotationsXYZ(dictionary));
             matrix3D.Translate(GetTranslation(dictionary));
             if (!matrix3D.IsIdentity) return matrix3D;
-            /*
-            var rotations = source.GetRotationsXYZ();// Extension.IDictionaryExtension.GetRotationsXYZ(source);
-            matrix3D = Helpers.Matrix3DHelper.RotateXYZ(new Matrix3D(), source.GetRotationsXYZ());// Extension.IDictionaryExtension.GetRotationsXYZ(source));
-            matrix3D.Translate(source.GetTranslation());// Extension.IDictionaryExtension.GetTranslation(source));
-
-            if (!matrix3D.IsIdentity)
-            {
-                return new MatrixTransform3D { Matrix = matrix3D };
-            }*/
             return null;
         }
 
+        public static string RotationXKey = "Spin,RotationX,Roll";
+        public static string RotationYKey = "Tilt,RotationY,Pitch";
+        public static string RotationZKey = "Orientation,RotationZ,Yaw";
         public static Vector3D GetRotationsXYZ(IDictionary source)
         {
             return new Vector3D(
-                Internal.Units.Angle.GetDegrees(source.Get<string>("RotationX,Spin,Roll")),
-                Internal.Units.Angle.GetDegrees(source.Get<string>("RotationY,Tilt,Pitch")),
-                Internal.Units.Angle.GetDegrees(source.Get<string>("RotationZ,Orientation,Yaw")));
+                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationXKey)),//"Spin,RotationX,Roll")),
+                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationYKey)),//"Tilt,RotationY,Pitch")),
+                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationZKey)));// "Orientation,RotationZ,Yaw")));
         }
 
         public static Vector3D GetTranslation(IDictionary source)

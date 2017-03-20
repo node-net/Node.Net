@@ -154,20 +154,34 @@ namespace Node.Net.Beta.Internal
         }
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T))
         {
+            if (name.IndexOf(',') > -1)//name.Contains(','))
+            {
+                int startIndex = 0;
+                int nextIndex = name.IndexOf(',');
+                while (startIndex < name.Length)
+                {
+                    //var sub_name = name.Substring(startIndex, nextIndex - startIndex);
+                    if (dictionary.Contains(name.Substring(startIndex, nextIndex - startIndex))) return dictionary.Get<T>(name.Substring(startIndex, nextIndex - startIndex));
+                    startIndex = nextIndex + 1;
+                    if (startIndex < name.Length)
+                    {
+                        nextIndex = name.IndexOf(',', startIndex);
+                        if (nextIndex < 0) nextIndex = name.Length - 1;
+                    }
+                }
+                /*
+                var names = name.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                foreach (var n in names)
+                {
+                    if (dictionary.Contains(n)) return dictionary.Get<T>(n);
+                }*/
+            }
             if (dictionary.Contains(name))
             {
                 var value = dictionary[name];
                 if (value != null)
                 {
                     if (typeof(T).IsAssignableFrom(value.GetType())) return (T)value;
-                }
-            }
-            if (name.Contains(","))
-            {
-                var names = name.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                foreach (var n in names)
-                {
-                    if (dictionary.Contains(n)) return dictionary.Get<T>(n);
                 }
             }
             if (typeof(T) == typeof(string))
