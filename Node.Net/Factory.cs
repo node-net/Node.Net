@@ -64,6 +64,15 @@ namespace Node.Net
             get { return factory.ScalePrimaryModel3D; }
             set { factory.ScalePrimaryModel3D = value; }
         }
+        public bool Cache
+        {
+            get { return factory.Cache; }
+            set { factory.Cache = value; }
+        }
+        public void ClearCache()
+        {
+            factory.ClearCache();
+        }
         public static Transform3D GetScalingTransform(IDictionary source) => Beta.Internal.Factories.Model3DFactory.GetScalingTransform(source);
         private readonly Beta.Internal.Factories.Factory factory = new Beta.Internal.Factories.Factory();
     }

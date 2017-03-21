@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -42,6 +39,7 @@ namespace Node.Net.Beta.Internal.Factories
                 }
             }
         }
+        public void ClearCache() { model3DCache.Clear(); }
         private Model3D CreateFromDictionary(IDictionary source)
         {
             if (cache)
@@ -72,10 +70,10 @@ namespace Node.Net.Beta.Internal.Factories
         private Model3D GetPrimaryModel3D(IDictionary source)
         {
             var model3D = GetUnscaledPrimaryModel3D(source);
-            if(model3D != null && ScalePrimaryModel)
+            if (model3D != null && ScalePrimaryModel)
             {
                 var scaleTransform = GetScalingTransform(source);
-                if(scaleTransform != null)
+                if (scaleTransform != null)
                 {
                     var scaledModel3D = new Model3DGroup { Transform = scaleTransform };
                     if (scaledModel3D != null)

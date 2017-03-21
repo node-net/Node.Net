@@ -88,6 +88,15 @@ namespace Node.Net.Beta.Internal.Factories
             return null;
         }
 
+        public bool Cache
+        {
+            get { return Model3DFactory.Cache; }
+            set { Model3DFactory.Cache = value; }
+        }
+        public void ClearCache()
+        {
+            Model3DFactory.ClearCache();
+        }
         private Model3DFactory Model3DFactory { get; } = new Model3DFactory();
         private StreamFactory StreamFactory { get; } = new StreamFactory();
         private AbstractFactory AbstractFactory { get; } = new AbstractFactory

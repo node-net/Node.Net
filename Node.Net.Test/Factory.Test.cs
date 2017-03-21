@@ -9,7 +9,7 @@ using System.Threading;
 namespace Node.Net
 {
     [TestFixture]
-    class FactoryTest
+    public class FactoryTest
     {
        [Test]
        public void Factory_Create_Abstract()
@@ -181,6 +181,22 @@ namespace Node.Net
 
             var v3d = factory.Create<Visual3D>(scene);
             Assert.NotNull(v3d, nameof(v3d));
+        }
+
+        [Test,Explicit]
+        public void Factory_Visual3D_Profile()
+        {
+            var factory = new Factory { Cache = true };
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+            var scene = factory.Create<IDictionary>("Scene.Cubes.json");
+            Assert.NotNull(scene, nameof(scene));
+
+            for (int i = 0; i < 500; ++i)
+            {
+                var v3d = factory.Create<Visual3D>(scene);
+                Assert.NotNull(v3d, nameof(v3d));
+            }
         }
 
         [Test]
