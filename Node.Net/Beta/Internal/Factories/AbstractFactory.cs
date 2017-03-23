@@ -14,6 +14,7 @@ namespace Node.Net.Beta.Internal.Factories
         public string TypeKey = "Type";
 
         private bool callingParent = false;
+        private CloneFactory CloneFactory { get; } = new CloneFactory();
         public object Create(Type target_type, object source)
         {
             if (target_type == null) return null;
@@ -46,7 +47,9 @@ namespace Node.Net.Beta.Internal.Factories
             if (instance != null) return instance;
 
             //if (ParentFactory != null) return CreateFromStream(target_type, ParentFactory.Create<Stream>(source),source);
-            return ResourceFactory.Create(target_type,source);
+            instance = ResourceFactory.Create(target_type,source);
+            if (instance == null) instance = CloneFactory.Create(target_type, source);
+            return instance;
         }
 
         public ResourceDictionary Resources { get; set; } = new ResourceDictionary();

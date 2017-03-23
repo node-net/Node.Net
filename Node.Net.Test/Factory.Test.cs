@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Threading;
+using System.Windows.Shapes;
 
 namespace Node.Net
 {
@@ -232,6 +233,14 @@ namespace Node.Net
         {
             var factory = new Factory();
             var item = factory.Create<object>("Text Files(.txt)|*.txt|All Files(*.*)|*.*");
+        }
+
+        [Test,Apartment(ApartmentState.STA)]
+        public void Factory_Clone()
+        {
+            var ellipse = new System.Windows.Shapes.Ellipse { Width = 10, Height = 15 };
+            var clone = Factory.Default.Create<Ellipse>(ellipse);
+            Assert.NotNull(clone, nameof(clone));
         }
     }
 }

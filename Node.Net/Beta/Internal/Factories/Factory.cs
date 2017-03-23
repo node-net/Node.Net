@@ -104,5 +104,6 @@ namespace Node.Net.Beta.Internal.Factories
             {typeof(IDictionary),typeof(Dictionary<string,dynamic>) },
             {typeof(IList),typeof(List<dynamic>) }
         };
+        
     }
 }
