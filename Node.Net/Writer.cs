@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Node.Net
 {
@@ -12,14 +13,6 @@ namespace Node.Net
     {
         public static Writer Default { get; } = new Writer();
 
-        public Writer()
-        {
-            WriteFunctions = new Dictionary<Type, Action<Stream, object>>
-            {
-                {typeof(IDictionary),jsonWriter.Write },
-                {typeof(IEnumerable),jsonWriter.Write }
-            };
-        }
         public void Write(Stream stream, object value)
         {
             if (value != null && WriteFunctions != null)
@@ -33,9 +26,17 @@ namespace Node.Net
                     }
                 }
             }
-            jsonWriter.Write(stream, value);
+            if (value != null)
+            {
+                if (typeof(ImageSource).IsAssignableFrom(value.GetType()))
+                {
+                    bitmapSourceWriter.Write(stream, value);
+                }
+                else { jsonWriter.Write(stream, value); }
+            }
         }
-        private Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
+        public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
         private JSONWriter jsonWriter = new JSONWriter();
+        private BitmapSourceWriter bitmapSourceWriter = new BitmapSourceWriter();
     }
 }
