@@ -21,6 +21,7 @@ namespace Node.Net
                 Add(signature, ReadImageSource);
             }
         }
+        public static Reader Default { get; } = new Reader();
         public object Read(Stream original_stream)
         {
             using (var signatureReader = new Beta.Internal.Readers.SignatureReader(original_stream))
