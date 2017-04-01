@@ -9,14 +9,14 @@ namespace Node.Net
     // "{"                           // ,json
     // "42 4D"                       // .bmp
     // "47 49 46 38 37 61"           // .gif
-    public sealed class Reader : Dictionary<string,Func<Stream,object>>
+    public sealed class Reader : Dictionary<string, Func<Stream, object>>
     {
         public Reader()
         {
             Add("<", ReadXml);
             Add("[", ReadJSON);
             Add("{", ReadJSON);
-            foreach(var signature in Beta.Internal.Readers.ImageSourceReader.Default.Signatures)
+            foreach (var signature in Beta.Internal.Readers.ImageSourceReader.Default.Signatures)
             {
                 Add(signature, ReadImageSource);
             }
@@ -56,7 +56,13 @@ namespace Node.Net
             }
             return null;
         }
-        public static object ReadJSON(Stream stream) => Beta.Internal.Readers.JSONReader.Default.Read(stream);
+        public object ReadJSON(Stream stream) => jsonReader.Read(stream);
         public static object ReadImageSource(Stream stream) => Beta.Internal.Readers.ImageSourceReader.Default.Read(stream);
+        public Type DefaultDocumentType
+        {
+            get { return jsonReader.DefaultDocumentType; }
+            set { jsonReader.DefaultDocumentType = value; }
+        }
+        private Beta.Internal.Readers.JSONReader jsonReader = new Beta.Internal.Readers.JSONReader();
     }
 }
