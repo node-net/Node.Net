@@ -9,7 +9,7 @@ namespace Node.Net
     // "{"                           // ,json
     // "42 4D"                       // .bmp
     // "47 49 46 38 37 61"           // .gif
-    public sealed class Reader : Dictionary<string, Func<Stream, object>>
+    public sealed class Reader : Dictionary<string, Func<Stream, object>>, IRead
     {
         public Reader()
         {
@@ -70,5 +70,33 @@ namespace Node.Net
             set { jsonReader.DefaultObjectType = value; }
         }
         private Beta.Internal.Readers.JSONReader jsonReader = new Beta.Internal.Readers.JSONReader();
+        public object Open(string name)
+        {
+            if (name.IsFileDialogFilter())
+            {
+                var openFileDialogFilter = name;
+                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = openFileDialogFilter };
+                var result = ofd.ShowDialog();
+                if (result == true)
+                {
+                    try
+                    {
+                        return this.Read(ofd.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Unable to open file {ofd.FileName}", ex);
+                    }
+                }
+            }
+            else
+            {
+                if (name.IsValidFileName())
+                {
+                    return this.Read(name);
+                }
+            }
+            return null;
+        }
     }
 }
