@@ -30,5 +30,6 @@ namespace Node.Net
         public static Point3D GetWorldOrigin(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetWorldOrigin(dictionary);
         public static double GetLengthMeters(this IDictionary dictionary, string name) => Beta.Internal.IDictionaryExtension.GetLengthMeters(dictionary, name);
         public static double GetAngleDegrees(this IDictionary dictionary, string name) => Beta.Internal.IDictionaryExtension.GetAngleDegrees(dictionary, name);
+        public static IDictionary Copy(this IDictionary dictionary, IDictionary source) => Beta.Internal.IDictionaryExtension.Copy(dictionary, source);
     }
 }
