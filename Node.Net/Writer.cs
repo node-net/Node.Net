@@ -35,6 +35,13 @@ namespace Node.Net
                 else { jsonWriter.Write(stream, value); }
             }
         }
+        public void Write(string filename,object value)
+        {
+            using (var filestream = new FileStream(filename, FileMode.Create))
+            {
+                Write(filestream, value);
+            }
+        }
         public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
         private JSONWriter jsonWriter = new JSONWriter();
         private BitmapSourceWriter bitmapSourceWriter = new BitmapSourceWriter();
