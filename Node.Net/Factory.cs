@@ -15,6 +15,11 @@ namespace Node.Net
         {
             ReadFunction = new Reader().Read;
         }
+        public Factory(Assembly assembly)
+        {
+            ReadFunction = new Reader().Read;
+            ManifestResourceAssemblies.Add(assembly);
+        }
         public T Create<T>() => IFactoryExtension.Create<T>(this);
         public T Create<T>(object source) => IFactoryExtension.Create<T>(this, source);
         public object Create(Type targetType, object source) => factory.Create(targetType, source);
