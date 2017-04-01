@@ -30,6 +30,11 @@ namespace Node.Net.Beta.Internal
             var svalue = dictionary.Get<string>(name);
             return Units.Length.GetMeters(svalue);
         }
+        public static double GetAngleDegrees(this IDictionary dictionary,string name)
+        {
+            var svalue = dictionary.Get<string>(name);
+            return Units.Angle.GetDegrees(svalue);
+        }
         public static int ComputeHashCode(this IDictionary dictionary)
         {
             var hashCode = dictionary.Count;
