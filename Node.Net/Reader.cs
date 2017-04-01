@@ -64,6 +64,11 @@ namespace Node.Net
             get { return jsonReader.DefaultDocumentType; }
             set { jsonReader.DefaultDocumentType = value; }
         }
+        public Type DefaultObjectType
+        {
+            get { return jsonReader.DefaultObjectType; }
+            set { jsonReader.DefaultObjectType = value; }
+        }
         private Beta.Internal.Readers.JSONReader jsonReader = new Beta.Internal.Readers.JSONReader();
     }
 }
