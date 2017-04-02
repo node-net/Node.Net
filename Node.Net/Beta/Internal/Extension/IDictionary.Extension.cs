@@ -199,6 +199,44 @@ namespace Node.Net.Beta.Internal
             //return default(T);
             return defaultValue;
         }
+        public static void Set(this IDictionary dictionary, string key, object value)
+        {
+            if (key.Contains("/")) SetValue(dictionary, key, value);
+            else
+            {
+                if (value != null && value.GetType() == typeof(DateTime))
+                {
+                    dictionary[key] = ((DateTime)value).ToString("o");
+                }
+                else { dictionary[key] = value; }
+            }
+        }
+        private static void SetValue(IDictionary dictionary, string key, object value)
+        {
+            if (dictionary != null)
+            {
+                if (key.Contains("/"))
+                {
+                    var parts = key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length > 1)
+                    {
+                        var child_key = parts[0];
+                        var child_subkey = String.Join("/", parts, 1, parts.Length - 1);
+                        IDictionary child = null;
+                        if (dictionary.Contains(child_key)) child = dictionary[child_key] as IDictionary;
+                        if (child == null)
+                        {
+                            child = new Dictionary<string, dynamic>();
+                            //dictionary[parts[0]] = child;
+                        }
+                        SetValue(child, child_subkey, value);
+                        dictionary[child_key] = child;
+                    }
+                }
+                else Set(dictionary, key, value);
+                //dictionary[key] = value;
+            }
+        }
         public static string GetName(this IDictionary dictionary)
         {
             var parent = GetParent(dictionary) as IDictionary;
