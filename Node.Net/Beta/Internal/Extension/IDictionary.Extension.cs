@@ -137,7 +137,28 @@ namespace Node.Net.Beta.Internal
                 }
             }
         }
-
+        public static IList<T> CollectValues<T>(this IDictionary dictionary,string key)
+        {
+            var results = new List<T>();
+            _CollectValues<T>(dictionary, key, results);
+            return results;
+        }
+        private static void _CollectValues<T>(this IDictionary dictionary,string key,List<T> results)
+        {
+            if(dictionary.Contains(key))
+            {
+                var value = dictionary.Get<T>(key);
+                if (!results.Contains(value)) results.Add(value);
+            }
+            foreach(var child_key in dictionary.Keys)
+            {
+                var child_dictionary = dictionary[child_key] as IDictionary;
+                if(child_dictionary != null)
+                {
+                    _CollectValues<T>(child_dictionary, key, results);
+                }
+            }
+        }
 
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source)
         {
@@ -387,5 +408,7 @@ namespace Node.Net.Beta.Internal
             return GetFurthestAncestor<IDictionary>(child);
 
         }
+
+        
     }
 }
