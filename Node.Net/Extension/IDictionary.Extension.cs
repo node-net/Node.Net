@@ -13,6 +13,7 @@ namespace Node.Net
         public static IList Collect(this IDictionary dictionary, string type) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type);
         public static IList Collect(this IDictionary dictionary, Type type) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type);
         public static IList<T> Collect<T>(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary);
+        public static IList<T> CollectValues<T>(this IDictionary dictionary, string key) => Beta.Internal.IDictionaryExtension.CollectValues<T>(dictionary,key);
         public static object GetParent(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetParent(dictionary);
         public static void SetParent(this IDictionary dictionary, object parent) => Beta.Internal.IDictionaryExtension.SetParent(dictionary, parent);
         public static object GetRootAncestor(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetRootAncestor(child);
@@ -29,5 +30,8 @@ namespace Node.Net
         public static Matrix3D GetLocalToWorld(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetLocalToWorld(dictionary);
         public static Point3D GetWorldOrigin(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetWorldOrigin(dictionary);
         public static double GetLengthMeters(this IDictionary dictionary, string name) => Beta.Internal.IDictionaryExtension.GetLengthMeters(dictionary, name);
+        public static double GetAngleDegrees(this IDictionary dictionary, string name) => Beta.Internal.IDictionaryExtension.GetAngleDegrees(dictionary, name);
+        public static IDictionary Copy(this IDictionary dictionary, IDictionary source) => Beta.Internal.IDictionaryExtension.Copy(dictionary, source);
+        public static void Set(this IDictionary dictionary, string key, object value) => Beta.Internal.IDictionaryExtension.Set(dictionary, key, value);
     }
 }

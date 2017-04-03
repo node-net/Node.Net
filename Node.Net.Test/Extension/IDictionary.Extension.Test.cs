@@ -99,6 +99,41 @@ namespace Node.Net
             var ibar = bars[0] as IBar;
             Assert.AreSame(ifoo, ibar.Parent);
             Assert.AreEqual("bar0", ibar.Name);
+
+       
+        }
+        [Test]
+        public void IDictonary_CollectValues()
+        {
+            var factory = new Factory
+            {
+                AbstractTypes = new Dictionary<Type, Type>
+                {
+                    {typeof(IWidget),typeof(Widget) },
+                    {typeof(IFoo), typeof(Foo) },
+                    {typeof(IBar),typeof(Bar) }
+                },
+                IDictionaryTypes = new Dictionary<string, Type>
+                {
+                    {nameof(Widget) , typeof(Widget) },
+                    {nameof(Foo), typeof(Foo) },
+                    {nameof(Bar),typeof(Bar) }
+                }
+            };
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+
+            var iwidget = factory.Create<IWidget>("Widget.1.json");
+            Assert.NotNull(iwidget, "iwidget Widget.1.json");
+            var foos = iwidget.Collect(typeof(IFoo));
+            Assert.AreEqual(1, foos.Count);
+
+            var type_names = iwidget.CollectValues<string>("Type");
+            Assert.True(type_names.Contains("Widget"));
+            Assert.True(type_names.Contains("Foo"));
+            Assert.True(type_names.Contains("Bar"));
+
+
         }
     }
 }

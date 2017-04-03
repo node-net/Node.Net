@@ -90,23 +90,11 @@
     <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
     <Compile Include="Reader.Test.cs" />
     <Compile Include="Beta\View3D.Test.cs" />
-    <Compile Include="Deprecated\Reader.Test.cs" />
     <Compile Include="Extension\IDictionary.Extension.Test.cs" />
     <Compile Include="Interfaces\IFactory.Test.cs" />
-    <Compile Include="Deprecated\Element.Test.cs" />
-    <Compile Include="Deprecated\Extensions_Test.cs" />
     <Compile Include="Factory.Test.cs" />
     <Compile Include="Foo.cs" />
     <Compile Include="Widget.cs" />
-    <Compile Include="Deprecated\Factory.Test.cs" />
-    <Compile Include="Deprecated\Fixture.cs" />
-    <Compile Include="Deprecated\GlobalProperties.Test.cs" />
-    <Compile Include="Deprecated\IDictionary.Test.cs" />
-    <Compile Include="Deprecated\IDocument.Test.cs" />
-    <Compile Include="Deprecated\Object.Test.cs" />
-    <Compile Include="Deprecated\Repository.Test.cs" />
-    <Compile Include="Deprecated\Resources\MaterialResources.Test.cs" />
-    <Compile Include="Deprecated\Writer.Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Test.Resources\Hash\Model.Cube.Blue.json">

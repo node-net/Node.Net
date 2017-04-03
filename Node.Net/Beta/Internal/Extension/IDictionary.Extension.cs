@@ -30,6 +30,11 @@ namespace Node.Net.Beta.Internal
             var svalue = dictionary.Get<string>(name);
             return Units.Length.GetMeters(svalue);
         }
+        public static double GetAngleDegrees(this IDictionary dictionary,string name)
+        {
+            var svalue = dictionary.Get<string>(name);
+            return Units.Angle.GetDegrees(svalue);
+        }
         public static int ComputeHashCode(this IDictionary dictionary)
         {
             var hashCode = dictionary.Count;
@@ -132,7 +137,28 @@ namespace Node.Net.Beta.Internal
                 }
             }
         }
-
+        public static IList<T> CollectValues<T>(this IDictionary dictionary,string key)
+        {
+            var results = new List<T>();
+            _CollectValues<T>(dictionary, key, results);
+            return results;
+        }
+        private static void _CollectValues<T>(this IDictionary dictionary,string key,List<T> results)
+        {
+            if(dictionary.Contains(key))
+            {
+                var value = dictionary.Get<T>(key);
+                if (!results.Contains(value)) results.Add(value);
+            }
+            foreach(var child_key in dictionary.Keys)
+            {
+                var child_dictionary = dictionary[child_key] as IDictionary;
+                if(child_dictionary != null)
+                {
+                    _CollectValues<T>(child_dictionary, key, results);
+                }
+            }
+        }
 
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source)
         {
@@ -193,6 +219,44 @@ namespace Node.Net.Beta.Internal
             }
             //return default(T);
             return defaultValue;
+        }
+        public static void Set(this IDictionary dictionary, string key, object value)
+        {
+            if (key.Contains("/")) SetValue(dictionary, key, value);
+            else
+            {
+                if (value != null && value.GetType() == typeof(DateTime))
+                {
+                    dictionary[key] = ((DateTime)value).ToString("o");
+                }
+                else { dictionary[key] = value; }
+            }
+        }
+        private static void SetValue(IDictionary dictionary, string key, object value)
+        {
+            if (dictionary != null)
+            {
+                if (key.Contains("/"))
+                {
+                    var parts = key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length > 1)
+                    {
+                        var child_key = parts[0];
+                        var child_subkey = String.Join("/", parts, 1, parts.Length - 1);
+                        IDictionary child = null;
+                        if (dictionary.Contains(child_key)) child = dictionary[child_key] as IDictionary;
+                        if (child == null)
+                        {
+                            child = new Dictionary<string, dynamic>();
+                            //dictionary[parts[0]] = child;
+                        }
+                        SetValue(child, child_subkey, value);
+                        dictionary[child_key] = child;
+                    }
+                }
+                else Set(dictionary, key, value);
+                //dictionary[key] = value;
+            }
         }
         public static string GetName(this IDictionary dictionary)
         {
@@ -344,5 +408,7 @@ namespace Node.Net.Beta.Internal
             return GetFurthestAncestor<IDictionary>(child);
 
         }
+
+        
     }
 }

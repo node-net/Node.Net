@@ -29,5 +29,7 @@
                 }
             }
         }
+        public static object GetValue(this object instance) => Collections.KeyValuePair.GetValue(instance);
+        public static bool IsKeyValuePair(this object instance) => Collections.KeyValuePair.IsKeyValuePair(instance);
     }
 }

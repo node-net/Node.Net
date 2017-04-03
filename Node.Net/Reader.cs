@@ -9,18 +9,19 @@ namespace Node.Net
     // "{"                           // ,json
     // "42 4D"                       // .bmp
     // "47 49 46 38 37 61"           // .gif
-    public sealed class Reader : Dictionary<string,Func<Stream,object>>
+    public sealed class Reader : Dictionary<string, Func<Stream, object>>, IRead
     {
         public Reader()
         {
             Add("<", ReadXml);
             Add("[", ReadJSON);
             Add("{", ReadJSON);
-            foreach(var signature in Beta.Internal.Readers.ImageSourceReader.Default.Signatures)
+            foreach (var signature in Beta.Internal.Readers.ImageSourceReader.Default.Signatures)
             {
                 Add(signature, ReadImageSource);
             }
         }
+        public static Reader Default { get; } = new Reader();
         public object Read(Stream original_stream)
         {
             using (var signatureReader = new Beta.Internal.Readers.SignatureReader(original_stream))
@@ -56,7 +57,46 @@ namespace Node.Net
             }
             return null;
         }
-        public static object ReadJSON(Stream stream) => Beta.Internal.Readers.JSONReader.Default.Read(stream);
+        public object ReadJSON(Stream stream) => jsonReader.Read(stream);
         public static object ReadImageSource(Stream stream) => Beta.Internal.Readers.ImageSourceReader.Default.Read(stream);
+        public Type DefaultDocumentType
+        {
+            get { return jsonReader.DefaultDocumentType; }
+            set { jsonReader.DefaultDocumentType = value; }
+        }
+        public Type DefaultObjectType
+        {
+            get { return jsonReader.DefaultObjectType; }
+            set { jsonReader.DefaultObjectType = value; }
+        }
+        private Beta.Internal.Readers.JSONReader jsonReader = new Beta.Internal.Readers.JSONReader();
+        public object Open(string name)
+        {
+            if (name.IsFileDialogFilter())
+            {
+                var openFileDialogFilter = name;
+                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = openFileDialogFilter };
+                var result = ofd.ShowDialog();
+                if (result == true)
+                {
+                    try
+                    {
+                        return this.Read(ofd.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Unable to open file {ofd.FileName}", ex);
+                    }
+                }
+            }
+            else
+            {
+                if (name.IsValidFileName())
+                {
+                    return this.Read(name);
+                }
+            }
+            return null;
+        }
     }
 }
