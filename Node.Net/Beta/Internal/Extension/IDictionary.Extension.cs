@@ -132,6 +132,20 @@ namespace Node.Net.Beta.Internal
                     {
                         if (!results.Contains(item)) results.Add(item);
                     }
+                    else
+                    {
+                        var d = item as IDictionary;
+                        if(d != null)
+                        {
+                            if(d.Contains("Type"))
+                            {
+                                if(d["Type"].ToString() == type)
+                                {
+                                    if (!results.Contains(item)) results.Add(item);
+                                }
+                            }
+                        }
+                    }
                     var child_idictionary = item as IDictionary;
                     if (child_idictionary != null) _Collect(child_idictionary, type, results);
                 }
