@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,6 +68,12 @@ namespace Node.Net
             //var matrix = foo.GetLocalToWorld();
         }
 
+        [Test]
+        public void IDictionary_Collect_Deep()
+        {
+            var data = Factory.Default.Create<IDictionary>("Scene.Cubes.json");
+            Assert.AreEqual(10,data.Collect<IDictionary>().Count);
+        }
         [Test]
         public void IDictonary_Collect()
         {
