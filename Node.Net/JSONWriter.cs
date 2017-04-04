@@ -23,6 +23,7 @@ namespace Node.Net
 
         public string WriteToString(object value)
         {
+            var result = "";
             using (MemoryStream memory = new MemoryStream())
             {
                 Write(memory, value);
@@ -30,9 +31,10 @@ namespace Node.Net
                 memory.Seek(0, SeekOrigin.Begin);
                 using (StreamReader sr = new StreamReader(memory))
                 {
-                    return sr.ReadToEnd();
+                    result = sr.ReadToEnd();
                 }
             }
+            return result;
         }
 
         public static JSONWriter Default { get; } = new JSONWriter();

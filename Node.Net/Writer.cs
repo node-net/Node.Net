@@ -40,6 +40,8 @@ namespace Node.Net
             using (var filestream = new FileStream(filename, FileMode.Create))
             {
                 Write(filestream, value);
+                filestream.Flush();
+                filestream.Close();
             }
         }
         public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
