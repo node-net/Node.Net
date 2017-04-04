@@ -24,8 +24,8 @@ namespace Node.Net
         public string WriteToString(object value)
         {
             var result = "";
-            using (MemoryStream memory = new MemoryStream())
-            {
+            MemoryStream memory = new MemoryStream();
+            //{
                 Write(memory, value);
                 memory.Flush();
                 memory.Seek(0, SeekOrigin.Begin);
@@ -33,7 +33,9 @@ namespace Node.Net
                 {
                     result = sr.ReadToEnd();
                 }
-            }
+            //}
+            //memory.Dispose();
+            memory = null;
             return result;
         }
 

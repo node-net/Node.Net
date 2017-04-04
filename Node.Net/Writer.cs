@@ -37,12 +37,13 @@ namespace Node.Net
         }
         public void Write(string filename,object value)
         {
-            using (var filestream = new FileStream(filename, FileMode.Create))
-            {
+            var filestream = new FileStream(filename, FileMode.Create);
+            //{
                 Write(filestream, value);
                 filestream.Flush();
                 filestream.Close();
-            }
+            //}
+            filestream = null;
         }
         public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
         private JSONWriter jsonWriter = new JSONWriter();
