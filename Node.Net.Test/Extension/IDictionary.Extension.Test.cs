@@ -65,7 +65,6 @@ namespace Node.Net
                 dictionary["X"] = $"{x} m";
                 var matrix = foo.GetLocalToWorld();
             }
-            //var matrix = foo.GetLocalToWorld();
         }
 
         [Test]
@@ -73,6 +72,9 @@ namespace Node.Net
         {
             var data = Factory.Default.Create<IDictionary>("Scene.Cubes.json");
             Assert.AreEqual(10,data.Collect<IDictionary>().Count);
+
+            data = Factory.Default.Create<IDictionary>("States.json");
+            Assert.AreEqual(3205, data.Collect<IDictionary>().Count);
         }
         [Test]
         public void IDictonary_Collect()
