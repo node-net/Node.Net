@@ -57,7 +57,11 @@ namespace Node.Net.Beta.Internal.Readers
             {
                 memoryStream = new MemoryStream();
                 var iByte = original_stream.ReadByte();
-                while (iByte > -1) memoryStream.WriteByte((byte)iByte);
+                while (iByte > -1)
+                {
+                    memoryStream.WriteByte((byte)iByte);
+                    iByte = original_stream.ReadByte();
+                }
                 memoryStream.Seek(0, SeekOrigin.Begin);
             }
 

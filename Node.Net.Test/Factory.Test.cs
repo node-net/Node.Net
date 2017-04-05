@@ -7,6 +7,7 @@ using System.Windows.Media.Media3D;
 using System.Threading;
 using System.Windows.Shapes;
 using System.IO;
+using System.Windows.Controls;
 
 namespace Node.Net
 {
@@ -250,6 +251,12 @@ namespace Node.Net
         {
             Assert.NotNull(Factory.Default.Create<Stream>("http://www.makoto3.net/xaml/CubeSample002.xaml"));
             GC.Collect();
+        }
+        [Test,Apartment(ApartmentState.STA)]
+        public void Factory_Create_From_Uri()
+        {
+            var page = Factory.Default.Create<Page>("http://www.makoto3.net/xaml/CubeSample002.xaml");
+            Assert.NotNull(page);
         }
     }
 }
