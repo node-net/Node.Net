@@ -29,6 +29,9 @@ namespace Node.Net.Beta.Internal.Factories
                     if (stream != null)
                     {
                         var item = CreateFromStream(target_type, stream, source);
+                        stream.Close();
+                        stream = null;
+                        GC.Collect();
                         if (item != null) return item;
                     }
                 }

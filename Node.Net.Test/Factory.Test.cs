@@ -233,6 +233,7 @@ namespace Node.Net
         {
             var factory = new Factory();
             var item = factory.Create<object>("Text Files(.txt)|*.txt|All Files(*.*)|*.*");
+            item = null;
         }
 
         [Test,Apartment(ApartmentState.STA)]
