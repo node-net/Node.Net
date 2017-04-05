@@ -5,7 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Media;
+using System.Xml;
 
 namespace Node.Net
 {
@@ -32,17 +35,32 @@ namespace Node.Net
                 {
                     bitmapSourceWriter.Write(stream, value);
                 }
-                else { jsonWriter.Write(stream, value); }
+                else
+                {
+                    if (typeof(DependencyObject).IsAssignableFrom(value.GetType()))
+                    {
+                        XamlWriter.Save(value,stream);
+                    }
+                    else
+                    {
+                        if(typeof(XmlDocument).IsAssignableFrom(value.GetType()))
+                        {
+                            (value as XmlDocument).Save(stream);
+                        }
+                        else
+                        {
+                            jsonWriter.Write(stream, value);
+                        }
+                    }
+                }
             }
         }
         public void Write(string filename,object value)
         {
             var filestream = new FileStream(filename, FileMode.Create);
-            //{
-                Write(filestream, value);
-                filestream.Flush();
-                filestream.Close();
-            //}
+            Write(filestream, value);
+            filestream.Flush();
+            filestream.Close();
             filestream = null;
         }
         public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }

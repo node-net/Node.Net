@@ -258,5 +258,20 @@ namespace Node.Net
             var page = Factory.Default.Create<Page>("http://www.makoto3.net/xaml/CubeSample002.xaml");
             Assert.NotNull(page);
         }
+
+        [Test, Apartment(ApartmentState.STA)]
+        public void Factory_Create_From_Filename()
+        {
+            var data = new Dictionary<string, dynamic>
+            {
+                {"Type","Widget" }
+            };
+            var tmp_filename = System.IO.Path.GetTempFileName();
+            Node.Net.Writer.Default.Write(tmp_filename, data);
+
+            var dictionary = Factory.Default.Create<IDictionary>(tmp_filename);
+            Assert.NotNull(dictionary, nameof(dictionary));
+            File.Delete(tmp_filename);
+        }
     }
 }
