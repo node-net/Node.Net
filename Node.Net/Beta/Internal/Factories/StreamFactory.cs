@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Reflection;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -56,6 +57,29 @@ namespace Node.Net.Beta.Internal.Factories
                 {
                     if (File.Exists(ofd.FileName)) return new FileStream(ofd.FileName, FileMode.Open);
                 }
+            }
+            if (name.Contains(":"))
+            {
+                try
+                {
+                    var uri = new Uri(name);
+                    switch (uri.Scheme)
+                    {
+                        case "http":
+                        case "https":
+                            {
+                                var webClient = new WebClient();
+                                return webClient.OpenRead(name);
+                                break;
+                            }
+                        case "file":
+                            {
+                                return new FileStream(uri.LocalPath, FileMode.Open);
+                                break;
+                            }
+                    }
+                }
+                catch { }
             }
             return new StackTrace().GetStream(name);
         }

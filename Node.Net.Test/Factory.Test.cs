@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Threading;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace Node.Net
 {
@@ -242,6 +243,13 @@ namespace Node.Net
             var ellipse = new System.Windows.Shapes.Ellipse { Width = 10, Height = 15 };
             var clone = Factory.Default.Create<Ellipse>(ellipse);
             Assert.NotNull(clone, nameof(clone));
+        }
+
+        [Test]
+        public void Factory_Create_Stream()
+        {
+            Assert.NotNull(Factory.Default.Create<Stream>("http://www.makoto3.net/xaml/CubeSample002.xaml"));
+            GC.Collect();
         }
     }
 }
