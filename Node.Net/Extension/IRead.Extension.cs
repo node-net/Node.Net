@@ -8,20 +8,25 @@ namespace Node.Net
 {
     public static class IReadExtension
     {
-        public static object ReadFromBase64String(this IRead read,string base64)
+        public static object ReadFromBase64String(this IRead read, string base64)
+        {
+            return ReadFromBase64String(read.Read, base64);
+        }
+
+        public static object ReadFromBase64String(Func<Stream, object> readFunction, string base64)
         {
             var bytes = Convert.FromBase64String(base64);
             if (bytes.Length > 0)
             {
                 int lastIndex = bytes.Length - 1;
-                while(bytes[lastIndex] == 0)
+                while (bytes[lastIndex] == 0)
                 {
                     lastIndex--;
                 }
-                if(lastIndex != bytes.Length)
+                if (lastIndex != bytes.Length)
                 {
                     var new_bytes = new List<byte>();
-                    for(int i = 0; i <= lastIndex;++i)
+                    for (int i = 0; i <= lastIndex; ++i)
                     {
                         new_bytes.Add(bytes[i]);
                     }
@@ -30,7 +35,7 @@ namespace Node.Net
             }
             var mstream = new MemoryStream(bytes);
             mstream.Seek(0, SeekOrigin.Begin);
-            var result = read.Read(mstream);
+            var result = readFunction(mstream);
             mstream.Close();
             mstream = null;
             return result;
@@ -47,9 +52,9 @@ namespace Node.Net
             return null;
         }
 
-        public static object Read(this IRead read,string filename)
+        public static object Read(this IRead read, string filename)
         {
-            if(File.Exists(filename))
+            if (File.Exists(filename))
             {
                 using (FileStream fs = new FileStream(filename, FileMode.Open))
                 {
@@ -61,7 +66,7 @@ namespace Node.Net
             else
             {
                 var stackTrace = new StackTrace();
-                foreach(var assembly in stackTrace.GetAssemblies())
+                foreach (var assembly in stackTrace.GetAssemblies())
                 {
                     var stream = assembly.GetStream(filename);
                     if (stream != null)

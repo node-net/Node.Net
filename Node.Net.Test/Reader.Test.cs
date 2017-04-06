@@ -91,26 +91,10 @@ namespace Node.Net
             var mesh = factory.Create<MeshGeometry3D>("mesh.xaml");
             Assert.NotNull(mesh, nameof(mesh));
 
-           // var mesh2 = factory.Create<MeshGeometry3D>("mesh2.xaml");
-            //Assert.NotNull(mesh2, nameof(mesh2));
-
             var base64 = Writer.Default.WriteToBase64String(mesh);
-
-            var bytes = Convert.FromBase64String(base64);
-
-            var filename = Path.GetTempFileName();
-            using (var stream = new FileStream(filename, FileMode.Create))
-            {
-                foreach (var b in bytes)
-                {
-                    stream.WriteByte(b);
-                }
-            }
-
-            
             var mesh2 = Reader.Default.ReadFromBase64String(base64);
-            //Assert.NotNull(mesh2, nameof(mesh2));
-            //Assert.AreNotSame(mesh, mesh2);
+            Assert.NotNull(mesh2, nameof(mesh2));
+            Assert.AreNotSame(mesh, mesh2);
         }
     }
 }
