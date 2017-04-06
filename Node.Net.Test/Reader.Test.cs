@@ -65,6 +65,11 @@ namespace Node.Net
         }
 
         [Test]
+        public void Reader_Read_Write_Base64_a()
+        {
+
+        }
+        [Test]
         public void Reader_Read_Write_Base64()
         {
             var factory = new Factory();
@@ -72,6 +77,9 @@ namespace Node.Net
 
             var mesh = factory.Create<MeshGeometry3D>("mesh.xaml");
             Assert.NotNull(mesh, nameof(mesh));
+
+           // var mesh2 = factory.Create<MeshGeometry3D>("mesh2.xaml");
+            //Assert.NotNull(mesh2, nameof(mesh2));
 
             var base64 = Writer.Default.WriteToBase64String(mesh);
 

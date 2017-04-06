@@ -43,7 +43,9 @@ namespace Node.Net.Beta.Internal.Readers
         {
             get
             {
+                var maxCount = 16;
                 var t = Text;
+                var i = 0;
                 foreach (var ch in Text)
                 {
                     /*
@@ -55,6 +57,8 @@ namespace Node.Net.Beta.Internal.Readers
                     */
                     var isControl = Char.IsControl(ch);
                     if (isControl) return false;
+                    ++i;
+                    if (i >= maxCount) return true;
                 }
 
                 return true;
