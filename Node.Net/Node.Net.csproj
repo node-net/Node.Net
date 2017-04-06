@@ -81,6 +81,7 @@
     <Compile Include="Beta\Internal\Readers\ImageSourceReader.cs" />
     <Compile Include="Extension\ImageSource.Extension.cs" />
     <Compile Include="Extension\IRead.Extension.cs" />
+    <Compile Include="Extension\IWrite.Extension.cs" />
     <Compile Include="Extension\Matrix3D.Extension.cs" />
     <Compile Include="Extension\Object.Extension.cs" />
     <Compile Include="Extension\Point.Extension.cs" />

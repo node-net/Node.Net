@@ -7,6 +7,16 @@ namespace Node.Net
 {
     public static class IReadExtension
     {
+        public static object ReadFromBase64String(this IRead read,string base64)
+        {
+            var bytes = Convert.FromBase64String(base64);
+            var mstream = new MemoryStream(bytes);
+            mstream.Seek(0, SeekOrigin.Begin);
+            var result = read.Read(mstream);
+            mstream.Close();
+            mstream = null;
+            return result;
+        }
         public static object Read(this IRead read, Assembly assembly, string name)
         {
             foreach (var manifestResourceName in assembly.GetManifestResourceNames())
