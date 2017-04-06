@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -10,6 +11,23 @@ namespace Node.Net
         public static object ReadFromBase64String(this IRead read,string base64)
         {
             var bytes = Convert.FromBase64String(base64);
+            if (bytes.Length > 0)
+            {
+                int lastIndex = bytes.Length - 1;
+                while(bytes[lastIndex] == 0)
+                {
+                    lastIndex--;
+                }
+                if(lastIndex != bytes.Length)
+                {
+                    var new_bytes = new List<byte>();
+                    for(int i = 0; i <= lastIndex;++i)
+                    {
+                        new_bytes.Add(bytes[i]);
+                    }
+                    bytes = new_bytes.ToArray();
+                }
+            }
             var mstream = new MemoryStream(bytes);
             mstream.Seek(0, SeekOrigin.Begin);
             var result = read.Read(mstream);
