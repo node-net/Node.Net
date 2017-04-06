@@ -63,5 +63,33 @@ namespace Node.Net
             Assert.AreEqual(2, array_1.GetAt(0));
             Assert.AreEqual(3, array_1.GetAt(1));
         }
+
+        [Test]
+        public void Reader_Read_Write_Base64()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(ReaderTest).Assembly);
+
+            var mesh = factory.Create<MeshGeometry3D>("mesh.xaml");
+            Assert.NotNull(mesh, nameof(mesh));
+
+            var base64 = Writer.Default.WriteToBase64String(mesh);
+
+            var bytes = Convert.FromBase64String(base64);
+
+            var filename = Path.GetTempFileName();
+            using (var stream = new FileStream(filename, FileMode.Create))
+            {
+                foreach (var b in bytes)
+                {
+                    stream.WriteByte(b);
+                }
+            }
+
+            /*
+            var mesh2 = Reader.Default.ReadFromBase64String(base64);
+            Assert.NotNull(mesh2, nameof(mesh2));
+            Assert.AreNotSame(mesh, mesh2);*/
+        }
     }
 }

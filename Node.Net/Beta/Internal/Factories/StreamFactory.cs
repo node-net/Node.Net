@@ -70,12 +70,12 @@ namespace Node.Net.Beta.Internal.Factories
                             {
                                 var webClient = new WebClient();
                                 return webClient.OpenRead(name);
-                                break;
+                                //break;
                             }
                         case "file":
                             {
                                 return new FileStream(uri.LocalPath, FileMode.Open);
-                                break;
+                                //break;
                             }
                     }
                 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Node.Net.Interfaces
+namespace Node.Net
 {
     public interface IWrite
     {

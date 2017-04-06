@@ -12,7 +12,7 @@ using System.Xml;
 
 namespace Node.Net
 {
-    public class Writer
+    public class Writer : IWrite
     {
         public static Writer Default { get; } = new Writer();
 
