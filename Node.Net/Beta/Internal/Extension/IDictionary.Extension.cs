@@ -8,7 +8,7 @@ namespace Node.Net.Beta.Internal
 {
     static class IDictionaryExtension
     {
-        public static string GetJSON(this IDictionary dictionary) { return new JSONWriter().WriteToString(dictionary); }// return Writers.JSONWriter.Default.WriteToString(dictionary); }
+        public static string GetJSON(this IDictionary dictionary) { return new JSONWriter().WriteToString(dictionary); }
         public static void Save(this IDictionary dictionary, Stream stream) { new JSONWriter().Write(stream, dictionary); }
         public static void SetParent(this IDictionary dictionary, object parent) { Internal.Collections.MetaData.Default.GetMetaData(dictionary)["Parent"] = parent; }
         public static object GetParent(this IDictionary dictionary) { return Internal.Collections.MetaData.Default.GetMetaData(dictionary, "Parent"); }

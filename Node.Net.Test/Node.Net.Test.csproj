@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Bar.cs" />
     <Compile Include="Controls\ContentControl.Test.cs" />
+    <Compile Include="Extension\Object.Extension.Test.cs" />
     <Compile Include="Extension\Visual.Extension.Test.cs" />
     <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
     <Compile Include="Reader.Test.cs" />
