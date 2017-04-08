@@ -68,6 +68,7 @@
     <Compile Include="Beta\Internal\Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\Visual3D.Extension.cs" />
     <Compile Include="Beta\Internal\Factories\CloneFactory.cs" />
+    <Compile Include="Beta\Internal\Factories\Viewport3DFactory.cs" />
     <Compile Include="BitmapSourceWriter.cs" />
     <Compile Include="Controls\ContentControl.cs" />
     <Compile Include="Controls\StaticViewport3D.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Extension\Rect3D.Extension.cs" />
     <Compile Include="Extension\StackTrace.Extension.cs" />
     <Compile Include="Extension\String.Extension.cs" />
+    <Compile Include="Extension\Viewport3D.Extension.cs" />
     <Compile Include="Extension\Visual.Extension.cs" />
     <Compile Include="Extension\Visual3D.Extension.cs" />
     <Compile Include="Interfaces\IStreamSignature.cs" />

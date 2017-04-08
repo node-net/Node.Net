@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Shapes;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace Node.Net
 {
@@ -184,6 +185,32 @@ namespace Node.Net
 
             var v3d = factory.Create<Visual3D>(scene);
             Assert.NotNull(v3d, nameof(v3d));
+
+            string filename = $"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\Scene.Cubes.xaml";
+            using (var s = new FileStream(filename, FileMode.Create))
+            {
+                Node.Net.Writer.Default.Write(s, v3d);
+            }
+        }
+
+        [Test,Apartment(ApartmentState.STA),Explicit]
+        public void Factory_Viewport3D()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+
+            var scene = factory.Create<IDictionary>("Scene.Cubes.json");
+            Assert.NotNull(scene, nameof(scene));
+
+            var viewport = factory.Create<Viewport3D>(scene);
+            Assert.NotNull(viewport, nameof(viewport));
+
+            new Window
+            {
+                Title = "Factory Viewport3D",
+                WindowState = WindowState.Maximized,
+                Content = viewport
+            }.ShowDialog();
         }
 
         [Test,Explicit]

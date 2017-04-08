@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -34,6 +35,7 @@ namespace Node.Net.Beta.Internal.Factories
                 {typeof(Model3D),Model3DFactory.Create },
                 {typeof(Visual3D), new Visual3DFactory {ParentFactory = this }.Create },
                 {typeof(IReadOnlyDocument), CollectionsFactory.Create },
+                {typeof(Viewport3D), new Viewport3DFactory{ParentFactory = this}.Create },
                 {typeof(object), AbstractFactory.Create }
 
             };

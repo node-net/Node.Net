@@ -65,6 +65,24 @@ namespace Node.Net
         }
 
         [Test]
+        public void Reader_Read_Write_Base64_a()
+        {
+            string[] data = { "a","ab","abc","abcd","abcde","" };
+            foreach(var s in data)
+            {
+                var bytes = Encoding.UTF8.GetBytes(s);
+                var base64 = Convert.ToBase64String(bytes);
+
+                var equalsCount = base64.Count(x => x == '=');
+
+                var bytes2 = Convert.FromBase64String(base64);
+                if(bytes.Length != bytes2.Length)
+                {
+
+                }
+            }
+        }
+        [Test]
         public void Reader_Read_Write_Base64()
         {
             var factory = new Factory();
@@ -74,22 +92,9 @@ namespace Node.Net
             Assert.NotNull(mesh, nameof(mesh));
 
             var base64 = Writer.Default.WriteToBase64String(mesh);
-
-            var bytes = Convert.FromBase64String(base64);
-
-            var filename = Path.GetTempFileName();
-            using (var stream = new FileStream(filename, FileMode.Create))
-            {
-                foreach (var b in bytes)
-                {
-                    stream.WriteByte(b);
-                }
-            }
-
-            /*
             var mesh2 = Reader.Default.ReadFromBase64String(base64);
             Assert.NotNull(mesh2, nameof(mesh2));
-            Assert.AreNotSame(mesh, mesh2);*/
+            Assert.AreNotSame(mesh, mesh2);
         }
     }
 }
