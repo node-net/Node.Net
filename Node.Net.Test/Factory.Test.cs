@@ -202,6 +202,9 @@ namespace Node.Net
             var scene = factory.Create<IDictionary>("Scene.Cubes.json");
             Assert.NotNull(scene, nameof(scene));
 
+            var m3d = factory.Create<Model3D>(scene);
+            Assert.NotNull(m3d, nameof(m3d));
+
             var viewport = factory.Create<Viewport3D>(scene);
             Assert.NotNull(viewport, nameof(viewport));
 

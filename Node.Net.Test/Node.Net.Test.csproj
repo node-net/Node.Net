@@ -90,6 +90,7 @@
     <Compile Include="Extension\Object.Extension.Test.cs" />
     <Compile Include="Extension\Visual.Extension.Test.cs" />
     <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
+    <Compile Include="Factory.Create.Visual3D.Test.cs" />
     <Compile Include="Reader.Test.cs" />
     <Compile Include="Beta\View3D.Test.cs" />
     <Compile Include="Extension\IDictionary.Extension.Test.cs" />

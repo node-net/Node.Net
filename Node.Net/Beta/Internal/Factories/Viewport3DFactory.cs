@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
+using Node.Net;
 
 namespace Node.Net.Beta.Internal.Factories
 {
@@ -32,7 +33,8 @@ namespace Node.Net.Beta.Internal.Factories
                         }
                     };
                     viewport.Children.Add(v3d);
-                    viewport.ZoomExtents();
+                    (viewport.Camera as ProjectionCamera)?.ZoomExtents(v3d.FindBounds(),500,500);
+                    return viewport;
                 }
 
             }

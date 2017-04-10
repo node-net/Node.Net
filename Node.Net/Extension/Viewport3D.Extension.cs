@@ -43,7 +43,7 @@ namespace Node.Net
             }
         }
 
-        private static Rect3D FindBounds(this Viewport3D viewport)
+        public static Rect3D FindBounds(this Viewport3D viewport)
         {
             var bounds = Rect3D.Empty;
             foreach (var visual in viewport.Children)
