@@ -26,14 +26,17 @@ namespace Node.Net
         }
         public static BitmapSource CreateBitmapSource(this Visual visual, double width, double height,double dpiX= 96, double dpiY= 96)
         {
+            var awidth = width * dpiX / 96.0;
+            var aheight = height * dpiX / 96.0;
             var frameworkElement = visual as FrameworkElement;
             if(frameworkElement != null)
             {
-                frameworkElement.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity ));
-                frameworkElement.Arrange(new System.Windows.Rect(new System.Windows.Size(width, height)));
+                frameworkElement.Measure(new System.Windows.Size(awidth, aheight));
+                //frameworkElement.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity ));
+                frameworkElement.Arrange(new System.Windows.Rect(new System.Windows.Size(awidth, aheight)));
                 frameworkElement.UpdateLayout();
             }
-            var bmp = new RenderTargetBitmap((Int32)Math.Ceiling(width), (Int32)Math.Ceiling(height), dpiX, dpiY, PixelFormats.Pbgra32);
+            var bmp = new RenderTargetBitmap((Int32)Math.Ceiling(awidth), (Int32)Math.Ceiling(aheight), dpiX, dpiY, PixelFormats.Pbgra32);
             bmp.Render(visual);
             return bmp;
         }

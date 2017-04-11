@@ -22,13 +22,15 @@ namespace Node.Net
             grid2.ColumnDefinitions.Add(new ColumnDefinition());
             grid2.ColumnDefinitions.Add(new ColumnDefinition());
             grid2.Children.Add(grid);
-            grid2.Children.Add(new Image { Source = grid.CreateBitmapSource(500, 500) });
+            var image = new Image { Source = grid.CreateBitmapSource(100, 100) ,Width=100,Height=100};
+            grid2.Children.Add(image);
+            Grid.SetColumn(image, 1);
 
             new Window
             {
                 Title = "GridLayers With Bitmap ShowDialog",
-                Width = 1000,
-                Height = 500,
+                Width = 200,
+                Height = 100,
                 Content = grid2
             }.ShowDialog();
         }
