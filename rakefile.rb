@@ -1,4 +1,4 @@
-VERSION='1.0.389'
+VERSION='1.0.390'
 require 'dev'
 
 task :publish  do
@@ -12,4 +12,5 @@ end
 # version 1.0.328 LOC 6287
 # version 1.0.341 LOC 6463
 #
-# edit via chrome
+# version 1.0.390 LOC 2281
+
