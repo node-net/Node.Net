@@ -8,6 +8,7 @@ namespace Node.Net
 {
     public static class ObjectExtension
     {
+        public static object GetKey(this object instance) => Beta.Internal.ObjectExtension.GetKey(instance);
         public static object GetValue(this object instance) => Beta.Internal.ObjectExtension.GetValue(instance);
         public static bool IsKeyValuePair(this object instance) => Beta.Internal.ObjectExtension.IsKeyValuePair(instance);
         public static string GetFullName(this object instance) => Beta.Internal.ObjectExtension.GetFullName(instance);

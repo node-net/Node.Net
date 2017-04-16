@@ -30,6 +30,7 @@ namespace Node.Net.Beta.Internal
                 }
             }
         }
+        public static object GetKey(this object instance) => Collections.KeyValuePair.GetKey(instance);
         public static object GetValue(this object instance) => Collections.KeyValuePair.GetValue(instance);
         public static bool IsKeyValuePair(this object instance) => Collections.KeyValuePair.IsKeyValuePair(instance);
         public static void SetFullName(this object instance, string fullname)
