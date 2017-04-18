@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Node.Net
 {
@@ -14,18 +15,32 @@ namespace Node.Net
 
         private static void CollectLogicalChildren<T>(DependencyObject parent, List<T> logicalChildren) where T : DependencyObject
         {
+            var depChildren = new List<DependencyObject>();
             var children = LogicalTreeHelper.GetChildren(parent);
             foreach (object child in children)
             {
                 if (child is DependencyObject)
                 {
-                    var depChild = child as DependencyObject;
-                    if (child is T)
-                    {
-                        logicalChildren.Add(child as T);
-                    }
-                    CollectLogicalChildren(depChild, logicalChildren);
+                    depChildren.Add(child as DependencyObject);
                 }
+            }
+            if(depChildren.Count == 0)
+            {
+                var contentControl = parent as ContentControl;
+                if(contentControl != null)
+                {
+                    var depContent = contentControl.Content as DependencyObject;
+                    if (depContent != null) depChildren.Add(depContent);
+                }
+            }
+
+            foreach(var depChild in depChildren)
+            { 
+                if (depChild is T)
+                {
+                    logicalChildren.Add(depChild as T);
+                }
+                CollectLogicalChildren(depChild, logicalChildren);
             }
         }
     }

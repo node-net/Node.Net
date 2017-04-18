@@ -3,6 +3,7 @@
     <Grid.RowDefinitions>
         <RowDefinition/>
         <RowDefinition/>
+        <RowDefinition/>
     </Grid.RowDefinitions>
     <StackPanel Orientation="Horizontal">
         <Button x:Name="Button1">1</Button>
@@ -16,4 +17,24 @@
         <Button x:Name="Button3">3</Button>
         <Button x:Name="Button4" Grid.Column="1">4</Button>
     </Grid>
+    <Border Grid.Row="2">
+        <Border.Child>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border>
+                    <Border.Child>
+                        <Button x:Name="Button5">5</Button>
+                    </Border.Child>
+                </Border>
+                <Border Grid.Column="1">
+                    <Border.Child>
+                        <Button x:Name="Button6">6</Button>
+                    </Border.Child>
+                </Border>
+            </Grid>
+        </Border.Child>
+    </Border>
 </Grid>
