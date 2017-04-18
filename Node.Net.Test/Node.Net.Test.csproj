@@ -88,6 +88,7 @@
     <Compile Include="Controls.Test.cs" />
     <Compile Include="Controls\ContentControl.Test.cs" />
     <Compile Include="Controls\Viewport3D.Camera.Test.cs" />
+    <Compile Include="Extension\DependencyObject.Extension.Test.cs" />
     <Compile Include="Extension\Object.Extension.Test.cs" />
     <Compile Include="Extension\Visual.Extension.Test.cs" />
     <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
@@ -276,6 +277,14 @@
       <SubType>Designer</SubType>
     </Page>
     <EmbeddedResource Include="Resources\Grid.Layers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Grid.Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Grid.Deep.Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
