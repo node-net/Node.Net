@@ -89,6 +89,7 @@
     <Compile Include="Controls\ContentControl.Test.cs" />
     <Compile Include="Controls\Viewport3D.Camera.Test.cs" />
     <Compile Include="Extension\DependencyObject.Extension.Test.cs" />
+    <Compile Include="Extension\Matrix3D.Extension.Test.cs" />
     <Compile Include="Extension\Object.Extension.Test.cs" />
     <Compile Include="Extension\Visual.Extension.Test.cs" />
     <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
