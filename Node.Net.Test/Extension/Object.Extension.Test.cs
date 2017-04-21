@@ -1,9 +1,10 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 
 namespace Node.Net
@@ -28,6 +29,14 @@ namespace Node.Net
             dictionary.DeepUpdateParents();
             Assert.AreEqual("a/b", c.GetFullName());
             Assert.AreEqual("b", c.GetName());
+        }
+
+        [Test,Apartment(ApartmentState.STA),Explicit]
+        public void GetFileName()
+        {
+            var item = Factory.Default.Create<object>("XAML Files(.xaml)|*.xaml|All Files(*.*)|*.*");
+            var filename = item.GetFileName();
+            Assert.True(File.Exists(filename));
         }
     }
 }

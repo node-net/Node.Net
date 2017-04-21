@@ -42,16 +42,25 @@ namespace Node.Net
         {
             using (var signatureReader = new Beta.Internal.Readers.SignatureReader(original_stream))
             {
+                var filename = original_stream.GetFileName();
                 var stream = signatureReader.Stream;
                 var signature_string = signatureReader.Signature;
                 if (signature_string.Contains("http://schemas.microsoft.com/winfx/2006/xaml/presentation"))
                 {
-                    return System.Windows.Markup.XamlReader.Load(stream);
+                    var item = System.Windows.Markup.XamlReader.Load(stream);
+                    item.SetFileName(filename);
+
+                    ////// DEBUG
+                    var ftest = item.GetFileName();
+                   
+                    //////
+                    return item;
                 }
                 if (signature_string.IndexOf("<") == 0)
                 {
                     var xdoc = new System.Xml.XmlDocument();
                     xdoc.Load(stream);
+                    xdoc.SetFileName(filename);
                     return xdoc;
                 }
             }

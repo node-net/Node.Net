@@ -31,6 +31,7 @@ namespace Node.Net.Beta.Internal.Collections
         }
         public object GetMetaData(object item,string name)
         {
+            if (item == null) return null;
             var metaData = GetMetaData(item);
             if (metaData.Contains(name)) return metaData[name];
             return null;

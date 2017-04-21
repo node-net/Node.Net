@@ -28,11 +28,20 @@ namespace Node.Net.Beta.Internal.Factories
                     var stream = ParentFactory.Create(typeof(Stream), source) as Stream;
                     if (stream != null)
                     {
+                        var filename = stream.GetFileName();
                         var item = CreateFromStream(target_type, stream, source);
                         stream.Close();
                         stream = null;
                         GC.Collect();
-                        if (item != null) return item;
+                        if (item != null)
+                        {
+                            var fname = item.GetFileName();
+                            if (fname.Length == 0)
+                            {
+                                item.SetFileName(stream.GetFileName());
+                            }
+                            return item;
+                        }
                     }
                 }
                 finally { callingParent = false; }

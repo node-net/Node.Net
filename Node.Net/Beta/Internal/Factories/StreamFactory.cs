@@ -55,7 +55,12 @@ namespace Node.Net.Beta.Internal.Factories
                 var result = ofd.ShowDialog();
                 if (result == true)
                 {
-                    if (File.Exists(ofd.FileName)) return new FileStream(ofd.FileName, FileMode.Open);
+                    if (File.Exists(ofd.FileName))
+                    {
+                        var stream = new FileStream(ofd.FileName, FileMode.Open);
+                        stream.SetFileName(ofd.FileName);
+                        return stream;
+                    }
                 }
             }
             if (name.Contains(":"))
