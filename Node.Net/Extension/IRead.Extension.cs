@@ -60,6 +60,7 @@ namespace Node.Net
                 {
                     var item = read.Read(fs);
                     SetPropertyValue(item, "FileName", filename);
+                    if (item != null) item.SetFileName(filename);
                     return item;
                 }
             }
@@ -73,6 +74,7 @@ namespace Node.Net
                     {
                         var item = read.Read(stream);
                         SetPropertyValue(item, "FileName", filename);
+                        if (item != null) item.SetFileName(filename);
                         return item;
                     }
                 }
