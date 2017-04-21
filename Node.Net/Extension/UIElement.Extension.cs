@@ -8,6 +8,7 @@ namespace Node.Net
     {
         public static ImageSource CreateBitmapSource(this UIElement visual, double width, double height, Visual backgoundVisual)
         {
+            if (width <= 0.0 || height <= 0.0) return null;
             var background_bitmap = backgoundVisual.CreateBitmapSource(width, height);
             var grid = new Grid();
             grid.Children.Add(new Image { Source = background_bitmap });
