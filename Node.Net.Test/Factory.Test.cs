@@ -282,7 +282,7 @@ namespace Node.Net
             Assert.NotNull(Factory.Default.Create<Stream>("http://www.makoto3.net/xaml/CubeSample002.xaml"));
             GC.Collect();
         }
-        [Test,Apartment(ApartmentState.STA)]
+        [Test,Apartment(ApartmentState.STA),Explicit]
         public void Factory_Create_From_Uri()
         {
             var page = Factory.Default.Create<Page>("http://www.makoto3.net/xaml/CubeSample002.xaml");
