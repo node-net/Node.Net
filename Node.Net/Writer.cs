@@ -39,7 +39,12 @@ namespace Node.Net
                 {
                     if (typeof(DependencyObject).IsAssignableFrom(value.GetType()))
                     {
-                        XamlWriter.Save(value,stream);
+                        var xmlWriter = XmlWriter.Create(stream, new XmlWriterSettings
+                        {
+                            Indent = true
+                        });
+                        XamlWriter.Save(value, xmlWriter);
+                        //XamlWriter.Save(value,stream);
                     }
                     else
                     {
