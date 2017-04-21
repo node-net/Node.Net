@@ -67,6 +67,7 @@
     <Compile Include="Beta\Internal\Extension\PerspectiveCamera.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\Visual3D.Extension.cs" />
+    <Compile Include="Beta\Internal\Factories\ChildrenFactory.cs" />
     <Compile Include="Beta\Internal\Factories\CloneFactory.cs" />
     <Compile Include="Beta\Internal\Factories\Viewport3DFactory.cs" />
     <Compile Include="BitmapSourceWriter.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Extension\Viewport3D.Extension.cs" />
     <Compile Include="Extension\Visual.Extension.cs" />
     <Compile Include="Extension\Visual3D.Extension.cs" />
+    <Compile Include="Interfaces\IChildren.cs" />
     <Compile Include="Interfaces\IStreamSignature.cs" />
     <Compile Include="Beta\Internal\Readers\Signature.cs" />
     <Compile Include="Beta\Internal\Readers\SignatureReader.cs" />

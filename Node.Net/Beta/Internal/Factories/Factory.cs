@@ -23,6 +23,7 @@ namespace Node.Net.Beta.Internal.Factories
             {
                 {typeof(Stream), StreamFactory.Create },
                 {typeof(IStreamSignature),StreamFactory.Create },
+                {typeof(IChildren),new ChildrenFactory().Create },
                 {typeof(String),new StringFactory().Create },
                 {typeof(double),new DoubleFactory().Create },
                 {typeof(Color),new ColorFactory().Create },
