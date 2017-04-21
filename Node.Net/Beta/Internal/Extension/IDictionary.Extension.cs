@@ -177,7 +177,7 @@ namespace Node.Net.Beta.Internal
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source)
         {
             dictionary.Clear();
-            foreach (var key in source)
+            foreach (var key in source.Keys)
             {
                 var value = source[key];
                 var child_dictionary = value as IDictionary;
@@ -191,6 +191,12 @@ namespace Node.Net.Beta.Internal
                 }
             }
             return dictionary;
+        }
+        public static IDictionary Clone(this IDictionary source)
+        {
+            var clone = Activator.CreateInstance(source.GetType()) as IDictionary;
+            clone.Copy(source);
+            return clone;
         }
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T))
         {

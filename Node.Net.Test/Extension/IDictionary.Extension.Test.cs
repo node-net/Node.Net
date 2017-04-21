@@ -144,5 +144,19 @@ namespace Node.Net
 
 
         }
+
+        [Test]
+        public void IDictionary_Clone()
+        {
+            var source = new Dictionary<string, dynamic>
+            {
+                { "A" , "abc"},{"B","def"}
+
+            };
+            var clone = source.Clone();
+            Assert.True(typeof(Dictionary<string, dynamic>) == clone.GetType());
+            Assert.AreEqual("abc", clone["A"].ToString());
+            Assert.AreEqual("def", clone["B"].ToString());
+        }
     }
 }
