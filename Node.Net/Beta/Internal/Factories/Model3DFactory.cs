@@ -103,10 +103,21 @@ namespace Node.Net.Beta.Internal.Factories
                 {
                     var model3D = ParentFactory.Create<Model3D>($"{type}.Model3D.");
                     if (model3D != null) return model3D;
+                    if (!locked)
+                    {
+                        try
+                        {
+                            locked = true;
+                            model3D = ParentFactory.Create<Model3D>($"{type}.");
+                            if (model3D != null) return model3D;
+                        }
+                        finally { locked = false; }
+                    }
                 }
             }
             return null;
         }
+        private bool locked = false;
         private Transform3D GetTransform3D(object source)
         {
             if (ParentFactory != null)
