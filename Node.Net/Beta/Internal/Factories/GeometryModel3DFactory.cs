@@ -41,6 +41,16 @@ namespace Node.Net.Beta.Internal.Factories
                     {
                         var geometryModel3D = ParentFactory.Create<GeometryModel3D>($"{type}.GeometryModel3D.");
                         if (geometryModel3D != null) return geometryModel3D;
+                        if (!locked)
+                        {
+                            try
+                            {
+                                locked = true;
+                                geometryModel3D = ParentFactory.Create<GeometryModel3D>($"{type}.");
+                                if (geometryModel3D != null) return geometryModel3D;
+                            }
+                            finally { locked = false; }
+                        }
                         var mesh = ParentFactory.Create<MeshGeometry3D>(source);
                         if (mesh != null) return CreateFromMeshGeometry3D(mesh);
                     }
@@ -49,6 +59,7 @@ namespace Node.Net.Beta.Internal.Factories
 
             return null;
         }
+        private bool locked = false;
         private static GeometryModel3D CreateFromMeshGeometry3D(MeshGeometry3D mesh)
         {
             if (mesh == null) return null;

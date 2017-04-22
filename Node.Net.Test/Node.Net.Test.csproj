@@ -209,6 +209,7 @@
     <EmbeddedResource Include="Resources\Bar.0.json" />
     <EmbeddedResource Include="Resources\States.Partial.json" />
     <EmbeddedResource Include="Resources\Array.Nested.json" />
+    <EmbeddedResource Include="Resources\Scene.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />
@@ -294,6 +295,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Frame.Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Floor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
