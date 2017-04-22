@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,14 @@ namespace Node.Net.Beta.Internal.Factories
                     foreach(var item in (source as Panel).Children)
                     {
                         children.Add(item);
+                    }
+                }
+                if(source is IDictionary)
+                {
+                    foreach(var key in (source as IDictionary).Keys)
+                    {
+                        var cdictionary = (source as IDictionary)[key] as IDictionary;
+                        if (cdictionary != null) children.Add(cdictionary);
                     }
                 }
                 return children;
