@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Node.Net.Beta.Internal.Factories
+{
+    class TreeViewItemHeaderFactory
+    {
+        public object Create(Type target_type, object source)
+        {
+            if (target_type == null) return null;
+            if (!typeof(ITreeViewItemHeader).IsAssignableFrom(target_type)) return null;
+            string type = source.GetType().Name;
+            string name = source.GetName();
+            return $"{type} {name}";
+        }
+    }
+}

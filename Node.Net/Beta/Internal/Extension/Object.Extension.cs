@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+
 namespace Node.Net.Beta.Internal
 {
     static class ObjectExtension
@@ -50,6 +52,15 @@ namespace Node.Net.Beta.Internal
             {
                 var parts = fullName.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 return parts[parts.Length - 1];
+            }
+            if(fullName.Length == 0)
+            {
+                var filename = instance.GetFileName();
+                if(filename.Length > 0)
+                {
+                    var fi = new FileInfo(filename);
+                    return fi.Name;
+                }
             }
             return fullName;
         }
