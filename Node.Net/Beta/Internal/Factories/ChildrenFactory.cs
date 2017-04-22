@@ -8,6 +8,7 @@ using System.Windows.Controls;
 
 namespace Node.Net.Beta.Internal.Factories
 {
+    class Children : List<object>, IChildren { }
     class ChildrenFactory
     {
         public object Create(Type target_type, object source)
@@ -16,7 +17,7 @@ namespace Node.Net.Beta.Internal.Factories
             if (!typeof(IChildren).IsAssignableFrom(target_type)) return null;
             if (source != null)
             {
-                var children = new List<object>();
+                var children = new Children();
                 if(source is Panel)
                 {
                     foreach(var item in (source as Panel).Children)

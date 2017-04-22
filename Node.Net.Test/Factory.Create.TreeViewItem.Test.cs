@@ -23,6 +23,8 @@ namespace Node.Net
 
             var tvi = factory.Create<TreeViewItem>(scene);
             Assert.NotNull(tvi, nameof(tvi));
+
+            Assert.AreEqual(1, tvi.Items.Count);
         }
     }
 }

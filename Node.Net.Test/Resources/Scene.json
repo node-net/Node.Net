@@ -2,6 +2,6 @@
     "Type": "Floor",
     "table": {
         "Type" : "Table",
-        "teapot" : {"Type" : "teapot"}
+        "teapot" : {"Type" : "Teapot"}
     }
 }
