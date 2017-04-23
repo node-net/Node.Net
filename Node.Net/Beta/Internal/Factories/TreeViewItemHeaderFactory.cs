@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,9 @@ namespace Node.Net.Beta.Internal.Factories
             if (!typeof(ITreeViewItemHeader).IsAssignableFrom(target_type)) return null;
             string type = source.GetType().Name;
             string name = source.GetName();
+
+            var idictionary = source as IDictionary;
+            if (idictionary != null) name = idictionary.GetName();
             //return $"{type} {name}";
             return new TreeViewItemHeader
             {
