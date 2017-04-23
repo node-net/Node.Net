@@ -19,7 +19,7 @@ namespace Node.Net.Beta.Internal.Factories
             string name = source.GetName();
 
             var idictionary = source as IDictionary;
-            if (idictionary != null) name = idictionary.GetName();
+            if (idictionary != null && name.Length == 0) name = idictionary.GetName();
             //return $"{type} {name}";
             return new TreeViewItemHeader
             {
