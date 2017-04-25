@@ -22,7 +22,8 @@ namespace Node.Net.Beta.Internal.Factories
                 var tvi = new TreeViewItem
                 {
                     DataContext = source,
-                    Header = header
+                    Header = header,
+                    ToolTip = source.GetType().FullName
                 };
                 UpdateChildren(tvi,source);
                 
