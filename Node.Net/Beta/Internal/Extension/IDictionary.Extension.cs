@@ -388,6 +388,11 @@ namespace Node.Net.Beta.Internal
             return GetLocalToWorld(dictionary).Transform(new Point3D(0, 0, 0));
         }
 
+        public static Vector3D GetWorldRotations(this IDictionary dictionary)
+        {
+            return GetLocalToWorld(dictionary).GetRotationsXYZ();
+        }
+
         public static T GetNearestAncestor<T>(this IDictionary child)
         {
             var parent = child.GetParent() as IDictionary;
