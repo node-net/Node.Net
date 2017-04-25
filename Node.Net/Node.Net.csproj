@@ -166,6 +166,7 @@
     <Compile Include="Interfaces\ITypeTransformer.cs" />
     <Compile Include="Interfaces\IUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpatialElement.cs" />
     <Compile Include="WordReader.cs" />
     <Compile Include="Writer.cs" />
   </ItemGroup>

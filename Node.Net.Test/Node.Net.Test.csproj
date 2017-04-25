@@ -102,6 +102,7 @@
     <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Factory.Test.cs" />
     <Compile Include="Foo.cs" />
+    <Compile Include="SpatialElement.Test.cs" />
     <Compile Include="Widget.cs" />
   </ItemGroup>
   <ItemGroup>
