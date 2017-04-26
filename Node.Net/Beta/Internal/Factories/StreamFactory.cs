@@ -9,6 +9,7 @@ namespace Node.Net.Beta.Internal.Factories
 {
     sealed class StreamFactory : IFactory
     {
+        public static List<Assembly> GlobalResourceAssemblies { get; } = new List<Assembly>();
         public List<Assembly> ResourceAssemblies { get; set; } = new List<Assembly>();
         public bool ExactMatch { get; set; } = false;
         public object Create(Type target_type, object source)
@@ -48,7 +49,15 @@ namespace Node.Net.Beta.Internal.Factories
                     if (!ExactMatch && manifestResourceName.Contains(name)) return assembly.GetManifestResourceStream(manifestResourceName);
                 }
             }
-            if(name.Contains("(") || name.Contains("*") && name.Contains(".") && name.Contains(")") || name.Contains("|"))
+            foreach (var assembly in GlobalResourceAssemblies)
+            {
+                foreach (var manifestResourceName in assembly.GetManifestResourceNames())
+                {
+                    if (manifestResourceName == name) return assembly.GetManifestResourceStream(manifestResourceName);
+                    if (!ExactMatch && manifestResourceName.Contains(name)) return assembly.GetManifestResourceStream(manifestResourceName);
+                }
+            }
+            if (name.Contains("(") || name.Contains("*") && name.Contains(".") && name.Contains(")") || name.Contains("|"))
             {
                 // open file dialog filter
                 var ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
