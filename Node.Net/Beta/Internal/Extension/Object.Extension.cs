@@ -73,5 +73,13 @@ namespace Node.Net.Beta.Internal
         }
         public static void SetFileName(this object instance, string filename) { Internal.Collections.MetaData.Default.GetMetaData(instance)["FileName"] = filename; }
         public static string GetFileName(this object instance) { return Internal.Collections.MetaData.Default.GetMetaData<string>(instance, "FileName"); }
+        public static void SetMetaData(this object instance,string name,object value)
+        {
+            var idictionary = Internal.Collections.MetaData.Default.GetMetaData(instance)[name] = value;
+        }
+        public static T GetMetaData<T>(this object instance,string name)
+        {
+            return Internal.Collections.MetaData.Default.GetMetaData<T>(instance, name);
+        }
     }
 }
