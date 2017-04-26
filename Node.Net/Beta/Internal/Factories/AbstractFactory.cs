@@ -24,7 +24,6 @@ namespace Node.Net.Beta.Internal.Factories
                 callingParent = true;
                 try
                 {
-                    //var stream = ParentFactory.Create<Stream>(source);
                     var stream = ParentFactory.Create(typeof(Stream), source) as Stream;
                     if (stream != null)
                     {
@@ -32,7 +31,6 @@ namespace Node.Net.Beta.Internal.Factories
                         var item = CreateFromStream(target_type, stream, source);
                         stream.Close();
                         stream = null;
-                        GC.Collect();
                         if (item != null)
                         {
                             var fname = item.GetFileName();
