@@ -267,6 +267,16 @@ namespace Node.Net
             var item = factory.Create<object>("Text Files(.txt)|*.txt|All Files(*.*)|*.*");
             item = null;
         }
+        [Test, Explicit, Apartment(ApartmentState.STA)]
+        public void Factory_Create_IDictionary_From_OpenFileDialogFilter()
+        {
+            var factory = new Factory();
+            var item = factory.Create<IDictionary>("Text Files(.txt)|*.txt|All Files(*.*)|*.*");
+            Assert.NotNull(item, nameof(item));
+            Assert.True(item.GetFileName().Length > 0,"FileName length");
+            var name = item.GetName();
+            Assert.True(item.GetName().Length > 0,"Name length");
+        }
 
         [Test,Apartment(ApartmentState.STA)]
         public void Factory_Clone()

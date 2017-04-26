@@ -33,11 +33,12 @@ namespace Node.Net.Beta.Internal.Factories
                         stream = null;
                         if (item != null)
                         {
+                            if (filename.Length > 0) item.SetFileName(filename);
                             var fname = item.GetFileName();
-                            if (fname.Length == 0)
-                            {
-                                item.SetFileName(stream.GetFileName());
-                            }
+                            //if (fname.Length == 0)
+                            //{
+                            //    item.SetFileName(stream.GetFileName());
+                            //}
                             return item;
                         }
                     }
@@ -77,7 +78,18 @@ namespace Node.Net.Beta.Internal.Factories
                     new_dictionary.DeepUpdateParents();
                     if (source != null && source.GetType() == typeof(string))
                     {
-                        new_dictionary.SetFileName(source.ToString());
+                        string filename = stream.GetFileName();
+                        if (filename.Length > 0) new_dictionary.SetFileName(filename);
+                        else new_dictionary.SetFileName(source.ToString());
+                        /*
+                        try
+                        {
+                            new_dictionary.SetFileName(source.ToString());
+                        }
+                        catch(Exception ex)
+                        {
+                            new_dictionary.SetFileName(stream.GetFileName());
+                        }*/
                     }
                     instance = new_dictionary;
                 }

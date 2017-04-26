@@ -292,7 +292,8 @@ namespace Node.Net.Beta.Internal
                     }
                 }
             }
-            return string.Empty;
+            return ObjectExtension.GetName(dictionary);
+            //return string.Empty;
         }
         public static string GetFullName(this IDictionary dictionary)
         {
