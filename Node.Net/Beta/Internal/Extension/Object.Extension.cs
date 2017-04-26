@@ -58,8 +58,15 @@ namespace Node.Net.Beta.Internal
                 var filename = instance.GetFileName();
                 if(filename.Length > 0)
                 {
-                    var fi = new FileInfo(filename);
-                    return fi.Name;
+                    try
+                    {
+                        var fi = new FileInfo(filename);
+                        return fi.Name;
+                    }
+                    catch(Exception exception)
+                    {
+                        throw new Exception($"filename:{filename}", exception);
+                    }
                 }
             }
             return fullName;
