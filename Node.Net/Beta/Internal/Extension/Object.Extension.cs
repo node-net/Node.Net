@@ -56,7 +56,7 @@ namespace Node.Net.Beta.Internal
             if(fullName.Length == 0)
             {
                 var filename = instance.GetFileName();
-                if(filename.Length > 0)
+                if(filename != null && filename.Length > 0)
                 {
                     try
                     {
