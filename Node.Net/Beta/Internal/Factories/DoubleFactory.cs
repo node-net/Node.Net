@@ -18,8 +18,6 @@ namespace Node.Net.Beta.Internal.Factories
                 var str = source.ToString();
                 if (str.Contains("deg") || str.Contains("rad")) return Units.Angle.GetDegrees(str);
                 return Units.Length.GetMeters(str);
-                //double value;
-                //if (Double.TryParse(source.ToString(), out value)) return value;
             }
 
             return null;

@@ -35,10 +35,6 @@ namespace Node.Net.Beta.Internal.Factories
                         {
                             if (filename.Length > 0) item.SetFileName(filename);
                             var fname = item.GetFileName();
-                            //if (fname.Length == 0)
-                            //{
-                            //    item.SetFileName(stream.GetFileName());
-                            //}
                             return item;
                         }
                     }
@@ -57,7 +53,6 @@ namespace Node.Net.Beta.Internal.Factories
             var instance =  target_type.Construct(source);
             if (instance != null) return instance;
 
-            //if (ParentFactory != null) return CreateFromStream(target_type, ParentFactory.Create<Stream>(source),source);
             instance = ResourceFactory.Create(target_type,source);
             if (instance == null) instance = CloneFactory.Create(target_type, source);
             return instance;
@@ -81,15 +76,6 @@ namespace Node.Net.Beta.Internal.Factories
                         string filename = stream.GetFileName();
                         if (filename.Length > 0) new_dictionary.SetFileName(filename);
                         else new_dictionary.SetFileName(source.ToString());
-                        /*
-                        try
-                        {
-                            new_dictionary.SetFileName(source.ToString());
-                        }
-                        catch(Exception ex)
-                        {
-                            new_dictionary.SetFileName(stream.GetFileName());
-                        }*/
                     }
                     instance = new_dictionary;
                 }
