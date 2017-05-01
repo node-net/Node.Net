@@ -79,6 +79,7 @@ namespace Node.Net.Beta.Internal.Factories
             get { return Model3DFactory.ScalePrimaryModel; }
             set { Model3DFactory.ScalePrimaryModel = value; }
         }
+        public Dictionary<Type, int> InstanceCounts { get; } = new Dictionary<Type, int>();
         public object Create(Type target_type, object source)
         {
             foreach (var type in FactoryFunctions.Keys)
@@ -86,10 +87,21 @@ namespace Node.Net.Beta.Internal.Factories
                 if (type.IsAssignableFrom(target_type))
                 {
                     var instance = FactoryFunctions[type](target_type, source);
-                    if (instance != null) return instance;
+                    if (instance != null)
+                    {
+                        if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
+                        else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
+                        return instance;
+                    }
                 }
             }
-            if (source != null && Resources.Contains(source)) return Resources[source];
+            if (source != null && Resources.Contains(source))
+            {
+                var instance =Resources[source];
+                if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
+                else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
+                return instance;
+            }
             return null;
         }
 
