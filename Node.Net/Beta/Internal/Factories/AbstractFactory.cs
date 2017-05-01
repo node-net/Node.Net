@@ -19,27 +19,30 @@ namespace Node.Net.Beta.Internal.Factories
         {
             if (target_type == null) return null;
 
-            if (source != null && ParentFactory != null && !callingParent)
+            var stream = source as Stream;
+            if (stream == null && source != null && ParentFactory != null && !callingParent)
             {
                 callingParent = true;
                 try
                 {
-                    var stream = ParentFactory.Create(typeof(Stream), source) as Stream;
-                    if (stream != null)
-                    {
-                        var filename = stream.GetFileName();
-                        var item = CreateFromStream(target_type, stream, source);
-                        stream.Close();
-                        stream = null;
-                        if (item != null)
-                        {
-                            if (filename.Length > 0) item.SetFileName(filename);
-                            var fname = item.GetFileName();
-                            return item;
-                        }
-                    }
+                    stream = ParentFactory.Create(typeof(Stream), source) as Stream;
+                    
                 }
                 finally { callingParent = false; }
+            }
+
+            if (stream != null)
+            {
+                var filename = stream.GetFileName();
+                var item = CreateFromStream(target_type, stream, source);
+                stream.Close();
+                stream = null;
+                if (item != null)
+                {
+                    if (filename.Length > 0) item.SetFileName(filename);
+                    var fname = item.GetFileName();
+                    return item;
+                }
             }
 
             foreach (var targetType in Keys)
