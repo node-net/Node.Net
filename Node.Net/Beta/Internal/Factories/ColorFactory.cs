@@ -8,7 +8,6 @@ namespace Node.Net.Beta.Internal.Factories
     sealed class ColorFactory : Dictionary<string, Color>, IFactory
     {
         public static ColorFactory Default { get; } = new ColorFactory();
-        //public Color DefaultColor = Colors.Transparent;
         public object Create(Type target_type, object source)
         {
             if (source != null)
