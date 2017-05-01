@@ -17,7 +17,6 @@ namespace Node.Net.Beta.Internal.Factories
             {
                 if(source != null)
                 {
-                    //var stream = ParentFactory.Create<Stream>(source);
                     return Create(target_type, ParentFactory.Create<IDictionary>(source));
                 }
             }

@@ -18,7 +18,6 @@ namespace Node.Net.Beta.Internal.Factories
             if (ParentFactory != null)
             {
                 var dictionary = ParentFactory.Create<IDictionary>(source);
-                //if (dictionary != null) return Create(typeof(IDictionary), dictionary);
                 if (dictionary != null) return CreateFromDictionary(dictionary);
             }
             return null;
