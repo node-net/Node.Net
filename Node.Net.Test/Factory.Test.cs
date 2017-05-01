@@ -313,5 +313,25 @@ namespace Node.Net
             Assert.NotNull(dictionary, nameof(dictionary));
             File.Delete(tmp_filename);
         }
+
+        [Test]
+        public void OpenFromManifestResource()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+            var project = factory.Create<IDictionary>("Scene.json");
+            if (project == null) throw new System.Exception("project is null");
+        }
+        [Test]
+        public void OpenFromFile()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
+            var stream = factory.Create<Stream>("Scene.json");
+            var filename = System.IO.Path.GetTempFileName();
+            stream.CopyToFile(filename);
+            var project = factory.Create<IDictionary>(filename);
+            if (project == null) throw new System.Exception("project is null");
+        }
     }
 }

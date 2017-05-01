@@ -94,6 +94,7 @@
     <Compile Include="Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Extension\Rect3D.Extension.cs" />
     <Compile Include="Extension\StackTrace.Extension.cs" />
+    <Compile Include="Extension\Stream.Extension.cs" />
     <Compile Include="Extension\String.Extension.cs" />
     <Compile Include="Extension\UIElement.Extension.cs" />
     <Compile Include="Extension\Viewport3D.Extension.cs" />
