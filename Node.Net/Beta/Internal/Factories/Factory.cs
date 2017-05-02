@@ -82,6 +82,25 @@ namespace Node.Net.Beta.Internal.Factories
         public Dictionary<Type, int> InstanceCounts { get; } = new Dictionary<Type, int>();
         public object Create(Type target_type, object source)
         {
+            if (source != null && Resources.Contains(source))
+            {
+                var instance = Resources[source];
+                if (target_type.IsInstanceOfType(instance))
+                {
+                    if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
+                    else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
+                    return instance;
+                }
+            }
+
+            //// DEBUG
+            /*
+            var sourceString = source.ToString();
+            if(source.GetType() == typeof(string))
+            {
+                int x = 0;
+            }*/
+            //// DEBUG
             foreach (var type in FactoryFunctions.Keys)
             {
                 if (type.IsAssignableFrom(target_type))
@@ -91,18 +110,36 @@ namespace Node.Net.Beta.Internal.Factories
                     {
                         if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
                         else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
+                        /// DEBUG
+                        if(source != null && source.GetType() == typeof(string) && IsResourceType(target_type))
+                        {
+                            int x = 0;
+                            if(!Resources.Contains(source.ToString()))
+                            {
+                                Resources.Add(source.ToString(), instance);
+                            }
+                        }
+                        /// DEBUG
                         return instance;
                     }
                 }
             }
+            /*
             if (source != null && Resources.Contains(source))
             {
-                var instance =Resources[source];
+                var instance = Resources[source];
                 if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
                 else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
                 return instance;
-            }
+            }*/
             return null;
+        }
+
+        public bool IsResourceType(Type type)
+        {
+            if (typeof(Model3D).IsAssignableFrom(type)) return true;
+            if (typeof(MeshGeometry3D).IsAssignableFrom(type)) return true;
+            return false;
         }
 
         public bool Cache
