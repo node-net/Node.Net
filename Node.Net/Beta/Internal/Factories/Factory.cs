@@ -80,8 +80,18 @@ namespace Node.Net.Beta.Internal.Factories
             set { Model3DFactory.ScalePrimaryModel = value; }
         }
         public Dictionary<Type, int> InstanceCounts { get; } = new Dictionary<Type, int>();
+
+        //private Dictionary<Type, List<string>> NullResources = new Dictionary<Type, List<string>>();
         public object Create(Type target_type, object source)
         {
+            /*
+            if(source != null && NullResources.ContainsKey(target_type))
+            {
+                if(source.GetType() == typeof(string))
+                {
+                    if (NullResources[target_type].Contains(source.ToString())) return null;
+                }
+            }*/
             if (source != null && Resources.Contains(source))
             {
                 var instance = Resources[source];
@@ -93,14 +103,6 @@ namespace Node.Net.Beta.Internal.Factories
                 }
             }
 
-            //// DEBUG
-            /*
-            var sourceString = source.ToString();
-            if(source.GetType() == typeof(string))
-            {
-                int x = 0;
-            }*/
-            //// DEBUG
             foreach (var type in FactoryFunctions.Keys)
             {
                 if (type.IsAssignableFrom(target_type))
@@ -110,28 +112,17 @@ namespace Node.Net.Beta.Internal.Factories
                     {
                         if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
                         else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
-                        /// DEBUG
                         if(source != null && source.GetType() == typeof(string) && IsResourceType(target_type))
                         {
-                            int x = 0;
                             if(!Resources.Contains(source.ToString()))
                             {
                                 Resources.Add(source.ToString(), instance);
                             }
                         }
-                        /// DEBUG
                         return instance;
                     }
                 }
             }
-            /*
-            if (source != null && Resources.Contains(source))
-            {
-                var instance = Resources[source];
-                if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
-                else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
-                return instance;
-            }*/
             return null;
         }
 
