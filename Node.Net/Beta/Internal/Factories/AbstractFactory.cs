@@ -20,6 +20,7 @@ namespace Node.Net.Beta.Internal.Factories
             if (target_type == null) return null;
 
 
+            //var s = source.ToString();
             if (source != null && Resources.Contains(source.ToString()))
             {
                 var result = Resources[source.ToString()];

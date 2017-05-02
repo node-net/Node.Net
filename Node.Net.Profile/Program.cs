@@ -19,7 +19,7 @@ namespace Node.Net.Profile
             */
 
             var test = new Node.Net.FactoryCreateVisual3DTest();
-            test.CreateFromManifestResourceStream("Scene.2000.json");
+            test.CreateFromManifestResourceStream("Scene.12500.json");
 
     }
     }
