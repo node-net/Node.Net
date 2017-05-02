@@ -28,15 +28,14 @@ namespace Node.Net.Beta.Internal.Factories
                     if(typeof(Stream).IsAssignableFrom(source.GetType()))
                     {
                         return Internal.Readers.SignatureReader.GetSignature(source as Stream);
-                        /*
-                        var sr = new Internal.Readers.SignatureReader();
-                        return sr.Read(source as Stream) as Internal.Readers.Signature;*/
                     }
                     return Create(target_type, Create(typeof(Stream), source));
                 }
             }
             return null;
         }
+
+        public IFactory ParentFactory { get; set; }
 
         public Stream Create(string name)
         {
@@ -45,16 +44,28 @@ namespace Node.Net.Beta.Internal.Factories
             {
                 foreach (var manifestResourceName in assembly.GetManifestResourceNames())
                 {
-                    if (manifestResourceName == name) return assembly.GetManifestResourceStream(manifestResourceName);
-                    if (!ExactMatch && manifestResourceName.Contains(name)) return assembly.GetManifestResourceStream(manifestResourceName);
+                    if (manifestResourceName == name)
+                    {
+                        return assembly.GetManifestResourceStream(manifestResourceName);
+                    }
+                    if (!ExactMatch && manifestResourceName.Contains(name))
+                    {
+                        return assembly.GetManifestResourceStream(manifestResourceName);
+                    }
                 }
             }
             foreach (var assembly in GlobalResourceAssemblies)
             {
                 foreach (var manifestResourceName in assembly.GetManifestResourceNames())
                 {
-                    if (manifestResourceName == name) return assembly.GetManifestResourceStream(manifestResourceName);
-                    if (!ExactMatch && manifestResourceName.Contains(name)) return assembly.GetManifestResourceStream(manifestResourceName);
+                    if (manifestResourceName == name)
+                    {
+                        return assembly.GetManifestResourceStream(manifestResourceName);
+                    }
+                    if (!ExactMatch && manifestResourceName.Contains(name))
+                    {
+                        return assembly.GetManifestResourceStream(manifestResourceName);
+                    }
                 }
             }
             if (name.Contains("(") || name.Contains("*") && name.Contains(".") && name.Contains(")") || name.Contains("|"))

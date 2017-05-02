@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -15,16 +11,32 @@ namespace Node.Net.Beta.Internal.Factories
         {
             if (source != null)
             {
-                if (typeof(IDictionary).IsAssignableFrom(source.GetType())) return CreateFromDictionary(source as IDictionary);
-                if (typeof(MeshGeometry3D).IsAssignableFrom(source.GetType())) return CreateFromMeshGeometry3D(source as MeshGeometry3D);
-            }
-            if (ParentFactory != null)
-            {
-                if (source != null)
+                var sourceType = source.GetType();
+                if (typeof(IDictionary).IsAssignableFrom(sourceType)) return CreateFromDictionary(source as IDictionary);
+                //var result = CreateFromDictionary(source as IDictionary);
+                //if (result != null) return result;
+                //if (typeof(IDictionary).IsInstanceOfType(source)) return CreateFromDictionary(source as IDictionary);
+                //if (source is IDictionary) return CreateFromDictionary(source as IDictionary);
+                //if (typeof(IDictionary).IsAssignableFrom(source.GetType())) return CreateFromDictionary(source as IDictionary);
+                if (typeof(MeshGeometry3D).IsAssignableFrom(sourceType)) return CreateFromMeshGeometry3D(source as MeshGeometry3D);
+                if (ParentFactory != null)
                 {
                     return Create(target_type, ParentFactory.Create<IDictionary>(source));
                 }
             }
+            /*
+            if (ParentFactory != null)
+            {
+                if (source != null)
+                {
+                    if(!typeof(IDictionary).IsAssignableFrom(sourceType))
+                    var dictionary = source as IDictionary;
+                    if (dictionary == null)
+                    {
+                        return Create(target_type, ParentFactory.Create<IDictionary>(source));
+                    }
+                }
+            }*/
             return null;
         }
 
@@ -32,11 +44,12 @@ namespace Node.Net.Beta.Internal.Factories
 
         private GeometryModel3D CreateFromDictionary(IDictionary source)
         {
+            if (source == null) return null;
             if (ParentFactory != null)
             {
-                if (source != null)
+                if (source != null && source.Contains("Type"))
                 {
-                    var type = source.Get<string>("Type");
+                    var type = source["Type"].ToString();
                     if (type.Length > 0)
                     {
                         var geometryModel3D = ParentFactory.Create<GeometryModel3D>($"{type}.GeometryModel3D.");

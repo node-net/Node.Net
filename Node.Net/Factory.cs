@@ -20,9 +20,27 @@ namespace Node.Net
             ReadFunction = new Reader().Read;
             ManifestResourceAssemblies.Add(assembly);
         }
-        public T Create<T>() => IFactoryExtension.Create<T>(this);
-        public T Create<T>(object source) => IFactoryExtension.Create<T>(this, source);
-        public object Create(Type targetType, object source) => factory.Create(targetType, source);
+        public T Create<T>()
+        {
+            T result = IFactoryExtension.Create<T>(this);
+            return result;
+        }
+        public T Create<T>(object source)
+        {
+            T result = IFactoryExtension.Create<T>(this, source);
+            return result;
+        }
+        public object Create(Type targetType, object source)
+        {
+            var result = factory.Create(targetType, source);
+            if(Logging)
+            {
+                var sourceInfo = source.ToString();
+
+                Log.Add($"Create(typeof({targetType.FullName}),{sourceInfo}");
+            }
+            return result;
+        }
         public ResourceDictionary Resources
         {
             get { return factory.Resources; }
@@ -78,6 +96,8 @@ namespace Node.Net
         {
             factory.ClearCache();
         }
+        public bool Logging { get; set; } = false;
+        public List<string> Log { get; } = new List<string>();
         public static Transform3D GetScalingTransform(IDictionary source) => Beta.Internal.Factories.Model3DFactory.GetScalingTransform(source);
         private readonly Beta.Internal.Factories.Factory factory = new Beta.Internal.Factories.Factory();
     }

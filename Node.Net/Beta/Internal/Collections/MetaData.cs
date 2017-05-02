@@ -9,12 +9,15 @@ namespace Node.Net.Beta.Internal.Collections
         public static MetaData Default { get; } = new MetaData();
         public IDictionary GetMetaData(object item)
         {
-            if (data.Count > 1000) Clean();
+            //if (data.Count > 1000) Clean();
             if (item == null) return null;
             foreach (var wr in data.Keys)
             {
                 if (wr.Target != null)
                 {
+                    if (wr.Target.Equals(item)) return data[wr];
+                    /*
+                    if (wr.Target == item) return data[wr];
                     if (item.GetType().IsValueType)
                     {
                         if (wr.Target.Equals(item)) return data[wr];
@@ -22,7 +25,7 @@ namespace Node.Net.Beta.Internal.Collections
                     else
                     {
                         if (wr.Target == item) return data[wr];
-                    }
+                    }*/
                 }
             }
             var metaData = new Dictionary<string, dynamic>();

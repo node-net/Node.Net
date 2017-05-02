@@ -7,6 +7,7 @@ namespace Node.Net.Beta.Internal.Factories
     {
         public object Create(Type target_type, object source)
         {
+            if (source == null) return null;
             if (target_type == null) return null;
             if (target_type != typeof(Visual3D)) return null;
             if (ParentFactory != null)

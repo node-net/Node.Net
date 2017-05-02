@@ -13,7 +13,15 @@ namespace Node.Net.Beta.Internal.Factories
             if (target_type != typeof(Model3D)) return null;
             if (source != null)
             {
+                var dictionary = source as IDictionary;
+                if(dictionary != null)
+                {
+                    return CreateFromDictionary(dictionary);
+                }
+                /*
+                var instance = CreateFromDictionary(source as IDictionary);
                 if (typeof(IDictionary).IsAssignableFrom(source.GetType())) return CreateFromDictionary(source as IDictionary);
+                */
             }
             if (ParentFactory != null)
             {
@@ -42,6 +50,7 @@ namespace Node.Net.Beta.Internal.Factories
         public void ClearCache() { model3DCache.Clear(); }
         private Model3D CreateFromDictionary(IDictionary source)
         {
+            if (source == null) return null;
             if (cache)
             {
                 if (model3DCache.ContainsKey(source)) return model3DCache[source];

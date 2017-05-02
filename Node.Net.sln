@@ -21,7 +21,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.Profile", "Node.Ne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.Benchmark", "Node.Net.Benchmark\Node.Net.Benchmark.csproj", "{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{48795579-3DEA-46A8-893E-FCB551E89D14}"
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -43,8 +48,18 @@ Global
 		{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48795579-3DEA-46A8-893E-FCB551E89D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48795579-3DEA-46A8-893E-FCB551E89D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48795579-3DEA-46A8-893E-FCB551E89D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48795579-3DEA-46A8-893E-FCB551E89D14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

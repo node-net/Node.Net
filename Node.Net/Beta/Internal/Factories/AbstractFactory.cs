@@ -18,30 +18,24 @@ namespace Node.Net.Beta.Internal.Factories
         public object Create(Type target_type, object source)
         {
             if (target_type == null) return null;
+            
 
-            var stream = source as Stream;
-            if (stream == null && source != null && ParentFactory != null && !callingParent)
+            if(source != null && Resources.Contains(source.ToString()))
             {
-                callingParent = true;
-                try
-                {
-                    stream = ParentFactory.Create(typeof(Stream), source) as Stream;
-                    
-                }
-                finally { callingParent = false; }
+                var result = Resources[source.ToString()];
+                if (result != null && target_type.IsAssignableFrom(result.GetType())) return result;
             }
-
+            var stream = CreateStream(source);
             if (stream != null)
             {
-                var filename = stream.GetFileName();
-                var item = CreateFromStream(target_type, stream, source);
-                stream.Close();
-                stream = null;
-                if (item != null)
+                var result = CreateFromStream(target_type, stream, source);
+                if (result != null)
                 {
-                    if (filename.Length > 0) item.SetFileName(filename);
-                    var fname = item.GetFileName();
-                    return item;
+                    if(typeof(string).IsAssignableFrom(source.GetType()))
+                    {
+                        Resources.Add(source.ToString(), result);
+                    }
+                    return result;
                 }
             }
 
@@ -57,10 +51,26 @@ namespace Node.Net.Beta.Internal.Factories
             if (instance != null) return instance;
 
             instance = ResourceFactory.Create(target_type,source);
+
             if (instance == null) instance = CloneFactory.Create(target_type, source);
             return instance;
         }
 
+        private Stream CreateStream(object source)
+        {
+            var stream = source as Stream;
+            if (stream == null && source != null && ParentFactory != null && !callingParent)
+            {
+                callingParent = true;
+                try
+                {
+                    stream = ParentFactory.Create(typeof(Stream), source) as Stream;
+
+                }
+                finally { callingParent = false; }
+            }
+            return stream;
+        }
         public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
         private readonly ResourceFactory ResourceFactory = new ResourceFactory();
         private object CreateFromStream(Type target_type,Stream stream,object source)
@@ -69,6 +79,8 @@ namespace Node.Net.Beta.Internal.Factories
             if (ReadFunction != null)
             {
                 var instance = ReadFunction(stream);
+                stream.Close();
+                
                 var dictionary = instance as IDictionary;
                 if (dictionary != null)
                 {

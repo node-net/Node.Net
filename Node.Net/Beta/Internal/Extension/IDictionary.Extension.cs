@@ -200,13 +200,12 @@ namespace Node.Net.Beta.Internal
         }
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T))
         {
-            if (name.IndexOf(',') > -1)//name.Contains(','))
+            if (name.IndexOf(',') > -1)
             {
                 int startIndex = 0;
                 int nextIndex = name.IndexOf(',');
                 while (startIndex < name.Length)
                 {
-                    //var sub_name = name.Substring(startIndex, nextIndex - startIndex);
                     if (dictionary.Contains(name.Substring(startIndex, nextIndex - startIndex))) return dictionary.Get<T>(name.Substring(startIndex, nextIndex - startIndex));
                     startIndex = nextIndex + 1;
                     if (startIndex < name.Length)
@@ -215,12 +214,6 @@ namespace Node.Net.Beta.Internal
                         if (nextIndex < 0) nextIndex = name.Length - 1;
                     }
                 }
-                /*
-                var names = name.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                foreach (var n in names)
-                {
-                    if (dictionary.Contains(n)) return dictionary.Get<T>(n);
-                }*/
             }
             if (dictionary.Contains(name))
             {
@@ -237,7 +230,6 @@ namespace Node.Net.Beta.Internal
                     return (T)(object)string.Empty;
                 }
             }
-            //return default(T);
             return defaultValue;
         }
         public static void Set(this IDictionary dictionary, string key, object value)
