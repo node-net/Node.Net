@@ -8,6 +8,11 @@ namespace Node.Net.Beta.Internal.Collections
     {
         public bool Equals(WeakReference a, WeakReference b)
         {
+            if(a.Target == null)
+            {
+                if (b.Target == null) return true;
+                return false;
+            }
             return a.Target.Equals(b.Target);
         }
 
