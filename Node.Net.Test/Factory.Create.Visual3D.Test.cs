@@ -21,7 +21,7 @@ namespace Node.Net
         [TestCase("Scene.20.json")]
         [TestCase("Scene.500.json")]
         [TestCase("Scene.2000.json")]
-        [TestCase("Scene.12500.json")]
+        [TestCase("Scene.12500.json"),Explicit]
         public void CreateFromManifestResourceStream(string name)
         {
             var factory = new Factory { Logging = true };

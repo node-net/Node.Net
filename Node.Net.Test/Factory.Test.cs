@@ -286,7 +286,7 @@ namespace Node.Net
             Assert.NotNull(clone, nameof(clone));
         }
 
-        [Test]
+        [Test,Explicit]
         public void Factory_Create_Stream()
         {
             Assert.NotNull(Factory.Default.Create<Stream>("http://www.makoto3.net/xaml/CubeSample002.xaml"));

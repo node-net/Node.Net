@@ -17,7 +17,6 @@ namespace Node.Net.Beta.Internal.Collections
         }
     }
 
-    //static WeakReferenceComparer MetaDataKeyComparer = new WeakReferenceComparer();
     sealed class MetaData
     {
         public static MetaData Default { get; } = new MetaData();
@@ -27,21 +26,10 @@ namespace Node.Net.Beta.Internal.Collections
         }
         public IDictionary GetMetaData(object item)
         {
-            //if (data.Count > 1000) Clean();
-            //if (item == null) return null;
-            
             if(data.ContainsKey(new WeakReference(item)))
             {
                 return data[new WeakReference(item)];
             }
-            /*
-            foreach (var wr in data.Keys)
-            {
-                if (wr.Target != null)
-                {
-                    if (wr.Target.Equals(item)) return data[wr];
-                }
-            }*/
             var metaData = new Dictionary<string, dynamic>();
             data.Add(new WeakReference(item), metaData);
             return metaData;
@@ -72,6 +60,6 @@ namespace Node.Net.Beta.Internal.Collections
             }
             foreach (var deadKey in deadKeys) { data.Remove(deadKey); }
         }
-        private readonly Dictionary<WeakReference, IDictionary> data = null;// new Dictionary<WeakReference, IDictionary>();
+        private readonly Dictionary<WeakReference, IDictionary> data = null;
     }
 }
