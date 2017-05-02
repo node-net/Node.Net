@@ -116,6 +116,7 @@ namespace Node.Net.Beta.Internal.Factories
         }
         public bool Logging { get; set; } = false;
         public Action<string> LogFunction { get; set; }
+        
         private Model3DFactory Model3DFactory { get; } = new Model3DFactory();
         private StreamFactory StreamFactory { get; } = new StreamFactory();
         private AbstractFactory AbstractFactory { get; } = new AbstractFactory

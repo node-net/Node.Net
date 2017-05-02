@@ -18,24 +18,28 @@ namespace Node.Net.Beta.Internal.Factories
         public object Create(Type target_type, object source)
         {
             if (target_type == null) return null;
-            
 
-            if(source != null && Resources.Contains(source.ToString()))
+
+            if (source != null && Resources.Contains(source.ToString()))
             {
                 var result = Resources[source.ToString()];
                 if (result != null && target_type.IsAssignableFrom(result.GetType())) return result;
             }
-            var stream = CreateStream(source);
-            if (stream != null)
+            else
             {
-                var result = CreateFromStream(target_type, stream, source);
-                if (result != null)
+                var stream = CreateStream(source);
+                if (stream != null)
                 {
-                    if(typeof(string).IsAssignableFrom(source.GetType()))
+                    var s = source.ToString();
+                    var result = CreateFromStream(target_type, stream, source);
+                    if (result != null)
                     {
-                        Resources.Add(source.ToString(), result);
+                        if (typeof(string).IsAssignableFrom(source.GetType()))
+                        {
+                            Resources.Add(source.ToString(), result);
+                        }
+                        return result;
                     }
-                    return result;
                 }
             }
 
