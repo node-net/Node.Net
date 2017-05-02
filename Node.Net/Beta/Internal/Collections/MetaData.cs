@@ -4,30 +4,44 @@ using System.Collections.Generic;
 
 namespace Node.Net.Beta.Internal.Collections
 {
+    class WeakReferenceComparer : IEqualityComparer<WeakReference>
+    {
+        public bool Equals(WeakReference a, WeakReference b)
+        {
+            return a.Target.Equals(b.Target);
+        }
+
+        public int GetHashCode(WeakReference w)
+        {
+            return w.Target.GetHashCode();
+        }
+    }
+
+    //static WeakReferenceComparer MetaDataKeyComparer = new WeakReferenceComparer();
     sealed class MetaData
     {
         public static MetaData Default { get; } = new MetaData();
+        public MetaData()
+        {
+            data = new Dictionary<WeakReference, IDictionary>(new WeakReferenceComparer());
+        }
         public IDictionary GetMetaData(object item)
         {
             //if (data.Count > 1000) Clean();
-            if (item == null) return null;
+            //if (item == null) return null;
+            
+            if(data.ContainsKey(new WeakReference(item)))
+            {
+                return data[new WeakReference(item)];
+            }
+            /*
             foreach (var wr in data.Keys)
             {
                 if (wr.Target != null)
                 {
                     if (wr.Target.Equals(item)) return data[wr];
-                    /*
-                    if (wr.Target == item) return data[wr];
-                    if (item.GetType().IsValueType)
-                    {
-                        if (wr.Target.Equals(item)) return data[wr];
-                    }
-                    else
-                    {
-                        if (wr.Target == item) return data[wr];
-                    }*/
                 }
-            }
+            }*/
             var metaData = new Dictionary<string, dynamic>();
             data.Add(new WeakReference(item), metaData);
             return metaData;
@@ -58,6 +72,6 @@ namespace Node.Net.Beta.Internal.Collections
             }
             foreach (var deadKey in deadKeys) { data.Remove(deadKey); }
         }
-        private readonly Dictionary<WeakReference, IDictionary> data = new Dictionary<WeakReference, IDictionary>();
+        private readonly Dictionary<WeakReference, IDictionary> data = null;// new Dictionary<WeakReference, IDictionary>();
     }
 }

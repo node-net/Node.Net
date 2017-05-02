@@ -1,10 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Node.Net
 {
@@ -21,6 +16,8 @@ namespace Node.Net
         [Test]
         [TestCase("Scene.500.json")]
         [TestCase("Scene.12500.json")]
+        [TestCase("Scene.24500.json")]
+        [TestCase("Scene.50000.json")]
         public void CreateFromManifestResourceStream(string name)
         {
             var data = factory.Create<IDictionary>(name);

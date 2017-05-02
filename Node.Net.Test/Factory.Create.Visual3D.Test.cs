@@ -137,6 +137,12 @@ namespace Node.Net
                 Node.Net.Writer.Default.Write(fs, scene);
             }
 
+            scene = CreateDeepSceneModel(70);
+            using (var fs = new FileStream($"{GetFolderPath(SpecialFolder.Desktop)}\\Scene.24500.json", FileMode.Create))
+            {
+                Node.Net.Writer.Default.Write(fs, scene);
+            }
+
             scene = CreateDeepSceneModel(100);
             using (var fs = new FileStream($"{GetFolderPath(SpecialFolder.Desktop)}\\Scene.50000.json", FileMode.Create))
             {

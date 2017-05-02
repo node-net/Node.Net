@@ -10,7 +10,10 @@ namespace Node.Net.Beta.Internal
     {
         public static string GetJSON(this IDictionary dictionary) { return new JSONWriter().WriteToString(dictionary); }
         public static void Save(this IDictionary dictionary, Stream stream) { new JSONWriter().Write(stream, dictionary); }
-        public static void SetParent(this IDictionary dictionary, object parent) { Internal.Collections.MetaData.Default.GetMetaData(dictionary)["Parent"] = parent; }
+        public static void SetParent(this IDictionary dictionary, object parent)
+        {
+            Internal.Collections.MetaData.Default.GetMetaData(dictionary)["Parent"] = parent;
+        }
         public static object GetParent(this IDictionary dictionary) { return Internal.Collections.MetaData.Default.GetMetaData(dictionary, "Parent"); }
         public static void SetFileName(this IDictionary dictionary,string filename) { Internal.Collections.MetaData.Default.GetMetaData(dictionary)["FileName"] = filename; }
         public static string GetFileName(this IDictionary dictionary) { return Internal.Collections.MetaData.Default.GetMetaData<string>(dictionary, "FileName"); }
@@ -21,7 +24,8 @@ namespace Node.Net.Beta.Internal
                 var child = value as IDictionary;
                 if (child != null)
                 {
-                    child.SetParent(dictionary); DeepUpdateParents(child);
+                    child.SetParent(dictionary);
+                    DeepUpdateParents(child);
                 }
             }
         }

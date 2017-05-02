@@ -104,6 +104,7 @@
     <Compile Include="Factory.Test.cs" />
     <Compile Include="Foo.cs" />
     <Compile Include="SpatialElement.Test.cs" />
+    <Compile Include="WeakReference.Test.cs" />
     <Compile Include="Widget.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +219,7 @@
     <EmbeddedResource Include="Resources\Scene.12500.json" />
     <EmbeddedResource Include="Resources\Scene.2000.json" />
     <EmbeddedResource Include="Resources\Scene.20.json" />
+    <EmbeddedResource Include="Resources\Scene.24500.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />
