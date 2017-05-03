@@ -116,7 +116,7 @@ namespace Node.Net.Beta.Internal.Factories
                         try
                         {
                             locked = true;
-                            model3D = ParentFactory.Create<Model3D>($"{type}.");
+                            model3D = ParentFactory.Create<Model3D>($"Model3D.{type}.");
                             if (model3D != null) return model3D;
                         }
                         finally { locked = false; }
