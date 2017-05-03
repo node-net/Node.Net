@@ -13,5 +13,6 @@ end
 # version 1.0.341 LOC 6463
 #
 # version 1.0.390 LOC 2281
+# version 1.0.420 LOC 2308
 
 # Allow Factories to share Global ManifestResources and ResourceDictionary
