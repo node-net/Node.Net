@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace Node.Net
 {
@@ -18,7 +19,26 @@ namespace Node.Net
                 memory.Seek(0, SeekOrigin.Begin);
                 return Convert.ToBase64String(memory.GetBuffer());
             }
-
+        }
+        public static string WriteToString(this IWrite writer,object item)
+        {
+            using (var memory = new MemoryStream())
+            {
+                writer.Write(memory, item);
+                memory.Flush();
+                memory.Seek(0, SeekOrigin.Begin);
+                using (var sr = new StreamReader(memory))
+                {
+                    return sr.ReadToEnd();
+                }
+            }
+        }
+        public static void Write(this IWrite writer,string filename,object item)
+        {
+            using (FileStream fs = new FileStream(filename, FileMode.Create))
+            {
+                writer.Write(fs, item);
+            }
         }
     }
 }
