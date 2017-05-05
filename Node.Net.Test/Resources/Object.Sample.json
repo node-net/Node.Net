@@ -1,0 +1,8 @@
+{
+    "null0" : null,
+    "bool0" : false,
+    "bool1" : true,
+    "string0" : "abc",
+    "array0": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
+    "array1" : [0.1,2.3,4.5,6.7,8.9]
+}

@@ -97,6 +97,7 @@
     <Compile Include="Factory.Create.TreeViewItem.Test.cs" />
     <Compile Include="Factory.Create.Viewport3D.Test.cs" />
     <Compile Include="Factory.Create.Visual3D.Test.cs" />
+    <Compile Include="JSONWriter.Test.cs" />
     <Compile Include="Reader.Test.cs" />
     <Compile Include="Beta\View3D.Test.cs" />
     <Compile Include="Extension\IDictionary.Extension.Test.cs" />
@@ -220,6 +221,7 @@
     <EmbeddedResource Include="Resources\Scene.2000.json" />
     <EmbeddedResource Include="Resources\Scene.20.json" />
     <EmbeddedResource Include="Resources\Scene.24500.json" />
+    <EmbeddedResource Include="Resources\Object.Sample.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />
