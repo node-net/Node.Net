@@ -8,7 +8,7 @@ using static System.Environment;
 namespace Node.Net
 {
     public enum JSONFormat { Compact, Indented };
-    public sealed class JSONWriter
+    public sealed class JSONWriter : IWrite
     {
         public JSONFormat Format = JSONFormat.Indented;
         private int IndentLevel;
