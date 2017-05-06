@@ -35,5 +35,9 @@ namespace Node.Net
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source) => Beta.Internal.IDictionaryExtension.Copy(dictionary, source);
         public static IDictionary Clone(this IDictionary source) => Beta.Internal.IDictionaryExtension.Clone(source);
         public static void Set(this IDictionary dictionary, string key, object value) => Beta.Internal.IDictionaryExtension.Set(dictionary, key, value);
+        public static void Save(this IDictionary dictionary, string filename)
+        {
+            Node.Net.JSONWriter.Default.Write(filename, dictionary);
+        }
     }
 }
