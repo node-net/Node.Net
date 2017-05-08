@@ -2,9 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
@@ -33,7 +30,7 @@ namespace Node.Net
             {
                 {"X","1 m" }
             };
-            var dictionary = new Dictionary<string,dynamic>
+            var dictionary = new Dictionary<string, dynamic>
             {
                 {"X","10 m" },
                 {"foo",foo}
@@ -46,7 +43,7 @@ namespace Node.Net
             Assert.AreEqual(11, worldOrigin.X);
         }
 
-        [Test,Explicit]
+        [Test, Explicit]
         public void IDictionary_Extension_Profile_GetLocalToWorld()
         {
             var foo = new Dictionary<string, dynamic>
@@ -59,8 +56,8 @@ namespace Node.Net
                 {"foo",foo}
             };
             dictionary.DeepUpdateParents();
-            
-            for(int x = 0; x < 1000000; x++)
+
+            for (int x = 0; x < 1000000; x++)
             {
                 dictionary["X"] = $"{x} m";
                 var matrix = foo.GetLocalToWorld();
@@ -68,16 +65,18 @@ namespace Node.Net
         }
 
         [Test]
-        public void IDictionary_Collect_Deep()
+        [TestCase("Scene.Cubes.json", typeof(IDictionary), null, 10)]
+        [TestCase("States.json", typeof(IDictionary), null, 3205)]
+        [TestCase("States.json", typeof(IDictionary), "Colorado", 66)]
+        public void IDictionary_Collect(string name, Type type, string search, int expectedCount)
         {
-            var data = Factory.Default.Create<IDictionary>("Scene.Cubes.json");
-            Assert.AreEqual(10,data.Collect<IDictionary>().Count);
-
-            data = Factory.Default.Create<IDictionary>("States.json");
-            Assert.AreEqual(3205, data.Collect<IDictionary>().Count);
+            var data = Factory.Default.Create<IDictionary>(name);
+            Assert.NotNull(data, nameof(data));
+            Assert.AreEqual(expectedCount, data.Collect(type, search).Count);
         }
+
         [Test]
-        public void IDictonary_Collect()
+        public void IDictonary_Collect_Custom()
         {
             var factory = new Factory
             {
@@ -109,7 +108,7 @@ namespace Node.Net
             Assert.AreSame(ifoo, ibar.Parent);
             Assert.AreEqual("bar0", ibar.Name);
 
-       
+
         }
         [Test]
         public void IDictonary_CollectValues()

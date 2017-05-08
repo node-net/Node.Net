@@ -83,10 +83,10 @@ namespace Node.Net.Beta.Internal
             _Collect(idictionary, type, results);
             return results;
         }
-        public static IList Collect(this IDictionary idictionary,Type type)
+        public static IList Collect(this IDictionary idictionary,Type type,string search=null)
         {
             var results = new List<object>();
-            _Collect(idictionary, type, results);
+            _Collect(idictionary, type, search,results);
             return results;
         }
         public static IList<T> Collect<T>(this IDictionary idictionary)
@@ -111,7 +111,22 @@ namespace Node.Net.Beta.Internal
                 }
             }
         }
-        private static void _Collect(this IDictionary idictionary, Type type,IList results)
+        private static bool MatchesSearch(this IDictionary idictionary,string search)
+        {
+            if (search == null) return true;
+            if (search.Length == 0) return true;
+            if (idictionary == null) return true;
+            foreach (var key in idictionary.Keys)
+            {
+                var value = idictionary[key];
+                if (value != null && value.GetType() == typeof(string))
+                {
+                    if (value.ToString().Contains(search)) return true;
+                }
+            }
+            return false;
+        }
+        private static void _Collect(this IDictionary idictionary, Type type,string search,IList results)
         {
             foreach (var item in idictionary.Values)
             {
@@ -119,10 +134,25 @@ namespace Node.Net.Beta.Internal
                 {
                     if (type.IsAssignableFrom(item.GetType()))
                     {
-                        if (!results.Contains(item)) results.Add(item);
+                        if (!results.Contains(item))
+                        {
+                            if (search == null)
+                            {
+                                results.Add(item);
+                            }
+                            else
+                            {
+                                if(MatchesSearch((item as IDictionary),search))
+
+                                {
+                                    results.Add(item);
+                                }
+
+                            }
+                        }
                     }
                     var child_idictionary = item as IDictionary;
-                    if (child_idictionary != null) _Collect(child_idictionary, type,results);
+                    if (child_idictionary != null) _Collect(child_idictionary, type,search,results);
                 }
             }
         }
