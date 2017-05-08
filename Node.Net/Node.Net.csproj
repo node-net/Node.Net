@@ -85,6 +85,7 @@
     <Compile Include="Beta\Internal\Factories\MaterialFactory.cs" />
     <Compile Include="Beta\Internal\Factories\ResourceFactory.cs" />
     <Compile Include="Beta\Internal\Readers\ImageSourceReader.cs" />
+    <Compile Include="Extension\Image.Extension.cs" />
     <Compile Include="Extension\ImageSource.Extension.cs" />
     <Compile Include="Extension\IRead.Extension.cs" />
     <Compile Include="Extension\IWrite.Extension.cs" />
