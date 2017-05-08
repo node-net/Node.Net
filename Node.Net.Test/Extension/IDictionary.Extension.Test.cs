@@ -111,7 +111,15 @@ namespace Node.Net
 
         }
         [Test]
-        public void IDictonary_CollectValues()
+        [TestCase("States.json",2)]
+        public void IDictionary_CollectValues(string name,int expectedCount)
+        {
+            var data = Factory.Default.Create<IDictionary>(name);
+            Assert.NotNull(data, nameof(data));
+            Assert.AreEqual(expectedCount, data.CollectValues<string>("Type").Count);
+        }
+        [Test]
+        public void IDictonary_CollectValues2()
         {
             var factory = new Factory
             {
@@ -145,17 +153,14 @@ namespace Node.Net
         }
 
         [Test]
-        public void IDictionary_Clone()
+        [TestCase("States.json")]
+        public void IDictionary_Clone(string name)
         {
-            var source = new Dictionary<string, dynamic>
-            {
-                { "A" , "abc"},{"B","def"}
-
-            };
-            var clone = source.Clone();
-            Assert.True(typeof(Dictionary<string, dynamic>) == clone.GetType());
-            Assert.AreEqual("abc", clone["A"].ToString());
-            Assert.AreEqual("def", clone["B"].ToString());
+            var data = Factory.Default.Create<IDictionary>(name);
+            Assert.NotNull(data, nameof(data));
+            var clone = data.Clone();
+            Assert.AreEqual(data.Count, clone.Count, "Counts do not match");
+            Assert.AreEqual(data.ComputeHashCode(), clone.ComputeHashCode(), "HashCodes do not match");
         }
     }
 }
