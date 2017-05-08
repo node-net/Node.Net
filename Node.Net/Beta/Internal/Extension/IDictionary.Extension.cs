@@ -89,14 +89,14 @@ namespace Node.Net.Beta.Internal
             _Collect(idictionary, type, search,results);
             return results;
         }
-        public static IList<T> Collect<T>(this IDictionary idictionary)
+        public static IList<T> Collect<T>(this IDictionary idictionary,string search=null)
         {
             var results = new List<T>();
-            _Collect<T>(idictionary, results);
+            _Collect<T>(idictionary, search,results);
 
             return results;
         }
-        private static void _Collect<T>(this IDictionary idictionary, IList results)
+        private static void _Collect<T>(this IDictionary idictionary, string search,IList results)
         {
             foreach (var item in idictionary.Values)
             {
@@ -104,10 +104,14 @@ namespace Node.Net.Beta.Internal
                 {
                     if (typeof(T).IsAssignableFrom(item.GetType()))
                     {
-                        if (!results.Contains(item)) results.Add(item);
+                        if (!results.Contains(item) && (
+                            search == null || MatchesSearch(item as IDictionary,search)))
+                        {
+                            results.Add(item);
+                        }
                     }
                     var child_idictionary = item as IDictionary;
-                    if (child_idictionary != null) _Collect<T>(child_idictionary, results);
+                    if (child_idictionary != null) _Collect<T>(child_idictionary, search,results);
                 }
             }
         }

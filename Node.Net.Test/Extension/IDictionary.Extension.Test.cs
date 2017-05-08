@@ -76,6 +76,17 @@ namespace Node.Net
         }
 
         [Test]
+        [TestCase("Scene.Cubes.json", null, 10)]
+        [TestCase("States.json", null, 3205)]
+        [TestCase("States.json", "Colorado", 66)]
+        public void IDictionary_Generic_Collect(string name,string search, int expectedCount)
+        {
+            var data = Factory.Default.Create<IDictionary>(name);
+            Assert.NotNull(data, nameof(data));
+            Assert.AreEqual(expectedCount, data.Collect<IDictionary>(search).Count);
+        }
+
+        [Test]
         public void IDictonary_Collect_Custom()
         {
             var factory = new Factory
