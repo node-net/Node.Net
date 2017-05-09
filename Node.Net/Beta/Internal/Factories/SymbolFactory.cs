@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,43 +15,52 @@ namespace Node.Net.Beta.Internal.Factories
             if (target_type != typeof(ISymbol)) return null;
             if (source != null)
             {
-                var labelText = source.GetType().Name[0];
-
+                var labelText = $"{source.GetType().Name[0]}";
                 if (typeof(IDictionary).IsAssignableFrom(source.GetType()))
                 {
                     var dictionary = source as IDictionary;
-                    if (dictionary.Contains("Type"))
+                    var type = dictionary.Get<string>("Type");
+                    if (type.Length > 0)
                     {
-                        var value = dictionary["Type"];
-                        if (value != null && labelText.ToString().Length > 0)
+                        labelText = $"{type[0]}";
+                        if (ParentFactory != null)
                         {
-                            labelText = labelText.ToString()[0];
+                            var uielement = ParentFactory.Create<object>($"Symbol.{type}.xaml") as UIElement;
+                            if (uielement != null)
+                            {
+                                return new ViewboxSymbol { Child = uielement };
+                            }
                         }
                     }
                 }
-                var canvas = new Canvas { Width = 16, Height = 16, ClipToBounds = true };
-                canvas.Children.Add(new Ellipse
-                {
-                    Fill = Brushes.Blue,
-                    Width = 16,
-                    Height = 16
-                });
-                var label = new Label
-                {
-                    Content = labelText,
-                    Foreground = Brushes.White,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
-                canvas.Children.Add(label);
-                Canvas.SetTop(label, -5.5);
-                Canvas.SetLeft(label, -1);
-                return new ViewboxSymbol
-                {
-                    Child = canvas
-                };
+                return GetDefaultsymbol(labelText, Brushes.Blue, Brushes.White);
             }
             return null;
+        }
+
+        private ISymbol GetDefaultsymbol(string text, Brush backgroundBrush, Brush foregroundBrush)
+        {
+            var canvas = new Canvas { Width = 16, Height = 16, ClipToBounds = true };
+            canvas.Children.Add(new Ellipse
+            {
+                Fill = backgroundBrush,
+                Width = 16,
+                Height = 16
+            });
+            var label = new Label
+            {
+                Content = text,
+                Foreground = foregroundBrush,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            canvas.Children.Add(label);
+            Canvas.SetTop(label, -5.5);
+            Canvas.SetLeft(label, -1);
+            return new ViewboxSymbol
+            {
+                Child = canvas
+            };
         }
         public IFactory ParentFactory { get; set; }
     }

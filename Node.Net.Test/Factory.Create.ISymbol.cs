@@ -32,6 +32,7 @@ namespace Node.Net.Tests
         }
         [Test, Apartment(ApartmentState.STA),Explicit]
         [TestCase("Scene.500.json")]
+        [TestCase("Foo.0.json")]
         public void Create_ShowDialog(string name)
         {
             var data = factory.Create<IDictionary>(name);
