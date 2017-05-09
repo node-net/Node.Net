@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Text;
 
 namespace Node.Net.Beta.Internal.Factories
 {
@@ -105,6 +106,12 @@ namespace Node.Net.Beta.Internal.Factories
                     }
                 }
                 catch { }
+            }
+            if(name.Contains("{" ))
+            {
+                var memory = new MemoryStream(Encoding.UTF8.GetBytes(name));
+                return memory;
+
             }
             return new StackTrace().GetStream(name);
         }

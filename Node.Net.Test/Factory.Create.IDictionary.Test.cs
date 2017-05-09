@@ -23,5 +23,12 @@ namespace Node.Net
             var data = factory.Create<IDictionary>(name);
             Assert.NotNull(data, nameof(data));
         }
+
+        [Test]
+        public void CreateFromJSONString()
+        {
+            var data = factory.Create<IDictionary>("{}");
+            Assert.NotNull(data, nameof(data));
+        }
     }
 }
