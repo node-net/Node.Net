@@ -94,6 +94,7 @@
     <Compile Include="Extension\Visual.Extension.Test.cs" />
     <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
     <Compile Include="Factory.Create.IDictionary.Test.cs" />
+    <Compile Include="Factory.Create.ISymbol.cs" />
     <Compile Include="Factory.Create.TreeViewItem.Test.cs" />
     <Compile Include="Factory.Create.Viewport3D.Test.cs" />
     <Compile Include="Factory.Create.Visual3D.Test.cs" />

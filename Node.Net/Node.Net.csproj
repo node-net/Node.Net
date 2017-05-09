@@ -69,6 +69,7 @@
     <Compile Include="Beta\Internal\Extension\Visual3D.Extension.cs" />
     <Compile Include="Beta\Internal\Factories\ChildrenFactory.cs" />
     <Compile Include="Beta\Internal\Factories\CloneFactory.cs" />
+    <Compile Include="Beta\Internal\Factories\SymbolFactory.cs" />
     <Compile Include="Beta\Internal\Factories\TreeViewItemFactory.cs" />
     <Compile Include="Beta\Internal\Factories\TreeViewItemHeaderFactory.cs" />
     <Compile Include="Beta\Internal\Factories\Viewport3DFactory.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Extension\Visual.Extension.cs" />
     <Compile Include="Extension\Visual3D.Extension.cs" />
     <Compile Include="Interfaces\IChildren.cs" />
+    <Compile Include="Interfaces\ISymbol.cs" />
     <Compile Include="Interfaces\ITreeViewItemHeader.cs" />
     <Compile Include="Interfaces\IStreamSignature.cs" />
     <Compile Include="Beta\Internal\Readers\Signature.cs" />

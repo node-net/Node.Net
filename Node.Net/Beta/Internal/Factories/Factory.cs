@@ -35,6 +35,7 @@ namespace Node.Net.Beta.Internal.Factories
                 {typeof(Transform3D), new Transform3DFactory {ParentFactory = this }.Create },
                 {typeof(MeshGeometry3D),new MeshGeometry3DFactory {ParentFactory=this }.Create },
                 {typeof(GeometryModel3D),new GeometryModel3DFactory {ParentFactory=this }.Create },
+                {typeof(ISymbol), new SymbolFactory{ParentFactory=this }.Create },
                 {typeof(Model3D),Model3DFactory.Create },
                 {typeof(Visual3D), new Visual3DFactory {ParentFactory = this }.Create },
                 {typeof(IReadOnlyDocument), CollectionsFactory.Create },
