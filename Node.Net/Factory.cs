@@ -51,6 +51,10 @@ namespace Node.Net
             get { return factory.Model3DCache; }
             set { factory.Model3DCache = value; }
         }
+        public List<Type> Model3DIgnoreTypes
+        {
+            get { return factory.Model3DIgnoreTypes; }
+        }
         public Dictionary<Type, Func<Type, object, object>> FactoryFunctions
         {
             get { return factory.FactoryFunctions; }

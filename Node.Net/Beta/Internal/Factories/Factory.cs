@@ -56,6 +56,10 @@ namespace Node.Net.Beta.Internal.Factories
             get { return Model3DFactory.Model3DCache; }
             set { Model3DFactory.Model3DCache = value; }
         }
+        public List<Type> Model3DIgnoreTypes
+        {
+            get { return Model3DFactory.IgnoreTypes; }
+        }
         public Dictionary<Type, Func<Type, object, object>> FactoryFunctions { get; private set; }
 
         public List<Assembly> ManifestResourceAssemblies
