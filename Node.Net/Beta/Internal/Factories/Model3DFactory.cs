@@ -39,7 +39,12 @@ namespace Node.Net.Beta.Internal.Factories
         public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction { get; set; }
         public bool ScalePrimaryModel { get; set; } = true;
         private bool cache = true;
-        private readonly Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
+        public Dictionary<object,Model3D> Model3DCache
+        {
+            get { return model3DCache; }
+            set { model3DCache = value; }
+        }
+        private Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
         public bool Cache
         {
             get { return cache; }

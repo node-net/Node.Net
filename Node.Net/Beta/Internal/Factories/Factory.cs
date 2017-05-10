@@ -51,6 +51,11 @@ namespace Node.Net.Beta.Internal.Factories
             get { return AbstractFactory.Resources; }
             set { AbstractFactory.Resources = value; }
         }
+        public Dictionary<object,Model3D> Model3DCache
+        {
+            get { return Model3DFactory.Model3DCache; }
+            set { Model3DFactory.Model3DCache = value; }
+        }
         public Dictionary<Type, Func<Type, object, object>> FactoryFunctions { get; private set; }
 
         public List<Assembly> ManifestResourceAssemblies
@@ -81,18 +86,8 @@ namespace Node.Net.Beta.Internal.Factories
             set { Model3DFactory.ScalePrimaryModel = value; }
         }
         public Dictionary<Type, int> InstanceCounts { get; } = new Dictionary<Type, int>();
-
-        //private Dictionary<Type, List<string>> NullResources = new Dictionary<Type, List<string>>();
         public object Create(Type target_type, object source)
         {
-            /*
-            if(source != null && NullResources.ContainsKey(target_type))
-            {
-                if(source.GetType() == typeof(string))
-                {
-                    if (NullResources[target_type].Contains(source.ToString())) return null;
-                }
-            }*/
             if (source != null && Resources.Contains(source))
             {
                 var instance = Resources[source];
