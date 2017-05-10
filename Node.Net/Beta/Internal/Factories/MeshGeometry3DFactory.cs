@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.IO;
+using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -15,7 +15,7 @@ namespace Node.Net.Beta.Internal.Factories
             }
             if (ParentFactory != null)
             {
-                if(source != null)
+                if (source != null)
                 {
                     return Create(target_type, ParentFactory.Create<IDictionary>(source));
                 }
@@ -25,6 +25,7 @@ namespace Node.Net.Beta.Internal.Factories
 
         public IFactory ParentFactory { get; set; }
 
+        private Dictionary<string, MeshGeometry3D> cache = new Dictionary<string, MeshGeometry3D>();
         private MeshGeometry3D CreateFromDictionary(IDictionary source)
         {
             if (ParentFactory != null)
@@ -32,7 +33,11 @@ namespace Node.Net.Beta.Internal.Factories
                 if (source != null)
                 {
                     var type = source.Get<string>("Type");
-                    return ParentFactory.Create<MeshGeometry3D>($"{type}.MeshGeometry3D.");
+                    var name = $"MeshGeometry3D.{type}.xaml";
+                    if (cache.ContainsKey(name)) return cache[name];
+                    var mesh = ParentFactory.Create<MeshGeometry3D>(name);
+                    cache.Add(name, mesh);
+                    return mesh;
                 }
             }
 

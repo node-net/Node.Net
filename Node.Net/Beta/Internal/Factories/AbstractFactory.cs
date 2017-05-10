@@ -40,6 +40,11 @@ namespace Node.Net.Beta.Internal.Factories
                         return result;
                     }
                 }
+                /*
+                else
+                {
+                    Resources.Add(source.ToString(), null);
+                }*/
             }
 
             foreach (var targetType in Keys)

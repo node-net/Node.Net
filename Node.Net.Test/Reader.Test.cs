@@ -20,7 +20,7 @@ namespace Node.Net
         {
             var data = new Dictionary<string, Type>
             {
-                {"Widget.MeshGeometry3D.xaml" , typeof(MeshGeometry3D) },
+                {"MeshGeometry3D.Widget.xaml" , typeof(MeshGeometry3D) },
                 {"index.html", typeof(XmlDocument) },
                 {"image.bmp", typeof(ImageSource) },
                 {"image.gif",typeof(ImageSource) },

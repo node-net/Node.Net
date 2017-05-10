@@ -125,7 +125,7 @@ namespace Node.Net
             {
                 { "image.bmp", "42 4D" },
                 { "image.gif", "47 49 46 38 39 61" },
-                { "Widget.MeshGeometry3D.xaml", "<" },
+                { "MeshGeometry3D.Widget.xaml", "<" },
                 { "Widget.0.json", "{" },
                 { "Text.Sample.A.txt","//" }
             };
