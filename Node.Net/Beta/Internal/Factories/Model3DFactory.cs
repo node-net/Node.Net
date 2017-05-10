@@ -43,7 +43,7 @@ namespace Node.Net.Beta.Internal.Factories
                 }
             }
         }
-        public void ClearCache() { model3DCache.Clear(); }
+        public void ClearCache() { model3DCache.Clear(); namedCache.Clear(); }
         private Model3D CreateFromDictionary(IDictionary source)
         {
             if (source == null) return null;
@@ -90,6 +90,8 @@ namespace Node.Net.Beta.Internal.Factories
             }
             return model3D;
         }
+
+        private Dictionary<string, Model3D> namedCache = new Dictionary<string, Model3D>();
         private Model3D GetUnscaledPrimaryModel3D(IDictionary source)
         {
             if (PrimaryModel3DHelperFunction != null)
@@ -99,25 +101,38 @@ namespace Node.Net.Beta.Internal.Factories
             }
             if (ParentFactory != null)
             {
-                var geometry3D = ParentFactory.Create(typeof(GeometryModel3D), source) as GeometryModel3D;
-                if (geometry3D != null) return geometry3D;
-
                 var type = source.Get<string>("Type");
                 if (type.Length > 0)
                 {
-                    var model3D = ParentFactory.Create<Model3D>($"{type}.Model3D.");
-                    if (model3D != null) return model3D;
-                    if (!locked)
+                    var modelName = $"Model3D.{type}.xaml";
+                    if (namedCache.ContainsKey(modelName))
                     {
-                        try
+                        var m3d = namedCache[modelName];
+                        if (m3d != null) return m3d;
+                    }
+                    else
+                    {
+                        var m3d = ParentFactory.Create<Model3D>(modelName);
+                        namedCache.Add(modelName, m3d);
+                        if (m3d != null) return m3d;
+                        /*
+                        var model3D = ParentFactory.Create<Model3D>($"{type}.Model3D.");
+                        if (model3D != null) return model3D;
+                        if (!locked)
                         {
-                            locked = true;
-                            model3D = ParentFactory.Create<Model3D>($"Model3D.{type}.");
-                            if (model3D != null) return model3D;
-                        }
-                        finally { locked = false; }
+                            try
+                            {
+                                locked = true;
+                                model3D = ParentFactory.Create<Model3D>($"Model3D.{type}.");
+                                if (model3D != null) return model3D;
+                            }
+                            finally { locked = false; }
+                        }*/
                     }
                 }
+
+                var geometry3D = ParentFactory.Create(typeof(GeometryModel3D), source) as GeometryModel3D;
+                if (geometry3D != null) return geometry3D;
             }
             return null;
         }

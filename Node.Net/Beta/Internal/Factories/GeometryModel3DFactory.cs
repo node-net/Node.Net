@@ -34,6 +34,10 @@ namespace Node.Net.Beta.Internal.Factories
                     var type = source["Type"].ToString();
                     if (type.Length > 0)
                     {
+                        var name = $"GeometryModel3D.{type}.xaml";
+                        var geometryModel3D = ParentFactory.Create<GeometryModel3D>(name);
+                        if (geometryModel3D != null) return geometryModel3D;
+                        /*
                         var geometryModel3D = ParentFactory.Create<GeometryModel3D>($"{type}.GeometryModel3D.");
                         if (geometryModel3D != null) return geometryModel3D;
                         if (!locked)
@@ -45,7 +49,7 @@ namespace Node.Net.Beta.Internal.Factories
                                 if (geometryModel3D != null) return geometryModel3D;
                             }
                             finally { locked = false; }
-                        }
+                        }*/
                         var mesh = ParentFactory.Create<MeshGeometry3D>(source);
                         if (mesh != null) return CreateFromMeshGeometry3D(mesh);
                     }
