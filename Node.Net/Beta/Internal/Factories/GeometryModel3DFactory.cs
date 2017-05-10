@@ -13,30 +13,12 @@ namespace Node.Net.Beta.Internal.Factories
             {
                 var sourceType = source.GetType();
                 if (typeof(IDictionary).IsAssignableFrom(sourceType)) return CreateFromDictionary(source as IDictionary);
-                //var result = CreateFromDictionary(source as IDictionary);
-                //if (result != null) return result;
-                //if (typeof(IDictionary).IsInstanceOfType(source)) return CreateFromDictionary(source as IDictionary);
-                //if (source is IDictionary) return CreateFromDictionary(source as IDictionary);
-                //if (typeof(IDictionary).IsAssignableFrom(source.GetType())) return CreateFromDictionary(source as IDictionary);
                 if (typeof(MeshGeometry3D).IsAssignableFrom(sourceType)) return CreateFromMeshGeometry3D(source as MeshGeometry3D);
                 if (ParentFactory != null)
                 {
                     return Create(target_type, ParentFactory.Create<IDictionary>(source));
                 }
             }
-            /*
-            if (ParentFactory != null)
-            {
-                if (source != null)
-                {
-                    if(!typeof(IDictionary).IsAssignableFrom(sourceType))
-                    var dictionary = source as IDictionary;
-                    if (dictionary == null)
-                    {
-                        return Create(target_type, ParentFactory.Create<IDictionary>(source));
-                    }
-                }
-            }*/
             return null;
         }
 

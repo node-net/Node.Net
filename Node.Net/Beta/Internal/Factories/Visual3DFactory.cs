@@ -9,11 +9,6 @@ namespace Node.Net.Beta.Internal.Factories
         {
             if (source == null) return null;
             if (target_type == null) return null;
-            /*
-            if (target_type != typeof(Visual3D))
-            {
-                return null;
-            }*/
             if (ParentFactory != null)
             {
                 var model3D = ParentFactory.Create<Model3D>(source);

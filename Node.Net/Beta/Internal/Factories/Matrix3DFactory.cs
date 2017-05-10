@@ -39,9 +39,9 @@ namespace Node.Net.Beta.Internal.Factories
         public static Vector3D GetRotationsXYZ(IDictionary source)
         {
             return new Vector3D(
-                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationXKey)),//"Spin,RotationX,Roll")),
-                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationYKey)),//"Tilt,RotationY,Pitch")),
-                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationZKey)));// "Orientation,RotationZ,Yaw")));
+                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationXKey)),
+                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationYKey)),
+                Internal.Units.Angle.GetDegrees(source.Get<string>(RotationZKey)));
         }
 
         public static Vector3D GetTranslation(IDictionary source)

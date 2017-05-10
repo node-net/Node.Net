@@ -22,11 +22,11 @@ namespace Node.Net.Beta.Internal.Factories
                     if (source.GetType() == typeof(string)) return Create(source.ToString());
                 }
             }
-            if(typeof(IStreamSignature).IsAssignableFrom(target_type))
+            if (typeof(IStreamSignature).IsAssignableFrom(target_type))
             {
-                if(source != null)
+                if (source != null)
                 {
-                    if(typeof(Stream).IsAssignableFrom(source.GetType()))
+                    if (typeof(Stream).IsAssignableFrom(source.GetType()))
                     {
                         return Internal.Readers.SignatureReader.GetSignature(source as Stream);
                     }
@@ -107,7 +107,7 @@ namespace Node.Net.Beta.Internal.Factories
                 }
                 catch { }
             }
-            if(name.Contains("{" ))
+            if (name.Contains("{"))
             {
                 var memory = new MemoryStream(Encoding.UTF8.GetBytes(name));
                 return memory;

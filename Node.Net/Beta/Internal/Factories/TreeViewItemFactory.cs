@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -18,22 +14,22 @@ namespace Node.Net.Beta.Internal.Factories
             if (ParentFactory != null) header = ParentFactory.Create<ITreeViewItemHeader>(source);
             if (header != null)
             {
-                
+
                 var tvi = new TreeViewItem
                 {
                     DataContext = source,
                     Header = header,
                     ToolTip = source.GetType().FullName
                 };
-                UpdateChildren(tvi,source);
-                
+                UpdateChildren(tvi, source);
+
                 return tvi;
             }
 
             return null;
         }
 
-        private void UpdateChildren(TreeViewItem tvi,object source)
+        private void UpdateChildren(TreeViewItem tvi, object source)
         {
             tvi.Items.Clear();
             IEnumerable children = null;
@@ -42,10 +38,10 @@ namespace Node.Net.Beta.Internal.Factories
                 children = ParentFactory.Create<IChildren>(source);
                 if (children.GetCount() > 0)
                 {
-                    foreach(var child in children)
+                    foreach (var child in children)
                     {
                         var ctvi = Create(typeof(TreeViewItem), child);
-                        if(ctvi != null)
+                        if (ctvi != null)
                         {
                             tvi.Items.Add(ctvi);
                         }
@@ -59,7 +55,7 @@ namespace Node.Net.Beta.Internal.Factories
         private void Tvi_Expanded(object sender, System.Windows.RoutedEventArgs e)
         {
             var tvi = sender as TreeViewItem;
-            foreach(var child in tvi.Items)
+            foreach (var child in tvi.Items)
             {
                 var ctvi = child as TreeViewItem;
             }

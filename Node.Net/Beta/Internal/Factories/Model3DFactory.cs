@@ -18,10 +18,6 @@ namespace Node.Net.Beta.Internal.Factories
                 {
                     return CreateFromDictionary(dictionary);
                 }
-                /*
-                var instance = CreateFromDictionary(source as IDictionary);
-                if (typeof(IDictionary).IsAssignableFrom(source.GetType())) return CreateFromDictionary(source as IDictionary);
-                */
             }
             if (ParentFactory != null)
             {
@@ -33,7 +29,7 @@ namespace Node.Net.Beta.Internal.Factories
         public IFactory ParentFactory { get; set; }
         public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction { get; set; }
         public bool ScalePrimaryModel { get; set; } = true;
-        private bool cache = false;
+        private bool cache = true;
         private readonly Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
         public bool Cache
         {

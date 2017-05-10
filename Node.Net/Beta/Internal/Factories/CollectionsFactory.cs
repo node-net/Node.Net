@@ -6,7 +6,6 @@ namespace Node.Net.Beta.Internal.Factories
 {
     sealed class CollectionsFactory : IFactory
     {
-        // ReadOnlyDocument
         public object Create(Type target_type, object source)
         {
             if (source != null)

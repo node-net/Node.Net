@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -20,7 +16,6 @@ namespace Node.Net.Beta.Internal.Factories
 
             var idictionary = source as IDictionary;
             if (idictionary != null && name.Length == 0) name = idictionary.GetName();
-            //return $"{type} {name}";
             return new TreeViewItemHeader
             {
                 Child = new Label { Content = $"{type} {name}" }

@@ -16,6 +16,12 @@ namespace Node.Net
     public class FactoryTest
     {
        [Test]
+       public void Factory_Defaults()
+        {
+            var factory = new Factory();
+            Assert.True(factory.Cache);
+        }
+       [Test]
        public void Factory_Create_Abstract()
         {
             var factory = new Factory();

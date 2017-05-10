@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Media3D;
-using Node.Net;
 
 namespace Node.Net.Beta.Internal.Factories
 {
@@ -18,7 +13,7 @@ namespace Node.Net.Beta.Internal.Factories
             if (ParentFactory != null)
             {
                 var v3d = ParentFactory.Create<Visual3D>(source);
-                if(v3d != null)
+                if (v3d != null)
                 {
                     var viewport = new Viewport3D
                     {
@@ -33,7 +28,7 @@ namespace Node.Net.Beta.Internal.Factories
                         }
                     };
                     viewport.Children.Add(v3d);
-                    (viewport.Camera as ProjectionCamera)?.ZoomExtents(v3d.FindBounds(),500,500);
+                    (viewport.Camera as ProjectionCamera)?.ZoomExtents(v3d.FindBounds(), 500, 500);
                     return viewport;
                 }
 
