@@ -9,8 +9,15 @@ namespace Node.Net.Beta.Internal.Factories
     {
         public object Create(Type target_type, object source)
         {
+            if (source == null) return null;
             if (target_type == null) return null;
             if (target_type != typeof(Model3D)) return null;
+            var sourceType = source.GetType();
+            if (IgnoreTypes.Contains(sourceType)) return null;
+            foreach(var ignoreType in IgnoreTypes)
+            {
+                if (ignoreType.IsAssignableFrom(sourceType)) return null;
+            }
             if (source != null)
             {
                 var dictionary = source as IDictionary;
@@ -26,6 +33,8 @@ namespace Node.Net.Beta.Internal.Factories
             }
             return null;
         }
+
+        public List<Type> IgnoreTypes { get; } = new List<Type>();
         public IFactory ParentFactory { get; set; }
         public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction { get; set; }
         public bool ScalePrimaryModel { get; set; } = true;
@@ -60,6 +69,7 @@ namespace Node.Net.Beta.Internal.Factories
                 var child_dictionary = source[key] as IDictionary;
                 if (child_dictionary != null)
                 {
+                    //var child_model = Create(typeof(Model3D), child_dictionary) as Model3D;
                     var child_model = CreateFromDictionary(child_dictionary);
                     if (child_model != null) model3DGroup.Children.Add(child_model);
                 }
