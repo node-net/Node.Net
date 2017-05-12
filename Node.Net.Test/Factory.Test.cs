@@ -327,6 +327,7 @@ namespace Node.Net
             factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
             var project = factory.Create<IDictionary>("Scene.json");
             if (project == null) throw new System.Exception("project is null");
+            Assert.AreEqual("Scene.json", project.GetFileName());
 
             var stream = factory.Create<Stream>("Scene.json");
             project = Factory.Default.Create<IDictionary>(stream);
