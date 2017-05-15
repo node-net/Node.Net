@@ -414,6 +414,12 @@ namespace Node.Net.Beta.Internal
 
             return localToWorld;
         }
+        public static Matrix3D GetWorldToLocal(this IDictionary dictionary)
+        {
+            var m = GetLocalToWorld(dictionary);
+            m.Invert();
+            return m;
+        }
         public static Point3D GetWorldOrigin(this IDictionary dictionary)
         {
             return GetLocalToWorld(dictionary).Transform(new Point3D(0, 0, 0));
