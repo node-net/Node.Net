@@ -223,6 +223,7 @@
     <EmbeddedResource Include="Resources\Scene.20.json" />
     <EmbeddedResource Include="Resources\Scene.24500.json" />
     <EmbeddedResource Include="Resources\Object.Sample.json" />
+    <EmbeddedResource Include="Resources\Object.Sample.Special.Strings.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />
