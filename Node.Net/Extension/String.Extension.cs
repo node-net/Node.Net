@@ -29,5 +29,6 @@ namespace Node.Net
             }
             return true;
         }
+        public static double GetMeters(this string value) => Beta.Internal.Units.Length.GetMeters(value);
     }
 }
