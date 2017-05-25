@@ -5,16 +5,28 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Xml;
 
 namespace Node.Net
 {
-    [TestFixture]
+    [TestFixture,Category("Reader")]
     class ReaderTest
     {
+        [Test,Apartment(ApartmentState.STA)]
+        [TestCase("{}",typeof(IDictionary))]
+        [TestCase("JSON Files(*.json)|*.json",typeof(IDictionary)),Explicit]
+        public void Read(string name,Type expectedType)
+        {
+            var reader = new Reader();
+            var instance = reader.Read(name);
+            Assert.NotNull(instance, nameof(instance));
+
+            var filename = instance.GetFileName();
+            int x = 0;
+        }
         [Test]
         public void Reader_Read()
         {
@@ -32,7 +44,7 @@ namespace Node.Net
             var factory = new Factory();
             factory.ManifestResourceAssemblies.Add(typeof(ReaderTest).Assembly);
             var reader = new Reader();
-            foreach(var name in data.Keys)
+            foreach (var name in data.Keys)
             {
                 var stream = factory.Create<Stream>(name);
                 Assert.NotNull(stream, $"null stream for '{name}'");
@@ -52,7 +64,7 @@ namespace Node.Net
             var reader = new Reader();
             var stream = factory.Create<Stream>("Array.Nested.json");
             var instance = reader.Read(stream);
-            Assert.NotNull(instance,nameof(instance));
+            Assert.NotNull(instance, nameof(instance));
             var ienumerable = instance as IEnumerable;
             Assert.NotNull(ienumerable, nameof(ienumerable));
             var array_0 = ienumerable.GetAt(0) as IEnumerable;
@@ -67,8 +79,8 @@ namespace Node.Net
         [Test]
         public void Reader_Read_Write_Base64_a()
         {
-            string[] data = { "a","ab","abc","abcd","abcde","" };
-            foreach(var s in data)
+            string[] data = { "a", "ab", "abc", "abcd", "abcde", "" };
+            foreach (var s in data)
             {
                 var bytes = Encoding.UTF8.GetBytes(s);
                 var base64 = Convert.ToBase64String(bytes);
@@ -76,7 +88,7 @@ namespace Node.Net
                 var equalsCount = base64.Count(x => x == '=');
 
                 var bytes2 = Convert.FromBase64String(base64);
-                if(bytes.Length != bytes2.Length)
+                if (bytes.Length != bytes2.Length)
                 {
 
                 }
@@ -95,6 +107,15 @@ namespace Node.Net
             var mesh2 = Reader.Default.ReadFromBase64String(base64);
             Assert.NotNull(mesh2, nameof(mesh2));
             Assert.AreNotSame(mesh, mesh2);
+        }
+
+        [Test, Explicit]
+        public void Reader_Read_Atypical()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(ReaderTest).Assembly);
+
+            var data = factory.Create<IDictionary>("Object.Sample.json");
         }
     }
 }
