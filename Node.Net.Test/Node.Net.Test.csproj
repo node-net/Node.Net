@@ -91,6 +91,7 @@
     <Compile Include="Extension\DependencyObject.Extension.Test.cs" />
     <Compile Include="Extension\Matrix3D.Extension.Test.cs" />
     <Compile Include="Extension\Object.Extension.Test.cs" />
+    <Compile Include="Extension\String.Extension.Test.cs" />
     <Compile Include="Extension\Visual.Extension.Test.cs" />
     <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
     <Compile Include="Factory.Create.IDictionary.Test.cs" />
@@ -223,6 +224,7 @@
     <EmbeddedResource Include="Resources\Scene.20.json" />
     <EmbeddedResource Include="Resources\Scene.24500.json" />
     <EmbeddedResource Include="Resources\Object.Sample.json" />
+    <EmbeddedResource Include="Resources\Object.Sample.Special.Strings.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\image.bmp" />

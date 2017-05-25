@@ -18,10 +18,11 @@ namespace Node.Net.Beta.Internal
             char[] values = { value };
             return Seek(reader, values);
         }
-        public static string Seek(this TextReader reader, char[] values)
+        public static string Seek(this TextReader reader, char[] values,bool ignoreEscaped = false)
         {
             var result = @"";
             var done = false;
+            //var lastChar = -1;
             foreach (char ch in values) { if ((char)reader.Peek() == ch) { done = true; } }
             var builder = new StringBuilder();
             builder.Append(result);
@@ -34,9 +35,26 @@ namespace Node.Net.Beta.Internal
                 }
                 else
                 {
-                    builder.Append((char)ichar);
-                    foreach (char ch in values) { if ((char)reader.Peek() == ch) { done = true; } }
+                    if(ignoreEscaped)
+                    {
+                        if(((char)ichar) == '\\') { }
+                        else { builder.Append((char)ichar); }
+                    }
+                    else { builder.Append((char)ichar); }
+                    //builder.Append((char)ichar);
+                    foreach (char ch in values)
+                    {
+                        if ((char)reader.Peek() == ch)
+                        {
+                            if (ignoreEscaped && ((char)(ichar)) == '\\')
+                            {
+                                // ignore
+                            }
+                            else { done = true; }
+                        }
+                    }
                 }
+                //lastChar = ichar;
             }
             result = builder.ToString();
             return result;

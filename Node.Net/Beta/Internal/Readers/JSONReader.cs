@@ -99,7 +99,7 @@ namespace Node.Net.Beta.Internal.Readers
             var ch = (char)reader.Peek();
             reader.Read(); // consume single or double quote
             char[] chars = { ch };
-            var result_raw = reader.Seek(chars);// Seek(reader, chars);
+            var result_raw = reader.Seek(chars,true);// Seek(reader, chars);
 
             var result = result_raw.Replace(@"\u0022", @"""");
             result = result.Replace(@"\u005c", @"\");

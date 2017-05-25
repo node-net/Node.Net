@@ -109,6 +109,16 @@ namespace Node.Net
             Assert.AreNotSame(mesh, mesh2);
         }
 
+        [Test]
+        public void Reader_Read_Special_Strings()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(ReaderTest).Assembly);
+
+            var data = factory.Create<IDictionary>("Object.Sample.Special.Strings.json");
+            Assert.AreEqual("6\"", data["X"].ToString());
+        }
+
         [Test, Explicit]
         public void Reader_Read_Atypical()
         {
