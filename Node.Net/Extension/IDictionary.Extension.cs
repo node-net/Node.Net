@@ -33,6 +33,8 @@ namespace Node.Net
         public static Matrix3D GetWorldToLocal(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetWorldToLocal(dictionary);
         public static Point3D GetWorldOrigin(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetWorldOrigin(dictionary);
         public static Vector3D GetWorldRotations(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetWorldRotations(dictionary);
+        public static Point3D GetOrigin(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetOrigin(dictionary);
+        public static Vector3D GetRotations(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetRotations(dictionary);
         public static double GetLengthMeters(this IDictionary dictionary, string name) => Beta.Internal.IDictionaryExtension.GetLengthMeters(dictionary, name);
         public static double GetAngleDegrees(this IDictionary dictionary, string name) => Beta.Internal.IDictionaryExtension.GetAngleDegrees(dictionary, name);
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source) => Beta.Internal.IDictionaryExtension.Copy(dictionary, source);
