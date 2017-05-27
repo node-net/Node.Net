@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace Node.Net
 {
@@ -54,6 +55,28 @@ namespace Node.Net
 
         public static object Read(this IRead read, string filename)
         {
+            if (filename.Contains("{"))
+            {
+                var memory = new MemoryStream(Encoding.UTF8.GetBytes(filename));
+                return read.Read(memory);
+            }
+            if (filename.Contains("(") || filename.Contains("*") && filename.Contains(".") && filename.Contains(")") || filename.Contains("|"))
+            {
+                // open file dialog filter
+                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = filename };
+                var result = ofd.ShowDialog();
+                if (result == true)
+                {
+                    if (File.Exists(ofd.FileName))
+                    {
+                        var stream = new FileStream(ofd.FileName, FileMode.Open);
+                        //stream.SetFileName(ofd.FileName);
+                        var instance = read.Read(stream);
+                        if(instance != null) instance.SetFileName(ofd.FileName);
+                        return instance;
+                    }
+                }
+            }
             if (File.Exists(filename))
             {
                 using (FileStream fs = new FileStream(filename, FileMode.Open))
