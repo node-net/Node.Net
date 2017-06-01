@@ -236,7 +236,7 @@ namespace Node.Net.Beta.Internal
             clone.Copy(source);
             return clone;
         }
-        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T))
+        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T),bool search = false)
         {
             if (name.IndexOf(',') > -1)
             {
@@ -263,18 +263,21 @@ namespace Node.Net.Beta.Internal
             }
 
             // Search for matching name
-            var items = dictionary.Collect<T>();
-            foreach(var item in items)
+            if (search)
             {
-                if (item.GetFullName() == name) return item;
-            }
-            foreach (var item in items)
-            {
-                if (item.GetName() == name) return item;
-            }
-            foreach (var item in items)
-            {
-                if (item.GetName().Contains(name)) return item;
+                var items = dictionary.Collect<T>();
+                foreach (var item in items)
+                {
+                    if (item.GetFullName() == name) return item;
+                }
+                foreach (var item in items)
+                {
+                    if (item.GetName() == name) return item;
+                }
+                foreach (var item in items)
+                {
+                    if (item.GetName().Contains(name)) return item;
+                }
             }
 
             if (typeof(T) == typeof(string))
