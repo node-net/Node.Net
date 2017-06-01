@@ -278,6 +278,10 @@ namespace Node.Net.Beta.Internal
                 {
                     if (item.GetName().Contains(name)) return item;
                 }
+                foreach (var item in items)
+                {
+                    if (item.GetFullName().Contains(name)) return item;
+                }
             }
 
             if (typeof(T) == typeof(string))

@@ -6,7 +6,7 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
-    [TestFixture]
+    [TestFixture,Category("IDictionary")]
     public class IDictionaryExtensionTest
     {
         [Test]
@@ -172,6 +172,16 @@ namespace Node.Net
             var clone = data.Clone();
             Assert.AreEqual(data.Count, clone.Count, "Counts do not match");
             Assert.AreEqual(data.ComputeHashCode(), clone.ComputeHashCode(), "HashCodes do not match");
+        }
+
+        [Test]
+        public void IDictionary_GetByName()
+        {
+            var data = new Dictionary<string, dynamic>();
+            var foo = new Dictionary<string, dynamic>();
+            data["foo"] = foo;
+            var item = data.Get<IDictionary>("foo", null, true);
+            Assert.AreSame(item, foo);
         }
     }
 }
