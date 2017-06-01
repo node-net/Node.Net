@@ -261,6 +261,22 @@ namespace Node.Net.Beta.Internal
                     if (typeof(T).IsAssignableFrom(value.GetType())) return (T)value;
                 }
             }
+
+            // Search for matching name
+            var items = dictionary.Collect<T>();
+            foreach(var item in items)
+            {
+                if (item.GetFullName() == name) return item;
+            }
+            foreach (var item in items)
+            {
+                if (item.GetName() == name) return item;
+            }
+            foreach (var item in items)
+            {
+                if (item.GetName().Contains(name)) return item;
+            }
+
             if (typeof(T) == typeof(string))
             {
                 if (defaultValue == null)
