@@ -18,5 +18,7 @@ namespace Node.Net
         public static string GetFileName(this object instance) => Beta.Internal.ObjectExtension.GetFileName(instance);
         public static void SetMetaData(this object instance, string name, object value) => Beta.Internal.ObjectExtension.SetMetaData(instance, name, value);
         public static T GetMetaData<T>(this object instance, string name) => Beta.Internal.ObjectExtension.GetMetaData<T>(instance, name);
+        public static T GetPropertyValue<T>(this object item, string propertyName) => Beta.Internal.ObjectExtension.GetPropertyValue<T>(item, propertyName);
+        public static void SetPropertyValue(this object item, string propertyName, object propertyValue) => Beta.Internal.ObjectExtension.SetPropertyValue(item, propertyName, propertyValue);
     }
 }
