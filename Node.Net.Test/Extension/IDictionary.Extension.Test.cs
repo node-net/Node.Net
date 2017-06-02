@@ -175,13 +175,29 @@ namespace Node.Net
         }
 
         [Test]
-        public void IDictionary_GetByName()
+        public void IDictionary_GetByName_Foo()
         {
             var data = new Dictionary<string, dynamic>();
             var foo = new Dictionary<string, dynamic>();
             data["foo"] = foo;
             var item = data.Get<IDictionary>("foo", null, true);
             Assert.AreSame(item, foo);
+        }
+        [Test]
+        public void IDictionary_GetByName()
+        {
+            var stream = typeof(IDictionaryExtensionTest).Assembly.GetManifestResourceStream
+                ("Node.Net.Tests.Resources.Object.Bars.json");
+            Assert.NotNull(stream, nameof(stream));
+            var factory = new Factory();
+            factory.IDictionaryTypes.Add("Bar", typeof(Bar));
+            var data = factory.Create<IDictionary>(stream);
+
+            //var bars = data.Collect<IBar>();
+            //Assert.AreEqual(1, bars.Count);
+
+            var bar = data.Get<IBar>("bar-0", null, true);
+            Assert.NotNull(bar, nameof(bar));
         }
     }
 }

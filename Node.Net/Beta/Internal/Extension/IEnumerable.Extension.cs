@@ -152,5 +152,40 @@ namespace Node.Net.Beta.Internal
             }
             return Simplify(copy);
         }
+
+        public static IList<string> GetNames(this IEnumerable source)
+        {
+            var names = new List<string>();
+            foreach (var item in source)
+            {
+                if (item != null)
+                {
+                    var name = item.GetName();
+                    if (!names.Contains(name))
+                    {
+                        names.Add(name);
+                    }
+                }
+            }
+
+            return names;
+        }
+
+        public static IList<string> GetFullNames(this IEnumerable source)
+        {
+            var fullNames = new List<string>();
+            foreach (var item in source)
+            {
+                if (item != null)
+                {
+                    var fullname = item.GetName();
+                    if (!fullNames.Contains(fullname))
+                    {
+                        fullNames.Add(fullname);
+                    }
+                }
+            }
+            return fullNames;
+        }
     }
 }

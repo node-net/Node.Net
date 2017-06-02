@@ -35,5 +35,8 @@ namespace Node.Net
             }
             return dictionary;
         }
+        public static IList<string> GetNames(this IEnumerable source) => Beta.Internal.IEnumerableExtension.GetNames(source);
+
+        public static IList<string> GetFullNames(this IEnumerable source) => Beta.Internal.IEnumerableExtension.GetFullNames(source);
     }
 }
