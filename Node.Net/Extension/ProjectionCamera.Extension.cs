@@ -68,5 +68,13 @@ namespace Node.Net
                 }
             }
         }
+        public static ProjectionCamera GetTransformedCamera(this ProjectionCamera camera, Transform3D transform)
+        {
+            var perspectiveCamera = camera as PerspectiveCamera;
+            if (perspectiveCamera != null) return perspectiveCamera.GetTransformedPerspectiveCamera(transform);
+            var orthographicCamera = camera as OrthographicCamera;
+            if (orthographicCamera != null) return orthographicCamera.GetTransformedCamera(transform);
+            return camera;
+        }
     }
 }
