@@ -88,11 +88,37 @@ namespace Node.Net
             // rotation about the X axis
             return rotationX;
         }
-        public static void SetDirectionVectors(this Matrix3D matrix, Vector3D xDirection, Vector3D yDirection, Vector3D zDirection)
+        public static Matrix3D SetDirectionVectors(this Matrix3D matrix, Vector3D xDirection, Vector3D yDirection, Vector3D zDirection)
         {
-            matrix.M11 = xDirection.X; matrix.M12 = xDirection.Y; matrix.M13 = xDirection.Z;
-            matrix.M21 = yDirection.X; matrix.M22 = yDirection.Y; matrix.M23 = yDirection.Z;
-            matrix.M31 = zDirection.X; matrix.M32 = yDirection.Z; matrix.M33 = zDirection.Z;
+            // zRotation
+            xDirection.Z = 0;
+            xDirection.Normalize();
+            var deltaZ = Abs(Vector3D.AngleBetween(new Vector3D(1, 0, 0), xDirection));
+            if (Abs(xDirection.Z - 1.0) < 0.001) deltaZ = 0.0;
+            if (xDirection.Y < 0.0) deltaZ *= -1.0;
+
+            matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), deltaZ));
+
+            // yRotation
+            zDirection.Normalize();
+            var inverse = Matrix3D.Multiply(new Matrix3D(), matrix);
+            inverse.Invert();
+            var zDir2 = inverse.Transform(zDirection);
+            var localY = matrix.Transform(new Vector3D(0, 1, 0));
+            var deltaY = Abs(Vector3D.AngleBetween(new Vector3D(0, 0, 1), zDir2));
+            if (zDir2.X < 0.0) deltaY *= -1.0;
+            matrix.Rotate(new Quaternion(localY, deltaY));
+
+            // xRotation
+            yDirection.Normalize();
+            inverse = Matrix3D.Multiply(new Matrix3D(), matrix);
+            inverse.Invert();
+            var yDir2 = inverse.Transform(yDirection);
+            var localX = matrix.Transform(new Vector3D(1, 0, 0));
+            var deltaX = Abs(Vector3D.AngleBetween(new Vector3D(0, 1, 0), yDir2));
+            if(yDir2.Z < 0.0) deltaX *= -1.0;
+            matrix.Rotate(new Quaternion(localX, deltaX));
+            return matrix;
         }
     }
 }
