@@ -236,6 +236,30 @@ namespace Node.Net.Beta.Internal
             clone.Copy(source);
             return clone;
         }
+        public static T Find<T>(this IDictionary dictionary,string name,bool exact = false) where T : IDictionary
+        {
+            var items = dictionary.Collect<T>();
+            foreach (var item in items)
+            {
+                if (item.GetFullName() == name) return item;
+            }
+            foreach (var item in items)
+            {
+                if (item.GetName() == name) return item;
+            }
+            if (!exact)
+            {
+                foreach (var item in items)
+                {
+                    if (item.GetName().Contains(name)) return item;
+                }
+                foreach (var item in items)
+                {
+                    if (item.GetFullName().Contains(name)) return item;
+                }
+            }
+            return default(T);
+        }
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T),bool search = false)
         {
             if (name.IndexOf(',') > -1)

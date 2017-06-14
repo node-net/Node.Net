@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
@@ -37,6 +39,14 @@ namespace Node.Net
             var item = Factory.Default.Create<object>("XAML Files(.xaml)|*.xaml|All Files(*.*)|*.*");
             var filename = item.GetFileName();
             Assert.True(File.Exists(filename));
+        }
+
+        [Test]
+        public void GetSetName()
+        {
+            var material = new DiffuseMaterial { Brush = Brushes.Red };
+            material.SetFullName("Red");
+            Assert.AreEqual("Red", material.GetName());
         }
     }
 }
