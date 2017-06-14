@@ -88,5 +88,11 @@ namespace Node.Net
             // rotation about the X axis
             return rotationX;
         }
+        public static void SetDirectionVectors(this Matrix3D matrix, Vector3D xDirection, Vector3D yDirection, Vector3D zDirection)
+        {
+            matrix.M11 = xDirection.X; matrix.M12 = xDirection.Y; matrix.M13 = xDirection.Z;
+            matrix.M21 = yDirection.X; matrix.M22 = yDirection.Y; matrix.M23 = yDirection.Z;
+            matrix.M31 = zDirection.X; matrix.M32 = yDirection.Z; matrix.M33 = zDirection.Z;
+        }
     }
 }
