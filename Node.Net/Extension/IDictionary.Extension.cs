@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
@@ -12,16 +9,16 @@ namespace Node.Net
     {
         public static IList Collect(this IDictionary dictionary, string type) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type);
         public static IList Collect(this IDictionary dictionary, Type type) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type);
-        public static IList Collect(this IDictionary dictionary, Type type,string search) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type,search);
+        public static IList Collect(this IDictionary dictionary, Type type, string search) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type, search);
         public static IList<T> Collect<T>(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary);
-        public static IList<T> Collect<T>(this IDictionary dictionary,string search) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary,search);
-        public static IList<T> CollectValues<T>(this IDictionary dictionary, string key) => Beta.Internal.IDictionaryExtension.CollectValues<T>(dictionary,key);
+        public static IList<T> Collect<T>(this IDictionary dictionary, string search) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, search);
+        public static IList<T> CollectValues<T>(this IDictionary dictionary, string key) => Beta.Internal.IDictionaryExtension.CollectValues<T>(dictionary, key);
         public static object GetParent(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetParent(dictionary);
         public static void SetParent(this IDictionary dictionary, object parent) => Beta.Internal.IDictionaryExtension.SetParent(dictionary, parent);
         public static object GetRootAncestor(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetRootAncestor(child);
         public static T GetFurthestAncestor<T>(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetFurthestAncestor<T>(child);
         public static T GetNearestAncestor<T>(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetNearestAncestor<T>(child);
-        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T), bool search = false) => Beta.Internal.IDictionaryExtension.Get<T>(dictionary, name, defaultValue,search);
+        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T), bool search = false) => Beta.Internal.IDictionaryExtension.Get<T>(dictionary, name, defaultValue, search);
         public static T Find<T>(this IDictionary dictionary, string name, bool exact = false) where T : IDictionary => Beta.Internal.IDictionaryExtension.Find<T>(dictionary, name, exact);
         public static string GetName(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetName(dictionary);
         public static string GetFullName(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetFullName(dictionary);
