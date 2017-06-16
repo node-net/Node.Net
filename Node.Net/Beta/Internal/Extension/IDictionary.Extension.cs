@@ -251,6 +251,27 @@ namespace Node.Net.Beta.Internal
             }
             return dictionary;
         }
+        public static IDictionary Copy(this IDictionary dictionary,IDictionary source,Func<object,bool> filterFunction)
+        {
+            dictionary.Clear();
+            foreach (var key in source.Keys)
+            {
+                var value = source[key];
+                if (filterFunction(value))
+                {
+                    var child_dictionary = value as IDictionary;
+                    if (child_dictionary != null)
+                    {
+                        dictionary[key] = new Dictionary<object, dynamic>().Copy(child_dictionary,filterFunction);
+                    }
+                    else
+                    {
+                        dictionary[key] = value;
+                    }
+                }
+            }
+            return dictionary;
+        }
         public static IDictionary Clone(this IDictionary source)
         {
             var clone = Activator.CreateInstance(source.GetType()) as IDictionary;
