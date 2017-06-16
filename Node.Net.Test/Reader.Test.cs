@@ -31,9 +31,9 @@ namespace Node.Net
         //[TestCase("States.json", typeof(IDictionary), 200)]
         public void Read_StressTest()// string name,Type expectedType,int iterations)
         {
-            string name = "States.json";
+            string name = "Scene.50000.json";// "States.json";
             Type expectedType = typeof(IDictionary);
-            int iterations = 200;
+            int iterations = 20;
 
             var reader = new Reader();
             for(int i = 0; i < iterations; ++i)

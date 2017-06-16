@@ -32,6 +32,8 @@ namespace Node.Net.Beta.Internal.Readers
             }
         }
 
+        private static char doubleQuote = '"';
+        private static char singleQuote = '\'';
         private object Read(System.IO.TextReader reader)
         {
             reader.EatWhiteSpace();// (reader);
@@ -45,11 +47,15 @@ namespace Node.Net.Beta.Internal.Readers
             //  'f' or 't' bool
             //  '{' object (hash)
             //  '[' array
+            if (c == doubleQuote || c == singleQuote) return ReadString(reader);
+            if (c == objectOpenCharacter) return ReadObject(reader);
+            if (c == arrayOpenCharacter) return ReadArray(reader);
             if (c == 'n') return ReadNull(reader);
             if (c == 'f' || c == 't') return ReadBool(reader);
-            if (c == '"' || c == '\'') return ReadString(reader);
-            if (c == '[') return ReadArray(reader);
-            return (c == '{') ? ReadObject(reader) : ReadNumber(reader);
+
+            //if (c == '[') return ReadArray(reader);
+            //return (c == '{') ? ReadObject(reader) : ReadNumber(reader);
+            return ReadNumber(reader);
         }
 
         private static object ReadNull(System.IO.TextReader reader)
@@ -93,14 +99,25 @@ namespace Node.Net.Beta.Internal.Readers
             }
         }
 
+        private static string unicodeDoubleQuotes = @"\u0022";
+        private static string doubleQuotes = @"""";
+        private static string unicodeBackslash = @"\u005c";
+        private static string backslash = @"\";
         private static object ReadString(System.IO.TextReader reader)
         {
             reader.EatWhiteSpace();
             var ch = (char)reader.Read(); // consume single or double quote
             var result_raw = reader.Seek(ch, true);
             reader.Read(); // consume escaped character
-            return result_raw.Replace(@"\u0022", @"""").Replace(@"\u005c", @"\");
 
+            return result_raw.Replace(unicodeDoubleQuotes, doubleQuotes).Replace(unicodeBackslash, backslash);
+            //return result_raw.Replace(@"\u0022", @"""").Replace(@"\u005c", @"\");
+
+
+
+
+            //if(result_raw.Contains(@"\u0022") || result_raw.Contains(@"\u005c")) return result_raw.Replace(@"\u0022", @"""").Replace(@"\u005c", @"\");
+            //return result_raw;
             /*
             var result = result_raw.Replace(@"\u0022", @"""");
             result = result.Replace(@"\u005c", @"\");
@@ -108,6 +125,7 @@ namespace Node.Net.Beta.Internal.Readers
             */
             
         }
+        private static char arrayOpenCharacter = '[';
         private object ReadArray(System.IO.TextReader reader)
         {
             var list = Activator.CreateInstance(DefaultArrayType) as IList;
@@ -153,16 +171,20 @@ namespace Node.Net.Beta.Internal.Readers
             return list.Simplify();
         }
 
+
+        private static char objectOpenCharacter = '{';
+        private static char objectCloseCharacter = '}';
+        private static char comma = ',';
         private object ReadObject(System.IO.TextReader reader)
         {
             var dictionary = (ObjectCount == 0) ? Activator.CreateInstance(DefaultDocumentType) as IDictionary :
                                                           Activator.CreateInstance(DefaultObjectType) as IDictionary;
             ObjectCount++;
-            reader.FastSeek('{');
+            reader.FastSeek(objectOpenCharacter);// '{');
             reader.Read(); // consume the '{'
             reader.EatWhiteSpace();
             var done = false;
-            if ((char)(reader.Peek()) == '}')
+            if ((char)(reader.Peek()) == objectCloseCharacter)// '}')
             {
                 done = true;
                 reader.Read(); // consume the '}'
@@ -178,11 +200,11 @@ namespace Node.Net.Beta.Internal.Readers
                 dictionary[key] = Read(reader);
                 reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
-                if (ch == ',') reader.Read(); // consume ','
+                if (ch ==comma) reader.Read(); // consume ','
 
                 reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
-                if (ch == '}')
+                if (ch == objectCloseCharacter)//'}')
                 {
                     reader.Read();
                     done = true;
