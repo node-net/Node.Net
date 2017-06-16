@@ -15,7 +15,7 @@ namespace Node.Net.Beta.Internal
         }
         public static void FastSeek(this TextReader reader,char value, bool ignoreEscaped = false)
         {
-            if (reader.Peek() == -1) return;
+            //if (reader.Peek() == -1) return;
             if ((char)reader.Peek() == value) { return; } 
             while (true)
             {
@@ -33,7 +33,7 @@ namespace Node.Net.Beta.Internal
         }
         public static void FastSeek(this TextReader reader, char[] values, bool ignoreEscaped = false)
         {
-            if (reader.Peek() == -1) return;
+            //if (reader.Peek() == -1) return;
             foreach (char ch in values) { if ((char)reader.Peek() == ch) { return; } }
             while (true)
             {
@@ -57,7 +57,6 @@ namespace Node.Net.Beta.Internal
         {
             var done = false;
             if ((char)reader.Peek() == value) { done = true; return ""; }
-            //var builder = new StringBuilder();
             builder.Clear();
             while (!done)
             {
@@ -78,13 +77,13 @@ namespace Node.Net.Beta.Internal
                     }
                 }
             }
+            if (builder.Length == 0) return "";
             return builder.ToString();
         }
         public static string Seek(this TextReader reader, char[] values, bool ignoreEscaped = false)
         {
             var done = false;
             foreach (char ch in values) { if ((char)reader.Peek() == ch) { done = true; } }
-            //var builder = new StringBuilder();
             builder.Clear();
             while (!done)
             {

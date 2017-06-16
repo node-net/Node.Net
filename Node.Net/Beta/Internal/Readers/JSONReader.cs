@@ -96,11 +96,11 @@ namespace Node.Net.Beta.Internal.Readers
         private static object ReadString(System.IO.TextReader reader)
         {
             reader.EatWhiteSpace();
-            //var ch = (char)reader.Peek();
             var ch = (char)reader.Read(); // consume single or double quote
             var result_raw = reader.Seek(ch, true);
             reader.Read(); // consume escaped character
             return result_raw.Replace(@"\u0022", @"""").Replace(@"\u005c", @"\");
+
             /*
             var result = result_raw.Replace(@"\u0022", @"""");
             result = result.Replace(@"\u005c", @"\");
