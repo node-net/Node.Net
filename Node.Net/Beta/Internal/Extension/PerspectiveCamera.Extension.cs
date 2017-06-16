@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
+﻿using System.Windows.Media.Media3D;
 using static System.Math;
 
 namespace Node.Net.Beta.Internal
@@ -22,7 +17,7 @@ namespace Node.Net.Beta.Internal
             if (Abs(local.Y) > frustrumHeight / 2.0) return false;
             return true;
         }
-        public static bool IsVisible(this PerspectiveCamera camera, Point3D worldPoint,double aspectRatio)
+        public static bool IsVisible(this PerspectiveCamera camera, Point3D worldPoint, double aspectRatio)
         {
             var local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
             // camera lookdirection is along -Z axis
@@ -32,7 +27,7 @@ namespace Node.Net.Beta.Internal
 
             var horizontalFOV = camera.FieldOfView;
             var verticalFOV = camera.FieldOfView;
-            if(aspectRatio >= 1)
+            if (aspectRatio >= 1)
             {
                 verticalFOV = horizontalFOV / aspectRatio;
             }

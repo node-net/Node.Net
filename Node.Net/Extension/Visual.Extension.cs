@@ -24,12 +24,12 @@ namespace Node.Net
         {
             return CreateBitmapSource(visual, width, height, DpiX, DpiY);
         }
-        public static BitmapSource CreateBitmapSource(this Visual visual, double width, double height,double dpiX= 96, double dpiY= 96)
+        public static BitmapSource CreateBitmapSource(this Visual visual, double width, double height, double dpiX = 96, double dpiY = 96)
         {
             var awidth = width * dpiX / 96.0;
             var aheight = height * dpiX / 96.0;
             var frameworkElement = visual as FrameworkElement;
-            if(frameworkElement != null)
+            if (frameworkElement != null)
             {
                 frameworkElement.Measure(new System.Windows.Size(awidth, aheight));
                 //frameworkElement.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity ));

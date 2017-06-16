@@ -8,7 +8,7 @@ namespace Node.Net
         public static bool IsVisible(this PerspectiveCamera camera, Point3D point, double aspectRatio) => Beta.Internal.PerspectiveCameraExtension.IsVisible(camera, point, aspectRatio);
 
         public static PerspectiveCamera GetTransformedPerspectiveCamera(this PerspectiveCamera camera, Transform3D transform) => Beta.Internal.PerspectiveCameraExtension.GetTransformedPerspectiveCamera(camera, transform);
-        public static double GetVerticalFieldOfView(this PerspectiveCamera camera,double width,double height)
+        public static double GetVerticalFieldOfView(this PerspectiveCamera camera, double width, double height)
         {
             if (height > 0 && width > 0) return camera.FieldOfView * (height / width);
             return camera.FieldOfView;

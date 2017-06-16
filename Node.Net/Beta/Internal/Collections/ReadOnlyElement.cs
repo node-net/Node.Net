@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Beta.Internal.Collections
 {
     class ReadOnlyElement : ReadOnlyDictionary, IReadOnlyElement, IDictionary
     {
         public ReadOnlyElement(IDictionary value) : base(value) { }
-        //int Count { get; }
         public bool Contains(string name) { return base.Contains(name); }
         public dynamic Get(string name) { return base[name]; }
         public T Get<T>(string name) { return (T)base[name]; }

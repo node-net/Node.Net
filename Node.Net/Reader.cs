@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -30,10 +29,8 @@ namespace Node.Net
                 var signature = signatureReader.Signature;
                 foreach (string signature_key in Keys)
                 {
-                    //if (signature.Contains(siqnature_key)) return this[siqnature_key](stream);
                     if (signature.IndexOf(signature_key) == 0) return this[signature_key](stream);
                 }
-                //if (UnrecognizedSignatureReader != null) return UnrecognizedSignatureReader.Read(original_stream);
                 throw new System.Exception($"unrecognized signature '{signature}'");
             }
         }
@@ -49,11 +46,6 @@ namespace Node.Net
                 {
                     var item = System.Windows.Markup.XamlReader.Load(stream);
                     item.SetFileName(filename);
-
-                    ////// DEBUG
-                    var ftest = item.GetFileName();
-                   
-                    //////
                     return item;
                 }
                 if (signature_string.IndexOf("<") == 0)

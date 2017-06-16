@@ -13,51 +13,102 @@ namespace Node.Net.Beta.Internal
                 reader.Read();
             }
         }
-        public static string Seek(this TextReader reader, char value)
+        public static void FastSeek(this TextReader reader,char value, bool ignoreEscaped = false)
         {
-            char[] values = { value };
-            return Seek(reader, values);
-        }
-        public static string Seek(this TextReader reader, char[] values,bool ignoreEscaped = false)
-        {
-            var result = @"";
-            var done = false;
-            //var lastChar = -1;
-            foreach (char ch in values) { if ((char)reader.Peek() == ch) { done = true; } }
-            var builder = new StringBuilder();
-            builder.Append(result);
-            while (!done)
+            if (reader.Peek() == -1) return;
+            if ((char)reader.Peek() == value) { return; } 
+            while (true)
             {
                 var ichar = reader.Read();
-                if (ichar < 0)
-                {
-                    done = true;
-                }
+                if (ichar < 0) { return; }
                 else
                 {
-                    if(ignoreEscaped)
+                    if ((char)reader.Peek() == value)
                     {
-                        if(((char)ichar) == '\\') { }
-                        else { builder.Append((char)ichar); }
+                        if (ignoreEscaped && ((char)(ichar)) == '\\') { }// ignore
+                        else { return; }
                     }
-                    else { builder.Append((char)ichar); }
-                    //builder.Append((char)ichar);
+                }
+            }
+        }
+        public static void FastSeek(this TextReader reader, char[] values, bool ignoreEscaped = false)
+        {
+            if (reader.Peek() == -1) return;
+            foreach (char ch in values) { if ((char)reader.Peek() == ch) { return; } }
+            while (true)
+            {
+                var ichar = reader.Read();
+                if (ichar < 0) { return; }
+                else
+                {
                     foreach (char ch in values)
                     {
                         if ((char)reader.Peek() == ch)
                         {
-                            if (ignoreEscaped && ((char)(ichar)) == '\\')
-                            {
-                                // ignore
-                            }
+                            if (ignoreEscaped && ((char)(ichar)) == '\\') { }// ignore
+                            else { return; }
+                        }
+                    }
+                }
+            }
+        }
+        private static StringBuilder builder = new StringBuilder();
+        public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false)
+        {
+            var done = false;
+            if ((char)reader.Peek() == value) { done = true; return ""; }
+            //var builder = new StringBuilder();
+            builder.Clear();
+            while (!done)
+            {
+                var ichar = reader.Read();
+                if (ichar < 0) { done = true; }
+                else
+                {
+                    if (ignoreEscaped)
+                    {
+                        if (((char)ichar) == '\\') { }
+                        else { builder.Append((char)ichar); }
+                    }
+                    else { builder.Append((char)ichar); }
+                    if ((char)reader.Peek() == value)
+                    {
+                        if (ignoreEscaped && ((char)(ichar)) == '\\') { } // ignore
+                        else { done = true; }
+                    }
+                }
+            }
+            return builder.ToString();
+        }
+        public static string Seek(this TextReader reader, char[] values, bool ignoreEscaped = false)
+        {
+            var done = false;
+            foreach (char ch in values) { if ((char)reader.Peek() == ch) { done = true; } }
+            //var builder = new StringBuilder();
+            builder.Clear();
+            while (!done)
+            {
+                var ichar = reader.Read();
+                if (ichar < 0) { done = true; }
+                else
+                {
+                    if (ignoreEscaped)
+                    {
+                        if (((char)ichar) == '\\') { }
+                        else { builder.Append((char)ichar); }
+                    }
+                    else { builder.Append((char)ichar); }
+                    foreach (char ch in values)
+                    {
+                        if ((char)reader.Peek() == ch)
+                        {
+                            if (ignoreEscaped && ((char)(ichar)) == '\\') { } // ignore
                             else { done = true; }
                         }
                     }
                 }
-                //lastChar = ichar;
             }
-            result = builder.ToString();
-            return result;
+            return builder.ToString();
         }
     }
 }

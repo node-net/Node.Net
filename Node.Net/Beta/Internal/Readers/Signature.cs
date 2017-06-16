@@ -48,13 +48,6 @@ namespace Node.Net.Beta.Internal.Readers
                 var i = 0;
                 foreach (var ch in Text)
                 {
-                    /*
-                    bool isDigit = Char.IsLetterOrDigit(ch);
-                    bool isSymbol = Char.IsSymbol(ch);
-                    bool isWhiteSpace = Char.IsWhiteSpace(ch);
-                    bool isSeperator = Char.IsSeparator(ch);
-                    bool isPunctuation = Char.IsPunctuation(ch);
-                    */
                     var isControl = Char.IsControl(ch);
                     if (isControl) return false;
                     ++i;

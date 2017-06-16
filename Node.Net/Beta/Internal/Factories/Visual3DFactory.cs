@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta.Internal.Factories

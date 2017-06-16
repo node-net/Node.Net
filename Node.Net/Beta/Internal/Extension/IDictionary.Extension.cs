@@ -15,7 +15,7 @@ namespace Node.Net.Beta.Internal
             Internal.Collections.MetaData.Default.GetMetaData(dictionary)["Parent"] = parent;
         }
         public static object GetParent(this IDictionary dictionary) { return Internal.Collections.MetaData.Default.GetMetaData(dictionary, "Parent"); }
-        public static void SetFileName(this IDictionary dictionary,string filename) { Internal.Collections.MetaData.Default.GetMetaData(dictionary)["FileName"] = filename; }
+        public static void SetFileName(this IDictionary dictionary, string filename) { Internal.Collections.MetaData.Default.GetMetaData(dictionary)["FileName"] = filename; }
         public static string GetFileName(this IDictionary dictionary) { return Internal.Collections.MetaData.Default.GetMetaData<string>(dictionary, "FileName"); }
         public static void DeepUpdateParents(this IDictionary dictionary)
         {
@@ -29,12 +29,12 @@ namespace Node.Net.Beta.Internal
                 }
             }
         }
-        public static double GetLengthMeters(this IDictionary dictionary,string name)
+        public static double GetLengthMeters(this IDictionary dictionary, string name)
         {
             var svalue = dictionary.Get<string>(name);
             return Units.Length.GetMeters(svalue);
         }
-        public static double GetAngleDegrees(this IDictionary dictionary,string name)
+        public static double GetAngleDegrees(this IDictionary dictionary, string name)
         {
             var svalue = dictionary.Get<string>(name);
             return Units.Angle.GetDegrees(svalue);
@@ -77,22 +77,22 @@ namespace Node.Net.Beta.Internal
             memory.Seek(0, SeekOrigin.Begin);
             return memory;
         }
-        public static IList Collect(this IDictionary idictionary,string type)
+        public static IList Collect(this IDictionary idictionary, string type)
         {
             var results = new List<object>();
             _Collect(idictionary, type, results);
             return results;
         }
-        public static IList Collect(this IDictionary idictionary,Type type,string search=null)
+        public static IList Collect(this IDictionary idictionary, Type type, string search = null)
         {
             var results = new List<object>();
-            _Collect(idictionary, type, search,results);
+            _Collect(idictionary, type, search, results);
             return results;
         }
-        public static IList<T> Collect<T>(this IDictionary idictionary,string search=null)
+        public static IList<T> Collect<T>(this IDictionary idictionary, string search = null)
         {
             var results = new List<T>();
-            _Collect<T>(idictionary, search,results);
+            _Collect<T>(idictionary, search, results);
 
             return results;
         }
@@ -117,7 +117,7 @@ namespace Node.Net.Beta.Internal
             }
             return results;
         }
-        private static void _Collect<T>(this IDictionary idictionary, string search,IList results)
+        private static void _Collect<T>(this IDictionary idictionary, string search, IList results)
         {
             foreach (var item in idictionary.Values)
             {
@@ -126,17 +126,17 @@ namespace Node.Net.Beta.Internal
                     if (typeof(T).IsAssignableFrom(item.GetType()))
                     {
                         if (!results.Contains(item) && (
-                            search == null || MatchesSearch(item as IDictionary,search)))
+                            search == null || MatchesSearch(item as IDictionary, search)))
                         {
                             results.Add(item);
                         }
                     }
                     var child_idictionary = item as IDictionary;
-                    if (child_idictionary != null) _Collect<T>(child_idictionary, search,results);
+                    if (child_idictionary != null) _Collect<T>(child_idictionary, search, results);
                 }
             }
         }
-        private static bool MatchesSearch(this IDictionary idictionary,string search)
+        private static bool MatchesSearch(this IDictionary idictionary, string search)
         {
             if (search == null) return true;
             if (search.Length == 0) return true;
@@ -151,7 +151,7 @@ namespace Node.Net.Beta.Internal
             }
             return false;
         }
-        private static void _Collect(this IDictionary idictionary, Type type,string search,IList results)
+        private static void _Collect(this IDictionary idictionary, Type type, string search, IList results)
         {
             foreach (var item in idictionary.Values)
             {
@@ -167,7 +167,7 @@ namespace Node.Net.Beta.Internal
                             }
                             else
                             {
-                                if(MatchesSearch((item as IDictionary),search))
+                                if (MatchesSearch((item as IDictionary), search))
 
                                 {
                                     results.Add(item);
@@ -177,7 +177,7 @@ namespace Node.Net.Beta.Internal
                         }
                     }
                     var child_idictionary = item as IDictionary;
-                    if (child_idictionary != null) _Collect(child_idictionary, type,search,results);
+                    if (child_idictionary != null) _Collect(child_idictionary, type, search, results);
                 }
             }
         }
@@ -194,11 +194,11 @@ namespace Node.Net.Beta.Internal
                     else
                     {
                         var d = item as IDictionary;
-                        if(d != null)
+                        if (d != null)
                         {
-                            if(d.Contains("Type"))
+                            if (d.Contains("Type"))
                             {
-                                if(d["Type"].ToString() == type)
+                                if (d["Type"].ToString() == type)
                                 {
                                     if (!results.Contains(item)) results.Add(item);
                                 }
@@ -210,23 +210,23 @@ namespace Node.Net.Beta.Internal
                 }
             }
         }
-        public static IList<T> CollectValues<T>(this IDictionary dictionary,string key)
+        public static IList<T> CollectValues<T>(this IDictionary dictionary, string key)
         {
             var results = new List<T>();
             _CollectValues<T>(dictionary, key, results);
             return results;
         }
-        private static void _CollectValues<T>(this IDictionary dictionary,string key,List<T> results)
+        private static void _CollectValues<T>(this IDictionary dictionary, string key, List<T> results)
         {
-            if(dictionary.Contains(key))
+            if (dictionary.Contains(key))
             {
                 var value = dictionary.Get<T>(key);
                 if (!results.Contains(value)) results.Add(value);
             }
-            foreach(var child_key in dictionary.Keys)
+            foreach (var child_key in dictionary.Keys)
             {
                 var child_dictionary = dictionary[child_key] as IDictionary;
-                if(child_dictionary != null)
+                if (child_dictionary != null)
                 {
                     _CollectValues<T>(child_dictionary, key, results);
                 }
@@ -257,7 +257,7 @@ namespace Node.Net.Beta.Internal
             clone.Copy(source);
             return clone;
         }
-        public static T Find<T>(this IDictionary dictionary,string name,bool exact = false) where T : IDictionary
+        public static T Find<T>(this IDictionary dictionary, string name, bool exact = false) where T : IDictionary
         {
             var items = dictionary.Collect<T>();
             foreach (var item in items)
@@ -281,7 +281,7 @@ namespace Node.Net.Beta.Internal
             }
             return default(T);
         }
-        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T),bool search = false)
+        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T), bool search = false)
         {
             if (name.IndexOf(',') > -1)
             {
@@ -495,7 +495,7 @@ namespace Node.Net.Beta.Internal
 
         public static Point3D GetOrigin(this IDictionary dictionary)
         {
-            return GetLocalToParent(dictionary).Transform(new Point3D(0,0,0));
+            return GetLocalToParent(dictionary).Transform(new Point3D(0, 0, 0));
         }
 
         public static Vector3D GetWorldRotations(this IDictionary dictionary)
@@ -548,6 +548,6 @@ namespace Node.Net.Beta.Internal
 
         }
 
-        
+
     }
 }

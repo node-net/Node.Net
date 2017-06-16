@@ -8,7 +8,7 @@ namespace Node.Net.Beta.Internal.Collections
     {
         public bool Equals(WeakReference a, WeakReference b)
         {
-            if(a.Target == null)
+            if (a.Target == null)
             {
                 if (b.Target == null) return true;
                 return false;
@@ -31,7 +31,7 @@ namespace Node.Net.Beta.Internal.Collections
         }
         public IDictionary GetMetaData(object item)
         {
-            if(data.ContainsKey(new WeakReference(item)))
+            if (data.ContainsKey(new WeakReference(item)))
             {
                 return data[new WeakReference(item)];
             }
@@ -39,17 +39,17 @@ namespace Node.Net.Beta.Internal.Collections
             data.Add(new WeakReference(item), metaData);
             return metaData;
         }
-        public object GetMetaData(object item,string name)
+        public object GetMetaData(object item, string name)
         {
             if (item == null) return null;
             var metaData = GetMetaData(item);
             if (metaData.Contains(name)) return metaData[name];
             return null;
         }
-        public T GetMetaData<T>(object item,string name)
+        public T GetMetaData<T>(object item, string name)
         {
             var instance = GetMetaData(item, name);
-            if(instance != null && typeof(T).IsAssignableFrom(instance.GetType()))
+            if (instance != null && typeof(T).IsAssignableFrom(instance.GetType()))
             {
                 return (T)instance;
             }

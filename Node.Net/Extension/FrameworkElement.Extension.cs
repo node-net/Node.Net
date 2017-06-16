@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,7 +19,7 @@ namespace Node.Net
                 DpiY = g.DpiY;
             }
         }
-        public static System.Windows.Media.Color GetColor(this FrameworkElement element,double x, double y)
+        public static System.Windows.Media.Color GetColor(this FrameworkElement element, double x, double y)
         {
             var renderTargetBitmap = new RenderTargetBitmap(
             (int)element.ActualWidth,
@@ -41,22 +37,22 @@ namespace Node.Net
             }
             return Colors.Transparent;
         }
-        public static double GetMatchingPixelPercentage(this FrameworkElement element,FrameworkElement element2)
+        public static double GetMatchingPixelPercentage(this FrameworkElement element, FrameworkElement element2)
         {
             if (element.ActualHeight == 0 || element.ActualWidth == 0) return 1.0;
-            if(element.ActualHeight != element2.ActualHeight)
+            if (element.ActualHeight != element2.ActualHeight)
             {
                 throw new InvalidOperationException("elements must be the same size");
             }
-            if(element.ActualWidth != element2.ActualWidth)
+            if (element.ActualWidth != element2.ActualWidth)
             {
                 throw new InvalidOperationException("element must be the same size");
             }
             var totalPixels = 0;
             var matchingPixels = 0;
-            for(double x = 0; x <= element.ActualWidth; x++)
+            for (double x = 0; x <= element.ActualWidth; x++)
             {
-                for(double y = 0; y <= element.ActualHeight; y++)
+                for (double y = 0; y <= element.ActualHeight; y++)
                 {
                     var color = element.GetColor(x, y);
                     var color2 = element2.GetColor(x, y);

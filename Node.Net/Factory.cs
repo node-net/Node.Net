@@ -33,7 +33,7 @@ namespace Node.Net
         public object Create(Type targetType, object source)
         {
             var result = factory.Create(targetType, source);
-            if(Logging)
+            if (Logging)
             {
                 var sourceInfo = source.ToString();
 
@@ -46,7 +46,7 @@ namespace Node.Net
             get { return factory.Resources; }
             set { factory.Resources = value; }
         }
-        public Dictionary<object,Model3D> Model3DCache
+        public Dictionary<object, Model3D> Model3DCache
         {
             get { return factory.Model3DCache; }
             set { factory.Model3DCache = value; }

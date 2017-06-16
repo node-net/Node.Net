@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Markup;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -30,7 +26,7 @@ namespace Node.Net.Beta.Internal.Factories
             return null;
         }
 
-        private static void Write(Stream stream,object value)
+        private static void Write(Stream stream, object value)
         {
             if (typeof(IDictionary).IsAssignableFrom(value.GetType()))
             {

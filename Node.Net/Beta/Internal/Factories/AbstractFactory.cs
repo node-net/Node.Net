@@ -40,11 +40,6 @@ namespace Node.Net.Beta.Internal.Factories
                         return result;
                     }
                 }
-                /*
-                else
-                {
-                    Resources.Add(source.ToString(), null);
-                }*/
             }
 
             foreach (var targetType in Keys)
@@ -55,10 +50,10 @@ namespace Node.Net.Beta.Internal.Factories
                     return concreteType.Construct(source);
                 }
             }
-            var instance =  target_type.Construct(source);
+            var instance = target_type.Construct(source);
             if (instance != null) return instance;
 
-            instance = ResourceFactory.Create(target_type,source);
+            instance = ResourceFactory.Create(target_type, source);
 
             if (instance == null) instance = CloneFactory.Create(target_type, source);
             return instance;
@@ -81,14 +76,14 @@ namespace Node.Net.Beta.Internal.Factories
         }
         public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
         private readonly ResourceFactory ResourceFactory = new ResourceFactory();
-        private object CreateFromStream(Type target_type,Stream stream,object source)
+        private object CreateFromStream(Type target_type, Stream stream, object source)
         {
             if (stream == null) return null;
             if (ReadFunction != null)
             {
                 var instance = ReadFunction(stream);
                 stream.Close();
-                
+
                 var dictionary = instance as IDictionary;
                 if (dictionary != null)
                 {

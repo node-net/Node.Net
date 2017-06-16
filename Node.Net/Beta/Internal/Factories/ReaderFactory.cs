@@ -2,9 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Beta.Internal.Factories
 {
@@ -27,7 +24,7 @@ namespace Node.Net.Beta.Internal.Factories
                             {
                                 var instance = ReadFunction(stream);
                                 var dictionary = instance as IDictionary;
-                                if(dictionary != null)
+                                if (dictionary != null)
                                 {
                                     dictionary = IDictionaryExtension.ConvertTypes(dictionary, IDictionaryTypes, TypeKey);
                                     dictionary.SetFileName(source.ToString());

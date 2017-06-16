@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media;
@@ -22,12 +21,7 @@ namespace Node.Net.Beta.Internal.Readers
         {
             if (disposing)
             {
-                /*
-                if (signatureReader != null)
-                {
-                    signatureReader.Dispose();
-                    signatureReader = null;
-                }*/
+
             }
         }
 
@@ -54,11 +48,9 @@ namespace Node.Net.Beta.Internal.Readers
             get
             {
                 var signatures = new List<string>(signatureReaders.Keys);
-                //foreach(var key in signatureReaders.)
                 return signatures.ToArray();
             }
         }
-        //private SignatureReader signatureReader = new SignatureReader();
         private readonly Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
         private readonly Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
 
@@ -67,12 +59,9 @@ namespace Node.Net.Beta.Internal.Readers
             var signatureReader = new Internal.Readers.SignatureReader(original_stream);
             var stream = signatureReader.Stream;
             var signature = signatureReader.Signature;
-            //var signature = signatureReader.Read(original_stream) as Signature;
-            //var stream = original_stream;
-            //if (!stream.CanSeek) stream = signatureReader.MemoryStream;
             foreach (string signature_key in signatureReaders.Keys)
             {
-                if (signature.IndexOf(signature_key) == 0 )
+                if (signature.IndexOf(signature_key) == 0)
                 {
                     var instance = readers[signatureReaders[signature_key]](stream);
                     return instance;

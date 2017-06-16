@@ -22,7 +22,7 @@ namespace Node.Net.Beta.Internal.Factories
             if (source != null)
             {
                 var dictionary = source as IDictionary;
-                if(dictionary != null)
+                if (dictionary != null)
                 {
                     return CreateFromDictionary(dictionary);
                 }
@@ -51,7 +51,7 @@ namespace Node.Net.Beta.Internal.Factories
         public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction { get; set; }
         public bool ScalePrimaryModel { get; set; } = true;
         private bool cache = true;
-        public Dictionary<object,Model3D> Model3DCache
+        public Dictionary<object, Model3D> Model3DCache
         {
             get { return model3DCache; }
             set { model3DCache = value; }
@@ -145,19 +145,6 @@ namespace Node.Net.Beta.Internal.Factories
                         var m3d = ParentFactory.Create<Model3D>(modelName);
                         namedCache.Add(modelName, m3d);
                         if (m3d != null) return m3d;
-                        /*
-                        var model3D = ParentFactory.Create<Model3D>($"{type}.Model3D.");
-                        if (model3D != null) return model3D;
-                        if (!locked)
-                        {
-                            try
-                            {
-                                locked = true;
-                                model3D = ParentFactory.Create<Model3D>($"Model3D.{type}.");
-                                if (model3D != null) return model3D;
-                            }
-                            finally { locked = false; }
-                        }*/
                     }
                 }
 
@@ -166,7 +153,6 @@ namespace Node.Net.Beta.Internal.Factories
             }
             return null;
         }
-        private bool locked = false;
         private Transform3D GetTransform3D(object source)
         {
             if (ParentFactory != null)

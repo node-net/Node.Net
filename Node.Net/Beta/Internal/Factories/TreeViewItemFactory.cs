@@ -46,9 +46,6 @@ namespace Node.Net.Beta.Internal.Factories
                             tvi.Items.Add(ctvi);
                         }
                     }
-                    //var dummy = new TreeViewItem { Header = "xxxDummyxxx" };
-                    //tvi.Items.Add(dummy);
-                    //tvi.Expanded += Tvi_Expanded;
                 }
             }
         }
@@ -59,7 +56,6 @@ namespace Node.Net.Beta.Internal.Factories
             {
                 var ctvi = child as TreeViewItem;
             }
-            //throw new NotImplementedException();
         }
 
         public IFactory ParentFactory { get; set; }

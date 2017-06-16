@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -18,16 +15,16 @@ namespace Node.Net.Beta.Internal.Factories
             if (source != null)
             {
                 var children = new Children();
-                if(source is Panel)
+                if (source is Panel)
                 {
-                    foreach(var item in (source as Panel).Children)
+                    foreach (var item in (source as Panel).Children)
                     {
                         children.Add(item);
                     }
                 }
-                if(source is IDictionary)
+                if (source is IDictionary)
                 {
-                    foreach(var key in (source as IDictionary).Keys)
+                    foreach (var key in (source as IDictionary).Keys)
                     {
                         var cdictionary = (source as IDictionary)[key] as IDictionary;
                         if (cdictionary != null) children.Add(cdictionary);
@@ -35,7 +32,7 @@ namespace Node.Net.Beta.Internal.Factories
                 }
                 return children;
             }
-    
+
             return null;
         }
     }

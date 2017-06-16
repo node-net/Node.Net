@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -44,11 +40,10 @@ namespace Node.Net
                             Indent = true
                         });
                         XamlWriter.Save(value, xmlWriter);
-                        //XamlWriter.Save(value,stream);
                     }
                     else
                     {
-                        if(typeof(XmlDocument).IsAssignableFrom(value.GetType()))
+                        if (typeof(XmlDocument).IsAssignableFrom(value.GetType()))
                         {
                             (value as XmlDocument).Save(stream);
                         }
@@ -60,7 +55,7 @@ namespace Node.Net
                 }
             }
         }
-        public void Write(string filename,object value)
+        public void Write(string filename, object value)
         {
             var filestream = new FileStream(filename, FileMode.Create);
             Write(filestream, value);

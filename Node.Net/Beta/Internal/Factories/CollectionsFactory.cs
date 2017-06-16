@@ -27,7 +27,7 @@ namespace Node.Net.Beta.Internal.Factories
                 var stream = source as Stream;
                 if (stream != null) return JSONReader.Read(stream) as IDictionary;
             }
-            if(target_type == typeof(IList))
+            if (target_type == typeof(IList))
             {
                 var stream = source as Stream;
                 if (stream != null) return JSONReader.Read(stream) as IList;

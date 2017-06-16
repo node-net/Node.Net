@@ -48,22 +48,22 @@ namespace Node.Net.Beta.Internal
         public static string GetName(this object instance)
         {
             var fullName = GetFullName(instance);
-            if(fullName.Contains("/"))
+            if (fullName.Contains("/"))
             {
                 var parts = fullName.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 return parts[parts.Length - 1];
             }
-            if(fullName.Length == 0)
+            if (fullName.Length == 0)
             {
                 var filename = instance.GetFileName();
-                if(filename != null && filename.Length > 0)
+                if (filename != null && filename.Length > 0)
                 {
                     try
                     {
                         var fi = new FileInfo(filename);
                         return fi.Name;
                     }
-                    catch(Exception exception)
+                    catch (Exception exception)
                     {
                         throw new Exception($"filename:{filename}", exception);
                     }
@@ -73,11 +73,11 @@ namespace Node.Net.Beta.Internal
         }
         public static void SetFileName(this object instance, string filename) { Internal.Collections.MetaData.Default.GetMetaData(instance)["FileName"] = filename; }
         public static string GetFileName(this object instance) { return Internal.Collections.MetaData.Default.GetMetaData<string>(instance, "FileName"); }
-        public static void SetMetaData(this object instance,string name,object value)
+        public static void SetMetaData(this object instance, string name, object value)
         {
             var idictionary = Internal.Collections.MetaData.Default.GetMetaData(instance)[name] = value;
         }
-        public static T GetMetaData<T>(this object instance,string name)
+        public static T GetMetaData<T>(this object instance, string name)
         {
             return Internal.Collections.MetaData.Default.GetMetaData<T>(instance, name);
         }

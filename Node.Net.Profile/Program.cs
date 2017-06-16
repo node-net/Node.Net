@@ -12,15 +12,15 @@ namespace Node.Net.Profile
         {
             //new Node.Net.IDictionaryExtensionTest().IDictionary_Extension_Profile_GetLocalToWorld();
             //new Node.Net.FactoryTest().Factory_Visual3D_Profile();
-            
+
+            /*
             var test = new Node.Net.FactoryCreateIDictionaryTest();
             test.SetUp();
             test.CreateFromManifestResourceStream("Scene.24500.json");
-            
-            /*
-            var test = new Node.Net.FactoryCreateVisual3DTest();
-            test.CreateFromManifestResourceStream("Scene.12500.json");
             */
+
+            var test = new Node.Net.ReaderTest();
+            test.Read_StressTest();
     }
     }
 }

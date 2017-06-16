@@ -51,7 +51,7 @@ namespace Node.Net.Beta.Internal.Factories
             get { return AbstractFactory.Resources; }
             set { AbstractFactory.Resources = value; }
         }
-        public Dictionary<object,Model3D> Model3DCache
+        public Dictionary<object, Model3D> Model3DCache
         {
             get { return Model3DFactory.Model3DCache; }
             set { Model3DFactory.Model3DCache = value; }
@@ -68,13 +68,13 @@ namespace Node.Net.Beta.Internal.Factories
             set { StreamFactory.ResourceAssemblies = value; }
         }
         public CollectionsFactory CollectionsFactory { get; } = new CollectionsFactory();
-        public Func<Stream,object> ReadFunction
+        public Func<Stream, object> ReadFunction
         {
             get { return AbstractFactory.ReadFunction; }
             set { AbstractFactory.ReadFunction = value; }
         }
-        public Dictionary<Type,Type> AbstractTypes { get { return AbstractFactory; } }
-        public Dictionary<string,Type> IDictionaryTypes
+        public Dictionary<Type, Type> AbstractTypes { get { return AbstractFactory; } }
+        public Dictionary<string, Type> IDictionaryTypes
         {
             get { return AbstractFactory.IDictionaryTypes; }
             set { AbstractFactory.IDictionaryTypes = value; }
@@ -112,9 +112,9 @@ namespace Node.Net.Beta.Internal.Factories
                     {
                         if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
                         else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
-                        if(source != null && source.GetType() == typeof(string) && IsResourceType(target_type))
+                        if (source != null && source.GetType() == typeof(string) && IsResourceType(target_type))
                         {
-                            if(!Resources.Contains(source.ToString()))
+                            if (!Resources.Contains(source.ToString()))
                             {
                                 Resources.Add(source.ToString(), instance);
                             }
@@ -144,7 +144,7 @@ namespace Node.Net.Beta.Internal.Factories
         }
         public bool Logging { get; set; } = false;
         public Action<string> LogFunction { get; set; }
-        
+
         private Model3DFactory Model3DFactory { get; } = new Model3DFactory();
         private StreamFactory StreamFactory { get; } = new StreamFactory();
         private AbstractFactory AbstractFactory { get; } = new AbstractFactory
@@ -152,6 +152,6 @@ namespace Node.Net.Beta.Internal.Factories
             {typeof(IDictionary),typeof(Dictionary<string,dynamic>) },
             {typeof(IList),typeof(List<dynamic>) }
         };
-        
+
     }
 }

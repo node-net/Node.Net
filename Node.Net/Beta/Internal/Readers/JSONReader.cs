@@ -54,7 +54,7 @@ namespace Node.Net.Beta.Internal.Readers
 
         private static object ReadNull(System.IO.TextReader reader)
         {
-            reader.EatWhiteSpace();//EatWhiteSpace(reader);
+            reader.EatWhiteSpace();
             var ch = (char)reader.Peek();
             if (ch == 'n')
             {
@@ -64,7 +64,7 @@ namespace Node.Net.Beta.Internal.Readers
         }
         private static object ReadBool(System.IO.TextReader reader)
         {
-            reader.EatWhiteSpace();//EatWhiteSpace(reader);
+            reader.EatWhiteSpace();
             var ch = (char)reader.Peek();
             if (ch == 't')
             {
@@ -76,9 +76,9 @@ namespace Node.Net.Beta.Internal.Readers
         }
         private static object ReadNumber(System.IO.TextReader reader)
         {
-            reader.EatWhiteSpace();//EatWhiteSpace(reader);
+            reader.EatWhiteSpace();
             char[] endchars = { '}', ']', ',', ' ' };
-            var nstr = reader.Seek(endchars);// Seek(reader, endchars);
+            var nstr = reader.Seek(endchars);
             if (nstr.Contains(@"."))
             {
                 var value = Convert.ToDouble(nstr);
@@ -95,24 +95,26 @@ namespace Node.Net.Beta.Internal.Readers
 
         private static object ReadString(System.IO.TextReader reader)
         {
-            reader.EatWhiteSpace();//EatWhiteSpace(reader);
-            var ch = (char)reader.Peek();
-            reader.Read(); // consume single or double quote
-            char[] chars = { ch };
-            var result_raw = reader.Seek(chars,true);// Seek(reader, chars);
-
+            reader.EatWhiteSpace();
+            //var ch = (char)reader.Peek();
+            var ch = (char)reader.Read(); // consume single or double quote
+            var result_raw = reader.Seek(ch, true);
+            reader.Read(); // consume escaped character
+            return result_raw.Replace(@"\u0022", @"""").Replace(@"\u005c", @"\");
+            /*
             var result = result_raw.Replace(@"\u0022", @"""");
             result = result.Replace(@"\u005c", @"\");
-            reader.Read(); // consume escaped character
             return result;
+            */
+            
         }
         private object ReadArray(System.IO.TextReader reader)
         {
             var list = Activator.CreateInstance(DefaultArrayType) as IList;
-            reader.Seek('[');// Seek(reader, '[');
+            reader.FastSeek('[');
             var ch = ' ';
             reader.Read(); // consume the '['
-            reader.EatWhiteSpace();//EatWhiteSpace(reader);
+            reader.EatWhiteSpace();
             var done = false;
             ch = (char)reader.Peek();
             if (ch == ']')
@@ -133,14 +135,14 @@ namespace Node.Net.Beta.Internal.Readers
 
             while (!done)
             {
-                reader.EatWhiteSpace();//EatWhiteSpace(reader);
+                reader.EatWhiteSpace();
                 list.Add(Read(reader));
-                reader.EatWhiteSpace();//EatWhiteSpace(reader);
+                reader.EatWhiteSpace();
                 var ichar = reader.Peek();
                 ch = (char)reader.Peek();
                 if (ch == ',') reader.Read(); // consume ','
 
-                reader.EatWhiteSpace();//EatWhiteSpace(reader);
+                reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
                 if (ch == ']')
                 {
@@ -148,7 +150,7 @@ namespace Node.Net.Beta.Internal.Readers
                     done = true;
                 }
             }
-            return list.Simplify(); 
+            return list.Simplify();
         }
 
         private object ReadObject(System.IO.TextReader reader)
@@ -156,9 +158,9 @@ namespace Node.Net.Beta.Internal.Readers
             var dictionary = (ObjectCount == 0) ? Activator.CreateInstance(DefaultDocumentType) as IDictionary :
                                                           Activator.CreateInstance(DefaultObjectType) as IDictionary;
             ObjectCount++;
-            reader.Seek('{');// Seek(reader, '{');
+            reader.FastSeek('{');
             reader.Read(); // consume the '{'
-            reader.EatWhiteSpace();//EatWhiteSpace(reader);
+            reader.EatWhiteSpace();
             var done = false;
             if ((char)(reader.Peek()) == '}')
             {
@@ -167,18 +169,18 @@ namespace Node.Net.Beta.Internal.Readers
             }
             while (!done)
             {
-                reader.EatWhiteSpace();//EatWhiteSpace(reader);
+                reader.EatWhiteSpace();
                 var key = ReadString(reader) as string;
                 var lastKey = key;
-                reader.EatWhiteSpace();//EatWhiteSpace(reader);
+                reader.EatWhiteSpace();
                 var ch = (char)reader.Peek();
                 reader.Read(); //consume ':'
                 dictionary[key] = Read(reader);
-                reader.EatWhiteSpace();//EatWhiteSpace(reader);
+                reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
                 if (ch == ',') reader.Read(); // consume ','
 
-                reader.EatWhiteSpace();//EatWhiteSpace(reader);
+                reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
                 if (ch == '}')
                 {

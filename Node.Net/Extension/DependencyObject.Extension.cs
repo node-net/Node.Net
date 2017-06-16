@@ -24,18 +24,18 @@ namespace Node.Net
                     depChildren.Add(child as DependencyObject);
                 }
             }
-            if(depChildren.Count == 0)
+            if (depChildren.Count == 0)
             {
                 var contentControl = parent as ContentControl;
-                if(contentControl != null)
+                if (contentControl != null)
                 {
                     var depContent = contentControl.Content as DependencyObject;
                     if (depContent != null) depChildren.Add(depContent);
                 }
             }
 
-            foreach(var depChild in depChildren)
-            { 
+            foreach (var depChild in depChildren)
+            {
                 if (depChild is T)
                 {
                     logicalChildren.Add(depChild as T);

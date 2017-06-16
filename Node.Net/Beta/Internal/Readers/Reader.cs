@@ -17,7 +17,7 @@ namespace Node.Net.Beta.Internal.Readers
             get { return jsonReader.DefaultObjectType; }
             set { jsonReader.DefaultObjectType = value; }
         }
-        public Dictionary<string,Type> ConversionTypeNames
+        public Dictionary<string, Type> ConversionTypeNames
         {
             get { return jsonReader.ConversionTypeNames; }
         }
@@ -25,9 +25,9 @@ namespace Node.Net.Beta.Internal.Readers
         public dynamic Read(string name)
         {
             var stream = GetStream(name);
-            if(stream != null)
+            if (stream != null)
             {
-                var item =  jsonReader.Read(stream);
+                var item = jsonReader.Read(stream);
                 item.SetPropertyValue("FileName", name);
                 return item;
             }

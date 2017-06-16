@@ -76,14 +76,10 @@ namespace Node.Net
             matrix3.Append(matrix2);
             matrix3 = matrix3.RotateXYZ(new Vector3D(0.0, rotationY * -1.0, 0.0));
 
-
-            //var localX = matrix2.Transform(new Vector3D(1, 0, 0));
             var localY = matrix3.Transform(new Vector3D(0, 1, 0));
             localY.X = 0.0;
             var angle = Vector3D.AngleBetween(localY, new Vector3D(0, 1, 0));
             var rotationX = localY.Z < 0 ? angle * -1.0 : angle;
-            //if (Abs(rotationY - 180.0) > 0.01 && Abs(localX.Z) < 0.0001) rotationY = 0.0;
-            //if (Abs(localY.Y + 1.0) < 0.01) rotationY = 0.0;
 
             // rotation about the X axis
             return rotationX;
@@ -116,7 +112,7 @@ namespace Node.Net
             var yDir2 = inverse.Transform(yDirection);
             var localX = matrix.Transform(new Vector3D(1, 0, 0));
             var deltaX = Abs(Vector3D.AngleBetween(new Vector3D(0, 1, 0), yDir2));
-            if(yDir2.Z < 0.0) deltaX *= -1.0;
+            if (yDir2.Z < 0.0) deltaX *= -1.0;
             matrix.Rotate(new Quaternion(localX, deltaX));
             return matrix;
         }

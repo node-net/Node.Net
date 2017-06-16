@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 
 namespace Node.Net
 {
@@ -20,7 +19,7 @@ namespace Node.Net
                 return Convert.ToBase64String(memory.GetBuffer());
             }
         }
-        public static string WriteToString(this IWrite writer,object item)
+        public static string WriteToString(this IWrite writer, object item)
         {
             using (var memory = new MemoryStream())
             {
@@ -33,7 +32,7 @@ namespace Node.Net
                 }
             }
         }
-        public static void Write(this IWrite writer,string filename,object item)
+        public static void Write(this IWrite writer, string filename, object item)
         {
             using (FileStream fs = new FileStream(filename, FileMode.Create))
             {

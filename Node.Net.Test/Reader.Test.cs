@@ -13,7 +13,7 @@ using System.Xml;
 namespace Node.Net
 {
     [TestFixture,Category("Reader")]
-    class ReaderTest
+    public class ReaderTest
     {
         [Test,Apartment(ApartmentState.STA)]
         [TestCase("{}",typeof(IDictionary))]
@@ -25,8 +25,25 @@ namespace Node.Net
             Assert.NotNull(instance, nameof(instance));
 
             var filename = instance.GetFileName();
-            int x = 0;
         }
+
+        [Test, Apartment(ApartmentState.STA), Explicit]
+        //[TestCase("States.json", typeof(IDictionary), 200)]
+        public void Read_StressTest()// string name,Type expectedType,int iterations)
+        {
+            string name = "States.json";
+            Type expectedType = typeof(IDictionary);
+            int iterations = 200;
+
+            var reader = new Reader();
+            for(int i = 0; i < iterations; ++i)
+            {
+                var instance = reader.Read(name);
+                Assert.NotNull(instance, nameof(instance));
+                Assert.True(expectedType.IsAssignableFrom(instance.GetType()), $"type {expectedType.FullName} not assignable from instance");
+            }
+        }
+
         [Test]
         public void Reader_Read()
         {

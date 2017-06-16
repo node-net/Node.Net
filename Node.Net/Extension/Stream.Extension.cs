@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace Node.Net
 {
@@ -14,7 +9,7 @@ namespace Node.Net
             using (var filestream = new FileStream(filename, FileMode.Create))
             {
                 int ibyte = stream.ReadByte();
-                while(ibyte > -1)
+                while (ibyte > -1)
                 {
                     filestream.WriteByte((byte)ibyte);
                     ibyte = stream.ReadByte();

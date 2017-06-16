@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
-    public class SpatialElement : Dictionary<string,dynamic>
+    public class SpatialElement : Dictionary<string, dynamic>
     {
         public string Type
         {
