@@ -33,7 +33,7 @@ namespace Node.Net
         {
             string name = "States.json"; //"Scene.50000.json";// "States.json";
             Type expectedType = typeof(IDictionary);
-            int iterations = 200;
+            int iterations = 500;
 
             var reader = new Reader();
             for(int i = 0; i < iterations; ++i)

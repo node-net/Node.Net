@@ -53,7 +53,66 @@ namespace Node.Net.Beta.Internal
             }
         }
         private static StringBuilder builder = new StringBuilder();
-        public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false)
+        private static int iPeek = -1;
+        private static int iChar = -1;
+        private static char backslash = '\\';
+        private static int iBackslash = (int)'\\';
+
+        public static string SeekIgnoreEscaped(this TextReader reader, char value)
+        {
+            iPeek = reader.Peek();
+            if ((char)iPeek == value) { return string.Empty; }
+            var done = false;
+            builder.Clear();
+            while (!done)
+            {
+                iChar = reader.Read();
+                if (iChar < 0) { done = true; }
+                else
+                {
+                    if (iChar != iBackslash) builder.Append((char)iChar);
+                    iPeek = reader.Peek();
+                    if ((char)iPeek == value)
+                    {
+                        if (iChar != iBackslash) done = true;
+                    }  
+                }
+            }
+            if (builder.Length == 0) return string.Empty;
+            return builder.ToString();
+        }
+        public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false) => SeekB(reader, value, ignoreEscaped);
+        public static string SeekB(this TextReader reader, char value, bool ignoreEscaped = false)
+        {
+            iPeek = reader.Peek();
+            if ((char)iPeek == value) { return string.Empty; }
+            var done = false;
+            builder.Clear();
+            while (!done)
+            {
+                iChar = reader.Read();
+                if (iChar < 0) { done = true; }
+                else
+                {
+                    if (ignoreEscaped)
+                    {
+                        if (((char)iChar) == backslash) { }
+                        else { builder.Append((char)iChar); }
+                    }
+                    else { builder.Append((char)iChar); }
+
+                    iPeek = reader.Peek();
+                    if ((char)iPeek == value)
+                    {
+                        if (ignoreEscaped && ((char)(iChar)) == backslash) { } // ignore
+                        else { done = true; }
+                    }
+                }
+            }
+            if (builder.Length == 0) return string.Empty;
+            return builder.ToString();
+        }
+        public static string SeekA(this TextReader reader, char value, bool ignoreEscaped = false)
         {
             var done = false;
             if ((char)reader.Peek() == value) { done = true; return ""; }

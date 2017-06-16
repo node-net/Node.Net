@@ -108,7 +108,7 @@ namespace Node.Net.Beta.Internal.Readers
         {
             reader.EatWhiteSpace();
             var ch = (char)reader.Read(); // consume single or double quote
-            var result_raw = reader.Seek(ch, true);
+            var result_raw = reader.SeekIgnoreEscaped(ch);// reader.Seek(ch, true);
             reader.Read(); // consume escaped character
 
             return result_raw.Replace(unicodeDoubleQuotes, doubleQuotes).Replace(unicodeBackslash, backslash);
