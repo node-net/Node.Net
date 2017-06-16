@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Node.Net.Beta.Internal.Readers
@@ -12,6 +13,9 @@ namespace Node.Net.Beta.Internal.Readers
         public Type DefaultArrayType = typeof(List<dynamic>);
         public Type DefaultObjectType = typeof(Dictionary<string, dynamic>);
         public Type DefaultDocumentType = typeof(Dictionary<string, dynamic>);
+
+        public Func<IDictionary> CreateDefaultObject { get; set; } = CreateDefaultObjectInstance;
+        public static IDictionary CreateDefaultObjectInstance() { return new Dictionary<string,dynamic>();}
         public Dictionary<string, Type> ConversionTypeNames { get; } = new Dictionary<string, Type>();
         public int ObjectCount { get; set; }
         public object Read(Stream stream)
@@ -36,7 +40,7 @@ namespace Node.Net.Beta.Internal.Readers
         private static char singleQuote = '\'';
         private object Read(System.IO.TextReader reader)
         {
-            reader.EatWhiteSpace();// (reader);
+            reader.EatWhiteSpace();
             var ichar = reader.Peek();
             if (ichar < 0) throw new InvalidDataException(@"end of stream reached");
             var c = (char)ichar;
@@ -50,11 +54,8 @@ namespace Node.Net.Beta.Internal.Readers
             if (c == doubleQuote || c == singleQuote) return ReadString(reader);
             if (c == objectOpenCharacter) return ReadObject(reader);
             if (c == arrayOpenCharacter) return ReadArray(reader);
-            if (c == 'n') return ReadNull(reader);
             if (c == 'f' || c == 't') return ReadBool(reader);
-
-            //if (c == '[') return ReadArray(reader);
-            //return (c == '{') ? ReadObject(reader) : ReadNumber(reader);
+            if (c == 'n') return ReadNull(reader);
             return ReadNumber(reader);
         }
 
@@ -175,10 +176,22 @@ namespace Node.Net.Beta.Internal.Readers
         private static char objectOpenCharacter = '{';
         private static char objectCloseCharacter = '}';
         private static char comma = ',';
+
         private object ReadObject(System.IO.TextReader reader)
         {
-            var dictionary = (ObjectCount == 0) ? Activator.CreateInstance(DefaultDocumentType) as IDictionary :
-                                                          Activator.CreateInstance(DefaultObjectType) as IDictionary;
+            //var dictionary = (ObjectCount == 0) ? Activator.CreateInstance(DefaultDocumentType) as IDictionary :
+            //                                              Activator.CreateInstance(DefaultObjectType) as IDictionary;
+            IDictionary dictionary = null;
+            if(ObjectCount == 0)
+            {
+                dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
+            }
+            else
+            {
+                if (CreateDefaultObject != null) dictionary = CreateDefaultObject();
+                else dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
+            }
+         
             ObjectCount++;
             reader.FastSeek(objectOpenCharacter);// '{');
             reader.Read(); // consume the '{'
