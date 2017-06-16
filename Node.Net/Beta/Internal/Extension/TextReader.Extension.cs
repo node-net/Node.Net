@@ -81,8 +81,8 @@ namespace Node.Net.Beta.Internal
             if (builder.Length == 0) return string.Empty;
             return builder.ToString();
         }
-        public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false) => SeekB(reader, value, ignoreEscaped);
-        public static string SeekB(this TextReader reader, char value, bool ignoreEscaped = false)
+        //public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false) => SeekB(reader, value, ignoreEscaped);
+        public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false)
         {
             iPeek = reader.Peek();
             if ((char)iPeek == value) { return string.Empty; }
@@ -112,6 +112,7 @@ namespace Node.Net.Beta.Internal
             if (builder.Length == 0) return string.Empty;
             return builder.ToString();
         }
+        /*
         public static string SeekA(this TextReader reader, char value, bool ignoreEscaped = false)
         {
             var done = false;
@@ -138,7 +139,7 @@ namespace Node.Net.Beta.Internal
             }
             if (builder.Length == 0) return "";
             return builder.ToString();
-        }
+        }*/
         public static string Seek(this TextReader reader, char[] values, bool ignoreEscaped = false)
         {
             var done = false;

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq.Expressions;
 using System.Text;
 
 namespace Node.Net.Beta.Internal.Readers
@@ -15,7 +14,7 @@ namespace Node.Net.Beta.Internal.Readers
         public Type DefaultDocumentType = typeof(Dictionary<string, dynamic>);
 
         public Func<IDictionary> CreateDefaultObject { get; set; } = CreateDefaultObjectInstance;
-        public static IDictionary CreateDefaultObjectInstance() { return new Dictionary<string,dynamic>();}
+        public static IDictionary CreateDefaultObjectInstance() { return new Dictionary<string, dynamic>(); }
         public Dictionary<string, Type> ConversionTypeNames { get; } = new Dictionary<string, Type>();
         public int ObjectCount { get; set; }
         public object Read(Stream stream)
@@ -104,14 +103,15 @@ namespace Node.Net.Beta.Internal.Readers
         private static string doubleQuotes = @"""";
         private static string unicodeBackslash = @"\u005c";
         private static string backslash = @"\";
+        private static string stringResult = "";
         private static object ReadString(System.IO.TextReader reader)
         {
             reader.EatWhiteSpace();
-            var ch = (char)reader.Read(); // consume single or double quote
-            var result_raw = reader.SeekIgnoreEscaped(ch);// reader.Seek(ch, true);
+            //var ch = (char)reader.Read(); // consume single or double quote
+            stringResult = reader.SeekIgnoreEscaped((char)reader.Read());// reader.Seek(ch, true);
             reader.Read(); // consume escaped character
 
-            return result_raw.Replace(unicodeDoubleQuotes, doubleQuotes).Replace(unicodeBackslash, backslash);
+            return stringResult.Replace(unicodeDoubleQuotes, doubleQuotes).Replace(unicodeBackslash, backslash);
             //return result_raw.Replace(@"\u0022", @"""").Replace(@"\u005c", @"\");
 
 
@@ -124,7 +124,7 @@ namespace Node.Net.Beta.Internal.Readers
             result = result.Replace(@"\u005c", @"\");
             return result;
             */
-            
+
         }
         private static char arrayOpenCharacter = '[';
         private object ReadArray(System.IO.TextReader reader)
@@ -182,7 +182,7 @@ namespace Node.Net.Beta.Internal.Readers
             //var dictionary = (ObjectCount == 0) ? Activator.CreateInstance(DefaultDocumentType) as IDictionary :
             //                                              Activator.CreateInstance(DefaultObjectType) as IDictionary;
             IDictionary dictionary = null;
-            if(ObjectCount == 0)
+            if (ObjectCount == 0)
             {
                 dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
             }
@@ -191,7 +191,7 @@ namespace Node.Net.Beta.Internal.Readers
                 if (CreateDefaultObject != null) dictionary = CreateDefaultObject();
                 else dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
             }
-         
+
             ObjectCount++;
             reader.FastSeek(objectOpenCharacter);// '{');
             reader.Read(); // consume the '{'
@@ -213,7 +213,7 @@ namespace Node.Net.Beta.Internal.Readers
                 dictionary[key] = Read(reader);
                 reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
-                if (ch ==comma) reader.Read(); // consume ','
+                if (ch == comma) reader.Read(); // consume ','
 
                 reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
