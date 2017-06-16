@@ -12,6 +12,7 @@ namespace Node.Net
         public static IList Collect(this IDictionary dictionary, Type type, string search) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type, search);
         public static IList<T> Collect<T>(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary);
         public static IList<T> Collect<T>(this IDictionary dictionary, string search) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, search);
+        public static IList<T> Collect<T>(this IDictionary dictionary, KeyValuePair<string, string> kvp) where T : IDictionary => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, kvp);
         public static IList<T> CollectValues<T>(this IDictionary dictionary, string key) => Beta.Internal.IDictionaryExtension.CollectValues<T>(dictionary, key);
         public static object GetParent(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetParent(dictionary);
         public static void SetParent(this IDictionary dictionary, object parent) => Beta.Internal.IDictionaryExtension.SetParent(dictionary, parent);

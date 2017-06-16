@@ -96,6 +96,27 @@ namespace Node.Net.Beta.Internal
 
             return results;
         }
+        public static IList<T> Collect<T>(this IDictionary dictionary, KeyValuePair<string, string> kvp) where T : IDictionary
+        {
+            var results = new List<T>();
+            var tmp = dictionary.Collect<T>();
+            foreach (var result in tmp)
+            {
+                var d = result as IDictionary;
+                if (d != null)
+                {
+                    if (d.Contains(kvp.Key))
+                    {
+                        var value = d[kvp.Key];
+                        if (value != null && value.ToString() == kvp.Value)
+                        {
+                            results.Add(result);
+                        }
+                    }
+                }
+            }
+            return results;
+        }
         private static void _Collect<T>(this IDictionary idictionary, string search,IList results)
         {
             foreach (var item in idictionary.Values)
