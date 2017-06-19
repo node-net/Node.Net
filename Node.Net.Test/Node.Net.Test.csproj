@@ -84,6 +84,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\IDictionaryItemsSourceAdapter.Test.xaml.cs">
+      <DependentUpon>IDictionaryItemsSourceAdapter.Test.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Bar.cs" />
     <Compile Include="Controls.Test.cs" />
     <Compile Include="Controls\ContentControl.Test.cs" />
@@ -284,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Page Include="Adapters\IDictionaryItemsSourceAdapter.Test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Canvas.Ellipse.Blue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
