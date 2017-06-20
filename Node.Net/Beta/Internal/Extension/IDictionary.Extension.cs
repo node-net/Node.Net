@@ -92,7 +92,14 @@ namespace Node.Net.Beta.Internal
         public static IList<T> Collect<T>(this IDictionary idictionary, string search = null)
         {
             var results = new List<T>();
-            _Collect<T>(idictionary, search, results);
+            _Collect<T>(idictionary, search, results,MatchesSearch);
+
+            return results;
+        }
+        public static IList<T> Collect<T>(this IDictionary dictionary,Func<IDictionary,string,bool> matchFunction,string search=null)
+        {
+            var results = new List<T>();
+            _Collect<T>(dictionary, search, results, matchFunction);
 
             return results;
         }
@@ -117,7 +124,7 @@ namespace Node.Net.Beta.Internal
             }
             return results;
         }
-        private static void _Collect<T>(this IDictionary idictionary, string search, IList results)
+        private static void _Collect<T>(this IDictionary idictionary, string search, IList results,Func<IDictionary,string,bool> matchFunction)
         {
             foreach (var item in idictionary.Values)
             {
@@ -126,13 +133,13 @@ namespace Node.Net.Beta.Internal
                     if (typeof(T).IsAssignableFrom(item.GetType()))
                     {
                         if (!results.Contains(item) && (
-                            search == null || MatchesSearch(item as IDictionary, search)))
+                            search == null || matchFunction(item as IDictionary,search)))// MatchesSearch(item as IDictionary, search)))
                         {
                             results.Add(item);
                         }
                     }
                     var child_idictionary = item as IDictionary;
-                    if (child_idictionary != null) _Collect<T>(child_idictionary, search, results);
+                    if (child_idictionary != null) _Collect<T>(child_idictionary, search, results,matchFunction);
                 }
             }
         }
@@ -141,6 +148,39 @@ namespace Node.Net.Beta.Internal
             if (search == null) return true;
             if (search.Length == 0) return true;
             if (idictionary == null) return true;
+            if (search.Contains(" "))
+            {
+                // All parts must match
+                var matchesValue = false;
+                var matchesKey = false;
+                var words = search.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                foreach(var word in words)
+                {
+                    matchesValue = MatchesValue(idictionary, word);
+                    matchesKey = idictionary.GetFullName().Contains(word);
+                    if (!matchesValue && !matchesKey) return false;
+                }
+                if (matchesValue || matchesKey) return true;
+                return false;
+            }
+            else
+            {
+                // Check for a value match
+                if (MatchesValue(idictionary, search)) return true;
+                /*
+                foreach (var key in idictionary.Keys)
+                {
+                    var value = idictionary[key];
+                    if (value != null && value.GetType() == typeof(string))
+                    {
+                        if (value.ToString().Contains(search)) return true;
+                    }
+                }*/
+            }
+            return false;
+        }
+        private static bool MatchesValue(this IDictionary idictionary,string search)
+        {
             foreach (var key in idictionary.Keys)
             {
                 var value = idictionary[key];

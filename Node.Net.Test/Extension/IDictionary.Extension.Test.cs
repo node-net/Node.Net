@@ -221,6 +221,13 @@ namespace Node.Net
             var converted = data.ConvertTypes(new Dictionary<string, Type>(), typeof(Element));
             var elements = converted.Collect<Element>();
             Assert.AreEqual(2, elements.Count);
+
+            var states = Factory.Default.Create<IDictionary>("States.json");
+            var dictionaries = states.Collect<IDictionary>();
+            Assert.NotNull(states, nameof(states));
+            converted = states.ConvertTypes(new Dictionary<string, Type>(), typeof(Element));
+            elements = converted.Collect<Element>();
+            Assert.AreEqual(dictionaries.Count, elements.Count);
         }
     }
 }
