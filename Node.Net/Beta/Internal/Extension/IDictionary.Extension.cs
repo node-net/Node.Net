@@ -471,14 +471,14 @@ namespace Node.Net.Beta.Internal
                 var childDictionary = value as IDictionary;
                 if (childDictionary != null)
                 {
-                    copy[key] = ConvertTypes(childDictionary, types, typeKey);
+                    copy[key] = ConvertTypes(childDictionary, types,defaultType, typeKey);
                 }
                 else
                 {
                     var childEnumerable = value as IEnumerable;
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
-                        copy[key] = childEnumerable.ConvertTypes(types, typeKey);
+                        copy[key] = childEnumerable.ConvertTypes(types,defaultType, typeKey);
                     }
                     else
                     {

@@ -118,7 +118,7 @@ namespace Node.Net.Beta.Internal
             return 0;
         }
 
-        public static IEnumerable ConvertTypes(this IEnumerable source, Dictionary<string, Type> types, string typeKey = "Type")
+        public static IEnumerable ConvertTypes(this IEnumerable source, Dictionary<string, Type> types, Type defaultType,string typeKey = "Type")
         {
             if (source == null) return null;
             IList copy = new List<dynamic>();
@@ -135,14 +135,14 @@ namespace Node.Net.Beta.Internal
                 var childDictionary = value as IDictionary;
                 if (childDictionary != null)
                 {
-                    copy.Add(childDictionary.ConvertTypes(types, typeKey));
+                    copy.Add(childDictionary.ConvertTypes(types, defaultType,typeKey));
                 }
                 else
                 {
                     var childEnumerable = value as IEnumerable;
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
-                        copy.Add(ConvertTypes(childEnumerable, types));
+                        copy.Add(ConvertTypes(childEnumerable, types,defaultType));
                     }
                     else
                     {

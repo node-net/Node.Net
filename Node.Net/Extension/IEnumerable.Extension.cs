@@ -7,7 +7,7 @@ namespace Node.Net
     public static class IEnumerableExtension
     {
         public static object GetAt(this IEnumerable source, int index) => Beta.Internal.IEnumerableExtension.GetAt(source, index);
-        public static IEnumerable ConvertTypes(this IEnumerable source, Dictionary<string, Type> types, string typeKey = "Type") => Beta.Internal.IEnumerableExtension.ConvertTypes(source, types, typeKey);
+        public static IEnumerable ConvertTypes(this IEnumerable source, Dictionary<string, Type> types,Type defaultType, string typeKey = "Type") => Beta.Internal.IEnumerableExtension.ConvertTypes(source, types,defaultType, typeKey);
         public static IDictionary ToDictionary(this IEnumerable source)
         {
             var dictionary = new Dictionary<string, dynamic>();

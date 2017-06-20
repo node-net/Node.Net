@@ -199,5 +199,28 @@ namespace Node.Net
             var bar = data.Get<IBar>("bar-0", null, true);
             Assert.NotNull(bar, nameof(bar));
         }
+
+        [Test]
+        public void IDictionary_ConvertTypes()
+        {
+            var data = new Dictionary<string, dynamic>
+            {
+                {"Type","Document" },
+                {"foo0",new Dictionary<string, dynamic>
+                        {
+                            { "Type" ,"Foo" },
+                            {"bar0",new Dictionary<string, dynamic>
+                                    {
+                                        {"Type","Bar" }
+                                    }
+                            }
+                        }
+                }
+            };
+
+            var converted = data.ConvertTypes(new Dictionary<string, Type>(), typeof(Element));
+            var elements = converted.Collect<Element>();
+            Assert.AreEqual(2, elements.Count);
+        }
     }
 }
