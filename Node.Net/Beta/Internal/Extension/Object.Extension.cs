@@ -5,6 +5,18 @@ namespace Node.Net.Beta.Internal
 {
     static class ObjectExtension
     {
+        public static bool HasPropertyValue(this object item,string propertyName)
+        {
+            if (item != null)
+            {
+                var propertyInfo = item.GetType().GetProperty(propertyName);
+                if (propertyInfo != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public static object GetPropertyValue(this object item, string propertyName)
         {
             if (item != null)
