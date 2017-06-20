@@ -442,15 +442,23 @@ namespace Node.Net.Beta.Internal
         }
         public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type")
         {
+            return ConvertTypes(source, types, typeof(Dictionary<string, dynamic>), typeKey);
+        }
+        public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, Type defaultType,string typeKey = "Type")
+        {
             if (source == null) return null;
             if (types == null) return source;
             var copy = Activator.CreateInstance(source.GetType()) as IDictionary;
             if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
             var typename = source.Get<string>(typeKey);
-            if (typename.Length > 0 && types.ContainsKey(typename))
+            if (typename.Length > 0)// && types.ContainsKey(typename))
             {
-                var targetType = types[typename];
-                if (targetType == null) throw new Exception($"types['{typename}'] was null");
+                var targetType = defaultType;
+                if (types.ContainsKey(typename))
+                {
+                    targetType = types[typename];
+                    if (targetType == null) throw new Exception($"types['{typename}'] was null");
+                }
                 if (source.GetType() != targetType)
                 {
                     copy = Activator.CreateInstance(targetType) as IDictionary;
@@ -470,7 +478,6 @@ namespace Node.Net.Beta.Internal
                     var childEnumerable = value as IEnumerable;
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
-                        //copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
                         copy[key] = childEnumerable.ConvertTypes(types, typeKey);
                     }
                     else
