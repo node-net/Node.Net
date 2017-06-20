@@ -450,9 +450,9 @@ namespace Node.Net.Beta.Internal
             if (types == null) return source;
             var copy = Activator.CreateInstance(source.GetType()) as IDictionary;
             if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
-            var typename = source.Get<string>(typeKey);
-            if (typename.Length > 0)// && types.ContainsKey(typename))
-            {
+            var typename = source.Get<string>(typeKey,"");
+            //if (typename.Length > 0)// && types.ContainsKey(typename))
+            //{
                 var targetType = defaultType;
                 if (types.ContainsKey(typename))
                 {
@@ -464,7 +464,7 @@ namespace Node.Net.Beta.Internal
                     copy = Activator.CreateInstance(targetType) as IDictionary;
                     if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
                 }
-            }
+            //}
             foreach (string key in source.Keys)
             {
                 var value = source[key];
