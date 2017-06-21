@@ -92,7 +92,14 @@ namespace Node.Net.Beta.Internal
         public static IList<T> Collect<T>(this IDictionary idictionary, string search = null)
         {
             var results = new List<T>();
-            _Collect<T>(idictionary, search, results);
+            _Collect<T>(idictionary, search, results,MatchesSearch);
+
+            return results;
+        }
+        public static IList<T> Collect<T>(this IDictionary dictionary,Func<IDictionary,string,bool> matchFunction,string search=null)
+        {
+            var results = new List<T>();
+            _Collect<T>(dictionary, search, results, matchFunction);
 
             return results;
         }
@@ -117,7 +124,7 @@ namespace Node.Net.Beta.Internal
             }
             return results;
         }
-        private static void _Collect<T>(this IDictionary idictionary, string search, IList results)
+        private static void _Collect<T>(this IDictionary idictionary, string search, IList results,Func<IDictionary,string,bool> matchFunction)
         {
             foreach (var item in idictionary.Values)
             {
@@ -126,13 +133,13 @@ namespace Node.Net.Beta.Internal
                     if (typeof(T).IsAssignableFrom(item.GetType()))
                     {
                         if (!results.Contains(item) && (
-                            search == null || MatchesSearch(item as IDictionary, search)))
+                            search == null || matchFunction(item as IDictionary,search)))// MatchesSearch(item as IDictionary, search)))
                         {
                             results.Add(item);
                         }
                     }
                     var child_idictionary = item as IDictionary;
-                    if (child_idictionary != null) _Collect<T>(child_idictionary, search, results);
+                    if (child_idictionary != null) _Collect<T>(child_idictionary, search, results,matchFunction);
                 }
             }
         }
@@ -141,6 +148,39 @@ namespace Node.Net.Beta.Internal
             if (search == null) return true;
             if (search.Length == 0) return true;
             if (idictionary == null) return true;
+            if (search.Contains(" "))
+            {
+                // All parts must match
+                var matchesValue = false;
+                var matchesKey = false;
+                var words = search.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                foreach(var word in words)
+                {
+                    matchesValue = MatchesValue(idictionary, word);
+                    matchesKey = idictionary.GetFullName().Contains(word);
+                    if (!matchesValue && !matchesKey) return false;
+                }
+                if (matchesValue || matchesKey) return true;
+                return false;
+            }
+            else
+            {
+                // Check for a value match
+                if (MatchesValue(idictionary, search)) return true;
+                /*
+                foreach (var key in idictionary.Keys)
+                {
+                    var value = idictionary[key];
+                    if (value != null && value.GetType() == typeof(string))
+                    {
+                        if (value.ToString().Contains(search)) return true;
+                    }
+                }*/
+            }
+            return false;
+        }
+        private static bool MatchesValue(this IDictionary idictionary,string search)
+        {
             foreach (var key in idictionary.Keys)
             {
                 var value = idictionary[key];
@@ -442,36 +482,43 @@ namespace Node.Net.Beta.Internal
         }
         public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type")
         {
+            return ConvertTypes(source, types, typeof(Dictionary<string, dynamic>), typeKey);
+        }
+        public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, Type defaultType,string typeKey = "Type")
+        {
             if (source == null) return null;
             if (types == null) return source;
             var copy = Activator.CreateInstance(source.GetType()) as IDictionary;
             if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
-            var typename = source.Get<string>(typeKey);
-            if (typename.Length > 0 && types.ContainsKey(typename))
-            {
-                var targetType = types[typename];
-                if (targetType == null) throw new Exception($"types['{typename}'] was null");
+            var typename = source.Get<string>(typeKey,"");
+            //if (typename.Length > 0)// && types.ContainsKey(typename))
+            //{
+                var targetType = defaultType;
+                if (types.ContainsKey(typename))
+                {
+                    targetType = types[typename];
+                    if (targetType == null) throw new Exception($"types['{typename}'] was null");
+                }
                 if (source.GetType() != targetType)
                 {
                     copy = Activator.CreateInstance(targetType) as IDictionary;
                     if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
                 }
-            }
+            //}
             foreach (string key in source.Keys)
             {
                 var value = source[key];
                 var childDictionary = value as IDictionary;
                 if (childDictionary != null)
                 {
-                    copy[key] = ConvertTypes(childDictionary, types, typeKey);
+                    copy[key] = ConvertTypes(childDictionary, types,defaultType, typeKey);
                 }
                 else
                 {
                     var childEnumerable = value as IEnumerable;
                     if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
                     {
-                        //copy[key] = IEnumerableExtension.ConvertTypes(childEnumerable, types, typeKey);
-                        copy[key] = childEnumerable.ConvertTypes(types, typeKey);
+                        copy[key] = childEnumerable.ConvertTypes(types,defaultType, typeKey);
                     }
                     else
                     {

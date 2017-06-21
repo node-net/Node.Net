@@ -12,6 +12,7 @@ namespace Node.Net
         public static IList Collect(this IDictionary dictionary, Type type, string search) => Beta.Internal.IDictionaryExtension.Collect(dictionary, type, search);
         public static IList<T> Collect<T>(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary);
         public static IList<T> Collect<T>(this IDictionary dictionary, string search) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, search);
+        public static IList<T> Collect<T>(this IDictionary dictionary, Func<IDictionary, string, bool> matchFunction, string search = null) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, matchFunction, search);
         public static IList<T> Collect<T>(this IDictionary dictionary, KeyValuePair<string, string> kvp) where T : IDictionary => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, kvp);
         public static IList<T> CollectValues<T>(this IDictionary dictionary, string key) => Beta.Internal.IDictionaryExtension.CollectValues<T>(dictionary, key);
         public static object GetParent(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetParent(dictionary);
@@ -24,6 +25,7 @@ namespace Node.Net
         public static string GetName(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetName(dictionary);
         public static string GetFullName(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetFullName(dictionary);
         public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, string typeKey = "Type") => Beta.Internal.IDictionaryExtension.ConvertTypes(source, types, typeKey);
+        public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, Type defaultType,string typeKey = "Type") => Beta.Internal.IDictionaryExtension.ConvertTypes(source, types,defaultType, typeKey);
         public static string GetTypeName(this IDictionary source, string typeKey = "Type") => Beta.Internal.IDictionaryExtension.GetTypeName(source, typeKey);
         public static string GetJSON(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetJSON(dictionary);
         public static void DeepUpdateParents(this IDictionary source) => Beta.Internal.IDictionaryExtension.DeepUpdateParents(source);
