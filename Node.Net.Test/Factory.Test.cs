@@ -28,6 +28,18 @@ namespace Node.Net
             Assert.NotNull(factory.Create<IDictionary>(), "factory.Create<IDictionary>()");
             Assert.NotNull(factory.Create<IList>(), "factory.Crate<IList>()");
         }
+
+        [Test]
+        public void Factory_Create_Abstract_From_IDictionary()
+        {
+            var factory = new Factory
+            {
+                AbstractTypes = new Dictionary<Type, Type>
+                {
+                    {typeof(IWidget),typeof(Widget) }
+                }
+            };
+        }
         [Test]
         public void Factory_Test()
         {
