@@ -40,7 +40,7 @@ namespace Node.Net.Beta.Internal.Factories
 
         public Stream Create(string name)
         {
-            if (File.Exists(name)) return new FileStream(name, FileMode.Open);
+            if (File.Exists(name)) return new FileStream(name, FileMode.Open,FileAccess.Read,FileShare.Read);
             foreach (var assembly in ResourceAssemblies)
             {
                 foreach (var manifestResourceName in assembly.GetManifestResourceNames())
@@ -78,7 +78,7 @@ namespace Node.Net.Beta.Internal.Factories
                 {
                     if (File.Exists(ofd.FileName))
                     {
-                        var stream = new FileStream(ofd.FileName, FileMode.Open);
+                        var stream = new FileStream(ofd.FileName, FileMode.Open,FileAccess.Read,FileShare.Read);
                         stream.SetFileName(ofd.FileName);
                         return stream;
                     }

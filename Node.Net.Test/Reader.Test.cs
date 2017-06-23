@@ -4,8 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Xml;
@@ -143,6 +145,30 @@ namespace Node.Net
             factory.ManifestResourceAssemblies.Add(typeof(ReaderTest).Assembly);
 
             var data = factory.Create<IDictionary>("Object.Sample.json");
+        }
+
+        [Test]
+        public void ReadOnlyFile()
+        {
+            var factory = new Factory();
+            factory.ManifestResourceAssemblies.Add(typeof(ReaderTest).Assembly);
+
+            var mesh = factory.Create<MeshGeometry3D>("mesh.xaml");
+            Assert.NotNull(mesh, nameof(mesh));
+
+            var tempfile = Path.GetTempFileName();
+            using (var fs = new FileStream(tempfile, FileMode.Create))
+            {
+                XamlWriter.Save(mesh, fs);
+            }
+
+            var fileInfo = new FileInfo(tempfile);
+            fileInfo.IsReadOnly = true;
+
+            factory.Create<MeshGeometry3D>(tempfile);
+
+            fileInfo.IsReadOnly = false;
+            File.Delete(tempfile);
         }
     }
 }

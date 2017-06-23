@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace Node.Net
 {
-    [TestFixture]
+    [TestFixture,Category("Factory")]
     public class FactoryTest
     {
        [Test]
@@ -39,6 +39,15 @@ namespace Node.Net
                     {typeof(IWidget),typeof(Widget) }
                 }
             };
+            var default_widget = factory.Create<IWidget>();
+            Assert.NotNull(default_widget, nameof(default_widget));
+
+            var widget = factory.Create<IWidget>(
+                new Dictionary<string, dynamic>
+                {
+                    {"Height", "1 ft" }
+                });
+            Assert.NotNull(widget, nameof(widget));
         }
         [Test]
         public void Factory_Test()
