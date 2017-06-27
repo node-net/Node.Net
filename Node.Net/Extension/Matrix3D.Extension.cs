@@ -103,7 +103,17 @@ namespace Node.Net
             var localY = matrix.Transform(new Vector3D(0, 1, 0));
             var deltaY = Abs(Vector3D.AngleBetween(new Vector3D(0, 0, 1), zDir2));
             if (zDir2.X < 0.0) deltaY *= -1.0;
+
+            ////////////////////////
+            if (Abs(Abs(deltaY) - 180.0) < 0.001)
+            {
+                deltaZ = 0.0;
+                matrix.SetIdentity();
+            }
+            ////////////////////////
             matrix.Rotate(new Quaternion(localY, deltaY));
+
+            
 
             // xRotation
             yDirection.Normalize();

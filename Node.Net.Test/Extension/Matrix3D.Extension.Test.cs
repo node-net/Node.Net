@@ -72,6 +72,7 @@ namespace Node.Net
         [TestCase(0,45,0)]
         [TestCase(0, -45, 0)]
         [TestCase(0,45,5)]
+        [TestCase(0,180,0)]
         public void SetDirectionVectors(double rotationX,double rotationY,double rotationZ)
         {
             var matrix = new Matrix3D();
