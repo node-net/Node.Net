@@ -72,6 +72,13 @@ namespace Node.Net
                 Assert.NotNull(instance, $"null instance for '{name}'");
 
                 Assert.True(data[name].IsAssignableFrom(instance.GetType()), $"type {data[name].FullName} not assignable from instance");
+
+                stream.Close();
+                stream = factory.Create<Stream>(name);
+                Assert.NotNull(stream, $"null stream for '{name}'");
+
+                var instance2 = reader.Read(stream);
+                Assert.NotNull(instance2, $"null instance for '{name}'");
             }
         }
 
