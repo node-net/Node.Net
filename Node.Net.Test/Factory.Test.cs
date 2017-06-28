@@ -365,5 +365,21 @@ namespace Node.Net
             var project = factory.Create<IDictionary>(filename);
             if (project == null) throw new System.Exception("project is null");
         }
+
+        [Test]
+        public void MatrixFromDictionary()
+        {
+            var factory = new Factory();
+            var data = new Dictionary<string, dynamic>
+            {
+                { "XDirection","0,1,0" },
+                { "YDirection","-1,0,0" }
+            };
+            var matrix = factory.Create<Matrix3D>(data);
+            var xDirection = matrix.Transform(new Vector3D(1, 0, 0));
+            var yDirection = matrix.Transform(new Vector3D(0, 1, 0));
+            Assert.AreEqual(1, xDirection.Y, "xDirection.Y");
+            Assert.AreEqual(-1, yDirection.X, "yDirection.X");
+        }
     }
 }

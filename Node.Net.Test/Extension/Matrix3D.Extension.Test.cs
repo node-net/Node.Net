@@ -13,6 +13,38 @@ namespace Node.Net
     class Matrix3DExtensionTest
     {
         [Test]
+        [TestCase(1,0,0,0,1,0)]
+        [TestCase(0, 1, 0, -1, 0, 0)]
+        [TestCase(0.86602540378443871, 0.49999999999999994, -1.3877787807814457E-17, -0.492403876506104, 0.85286853195244328, 0.17364817766693036)]
+        public void SetDirectionVectorsXY(double xDirX,double xDirY,double xDirZ,double yDirX,double yDirY,double yDirZ)
+        {
+            var xDirection = new Vector3D(xDirX, xDirY, xDirZ);
+            xDirection.Normalize();
+            var yDirection = new Vector3D(yDirX, yDirY, yDirZ);
+            yDirection.Normalize();
+
+            var zDirection = Vector3D.CrossProduct(xDirection, yDirection);
+
+            var matrix = new Matrix3D();
+            matrix = matrix.SetDirectionVectorsXY(xDirection, yDirection);
+
+            var xDirectionCheck = matrix.Transform(new Vector3D(1, 0, 0));
+            var yDirectionCheck = matrix.Transform(new Vector3D(0, 1, 0));
+            var zDirectionCheck = matrix.Transform(new Vector3D(0, 0, 1));
+
+            Assert.AreEqual(Round(xDirection.X, 3), Round(xDirectionCheck.X, 3), $"xDirection.X");
+            Assert.AreEqual(Round(xDirection.Y, 3), Round(xDirectionCheck.Y, 3), $"xDirection.Y");
+            Assert.AreEqual(Round(xDirection.Z, 3), Round(xDirectionCheck.Z, 3), $"xDirection.Z");
+
+            Assert.AreEqual(Round(yDirection.X, 3), Round(yDirectionCheck.X, 3), $"yDirection.X");
+            Assert.AreEqual(Round(yDirection.Y, 3), Round(yDirectionCheck.Y, 3), $"yDirection.Y");
+            Assert.AreEqual(Round(yDirection.Z, 3), Round(yDirectionCheck.Z, 3), $"yDirection.Z");
+
+            Assert.AreEqual(Round(zDirection.X, 3), Round(zDirectionCheck.X, 3), $"zDirection.X");
+            Assert.AreEqual(Round(zDirection.Y, 3), Round(zDirectionCheck.Y, 3), $"zDirection.Y");
+            Assert.AreEqual(Round(zDirection.Z, 3), Round(zDirectionCheck.Z, 3), $"zDirection.Z");
+        }
+        [Test]
         public void RotateXYZ_GetRotations()
         {
 
@@ -74,7 +106,7 @@ namespace Node.Net
         [TestCase(0,45,5)]
         [TestCase(0,180,0)]
         [TestCase(0, 90, 180)]
-        public void SetDirectionVectors(double rotationX,double rotationY,double rotationZ)
+        public void SetDirectionVectorsXYZ(double rotationX,double rotationY,double rotationZ)
         {
             var matrix = new Matrix3D();
             matrix = matrix.RotateXYZ(new Vector3D(rotationX, rotationY, rotationZ));

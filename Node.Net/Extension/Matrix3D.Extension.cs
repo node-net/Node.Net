@@ -168,5 +168,83 @@ namespace Node.Net
             matrix.Rotate(new Quaternion(localX, deltaX));
             return matrix;
         }
+        /*
+        public static Matrix3D SetDirectionVectors2(this Matrix3D matrix, Vector3D xDirection, Vector3D yDirection, Vector3D zDirection)
+        {
+            // zRotation
+            xDirection.Z = 0;
+            xDirection.Normalize();
+            var deltaZ = Abs(Vector3D.AngleBetween(new Vector3D(1, 0, 0), xDirection));
+            if (Abs(xDirection.Z - 1.0) < 0.001) deltaZ = 0.0;
+            if (xDirection.Y < 0.0) deltaZ *= -1.0;
+
+            matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), deltaZ));
+
+            // xRotation
+            zDirection.Normalize();
+            var inverse = Matrix3D.Multiply(new Matrix3D(), matrix);
+            inverse.Invert();
+            var zDir2 = inverse.Transform(zDirection);
+            var localX = matrix.Transform(new Vector3D(1, 0, 0));
+            var deltaX = Abs(Vector3D.AngleBetween(new Vector3D(0, 0, 1), zDir2));
+            if (zDir2.X < 0.0) deltaX *= -1.0;
+
+            ////////////////////////
+            if (Abs(Abs(deltaX) - 180.0) < 0.001)
+            {
+                deltaZ = 0.0;
+                matrix.SetIdentity();
+            }
+            ////////////////////////
+            matrix.Rotate(new Quaternion(localX, deltaX));
+
+
+
+            // yRotation
+            xDirection.Normalize();
+            inverse = Matrix3D.Multiply(new Matrix3D(), matrix);
+            inverse.Invert();
+            var yDir2 = inverse.Transform(yDirection);
+            var localX = matrix.Transform(new Vector3D(1, 0, 0));
+            var deltaX = Abs(Vector3D.AngleBetween(new Vector3D(0, 1, 0), yDir2));
+            if (yDir2.Z < 0.0) deltaX *= -1.0;
+            matrix.Rotate(new Quaternion(localX, deltaX));
+            return matrix;
+        }
+        */
+        public static Matrix3D SetDirectionVectorsXY(this Matrix3D matrix,Vector3D xDirection,Vector3D yDirection)
+        {
+            xDirection.Normalize();
+            yDirection.Normalize();
+            var zDirection = Vector3D.CrossProduct(xDirection, yDirection);
+
+            // Align X axes
+            var normal = Vector3D.CrossProduct(new Vector3D(1, 0, 0),xDirection);
+            if(normal.Length > 0)
+            {
+                var deltaX = Vector3D.AngleBetween(new Vector3D(1, 0, 0), xDirection);
+                matrix.Rotate(new Quaternion(normal, deltaX));
+            }
+
+            // Align Y axes
+            var localY = matrix.Transform(new Vector3D(0, 1, 0));
+            normal = Vector3D.CrossProduct(localY, yDirection);
+            if(normal.Length > 0)
+            {
+                var deltaY = Vector3D.AngleBetween(localY, yDirection);
+                matrix.Rotate(new Quaternion(normal, deltaY));
+            }
+
+            // Align Z axes
+            var localZ = matrix.Transform(new Vector3D(0, 0, 1));
+            normal = Vector3D.CrossProduct(localZ, zDirection);
+            if (normal.Length > 0)
+            {
+                var deltaZ = Vector3D.AngleBetween(localZ, zDirection);
+                matrix.Rotate(new Quaternion(normal, deltaZ));
+            }
+
+            return matrix;
+        }
     }
 }
