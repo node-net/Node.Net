@@ -23,6 +23,24 @@ namespace Node.Net
             return new Vector3D(GetRotationX(matrix, rotationZ, rotationY), rotationY, rotationZ);
         }
 
+        public static Matrix3D RotateZXY(this Matrix3D matrix, Vector3D rotationsXYZ)
+        {
+            matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), rotationsXYZ.Z));
+
+            var localX = matrix.Transform(new Vector3D(1, 0, 0));
+            matrix.Rotate(new Quaternion(localX, rotationsXYZ.X));
+
+            var localY = matrix.Transform(new Vector3D(0, 1, 0));
+            matrix.Rotate(new Quaternion(localY, rotationsXYZ.Y));
+            return matrix;
+        }
+        public static Vector3D GetRotationsZXY(this Matrix3D matrix)
+        {
+            var rotationZ = GetRotationZ(matrix);
+            var rotationX = GetRotationXZ(matrix, rotationZ);
+            var rotationY = GetRotationYXZ(matrix, rotationX, rotationZ);
+            return new Vector3D(rotationX, rotationY, rotationZ);
+        }
         public static double GetRotationZ(this Matrix3D matrix)
         {
             var localX = matrix.Transform(new Vector3D(1, 0, 0));
@@ -59,6 +77,25 @@ namespace Node.Net
 
             return rotationY;
         }
+        public static double GetRotationXZ(this Matrix3D matrix, double rotationZ)
+        {
+            // back off z rotation
+            var matrix2 = new Matrix3D();
+            matrix2.Append(matrix);
+            matrix2 = matrix2.RotateXYZ(new Vector3D(0.0, 0.0, rotationZ * -1.0));
+
+            var localX = matrix2.Transform(new Vector3D(1, 0, 0));
+            var localY = matrix2.Transform(new Vector3D(0, 1, 0));
+
+            // rotation about the X axis
+            localY.X = 0.0;
+            var angle = Vector3D.AngleBetween(localY, new Vector3D(0, 1, 0));
+            var rotationX = localX.Z > 0 ? angle * -1.0 : angle;
+            if (Abs(rotationX - 180.0) > 0.01 && Abs(localY.Z) < 0.0001) rotationX = 0.0;
+            if (Abs(localY.Y + 1.0) < 0.01) rotationX = 0.0;
+
+            return rotationX;
+        }
 
         public static double GetRotationX(this Matrix3D matrix)
         {
@@ -84,6 +121,11 @@ namespace Node.Net
             // rotation about the X axis
             return rotationX;
         }
+        public static double GetRotationYXZ(this Matrix3D matrix, double rotationX, double rotationZ)
+        {
+            return 0.0;
+        }
+
         public static Matrix3D SetDirectionVectors(this Matrix3D matrix, Vector3D xDirection, Vector3D yDirection, Vector3D zDirection)
         {
             // zRotation
