@@ -29,6 +29,7 @@ namespace Node.Net.Beta.Internal.Factories
                 var xDirection = Vector3D.Parse(dictionary.Get<string>("XDirection", "1,0,0"));
                 var yDirection = Vector3D.Parse(dictionary.Get<string>("YDirection", "0,1,0"));
                 matrix3D = matrix3D.SetDirectionVectorsXY(xDirection, yDirection);
+                matrix3D.Translate(GetTranslation(dictionary));
                 return matrix3D;
             }
             matrix3D = RotateXYZ(matrix3D, GetRotationsXYZ(dictionary));
