@@ -12,9 +12,7 @@ namespace Node.Net.Beta.Internal.Readers
         public Type DefaultArrayType = typeof(List<dynamic>);
         public Type DefaultObjectType = typeof(Dictionary<string, dynamic>);
         public Type DefaultDocumentType = typeof(Dictionary<string, dynamic>);
-
-        public Func<IDictionary> CreateDefaultObject { get; set; } = CreateDefaultObjectInstance;
-        public static IDictionary CreateDefaultObjectInstance() { return new Dictionary<string, dynamic>(); }
+        public Func<IDictionary> CreateDefaultObject { get; set; } = null;
         public Dictionary<string, Type> ConversionTypeNames { get; } = new Dictionary<string, Type>();
         public int ObjectCount { get; set; }
         public object Read(Stream stream)
@@ -107,24 +105,9 @@ namespace Node.Net.Beta.Internal.Readers
         private static object ReadString(System.IO.TextReader reader)
         {
             reader.EatWhiteSpace();
-            //var ch = (char)reader.Read(); // consume single or double quote
-            stringResult = reader.SeekIgnoreEscaped((char)reader.Read());// reader.Seek(ch, true);
+            stringResult = reader.SeekIgnoreEscaped((char)reader.Read());
             reader.Read(); // consume escaped character
-
             return stringResult.Replace(unicodeDoubleQuotes, doubleQuotes).Replace(unicodeBackslash, backslash);
-            //return result_raw.Replace(@"\u0022", @"""").Replace(@"\u005c", @"\");
-
-
-
-
-            //if(result_raw.Contains(@"\u0022") || result_raw.Contains(@"\u005c")) return result_raw.Replace(@"\u0022", @"""").Replace(@"\u005c", @"\");
-            //return result_raw;
-            /*
-            var result = result_raw.Replace(@"\u0022", @"""");
-            result = result.Replace(@"\u005c", @"\");
-            return result;
-            */
-
         }
         private static char arrayOpenCharacter = '[';
         private object ReadArray(System.IO.TextReader reader)

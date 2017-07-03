@@ -17,6 +17,17 @@ namespace Node.Net
     [TestFixture,Category("Reader")]
     public class ReaderTest
     {
+        [Test]
+        public void Read_DefaultObjectType()
+        {
+            var reader = new Reader { DefaultObjectType = typeof(SpatialElement) };
+            var data = reader.Read("States.json") as IDictionary;
+            Assert.NotNull(data, nameof(data));
+
+            var dictionaries = data.Collect<IDictionary>();
+            var spatialElements = data.Collect<SpatialElement>();
+            Assert.AreEqual(dictionaries.Count, spatialElements.Count);
+        }
         [Test,Apartment(ApartmentState.STA)]
         [TestCase("{}",typeof(IDictionary))]
         [TestCase("JSON Files(*.json)|*.json",typeof(IDictionary)),Explicit]
