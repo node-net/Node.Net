@@ -49,6 +49,22 @@ namespace Node.Net
                 });
             Assert.NotNull(widget, nameof(widget));
         }
+
+        [Test]
+        public void Factory_DefaultObjectType()
+        {
+            var factory = new Factory
+            {
+                DefaultObjectType = typeof(SpatialElement)
+            };
+            var data = factory.Create<IDictionary>("States.json");
+            Assert.NotNull(data, nameof(data));
+
+            var dictionaries = data.Collect<IDictionary>();
+            var spatialElements = data.Collect<SpatialElement>();
+            Assert.AreEqual(dictionaries.Count, spatialElements.Count);
+        }
+
         [Test]
         public void Factory_Test()
         {

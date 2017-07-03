@@ -79,6 +79,11 @@ namespace Node.Net.Beta.Internal.Factories
             get { return AbstractFactory.IDictionaryTypes; }
             set { AbstractFactory.IDictionaryTypes = value; }
         }
+        public Type DefaultObjectType
+        {
+            get { return AbstractFactory.DefaultObjectType; }
+            set { AbstractFactory.DefaultObjectType = value; }
+        }
         public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction
         {
             get { return Model3DFactory.PrimaryModel3DHelperFunction; }

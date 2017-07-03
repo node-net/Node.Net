@@ -81,6 +81,12 @@ namespace Node.Net
                 }
             }
         }
+        
+        public Type DefaultObjectType
+        {
+            get { return factory.DefaultObjectType; }
+            set { factory.DefaultObjectType = value; }
+        }
         public Func<Stream, object> ReadFunction
         {
             get { return factory.ReadFunction; }

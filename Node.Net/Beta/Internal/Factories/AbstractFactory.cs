@@ -11,6 +11,7 @@ namespace Node.Net.Beta.Internal.Factories
         public IFactory ParentFactory { get; set; }
         public Func<Stream, object> ReadFunction { get; set; } = new Internal.Readers.JSONReader().Read;
         public Dictionary<string, Type> IDictionaryTypes { get; set; } = new Dictionary<string, Type>();
+        public Type DefaultObjectType { get; set; } = typeof(Dictionary<string, dynamic>);
         public string TypeKey = "Type";
 
         private bool callingParent = false;
@@ -87,7 +88,7 @@ namespace Node.Net.Beta.Internal.Factories
                 var dictionary = instance as IDictionary;
                 if (dictionary != null)
                 {
-                    var new_dictionary = IDictionaryExtension.ConvertTypes(dictionary, IDictionaryTypes, TypeKey);
+                    var new_dictionary = IDictionaryExtension.ConvertTypes(dictionary, IDictionaryTypes, DefaultObjectType,TypeKey);
                     new_dictionary.DeepUpdateParents();
                     if (source != null && source.GetType() == typeof(string))
                     {
