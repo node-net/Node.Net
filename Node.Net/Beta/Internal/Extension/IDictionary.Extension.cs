@@ -347,6 +347,7 @@ namespace Node.Net.Beta.Internal
         }
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T), bool search = false)
         {
+            if (name == null) return defaultValue;
             if (name.IndexOf(',') > -1)
             {
                 int startIndex = 0;

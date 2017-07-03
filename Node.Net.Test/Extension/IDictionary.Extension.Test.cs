@@ -182,6 +182,8 @@ namespace Node.Net
             data["foo"] = foo;
             var item = data.Get<IDictionary>("foo", null, true);
             Assert.AreSame(item, foo);
+
+            var null_item = data.Get<IDictionary>(null);
         }
         [Test]
         public void IDictionary_GetByName()
