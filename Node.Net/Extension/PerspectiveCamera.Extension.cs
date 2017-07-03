@@ -13,5 +13,16 @@ namespace Node.Net
             if (height > 0 && width > 0) return camera.FieldOfView * (height / width);
             return camera.FieldOfView;
         }
+        public static OrthographicCamera GetOrthographicCamera(this PerspectiveCamera camera)
+        {
+            return new OrthographicCamera
+            {
+                Position = camera.Position,
+                LookDirection = camera.LookDirection,
+                UpDirection = camera.UpDirection,
+                FarPlaneDistance = double.PositiveInfinity,
+                NearPlaneDistance = 0.0
+            };
+        }
     }
 }
