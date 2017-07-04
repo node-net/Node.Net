@@ -619,7 +619,41 @@ namespace Node.Net.Beta.Internal
             return GetFurthestAncestor<IDictionary>(child);
 
         }
+        public static int CompareTo(this IDictionary a,IDictionary b)
+        {
+            if (b == null) return -1;
+            var countCompare = a.Count.CompareTo(b.Count);
+            if (countCompare != 0) return countCompare;
 
+            if (a.Count > 0)
+            {
+                var aEnumerator = a.Keys.GetEnumerator();
+                var bEnumerator = b.Keys.GetEnumerator();
+
+                while(aEnumerator.MoveNext())
+                {
+                    bEnumerator.MoveNext();
+                    var aKey = aEnumerator.Current as IComparable;
+                    var bKey = bEnumerator.Current as IComparable;
+                    var keyCompare = 0;
+                    if (aKey != null)
+                    {
+                        keyCompare = aKey.CompareTo(bKey);
+                        if (keyCompare != 0) return keyCompare;
+
+                        var aValue = a[aKey] as IComparable;
+                        var bValue = b[bKey] as IComparable;
+                        var valueCompare = 0;
+                        if(aValue != null)
+                        {
+                            valueCompare = aValue.CompareTo(bValue);
+                            if (valueCompare != 0) return valueCompare;
+                        }
+                    }
+                }
+            }
+            return 0;
+        }
 
     }
 }

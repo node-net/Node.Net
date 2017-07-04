@@ -42,6 +42,7 @@ namespace Node.Net
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source, Func<object, bool> valueFilterFunction, Func<object, bool> keyFilterFunction = null) => Beta.Internal.IDictionaryExtension.Copy(dictionary, source, valueFilterFunction,keyFilterFunction);
         public static IDictionary Clone(this IDictionary source) => Beta.Internal.IDictionaryExtension.Clone(source);
         public static int ComputeHashCode(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.ComputeHashCode(dictionary);
+        public static int CompareTo(this IDictionary a, IDictionary b) => Beta.Internal.IDictionaryExtension.CompareTo(a, b);
         public static void Set(this IDictionary dictionary, string key, object value) => Beta.Internal.IDictionaryExtension.Set(dictionary, key, value);
         public static void Save(this IDictionary dictionary, string filename)
         {

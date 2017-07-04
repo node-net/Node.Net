@@ -231,5 +231,29 @@ namespace Node.Net
             elements = converted.Collect<Element>();
             Assert.AreEqual(dictionaries.Count, elements.Count);
         }
+        [Test]
+        public void IDictionary_GetHashCode()
+        {
+            Assert.AreNotEqual(0, "X".GetHashCode(),"X");
+            Assert.AreNotEqual(0, "10 m".GetHashCode(),"10 m");
+            var data = new Dictionary<string, dynamic> { { "X", "10 m" } };
+            Assert.AreNotEqual(0, data.ComputeHashCode());
+        }
+        [Test]
+        public void IDictionary_CompareTo()
+        {
+            var dictionary1 = new Dictionary<string,dynamic>
+            {
+                {"X" , "10 m" }
+            };
+            var dictionary2 = new Dictionary<string,dynamic>
+            {
+                {"X" ,"11 m" }
+            };
+            Assert.AreEqual(0, dictionary1.CompareTo(dictionary1),"dictionary1.CompareTo(dictionary1)");
+            Assert.AreEqual(-1, dictionary1.CompareTo(null),"dictionary1.CompareTo(null)");
+            Assert.AreEqual(-1, dictionary1.CompareTo(dictionary2), "dictionary1.CompareTo(dictionary2)");
+            Assert.AreEqual(1, dictionary2.CompareTo(dictionary1),"dictionary2.CompareTo(dictionary1)");
+        }
     }
 }
