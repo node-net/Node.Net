@@ -251,7 +251,7 @@ namespace Node.Net
                 {"X" ,"11 m" }
             };
             Assert.AreEqual(0, dictionary1.CompareTo(dictionary1),"dictionary1.CompareTo(dictionary1)");
-            Assert.AreEqual(-1, dictionary1.CompareTo(null),"dictionary1.CompareTo(null)");
+            Assert.AreEqual(1, dictionary1.CompareTo(null),"dictionary1.CompareTo(null)");
             Assert.AreEqual(-1, dictionary1.CompareTo(dictionary2), "dictionary1.CompareTo(dictionary2)");
             Assert.AreEqual(1, dictionary2.CompareTo(dictionary1),"dictionary2.CompareTo(dictionary1)");
         }

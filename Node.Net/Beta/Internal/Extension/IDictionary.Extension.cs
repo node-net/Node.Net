@@ -621,7 +621,14 @@ namespace Node.Net.Beta.Internal
         }
         public static int CompareTo(this IDictionary a,IDictionary b)
         {
-            if (b == null) return -1;
+            // Less than zero
+            // The current instance precedes the object specified by the CompareTo method in the sort order.
+            //            
+            //
+            // Greater than zero
+            // This current instance follows the object specified by the CompareTo method in the sort order.
+            //  
+            if (b == null) return 1;
             var countCompare = a.Count.CompareTo(b.Count);
             if (countCompare != 0) return countCompare;
 
