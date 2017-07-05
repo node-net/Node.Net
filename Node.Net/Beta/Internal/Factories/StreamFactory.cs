@@ -13,6 +13,8 @@ namespace Node.Net.Beta.Internal.Factories
         public static List<Assembly> GlobalResourceAssemblies { get; } = new List<Assembly>();
         public List<Assembly> ResourceAssemblies { get; set; } = new List<Assembly>();
         public bool ExactMatch { get; set; } = false;
+        private string ignoreFilter;
+        public void Refresh() { ignoreFilter = null; }
         public object Create(Type target_type, object source)
         {
             if (target_type == typeof(Stream))
@@ -71,16 +73,24 @@ namespace Node.Net.Beta.Internal.Factories
             }
             if (name.Contains("(") || name.Contains("*") && name.Contains(".") && name.Contains(")") || name.Contains("|"))
             {
-                // open file dialog filter
-                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
-                var result = ofd.ShowDialog();
-                if (result == true)
+                if (ignoreFilter != name)
                 {
-                    if (File.Exists(ofd.FileName))
+                    // open file dialog filter
+                    var ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
+                    var result = ofd.ShowDialog();
+                    if (result == true)
                     {
-                        var stream = new FileStream(ofd.FileName, FileMode.Open,FileAccess.Read,FileShare.Read);
-                        stream.SetFileName(ofd.FileName);
-                        return stream;
+                        if (File.Exists(ofd.FileName))
+                        {
+                            var stream = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                            stream.SetFileName(ofd.FileName);
+                            return stream;
+                        }
+                    }
+                    else
+                    {
+                        // cancelled
+                        ignoreFilter = name;
                     }
                 }
             }

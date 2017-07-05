@@ -97,6 +97,7 @@ namespace Node.Net.Beta.Internal.Factories
         public Dictionary<Type, int> InstanceCounts { get; } = new Dictionary<Type, int>();
         public object Create(Type target_type, object source)
         {
+            StreamFactory.Refresh();
             if (source != null && Resources.Contains(source))
             {
                 var instance = Resources[source];

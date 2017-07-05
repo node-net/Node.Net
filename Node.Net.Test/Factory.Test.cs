@@ -310,6 +310,7 @@ namespace Node.Net
             var item = factory.Create<object>("Text Files(.txt)|*.txt|All Files(*.*)|*.*");
             item = null;
         }
+        // NOTE: test cancel in OpenFileDialog
         [Test, Explicit, Apartment(ApartmentState.STA)]
         public void Factory_Create_IDictionary_From_OpenFileDialogFilter()
         {
