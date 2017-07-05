@@ -76,6 +76,10 @@ namespace Node.Net
                         return instance;
                     }
                 }
+                else
+                {
+                    return null;
+                }
             }
             if (File.Exists(filename))
             {
