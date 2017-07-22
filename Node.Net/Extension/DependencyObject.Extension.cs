@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 
 namespace Node.Net
 {
@@ -13,6 +15,14 @@ namespace Node.Net
             return results;
         }
 
+        public static DependencyObject Clone(this DependencyObject d)
+        {
+            var memory = new MemoryStream();
+            XamlWriter.Save(d, memory);
+            memory.Flush();
+            memory.Seek(0, SeekOrigin.Begin);
+            return XamlReader.Load(memory) as DependencyObject;
+        }
         private static void CollectLogicalChildren<T>(DependencyObject parent, List<T> logicalChildren) where T : DependencyObject
         {
             var depChildren = new List<DependencyObject>();
