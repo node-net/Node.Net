@@ -15,5 +15,10 @@
         public static bool HasPropertyValue(this object item, string propertyName) => Beta.Internal.ObjectExtension.HasPropertyValue(item, propertyName);
         public static T GetPropertyValue<T>(this object item, string propertyName) => Beta.Internal.ObjectExtension.GetPropertyValue<T>(item, propertyName);
         public static void SetPropertyValue(this object item, string propertyName, object propertyValue) => Beta.Internal.ObjectExtension.SetPropertyValue(item, propertyName, propertyValue);
+        public static void SetParent(this object source, object parent)
+        {
+            Beta.Internal.Collections.MetaData.Default.GetMetaData(source)["Parent"] = parent;
+        }
+        public static object GetParent(this object source) { return Beta.Internal.Collections.MetaData.Default.GetMetaData(source, "Parent"); }
     }
 }
