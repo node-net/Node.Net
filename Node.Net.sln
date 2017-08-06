@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net", "Node.Net\Node.Net.csproj", "{CD9926A1-AF51-4D3B-8AD9-81948B4F46EF}"
 EndProject
@@ -19,14 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.Test", "Node.Net.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.Profile", "Node.Net.Profile\Node.Net.Profile.csproj", "{F56FC23C-C39C-42B3-8A7E-72DB13D8A282}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.Benchmark", "Node.Net.Benchmark\Node.Net.Benchmark.csproj", "{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{48795579-3DEA-46A8-893E-FCB551E89D14}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -44,10 +39,6 @@ Global
 		{F56FC23C-C39C-42B3-8A7E-72DB13D8A282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F56FC23C-C39C-42B3-8A7E-72DB13D8A282}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F56FC23C-C39C-42B3-8A7E-72DB13D8A282}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1F7DBB2-FC91-470A-8A04-3C244602FAE3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{48795579-3DEA-46A8-893E-FCB551E89D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{48795579-3DEA-46A8-893E-FCB551E89D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48795579-3DEA-46A8-893E-FCB551E89D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,6 +46,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

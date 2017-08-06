@@ -26,10 +26,10 @@ namespace Node.Net
                 writer.Write(memory, item);
                 memory.Flush();
                 memory.Seek(0, SeekOrigin.Begin);
-                using (var sr = new StreamReader(memory))
-                {
+                var sr = new StreamReader(memory);
+                //{
                     return sr.ReadToEnd();
-                }
+                //}
             }
         }
         public static void Write(this IWrite writer, string filename, object item)
