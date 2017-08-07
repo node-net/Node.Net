@@ -579,6 +579,19 @@ namespace Node.Net.Beta.Internal
             return GetLocalToParent(dictionary).GetRotationsXYZ();
         }
 
+        public static IDictionary GetAncestor(this IDictionary child,string key,string value)
+        {
+            var parent = child.GetParent() as IDictionary;
+            if(child != null && parent != null)
+            {
+                if(parent.Contains(key))
+                {
+                    if (parent[key].ToString() == value) return parent;
+                }
+                return parent.GetAncestor(key, value);
+            }
+            return null;
+        }
         public static T GetNearestAncestor<T>(this IDictionary child)
         {
             var parent = child.GetParent() as IDictionary;

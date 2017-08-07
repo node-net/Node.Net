@@ -20,6 +20,7 @@ namespace Node.Net
         public static object GetRootAncestor(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetRootAncestor(child);
         public static T GetFurthestAncestor<T>(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetFurthestAncestor<T>(child);
         public static T GetNearestAncestor<T>(this IDictionary child) => Beta.Internal.IDictionaryExtension.GetNearestAncestor<T>(child);
+        public static IDictionary GetAncestor(this IDictionary child, string key, string value) => Beta.Internal.IDictionaryExtension.GetAncestor(child, key, value);
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T), bool search = false) => Beta.Internal.IDictionaryExtension.Get<T>(dictionary, name, defaultValue, search);
         public static T Find<T>(this IDictionary dictionary, string name, bool exact = false) where T : IDictionary => Beta.Internal.IDictionaryExtension.Find<T>(dictionary, name, exact);
         public static string GetName(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetName(dictionary);
