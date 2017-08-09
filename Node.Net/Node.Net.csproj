@@ -98,6 +98,7 @@
     <Compile Include="Extension\Object.Extension.cs" />
     <Compile Include="Extension\OrthographicCamera.Extension.cs" />
     <Compile Include="Extension\Point.Extension.cs" />
+    <Compile Include="Extension\PointCollection.Extension.cs" />
     <Compile Include="Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Extension\Rect3D.Extension.cs" />
     <Compile Include="Extension\StackTrace.Extension.cs" />
