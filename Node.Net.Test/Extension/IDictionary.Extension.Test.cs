@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
+using static System.Math;
 
 namespace Node.Net
 {
@@ -22,7 +23,18 @@ namespace Node.Net
             var parentOrigin = matrix.Transform(new Point3D(0, 0, 0));
             Assert.AreEqual(10, parentOrigin.X);
         }
+        [Test]
+        public void IDictionary_Extension_GetLengthMeters()
+        {
+            var data = new Dictionary<string, dynamic>
+            {
+                {"Length","600 ft" },
+                {"Width","10 m" }
+            };
 
+            Assert.AreEqual(10, data.GetLengthMeters("Width"), "Width");
+            Assert.AreEqual(183,Round (data.GetLengthMeters("Length"),0), "Length");
+        }
         [Test]
         public void IDictionary_Extension_GetLocalToWorld()
         {
