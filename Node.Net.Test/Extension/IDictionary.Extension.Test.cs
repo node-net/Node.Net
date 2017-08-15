@@ -267,5 +267,23 @@ namespace Node.Net
             Assert.AreEqual(-1, dictionary1.CompareTo(dictionary2), "dictionary1.CompareTo(dictionary2)");
             Assert.AreEqual(1, dictionary2.CompareTo(dictionary1),"dictionary2.CompareTo(dictionary1)");
         }
+        [Test]
+        public void IDictionary_SetWorldOrigin()
+        {
+            var d0 = new Dictionary<string, dynamic>();
+            d0.SetWorldOrigin(new Point3D(100, 10, 1));
+            Assert.AreEqual("100 m", d0.Get<string>("X"),"X");
+            Assert.AreEqual("10 m", d0.Get<string>("Y"), "Y");
+            Assert.AreEqual("1 m", d0.Get<string>("Z"), "Z");
+
+            var d1 = new Dictionary<string, dynamic>();
+            d0.Add("d1", d1);
+            d0.DeepUpdateParents();
+
+            d1.SetWorldOrigin(new Point3D(110, 11, 1.1));
+            Assert.AreEqual("10 m", d1.Get<string>("X"), "X");
+            Assert.AreEqual("1 m", d1.Get<string>("Y"), "Y");
+            Assert.AreEqual("0.1 m", d1.Get<string>("Z"), "Z");
+        }
     }
 }

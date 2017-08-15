@@ -564,6 +564,21 @@ namespace Node.Net.Beta.Internal
         {
             return GetLocalToWorld(dictionary).Transform(new Point3D(0, 0, 0));
         }
+        public static void SetWorldOrigin(this IDictionary dictionary,Point3D world_origin)
+        {
+            var parent = dictionary.GetNearestAncestor<IDictionary>();
+            var local_origin = world_origin;
+            if(parent != null)
+            {
+                var parent_world_origin = parent.GetWorldOrigin();
+                var delta = world_origin - parent_world_origin;
+                local_origin = new Point3D(delta.X, delta.Y, delta.Z);
+            }
+
+            dictionary["X"] = $"{local_origin.X} m";
+            dictionary["Y"] = $"{local_origin.Y} m";
+            dictionary["Z"] = $"{local_origin.Z} m";
+        }
 
         public static Point3D GetOrigin(this IDictionary dictionary)
         {
