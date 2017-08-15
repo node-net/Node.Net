@@ -37,6 +37,7 @@ namespace Node.Net
         public static void SetWorldOrigin(this IDictionary dictionary, Point3D worldOrigin) => Beta.Internal.IDictionaryExtension.SetWorldOrigin(dictionary, worldOrigin);
         public static Vector3D GetWorldRotations(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetWorldRotations(dictionary);
         public static Point3D GetOrigin(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetOrigin(dictionary);
+        public static void SetOrigin(this IDictionary dictionary, Point3D origin) => Beta.Internal.IDictionaryExtension.SetOrigin(dictionary, origin);
         public static Vector3D GetRotations(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.GetRotations(dictionary);
         public static double GetLengthMeters(this IDictionary dictionary, string name) => Beta.Internal.IDictionaryExtension.GetLengthMeters(dictionary, name);
         public static double GetAngleDegrees(this IDictionary dictionary, string name) => Beta.Internal.IDictionaryExtension.GetAngleDegrees(dictionary, name);

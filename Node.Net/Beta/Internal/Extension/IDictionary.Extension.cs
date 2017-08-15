@@ -585,6 +585,13 @@ namespace Node.Net.Beta.Internal
             return GetLocalToParent(dictionary).Transform(new Point3D(0, 0, 0));
         }
 
+        public static void SetOrigin(this IDictionary dictionary,Point3D origin)
+        {
+            dictionary["X"] = $"{origin.X} m";
+            dictionary["Y"] = $"{origin.Y} m";
+            dictionary["Z"] = $"{origin.Z} m";
+        }
+
         public static Vector3D GetWorldRotations(this IDictionary dictionary)
         {
             return GetLocalToWorld(dictionary).GetRotationsXYZ();
