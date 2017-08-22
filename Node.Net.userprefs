@@ -1,0 +1,13 @@
+﻿<Properties StartupConfiguration="{F56FC23C-C39C-42B3-8A7E-72DB13D8A282}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Node.Net/Beta/Internal/Extension/Image.Extension.cs">
+    <Files>
+      <File FileName="Node.Net/Beta/Internal/Extension/Image.Extension.cs" Line="4" Column="28" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
