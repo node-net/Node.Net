@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Node.Net.Profile")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Musco Sports Lighting")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Node.Net.Profile")]
-[assembly: AssemblyCopyright("Copyright © Musco Sports Lighting 2017")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
