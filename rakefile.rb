@@ -1,3 +1,4 @@
+DEBUG=true
 VERSION='1.0.483'
 require 'dev'
 
