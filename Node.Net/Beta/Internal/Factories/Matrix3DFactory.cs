@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Beta.Internal.Factories
@@ -20,6 +21,19 @@ namespace Node.Net.Beta.Internal.Factories
             return null;
         }
 
+        public static IDictionary GetDictionary(Matrix3D matrix)
+        {
+            var data = new Dictionary<string, dynamic>();
+            var rotationsZXY = Matrix3DExtension.GetRotationsZXY(matrix);
+            var translation = Matrix3DExtension.GetTranslation(matrix);
+            data["X"] = $"{translation.X} m";
+            data["Y"] = $"{translation.Y} m";
+            data["Z"] = $"{translation.Z} m";
+            data["RotationX"] = $"{rotationsZXY.Y} deg";
+            data["RotationY"] = $"{rotationsZXY.Y} deg";
+            data["RotationZ"] = $"{rotationsZXY.X} deg";
+            return data;
+        }
         private static Matrix3D? CreateFromIDictionary(IDictionary dictionary)
         {
             var matrix3D = new Matrix3D();
