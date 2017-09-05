@@ -326,6 +326,7 @@ namespace Node.Net.Beta.Internal
             var items = dictionary.Collect<T>();
             foreach (var item in items)
             {
+                if(item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
                 if (item.GetFullName() == name) return item;
             }
             foreach (var item in items)
@@ -696,6 +697,34 @@ namespace Node.Net.Beta.Internal
             }
             return 0;
         }
+        public static T GetCurrent<T>(this IDictionary dictionary) where T : IDictionary
+        {
+            var metaData = Internal.Collections.MetaData.Default.GetMetaData(dictionary);
+            if (metaData.Contains("Currents"))
+            {
+                var currents = Internal.Collections.MetaData.Default.GetMetaData(dictionary)["Currents"] as IDictionary;
+                if (currents != null)
+                {
+                    if (currents.Contains(typeof(T)))
+                    {
+                        var current_name = currents[typeof(T)].ToString();
+                        return dictionary.Find<T>(current_name);
+                    }
+                }
+            }
 
+            var items = dictionary.Collect<T>();
+            if (items.Count > 0) return items[0];
+            return default(T);
+        }
+        public static void SetCurrent<T>(this IDictionary dictionary,string name) where T : IDictionary
+        {
+            var metaData = Internal.Collections.MetaData.Default.GetMetaData(dictionary);
+            if (!metaData.Contains("Currents")) { metaData.Add("Currents", new Dictionary<Type, string>()); }
+            var currents = Internal.Collections.MetaData.Default.GetMetaData(dictionary)["Currents"] as IDictionary;
+            currents[typeof(T)] = name;
+
+           
+        }
     }
 }

@@ -285,5 +285,21 @@ namespace Node.Net
             Assert.AreEqual("1 m", d1.Get<string>("Y"), "Y");
             Assert.AreEqual("0.1 m", d1.Get<string>("Z"), "Z");
         }
+        [Test]
+        public void IDictionary_GetSet_Current()
+        {
+            var d0 = new Dictionary<string, dynamic>
+            {
+                { "A", new Dictionary<string,dynamic>{{"Type","Widget"}} },
+                { "B", new Dictionary<string,dynamic>{{"Type","Foo"}} }
+            };
+            var current = d0.GetCurrent<IDictionary>();
+            Assert.NotNull(current, nameof(current));
+            Assert.AreEqual("Widget", current["Type"].ToString());
+
+            d0.SetCurrent<IDictionary>("B");
+            current = d0.GetCurrent<IDictionary>();
+            Assert.AreEqual("Foo", current["Type"].ToString());
+        }
     }
 }

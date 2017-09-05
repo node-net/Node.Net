@@ -51,5 +51,7 @@ namespace Node.Net
         {
             Node.Net.JSONWriter.Default.Write(filename, dictionary);
         }
+        public static T GetCurrent<T>(this IDictionary dictionary) where T : IDictionary => Beta.Internal.IDictionaryExtension.GetCurrent<T>(dictionary);
+        public static void SetCurrent<T>(this IDictionary dictionary, string name) where T : IDictionary => Beta.Internal.IDictionaryExtension.SetCurrent<T>(dictionary, name);
     }
 }
