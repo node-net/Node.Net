@@ -165,5 +165,16 @@ namespace Node.Net
 
 
         }
+
+
+        [Test]
+        public void GetDictionary()
+        {
+            var matrix = new Matrix3D();
+            matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), 45));
+
+            var dictionary = matrix.GetDictionary();
+            Assert.AreEqual("45 deg", dictionary["RotationZ"]);
+        }
     }
 }

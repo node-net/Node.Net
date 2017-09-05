@@ -29,9 +29,9 @@ namespace Node.Net.Beta.Internal.Factories
             data["X"] = $"{translation.X} m";
             data["Y"] = $"{translation.Y} m";
             data["Z"] = $"{translation.Z} m";
-            data["RotationX"] = $"{rotationsZXY.Y} deg";
+            data["RotationX"] = $"{rotationsZXY.X} deg";
             data["RotationY"] = $"{rotationsZXY.Y} deg";
-            data["RotationZ"] = $"{rotationsZXY.X} deg";
+            data["RotationZ"] = $"{rotationsZXY.Z} deg";
             return data;
         }
         private static Matrix3D? CreateFromIDictionary(IDictionary dictionary)
