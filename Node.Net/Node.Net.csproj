@@ -181,7 +181,9 @@
     <Compile Include="WordReader.cs" />
     <Compile Include="Writer.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Factory.Resources.xaml">
       <Generator>MSBuild:Compile</Generator>
