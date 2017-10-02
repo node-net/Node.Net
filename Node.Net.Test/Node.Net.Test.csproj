@@ -96,6 +96,7 @@
     <Compile Include="Extension\Matrix3D.Extension.Test.cs" />
     <Compile Include="Extension\Object.Extension.Test.cs" />
     <Compile Include="Extension\String.Extension.Test.cs" />
+    <Compile Include="Extension\Vector3D.Extension.Test.cs" />
     <Compile Include="Extension\Visual.Extension.Test.cs" />
     <Compile Include="Extension\VisualCreateBitmapTestControl.cs" />
     <Compile Include="Factory.Create.IDictionary.Test.cs" />

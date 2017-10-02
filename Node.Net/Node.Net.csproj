@@ -105,6 +105,7 @@
     <Compile Include="Extension\Stream.Extension.cs" />
     <Compile Include="Extension\String.Extension.cs" />
     <Compile Include="Extension\UIElement.Extension.cs" />
+    <Compile Include="Extension\Vector3D.Extension.cs" />
     <Compile Include="Extension\Viewport3D.Extension.cs" />
     <Compile Include="Extension\Visual.Extension.cs" />
     <Compile Include="Extension\Visual3D.Extension.cs" />
