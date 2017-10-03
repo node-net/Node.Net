@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Media3D;
+﻿using System.Collections;
+using System.Windows.Media.Media3D;
 using static System.Math;
 
 namespace Node.Net
@@ -40,6 +41,10 @@ namespace Node.Net
             var rotationX = GetRotationXZ(matrix, rotationZ);
             var rotationY = GetRotationYXZ(matrix, rotationX, rotationZ);
             return new Vector3D(rotationX, rotationY, rotationZ);
+        }
+        public static Point3D GetTranslation(this Matrix3D matrix)
+        {
+            return matrix.Transform(new Point3D(0, 0, 0));
         }
         public static double GetRotationZ(this Matrix3D matrix)
         {
@@ -246,5 +251,6 @@ namespace Node.Net
 
             return matrix;
         }
+        public static IDictionary GetDictionary(this Matrix3D matrix) => Beta.Internal.Factories.Matrix3DFactory.GetDictionary(matrix);
     }
 }

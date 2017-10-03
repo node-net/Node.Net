@@ -188,5 +188,20 @@ namespace Node.Net
             fileInfo.IsReadOnly = false;
             File.Delete(tempfile);
         }
+
+        [Test,Explicit,Apartment(ApartmentState.STA)]
+        public void Reader_Open()
+        {
+            var a = Reader.Default.Open("JSON Files(*.json) | *.json");
+            var filename = a.GetFileName();
+            Assert.True(File.Exists(filename));
+        }
+        [Test, Explicit, Apartment(ApartmentState.STA)]
+        public void Reader_Read_Filename()
+        {
+            var a = Reader.Default.Read("JSON Files(*.json) | *.json");
+            var filename = a.GetFileName();
+            Assert.True(File.Exists(filename));
+        }
     }
 }

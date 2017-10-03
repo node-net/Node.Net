@@ -3,6 +3,7 @@
 
 doc/
 log/
+.vs/
 
 commit.message
 *.gem 
