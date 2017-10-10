@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
@@ -50,6 +51,10 @@ namespace Node.Net
         public static void Save(this IDictionary dictionary, string filename)
         {
             Node.Net.JSONWriter.Default.Write(filename, dictionary);
+        }
+        public static void Save(this IDictionary dictionary,Stream stream)
+        {
+            Node.Net.JSONWriter.Default.Write(stream, dictionary);
         }
         public static T GetCurrent<T>(this IDictionary dictionary) where T : IDictionary => Beta.Internal.IDictionaryExtension.GetCurrent<T>(dictionary);
         public static void SetCurrent<T>(this IDictionary dictionary, string name) where T : IDictionary => Beta.Internal.IDictionaryExtension.SetCurrent<T>(dictionary, name);
