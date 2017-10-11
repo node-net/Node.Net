@@ -321,16 +321,18 @@ namespace Node.Net.Beta.Internal
             clone.Copy(source);
             return clone;
         }
-        public static T Find<T>(this IDictionary dictionary, string name, bool exact = false) where T : IDictionary
+        public static T Find<T>(this IDictionary dictionary, string name, bool exact = false)// where T : IDictionary
         {
             var items = dictionary.Collect<T>();
             foreach (var item in items)
             {
-                if(item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
+                if(item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); item.SetParent(dictionary); }
                 if (item.GetFullName() == name) return item;
             }
             foreach (var item in items)
             {
+				var itemName = item.GetName();
+				var itemKey = item.GetKey();
                 if (item.GetName() == name) return item;
             }
             if (!exact)
