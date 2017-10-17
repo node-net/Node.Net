@@ -321,7 +321,7 @@ namespace Node.Net.Beta.Internal
             clone.Copy(source);
             return clone;
         }
-        public static T Find<T>(this IDictionary dictionary, string name, bool exact = false) where T : IDictionary
+        public static T Find<T>(this IDictionary dictionary, string name, bool exact = false)// where T : IDictionary
         {
             var items = dictionary.Collect<T>();
             foreach (var item in items)
@@ -331,6 +331,7 @@ namespace Node.Net.Beta.Internal
             }
             foreach (var item in items)
             {
+				var iname = item.GetName();
                 if (item.GetName() == name) return item;
             }
             if (!exact)
