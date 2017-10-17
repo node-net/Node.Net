@@ -31,7 +31,7 @@ namespace Node.Net
 				{
 					if (signature.IndexOf(signature_key) == 0) return this[signature_key](stream);
 				}
-				throw new System.Exception($"unrecognized signature '{signature}'");
+				throw new UnrecognizedSignatureException($"unrecognized signature '{signature.Substring(0,24)}'");
 			}
 		}
 
