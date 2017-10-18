@@ -82,25 +82,21 @@ namespace Node.Net.Beta.Internal
 					}
 				}
 			}
-			if(fullName.Length == 0)
+			if(fullName == null || fullName.Length == 0)
 			{
-				var idictionary = instance as IDictionary;
-				if (idictionary != null)
+				var dictionary = instance as IDictionary;
+				var parent = dictionary.GetParent() as IDictionary;
+				if (parent != null)
 				{
-					var parent = idictionary.GetParent() as IDictionary;
-					if (parent != null)
+					foreach (string key in parent.Keys)
 					{
-						foreach (string key in parent.Keys)
+						var test_element = parent.Get<IDictionary>(key);
+						if (test_element != null)
 						{
-							var test_element = parent.Get<IDictionary>(key);
-							if (test_element != null)
-							{
-								if (object.ReferenceEquals(test_element, idictionary)) return key;
-							}
+							if (object.ReferenceEquals(test_element, dictionary)) return key;
 						}
 					}
 				}
-				//return Beta.Internal.IDictionaryExtension.GetName(idictionary);
 			}
 			return fullName;
 		}

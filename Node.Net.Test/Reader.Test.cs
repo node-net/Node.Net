@@ -183,6 +183,7 @@ namespace Node.Net
 			var fileInfo = new FileInfo(tempfile);
 			fileInfo.IsReadOnly = true;
 
+			var data = Reader.Default.Read(tempfile);
 			factory.Create<MeshGeometry3D>(tempfile);
 
 			fileInfo.IsReadOnly = false;

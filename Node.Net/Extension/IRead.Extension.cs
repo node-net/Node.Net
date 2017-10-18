@@ -83,7 +83,7 @@ namespace Node.Net
             }
             if (File.Exists(filename))
             {
-                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                using (FileStream fs = new FileStream(filename, FileMode.Open,FileAccess.Read))
                 {
                     var item = read.Read(fs);
                     SetPropertyValue(item, "FileName", filename);

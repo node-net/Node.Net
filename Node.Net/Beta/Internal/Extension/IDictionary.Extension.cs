@@ -326,13 +326,12 @@ namespace Node.Net.Beta.Internal
             var items = dictionary.Collect<T>();
             foreach (var item in items)
             {
-                if(item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); item.SetParent(dictionary); }
+                if(item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
                 if (item.GetFullName() == name) return item;
             }
             foreach (var item in items)
             {
-				var itemName = item.GetName();
-				var itemKey = item.GetKey();
+				var iname = item.GetName();
                 if (item.GetName() == name) return item;
             }
             if (!exact)
