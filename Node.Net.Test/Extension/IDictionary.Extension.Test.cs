@@ -99,6 +99,16 @@ namespace Node.Net
 		}
 
 		[Test]
+		public void IDictionary_Collect_By_Type_Name()
+		{
+			var data = Factory.Default.Create<IDictionary>("States.json");
+			Assert.NotNull(data, nameof(data));
+
+			var counties = data.Collect("County");
+			Assert.AreEqual(3105, counties.Count, "counties.Count");
+		}
+
+		[Test]
 		public void IDictonary_Collect_Custom()
 		{
 			var factory = new Factory
