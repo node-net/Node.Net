@@ -60,7 +60,7 @@ namespace Node.Net
                 var memory = new MemoryStream(Encoding.UTF8.GetBytes(filename));
                 return read.Read(memory);
             }
-            if (filename.Contains("(") || filename.Contains("*") && filename.Contains(".") && filename.Contains(")") || filename.Contains("|"))
+            if (filename.Contains("(") && filename.Contains("*") && filename.Contains(".") && filename.Contains(")") && filename.Contains("|"))
             {
                 // open file dialog filter
                 var ofd = new Microsoft.Win32.OpenFileDialog { Filter = filename };

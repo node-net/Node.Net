@@ -197,6 +197,13 @@ namespace Node.Net
 		}
 
 		[Test]
+		public void IDictionary_Get_Value()
+		{
+			var dictionary = new Dictionary<string, dynamic> { { "Factor", 1.1 } };
+			Assert.AreEqual(1.1, IDictionaryExtension.Get<double>(dictionary, "Factor", 1.0));
+			Assert.AreEqual(1.1f, IDictionaryExtension.Get<float>(dictionary, "Factor", 1.0f));
+		}
+		[Test]
 		public void IDictionary_GetByName_Foo()
 		{
 			var data = new Dictionary<string, dynamic>();

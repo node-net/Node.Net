@@ -190,6 +190,19 @@ namespace Node.Net
 			File.Delete(tempfile);
 		}
 
+		[Test]
+		public void ReadSpecialChars()
+		{
+			var stream = typeof(ReaderTest).Assembly.GetManifestResourceStream("Node.Net.Tests.Resources.Dictionary.Scene.A.json");
+			Assert.NotNull(stream, nameof(stream));
+			var filename = $"{Path.GetTempPath()}Test(aa).json";
+			if (File.Exists(filename)) File.Delete(filename);
+			stream.CopyToFile(filename);
+
+			var data = Reader.Default.Read(filename);
+			Assert.NotNull(data, nameof(data));
+			File.Delete(filename);
+		}
 		[Test,Explicit,Apartment(ApartmentState.STA)]
 		public void Reader_Open()
 		{
