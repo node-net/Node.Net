@@ -111,7 +111,12 @@ namespace Node.Net
         {
             factory.ClearCache();
         }
-        public bool Logging { get; set; } = false;
+		public void ClearCache(object model)
+		{
+			factory.ClearCache(model);
+		}
+
+		public bool Logging { get; set; } = false;
         public List<string> Log { get; } = new List<string>();
         public static Transform3D GetScalingTransform(IDictionary source) => Beta.Internal.Factories.Model3DFactory.GetScalingTransform(source);
         private readonly Beta.Internal.Factories.Factory factory = new Beta.Internal.Factories.Factory();
