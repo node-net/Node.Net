@@ -18,7 +18,7 @@ namespace Node.Net.Beta.Internal
 			}
 			return false;
 		}
-		public static object GetPropertyValue(this object item, string propertyName)
+		public static object GetPropertyValue(this object item, string propertyName,object defaultValue = null)
 		{
 			if (item != null)
 			{
@@ -28,11 +28,11 @@ namespace Node.Net.Beta.Internal
 					return propertyInfo.GetValue(item);
 				}
 			}
-			return null;
+			return defaultValue;
 		}
-		public static T GetPropertyValue<T>(this object item, string propertyName)
+		public static T GetPropertyValue<T>(this object item, string propertyName,T defaultValue = default(T))
 		{
-			return (T)GetPropertyValue(item, propertyName);
+			return (T)GetPropertyValue(item, propertyName,defaultValue);
 		}
 		public static void SetPropertyValue(this object item, string propertyName, object propertyValue)
 		{
