@@ -99,6 +99,16 @@ namespace Node.Net
 		}
 
 		[Test]
+		public void IDictionary_Collect_By_Type_Name()
+		{
+			var data = Factory.Default.Create<IDictionary>("States.json");
+			Assert.NotNull(data, nameof(data));
+
+			var counties = data.Collect("County");
+			Assert.AreEqual(3105, counties.Count, "counties.Count");
+		}
+
+		[Test]
 		public void IDictonary_Collect_Custom()
 		{
 			var factory = new Factory
@@ -186,6 +196,13 @@ namespace Node.Net
 			Assert.AreEqual(data.ComputeHashCode(), clone.ComputeHashCode(), "HashCodes do not match");
 		}
 
+		[Test]
+		public void IDictionary_Get_Value()
+		{
+			var dictionary = new Dictionary<string, dynamic> { { "Factor", 1.1 } };
+			Assert.AreEqual(1.1, IDictionaryExtension.Get<double>(dictionary, "Factor", 1.0));
+			Assert.AreEqual(1.1f, IDictionaryExtension.Get<float>(dictionary, "Factor", 1.0f));
+		}
 		[Test]
 		public void IDictionary_GetByName_Foo()
 		{

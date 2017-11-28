@@ -92,11 +92,11 @@ namespace Node.Net.Beta.Internal
 		public static IList<T> Collect<T>(this IDictionary idictionary, string search = null)
 		{
 			var results = new List<T>();
-			_Collect<T>(idictionary, search, results, MatchesSearch);
+			_Collect<T>(idictionary, search, results,MatchesSearch);
 
 			return results;
 		}
-		public static IList<T> Collect<T>(this IDictionary dictionary, Func<IDictionary, string, bool> matchFunction, string search = null)
+		public static IList<T> Collect<T>(this IDictionary dictionary,Func<IDictionary,string,bool> matchFunction,string search=null)
 		{
 			var results = new List<T>();
 			_Collect<T>(dictionary, search, results, matchFunction);
@@ -124,7 +124,7 @@ namespace Node.Net.Beta.Internal
 			}
 			return results;
 		}
-		private static void _Collect<T>(this IDictionary idictionary, string search, IList results, Func<IDictionary, string, bool> matchFunction)
+		private static void _Collect<T>(this IDictionary idictionary, string search, IList results,Func<IDictionary,string,bool> matchFunction)
 		{
 			foreach (var item in idictionary.Values)
 			{
@@ -133,13 +133,13 @@ namespace Node.Net.Beta.Internal
 					if (typeof(T).IsAssignableFrom(item.GetType()))
 					{
 						if (!results.Contains(item) && (
-							search == null || matchFunction(item as IDictionary, search)))// MatchesSearch(item as IDictionary, search)))
+							search == null || matchFunction(item as IDictionary,search)))// MatchesSearch(item as IDictionary, search)))
 						{
 							results.Add(item);
 						}
 					}
 					var child_idictionary = item as IDictionary;
-					if (child_idictionary != null) _Collect<T>(child_idictionary, search, results, matchFunction);
+					if (child_idictionary != null) _Collect<T>(child_idictionary, search, results,matchFunction);
 				}
 			}
 		}
@@ -154,7 +154,7 @@ namespace Node.Net.Beta.Internal
 				var matchesValue = false;
 				var matchesKey = false;
 				var words = search.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-				foreach (var word in words)
+				foreach(var word in words)
 				{
 					matchesValue = MatchesValue(idictionary, word);
 					matchesKey = idictionary.GetFullName().Contains(word);
@@ -179,7 +179,7 @@ namespace Node.Net.Beta.Internal
 			}
 			return false;
 		}
-		private static bool MatchesValue(this IDictionary idictionary, string search)
+		private static bool MatchesValue(this IDictionary idictionary,string search)
 		{
 			foreach (var key in idictionary.Keys)
 			{
@@ -291,7 +291,7 @@ namespace Node.Net.Beta.Internal
 			}
 			return dictionary;
 		}
-		public static IDictionary Copy(this IDictionary dictionary, IDictionary source, Func<object, bool> valueFilterFunction, Func<object, bool> keyFilterFunction = null)
+		public static IDictionary Copy(this IDictionary dictionary,IDictionary source,Func<object,bool> valueFilterFunction,Func<object,bool> keyFilterFunction = null)
 		{
 			dictionary.Clear();
 			foreach (var key in source.Keys)
@@ -326,7 +326,7 @@ namespace Node.Net.Beta.Internal
 			var items = dictionary.Collect<T>();
 			foreach (var item in items)
 			{
-				if (item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
+				if(item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
 				if (item.GetFullName() == name) return item;
 			}
 			foreach (var item in items)
@@ -370,7 +370,17 @@ namespace Node.Net.Beta.Internal
 				var value = dictionary[name];
 				if (value != null)
 				{
+					var templateType = typeof(T);
+					var valueType = value.GetType();
 					if (typeof(T).IsAssignableFrom(value.GetType())) return (T)value;
+					if(templateType == typeof(double))
+					{
+						return (T)(object)Convert.ToDouble(value);
+					}
+					if (templateType == typeof(float))
+					{
+						return (T)(object)Convert.ToSingle(value);
+					}
 				}
 			}
 
@@ -487,26 +497,26 @@ namespace Node.Net.Beta.Internal
 		{
 			return ConvertTypes(source, types, typeof(Dictionary<string, dynamic>), typeKey);
 		}
-		public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, Type defaultType, string typeKey = "Type")
+		public static IDictionary ConvertTypes(this IDictionary source, Dictionary<string, Type> types, Type defaultType,string typeKey = "Type")
 		{
 			if (source == null) return null;
 			if (types == null) return source;
 			var copy = Activator.CreateInstance(source.GetType()) as IDictionary;
 			if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
-			var typename = source.Get<string>(typeKey, "");
+			var typename = source.Get<string>(typeKey,"");
 			//if (typename.Length > 0)// && types.ContainsKey(typename))
 			//{
-			var targetType = defaultType;
-			if (types.ContainsKey(typename))
-			{
-				targetType = types[typename];
-				if (targetType == null) throw new Exception($"types['{typename}'] was null");
-			}
-			if (source.GetType() != targetType)
-			{
-				copy = Activator.CreateInstance(targetType) as IDictionary;
-				if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
-			}
+				var targetType = defaultType;
+				if (types.ContainsKey(typename))
+				{
+					targetType = types[typename];
+					if (targetType == null) throw new Exception($"types['{typename}'] was null");
+				}
+				if (source.GetType() != targetType)
+				{
+					copy = Activator.CreateInstance(targetType) as IDictionary;
+					if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
+				}
 			//}
 			foreach (string key in source.Keys)
 			{
@@ -514,14 +524,14 @@ namespace Node.Net.Beta.Internal
 				var childDictionary = value as IDictionary;
 				if (childDictionary != null)
 				{
-					copy[key] = ConvertTypes(childDictionary, types, defaultType, typeKey);
+					copy[key] = ConvertTypes(childDictionary, types,defaultType, typeKey);
 				}
 				else
 				{
 					var childEnumerable = value as IEnumerable;
 					if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
 					{
-						copy[key] = childEnumerable.ConvertTypes(types, defaultType, typeKey);
+						copy[key] = childEnumerable.ConvertTypes(types,defaultType, typeKey);
 					}
 					else
 					{
@@ -566,11 +576,11 @@ namespace Node.Net.Beta.Internal
 		{
 			return GetLocalToWorld(dictionary).Transform(new Point3D(0, 0, 0));
 		}
-		public static void SetWorldOrigin(this IDictionary dictionary, Point3D world_origin)
+		public static void SetWorldOrigin(this IDictionary dictionary,Point3D world_origin)
 		{
 			var parent = dictionary.GetNearestAncestor<IDictionary>();
 			var local_origin = world_origin;
-			if (parent != null)
+			if(parent != null)
 			{
 				var parent_world_origin = parent.GetWorldOrigin();
 				var delta = world_origin - parent_world_origin;
@@ -587,7 +597,7 @@ namespace Node.Net.Beta.Internal
 			return GetLocalToParent(dictionary).Transform(new Point3D(0, 0, 0));
 		}
 
-		public static void SetOrigin(this IDictionary dictionary, Point3D origin)
+		public static void SetOrigin(this IDictionary dictionary,Point3D origin)
 		{
 			dictionary["X"] = $"{origin.X} m";
 			dictionary["Y"] = $"{origin.Y} m";
@@ -603,12 +613,12 @@ namespace Node.Net.Beta.Internal
 			return GetLocalToParent(dictionary).GetRotationsXYZ();
 		}
 
-		public static IDictionary GetAncestor(this IDictionary child, string key, string value)
+		public static IDictionary GetAncestor(this IDictionary child,string key,string value)
 		{
 			var parent = child.GetParent() as IDictionary;
-			if (child != null && parent != null)
+			if(child != null && parent != null)
 			{
-				if (parent.Contains(key))
+				if(parent.Contains(key))
 				{
 					if (parent[key].ToString() == value) return parent;
 				}
@@ -656,7 +666,7 @@ namespace Node.Net.Beta.Internal
 			return GetFurthestAncestor<IDictionary>(child);
 
 		}
-		public static int CompareTo(this IDictionary a, IDictionary b)
+		public static int CompareTo(this IDictionary a,IDictionary b)
 		{
 			// Less than zero
 			// The current instance precedes the object specified by the CompareTo method in the sort order.
@@ -674,7 +684,7 @@ namespace Node.Net.Beta.Internal
 				var aEnumerator = a.Keys.GetEnumerator();
 				var bEnumerator = b.Keys.GetEnumerator();
 
-				while (aEnumerator.MoveNext())
+				while(aEnumerator.MoveNext())
 				{
 					bEnumerator.MoveNext();
 					var aKey = aEnumerator.Current as IComparable;
@@ -688,7 +698,7 @@ namespace Node.Net.Beta.Internal
 						var aValue = a[aKey] as IComparable;
 						var bValue = b[bKey] as IComparable;
 						var valueCompare = 0;
-						if (aValue != null)
+						if(aValue != null)
 						{
 							valueCompare = aValue.CompareTo(bValue);
 							if (valueCompare != 0) return valueCompare;
@@ -718,14 +728,14 @@ namespace Node.Net.Beta.Internal
 			if (items.Count > 0) return items[0];
 			return default(T);
 		}
-		public static void SetCurrent<T>(this IDictionary dictionary, string name) where T : IDictionary
+		public static void SetCurrent<T>(this IDictionary dictionary,string name) where T : IDictionary
 		{
 			var metaData = Internal.Collections.MetaData.Default.GetMetaData(dictionary);
 			if (!metaData.Contains("Currents")) { metaData.Add("Currents", new Dictionary<Type, string>()); }
 			var currents = Internal.Collections.MetaData.Default.GetMetaData(dictionary)["Currents"] as IDictionary;
 			currents[typeof(T)] = name;
 
-
+		   
 		}
 	}
 }
