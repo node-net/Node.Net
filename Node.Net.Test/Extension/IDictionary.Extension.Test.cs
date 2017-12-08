@@ -310,6 +310,7 @@ namespace Node.Net
 				{ "A", new Dictionary<string,dynamic>{{"Type","Widget"}} },
 				{ "B", new Dictionary<string,dynamic>{{"Type","Foo"}} }
 			};
+			d0.DeepUpdateParents();
 			var current = d0.GetCurrent<IDictionary>();
 			Assert.NotNull(current, nameof(current));
 			Assert.AreEqual("Widget", current["Type"].ToString());
@@ -325,6 +326,9 @@ namespace Node.Net
 			{
 				{"foo0" , new Foo{ { "bar0", new Bar() }, { "bar1", new Bar()} } }
 			};
+			data.DeepUpdateParents();
+			var foo0 = data.Find<Foo>("foo0");
+			Assert.NotNull(foo0, nameof(foo0));
 			Assert.AreEqual("foo0", data.Find<Foo>("foo0").GetName(), "data.Find<Foo>('foo0').Name");
 			Assert.AreEqual("bar1", data.Find<Bar>("bar1").GetName(), "data.Find<Bar>('bar1').Name");
 		}
