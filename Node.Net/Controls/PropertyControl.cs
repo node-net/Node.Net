@@ -55,9 +55,9 @@ namespace Node.Net.Controls
         }
 
         public static readonly DependencyProperty SelectedObjectProperty =
-            DependencyProperty.Register(nameof(SelectedObject), typeof(object), typeof(PropertyControl), new FrameworkPropertyMetadata(OnProjectChanged));
+            DependencyProperty.Register(nameof(SelectedObject), typeof(object), typeof(PropertyControl), new FrameworkPropertyMetadata(OnSelectedObjectChanged));
 
-        private static void OnProjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSelectedObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var propertyGrid = (d as PropertyControl).PropertyGrid as System.Windows.Forms.PropertyGrid;
             propertyGrid.SelectedObject = e.NewValue;
@@ -78,6 +78,11 @@ namespace Node.Net.Controls
             }
         }
         public object PropertyGrid { get { return propertyGrid; } }
+		public bool ToolbarVisible
+		{
+			get { return propertyGrid.ToolbarVisible; }
+			set { propertyGrid.ToolbarVisible = value; }
+		}
         private System.Windows.Forms.PropertyGrid propertyGrid = new System.Windows.Forms.PropertyGrid
         {
             ToolbarVisible = false,

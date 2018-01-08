@@ -13,7 +13,7 @@
         public static void SetMetaData(this object instance, string name, object value) => Beta.Internal.ObjectExtension.SetMetaData(instance, name, value);
         public static T GetMetaData<T>(this object instance, string name) => Beta.Internal.ObjectExtension.GetMetaData<T>(instance, name);
         public static bool HasPropertyValue(this object item, string propertyName) => Beta.Internal.ObjectExtension.HasPropertyValue(item, propertyName);
-        public static T GetPropertyValue<T>(this object item, string propertyName) => Beta.Internal.ObjectExtension.GetPropertyValue<T>(item, propertyName);
+        public static T GetPropertyValue<T>(this object item, string propertyName,T defaultValue=default(T)) => Beta.Internal.ObjectExtension.GetPropertyValue<T>(item, propertyName,defaultValue);
         public static void SetPropertyValue(this object item, string propertyName, object propertyValue) => Beta.Internal.ObjectExtension.SetPropertyValue(item, propertyName, propertyValue);
         public static void SetParent(this object source, object parent)
         {
