@@ -85,7 +85,11 @@ namespace Node.Net
 			get { return jsonReader.DefaultObjectType; }
 			set { jsonReader.DefaultObjectType = value; }
 		}
-		public Dictionary<string, Type> ConversionTypeNames { get { return jsonReader.ConversionTypeNames; } }
+		public Dictionary<string, Type> ConversionTypeNames
+		{
+			get { return jsonReader.ConversionTypeNames; }
+			set { jsonReader.ConversionTypeNames = value; }
+		}
 
 		private Beta.Internal.Readers.JSONReader jsonReader = new Beta.Internal.Readers.JSONReader();
 		public object Open(string name)
