@@ -1,4 +1,4 @@
-VERSION='1.0.503'
+VERSION='1.0.504'
 require 'dev'
 
 task :publish  do

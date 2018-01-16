@@ -7,7 +7,7 @@ using static System.Math;
 
 namespace Node.Net
 {
-	[TestFixture,Category("IDictionary")]
+	[TestFixture, Category("IDictionary")]
 	public class IDictionaryExtensionTest
 	{
 		[Test]
@@ -23,6 +23,7 @@ namespace Node.Net
 			var parentOrigin = matrix.Transform(new Point3D(0, 0, 0));
 			Assert.AreEqual(10, parentOrigin.X);
 		}
+
 		[Test]
 		public void IDictionary_Extension_GetLengthMeters()
 		{
@@ -33,8 +34,9 @@ namespace Node.Net
 			};
 
 			Assert.AreEqual(10, data.GetLengthMeters("Width"), "Width");
-			Assert.AreEqual(183,Round (data.GetLengthMeters("Length"),0), "Length");
+			Assert.AreEqual(183, Round(data.GetLengthMeters("Length"), 0), "Length");
 		}
+
 		[Test]
 		public void IDictionary_Extension_GetLocalToWorld()
 		{
@@ -91,7 +93,7 @@ namespace Node.Net
 		[TestCase("Scene.Cubes.json", null, 10)]
 		[TestCase("States.json", null, 3205)]
 		[TestCase("States.json", "Colorado", 66)]
-		public void IDictionary_Generic_Collect(string name,string search, int expectedCount)
+		public void IDictionary_Generic_Collect(string name, string search, int expectedCount)
 		{
 			var data = Factory.Default.Create<IDictionary>(name);
 			Assert.NotNull(data, nameof(data));
@@ -128,7 +130,6 @@ namespace Node.Net
 			};
 			factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
 
-
 			var iwidget = factory.Create<IWidget>("Widget.1.json");
 			Assert.NotNull(iwidget, "iwidget Widget.1.json");
 			var foos = iwidget.Collect(typeof(IFoo));
@@ -140,17 +141,17 @@ namespace Node.Net
 			var ibar = bars[0] as IBar;
 			Assert.AreSame(ifoo, ibar.Parent);
 			Assert.AreEqual("bar0", ibar.Name);
-
-
 		}
+
 		[Test]
-		[TestCase("States.json",2)]
-		public void IDictionary_CollectValues(string name,int expectedCount)
+		[TestCase("States.json", 2)]
+		public void IDictionary_CollectValues(string name, int expectedCount)
 		{
 			var data = Factory.Default.Create<IDictionary>(name);
 			Assert.NotNull(data, nameof(data));
 			Assert.AreEqual(expectedCount, data.CollectValues<string>("Type").Count);
 		}
+
 		[Test]
 		public void IDictonary_CollectValues2()
 		{
@@ -171,7 +172,6 @@ namespace Node.Net
 			};
 			factory.ManifestResourceAssemblies.Add(typeof(FactoryTest).Assembly);
 
-
 			var iwidget = factory.Create<IWidget>("Widget.1.json");
 			Assert.NotNull(iwidget, "iwidget Widget.1.json");
 			var foos = iwidget.Collect(typeof(IFoo));
@@ -181,8 +181,6 @@ namespace Node.Net
 			Assert.True(type_names.Contains("Widget"));
 			Assert.True(type_names.Contains("Foo"));
 			Assert.True(type_names.Contains("Bar"));
-
-
 		}
 
 		[Test]
@@ -203,6 +201,7 @@ namespace Node.Net
 			Assert.AreEqual(1.1, IDictionaryExtension.Get<double>(dictionary, "Factor", 1.0));
 			Assert.AreEqual(1.1f, IDictionaryExtension.Get<float>(dictionary, "Factor", 1.0f));
 		}
+
 		[Test]
 		public void IDictionary_GetByName_Foo()
 		{
@@ -214,6 +213,7 @@ namespace Node.Net
 
 			var null_item = data.Get<IDictionary>(null);
 		}
+
 		[Test]
 		public void IDictionary_GetByName()
 		{
@@ -260,36 +260,39 @@ namespace Node.Net
 			elements = converted.Collect<Element>();
 			Assert.AreEqual(dictionaries.Count, elements.Count);
 		}
+
 		[Test]
 		public void IDictionary_GetHashCode()
 		{
-			Assert.AreNotEqual(0, "X".GetHashCode(),"X");
-			Assert.AreNotEqual(0, "10 m".GetHashCode(),"10 m");
+			Assert.AreNotEqual(0, "X".GetHashCode(), "X");
+			Assert.AreNotEqual(0, "10 m".GetHashCode(), "10 m");
 			var data = new Dictionary<string, dynamic> { { "X", "10 m" } };
 			Assert.AreNotEqual(0, data.ComputeHashCode());
 		}
+
 		[Test]
 		public void IDictionary_CompareTo()
 		{
-			var dictionary1 = new Dictionary<string,dynamic>
+			var dictionary1 = new Dictionary<string, dynamic>
 			{
 				{"X" , "10 m" }
 			};
-			var dictionary2 = new Dictionary<string,dynamic>
+			var dictionary2 = new Dictionary<string, dynamic>
 			{
 				{"X" ,"11 m" }
 			};
-			Assert.AreEqual(0, dictionary1.CompareTo(dictionary1),"dictionary1.CompareTo(dictionary1)");
-			Assert.AreEqual(1, dictionary1.CompareTo(null),"dictionary1.CompareTo(null)");
+			Assert.AreEqual(0, dictionary1.CompareTo(dictionary1), "dictionary1.CompareTo(dictionary1)");
+			Assert.AreEqual(1, dictionary1.CompareTo(null), "dictionary1.CompareTo(null)");
 			Assert.AreEqual(-1, dictionary1.CompareTo(dictionary2), "dictionary1.CompareTo(dictionary2)");
-			Assert.AreEqual(1, dictionary2.CompareTo(dictionary1),"dictionary2.CompareTo(dictionary1)");
+			Assert.AreEqual(1, dictionary2.CompareTo(dictionary1), "dictionary2.CompareTo(dictionary1)");
 		}
+
 		[Test]
 		public void IDictionary_SetWorldOrigin()
 		{
 			var d0 = new Dictionary<string, dynamic>();
 			d0.SetWorldOrigin(new Point3D(100, 10, 1));
-			Assert.AreEqual("100 m", d0.Get<string>("X"),"X");
+			Assert.AreEqual("100 m", d0.Get<string>("X"), "X");
 			Assert.AreEqual("10 m", d0.Get<string>("Y"), "Y");
 			Assert.AreEqual("1 m", d0.Get<string>("Z"), "Z");
 
@@ -302,6 +305,7 @@ namespace Node.Net
 			Assert.AreEqual("1 m", d1.Get<string>("Y"), "Y");
 			Assert.AreEqual("0.1 m", d1.Get<string>("Z"), "Z");
 		}
+
 		[Test]
 		public void IDictionary_GetSet_Current()
 		{
@@ -319,6 +323,7 @@ namespace Node.Net
 			current = d0.GetCurrent<IDictionary>();
 			Assert.AreEqual("Foo", current["Type"].ToString());
 		}
+
 		[Test]
 		public void IDictionary_Find()
 		{
@@ -331,6 +336,19 @@ namespace Node.Net
 			Assert.NotNull(foo0, nameof(foo0));
 			Assert.AreEqual("foo0", data.Find<Foo>("foo0").GetName(), "data.Find<Foo>('foo0').Name");
 			Assert.AreEqual("bar1", data.Find<Bar>("bar1").GetName(), "data.Find<Bar>('bar1').Name");
+		}
+
+		public void IDictionary_GetUniqueKey()
+		{
+			var data = new Dictionary<string, dynamic>();
+
+			var key = data.GetUniqueKey("foo");
+			data.Add(key, "0");
+			key = data.GetUniqueKey("foo");
+			data.Add(key, "1");
+			key = data.GetUniqueKey("foo");
+			data.Add(key, "1");
+			Assert.AreEqual(3, data.Keys.Count);
 		}
 	}
 }
