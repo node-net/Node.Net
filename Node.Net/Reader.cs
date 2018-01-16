@@ -35,6 +35,11 @@ namespace Node.Net
 			}
 		}
 
+		public static List<string> xaml_markers = new List<string>
+		{
+			"http://schemas.microsoft.com/winfx/2006/xaml/presentation",
+			"<MeshGeometry3D",
+		};
 		public static object ReadXml(Stream original_stream)
 		{
 			using (var signatureReader = new Beta.Internal.Readers.SignatureReader(original_stream))
@@ -42,12 +47,22 @@ namespace Node.Net
 				var filename = original_stream.GetFileName();
 				var stream = signatureReader.Stream;
 				var signature_string = signatureReader.Signature;
+				foreach(var marker in xaml_markers)
+				{
+					if(signature_string.Contains(marker))
+					{
+						var item = System.Windows.Markup.XamlReader.Load(stream);
+						item.SetFileName(filename);
+						return item;
+					}
+				}
+				/*
 				if (signature_string.Contains("http://schemas.microsoft.com/winfx/2006/xaml/presentation"))
 				{
 					var item = System.Windows.Markup.XamlReader.Load(stream);
 					item.SetFileName(filename);
 					return item;
-				}
+				}*/
 				if (signature_string.IndexOf("<") == 0)
 				{
 					var xdoc = new System.Xml.XmlDocument();
@@ -70,7 +85,11 @@ namespace Node.Net
 			get { return jsonReader.DefaultObjectType; }
 			set { jsonReader.DefaultObjectType = value; }
 		}
-		public Dictionary<string, Type> ConversionTypeNames { get { return jsonReader.ConversionTypeNames; } }
+		public Dictionary<string, Type> ConversionTypeNames
+		{
+			get { return jsonReader.ConversionTypeNames; }
+			set { jsonReader.ConversionTypeNames = value; }
+		}
 
 		private Beta.Internal.Readers.JSONReader jsonReader = new Beta.Internal.Readers.JSONReader();
 		public object Open(string name)

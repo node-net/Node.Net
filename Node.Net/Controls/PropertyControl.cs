@@ -9,84 +9,84 @@ using System.Windows.Controls;
 
 namespace Node.Net.Controls
 {
-    public class PropertyControl : UserControl, IDisposable
-    {
-        public PropertyControl()
-        {
-            Content = new System.Windows.Forms.Integration.WindowsFormsHost
-            {
-                Child = propertyGrid
-            };
-            DataContextChanged += PropertyControl_DataContextChanged;
-        }
+	public class PropertyControl : UserControl, IDisposable
+	{
+		public PropertyControl()
+		{
+			Content = new System.Windows.Forms.Integration.WindowsFormsHost
+			{
+				Child = propertyGrid
+			};
+			DataContextChanged += PropertyControl_DataContextChanged;
+		}
 
-        private void PropertyControl_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
-        {
-            if (DataContext != null)
-            {
-                var npc = DataContext as INotifyPropertyChanged;
-                if (npc != null)
-                {
-                    npc.PropertyChanged += Npc_PropertyChanged;
-                }
-                if (DataContext.HasPropertyValue("SelectedObject"))
-                {
-                    SelectedObject = DataContext.GetPropertyValue<object>("SelectedObject");
-                    return;
-                }
-            }
-            SelectedObject = DataContext;
-        }
-        private void Npc_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (DataContext != null)
-            {
-                if (DataContext.HasPropertyValue("SelectedObject"))
-                {
-                    SelectedObject = DataContext.GetPropertyValue<object>("SelectedObject");
-                }
-            }
-        }
+		private void PropertyControl_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+		{
+			if (DataContext != null)
+			{
+				var npc = DataContext as INotifyPropertyChanged;
+				if (npc != null)
+				{
+					npc.PropertyChanged += Npc_PropertyChanged;
+				}
+				if (DataContext.HasPropertyValue("SelectedObject"))
+				{
+					SelectedObject = DataContext.GetPropertyValue<object>("SelectedObject");
+					return;
+				}
+			}
+			SelectedObject = DataContext;
+		}
+		private void Npc_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (DataContext != null)
+			{
+				if (DataContext.HasPropertyValue("SelectedObject"))
+				{
+					SelectedObject = DataContext.GetPropertyValue<object>("SelectedObject");
+				}
+			}
+		}
 
-        public object SelectedObject
-        {
-            get { return GetValue(SelectedObjectProperty); }
-            set { SetValue(SelectedObjectProperty, value); }
-        }
+		public object SelectedObject
+		{
+			get { return GetValue(SelectedObjectProperty); }
+			set { SetValue(SelectedObjectProperty, value); }
+		}
 
-        public static readonly DependencyProperty SelectedObjectProperty =
-            DependencyProperty.Register(nameof(SelectedObject), typeof(object), typeof(PropertyControl), new FrameworkPropertyMetadata(OnSelectedObjectChanged));
+		public static readonly DependencyProperty SelectedObjectProperty =
+			DependencyProperty.Register(nameof(SelectedObject), typeof(object), typeof(PropertyControl), new FrameworkPropertyMetadata(OnSelectedObjectChanged));
 
-        private static void OnSelectedObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var propertyGrid = (d as PropertyControl).PropertyGrid as System.Windows.Forms.PropertyGrid;
-            propertyGrid.SelectedObject = e.NewValue;
-        }
+		private static void OnSelectedObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var propertyGrid = (d as PropertyControl).PropertyGrid as System.Windows.Forms.PropertyGrid;
+			propertyGrid.SelectedObject = e.NewValue;
+		}
 
-        public void Dispose()
-        {
-            Dispose(true);
-            System.GC.SuppressFinalize(this);
-        }
+		public void Dispose()
+		{
+			Dispose(true);
+			System.GC.SuppressFinalize(this);
+		}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                propertyGrid.Dispose();
-                (Content as System.Windows.Forms.Integration.WindowsFormsHost).Dispose();
-            }
-        }
-        public object PropertyGrid { get { return propertyGrid; } }
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				propertyGrid.Dispose();
+				(Content as System.Windows.Forms.Integration.WindowsFormsHost).Dispose();
+			}
+		}
+		public object PropertyGrid { get { return propertyGrid; } }
 		public bool ToolbarVisible
 		{
 			get { return propertyGrid.ToolbarVisible; }
 			set { propertyGrid.ToolbarVisible = value; }
 		}
-        private System.Windows.Forms.PropertyGrid propertyGrid = new System.Windows.Forms.PropertyGrid
-        {
-            ToolbarVisible = false,
-            LargeButtons = true
-        };
-    }
+		private System.Windows.Forms.PropertyGrid propertyGrid = new System.Windows.Forms.PropertyGrid
+		{
+			ToolbarVisible = false,
+			LargeButtons = true
+		};
+	}
 }

@@ -13,7 +13,7 @@ namespace Node.Net.Beta.Internal.Readers
 		public Type DefaultObjectType = typeof(Dictionary<string, dynamic>);
 		public Type DefaultDocumentType = typeof(Dictionary<string, dynamic>);
 		public Func<IDictionary> CreateDefaultObject { get; set; } = null;
-		public Dictionary<string, Type> ConversionTypeNames { get; } = new Dictionary<string, Type>();
+		public Dictionary<string, Type> ConversionTypeNames { get; set; } = new Dictionary<string, Type>();
 		public int ObjectCount { get; set; }
 		public object Read(Stream stream)
 		{
