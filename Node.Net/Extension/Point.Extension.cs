@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using static System.Math;
 
 namespace Node.Net
 {
@@ -100,6 +101,27 @@ namespace Node.Net
 				}
 			}
 			return results.ToArray();
+		}
+
+		public static double GetArea(this Point[] points)
+		{
+			if (points.Length > 2)
+			{
+				Point[] pts = new Point[points.Length + 1];
+				points.CopyTo(pts, 0);
+				pts[points.Length] = points[0];
+
+				double area = 0.0;
+				for (int i = 0; i < points.Length; i++)
+				{
+					area +=
+						(pts[i + 1].X - pts[i].X) *
+						(pts[i + 1].Y + pts[i].Y) / 2;
+				}
+
+				return Abs(area);
+			}
+			return 0.0;
 		}
 	}
 }
