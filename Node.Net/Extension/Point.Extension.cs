@@ -27,7 +27,7 @@ namespace Node.Net
 			return points.ToArray();
 		}
 
-		public static string ToString(Point[] points)
+		public static string GetString(this Point[] points)
 		{
 			var builder = new StringBuilder();
 			foreach (var point in points)
@@ -122,6 +122,21 @@ namespace Node.Net
 				return Abs(area);
 			}
 			return 0.0;
+		}
+
+		public static Point[] ParsePoints(string value)
+		{
+			var results = new List<Point>();
+			var words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+			foreach (var word in words)
+			{
+				var svalues = word.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+				if (svalues.Length == 2)
+				{
+					results.Add(new Point(Convert.ToSingle(svalues[0]), Convert.ToSingle(svalues[1])));
+				}
+			}
+			return results.ToArray();
 		}
 	}
 }
