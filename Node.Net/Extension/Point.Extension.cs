@@ -138,5 +138,35 @@ namespace Node.Net
 			}
 			return results.ToArray();
 		}
+
+		public static Point GetCentroid(this Point[] points, double tolerance = 0.0001)
+		{
+			var pts = points.Close(tolerance);
+			int num_points = points.Length;
+
+			var X = 0.0;
+			var Y = 0.0;
+			double second_factor;
+			for (int i = 0; i < num_points; i++)
+			{
+				second_factor =
+					pts[i].X * pts[i + 1].Y -
+					pts[i + 1].X * pts[i].Y;
+				X += (pts[i].X + pts[i + 1].X) * second_factor;
+				Y += (pts[i].Y + pts[i + 1].Y) * second_factor;
+			}
+
+			var polygon_area = pts.GetArea();
+			X /= (6 * polygon_area);
+			Y /= (6 * polygon_area);
+
+			if (X < 0)
+			{
+				X = -X;
+				Y = -Y;
+			}
+
+			return new Point(X, Y);
+		}
 	}
 }
