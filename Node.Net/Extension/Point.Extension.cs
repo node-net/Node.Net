@@ -114,9 +114,9 @@ namespace Node.Net
 				double area = 0.0;
 				for (int i = 0; i < points.Length; i++)
 				{
-					area +=
-						(pts[i + 1].X - pts[i].X) *
+					var segment_area = (pts[i + 1].X - pts[i].X) *
 						(pts[i + 1].Y + pts[i].Y) / 2;
+					area += segment_area;
 				}
 
 				return Abs(area);
@@ -142,7 +142,7 @@ namespace Node.Net
 		public static Point GetCentroid(this Point[] points, double tolerance = 0.0001)
 		{
 			var pts = points.Close(tolerance);
-			int num_points = points.Length;
+			int num_points = pts.Length - 1;
 
 			var X = 0.0;
 			var Y = 0.0;
@@ -167,6 +167,11 @@ namespace Node.Net
 			}
 
 			return new Point(X, Y);
+		}
+
+		public static List<Point[]> Subdivide(this Point[] points, Point origin, double deltaX, double deltaY)
+		{
+			return null;
 		}
 	}
 }

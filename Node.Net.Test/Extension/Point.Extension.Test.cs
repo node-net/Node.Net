@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using System.Windows;
-using NUnit.Framework;
 
 namespace Node.Net.Tests
 {
@@ -35,8 +27,39 @@ namespace Node.Net.Tests
 		[Test]
 		public void ParsePoints()
 		{
-			var points = PointExtension.ParsePoints("0,0 10,0 10,10 0,10");
+			var points = PointExtension.ParsePoints("0,0 10,0 10,5 0,5");
 			Assert.AreEqual(4, points.Length);
+			Assert.AreEqual(0.0, points[0].X);
+			Assert.AreEqual(0.0, points[0].Y);
+			Assert.AreEqual(10.0, points[1].X);
+			Assert.AreEqual(0.0, points[1].Y);
+			Assert.AreEqual(10.0, points[2].X);
+			Assert.AreEqual(5.0, points[2].Y);
+			Assert.AreEqual(0.0, points[3].X);
+			Assert.AreEqual(5.0, points[3].Y);
+		}
+
+		[Test]
+		public void GetArea()
+		{
+			var points = PointExtension.ParsePoints("0,0 100,0 100,50 0,50");
+			Assert.AreEqual(5000.0, points.GetArea());
+		}
+
+		[Test]
+		public void GetLength()
+		{
+			var points = PointExtension.ParsePoints("0,0 100,0 100,50 0,50 0,0");
+			Assert.AreEqual(300.0, points.GetLength());
+		}
+
+		[Test]
+		public void GetCentroid()
+		{
+			var points = PointExtension.ParsePoints("-50,-25 50,-25 50,25 -50,25 -50,-25");
+			var centroid = points.GetCentroid();
+			Assert.AreEqual(0.0, centroid.X, "centroid.X");
+			Assert.AreEqual(0.0, centroid.Y, "centroid.Y");
 		}
 	}
 }
