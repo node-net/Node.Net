@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,7 +11,7 @@ using NUnit.Framework;
 
 namespace Node.Net.Tests
 {
-	[TestFixture]
+	[TestFixture, Category(nameof(PointExtension))]
 	internal class PointExtensionTest
 	{
 		[Test]
@@ -24,6 +23,42 @@ namespace Node.Net.Tests
 			Assert.AreEqual(40.0, outline.GetLength(), "outline.GetLength()");
 			var points = outline.GetPointsAtInterval(5.0);
 			Assert.AreEqual(9, points.Length, "points.Length");
+		}
+
+		[Test]
+		public void GetString()
+		{
+			var points = new Point[] { new Point(0, 0), new Point(10, 0), new Point(10, 10), new Point(0, 10) };
+			Assert.AreEqual("0,0 10,0 10,10 0,10", points.GetString());
+		}
+
+		[Test]
+		public void ParsePoints()
+		{
+			var points = PointExtension.ParsePoints("0,0 10,0 10,5 0,5");
+			Assert.AreEqual(4, points.Length);
+			Assert.AreEqual(0.0, points[0].X);
+			Assert.AreEqual(0.0, points[0].Y);
+			Assert.AreEqual(10.0, points[1].X);
+			Assert.AreEqual(0.0, points[1].Y);
+			Assert.AreEqual(10.0, points[2].X);
+			Assert.AreEqual(5.0, points[2].Y);
+			Assert.AreEqual(0.0, points[3].X);
+			Assert.AreEqual(5.0, points[3].Y);
+		}
+
+		[Test]
+		public void GetArea()
+		{
+			var points = PointExtension.ParsePoints("0,0 100,0 100,50 0,50");
+			Assert.AreEqual(5000.0, points.GetArea());
+		}
+
+		[Test]
+		public void GetLength()
+		{
+			var points = PointExtension.ParsePoints("0,0 100,0 100,50 0,50 0,0");
+			Assert.AreEqual(300.0, points.GetLength());
 		}
 	}
 }

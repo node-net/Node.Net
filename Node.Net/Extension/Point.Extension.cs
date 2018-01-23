@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using static System.Math;
 
 namespace Node.Net
 {
@@ -26,7 +27,7 @@ namespace Node.Net
 			return points.ToArray();
 		}
 
-		public static string ToString(Point[] points)
+		public static string GetString(this Point[] points)
 		{
 			var builder = new StringBuilder();
 			foreach (var point in points)
@@ -100,6 +101,47 @@ namespace Node.Net
 				}
 			}
 			return results.ToArray();
+		}
+
+		public static double GetArea(this Point[] points)
+		{
+			if (points.Length > 2)
+			{
+				Point[] pts = new Point[points.Length + 1];
+				points.CopyTo(pts, 0);
+				pts[points.Length] = points[0];
+
+				double area = 0.0;
+				for (int i = 0; i < points.Length; i++)
+				{
+					var segment_area = (pts[i + 1].X - pts[i].X) *
+						(pts[i + 1].Y + pts[i].Y) / 2;
+					area += segment_area;
+				}
+
+				return Abs(area);
+			}
+			return 0.0;
+		}
+
+		public static Point[] ParsePoints(string value)
+		{
+			var results = new List<Point>();
+			var words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+			foreach (var word in words)
+			{
+				var svalues = word.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+				if (svalues.Length == 2)
+				{
+					results.Add(new Point(Convert.ToSingle(svalues[0]), Convert.ToSingle(svalues[1])));
+				}
+			}
+			return results.ToArray();
+		}
+
+		public static List<Point[]> Subdivide(this Point[] points, Point origin, double deltaX, double deltaY)
+		{
+			return null;
 		}
 	}
 }
