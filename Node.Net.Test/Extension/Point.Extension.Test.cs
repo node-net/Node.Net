@@ -61,5 +61,14 @@ namespace Node.Net.Tests
 			Assert.AreEqual(0.0, centroid.X, "centroid.X");
 			Assert.AreEqual(0.0, centroid.Y, "centroid.Y");
 		}
+
+		[Test]
+		public void Offset()
+		{
+			var points = PointExtension.ParsePoints("-1,-1 1,-1 1,1 -1,1");
+			var offset = points.Offset(2.0);
+			Assert.AreEqual(-3.0, offset[0].X, "offset[0].X");
+			Assert.AreEqual(3.0, offset[2].X, "offset[2].X");
+		}
 	}
 }
