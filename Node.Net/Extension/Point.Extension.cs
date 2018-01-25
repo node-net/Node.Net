@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+
+//using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using static System.Math;
 
 namespace Node.Net
@@ -167,6 +170,39 @@ namespace Node.Net
 			}
 
 			return new Point(X, Y);
+		}
+
+		public static Point GetDimensions(this Point[] points)
+		{
+			if (points.Length > 0)
+			{
+				var min = points[0];
+				var max = points[0];
+				foreach (var point in points)
+				{
+					if (point.X < min.X) min.X = point.X;
+					if (point.Y < min.Y) min.Y = point.Y;
+					if (point.X > max.X) max.X = point.X;
+					if (point.Y > max.Y) max.Y = point.Y;
+				}
+				return new Point(max.X - min.X, max.Y - min.Y);
+			}
+			return new Point(0, 0);
+		}
+
+		public static Point[] Offset(this Point[] points, double distance)
+		{
+			var dims = points.GetDimensions();
+			var scale = (dims.X / 2.0 + distance) / (dims.X / 2.0);
+			var scaleTransform = new ScaleTransform(scale, scale);
+
+			var result = new List<Point>();
+			var pointFs = new List<System.Drawing.PointF>();
+			foreach (var point in points)
+			{
+				result.Add(scaleTransform.Transform(point));
+			}
+			return result.ToArray();
 		}
 
 		public static List<Point[]> Subdivide(this Point[] points, Point origin, double deltaX, double deltaY)
