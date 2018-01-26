@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+
+//using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using static System.Math;
 
 namespace Node.Net
@@ -137,6 +140,91 @@ namespace Node.Net
 				}
 			}
 			return results.ToArray();
+		}
+
+		public static Point GetCentroid(this Point[] points, double tolerance = 0.0001)
+		{
+			var pts = points.Close(tolerance);
+			int num_points = pts.Length - 1;
+
+			var X = 0.0;
+			var Y = 0.0;
+			double second_factor;
+			for (int i = 0; i < num_points; i++)
+			{
+				second_factor =
+					pts[i].X * pts[i + 1].Y -
+					pts[i + 1].X * pts[i].Y;
+				X += (pts[i].X + pts[i + 1].X) * second_factor;
+				Y += (pts[i].Y + pts[i + 1].Y) * second_factor;
+			}
+
+			var polygon_area = pts.GetArea();
+			X /= (6 * polygon_area);
+			Y /= (6 * polygon_area);
+
+			if (X < 0)
+			{
+				X = -X;
+				Y = -Y;
+			}
+
+			return new Point(X, Y);
+		}
+
+		public static Point GetDimensions(this Point[] points)
+		{
+			if (points.Length > 0)
+			{
+				var min = points[0];
+				var max = points[0];
+				foreach (var point in points)
+				{
+					if (point.X < min.X) min.X = point.X;
+					if (point.Y < min.Y) min.Y = point.Y;
+					if (point.X > max.X) max.X = point.X;
+					if (point.Y > max.Y) max.Y = point.Y;
+				}
+				return new Point(max.X - min.X, max.Y - min.Y);
+			}
+			return new Point(0, 0);
+		}
+
+		public static Point[] Offset(this Point[] points, double distance)
+		{
+			var dims = points.GetDimensions();
+			var scale = (dims.X / 2.0 + distance) / (dims.X / 2.0);
+			var scaleTransform = new ScaleTransform(scale, scale);
+
+			var result = new List<Point>();
+			var pointFs = new List<System.Drawing.PointF>();
+			foreach (var point in points)
+			{
+				result.Add(scaleTransform.Transform(point));
+			}
+			return result.ToArray();
+		}
+
+		public static bool Contains(this Point[] polygon, Point point)
+		{
+			if (polygon == null) return false;
+			int polygonLength = polygon.Length, i = 0;
+			bool inside = false;
+			double pointX = point.X, pointY = point.Y;
+			double startX, startY, endX, endY;
+			Point endPoint = polygon[polygonLength - 1];
+			endX = endPoint.X;
+			endY = endPoint.Y;
+			while (i < polygonLength)
+			{
+				startX = endX; startY = endY;
+				endPoint = polygon[i++];
+				endX = endPoint.X; endY = endPoint.Y;
+				inside ^= (endY > pointY ^ startY > pointY) /* ? pointY inside [startY;endY] segment ? */
+						  && /* if so, test if it is under the segment */
+						  ((pointX - endX) < (pointY - endY) * (startX - endX) / (startY - endY));
+			}
+			return inside;
 		}
 
 		public static List<Point[]> Subdivide(this Point[] points, Point origin, double deltaX, double deltaY)

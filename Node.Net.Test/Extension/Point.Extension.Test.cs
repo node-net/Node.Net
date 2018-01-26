@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using System.Windows;
-using NUnit.Framework;
 
 namespace Node.Net.Tests
 {
@@ -59,6 +51,24 @@ namespace Node.Net.Tests
 		{
 			var points = PointExtension.ParsePoints("0,0 100,0 100,50 0,50 0,0");
 			Assert.AreEqual(300.0, points.GetLength());
+		}
+
+		[Test]
+		public void GetCentroid()
+		{
+			var points = PointExtension.ParsePoints("-50,-25 50,-25 50,25 -50,25 -50,-25");
+			var centroid = points.GetCentroid();
+			Assert.AreEqual(0.0, centroid.X, "centroid.X");
+			Assert.AreEqual(0.0, centroid.Y, "centroid.Y");
+		}
+
+		[Test]
+		public void Offset()
+		{
+			var points = PointExtension.ParsePoints("-1,-1 1,-1 1,1 -1,1");
+			var offset = points.Offset(2.0);
+			Assert.AreEqual(-3.0, offset[0].X, "offset[0].X");
+			Assert.AreEqual(3.0, offset[2].X, "offset[2].X");
 		}
 	}
 }
