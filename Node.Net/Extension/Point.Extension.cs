@@ -212,6 +212,28 @@ namespace Node.Net
 			return list.ToArray();
 		}
 
+		public static bool Contains(this Point[] polygon, Point point)
+		{
+			if (polygon == null) return false;
+			int polygonLength = polygon.Length, i = 0;
+			bool inside = false;
+			double pointX = point.X, pointY = point.Y;
+			double startX, startY, endX, endY;
+			Point endPoint = polygon[polygonLength - 1];
+			endX = endPoint.X;
+			endY = endPoint.Y;
+			while (i < polygonLength)
+			{
+				startX = endX; startY = endY;
+				endPoint = polygon[i++];
+				endX = endPoint.X; endY = endPoint.Y;
+				inside ^= (endY > pointY ^ startY > pointY) /* ? pointY inside [startY;endY] segment ? */
+						  && /* if so, test if it is under the segment */
+						  ((pointX - endX) < (pointY - endY) * (startX - endX) / (startY - endY));
+			}
+			return inside;
+		}
+
 		public static List<Point[]> Subdivide(this Point[] points, Point origin, double deltaX, double deltaY)
 		{
 			return null;
