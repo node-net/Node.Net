@@ -205,6 +205,13 @@ namespace Node.Net
 			return result.ToArray();
 		}
 
+		public static Point[] Reverse(this Point[] points)
+		{
+			var list = new List<Point>(points);
+			list.Reverse();
+			return list.ToArray();
+		}
+
 		public static List<Point[]> Subdivide(this Point[] points, Point origin, double deltaX, double deltaY)
 		{
 			return null;
