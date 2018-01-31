@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Node.Net.Beta.Internal.Readers
 {
-	sealed class JSONReader
+	internal sealed class JSONReader
 	{
 		public static JSONReader Default { get; } = new JSONReader();
 		public Type DefaultArrayType = typeof(List<dynamic>);
@@ -15,6 +15,7 @@ namespace Node.Net.Beta.Internal.Readers
 		public Func<IDictionary> CreateDefaultObject { get; set; } = null;
 		public Dictionary<string, Type> ConversionTypeNames { get; set; } = new Dictionary<string, Type>();
 		public int ObjectCount { get; set; }
+
 		public object Read(Stream stream)
 		{
 			using (System.IO.TextReader reader = new StreamReader(stream, Encoding.Default, true, 1024, true))
@@ -35,6 +36,7 @@ namespace Node.Net.Beta.Internal.Readers
 
 		private static char doubleQuote = '"';
 		private static char singleQuote = '\'';
+
 		private object Read(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
@@ -66,6 +68,7 @@ namespace Node.Net.Beta.Internal.Readers
 			}
 			return null;
 		}
+
 		private static object ReadBool(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
@@ -78,6 +81,7 @@ namespace Node.Net.Beta.Internal.Readers
 			reader.Read(); reader.Read(); reader.Read(); reader.Read(); reader.Read(); // read char f,a,l,s,e
 			return false;
 		}
+
 		private static object ReadNumber(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
@@ -102,6 +106,7 @@ namespace Node.Net.Beta.Internal.Readers
 		private static string unicodeBackslash = @"\u005c";
 		private static string backslash = @"\";
 		private static string stringResult = "";
+
 		private static object ReadString(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
@@ -109,7 +114,9 @@ namespace Node.Net.Beta.Internal.Readers
 			reader.Read(); // consume escaped character
 			return stringResult.Replace(unicodeDoubleQuotes, doubleQuotes).Replace(unicodeBackslash, backslash);
 		}
+
 		private static char arrayOpenCharacter = '[';
+
 		private object ReadArray(System.IO.TextReader reader)
 		{
 			var list = Activator.CreateInstance(DefaultArrayType) as IList;
@@ -155,24 +162,38 @@ namespace Node.Net.Beta.Internal.Readers
 			return list.Simplify();
 		}
 
-
 		private static char objectOpenCharacter = '{';
 		private static char objectCloseCharacter = '}';
 		private static char comma = ',';
 
 		private object ReadObject(System.IO.TextReader reader)
 		{
-			//var dictionary = (ObjectCount == 0) ? Activator.CreateInstance(DefaultDocumentType) as IDictionary :
-			//                                              Activator.CreateInstance(DefaultObjectType) as IDictionary;
 			IDictionary dictionary = null;
 			if (ObjectCount == 0)
 			{
+				if (DefaultDocumentType == null) throw new Exception("DefaultDocumentType is null");
 				dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
+				if (dictionary == null)
+				{
+					throw new Exception($"Unable to create instance of {DefaultDocumentType.GetType().FullName}");
+				}
 			}
 			else
 			{
-				if (CreateDefaultObject != null) dictionary = CreateDefaultObject();
-				else dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
+				if (CreateDefaultObject != null)
+				{
+					dictionary = CreateDefaultObject();
+					if (dictionary == null) { throw new Exception("CreateDefaultObject returned null"); }
+				}
+				else
+				{
+					if (DefaultObjectType == null) throw new Exception("DefaultObjectType is null");
+					dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
+					if (dictionary == null)
+					{
+						throw new Exception($"Unable to create isntance of {DefaultObjectType.GetType().FullName}");
+					}
+				}
 			}
 
 			ObjectCount++;
@@ -213,6 +234,10 @@ namespace Node.Net.Beta.Internal.Readers
 				if (!ConversionTypeNames[type].IsAssignableFrom(dictionary.GetType()))
 				{
 					var converted = Activator.CreateInstance(ConversionTypeNames[type]) as IDictionary;
+					if (converted == null)
+					{
+						throw new Exception($"Unable to create instance of {ConversionTypeNames[type].FullName}");
+					}
 					foreach (var key in dictionary.Keys)
 					{
 						if (!converted.Contains(key))
