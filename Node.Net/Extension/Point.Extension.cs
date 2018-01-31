@@ -30,13 +30,13 @@ namespace Node.Net
 			return points.ToArray();
 		}
 
-		public static string GetString(this Point[] points)
+		public static string GetString(this Point[] points,int decimals=1)
 		{
 			var builder = new StringBuilder();
 			foreach (var point in points)
 			{
 				if (builder.Length > 0) builder.Append(' ');
-				builder.Append($"{point.X},{point.Y}");
+				builder.Append($"{Round(point.X,decimals)},{Round(point.Y,decimals)}");
 			}
 			return builder.ToString();
 		}
