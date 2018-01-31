@@ -7,6 +7,7 @@ log/
 
 commit.message
 *.gem 
+*.ide
 
 # User-specific files
 *.suo
