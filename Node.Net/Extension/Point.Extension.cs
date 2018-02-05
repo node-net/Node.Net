@@ -30,13 +30,13 @@ namespace Node.Net
 			return points.ToArray();
 		}
 
-		public static string GetString(this Point[] points,int decimals=1)
+		public static string GetString(this Point[] points, int decimals = 1)
 		{
 			var builder = new StringBuilder();
 			foreach (var point in points)
 			{
 				if (builder.Length > 0) builder.Append(' ');
-				builder.Append($"{Round(point.X,decimals)},{Round(point.Y,decimals)}");
+				builder.Append($"{Round(point.X, decimals)},{Round(point.Y, decimals)}");
 			}
 			return builder.ToString();
 		}
@@ -212,7 +212,7 @@ namespace Node.Net
 			return list.ToArray();
 		}
 
-		public static bool Contains(this Point[] polygon, Point point)
+		public static bool Contains(this Point[] polygon, Point point, double tolerance = 0.00001)
 		{
 			if (polygon == null) return false;
 			int polygonLength = polygon.Length, i = 0;
@@ -230,6 +230,7 @@ namespace Node.Net
 				inside ^= (endY > pointY ^ startY > pointY) /* ? pointY inside [startY;endY] segment ? */
 						  && /* if so, test if it is under the segment */
 						  ((pointX - endX) < (pointY - endY) * (startX - endX) / (startY - endY));
+				if (Abs(point.X - startX) < tolerance && Abs(point.Y - startY) < tolerance) return true;
 			}
 			return inside;
 		}

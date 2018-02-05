@@ -70,5 +70,13 @@ namespace Node.Net.Tests
 			Assert.AreEqual(-3.0, offset[0].X, "offset[0].X");
 			Assert.AreEqual(3.0, offset[2].X, "offset[2].X");
 		}
+
+		[Test]
+		public void Contains()
+		{
+			var points = PointExtension.ParsePoints("-20,-10 20,-10 20,10 -20,10");
+			Assert.True(points.Contains(new Point(-20, -10)), "Contains(-20,-10)");
+			Assert.True(points.Contains(new Point(-20, 10)), "Contains(-20,10)");
+		}
 	}
 }
