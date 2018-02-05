@@ -255,9 +255,23 @@ namespace Node.Net
 
 		public static bool IsPointOnLine(Point pointA, Point pointB, Point testPoint, double epsilon = 0.00001)
 		{
-			var a = (pointB.Y - pointA.Y) / (pointB.X - pointA.X);
-			var b = pointA.Y - a * pointA.X;
-			if (Abs(testPoint.Y - (a * testPoint.X + b)) < epsilon) return true;
+			if (Abs(pointB.X - pointA.X) < epsilon)
+			{
+				// vertical line
+				if (Abs(testPoint.X - pointA.X) < epsilon)
+				{
+					if (Abs(testPoint.Y - pointA.Y) < epsilon) return true;
+					if (Abs(testPoint.Y - pointB.Y) < epsilon) return true;
+					if (testPoint.Y < pointB.Y && testPoint.Y > pointA.Y) return true;
+					if (testPoint.Y > pointB.Y && testPoint.Y < pointA.Y) return true;
+				}
+			}
+			else
+			{
+				var a = (pointB.Y - pointA.Y) / (pointB.X - pointA.X);
+				var b = pointA.Y - a * pointA.X;
+				if (Abs(testPoint.Y - (a * testPoint.X + b)) < epsilon) return true;
+			}
 			return false;
 		}
 
