@@ -212,7 +212,7 @@ namespace Node.Net
 			return list.ToArray();
 		}
 
-		public static bool Contains(this Point[] polygon, Point point, double tolerance = 0.00001)
+		public static bool Contains(this Point[] polygon, Point point, double epsilon = 0.00001)
 		{
 			if (polygon == null) return false;
 			int polygonLength = polygon.Length, i = 0;
@@ -227,12 +227,38 @@ namespace Node.Net
 				startX = endX; startY = endY;
 				endPoint = polygon[i++];
 				endX = endPoint.X; endY = endPoint.Y;
-				inside ^= (endY > pointY ^ startY > pointY) /* ? pointY inside [startY;endY] segment ? */
+				inside ^= (endY >= pointY ^ startY >= pointY) /* ? pointY inside [startY;endY] segment ? */
 						  && /* if so, test if it is under the segment */
 						  ((pointX - endX) < (pointY - endY) * (startX - endX) / (startY - endY));
-				if (Abs(point.X - startX) < tolerance && Abs(point.Y - startY) < tolerance) return true;
+				//if (Abs(point.X - startX) < tolerance && Abs(point.Y - startY) < tolerance) return true;
+			}
+
+			if (!inside)
+			{
+				// test if point is on outline
+				var closed = polygon.Close(epsilon);
+				if (closed.IsPointOnPolyline(point)) return true;
 			}
 			return inside;
+		}
+
+		public static bool IsPointOnPolyline(this Point[] points, Point point, double epsilon = 0.00001)
+		{
+			for (int i = 1; i < points.Length; ++i)
+			{
+				var pointA = points[i - 1];
+				var pointB = points[i];
+				if (IsPointOnLine(pointA, pointB, point, epsilon)) return true;
+			}
+			return false;
+		}
+
+		public static bool IsPointOnLine(Point pointA, Point pointB, Point testPoint, double epsilon = 0.00001)
+		{
+			var a = (pointB.Y - pointA.Y) / (pointB.X - pointA.X);
+			var b = pointA.Y - a * pointA.X;
+			if (Abs(testPoint.Y - (a * testPoint.X + b)) < epsilon) return true;
+			return false;
 		}
 
 		public static List<Point[]> Subdivide(this Point[] points, Point origin, double deltaX, double deltaY)
