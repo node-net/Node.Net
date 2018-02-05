@@ -77,6 +77,22 @@ namespace Node.Net.Tests
 			var points = PointExtension.ParsePoints("-20,-10 20,-10 20,10 -20,10");
 			Assert.True(points.Contains(new Point(-20, -10)), "Contains(-20,-10)");
 			Assert.True(points.Contains(new Point(-20, 10)), "Contains(-20,10)");
+			Assert.True(points.Contains(new Point(-10, 10)), "Contains(-10,10)");
+		}
+
+		[Test]
+		public void IsPointOnLine()
+		{
+			Assert.False(PointExtension.IsPointOnLine(new Point(-20, -10), new Point(20, -10), new Point(0, -11)), "a");
+			Assert.True(PointExtension.IsPointOnLine(new Point(-20, -10), new Point(20, -10), new Point(0, -10)), "b");
+			Assert.True(PointExtension.IsPointOnLine(new Point(20, 10), new Point(-20, 10), new Point(0, 10)), "c");
+		}
+
+		[Test]
+		public void IsPointOnPolyline()
+		{
+			var points = PointExtension.ParsePoints("-20,-10 20,-10 20,10 -20,10");
+			Assert.True(points.IsPointOnPolyline(new Point(0, 10)));
 		}
 	}
 }
