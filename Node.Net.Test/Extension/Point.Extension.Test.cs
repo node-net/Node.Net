@@ -106,7 +106,7 @@ namespace Node.Net.Tests
 			var closed = points.Close();
 			Assert.AreEqual(5, closed.Length);
 
-			var open = closed.UnClose();
+			var open = closed.Open();
 			Assert.AreEqual(4, open.Length);
 		}
 	}

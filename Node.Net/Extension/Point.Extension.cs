@@ -54,7 +54,7 @@ namespace Node.Net
 			return points;
 		}
 
-		public static Point[] UnClose(this Point[] points, double tolerance = 0.0001)
+		public static Point[] Open(this Point[] points, double tolerance = 0.0001)
 		{
 			if (points.Length < 2) return points;
 			var delta = Point.Subtract(points[points.Length - 1], points[0]);
