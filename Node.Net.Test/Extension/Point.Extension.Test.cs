@@ -96,5 +96,18 @@ namespace Node.Net.Tests
 			Assert.True(points.IsPointOnPolyline(new Point(0, 10)));
 			Assert.True(points.IsPointOnPolyline(new Point(20, 0)));
 		}
+
+		[Test]
+		public void Close()
+		{
+			var points = PointExtension.ParsePoints("-20,-10 20,-10 20,10 -20,10");
+			Assert.AreEqual(4, points.Length);
+
+			var closed = points.Close();
+			Assert.AreEqual(5, closed.Length);
+
+			var open = closed.UnClose();
+			Assert.AreEqual(4, open.Length);
+		}
 	}
 }

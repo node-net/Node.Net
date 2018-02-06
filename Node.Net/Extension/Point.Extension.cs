@@ -54,6 +54,22 @@ namespace Node.Net
 			return points;
 		}
 
+		public static Point[] UnClose(this Point[] points, double tolerance = 0.0001)
+		{
+			if (points.Length < 2) return points;
+			var delta = Point.Subtract(points[points.Length - 1], points[0]);
+			if (delta.Length < tolerance)
+			{
+				var result = new List<Point>();
+				for (int i = 0; i < points.Length - 1; ++i)
+				{
+					result.Add(points[i]);
+				}
+				return result.ToArray();
+			}
+			return points;
+		}
+
 		public static double GetLength(this Point[] points)
 		{
 			if (points.Length < 2) return 0.0;
