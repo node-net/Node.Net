@@ -205,6 +205,20 @@ namespace Node.Net
 			return result.ToArray();
 		}
 
+		public static Point[] Scale(this Point[] points, double scale)
+		{
+			var dims = points.GetDimensions();
+			var scaleTransform = new ScaleTransform(scale, scale);
+
+			var result = new List<Point>();
+			var pointFs = new List<System.Drawing.PointF>();
+			foreach (var point in points)
+			{
+				result.Add(scaleTransform.Transform(point));
+			}
+			return result.ToArray();
+		}
+
 		public static Point[] Reverse(this Point[] points)
 		{
 			var list = new List<Point>(points);
