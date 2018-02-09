@@ -90,6 +90,22 @@ namespace Node.Net
 		}
 
 		[Test]
+		public void IDictionary_Collect_Search()
+		{
+			var data = new Dictionary<string, dynamic>
+			{
+				{"1",new Dictionary<string,dynamic>{{"Type","Widget"}} },
+				{"2",new Dictionary<string,dynamic>{{"Type","Widget"}} },
+				{"11",new Dictionary<string,dynamic>{{"Type","Widget"}} },
+				{"12",new Dictionary<string,dynamic>{{"Type","Widget"}} }
+			};
+			data.DeepUpdateParents();
+
+			var results = data.Collect<IDictionary>("1");
+			Assert.AreEqual(3, results.Count, "results.Count 1");
+		}
+
+		[Test]
 		[TestCase("Scene.Cubes.json", null, 10)]
 		[TestCase("States.json", null, 3205)]
 		[TestCase("States.json", "Colorado", 66)]
