@@ -69,6 +69,11 @@ namespace Node.Net.Tests
 			var offset = points.Offset(2.0);
 			Assert.AreEqual(-3.0, offset[0].X, "offset[0].X");
 			Assert.AreEqual(3.0, offset[2].X, "offset[2].X");
+
+			points = PointExtension.ParsePoints("-10,-5 10,-5 10,5 -10,5");
+			offset = points.Offset(2.0);
+			Assert.AreEqual(-12, offset[0].X, "offset[0].X");
+			Assert.AreEqual(-7, offset[0].Y, "offset[0].Y");
 		}
 
 		[Test]

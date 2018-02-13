@@ -209,8 +209,9 @@ namespace Node.Net
 		public static Point[] Offset(this Point[] points, double distance)
 		{
 			var dims = points.GetDimensions();
-			var scale = (dims.X / 2.0 + distance) / (dims.X / 2.0);
-			var scaleTransform = new ScaleTransform(scale, scale);
+			var scaleX = (dims.X / 2.0 + distance) / (dims.X / 2.0);
+			var scaleY = (dims.Y / 2.0 + distance) / (dims.Y / 2.0);
+			var scaleTransform = new ScaleTransform(scaleX, scaleY);
 
 			var result = new List<Point>();
 			var pointFs = new List<System.Drawing.PointF>();
