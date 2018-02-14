@@ -206,20 +206,35 @@ namespace Node.Net
 			return new Point(0, 0);
 		}
 
+		public static Point[] Move(this Point[] points, Point offset)
+		{
+			var results = new List<Point>();
+			foreach (var point in points)
+			{
+				results.Add(new Point(point.X + offset.X, point.Y + offset.Y));
+			}
+			return results.ToArray();
+		}
+
 		public static Point[] Offset(this Point[] points, double distance)
 		{
+			var centroid = points.GetCentroid();
+
+			var centeredPoints = points.Move(new Point(-centroid.X, -centroid.Y));
+
 			var dims = points.GetDimensions();
 			var scaleX = (dims.X / 2.0 + distance) / (dims.X / 2.0);
 			var scaleY = (dims.Y / 2.0 + distance) / (dims.Y / 2.0);
 			var scaleTransform = new ScaleTransform(scaleX, scaleY);
 
-			var result = new List<Point>();
+			var resultA = new List<Point>();
 			var pointFs = new List<System.Drawing.PointF>();
-			foreach (var point in points)
+			foreach (var point in centeredPoints)
 			{
-				result.Add(scaleTransform.Transform(point));
+				resultA.Add(scaleTransform.Transform(point));
 			}
-			return result.ToArray();
+
+			return resultA.ToArray().Move(centroid);
 		}
 
 		public static Point[] Scale(this Point[] points, double scale)
