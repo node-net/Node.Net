@@ -256,7 +256,7 @@ QD:\work\github\node-net\Node.Net\Node.Net.Test\Extension\Object.Extension.Test.
 (( ))$ ,
 
 -- 
-// 00 11# +ê
+// 00 11# +â
 PD:\work\github\node-net\Node.Net\Node.Net.Test\Extension\Point.Extension.Test.cs
 
  "
@@ -284,22 +284,22 @@ PD:\work\github\node-net\Node.Net\Node.Net.Test\Extension\Point.Extension.Test.c
 ;; << 
 << ==  >>  
 
-BB 
-DD EE 
-EE FF GG 
+BB <
+DD EE II 	JJ NN 	OO n
+EE FF GG JJ 	KK LL OO 	PP QQ RR SS 
 
-KK (
-MM NN OO PP 
+WW (
+YY ZZ [[ \\ 
 
-TT 
+`` 
 
-]] 
-__ `` aa 
+ii 
+kk ll mm 
 
-ee 
-gg hh jj 
-jj kk mm 
-mm nn ­
+qq 
+ss tt vv 
+vv ww yy 
+yy zz ­
 QD:\work\github\node-net\Node.Net\Node.Net.Test\Extension\String.Extension.Test.cs
 
 

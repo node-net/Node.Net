@@ -4148,7 +4148,7 @@ GetSetName-- 
 ;116 7
 }22 	
 }33 
-}44 ¾x
+}44 ´Š
 PD:\work\github\node-net\Node.Net\Node.Net.Test\Extension\Point.Extension.Test.cs
 	namespace 	
 Node
@@ -4722,409 +4722,561 @@ PD:\work\github\node-net\Node.Net\Node.Net.Test\Extension\Point.Extension.Test.c
 ,GG# $
 $strGG% 2
 )GG2 3
-;GG3 4
-}HH 
-[JJ 
-TestJJ 
-]JJ 
-publicKK 
-voidKK	 
-ContainsKK 
-(KK 
-)KK 
-{LL 
-varMM 
-pointsMM 
-=MM 
-PointExtensionMM 
-.MM 
-ParsePointsMM *
-(MM* +
-$strMM+ H
-)MMH I
-;MMI J
-AssertNN 	
-.NN	 
-
-TrueNN
- 
-(NN 
-pointsNN 
-.NN 
-ContainsNN 
-(NN 
-newNN "
-PointNN# (
-(NN( )
--NN) *
-$numNN* ,
-,NN, -
--NN. /
-$numNN/ 1
-)NN1 2
-)NN2 3
-,NN3 4
-$strNN5 H
-)NNH I
-;NNI J
-AssertOO 	
-.OO	 
-
-TrueOO
- 
-(OO 
-pointsOO 
-.OO 
-ContainsOO 
-(OO 
-newOO "
-PointOO# (
-(OO( )
--OO) *
-$numOO* ,
-,OO, -
-$numOO. 0
-)OO0 1
-)OO1 2
-,OO2 3
-$strOO4 F
-)OOF G
-;OOG H
+;GG3 4
+pointsII 	
+=II
+ 
+PointExtensionII 
+.II 
+ParsePointsII &
+(II& '
+$strII' @
+)II@ A
+;IIA B
+offsetJJ 	
+=JJ
+ 
+pointsJJ 
+.JJ 
+OffsetJJ 
+(JJ 
+$numJJ 
+)JJ 
+;JJ 
+AssertKK 	
+.KK	 
+
+AreEqualKK
+ 
+(KK 
+-KK 
+$numKK 
+,KK 
+offsetKK 
+[KK 
+$numKK  
+]KK  !
+.KK! "
+XKK" #
+,KK# $
+$strKK% 2
+)KK2 3
+;KK3 4
+AssertLL 	
+.LL	 
+
+AreEqualLL
+ 
+(LL 
+-LL 
+$numLL 
+,LL 
+offsetLL 
+[LL 
+$numLL 
+]LL  
+.LL  !
+YLL! "
+,LL" #
+$strLL$ 1
+)LL1 2
+;LL2 3
+pointsNN 	
+=NN
+ 
+PointExtensionNN 
+.NN 
+ParsePointsNN &
+(NN& '
+$strNN' :
+)NN: ;
+;NN; <
+offsetOO 	
+=OO
+ 
+pointsOO 
+.OO 
+OffsetOO 
+(OO 
+$numOO 
+)OO 
+;OO 
 AssertPP 	
 .PP	 
-
-TruePP
- 
-(PP 
-pointsPP 
-.PP 
-ContainsPP 
-(PP 
-newPP "
-PointPP# (
-(PP( )
--PP) *
-$numPP* ,
-,PP, -
-$numPP. 0
-)PP0 1
+
+AreEqualPP
+ 
+(PP 
+-PP 
+$numPP 
+,PP 
+offsetPP 
+[PP 
+$numPP 
+]PP  
+.PP  !
+XPP! "
+,PP" #
+$strPP$ 1
 )PP1 2
-,PP2 3
-$strPP4 F
-)PPF G
-;PPG H
-}QQ 
-[SS 
-TestSS 
-]SS 
-publicTT 
-voidTT	 
-IsPointOnLineTT 
-(TT 
-)TT 
-{UU 
-AssertVV 	
-.VV	 
+;PP2 3
+AssertQQ 	
+.QQ	 
+
+AreEqualQQ
+ 
+(QQ 
+-QQ 
+$numQQ 
+,QQ 
+offsetQQ 
+[QQ 
+$numQQ 
+]QQ  
+.QQ  !
+YQQ! "
+,QQ" #
+$strQQ$ 1
+)QQ1 2
+;QQ2 3
+AssertRR 	
+.RR	 
+
+AreEqualRR
+ 
+(RR 
+$numRR 
+,RR 
+offsetRR 
+[RR 
+$numRR 
+]RR  
+.RR  !
+XRR! "
+,RR" #
+$strRR$ 1
+)RR1 2
+;RR2 3
+AssertSS 	
+.SS	 
+
+AreEqualSS
+ 
+(SS 
+$numSS 
+,SS 
+offsetSS 
+[SS 
+$numSS 
+]SS 
+.SS  
+YSS  !
+,SS! "
+$strSS# 0
+)SS0 1
+;SS1 2
+}TT 
+[VV 
+TestVV 
+]VV 
+publicWW 
+voidWW	 
+ContainsWW 
+(WW 
+)WW 
+{XX 
+varYY 
+pointsYY 
+=YY 
+PointExtensionYY 
+.YY 
+ParsePointsYY *
+(YY* +
+$strYY+ H
+)YYH I
+;YYI J
+AssertZZ 	
+.ZZ	 
+
+TrueZZ
+ 
+(ZZ 
+pointsZZ 
+.ZZ 
+ContainsZZ 
+(ZZ 
+newZZ "
+PointZZ# (
+(ZZ( )
+-ZZ) *
+$numZZ* ,
+,ZZ, -
+-ZZ. /
+$numZZ/ 1
+)ZZ1 2
+)ZZ2 3
+,ZZ3 4
+$strZZ5 H
+)ZZH I
+;ZZI J
+Assert[[ 	
+.[[	 
+
+True[[
+ 
+([[ 
+points[[ 
+.[[ 
+Contains[[ 
+([[ 
+new[[ "
+Point[[# (
+([[( )
+-[[) *
+$num[[* ,
+,[[, -
+$num[[. 0
+)[[0 1
+)[[1 2
+,[[2 3
+$str[[4 F
+)[[F G
+;[[G H
+Assert\\ 	
+.\\	 
+
+True\\
+ 
+(\\ 
+points\\ 
+.\\ 
+Contains\\ 
+(\\ 
+new\\ "
+Point\\# (
+(\\( )
+-\\) *
+$num\\* ,
+,\\, -
+$num\\. 0
+)\\0 1
+)\\1 2
+,\\2 3
+$str\\4 F
+)\\F G
+;\\G H
+}]] 
+[__ 
+Test__ 
+]__ 
+public`` 
+void``	 
+IsPointOnLine`` 
+(`` 
+)`` 
+{aa 
+Assertbb 	
+.bb	 
 
-FalseVV
+Falsebb
  
-(VV 
-PointExtensionVV 
-.VV 
-IsPointOnLineVV ,
-(VV, -
-newVV- 0
-PointVV1 6
-(VV6 7
--VV7 8
-$numVV8 :
-,VV: ;
--VV< =
-$numVV= ?
-)VV? @
-,VV@ A
-newVVB E
-PointVVF K
-(VVK L
-$numVVL N
-,VVN O
--VVP Q
-$numVVQ S
-)VVS T
-,VVT U
-newVVV Y
-PointVVZ _
-(VV_ `
-$numVV` a
-,VVa b
--VVc d
-$numVVd f
-)VVf g
-)VVg h
-,VVh i
-$strVVj m
-)VVm n
-;VVn o
-AssertWW 	
-.WW	 
+(bb 
+PointExtensionbb 
+.bb 
+IsPointOnLinebb ,
+(bb, -
+newbb- 0
+Pointbb1 6
+(bb6 7
+-bb7 8
+$numbb8 :
+,bb: ;
+-bb< =
+$numbb= ?
+)bb? @
+,bb@ A
+newbbB E
+PointbbF K
+(bbK L
+$numbbL N
+,bbN O
+-bbP Q
+$numbbQ S
+)bbS T
+,bbT U
+newbbV Y
+PointbbZ _
+(bb_ `
+$numbb` a
+,bba b
+-bbc d
+$numbbd f
+)bbf g
+)bbg h
+,bbh i
+$strbbj m
+)bbm n
+;bbn o
+Assertcc 	
+.cc	 
 
-TrueWW
+Truecc
  
-(WW 
-PointExtensionWW 
-.WW 
-IsPointOnLineWW +
-(WW+ ,
-newWW, /
-PointWW0 5
-(WW5 6
--WW6 7
-$numWW7 9
-,WW9 :
--WW; <
-$numWW< >
-)WW> ?
-,WW? @
-newWWA D
-PointWWE J
-(WWJ K
-$numWWK M
-,WWM N
--WWO P
-$numWWP R
-)WWR S
-,WWS T
-newWWU X
-PointWWY ^
-(WW^ _
-$numWW_ `
-,WW` a
--WWb c
-$numWWc e
-)WWe f
-)WWf g
-,WWg h
-$strWWi l
-)WWl m
-;WWm n
-AssertXX 	
-.XX	 
+(cc 
+PointExtensioncc 
+.cc 
+IsPointOnLinecc +
+(cc+ ,
+newcc, /
+Pointcc0 5
+(cc5 6
+-cc6 7
+$numcc7 9
+,cc9 :
+-cc; <
+$numcc< >
+)cc> ?
+,cc? @
+newccA D
+PointccE J
+(ccJ K
+$numccK M
+,ccM N
+-ccO P
+$numccP R
+)ccR S
+,ccS T
+newccU X
+PointccY ^
+(cc^ _
+$numcc_ `
+,cc` a
+-ccb c
+$numccc e
+)cce f
+)ccf g
+,ccg h
+$strcci l
+)ccl m
+;ccm n
+Assertdd 	
+.dd	 
 
-TrueXX
+Truedd
  
-(XX 
-PointExtensionXX 
-.XX 
-IsPointOnLineXX +
-(XX+ ,
-newXX, /
-PointXX0 5
-(XX5 6
-$numXX6 8
-,XX8 9
-$numXX: <
-)XX< =
-,XX= >
-newXX? B
-PointXXC H
-(XXH I
--XXI J
-$numXXJ L
-,XXL M
-$numXXN P
-)XXP Q
-,XXQ R
-newXXS V
-PointXXW \
-(XX\ ]
-$numXX] ^
-,XX^ _
-$numXX` b
-)XXb c
-)XXc d
-,XXd e
-$strXXf i
-)XXi j
-;XXj k
-AssertYY 	
-.YY	 
+(dd 
+PointExtensiondd 
+.dd 
+IsPointOnLinedd +
+(dd+ ,
+newdd, /
+Pointdd0 5
+(dd5 6
+$numdd6 8
+,dd8 9
+$numdd: <
+)dd< =
+,dd= >
+newdd? B
+PointddC H
+(ddH I
+-ddI J
+$numddJ L
+,ddL M
+$numddN P
+)ddP Q
+,ddQ R
+newddS V
+PointddW \
+(dd\ ]
+$numdd] ^
+,dd^ _
+$numdd` b
+)ddb c
+)ddc d
+,ddd e
+$strddf i
+)ddi j
+;ddj k
+Assertee 	
+.ee	 
 
-TrueYY
+Trueee
  
-(YY 
-PointExtensionYY 
-.YY 
-IsPointOnLineYY +
-(YY+ ,
-newYY, /
-PointYY0 5
-(YY5 6
-$numYY6 8
-,YY8 9
--YY: ;
-$numYY; =
-)YY= >
-,YY> ?
-newYY@ C
-PointYYD I
-(YYI J
-$numYYJ L
-,YYL M
-$numYYN P
-)YYP Q
-,YYQ R
-newYYS V
-PointYYW \
-(YY\ ]
-$numYY] _
-,YY_ `
-$numYYa b
-)YYb c
-)YYc d
-,YYd e
-$strYYf i
-)YYi j
-;YYj k
-}ZZ 
-[\\ 
-Test\\ 
-]\\ 
-public]] 
-void]]	 
-IsPointOnPolyline]] 
-(]]  
-)]]  !
-{^^ 
-var__ 
-points__ 
-=__ 
-PointExtension__ 
-.__ 
-ParsePoints__ *
-(__* +
-$str__+ H
-)__H I
-;__I J
-Assert`` 	
-.``	 
+(ee 
+PointExtensionee 
+.ee 
+IsPointOnLineee +
+(ee+ ,
+newee, /
+Pointee0 5
+(ee5 6
+$numee6 8
+,ee8 9
+-ee: ;
+$numee; =
+)ee= >
+,ee> ?
+newee@ C
+PointeeD I
+(eeI J
+$numeeJ L
+,eeL M
+$numeeN P
+)eeP Q
+,eeQ R
+neweeS V
+PointeeW \
+(ee\ ]
+$numee] _
+,ee_ `
+$numeea b
+)eeb c
+)eec d
+,eed e
+$streef i
+)eei j
+;eej k
+}ff 
+[hh 
+Testhh 
+]hh 
+publicii 
+voidii	 
+IsPointOnPolylineii 
+(ii  
+)ii  !
+{jj 
+varkk 
+pointskk 
+=kk 
+PointExtensionkk 
+.kk 
+ParsePointskk *
+(kk* +
+$strkk+ H
+)kkH I
+;kkI J
+Assertll 	
+.ll	 
 
-True``
+Truell
  
-(`` 
-points`` 
-.`` 
-IsPointOnPolyline`` '
-(``' (
-new``( +
-Point``, 1
-(``1 2
-$num``2 3
-,``3 4
-$num``5 7
-)``7 8
-)``8 9
-)``9 :
-;``: ;
-Assertaa 	
-.aa	 
+(ll 
+pointsll 
+.ll 
+IsPointOnPolylinell '
+(ll' (
+newll( +
+Pointll, 1
+(ll1 2
+$numll2 3
+,ll3 4
+$numll5 7
+)ll7 8
+)ll8 9
+)ll9 :
+;ll: ;
+Assertmm 	
+.mm	 
 
-Trueaa
+Truemm
  
-(aa 
-pointsaa 
-.aa 
-IsPointOnPolylineaa '
-(aa' (
-newaa( +
-Pointaa, 1
-(aa1 2
-$numaa2 4
-,aa4 5
-$numaa6 7
-)aa7 8
-)aa8 9
-)aa9 :
-;aa: ;
-}bb 
-[dd 
-Testdd 
-]dd 
-publicee 
-voidee	 
-Closeee 
-(ee 
-)ee 
-{ff 
-vargg 
-pointsgg 
-=gg 
-PointExtensiongg 
-.gg 
-ParsePointsgg *
-(gg* +
-$strgg+ H
-)ggH I
-;ggI J
-Asserthh 	
-.hh	 
+(mm 
+pointsmm 
+.mm 
+IsPointOnPolylinemm '
+(mm' (
+newmm( +
+Pointmm, 1
+(mm1 2
+$nummm2 4
+,mm4 5
+$nummm6 7
+)mm7 8
+)mm8 9
+)mm9 :
+;mm: ;
+}nn 
+[pp 
+Testpp 
+]pp 
+publicqq 
+voidqq	 
+Closeqq 
+(qq 
+)qq 
+{rr 
+varss 
+pointsss 
+=ss 
+PointExtensionss 
+.ss 
+ParsePointsss *
+(ss* +
+$strss+ H
+)ssH I
+;ssI J
+Asserttt 	
+.tt	 
 
-AreEqualhh
+AreEqualtt
  
-(hh 
-$numhh 
-,hh 
-pointshh 
-.hh 
-Lengthhh #
-)hh# $
-;hh$ %
-varjj 
-closedjj 
-=jj 
-pointsjj 
-.jj 
-Closejj 
-(jj 
-)jj 
-;jj 
-Assertkk 	
-.kk	 
+(tt 
+$numtt 
+,tt 
+pointstt 
+.tt 
+Lengthtt #
+)tt# $
+;tt$ %
+varvv 
+closedvv 
+=vv 
+pointsvv 
+.vv 
+Closevv 
+(vv 
+)vv 
+;vv 
+Assertww 	
+.ww	 
 
-AreEqualkk
+AreEqualww
  
-(kk 
-$numkk 
-,kk 
-closedkk 
-.kk 
-Lengthkk #
-)kk# $
-;kk$ %
-varmm 
-openmm 
-=mm 
-closedmm 
-.mm 
-Openmm 
-(mm 
-)mm 
-;mm 
-Assertnn 	
-.nn	 
+(ww 
+$numww 
+,ww 
+closedww 
+.ww 
+Lengthww #
+)ww# $
+;ww$ %
+varyy 
+openyy 
+=yy 
+closedyy 
+.yy 
+Openyy 
+(yy 
+)yy 
+;yy 
+Assertzz 	
+.zz	 
 
-AreEqualnn
+AreEqualzz
  
-(nn 
-$numnn 
-,nn 
-opennn 
-.nn 
-Lengthnn !
-)nn! "
-;nn" #
-}oo 
-}pp 
-}qq ‰
+(zz 
+$numzz 
+,zz 
+openzz 
+.zz 
+Lengthzz !
+)zz! "
+;zz" #
+}{{ 
+}|| 
+}}} ‰
 
 QD:\work\github\node-net\Node.Net\Node.Net.Test\Extension\String.Extension.Test.cs
 	namespace 	

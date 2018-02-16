@@ -16,3 +16,6 @@ end
 # version 1.0.420 LOC 2308
 
 # Allow Factories to share Global ManifestResources and ResourceDictionary
+
+# Analyze with SonarQube
+# 
