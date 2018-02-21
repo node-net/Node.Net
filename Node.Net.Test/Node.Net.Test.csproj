@@ -87,8 +87,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\IDictionaryItemsSourceAdapter.Test.xaml.cs">
-      <DependentUpon>IDictionaryItemsSourceAdapter.Test.xaml</DependentUpon>
+    <Compile Include="Adapters\DictionaryItemsSourceAdapter.Test.xaml.cs">
+      <DependentUpon>DictionaryItemsSourceAdapter.Test.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bar.cs" />
     <Compile Include="Controls.Test.cs" />
@@ -294,7 +294,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Page Include="Adapters\IDictionaryItemsSourceAdapter.Test.xaml">
+    <Page Include="Adapters\DictionaryItemsSourceAdapter.Test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Node.Net.Adapters
 {
-    public sealed class IDictionaryItemsSourceAdapter<T> : INotifyPropertyChanged
+    public sealed class DictionaryItemsSourceAdapter<T> : INotifyPropertyChanged
     {
         public IEnumerable ItemsSource
         {

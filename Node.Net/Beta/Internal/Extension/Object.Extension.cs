@@ -99,7 +99,7 @@ namespace Node.Net.Beta.Internal
 					}
 				}
 			}
-			if (fullName == null || fullName.Length == 0)
+			if (fullName.Length == 0)
 			{
 				var dictionary = instance as IDictionary;
 				var parent = dictionary.GetParent() as IDictionary;

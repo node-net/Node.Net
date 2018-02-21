@@ -18,12 +18,12 @@ using NUnit.Framework;
 namespace Node.Net.Tests.Adapters
 {
     /// <summary>
-    /// Interaction logic for IDictionaryItemsSourceAdapter.xaml
+    /// Interaction logic for DictionaryItemsSourceAdapter.xaml
     /// </summary>
-    [TestFixture,Category("IDictionaryItemsSourceAdapter"),Apartment(ApartmentState.STA)]
-    public partial class IDictionaryItemsSourceAdapterTest : UserControl
+    [TestFixture,Category("DictionaryItemsSourceAdapter"),Apartment(ApartmentState.STA)]
+    public partial class DictionaryItemsSourceAdapterTest : UserControl
     {
-        public IDictionaryItemsSourceAdapterTest()
+        public DictionaryItemsSourceAdapterTest()
         {
             InitializeComponent();
 
@@ -37,14 +37,14 @@ namespace Node.Net.Tests.Adapters
             data.DeepUpdateParents();
             var elementA = data["A"] as Element;
             Assert.AreEqual("A", elementA.Name);
-            comboBox.DataContext = new Node.Net.Adapters.IDictionaryItemsSourceAdapter<IDictionary> { Model = data };
+            comboBox.DataContext = new Node.Net.Adapters.DictionaryItemsSourceAdapter<IDictionary> { Model = data };
         }
         [Test,Explicit]
         public void Usage()
         {
             var window = new Window
             {
-                Content = new IDictionaryItemsSourceAdapterTest(),
+                Content = new DictionaryItemsSourceAdapterTest(),
                 Title = "IDictionaryItemsSourceAdapter Test",
                 WindowState = WindowState.Maximized
             };
