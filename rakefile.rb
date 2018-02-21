@@ -1,6 +1,7 @@
 VERSION='1.0.523'
 require 'dev'
 
+CLEAN.include(".sonarqube")
 task :publish  do
 	if(__FILE__.include?('/work/') && Git.user_email.length > 0)
 		puts `nuget push Node.Net.#{VERSION}.nupkg -Source https://api.nuget.org/v3/index.json`
