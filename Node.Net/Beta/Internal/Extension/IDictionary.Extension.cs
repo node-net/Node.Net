@@ -63,6 +63,16 @@ namespace Node.Net.Beta.Internal
 			return Units.Angle.GetDegrees(svalue);
 		}
 
+		private static bool UseValueHash(object value)
+		{
+			if (value is bool ||
+				value is double ||
+				value is float ||
+				value is int ||
+				value is long ||
+				value is string) { return true; }
+			return false;
+		}
 		public static int ComputeHashCode(this IDictionary dictionary)
 		{
 			var hashCode = dictionary.Count;
@@ -72,21 +82,16 @@ namespace Node.Net.Beta.Internal
 				var value = dictionary[key];
 				if (value != null)
 				{
-					if (value.GetType() == typeof(bool) ||
-					   value.GetType() == typeof(double) ||
-					   value.GetType() == typeof(float) ||
-					   value.GetType() == typeof(int) ||
-					   value.GetType() == typeof(long) ||
-					   value.GetType() == typeof(string))
+					if (UseValueHash(value))
 					{
 						hashCode = hashCode ^ value.GetHashCode();
 					}
 					else
 					{
-						if (typeof(IDictionary).IsAssignableFrom(value.GetType())) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
+						if (value is IDictionary) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
 						else
 						{
-							if (typeof(IDictionary).IsAssignableFrom(value.GetType())) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+							if (value is IEnumerable) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
 						}
 					}
 				}
@@ -140,17 +145,16 @@ namespace Node.Net.Beta.Internal
 			foreach (var result in tmp)
 			{
 				var d = result as IDictionary;
-				if (d != null)
+
+				if (d != null && d.Contains(kvp.Key))
 				{
-					if (d.Contains(kvp.Key))
+					var value = d[kvp.Key];
+					if (value != null && value.ToString() == kvp.Value)
 					{
-						var value = d[kvp.Key];
-						if (value != null && value.ToString() == kvp.Value)
-						{
-							results.Add(result);
-						}
+						results.Add(result);
 					}
 				}
+
 			}
 			return results;
 		}
@@ -161,7 +165,7 @@ namespace Node.Net.Beta.Internal
 			{
 				if (item != null)
 				{
-					if (typeof(T).IsAssignableFrom(item.GetType()))
+					if (item is T)//typeof(T).IsAssignableFrom(item.GetType()))
 					{
 						if (!results.Contains(item) && (
 							search == null || matchFunction(item as IDictionary, search)))// MatchesSearch(item as IDictionary, search)))
@@ -217,7 +221,7 @@ namespace Node.Net.Beta.Internal
 			foreach (var key in idictionary.Keys)
 			{
 				var value = idictionary[key];
-				if (value != null && value.GetType() == typeof(string))
+				if (value != null && value is string)
 				{
 					if (value.ToString().Contains(search)) return true;
 				}
@@ -421,8 +425,7 @@ namespace Node.Net.Beta.Internal
 				if (value != null)
 				{
 					var templateType = typeof(T);
-					var valueType = value.GetType();
-					if (typeof(T).IsAssignableFrom(value.GetType())) return (T)value;
+					if (value is T) return (T)value;
 					if (templateType == typeof(double))
 					{
 						return (T)(object)Convert.ToDouble(value);

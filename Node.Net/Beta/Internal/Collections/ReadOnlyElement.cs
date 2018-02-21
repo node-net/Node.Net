@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Node.Net.Beta.Internal.Collections
 {
-    class ReadOnlyElement : ReadOnlyDictionary, IReadOnlyElement, IDictionary
+    class ReadOnlyElement : ReadOnlyDictionary, IReadOnlyElement
     {
         public ReadOnlyElement(IDictionary value) : base(value) { }
         public bool Contains(string name) { return base.Contains(name); }
@@ -14,6 +15,6 @@ namespace Node.Net.Beta.Internal.Collections
         public string Name { get; }
         public string FullName { get; }
         public string JSON { get; }
-        public IEnumerable Find(Type target_type, string pattern = "") { return null; }
+        public IEnumerable Find(Type target_type, string pattern = "") { return new List<object>(); }
     }
 }

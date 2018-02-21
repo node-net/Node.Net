@@ -257,9 +257,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\index.html" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Cube.MeshGeometry3D.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
