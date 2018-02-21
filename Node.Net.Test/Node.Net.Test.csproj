@@ -8,8 +8,8 @@
     <ProjectGuid>{E9A264F6-0AD4-4580-AC98-AB57FA540C89}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Node.Net.Tests</RootNamespace>
-    <AssemblyName>Node.Net.Tests</AssemblyName>
+    <RootNamespace>Node.Net.Test</RootNamespace>
+    <AssemblyName>Node.Net.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -96,6 +96,7 @@
     <Compile Include="Controls\GridView.Test.cs" />
     <Compile Include="Controls\Viewport3D.Camera.Test.cs" />
     <Compile Include="Element.Test.cs" />
+    <Compile Include="Extension\Assembly.Extension.Test.cs" />
     <Compile Include="Extension\DependencyObject.Extension.Test.cs" />
     <Compile Include="Extension\Matrix3D.Extension.Test.cs" />
     <Compile Include="Extension\Object.Extension.Test.cs" />
