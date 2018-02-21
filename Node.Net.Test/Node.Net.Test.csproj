@@ -91,6 +91,7 @@
       <DependentUpon>DictionaryItemsSourceAdapter.Test.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bar.cs" />
+    <Compile Include="BitmapSourceWriter.Test.cs" />
     <Compile Include="Controls.Test.cs" />
     <Compile Include="Controls\ContentControl.Test.cs" />
     <Compile Include="Controls\GridView.Test.cs" />

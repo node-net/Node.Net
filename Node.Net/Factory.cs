@@ -35,7 +35,8 @@ namespace Node.Net
 			var result = factory.Create(targetType, source);
 			if (Logging)
 			{
-				var sourceInfo = source.ToString();
+				var sourceInfo = "null";
+				if(source != null) sourceInfo = source.ToString();
 
 				Log.Add($"Create(typeof({targetType.FullName}),{sourceInfo}");
 			}

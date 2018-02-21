@@ -70,7 +70,10 @@ namespace Node.Net.Beta.Internal.Factories
 			}
 		}
 		public void ClearCache() { model3DCache.Clear(); namedCache.Clear(); }
-		public void ClearCache(object model) { model3DCache.Remove(model); }
+		public void ClearCache(object model)
+		{
+			if (model != null) { model3DCache.Remove(model); }
+		}
 		private Model3D CreateFromDictionary(IDictionary source)
 		{
 			if (source == null) return null;
@@ -164,6 +167,7 @@ namespace Node.Net.Beta.Internal.Factories
 		}
 		public static Transform3D GetScalingTransform(IDictionary source)
 		{
+			if (source == null) return new MatrixTransform3D();
 			var scaleX = 1.0;
 			var scaleY = 1.0;
 			var scaleZ = 1.0;
