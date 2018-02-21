@@ -234,7 +234,7 @@ namespace Node.Net
 		public void IDictionary_GetByName()
 		{
 			var stream = typeof(IDictionaryExtensionTest).Assembly.GetManifestResourceStream
-				("Node.Net.Tests.Resources.Object.Bars.json");
+				("Node.Net.Test.Resources.Object.Bars.json");
 			Assert.NotNull(stream, nameof(stream));
 			var factory = new Factory();
 			factory.IDictionaryTypes.Add("Bar", typeof(Bar));
