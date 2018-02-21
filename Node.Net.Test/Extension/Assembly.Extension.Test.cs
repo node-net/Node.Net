@@ -27,13 +27,17 @@ namespace Node.Net.Tests.Extension
 			Assert.True(names.Contains("Node.Net.Test.Resources.Object.Sample.json"));
 		}
 		
-
-		//public static string[] GetManifestResourceNames(this Assembly assembly, string name)
-		
-
-		//public static Dictionary<string, Type> GetNameTypeDictionary(this Assembly assembly)
-		
-
-		//public static Dictionary<string, Type> GetFullNameTypeDictionary(this Assembly assembly)
+		[Test]
+		public void GetNameTypeDictionary()
+		{
+			var dictionary = typeof(AssemblyExtensionTest).Assembly.GetNameTypeDictionary();
+			Assert.True(dictionary.ContainsKey("Bar"));
+		}
+		[Test]
+		public void GetFullNameTypeDictionary()
+		{
+			var dictionary = typeof(AssemblyExtensionTest).Assembly.GetFullNameTypeDictionary();
+			Assert.True(dictionary.ContainsKey("Node.Net.Bar"));
+		}
 	}
 }
