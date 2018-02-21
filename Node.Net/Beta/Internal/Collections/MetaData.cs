@@ -6,19 +6,19 @@ namespace Node.Net.Beta.Internal.Collections
 {
     class WeakReferenceComparer : IEqualityComparer<WeakReference>
     {
-        public bool Equals(WeakReference a, WeakReference b)
+        public bool Equals(WeakReference x, WeakReference y)
         {
-            if (a.Target == null)
+            if (x.Target == null)
             {
-                if (b.Target == null) return true;
+                if (y.Target == null) return true;
                 return false;
             }
-            return a.Target.Equals(b.Target);
+            return x.Target.Equals(y.Target);
         }
 
-        public int GetHashCode(WeakReference w)
+        public int GetHashCode(WeakReference obj)
         {
-            return w.Target.GetHashCode();
+            return obj.Target.GetHashCode();
         }
     }
 
@@ -49,7 +49,7 @@ namespace Node.Net.Beta.Internal.Collections
         public T GetMetaData<T>(object item, string name)
         {
             var instance = GetMetaData(item, name);
-            if (instance != null && typeof(T).IsAssignableFrom(instance.GetType()))
+            if (instance != null && instance is T) //typeof(T).IsAssignableFrom(instance.GetType()))
             {
                 return (T)instance;
             }
