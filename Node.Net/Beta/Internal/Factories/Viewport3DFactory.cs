@@ -6,10 +6,10 @@ namespace Node.Net.Beta.Internal.Factories
 {
     class Viewport3DFactory : IFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
-            if (target_type == null) return null;
-            if (target_type != typeof(Viewport3D)) return null;
+            if (targetType == null) return null;
+            if (targetType != typeof(Viewport3D)) return null;
             if (ParentFactory != null)
             {
                 var v3d = ParentFactory.Create<Visual3D>(source);

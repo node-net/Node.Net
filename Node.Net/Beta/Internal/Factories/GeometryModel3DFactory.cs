@@ -7,7 +7,7 @@ namespace Node.Net.Beta.Internal.Factories
 {
     sealed class GeometryModel3DFactory : IFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
             if (source != null)
             {
@@ -16,7 +16,7 @@ namespace Node.Net.Beta.Internal.Factories
                 if (typeof(MeshGeometry3D).IsAssignableFrom(sourceType)) return CreateFromMeshGeometry3D(source as MeshGeometry3D);
                 if (ParentFactory != null)
                 {
-                    return Create(target_type, ParentFactory.Create<IDictionary>(source));
+                    return Create(targetType, ParentFactory.Create<IDictionary>(source));
                 }
             }
             return null;

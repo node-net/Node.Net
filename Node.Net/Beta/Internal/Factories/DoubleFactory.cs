@@ -4,10 +4,10 @@ namespace Node.Net.Beta.Internal.Factories
 {
     class DoubleFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
-            if (target_type == null) return null;
-            if (target_type != typeof(double)) return null;
+            if (targetType == null) return null;
+            if (targetType != typeof(double)) return null;
 
             if (source != null && source.GetType() == typeof(string))
             {

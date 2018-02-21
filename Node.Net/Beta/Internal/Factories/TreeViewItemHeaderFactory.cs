@@ -7,10 +7,10 @@ namespace Node.Net.Beta.Internal.Factories
     class TreeViewItemHeader : Border, ITreeViewItemHeader { }
     class TreeViewItemHeaderFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
-            if (target_type == null) return null;
-            if (!typeof(ITreeViewItemHeader).IsAssignableFrom(target_type)) return null;
+            if (targetType == null) return null;
+            if (!typeof(ITreeViewItemHeader).IsAssignableFrom(targetType)) return null;
             string type = source.GetType().Name;
             string name = source.GetName();
 

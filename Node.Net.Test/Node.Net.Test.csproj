@@ -111,7 +111,6 @@
     <Compile Include="Factory.Create.Visual3D.Test.cs" />
     <Compile Include="JSONWriter.Test.cs" />
     <Compile Include="Reader.Test.cs" />
-    <Compile Include="Beta\View3D.Test.cs" />
     <Compile Include="Extension\IDictionary.Extension.Test.cs" />
     <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Factory.Test.cs" />
@@ -201,6 +200,7 @@
     <EmbeddedResource Include="Resources\Dictionary.Scene.A.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Beta\" />
     <Folder Include="Factories\" />
   </ItemGroup>
   <ItemGroup>

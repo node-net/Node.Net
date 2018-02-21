@@ -15,16 +15,16 @@ namespace Node.Net.Beta.Internal.Factories
 		public bool ExactMatch { get; set; } = false;
 		private string ignoreFilter;
 		public void Refresh() { ignoreFilter = null; }
-		public object Create(Type target_type, object source)
+		public object Create(Type targetType, object source)
 		{
-			if (target_type == typeof(Stream))
+			if (targetType == typeof(Stream))
 			{
 				if (source != null)
 				{
 					if (source.GetType() == typeof(string)) return Create(source.ToString());
 				}
 			}
-			if (typeof(IStreamSignature).IsAssignableFrom(target_type))
+			if (typeof(IStreamSignature).IsAssignableFrom(targetType))
 			{
 				if (source != null)
 				{
@@ -32,7 +32,7 @@ namespace Node.Net.Beta.Internal.Factories
 					{
 						return Internal.Readers.SignatureReader.GetSignature(source as Stream);
 					}
-					return Create(target_type, Create(typeof(Stream), source));
+					return Create(targetType, Create(typeof(Stream), source));
 				}
 			}
 			return null;

@@ -10,9 +10,9 @@ namespace Node.Net.Beta.Internal.Factories
     class SymbolFactory
     {
         class ViewboxSymbol : Viewbox, ISymbol { }
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
-            if (target_type != typeof(ISymbol)) return null;
+            if (targetType != typeof(ISymbol)) return null;
             if (source != null)
             {
                 var labelText = $"{source.GetType().Name[0]}";

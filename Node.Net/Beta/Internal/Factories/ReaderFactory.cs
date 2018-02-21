@@ -9,7 +9,7 @@ namespace Node.Net.Beta.Internal.Factories
     {
         public IFactory ParentFactory { get; set; }
 
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
             if (source != null)
             {
@@ -32,8 +32,8 @@ namespace Node.Net.Beta.Internal.Factories
                                 }
                                 if (instance != null)
                                 {
-                                    if (target_type.IsAssignableFrom(instance.GetType())) return instance;
-                                    if (ParentFactory != null) return ParentFactory.Create(target_type, instance);
+                                    if (targetType.IsAssignableFrom(instance.GetType())) return instance;
+                                    if (ParentFactory != null) return ParentFactory.Create(targetType, instance);
                                 }
                             }
                         }
