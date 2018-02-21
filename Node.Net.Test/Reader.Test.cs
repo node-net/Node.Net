@@ -63,7 +63,6 @@ namespace Node.Net
 			var data = new Dictionary<string, Type>
 			{
 				{"MeshGeometry3D.Widget.xaml" , typeof(MeshGeometry3D) },
-				{"index.html", typeof(XmlDocument) },
 				{"image.bmp", typeof(ImageSource) },
 				{"image.gif",typeof(ImageSource) },
 				{"image.jpg",typeof(ImageSource) },
