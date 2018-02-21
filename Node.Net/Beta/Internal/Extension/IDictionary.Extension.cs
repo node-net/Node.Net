@@ -82,10 +82,14 @@ namespace Node.Net.Beta.Internal
 				var value = dictionary[key];
 				if (value != null)
 				{
-					if (UseValueHash(value))
+					if (value is IDictionary) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
+					else
 					{
-						hashCode = hashCode ^ value.GetHashCode();
+						if (value is IEnumerable) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+						else hashCode = hashCode ^ value.GetHashCode();
 					}
+					/*
+					if (UseValueHash(value)) hashCode = hashCode ^ value.GetHashCode();
 					else
 					{
 						if (value is IDictionary) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
@@ -93,7 +97,7 @@ namespace Node.Net.Beta.Internal
 						{
 							if (value is IEnumerable) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
 						}
-					}
+					}*/
 				}
 			}
 			return hashCode;
@@ -178,9 +182,7 @@ namespace Node.Net.Beta.Internal
 
 		private static bool MatchesSearch(this IDictionary idictionary, string search)
 		{
-			if (search == null) return true;
-			if (search.Length == 0) return true;
-			if (idictionary == null) return true;
+			if (search == null || search.Length == 0 || idictionary == null) return true;
 			if (search.Contains(" "))
 			{
 				// All parts must match
@@ -225,21 +227,11 @@ namespace Node.Net.Beta.Internal
 					if (type.IsAssignableFrom(item.GetType()) && !results.Contains(item))
 					//if(item.GetType().IsInstanceOfType(type) && !results.Contains(item))
 					{
-						//if (!results.Contains(item))
-						//{
-							if (search == null)
-							{
-								results.Add(item);
-							}
-							else
-							{
-								if (MatchesSearch((item as IDictionary), search))
-
-								{
-									results.Add(item);
-								}
-							}
-						//}
+						if (search == null || MatchesSearch((item as IDictionary), search))
+						{
+							results.Add(item);
+						}
+	
 					}
 					var child_idictionary = item as IDictionary;
 					if (child_idictionary != null) _Collect(child_idictionary, type, search, results);
@@ -253,20 +245,13 @@ namespace Node.Net.Beta.Internal
 			{
 				if (item != null)
 				{
-					if (item.GetType().Name == type)
-					{
-						if (!results.Contains(item)) results.Add(item);
-					}
+					if (item.GetType().Name == type && !results.Contains(item)) results.Add(item);
 					else
 					{
 						var d = item as IDictionary;
 						if ( d!= null && d.Contains("Type") && d["Type"].ToString() == type && !results.Contains(item))
 						{
 							results.Add(item);
-							//if (d["Type"].ToString() == type)
-							//{
-								//if (!results.Contains(item)) results.Add(item);
-							//}
 						}
 					}
 					var child_idictionary = item as IDictionary;
@@ -350,7 +335,7 @@ namespace Node.Net.Beta.Internal
 			return clone;
 		}
 
-		public static T Find<T>(this IDictionary dictionary, string name, bool exact = false, bool deepUpdateParents = false)// where T : IDictionary
+		public static T Find<T>(this IDictionary dictionary, string name, bool exact = false, bool deepUpdateParents = false)
 		{
 			var items = dictionary.Collect<T>();
 			foreach (var item in items)
@@ -360,7 +345,6 @@ namespace Node.Net.Beta.Internal
 			}
 			foreach (var item in items)
 			{
-				//var iname = item.GetName();
 				if (item.GetName() == name) return item;
 			}
 			if (!exact)
@@ -436,13 +420,6 @@ namespace Node.Net.Beta.Internal
 			}
 
 			if (typeof(T) == typeof(string) && defaultValue == null) return (T)(object)string.Empty;
-			/*
-			{
-				if (defaultValue == null)
-				{
-					return (T)(object)string.Empty;
-				}
-			}*/
 			return defaultValue;
 		}
 

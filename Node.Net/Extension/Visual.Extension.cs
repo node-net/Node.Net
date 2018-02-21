@@ -24,7 +24,7 @@ namespace Node.Net
         {
             return CreateBitmapSource(visual, width, height, DpiX, DpiY);
         }
-        public static BitmapSource CreateBitmapSource(this Visual visual, double width, double height, double dpiX = 96, double dpiY = 96)
+        public static BitmapSource CreateBitmapSource(this Visual visual, double width, double height, double dpiX, double dpiY)
         {
             var awidth = width * dpiX / 96.0;
             var aheight = height * dpiX / 96.0;
@@ -32,7 +32,6 @@ namespace Node.Net
             if (frameworkElement != null)
             {
                 frameworkElement.Measure(new System.Windows.Size(awidth, aheight));
-                //frameworkElement.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity ));
                 frameworkElement.Arrange(new System.Windows.Rect(new System.Windows.Size(awidth, aheight)));
                 frameworkElement.UpdateLayout();
             }

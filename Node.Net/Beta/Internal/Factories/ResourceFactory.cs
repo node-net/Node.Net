@@ -5,12 +5,12 @@ namespace Node.Net.Beta.Internal.Factories
 {
     class ResourceFactory : IFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
             if (source != null && Resources.Contains(source))
             {
                 var instance = Resources[source];
-                if (instance != null && target_type.IsAssignableFrom(instance.GetType()))
+                if (instance != null && targetType.IsAssignableFrom(instance.GetType()))
                 {
                     return instance;
                 }

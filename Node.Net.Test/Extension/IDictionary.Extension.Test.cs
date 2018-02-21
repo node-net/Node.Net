@@ -285,6 +285,12 @@ namespace Node.Net
 			var data = new Dictionary<string, dynamic> { { "X", "10 m" } };
 			Assert.AreNotEqual(0, data.ComputeHashCode());
 		}
+		[Test]
+		public void IDictionary_ComputeHashCode()
+		{
+			var data = new Dictionary<string, dynamic> { { "X", "10 m" },{ "list", new string[] { "a", "b", "c" } } };
+			Assert.AreNotEqual(0, data.ComputeHashCode());
+		}
 
 		[Test]
 		public void IDictionary_CompareTo()

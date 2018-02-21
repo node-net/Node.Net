@@ -8,10 +8,10 @@ namespace Node.Net.Beta.Internal.Factories
     class Children : List<object>, IChildren { }
     class ChildrenFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
-            if (target_type == null) return null;
-            if (!typeof(IChildren).IsAssignableFrom(target_type)) return null;
+            if (targetType == null) return null;
+            if (!typeof(IChildren).IsAssignableFrom(targetType)) return null;
             if (source != null)
             {
                 var children = new Children();

@@ -7,11 +7,11 @@ namespace Node.Net.Beta.Internal.Factories
 {
 	sealed class Model3DFactory : IFactory
 	{
-		public object Create(Type target_type, object source)
+		public object Create(Type targetType, object source)
 		{
 			if (source == null) return null;
-			if (target_type == null) return null;
-			if (target_type != typeof(Model3D)) return null;
+			if (targetType == null) return null;
+			if (targetType != typeof(Model3D)) return null;
 			if (Ignore(source)) return null;
 			//if (IgnoreTypes.Contains(sourceType)) return null;
 			/*
