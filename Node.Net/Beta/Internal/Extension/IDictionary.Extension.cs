@@ -163,19 +163,16 @@ namespace Node.Net.Beta.Internal
 		{
 			foreach (var item in idictionary.Values)
 			{
-				if (item != null)
+				if (item != null && item is T)//typeof(T).IsAssignableFrom(item.GetType()))
 				{
-					if (item is T)//typeof(T).IsAssignableFrom(item.GetType()))
+					if (!results.Contains(item) && (
+						search == null || matchFunction(item as IDictionary, search)))// MatchesSearch(item as IDictionary, search)))
 					{
-						if (!results.Contains(item) && (
-							search == null || matchFunction(item as IDictionary, search)))// MatchesSearch(item as IDictionary, search)))
-						{
-							results.Add(item);
-						}
+						results.Add(item);
 					}
-					var child_idictionary = item as IDictionary;
-					if (child_idictionary != null) _Collect<T>(child_idictionary, search, results, matchFunction);
 				}
+				var child_idictionary = item as IDictionary;
+				if (child_idictionary != null) _Collect<T>(child_idictionary, search, results, matchFunction);
 			}
 		}
 
@@ -201,17 +198,7 @@ namespace Node.Net.Beta.Internal
 			}
 			else
 			{
-				// Check for a value match
 				if (MatchesValue(idictionary, search)) return true;
-				/*
-				foreach (var key in idictionary.Keys)
-				{
-					var value = idictionary[key];
-					if (value != null && value.GetType() == typeof(string))
-					{
-						if (value.ToString().Contains(search)) return true;
-					}
-				}*/
 			}
 			return false;
 		}
@@ -221,17 +208,10 @@ namespace Node.Net.Beta.Internal
 			foreach (var key in idictionary.Keys)
 			{
 				var value = idictionary[key];
-				if (value != null && value is string)
-				{
-					if (value.ToString().Contains(search)) return true;
-				}
+				if (value != null && value is string && value.ToString().Contains(search)) return true;
 			}
 			var mkey = ObjectExtension.GetName(idictionary);
-			if (mkey.Length > 0)
-			{
-				if (search.Length > 0 && mkey.Contains(search))
-				{ return true; }
-			}
+			if (mkey.Length > 0 && search.Length > 0 && mkey.Contains(search)) return true;
 
 			return false;
 		}
@@ -242,10 +222,11 @@ namespace Node.Net.Beta.Internal
 			{
 				if (item != null)
 				{
-					if (type.IsAssignableFrom(item.GetType()))
+					if (type.IsAssignableFrom(item.GetType()) && !results.Contains(item))
+					//if(item.GetType().IsInstanceOfType(type) && !results.Contains(item))
 					{
-						if (!results.Contains(item))
-						{
+						//if (!results.Contains(item))
+						//{
 							if (search == null)
 							{
 								results.Add(item);
@@ -258,7 +239,7 @@ namespace Node.Net.Beta.Internal
 									results.Add(item);
 								}
 							}
-						}
+						//}
 					}
 					var child_idictionary = item as IDictionary;
 					if (child_idictionary != null) _Collect(child_idictionary, type, search, results);
@@ -279,15 +260,13 @@ namespace Node.Net.Beta.Internal
 					else
 					{
 						var d = item as IDictionary;
-						if (d != null)
+						if ( d!= null && d.Contains("Type") && d["Type"].ToString() == type && !results.Contains(item))
 						{
-							if (d.Contains("Type"))
-							{
-								if (d["Type"].ToString() == type)
-								{
-									if (!results.Contains(item)) results.Add(item);
-								}
-							}
+							results.Add(item);
+							//if (d["Type"].ToString() == type)
+							//{
+								//if (!results.Contains(item)) results.Add(item);
+							//}
 						}
 					}
 					var child_idictionary = item as IDictionary;
@@ -376,15 +355,12 @@ namespace Node.Net.Beta.Internal
 			var items = dictionary.Collect<T>();
 			foreach (var item in items)
 			{
-				if (deepUpdateParents)
-				{
-					if (item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
-				}
+				if (deepUpdateParents && item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
 				if (item.GetFullName() == name) return item;
 			}
 			foreach (var item in items)
 			{
-				var iname = item.GetName();
+				//var iname = item.GetName();
 				if (item.GetName() == name) return item;
 			}
 			if (!exact)
@@ -459,13 +435,14 @@ namespace Node.Net.Beta.Internal
 				}
 			}
 
-			if (typeof(T) == typeof(string))
+			if (typeof(T) == typeof(string) && defaultValue == null) return (T)(object)string.Empty;
+			/*
 			{
 				if (defaultValue == null)
 				{
 					return (T)(object)string.Empty;
 				}
-			}
+			}*/
 			return defaultValue;
 		}
 
