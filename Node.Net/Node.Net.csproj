@@ -61,7 +61,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\IDictionaryItemsSourceAdapter.cs" />
+    <Compile Include="Adapters\DictionaryItemsSourceAdapter.cs" />
     <Compile Include="Beta\Internal\Collections\KeyValuePair.cs" />
     <Compile Include="Beta\Internal\Extension\Image.Extension.cs" />
     <Compile Include="Beta\Internal\Extension\ImageSource.Extension.cs" />

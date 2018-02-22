@@ -5,7 +5,7 @@ namespace Node.Net.Beta.Internal.Factories
 {
     sealed class BrushFactory : IFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
             if (source != null)
             {
@@ -15,10 +15,10 @@ namespace Node.Net.Beta.Internal.Factories
             if (ParentFactory != null)
             {
                 var color = ParentFactory.Create(typeof(Color), source);
-                if (color != null) return Create(target_type, color);
+                if (color != null) return Create(targetType, color);
 
                 var image = ParentFactory.Create(typeof(ImageSource), source);
-                if (image != null) return Create(target_type, image);
+                if (image != null) return Create(targetType, image);
             }
             return null;
         }

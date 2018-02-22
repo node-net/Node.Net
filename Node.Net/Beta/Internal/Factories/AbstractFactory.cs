@@ -17,14 +17,14 @@ namespace Node.Net.Beta.Internal.Factories
 		private bool callingParent = false;
 		private CloneFactory CloneFactory { get; } = new CloneFactory();
 
-		public object Create(Type target_type, object source)
+		public object Create(Type targetType, object source)
 		{
-			if (target_type == null) return null;
+			if (targetType == null) return null;
 
 			if (source != null && Resources.Contains(source.ToString()))
 			{
 				var result = Resources[source.ToString()];
-				if (result != null && target_type.IsAssignableFrom(result.GetType())) return result;
+				if (result != null && targetType.IsAssignableFrom(result.GetType())) return result;
 			}
 			else
 			{
@@ -32,7 +32,7 @@ namespace Node.Net.Beta.Internal.Factories
 				if (stream != null && source != null)
 				{
 					var s = source.ToString();
-					var result = CreateFromStream(target_type, stream, source);
+					var result = CreateFromStream(targetType, stream, source);
 					if (result != null)
 					{
 						if (typeof(string).IsAssignableFrom(source.GetType()))
@@ -44,20 +44,20 @@ namespace Node.Net.Beta.Internal.Factories
 				}
 			}
 
-			foreach (var targetType in Keys)
+			foreach (var _targetType in Keys)
 			{
-				var concreteType = this[targetType];
-				if (targetType.IsAssignableFrom(target_type))
+				var concreteType = this[_targetType];
+				if (_targetType.IsAssignableFrom(targetType))
 				{
 					return concreteType.Construct(source);
 				}
 			}
-			var instance = target_type.Construct(source);
+			var instance = targetType.Construct(source);
 			if (instance != null) return instance;
 
-			instance = ResourceFactory.Create(target_type, source);
+			instance = ResourceFactory.Create(targetType, source);
 
-			if (instance == null) instance = CloneFactory.Create(target_type, source);
+			if (instance == null) instance = CloneFactory.Create(targetType, source);
 			return instance;
 		}
 

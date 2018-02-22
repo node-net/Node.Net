@@ -1,7 +1,0 @@
-organization=lou-parslow-github
-projectKey=Node.Net
-serverUrl=https://sonarcloud.io
-serverVersion=7.1.0.36868
-dashboardUrl=https://sonarcloud.io/dashboard/index/Node.Net
-ceTaskId=AWGgvtvnm6Cp4If4W2dG
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWGgvtvnm6Cp4If4W2dG

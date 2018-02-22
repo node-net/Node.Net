@@ -5,10 +5,10 @@ namespace Node.Net.Beta.Internal.Factories
 {
     sealed class Visual3DFactory : IFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
             if (source == null) return null;
-            if (target_type == null) return null;
+            if (targetType == null) return null;
             if (ParentFactory != null)
             {
                 var model3D = ParentFactory.Create<Model3D>(source);

@@ -35,7 +35,7 @@ namespace Node.Net
 			}
 		}
 
-		public static List<string> xaml_markers = new List<string>
+		private static List<string> xaml_markers = new List<string>
 		{
 			"http://schemas.microsoft.com/winfx/2006/xaml/presentation",
 			"<MeshGeometry3D",

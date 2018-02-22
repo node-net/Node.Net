@@ -48,8 +48,8 @@ namespace Node.Net
             {
                 throw new InvalidOperationException("element must be the same size");
             }
-            var totalPixels = 0;
-            var matchingPixels = 0;
+            var totalPixels = 0.0;
+            var matchingPixels = 0.0;
             for (double x = 0; x <= element.ActualWidth; x++)
             {
                 for (double y = 0; y <= element.ActualHeight; y++)

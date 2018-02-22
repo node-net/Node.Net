@@ -6,7 +6,7 @@ namespace Node.Net.Beta.Internal.Factories
 {
     sealed class CollectionsFactory : IFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
             if (source != null)
             {
@@ -15,19 +15,19 @@ namespace Node.Net.Beta.Internal.Factories
                     var stream = StreamFactory.Create(source.ToString());
                     if (stream != null)
                     {
-                        var instance = Create(target_type, stream);
+                        var instance = Create(targetType, stream);
                         var idictionary = instance as IDictionary;
                         if (idictionary != null) idictionary.SetFileName(source.ToString());
                         return instance;
                     }
                 }
             }
-            if (target_type == typeof(IDictionary))
+            if (targetType == typeof(IDictionary))
             {
                 var stream = source as Stream;
                 if (stream != null) return JSONReader.Read(stream) as IDictionary;
             }
-            if (target_type == typeof(IList))
+            if (targetType == typeof(IList))
             {
                 var stream = source as Stream;
                 if (stream != null) return JSONReader.Read(stream) as IList;

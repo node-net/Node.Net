@@ -8,8 +8,8 @@
     <ProjectGuid>{E9A264F6-0AD4-4580-AC98-AB57FA540C89}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Node.Net.Tests</RootNamespace>
-    <AssemblyName>Node.Net.Tests</AssemblyName>
+    <RootNamespace>Node.Net.Test</RootNamespace>
+    <AssemblyName>Node.Net.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -87,15 +87,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\IDictionaryItemsSourceAdapter.Test.xaml.cs">
-      <DependentUpon>IDictionaryItemsSourceAdapter.Test.xaml</DependentUpon>
+    <Compile Include="Adapters\DictionaryItemsSourceAdapter.Test.xaml.cs">
+      <DependentUpon>DictionaryItemsSourceAdapter.Test.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bar.cs" />
+    <Compile Include="BitmapSourceWriter.Test.cs" />
     <Compile Include="Controls.Test.cs" />
     <Compile Include="Controls\ContentControl.Test.cs" />
     <Compile Include="Controls\GridView.Test.cs" />
     <Compile Include="Controls\Viewport3D.Camera.Test.cs" />
     <Compile Include="Element.Test.cs" />
+    <Compile Include="Extension\Assembly.Extension.Test.cs" />
     <Compile Include="Extension\DependencyObject.Extension.Test.cs" />
     <Compile Include="Extension\Matrix3D.Extension.Test.cs" />
     <Compile Include="Extension\Object.Extension.Test.cs" />
@@ -111,7 +113,6 @@
     <Compile Include="Factory.Create.Visual3D.Test.cs" />
     <Compile Include="JSONWriter.Test.cs" />
     <Compile Include="Reader.Test.cs" />
-    <Compile Include="Beta\View3D.Test.cs" />
     <Compile Include="Extension\IDictionary.Extension.Test.cs" />
     <Compile Include="Interfaces\IFactory.Test.cs" />
     <Compile Include="Factory.Test.cs" />
@@ -201,6 +202,7 @@
     <EmbeddedResource Include="Resources\Dictionary.Scene.A.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Beta\" />
     <Folder Include="Factories\" />
   </ItemGroup>
   <ItemGroup>
@@ -257,9 +259,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\index.html" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Cube.MeshGeometry3D.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -294,7 +293,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Page Include="Adapters\IDictionaryItemsSourceAdapter.Test.xaml">
+    <Page Include="Adapters\DictionaryItemsSourceAdapter.Test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
