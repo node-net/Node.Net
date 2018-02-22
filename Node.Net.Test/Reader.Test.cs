@@ -63,7 +63,6 @@ namespace Node.Net
 			var data = new Dictionary<string, Type>
 			{
 				{"MeshGeometry3D.Widget.xaml" , typeof(MeshGeometry3D) },
-				{"index.html", typeof(XmlDocument) },
 				{"image.bmp", typeof(ImageSource) },
 				{"image.gif",typeof(ImageSource) },
 				{"image.jpg",typeof(ImageSource) },
@@ -193,7 +192,7 @@ namespace Node.Net
 		[Test]
 		public void ReadSpecialChars()
 		{
-			var stream = typeof(ReaderTest).Assembly.GetManifestResourceStream("Node.Net.Tests.Resources.Dictionary.Scene.A.json");
+			var stream = typeof(ReaderTest).Assembly.GetManifestResourceStream("Node.Net.Test.Resources.Dictionary.Scene.A.json");
 			Assert.NotNull(stream, nameof(stream));
 			var filename = $"{Path.GetTempPath()}Test(aa).json";
 			if (File.Exists(filename)) File.Delete(filename);

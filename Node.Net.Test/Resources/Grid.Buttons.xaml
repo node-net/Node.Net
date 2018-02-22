@@ -1,10 +1,16 @@
 <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Width="60" Height="30">
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition/>
-        <ColumnDefinition/>
-    </Grid.ColumnDefinitions>
-    <Button x:Name="Button1">1</Button>
-    <Button x:Name="Button2" Grid.Column="1">2</Button>
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  Width="60" Height="30">
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition/>
+		<ColumnDefinition/>
+	</Grid.ColumnDefinitions>
+	<Button x:Name="Button1">
+		<Button.Content>
+			<Label>
+				<Label.Content>1</Label.Content>
+			</Label>
+		</Button.Content>
+	</Button>
+	<Button x:Name="Button2" Grid.Column="1">2</Button>
 </Grid>

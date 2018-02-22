@@ -13,21 +13,17 @@ namespace Node.Net.Beta.Internal
             {
                 if (value != null)
                 {
-                    if (value.GetType() == typeof(bool) ||
-                       value.GetType() == typeof(double) ||
-                       value.GetType() == typeof(float) ||
-                       value.GetType() == typeof(int) ||
-                       value.GetType() == typeof(long) ||
-                       value.GetType() == typeof(string))
+                    if (value is bool || value is double || value is float ||
+                        value is int || value is long || value is string)
                     {
                         hashCode = hashCode ^ value.GetHashCode();
                     }
                     else
                     {
-                        if (typeof(IDictionary).IsAssignableFrom(value.GetType())) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
+                        if (value is IDictionary) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
                         else
                         {
-                            if (typeof(IDictionary).IsAssignableFrom(value.GetType())) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+                            if (value is IEnumerable) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
                         }
                     }
                 }

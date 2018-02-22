@@ -7,10 +7,10 @@ namespace Node.Net.Beta.Internal.Factories
 {
     class LightFactory : IFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
-            if (target_type == null) return null;
-            if (!target_type.IsAssignableFrom(target_type)) return null;
+            if (targetType == null) return null;
+            if (!targetType.IsAssignableFrom(targetType)) return null;
             if (source != null)
             {
                 if (source.GetType() == typeof(Color)) return new AmbientLight { Color = (Color)source };

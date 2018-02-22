@@ -4,6 +4,9 @@
 doc/
 log/
 .vs/
+.sonarqube/
+bin/
+lib/
 
 commit.message
 *.gem 

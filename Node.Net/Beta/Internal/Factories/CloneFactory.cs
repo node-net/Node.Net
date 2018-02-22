@@ -9,10 +9,10 @@ namespace Node.Net.Beta.Internal.Factories
     {
         public Func<Stream, object> ReadFunction { get; set; } = new Node.Net.Reader().Read;
         public Action<Stream, object> WriteFunction { get; set; } = Write;
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
             if (source == null) return null;
-            if (target_type.IsAssignableFrom(source.GetType()))
+            if (targetType.IsAssignableFrom(source.GetType()))
             {
                 using (MemoryStream memory = new MemoryStream())
                 {
@@ -20,7 +20,7 @@ namespace Node.Net.Beta.Internal.Factories
                     memory.Flush();
                     memory.Seek(0, SeekOrigin.Begin);
                     var clone = ReadFunction(memory);
-                    if (clone != null && target_type.IsAssignableFrom(clone.GetType())) return clone;
+                    if (clone != null && targetType.IsAssignableFrom(clone.GetType())) return clone;
                 }
             }
             return null;

@@ -95,30 +95,30 @@ namespace Node.Net.Beta.Internal.Factories
 			set { Model3DFactory.ScalePrimaryModel = value; }
 		}
 		public Dictionary<Type, int> InstanceCounts { get; } = new Dictionary<Type, int>();
-		public object Create(Type target_type, object source)
+		public object Create(Type targetType, object source)
 		{
 			StreamFactory.Refresh();
 			if (source != null && Resources.Contains(source))
 			{
 				var instance = Resources[source];
-				if (target_type.IsInstanceOfType(instance))
+				if (targetType.IsInstanceOfType(instance))
 				{
-					if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
-					else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
+					if (!InstanceCounts.ContainsKey(targetType)) InstanceCounts.Add(targetType, 1);
+					else InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
 					return instance;
 				}
 			}
 
 			foreach (var type in FactoryFunctions.Keys)
 			{
-				if (type.IsAssignableFrom(target_type))
+				if (type.IsAssignableFrom(targetType))
 				{
-					var instance = FactoryFunctions[type](target_type, source);
+					var instance = FactoryFunctions[type](targetType, source);
 					if (instance != null)
 					{
-						if (!InstanceCounts.ContainsKey(target_type)) InstanceCounts.Add(target_type, 1);
-						else InstanceCounts[target_type] = InstanceCounts[target_type] + 1;
-						if (source != null && source.GetType() == typeof(string) && IsResourceType(target_type))
+						if (!InstanceCounts.ContainsKey(targetType)) InstanceCounts.Add(targetType, 1);
+						else InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+						if (source != null && source.GetType() == typeof(string) && IsResourceType(targetType))
 						{
 							if (!Resources.Contains(source.ToString()))
 							{

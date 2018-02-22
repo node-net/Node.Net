@@ -175,7 +175,7 @@ namespace Node.Net.Beta.Internal.Readers
 				dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
 				if (dictionary == null)
 				{
-					throw new Exception($"Unable to create instance of {DefaultDocumentType.GetType().FullName}");
+					throw new Exception($"Unable to create instance of {DefaultDocumentType.FullName}");
 				}
 			}
 			else
@@ -191,7 +191,7 @@ namespace Node.Net.Beta.Internal.Readers
 					dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
 					if (dictionary == null)
 					{
-						throw new Exception($"Unable to create isntance of {DefaultObjectType.GetType().FullName}");
+						throw new Exception($"Unable to create isntance of {DefaultObjectType.FullName}");
 					}
 				}
 			}

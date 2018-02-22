@@ -63,6 +63,16 @@ namespace Node.Net.Beta.Internal
 			return Units.Angle.GetDegrees(svalue);
 		}
 
+		private static bool UseValueHash(object value)
+		{
+			if (value is bool ||
+				value is double ||
+				value is float ||
+				value is int ||
+				value is long ||
+				value is string) { return true; }
+			return false;
+		}
 		public static int ComputeHashCode(this IDictionary dictionary)
 		{
 			var hashCode = dictionary.Count;
@@ -72,23 +82,22 @@ namespace Node.Net.Beta.Internal
 				var value = dictionary[key];
 				if (value != null)
 				{
-					if (value.GetType() == typeof(bool) ||
-					   value.GetType() == typeof(double) ||
-					   value.GetType() == typeof(float) ||
-					   value.GetType() == typeof(int) ||
-					   value.GetType() == typeof(long) ||
-					   value.GetType() == typeof(string))
-					{
-						hashCode = hashCode ^ value.GetHashCode();
-					}
+					if (value is IDictionary) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
 					else
 					{
-						if (typeof(IDictionary).IsAssignableFrom(value.GetType())) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
+						if (value is IEnumerable) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+						else hashCode = hashCode ^ value.GetHashCode();
+					}
+					/*
+					if (UseValueHash(value)) hashCode = hashCode ^ value.GetHashCode();
+					else
+					{
+						if (value is IDictionary) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
 						else
 						{
-							if (typeof(IDictionary).IsAssignableFrom(value.GetType())) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+							if (value is IEnumerable) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
 						}
-					}
+					}*/
 				}
 			}
 			return hashCode;
@@ -140,17 +149,16 @@ namespace Node.Net.Beta.Internal
 			foreach (var result in tmp)
 			{
 				var d = result as IDictionary;
-				if (d != null)
+
+				if (d != null && d.Contains(kvp.Key))
 				{
-					if (d.Contains(kvp.Key))
+					var value = d[kvp.Key];
+					if (value != null && value.ToString() == kvp.Value)
 					{
-						var value = d[kvp.Key];
-						if (value != null && value.ToString() == kvp.Value)
-						{
-							results.Add(result);
-						}
+						results.Add(result);
 					}
 				}
+
 			}
 			return results;
 		}
@@ -159,27 +167,22 @@ namespace Node.Net.Beta.Internal
 		{
 			foreach (var item in idictionary.Values)
 			{
-				if (item != null)
+				if (item != null && item is T)//typeof(T).IsAssignableFrom(item.GetType()))
 				{
-					if (typeof(T).IsAssignableFrom(item.GetType()))
+					if (!results.Contains(item) && (
+						search == null || matchFunction(item as IDictionary, search)))// MatchesSearch(item as IDictionary, search)))
 					{
-						if (!results.Contains(item) && (
-							search == null || matchFunction(item as IDictionary, search)))// MatchesSearch(item as IDictionary, search)))
-						{
-							results.Add(item);
-						}
+						results.Add(item);
 					}
-					var child_idictionary = item as IDictionary;
-					if (child_idictionary != null) _Collect<T>(child_idictionary, search, results, matchFunction);
 				}
+				var child_idictionary = item as IDictionary;
+				if (child_idictionary != null) _Collect<T>(child_idictionary, search, results, matchFunction);
 			}
 		}
 
 		private static bool MatchesSearch(this IDictionary idictionary, string search)
 		{
-			if (search == null) return true;
-			if (search.Length == 0) return true;
-			if (idictionary == null) return true;
+			if (search == null || search.Length == 0 || idictionary == null) return true;
 			if (search.Contains(" "))
 			{
 				// All parts must match
@@ -197,17 +200,7 @@ namespace Node.Net.Beta.Internal
 			}
 			else
 			{
-				// Check for a value match
 				if (MatchesValue(idictionary, search)) return true;
-				/*
-				foreach (var key in idictionary.Keys)
-				{
-					var value = idictionary[key];
-					if (value != null && value.GetType() == typeof(string))
-					{
-						if (value.ToString().Contains(search)) return true;
-					}
-				}*/
 			}
 			return false;
 		}
@@ -217,17 +210,10 @@ namespace Node.Net.Beta.Internal
 			foreach (var key in idictionary.Keys)
 			{
 				var value = idictionary[key];
-				if (value != null && value.GetType() == typeof(string))
-				{
-					if (value.ToString().Contains(search)) return true;
-				}
+				if (value != null && value is string && value.ToString().Contains(search)) return true;
 			}
 			var mkey = ObjectExtension.GetName(idictionary);
-			if (mkey.Length > 0)
-			{
-				if (search.Length > 0 && mkey.Contains(search))
-				{ return true; }
-			}
+			if (mkey.Length > 0 && search.Length > 0 && mkey.Contains(search)) return true;
 
 			return false;
 		}
@@ -238,23 +224,14 @@ namespace Node.Net.Beta.Internal
 			{
 				if (item != null)
 				{
-					if (type.IsAssignableFrom(item.GetType()))
+					if (type.IsAssignableFrom(item.GetType()) && !results.Contains(item))
+					//if(item.GetType().IsInstanceOfType(type) && !results.Contains(item))
 					{
-						if (!results.Contains(item))
+						if (search == null || MatchesSearch((item as IDictionary), search))
 						{
-							if (search == null)
-							{
-								results.Add(item);
-							}
-							else
-							{
-								if (MatchesSearch((item as IDictionary), search))
-
-								{
-									results.Add(item);
-								}
-							}
+							results.Add(item);
 						}
+	
 					}
 					var child_idictionary = item as IDictionary;
 					if (child_idictionary != null) _Collect(child_idictionary, type, search, results);
@@ -268,22 +245,13 @@ namespace Node.Net.Beta.Internal
 			{
 				if (item != null)
 				{
-					if (item.GetType().Name == type)
-					{
-						if (!results.Contains(item)) results.Add(item);
-					}
+					if (item.GetType().Name == type && !results.Contains(item)) results.Add(item);
 					else
 					{
 						var d = item as IDictionary;
-						if (d != null)
+						if ( d!= null && d.Contains("Type") && d["Type"].ToString() == type && !results.Contains(item))
 						{
-							if (d.Contains("Type"))
-							{
-								if (d["Type"].ToString() == type)
-								{
-									if (!results.Contains(item)) results.Add(item);
-								}
-							}
+							results.Add(item);
 						}
 					}
 					var child_idictionary = item as IDictionary;
@@ -367,20 +335,16 @@ namespace Node.Net.Beta.Internal
 			return clone;
 		}
 
-		public static T Find<T>(this IDictionary dictionary, string name, bool exact = false, bool deepUpdateParents = false)// where T : IDictionary
+		public static T Find<T>(this IDictionary dictionary, string name, bool exact = false, bool deepUpdateParents = false)
 		{
 			var items = dictionary.Collect<T>();
 			foreach (var item in items)
 			{
-				if (deepUpdateParents)
-				{
-					if (item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
-				}
+				if (deepUpdateParents && item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
 				if (item.GetFullName() == name) return item;
 			}
 			foreach (var item in items)
 			{
-				var iname = item.GetName();
 				if (item.GetName() == name) return item;
 			}
 			if (!exact)
@@ -421,8 +385,7 @@ namespace Node.Net.Beta.Internal
 				if (value != null)
 				{
 					var templateType = typeof(T);
-					var valueType = value.GetType();
-					if (typeof(T).IsAssignableFrom(value.GetType())) return (T)value;
+					if (value is T) return (T)value;
 					if (templateType == typeof(double))
 					{
 						return (T)(object)Convert.ToDouble(value);
@@ -456,13 +419,7 @@ namespace Node.Net.Beta.Internal
 				}
 			}
 
-			if (typeof(T) == typeof(string))
-			{
-				if (defaultValue == null)
-				{
-					return (T)(object)string.Empty;
-				}
-			}
+			if (typeof(T) == typeof(string) && defaultValue == null) return (T)(object)string.Empty;
 			return defaultValue;
 		}
 

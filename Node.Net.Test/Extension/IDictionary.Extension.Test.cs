@@ -234,7 +234,7 @@ namespace Node.Net
 		public void IDictionary_GetByName()
 		{
 			var stream = typeof(IDictionaryExtensionTest).Assembly.GetManifestResourceStream
-				("Node.Net.Tests.Resources.Object.Bars.json");
+				("Node.Net.Test.Resources.Object.Bars.json");
 			Assert.NotNull(stream, nameof(stream));
 			var factory = new Factory();
 			factory.IDictionaryTypes.Add("Bar", typeof(Bar));
@@ -283,6 +283,12 @@ namespace Node.Net
 			Assert.AreNotEqual(0, "X".GetHashCode(), "X");
 			Assert.AreNotEqual(0, "10 m".GetHashCode(), "10 m");
 			var data = new Dictionary<string, dynamic> { { "X", "10 m" } };
+			Assert.AreNotEqual(0, data.ComputeHashCode());
+		}
+		[Test]
+		public void IDictionary_ComputeHashCode()
+		{
+			var data = new Dictionary<string, dynamic> { { "X", "10 m" },{ "list", new string[] { "a", "b", "c" } } };
 			Assert.AreNotEqual(0, data.ComputeHashCode());
 		}
 

@@ -5,7 +5,7 @@ namespace Node.Net.Beta.Internal.Factories
 {
     sealed class StringFactory : IFactory
     {
-        public object Create(Type target_type, object source)
+        public object Create(Type targetType, object source)
         {
             if (source != null)
             {
