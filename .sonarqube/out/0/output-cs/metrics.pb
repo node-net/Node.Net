@@ -163,9 +163,9 @@ ZD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Extension\IDictionary.E
 ZD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Extension\IEnumerable.Extension.cs[ 88@8H8R 0=0;5=0;10=0;20=0;30=1;60=0;90=0Z1=0;2=1;4=3;6=0;8=1;10=1;12=1jrÛ	
  !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\^_abcdefghijklmnopqrstuvwyz{|}~ÄÅÇÉÑÖÜáàâäãåçéèêëíìîïñóòôöúùûü†°¢£§•¶ß®©´¨ÆØ∞±≤≥¥µ∂∑∏π∫ªºΩæøxfÇZ#'(,.1257:;=@BCEHJLOSUXY^cfhilpstv{}ÄÇÖàäèëïôü°£§¶´±≥µ∂∏ºº
 ID:\work\github\node-net\Node.Net\Node.Net\Extension\IFactory.Extension.cs (08@HR 0=1;5=0;10=0;20=0;30=0;60=0;90=0Z1=1;2=1;4=0;6=0;8=0;10=0;12=0r	
-xÇ	«
-UD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Extension\Object.Extension.cs- 8 @ H R 0=0;5=0;10=0;20=0;30=1;60=0;90=0Z1=9;2=4;4=0;6=0;8=0;10=1;12=0rq	
- !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrx/Ç+#')*,01259:;?@BCEGHMQUXY[]^`eghko⁄
+xÇ	È
+UD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Extension\Object.Extension.cs1 8"@"H"R 0=0;5=0;10=0;20=0;30=1;60=0;90=0Z1=8;2=5;4=0;6=0;8=0;10=1;12=0rã	
+ !#$%&'()*+,-.0123456789:<>@BCDEGHIJKLNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwyz{|~ÄÅÉÑÖÜàâäãåçx&Ç2 %'(*-2457<>@DIJKPQSTVXY^bfijlnoqv{ÄÖä⁄
 YD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Extension\StackTrace.Extension.cs 8@HR 0=0;5=1;10=0;20=0;30=0;60=0;90=0Z1=0;2=1;4=1;6=0;8=0;10=0;12=0r"	
  !"#$x	Ç	!∆
 YD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Extension\TextReader.Extension.csN 8/@/H/R 0=0;5=0;10=0;20=0;30=1;60=0;90=0Z1=0;2=1;4=0;6=1;8=2;10=2;12=0j!$0Tktvwxy{|}ÅÇÑÖáàåç§r™	
@@ -176,8 +176,8 @@ H
 R 0=0;5=0;10=1;20=0;30=0;60=0;90=0Z1=1;2=0;4=0;6=0;8=1;10=0;12=0r$	
  !"#$%xÇ
  "∫
-TD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Factories\AbstractFactory.cs5 8'@'H'R 0=0;5=0;10=0;20=0;30=1;60=0;90=0Z1=11;2=0;4=1;6=0;8=0;10=1;12=1re	
- !"#$%&'()*+,./012345679;<=?@ABCDEFGIJKLMNOPQRSTUVXYZ[\]^_`abcdefghijklmnx,Ç*!"#%').13679;<BDGJLRSUVY[\]_`aceghk‘
+TD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Factories\AbstractFactory.cs5 8(@(H(R 0=0;5=0;10=0;20=0;30=1;60=0;90=0Z1=11;2=0;4=1;6=0;8=0;10=1;12=1re	
+ !"#$%&'()*+,-/012345678:<=>@ABCDEFGHIJKLMOPRSTUVWXZ[\]^_`abcdefghijklmnopx-Ç* "#$&(*/2478:<=CEHJLTUWX[]^_abcegijm‘
 QD:\work\github\node-net\Node.Net\Node.Net\Beta\Internal\Factories\BrushFactory.cs 8@HR 0=0;5=0;10=1;20=0;30=0;60=0;90=0Z1=2;2=1;4=0;6=1;8=0;10=0;12=0r!	
  !"#$xÇ
 !‡
