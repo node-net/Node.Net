@@ -70,11 +70,16 @@ namespace Node.Net.Tests
             var offset = points.Offset(2.0);
             Assert.AreEqual(6, offset.Length, "offset.Length");
             Assert.AreEqual(-1.0, Round(offset[0].X, 2), "offset[0].X");
-            Assert.AreEqual(-2.0, Round(offset[0].Y, 2), "offset[0].Y");
+            Assert.AreEqual(-3.0, Round(offset[0].Y, 2), "offset[0].Y");
             Assert.AreEqual(1.0, Round(offset[1].X, 2), "offset[1].X");
-            Assert.AreEqual(-2.0, Round(offset[1].Y, 2), "offset[1].Y");
-            Assert.AreEqual(2.0, Round(offset[2].X, 2), "offset[1].X");
-            Assert.AreEqual(-1.0, Round(offset[2].Y, 2), "offset[1].Y");
+            Assert.AreEqual(-3.0, Round(offset[1].Y, 2), "offset[1].Y");
+            Assert.AreEqual(3.0, Round(offset[2].X, 2), "offset[2].X");
+            Assert.AreEqual(-1.0, Round(offset[2].Y, 2), "offset[2].Y");
+
+            points = PointExtension.ParsePoints("-5.5,-5.5 0,-5.5 5.5,-5.5 11,-5.5");
+            offset = points.Offset(10.0);
+            Assert.AreEqual(-5.5, Round(offset[0].X, 2), "offset[0].X");
+            Assert.AreEqual(-15.5, Round(offset[0].Y, 2), "offset[0].Y");
             /*
 			Assert.AreEqual(-3.0, offset[0].X, "offset[0].X");
 			Assert.AreEqual(3.0, offset[2].X, "offset[2].X");
