@@ -136,5 +136,13 @@ namespace Node.Net.Tests
             var open = closed.Open();
             Assert.AreEqual(4, open.Length);
         }
+
+        [Test]
+        public void GetConnectingArcPoints()
+        {
+            var arcPoints = PointExtension.GetConnectingArcPoints(
+                new Point(100.0, 0.0), new Point(50.0, 10.0),
+                new Point(-50.0, 10.0), new Point(-100.0, 0.0));
+        }
     }
 }
