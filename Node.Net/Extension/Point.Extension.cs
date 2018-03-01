@@ -357,5 +357,19 @@ namespace Node.Net
         {
             return null;
         }
+
+        public static List<Point> GetConnectingArcPoints(Point pointA, Point pointB, Point pointC, Point pointD)
+        {
+            var results = new List<Point>();
+            Vector tangent1 = (pointB - pointA);
+            tangent1.Normalize();
+            var matrix = new System.Windows.Media.Matrix();
+            matrix.Rotate(90.0);
+            var negativenormal1 = Vector.Multiply(tangent1, matrix);
+            Vector tangent2 = (pointD - pointC);
+            tangent2.Normalize();
+            var negativenormal2 = Vector.Multiply(tangent1, matrix);
+            return results;
+        }
     }
 }
