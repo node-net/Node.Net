@@ -237,9 +237,10 @@ namespace Node.Net
                 var matrix = new System.Windows.Media.Matrix();
                 matrix.Rotate(-90.0);
                 var normal = Vector.Multiply(tangent, matrix);
+                var offset = new Vector(normal.X * distance, normal.Y * distance);
 
-                offsetPointList.Add(new Point(pointA.X + normal.X, pointA.Y + normal.Y));
-                offsetPointList.Add(new Point(pointB.X + normal.X, pointB.Y + normal.Y));
+                offsetPointList.Add(new Point(pointA.X + offset.X, pointA.Y + offset.Y));
+                offsetPointList.Add(new Point(pointB.X + offset.X, pointB.Y + offset.Y));
             }
 
             var offsetPoints = offsetPointList.ToArray();
