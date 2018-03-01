@@ -254,8 +254,11 @@ namespace Node.Net
             var segmentCount = points.Length - 1;
             Point offsetPointA = new Point();
             Point offsetPointB = new Point();
-            Point offsetPointC;
-            Point offsetPointD;
+            Point offsetPointC = new Point();
+            Point offsetPointD = new Point();
+
+            Point originalOffsetA = new Point();
+            Point originalOffsetB = new Point();
             for (int si = 0; si < segmentCount; ++si)
             {
                 var pointA = points[si];
@@ -284,10 +287,25 @@ namespace Node.Net
 
                 offsetPointA = offsetPointC;
                 offsetPointB = offsetPointD;
+
+                if(si == 0)
+                {
+                    originalOffsetA = offsetPointA;
+                    originalOffsetB = offsetPointB;
+                }
             }
 
             var offsetPoints = offsetPointList.ToArray();
-            if (points.IsClosed()) offsetPoints = offsetPoints.Close();
+            if (points.IsClosed())
+            {
+                var arc_points = GetConnectingArcPoints(offsetPointC, offsetPointD, originalOffsetA, originalOffsetB);
+                if (arc_points.Count > 0)
+                {
+                    foreach (var arc_point in arc_points) offsetPointList.Add(arc_point);
+                }
+
+                offsetPoints = offsetPoints.Close();
+            }
             return offsetPoints;
         }
 
