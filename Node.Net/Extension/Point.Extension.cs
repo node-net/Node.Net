@@ -248,6 +248,49 @@ namespace Node.Net
             return offsetPoints;
         }
 
+        public static Point[] OffsetWithArcs(this Point[] points,double distance)
+        {
+            var offsetPointList = new List<Point>();
+            var segmentCount = points.Length - 1;
+            Point offsetPointA = new Point();
+            Point offsetPointB = new Point();
+            Point offsetPointC;
+            Point offsetPointD;
+            for (int si = 0; si < segmentCount; ++si)
+            {
+                var pointA = points[si];
+                var pointB = points[si + 1];
+                Vector tangent = (pointB - pointA);
+                tangent.Normalize();
+                var matrix = new System.Windows.Media.Matrix();
+                matrix.Rotate(-90.0);
+                var normal = Vector.Multiply(tangent, matrix);
+                var offset = new Vector(normal.X * distance, normal.Y * distance);
+
+                offsetPointC = new Point(pointA.X + offset.X, pointA.Y + offset.Y);
+                offsetPointD = new Point(pointB.X + offset.X, pointB.Y + offset.Y);
+
+                if (si > 0)
+                {
+                    var arc_points = GetConnectingArcPoints(offsetPointA, offsetPointB, offsetPointC, offsetPointD);
+                    if(arc_points.Count > 0)
+                    {
+                        foreach (var arc_point in arc_points) offsetPointList.Add(arc_point);
+                    }
+                }
+
+                offsetPointList.Add(offsetPointC);
+                offsetPointList.Add(offsetPointD);
+
+                offsetPointA = offsetPointC;
+                offsetPointB = offsetPointD;
+            }
+
+            var offsetPoints = offsetPointList.ToArray();
+            if (points.IsClosed()) offsetPoints = offsetPoints.Close();
+            return offsetPoints;
+        }
+
         public static Point[] Offset_Old(this Point[] points, double distance)
         {
             var centroid = points.GetCentroid();
@@ -361,6 +404,9 @@ namespace Node.Net
         public static List<Point> GetConnectingArcPoints(Point pointA, Point pointB, Point pointC, Point pointD)
         {
             var results = new List<Point>();
+            Point intersection = new Point();
+            if (!IsIntersection(pointA, pointB, pointC, pointD, out intersection)) return results;
+
             Vector tangent1 = (pointB - pointA);
             tangent1.Normalize();
             var matrix = new System.Windows.Media.Matrix();
@@ -368,8 +414,74 @@ namespace Node.Net
             var negativenormal1 = Vector.Multiply(tangent1, matrix);
             Vector tangent2 = (pointD - pointC);
             tangent2.Normalize();
-            var negativenormal2 = Vector.Multiply(tangent1, matrix);
+            var negativenormal2 = Vector.Multiply(tangent2, matrix);
+
+            Point arc_origin = new Point();
+            if(IsIntersection(pointB,new Point(pointB.X + negativenormal1.X,pointB.Y + negativenormal1.Y),
+                              pointC,new Point(pointC.X + negativenormal2.X,pointC.Y + negativenormal2.Y),out arc_origin))
+            {
+                var angle = Vector.AngleBetween(pointB - arc_origin, pointC - arc_origin);
+                if(Abs(angle) > 5.0)
+                {
+                    var theta_div = Round(Abs(angle) / 5.0, 0) + 1;
+                    if(theta_div > 1)
+                    {
+                        var delta = angle / ((double)theta_div);
+                        for(double i =1; i < theta_div;++i)
+                        {
+                            var rotationMatrix = new System.Windows.Media.Matrix();
+                            rotationMatrix.Rotate(delta * i);
+                            var arc_vector = pointB - arc_origin;
+                            arc_vector = Vector.Multiply(arc_vector, rotationMatrix);
+                            results.Add(new Point(arc_origin.X + arc_vector.X,arc_origin.Y + arc_vector.Y));
+                        }
+                    }
+                }
+            }
+            
             return results;
+        }
+        public static double GetSlope(this Point pointA,Point pointB)
+        {
+            return (pointB.Y - pointA.Y) / (pointB.X - pointA.X);
+        }
+        public static double GetA(this Point pointA,Point pointB) { return -1.0 * GetSlope(pointA, pointB); }
+        public static double GetC(this Point pointA,Point pointB) { return pointA.Y - GetSlope(pointA, pointB) * pointA.X; }
+        public static bool IsVertical(this Point pointA,Point pointB,double tolerance = 0.0001)
+        {
+            return Abs(pointB.X-pointA.X) < tolerance;
+        }
+        public static bool IsIntersection(Point pointA,Point pointB,Point pointC,Point pointD,out Point intersectionPoint)
+        {
+            intersectionPoint = new Point();
+            if (pointA.IsVertical(pointB) && pointC.IsVertical(pointD)) return false;
+            if(pointA.IsVertical(pointB))
+            {
+                var y = (pointA.X - pointC.X) * (pointD.Y - pointC.Y) / ((pointD.X - pointC.X)) + pointC.Y;
+                intersectionPoint = new Point(pointA.X, y);
+                return true;
+            }
+            if(pointC.IsVertical(pointD))
+            {
+                var y = (pointC.X - pointA.X) * (pointB.Y - pointA.Y) / ((pointB.X - pointA.X)) + pointA.Y;
+                intersectionPoint = new Point(pointC.X, y);
+                return true;
+            }
+            var A1 = pointA.GetA(pointB);
+            var A2 = pointC.GetA(pointD);
+            var B1 = 1.0;
+            var B2 = 1.0;
+            var C1 = pointA.GetC(pointB);
+            var C2 = pointC.GetC(pointD);
+            double delta = A1 * B2 - A2 * B1;
+            bool hasIntersection = Abs(delta - 0) > 0.0001f;
+            if (hasIntersection)
+            {
+                double x = (B2 * C1 - B1 * C2) / delta;
+                double y = (A1 * C2 - A2 * C1) / delta;
+                intersectionPoint = new Point(x, y);
+            }
+            return hasIntersection;
         }
     }
 }

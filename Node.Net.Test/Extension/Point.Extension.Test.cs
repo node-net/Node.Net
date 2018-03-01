@@ -99,6 +99,13 @@ namespace Node.Net.Tests
         }
 
         [Test]
+        public void OffsetWithArcs()
+        {
+            var points = PointExtension.ParsePoints("-1,-1 1,-1 1,1 -1,1");
+            var offset = points.OffsetWithArcs(2.0);
+            Assert.AreEqual(42, offset.Length, "offset.Length");
+        }
+        [Test]
         public void Contains()
         {
             var points = PointExtension.ParsePoints("-20,-10 20,-10 20,10 -20,10");
@@ -143,6 +150,41 @@ namespace Node.Net.Tests
             var arcPoints = PointExtension.GetConnectingArcPoints(
                 new Point(100.0, 0.0), new Point(50.0, 10.0),
                 new Point(-50.0, 10.0), new Point(-100.0, 0.0));
+            Assert.AreEqual(5, arcPoints.Count, "arcPoints.Count case 1");
+            Assert.AreEqual(33.45, Round(arcPoints[0].X, 2), "arcPoints[0].X case 1");
+            Assert.AreEqual(16.76, Round(arcPoints[1].X, 2), "arcPoints[1].X case 1");
+            Assert.AreEqual(0.0, Round(arcPoints[2].X, 2), "arcPoints[2].X case 1");
+            Assert.AreEqual(-16.76, Round(arcPoints[3].X, 2), "arcPoints[3].X case 1");
+            Assert.AreEqual(-33.45, Round(arcPoints[4].X, 2), "arcPoints[4].X case 1");
+
+            arcPoints = PointExtension.GetConnectingArcPoints(
+                new Point(-100.0, 0.0), new Point(-50.0, 10.0),
+                new Point(50.0, 10.0),new Point(100.0, 0.0));
+            Assert.AreEqual(5, arcPoints.Count, "arcPoints.Count case 2");
+            Assert.AreEqual(-33.45, Round(arcPoints[0].X, 2), "arcPoints[0].X case 2");
+            Assert.AreEqual(-16.76, Round(arcPoints[1].X, 2), "arcPoints[1].X case 2");
+            Assert.AreEqual(0.0, Round(arcPoints[2].X, 2), "arcPoints[2].X case 2");
+            Assert.AreEqual(16.76, Round(arcPoints[3].X, 2), "arcPoints[3].X case 2");
+            Assert.AreEqual(33.45, Round(arcPoints[4].X, 2), "arcPoints[4].X case 2");
         }
+        [Test]
+        public void IsIntersection()
+        {
+            Point intersection = new Point();
+            Assert.False(PointExtension.IsIntersection(new Point(0, 0), new Point(0, 100), new Point(10, 0), new Point(10, 100), out intersection));
+
+            Assert.True(PointExtension.IsIntersection(new Point(0, 0), new Point(10, 10), new Point(10, 0), new Point(0, 10), out intersection));
+            Assert.AreEqual(5.0, intersection.X, "intersection.X");
+            Assert.AreEqual(5.0, intersection.X, "intersection.Y");
+
+            Assert.True(PointExtension.IsIntersection(new Point(10, 0), new Point(10, 100), new Point(0, 15), new Point(20, 15), out intersection));
+            Assert.AreEqual(10.0, intersection.X, "intersection.X case 1");
+            Assert.AreEqual(15.0, intersection.Y, "intersection.Y case 1");
+
+            Assert.True(PointExtension.IsIntersection(new Point(0, 15), new Point(20, 15), new Point(10, 0), new Point(10, 100),  out intersection));
+            Assert.AreEqual(10.0, intersection.X, "intersection.X case 2");
+            Assert.AreEqual(15.0, intersection.Y, "intersection.Y case 2");
+        }
+        
     }
 }

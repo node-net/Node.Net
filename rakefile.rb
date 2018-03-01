@@ -1,4 +1,4 @@
-VERSION='1.0.529'
+VERSION='1.0.530'
 require 'dev'
 
 CLEAN.include(".sonarqube")
