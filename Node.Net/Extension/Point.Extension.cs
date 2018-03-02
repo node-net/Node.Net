@@ -248,7 +248,7 @@ namespace Node.Net
             return offsetPoints;
         }
 
-        public static Point[] OffsetWithArcs(this Point[] points,double distance)
+        public static Point[] OffsetWithArcs(this Point[] points, double distance)
         {
             var offsetPointList = new List<Point>();
             var segmentCount = points.Length - 1;
@@ -276,7 +276,7 @@ namespace Node.Net
                 if (si > 0)
                 {
                     var arc_points = GetConnectingArcPoints(offsetPointA, offsetPointB, offsetPointC, offsetPointD);
-                    if(arc_points.Count > 0)
+                    if (arc_points.Count > 0)
                     {
                         foreach (var arc_point in arc_points) offsetPointList.Add(arc_point);
                     }
@@ -288,14 +288,13 @@ namespace Node.Net
                 offsetPointA = offsetPointC;
                 offsetPointB = offsetPointD;
 
-                if(si == 0)
+                if (si == 0)
                 {
                     originalOffsetA = offsetPointA;
                     originalOffsetB = offsetPointB;
                 }
             }
 
-            var offsetPoints = offsetPointList.ToArray();
             if (points.IsClosed())
             {
                 var arc_points = GetConnectingArcPoints(offsetPointC, offsetPointD, originalOffsetA, originalOffsetB);
@@ -303,10 +302,11 @@ namespace Node.Net
                 {
                     foreach (var arc_point in arc_points) offsetPointList.Add(arc_point);
                 }
-
+                var offsetPoints = offsetPointList.ToArray();
                 offsetPoints = offsetPoints.Close();
+                return offsetPoints;
             }
-            return offsetPoints;
+            return offsetPointList.ToArray();
         }
 
         public static Point[] Offset_Old(this Point[] points, double distance)
@@ -435,51 +435,62 @@ namespace Node.Net
             var negativenormal2 = Vector.Multiply(tangent2, matrix);
 
             Point arc_origin = new Point();
-            if(IsIntersection(pointB,new Point(pointB.X + negativenormal1.X,pointB.Y + negativenormal1.Y),
-                              pointC,new Point(pointC.X + negativenormal2.X,pointC.Y + negativenormal2.Y),out arc_origin))
+            if (IsIntersection(pointB, new Point(pointB.X + negativenormal1.X, pointB.Y + negativenormal1.Y),
+                              pointC, new Point(pointC.X + negativenormal2.X, pointC.Y + negativenormal2.Y), out arc_origin))
             {
                 var angle = Vector.AngleBetween(pointB - arc_origin, pointC - arc_origin);
-                if(Abs(angle) > 5.0)
+                if (Abs(angle) > 5.0)
                 {
                     var theta_div = Round(Abs(angle) / 5.0, 0) + 1;
-                    if(theta_div > 1)
+                    if (theta_div > 1)
                     {
                         var delta = angle / ((double)theta_div);
-                        for(double i =1; i < theta_div;++i)
+                        for (double i = 1; i < theta_div; ++i)
                         {
                             var rotationMatrix = new System.Windows.Media.Matrix();
                             rotationMatrix.Rotate(delta * i);
                             var arc_vector = pointB - arc_origin;
                             arc_vector = Vector.Multiply(arc_vector, rotationMatrix);
-                            results.Add(new Point(arc_origin.X + arc_vector.X,arc_origin.Y + arc_vector.Y));
+                            results.Add(new Point(arc_origin.X + arc_vector.X, arc_origin.Y + arc_vector.Y));
                         }
                     }
                 }
             }
-            
+
             return results;
         }
-        public static double GetSlope(this Point pointA,Point pointB)
+
+        public static double GetSlope(this Point pointA, Point pointB)
         {
             return (pointB.Y - pointA.Y) / (pointB.X - pointA.X);
         }
-        public static double GetA(this Point pointA,Point pointB) { return -1.0 * GetSlope(pointA, pointB); }
-        public static double GetC(this Point pointA,Point pointB) { return pointA.Y - GetSlope(pointA, pointB) * pointA.X; }
-        public static bool IsVertical(this Point pointA,Point pointB,double tolerance = 0.0001)
+
+        public static double GetA(this Point pointA, Point pointB)
         {
-            return Abs(pointB.X-pointA.X) < tolerance;
+            return -1.0 * GetSlope(pointA, pointB);
         }
-        public static bool IsIntersection(Point pointA,Point pointB,Point pointC,Point pointD,out Point intersectionPoint)
+
+        public static double GetC(this Point pointA, Point pointB)
+        {
+            return pointA.Y - GetSlope(pointA, pointB) * pointA.X;
+        }
+
+        public static bool IsVertical(this Point pointA, Point pointB, double tolerance = 0.0001)
+        {
+            return Abs(pointB.X - pointA.X) < tolerance;
+        }
+
+        public static bool IsIntersection(Point pointA, Point pointB, Point pointC, Point pointD, out Point intersectionPoint)
         {
             intersectionPoint = new Point();
             if (pointA.IsVertical(pointB) && pointC.IsVertical(pointD)) return false;
-            if(pointA.IsVertical(pointB))
+            if (pointA.IsVertical(pointB))
             {
                 var y = (pointA.X - pointC.X) * (pointD.Y - pointC.Y) / ((pointD.X - pointC.X)) + pointC.Y;
                 intersectionPoint = new Point(pointA.X, y);
                 return true;
             }
-            if(pointC.IsVertical(pointD))
+            if (pointC.IsVertical(pointD))
             {
                 var y = (pointC.X - pointA.X) * (pointB.Y - pointA.Y) / ((pointB.X - pointA.X)) + pointA.Y;
                 intersectionPoint = new Point(pointC.X, y);
