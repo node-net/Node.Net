@@ -35,5 +35,16 @@ namespace Node.Net
 			}
 			return results.ToArray();
 		}
-	}
+        public static Point3D[] Transform(this Point3D[] points, Matrix3D matrix)
+        {
+            var result = new List<Point3D>();
+
+            var tranformed = new List<Point3D>();
+            foreach (var point in points)
+            {
+                result.Add(matrix.Transform(point));
+            }
+            return result.ToArray();
+        }
+    }
 }
