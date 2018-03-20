@@ -17,10 +17,18 @@ namespace Node.Net
 		public static IList<T> Collect<T>(this IDictionary dictionary) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary);
 
 		public static IList<T> Collect<T>(this IDictionary dictionary, string search) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, search);
-
+		public static IList<T> Collect<T>(this IDictionary element, Func<object,bool> filter)
+		{
+			var unfiltered = element.Collect<T>();
+			var filtered = new List<T>();
+			foreach (var item in unfiltered)
+			{
+				if (filter != null && filter(item)) filtered.Add(item);
+			}
+			return filtered;
+		}
 		public static IList<T> Collect<T>(this IDictionary dictionary, Func<IDictionary, string, bool> matchFunction, string search = null) => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, matchFunction, search);
 
-		//public static IList<T> Collect<T>(this IDictionary dictionary, KeyValuePair<string, string> kvp) where T : IDictionary => Beta.Internal.IDictionaryExtension.Collect<T>(dictionary, kvp);
 
 		public static IList<T> CollectValues<T>(this IDictionary dictionary, string key) => Beta.Internal.IDictionaryExtension.CollectValues<T>(dictionary, key);
 
