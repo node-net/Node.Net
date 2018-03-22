@@ -109,6 +109,7 @@
     <Compile Include="Extension\Viewport3D.Extension.cs" />
     <Compile Include="Extension\Visual.Extension.cs" />
     <Compile Include="Extension\Visual3D.Extension.cs" />
+    <Compile Include="HitTester.cs" />
     <Compile Include="Interfaces\IChildren.cs" />
     <Compile Include="Interfaces\ISymbol.cs" />
     <Compile Include="Interfaces\ITreeViewItemHeader.cs" />
