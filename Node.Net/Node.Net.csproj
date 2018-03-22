@@ -77,7 +77,6 @@
     <Compile Include="BitmapSourceWriter.cs" />
     <Compile Include="Controls\ContentControl.cs" />
     <Compile Include="Controls\GridView.cs" />
-    <Compile Include="Controls\PropertyControl.cs" />
     <Compile Include="Controls\StaticViewport3D.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Extension\Assembly.Extension.cs" />
