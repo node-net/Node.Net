@@ -35,7 +35,20 @@ namespace Node.Net
 			}
 		}
 
-		private static List<string> xaml_markers = new List<string>
+        public object Read(string filename) => IReadExtension.Read(this, filename);
+      
+        private T Convert<T>(object instance)
+        {
+            if (instance == null) return default(T);
+            if (typeof(T).IsAssignableFrom(instance.GetType()))
+            {
+                return (T)instance;
+            }
+            return default(T);
+        }
+        public T Read<T>(Stream stream) => Convert<T>(Read(stream));
+        public T Read<T>(string filename) => Convert<T>(Read(filename));
+        private static List<string> xaml_markers = new List<string>
 		{
 			"http://schemas.microsoft.com/winfx/2006/xaml/presentation",
 			"<MeshGeometry3D",
