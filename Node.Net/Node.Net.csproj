@@ -78,6 +78,10 @@
     <Compile Include="Controls\ContentControl.cs" />
     <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\StaticViewport3D.cs" />
+    <Compile Include="Converters\HiddenWhenNullConverter.cs" />
+    <Compile Include="Converters\VisibleWhenGreaterThanOneConverter.cs" />
+    <Compile Include="Converters\VisibleWhenGreaterThanZeroConverter.cs" />
+    <Compile Include="Converters\VisibleWhenNullConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Extension\Assembly.Extension.cs" />
