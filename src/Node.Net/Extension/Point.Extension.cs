@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using static System.Math;
 
 namespace Node.Net
@@ -114,6 +115,51 @@ namespace Node.Net
 				return result.ToArray();
 			}
 			return points;
+		}
+		public static Point[] Open(this Point[] points, double tolerance = 0.0001)
+		{
+			if (points.Length < 2) return points;
+			var delta = Point.Subtract(points[points.Length - 1], points[0]);
+			if (delta.Length < tolerance)
+			{
+				var result = new List<Point>();
+				for (int i = 0; i < points.Length - 1; ++i)
+				{
+					result.Add(points[i]);
+				}
+				return result.ToArray();
+			}
+			return points;
+		}
+		public static Point[] Scale(this Point[] points, double scale)
+		{
+			var dims = points.GetDimensions();
+			var scaleTransform = new ScaleTransform(scale, scale);
+
+			var result = new List<Point>();
+			var pointFs = new List<System.Drawing.PointF>();
+			foreach (var point in points)
+			{
+				result.Add(scaleTransform.Transform(point));
+			}
+			return result.ToArray();
+		}
+		public static Point GetDimensions(this Point[] points)
+		{
+			if (points.Length > 0)
+			{
+				var min = points[0];
+				var max = points[0];
+				foreach (var point in points)
+				{
+					if (point.X < min.X) min.X = point.X;
+					if (point.Y < min.Y) min.Y = point.Y;
+					if (point.X > max.X) max.X = point.X;
+					if (point.Y > max.Y) max.Y = point.Y;
+				}
+				return new Point(max.X - min.X, max.Y - min.Y);
+			}
+			return new Point(0, 0);
 		}
 		/// <summary>
 		/// Offset a Point[]
