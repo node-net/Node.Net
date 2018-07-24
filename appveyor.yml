@@ -7,5 +7,5 @@ test_script:
   - rake
 environment:
   matrix:
-    - ruby_version: "200-x64"
+    - ruby_version: 22
 
