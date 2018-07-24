@@ -811,5 +811,16 @@ namespace Node.Net
 		}
 		public static IList<T> Collect<T>(this IDictionary dictionary, Func<object, bool> filter)
 			=> new List<T>(dictionary.Collect<T>().Where(x => filter(x)));
+
+		public static string GetUniqueKey(this IDictionary dictionary, string baseName)
+		{
+			if (!dictionary.Contains(baseName)) return baseName;
+			for (int i = 1; i < 10000; ++i)
+			{
+				var key = $"{baseName}{i}";
+				if (!dictionary.Contains(key)) return key;
+			}
+			return baseName;
+		}
 	}
 }
