@@ -1,20 +1,33 @@
 <?xml version="1.0"?>
-<package >
-  <metadata>
-    <id>Node.Net</id>
-    <version>1.0.541</version>
-    <authors>Node.Net</authors>
-    <owners>Node.Net</owners>
-    <licenseUrl>https://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-    <projectUrl>https://github.com/node-net/Node.Net</projectUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>C# Library</description>
-    <releaseNotes></releaseNotes>
-    <copyright>Copyright 2015-2016</copyright>
-    <tags>JSON</tags>
-  </metadata>
-  <files>
-    <file src="lib/Net4.6/Node.Net.dll" target="lib/net46"/>
-    <file src="LICENSE"/>
-  </files>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Node.Net</id>
+        <title>Node.Net</title>
+        <version>1.1.22-beta</version>
+        <authors>Lou Parslow</authors>
+        <owners>Lou Parslow</owners>
+        <licenseUrl>https://raw.githubusercontent.com/node-net/Node.Net/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/node-net/Node.Net</projectUrl>
+        <iconUrl>https://github.com/node-net/Node.Net/raw/master/Node.Net.256.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <summary>JSON.</summary>
+        <description>
+            Node.Net is a .NET library.
+
+            Supported platforms:
+            - .NET Framework 4.6
+        </description>
+        <releaseNotes></releaseNotes>
+        <language>en-US</language>
+        <tags>IDictionary framework</tags>
+        <copyright>Copyright (c) 2017 Lou Parslow</copyright>
+        <dependencies>
+            <group targetFramework="net46" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="LICENSE.txt" />
+        <file src="bin/Release/net46/Node.Net.dll" target="lib\net46" />
+        <file src="bin/Release/net46/Node.Net.xml" target="lib\net46" />
+    </files>
 </package>

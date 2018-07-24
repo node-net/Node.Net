@@ -1,26 +1,13 @@
-VERSION='1.0.541'
+VERSION='1.1.22'
+#SLN_FILES=FileList.new('Node.Net.NETStandard2.0.sln','Node.Net.NETFramework4.6.sln')
 require 'dev'
+CLOBBER.include('**/obj','bin','TestResults')
 
-CLEAN.include(".sonarqube")
 task :publish  do
-	if(__FILE__.include?('/work/') && Git.user_email.length > 0)
-		list=`nuget list Node.Net`
-		if(!list.include?("Node.Net #{VERSION}"))
-			puts `nuget push Node.Net.#{VERSION}.nupkg -Source https://api.nuget.org/v3/index.json`
-			Git.tag File.dirname(__FILE__), VERSION
-		end
+	list=`nuget list Node.Net -Source VSTS -Prerelease`
+	if(!list.include?("Node.Net #{VERSION}"))
+	#	# Have VSTS package and push the NuGet Packages
+	#	puts `nuget push Ouroboros.Reflection.#{VERSION}.nupkg -Source "https://lou-parslow.pkgs.visualstudio.com/_packaging/Packages/nuget/v3/index.json" -ApiKey VSTS`
+		puts `nuget push Node.Net.#{VERSION}-beta.nupkg -Source https://api.nuget.org/v3/index.json`
 	end
 end
-
-# version 1.0.314 LOC 5312
-# version 1.0.328 LOC 6287
-# version 1.0.341 LOC 6463
-#
-# version 1.0.390 LOC 2281
-# version 1.0.420 LOC 2308
-
-# Allow Factories to share Global ManifestResources and ResourceDictionary
-
-# Analyze with SonarQube
-# 
-#
