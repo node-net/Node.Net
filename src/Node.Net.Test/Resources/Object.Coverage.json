@@ -1,0 +1,11 @@
+{
+	"base64": "base64:dGVzdA==",
+	"bool_true ": true,
+	"bool_false": false,
+	"int_0": 0,
+	"float_1": 1.23,
+	"null": null,
+	"array_0": [ 0, 1, 2, 3 ],
+  "array_empty": [],
+  "objectA": {}
+}

@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <DebugType>Full</DebugType>
+    <PackageId>Node.Net</PackageId>
+    <PackageVersion>1.1.22</PackageVersion>
+    <Authors>Lou Parslow</Authors>
+    <Description>Persistence Framework</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <Copyright>Copyright 2017 (c) Lou Parslow. All rights reserved.</Copyright>
+    <ProjectUrl>https://github.com/lou-parslow/Trestle</ProjectUrl>
+    <LicenseUrl>https://raw.githubusercontent.com/lou-parslow/Trestle/master/LICENSE</LicenseUrl>
+    <PackageTags>JSON framework</PackageTags>
+    <AssemblyName>Node.Net</AssemblyName>
+    <RootNamespace>Node.Net</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>..\..\bin\Release\netstandard2.0\Node.Net.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\" />
+  </Target>
+  <Target Name="AfterBuild">
+    <!-- Remove obj folder -->
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" />
+    <!-- Remove bin folder -->
+    <RemoveDir Directories="$(IntermediateOutputPath)" />
+</Target>
+<Target Name="BeforeBuild">
+  <Exec Command="nuget.exe restore ..\..\Node.Net.NETStandard2.0.sln" />
+</Target>
+
+</Project>

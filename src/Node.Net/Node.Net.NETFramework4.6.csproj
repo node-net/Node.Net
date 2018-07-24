@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F29B2594-8A0B-4521-BB96-3DA2A5D578A0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Node.Net</RootNamespace>
+    <AssemblyName>Node.Net</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\net46\</OutputPath>
+    <IntermediateOutputPath>..\..\obj\Debug\</IntermediateOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release\net46\</OutputPath>
+    <IntermediateOutputPath>..\..\obj\Release\</IntermediateOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\Release\net46\Node.Net.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Exceptions\UnrecognizedSignatureException.cs" />
+    <Compile Include="Extension\Assembly.Extension.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Extension\IDictionary.Extension.cs" />
+    <Compile Include="Extension\IEnumerable.Extension.cs" />
+    <Compile Include="Extension\IFactory.Extension.cs" />
+    <Compile Include="Extension\IRead.Extension.cs" />
+    <Compile Include="Extension\Matrix3D.Extension.cs" />
+    <Compile Include="Extension\Object.Extension.cs" />
+    <Compile Include="Extension\PerspectiveCamera.Extension.cs" />
+    <Compile Include="Extension\Point.Extension.cs" />
+    <Compile Include="Extension\Point3D.Extension.cs" />
+    <Compile Include="Extension\ProjectionCamera.Extension.cs" />
+    <Compile Include="Extension\Rect3D.Extension.cs" />
+    <Compile Include="Extension\StackTrace.Extension.cs" />
+    <Compile Include="Extension\Stream.Extension.cs" />
+    <Compile Include="Extension\String.Extension.cs" />
+    <Compile Include="Extension\TextReader.Extension.cs" />
+    <Compile Include="Extension\Vector3D.Extension.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="Interfaces\IFactory.cs" />
+    <Compile Include="Interfaces\IRead.cs" />
+    <Compile Include="Interfaces\IWrite.cs" />
+    <Compile Include="Internal\AbstractFactory.cs" />
+    <Compile Include="Internal\Angle.cs" />
+    <Compile Include="Internal\BitmapSourceWriter.cs" />
+    <Compile Include="Internal\BrushFactory.cs" />
+    <Compile Include="Internal\CloneFactory.cs" />
+    <Compile Include="Internal\CollectionsFactory.cs" />
+    <Compile Include="Internal\ColorFactory.cs" />
+    <Compile Include="Internal\Factory.cs" />
+    <Compile Include="Internal\GeometryModel3DFactory.cs" />
+    <Compile Include="Internal\ImageSourceReader.cs" />
+    <Compile Include="Internal\JSONReader.cs" />
+    <Compile Include="Internal\JSONWriter.cs" />
+    <Compile Include="Internal\Length.cs" />
+    <Compile Include="Internal\MaterialFactory.cs" />
+    <Compile Include="Internal\Matrix3DFactory.cs" />
+    <Compile Include="Internal\MeshGeometry3DFactory.cs" />
+    <Compile Include="Internal\MetaData.cs" />
+    <Compile Include="Internal\Model3DFactory.cs" />
+    <Compile Include="Internal\ResourceFactory.cs" />
+    <Compile Include="Internal\Signature.cs" />
+    <Compile Include="Internal\SignatureReader.cs" />
+    <Compile Include="Internal\StreamFactory.cs" />
+    <Compile Include="Internal\Transform3DFactory.cs" />
+    <Compile Include="Internal\Type.Extension.cs" />
+    <Compile Include="Internal\Visual3DFactory.cs" />
+    <Compile Include="JsonRPC\Client.cs" />
+    <Compile Include="JsonRPC\Error.cs" />
+    <Compile Include="JsonRPC\Request.cs" />
+    <Compile Include="JsonRPC\Responder.cs" />
+    <Compile Include="JsonRPC\Response.cs" />
+    <Compile Include="JsonRPC\Server.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Reader.cs" />
+    <Compile Include="WordReader.cs" />
+    <Compile Include="Writer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <Target Name="BeforeBuild">
+    <!-- Remove obj folder -->
+    <RemoveDir Directories="obj" />
+  </Target>
+</Project>
