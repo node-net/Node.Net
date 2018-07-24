@@ -1,6 +1,6 @@
 version: "{build}"
 install:
-  - ps: [Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+  - ps: | [Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
   - gem install dev --quiet --no-ri --no-rdoc
 build: off
 test_script:
