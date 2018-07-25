@@ -39,12 +39,35 @@ namespace Node.Net.Internal
 		}
 		private static Matrix3D? CreateFromIDictionary(IDictionary dictionary)
 		{
+			var log = new StringBuilder();
 			var matrix3D = new Matrix3D();
-
+			var xDirection = new Vector3D(1, 0, 0);
+			var yDirection = new Vector3D(0, 1, 0);
 			if (dictionary.Contains("XDirection"))
 			{
-				var xDirection = Vector3D.Parse(dictionary.Get<string>("XDirection", "1,0,0"));
-				var yDirection = Vector3D.Parse(dictionary.Get<string>("YDirection", "0,1,0"));
+				
+				try
+				{
+					
+					if(dictionary.Contains("XDirection"))
+					{
+						var xDirectionValue = dictionary.Get<string>("XDirection", "1,0,0");
+						log.AppendLine($" XDirection = {xDirectionValue}");
+						xDirection = Vector3D.Parse(xDirectionValue);
+					}
+					if (dictionary.Contains("YDirection"))
+					{
+						var yDirectionValue = dictionary.Get<string>("YDirection", "0,1,0");
+						log.AppendLine($" YDirection = {yDirectionValue}");
+						yDirection = Vector3D.Parse(yDirectionValue);
+					}
+				}
+				catch(Exception e)
+				{
+					throw new InvalidOperationException($"Matrix3DFactory.CreateFromIDictionary{Environment.NewLine}{log}", e);
+				}
+				//var xDirection = Vector3D.Parse(dictionary.Get<string>("XDirection", "1,0,0"));
+				//var yDirection = Vector3D.Parse(dictionary.Get<string>("YDirection", "0,1,0"));
 				matrix3D = matrix3D.SetDirectionVectorsXY(xDirection, yDirection);
 				matrix3D.Translate(GetTranslation(dictionary));
 				return matrix3D;
