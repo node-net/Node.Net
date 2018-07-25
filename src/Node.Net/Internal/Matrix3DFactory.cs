@@ -64,6 +64,7 @@ namespace Node.Net.Internal
 				}
 				catch(Exception e)
 				{
+					log.AppendLine($" IDictionary FullName {dictionary.GetFullName()}");
 					throw new InvalidOperationException($"Matrix3DFactory.CreateFromIDictionary{Environment.NewLine}{log}", e);
 				}
 				//var xDirection = Vector3D.Parse(dictionary.Get<string>("XDirection", "1,0,0"));
