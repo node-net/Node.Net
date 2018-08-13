@@ -88,6 +88,15 @@ namespace Node.Net.Internal
             if (typeof(T) == typeof(string)) return (T)(object)"";
             return default(T);
         }
+		public void ClearMetaData(object item)
+		{
+			if (item != null)
+			{
+				var wr = new WeakReference(item);
+				data.Remove(wr);
+			}
+			Clean();
+		}
         /// <summary>
         /// Cleans weak references that are no longer alive
         /// </summary>
