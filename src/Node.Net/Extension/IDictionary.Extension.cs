@@ -48,6 +48,21 @@ namespace Node.Net
 				}
 			}
 		}
+		public static void DeepClean(this IDictionary dictionary)
+		{
+			foreach (var value in dictionary.Values)
+			{
+				var child = value as IDictionary;
+				if (child != null)
+				{
+					child.DeepClean();
+					child = null;
+				}
+			}
+			dictionary.Clear();
+			dictionary.ClearMetaData();
+			ObjectExtension.CleanMetaData();
+		}
 		/// <summary>
 		/// Get the Length in meters from a value in a dictionary
 		/// </summary>
