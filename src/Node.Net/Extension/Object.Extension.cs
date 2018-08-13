@@ -213,5 +213,13 @@ namespace Node.Net
 		{
 			return Internal.MetaData.Default.GetMetaData<T>(instance, name);
 		}
+		public static void ClearMetaData(this object instance)
+		{
+			Internal.MetaData.Default.ClearMetaData(instance);
+		}
+		public static void CleanMetaData()
+		{
+			Internal.MetaData.Default.Clean();
+		}
 	}
 }
