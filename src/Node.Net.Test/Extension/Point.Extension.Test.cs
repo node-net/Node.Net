@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using System.Windows;
-using NUnit.Framework;
 
 namespace Node.Net.Test
 {
 	[TestFixture]
-	class PointExtensionTest
+	internal class PointExtensionTest
 	{
 		[Test]
 		public void GetLength()
 		{
 			Assert.AreEqual(15.0, new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) }.GetLength());
 		}
+
 		[Test]
 		public void Close()
 		{
@@ -26,11 +22,13 @@ namespace Node.Net.Test
 			var points3 = points2.Close();
 			Assert.AreEqual(5, points3.Length);
 		}
+
 		[Test]
 		public void GetArea()
 		{
-			Assert.AreEqual(25.0, new Point[] { new Point(0,0),new Point(0,5),new Point(5,5),new Point(5,0)}.GetArea());
+			Assert.AreEqual(25.0, new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) }.GetArea());
 		}
+
 		[Test]
 		public void GetPointAtDistance()
 		{
@@ -40,6 +38,7 @@ namespace Node.Net.Test
 			a = points.GetPointAtDistance(33.0);
 			Assert.AreEqual(5, a.X);
 		}
+
 		[Test]
 		public void Offset()
 		{
@@ -47,6 +46,7 @@ namespace Node.Net.Test
 			var offset = points.Offset(2.0);
 			Assert.AreEqual(6, offset.Length);
 		}
+
 		[Test]
 		public void OffsetWithArcs()
 		{
@@ -54,27 +54,32 @@ namespace Node.Net.Test
 			var offset = points.OffsetWithArcs(2.0);
 			Assert.AreEqual(42, offset.Length);
 		}
+
 		[Test]
 		public void GetA()
 		{
 			Assert.AreEqual(-1, new Point(0, 0).GetA(new Point(1, 1)));
 		}
+
 		[Test]
 		public void GetC()
 		{
 			Assert.AreEqual(0, new Point(0, 0).GetC(new Point(1, 1)));
 		}
+
 		[Test]
 		public void GetSlope()
 		{
 			Assert.AreEqual(1, new Point(0, 0).GetSlope(new Point(1, 1)));
 		}
+
 		[Test]
 		public void ParsePoints()
 		{
 			var points = PointExtension.ParsePoints("0,0 1,0");
 			Assert.AreEqual(2, points.Length);
 		}
+
 		[Test]
 		public void GetString()
 		{
@@ -82,6 +87,7 @@ namespace Node.Net.Test
 			var str = points.GetString();
 			Assert.AreEqual("3,4", str);
 		}
+
 		[Test]
 		public void GetCentroid()
 		{

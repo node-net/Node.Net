@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Internal
 {
@@ -16,7 +14,12 @@ namespace Node.Net.Internal
 		public List<Assembly> ResourceAssemblies { get; set; } = new List<Assembly>();
 		public bool ExactMatch { get; set; } = false;
 		private string ignoreFilter;
-		public void Refresh() { ignoreFilter = null; }
+
+		public void Refresh()
+		{
+			ignoreFilter = null;
+		}
+
 		public object Create(Type targetType, object source)
 		{
 			if (targetType == typeof(Stream))
@@ -125,7 +128,6 @@ namespace Node.Net.Internal
 			{
 				var memory = new MemoryStream(Encoding.UTF8.GetBytes(name));
 				return memory;
-
 			}
 			return new StackTrace().GetStream(name);
 		}

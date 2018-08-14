@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
@@ -43,6 +41,7 @@ namespace Node.Net
 			mstream = null;
 			return result;
 		}
+
 		public static object Read(this IRead read, Assembly assembly, string name)
 		{
 			foreach (var manifestResourceName in assembly.GetManifestResourceNames())
@@ -122,6 +121,7 @@ namespace Node.Net
 				}
 			}
 		}
+
 		public static object Read(this IRead read, Type type, string name) => Read(read, type.Assembly, name);
 	}
 }

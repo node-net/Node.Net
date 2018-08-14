@@ -1,9 +1,6 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Node.Net.Test.Extension
 {
@@ -11,28 +8,30 @@ namespace Node.Net.Test.Extension
 	{
 		public object Parent { get; set; }
 	}
-    [TestFixture,Category("Object.Extension")]
-    public class ObjectExtensionTest
-    {
-        [Test]
-        public void GetName_SetName()
-        {
-            var dateTime = DateTime.Now;
-            Assert.AreEqual("", dateTime.GetName());
+
+	[TestFixture, Category("Object.Extension")]
+	public class ObjectExtensionTest
+	{
+		[Test]
+		public void GetName_SetName()
+		{
+			var dateTime = DateTime.Now;
+			Assert.AreEqual("", dateTime.GetName());
 			dateTime.SetName("Now");
 			//Assert.AreEqual("Now", dateTime.GetName());
-        }
-        [Test]
-        public void GetParent_SetParent()
-        {
-            var bar = new Dictionary<string, dynamic> { { "Name", "bar" } };
+		}
+
+		[Test]
+		public void GetParent_SetParent()
+		{
+			var bar = new Dictionary<string, dynamic> { { "Name", "bar" } };
 			bar.SetParent(null);
-            var foo = new Dictionary<string, dynamic>
-            {
-                {"Name","foo" },
-                {"bar",bar }
-            };
-            Assert.IsNull(bar.GetParent());
+			var foo = new Dictionary<string, dynamic>
+			{
+				{"Name","foo" },
+				{"bar",bar }
+			};
+			Assert.IsNull(bar.GetParent());
 			bar.SetParent(foo);
 			Assert.AreSame(foo, bar.GetParent());
 
@@ -41,6 +40,5 @@ namespace Node.Net.Test.Extension
 			widget.SetParent(null);
 			Assert.IsNull(widget.GetParent());
 		}
-		
-    }
+	}
 }

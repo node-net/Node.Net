@@ -2,14 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using static System.Environment;
 
 namespace Node.Net.Internal
 {
 	internal enum JSONFormat { Compact, Indented };
+
 	internal sealed class JSONWriter : IWrite
 	{
 		public JSONFormat Format { get { return format; } set { format = value; } }
@@ -18,6 +17,7 @@ namespace Node.Net.Internal
 		public List<Type> IgnoreTypes { get { return ignoreTypes; } set { ignoreTypes = value; } }
 		private List<Type> ignoreTypes = new List<Type>();
 		private bool WritingArray { get; set; } = false;
+
 		public void Write(Stream stream, object value)
 		{
 			using (StreamWriter writer = new StreamWriter(stream, Encoding.Default, 1024, true))
@@ -41,16 +41,18 @@ namespace Node.Net.Internal
 			return result;
 		}
 
-		public static JSONWriter Default { get; } = new JSONWriter();
+		//public static JSONWriter Default { get; } = new JSONWriter();
 
 		private void PushIndent()
 		{
 			IndentLevel++;
 		}
+
 		private void PopIndent()
 		{
 			IndentLevel--;
 		}
+
 		private string GetIndent()
 		{
 			if (Format == JSONFormat.Indented)
@@ -70,6 +72,7 @@ namespace Node.Net.Internal
 			}
 			return string.Empty;
 		}
+
 		private void Write(System.IO.TextWriter writer, object value)
 		{
 			if (ReferenceEquals(null, value)) WriteNull(writer);
@@ -84,11 +87,16 @@ namespace Node.Net.Internal
 			}
 		}
 
-		private static void WriteNull(System.IO.TextWriter writer) { writer.Write("null"); }
+		private static void WriteNull(System.IO.TextWriter writer)
+		{
+			writer.Write("null");
+		}
+
 		private void WriteBytes(System.IO.TextWriter writer, byte[] bytes)
 		{
 			WriteString(writer, $"base64:{Convert.ToBase64String(bytes)}");
 		}
+
 		private void WriteString(System.IO.TextWriter writer, object value)
 		{
 			var svalue = value.ToString();
@@ -99,6 +107,7 @@ namespace Node.Net.Internal
 			if (writingPrimitiveValue) writer.Write($"\"{escaped_value}\"");
 			else writer.Write($"{GetIndent()}\"{escaped_value}\"");
 		}
+
 		private void WriteValueType(System.IO.TextWriter writer, object value)
 		{
 			if (value.GetType() == typeof(bool))
@@ -124,6 +133,7 @@ namespace Node.Net.Internal
 				}
 			}
 		}
+
 		private void WriteDoubleArray2D(System.IO.TextWriter writer, object value)
 		{
 			var array = value as double[,];
@@ -140,6 +150,7 @@ namespace Node.Net.Internal
 			}
 			WriteIEnumerable(writer, equivalentList);
 		}
+
 		private void WriteIEnumerable(System.IO.TextWriter writer, object value)
 		{
 			WritingArray = true;
@@ -220,7 +231,6 @@ namespace Node.Net.Internal
 					{
 						writer.Write($": ");
 						Write(writer, dictionary[key]);
-
 					}
 
 					++index;

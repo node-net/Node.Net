@@ -2,15 +2,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Internal
 {
-	internal sealed class JSONReader
+	public sealed class JSONReader : IDisposable
 	{
-		public static JSONReader Default { get; } = new JSONReader();
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		~JSONReader()
+		{
+			Dispose(false);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				DefaultArrayType = null;
+				DefaultObjectType = null;
+				DefaultDocumentType = null;
+				CreateDefaultObject = null;
+				ConversionTypeNames = null;
+				ObjectCount = 0;
+			}
+		}
+
 		public Type DefaultArrayType = typeof(List<dynamic>);
 		public Type DefaultObjectType = typeof(Dictionary<string, dynamic>);
 		public Type DefaultDocumentType = typeof(Dictionary<string, dynamic>);
@@ -36,11 +57,12 @@ namespace Node.Net.Internal
 			}
 		}
 
-		private static char doubleQuote = '"';
-		private static char singleQuote = '\'';
-
 		private object Read(System.IO.TextReader reader)
 		{
+			char objectOpenCharacter = '{';
+			char arrayOpenCharacter = '[';
+			char doubleQuote = '"';
+			char singleQuote = '\'';
 			reader.EatWhiteSpace();
 			var ichar = reader.Peek();
 			if (ichar < 0) throw new InvalidDataException(@"end of stream reached");
@@ -60,7 +82,7 @@ namespace Node.Net.Internal
 			return ReadNumber(reader);
 		}
 
-		private static object ReadNull(System.IO.TextReader reader)
+		private object ReadNull(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
 			var ch = (char)reader.Peek();
@@ -71,7 +93,7 @@ namespace Node.Net.Internal
 			return null;
 		}
 
-		private static object ReadBool(System.IO.TextReader reader)
+		private object ReadBool(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
 			var ch = (char)reader.Peek();
@@ -84,7 +106,7 @@ namespace Node.Net.Internal
 			return false;
 		}
 
-		private static object ReadNumber(System.IO.TextReader reader)
+		private object ReadNumber(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
 			char[] endchars = { '}', ']', ',', ' ' };
@@ -103,21 +125,17 @@ namespace Node.Net.Internal
 			}
 		}
 
-		private static string unicodeDoubleQuotes = @"\u0022";
-		private static string doubleQuotes = @"""";
-		private static string unicodeBackslash = @"\u005c";
-		private static string backslash = @"\";
-		private static string stringResult = "";
-
-		private static object ReadString(System.IO.TextReader reader)
+		private object ReadString(System.IO.TextReader reader)
 		{
+			string unicodeDoubleQuotes = @"\u0022";
+			string doubleQuotes = @"""";
+			string unicodeBackslash = @"\u005c";
+			string backslash = @"\";
 			reader.EatWhiteSpace();
-			stringResult = reader.SeekIgnoreEscaped((char)reader.Read());
+			string stringResult = reader.SeekIgnoreEscaped((char)reader.Read());
 			reader.Read(); // consume escaped character
 			return stringResult.Replace(unicodeDoubleQuotes, doubleQuotes).Replace(unicodeBackslash, backslash);
 		}
-
-		private static char arrayOpenCharacter = '[';
 
 		private object ReadArray(System.IO.TextReader reader)
 		{
@@ -164,12 +182,11 @@ namespace Node.Net.Internal
 			return list.Simplify();
 		}
 
-		private static char objectOpenCharacter = '{';
-		private static char objectCloseCharacter = '}';
-		private static char comma = ',';
-
 		private object ReadObject(System.IO.TextReader reader)
 		{
+			char objectOpenCharacter = '{';
+			char objectCloseCharacter = '}';
+			char comma = ',';
 			IDictionary dictionary = null;
 			if (ObjectCount == 0)
 			{
