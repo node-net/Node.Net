@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Internal
 {
-	sealed class Model3DFactory : IFactory
+	internal sealed class Model3DFactory : IFactory
 	{
 		public object Create(Type targetType, object source)
 		{
@@ -50,16 +47,20 @@ namespace Node.Net.Internal
 			}
 			return false;
 		}
+
 		public IFactory ParentFactory { get; set; }
 		public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction { get; set; }
 		public bool ScalePrimaryModel { get; set; } = true;
 		private bool cache = true;
+
 		public Dictionary<object, Model3D> Model3DCache
 		{
 			get { return model3DCache; }
 			set { model3DCache = value; }
 		}
+
 		private Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
+
 		public bool Cache
 		{
 			get { return cache; }
@@ -72,11 +73,17 @@ namespace Node.Net.Internal
 				}
 			}
 		}
-		public void ClearCache() { model3DCache.Clear(); namedCache.Clear(); }
+
+		public void ClearCache()
+		{
+			model3DCache.Clear(); namedCache.Clear();
+		}
+
 		public void ClearCache(object model)
 		{
 			if (model != null) { model3DCache.Remove(model); }
 		}
+
 		private Model3D CreateFromDictionary(IDictionary source)
 		{
 			if (source == null) return null;
@@ -129,6 +136,7 @@ namespace Node.Net.Internal
 		}
 
 		private Dictionary<string, Model3D> namedCache = new Dictionary<string, Model3D>();
+
 		private Model3D GetUnscaledPrimaryModel3D(IDictionary source)
 		{
 			if (PrimaryModel3DHelperFunction != null)
@@ -160,6 +168,7 @@ namespace Node.Net.Internal
 			}
 			return null;
 		}
+
 		private Transform3D GetTransform3D(object source)
 		{
 			if (ParentFactory != null)
@@ -168,6 +177,7 @@ namespace Node.Net.Internal
 			}
 			return null;
 		}
+
 		public static Transform3D GetScalingTransform(IDictionary source)
 		{
 			if (source == null) return new MatrixTransform3D();

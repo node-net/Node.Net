@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
@@ -24,6 +20,7 @@ namespace Node.Net
 			}
 			return assemblies.ToArray();
 		}
+
 		public static Stream GetStream(this StackTrace stackTrace, string name)
 		{
 			foreach (var assembly in stackTrace.GetAssemblies())

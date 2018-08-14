@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Internal
 {
-	sealed class MeshGeometry3DFactory : IFactory
+	internal sealed class MeshGeometry3DFactory : IFactory
 	{
 		public object Create(Type targetType, object source)
 		{
@@ -29,6 +26,7 @@ namespace Node.Net.Internal
 		public IFactory ParentFactory { get; set; }
 
 		private Dictionary<string, MeshGeometry3D> cache = new Dictionary<string, MeshGeometry3D>();
+
 		private MeshGeometry3D CreateFromDictionary(IDictionary source)
 		{
 			if (ParentFactory != null)

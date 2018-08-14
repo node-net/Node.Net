@@ -12,7 +12,6 @@ namespace Node.Net
 	/// </summary>
 	public static class IDictionaryExtension
 	{
-
 		/// <summary>
 		/// Get the JSON string for an IDictionary
 		/// </summary>
@@ -22,6 +21,7 @@ namespace Node.Net
 		{
 			return new Internal.JSONWriter().WriteToString(dictionary);
 		}
+
 		/// <summary>
 		/// Save to a stream
 		/// </summary>
@@ -48,6 +48,7 @@ namespace Node.Net
 				}
 			}
 		}
+
 		public static void DeepClean(this IDictionary dictionary)
 		{
 			foreach (var value in dictionary.Values)
@@ -63,6 +64,7 @@ namespace Node.Net
 			dictionary.ClearMetaData();
 			ObjectExtension.CleanMetaData();
 		}
+
 		/// <summary>
 		/// Get the Length in meters from a value in a dictionary
 		/// </summary>
@@ -74,6 +76,7 @@ namespace Node.Net
 			var svalue = dictionary.Get<string>(name);
 			return Internal.Length.GetMeters(svalue);
 		}
+
 		/// <summary>
 		/// Get the angle in degrees from an IDictionary value
 		/// </summary>
@@ -158,6 +161,7 @@ namespace Node.Net
 			_Collect(idictionary, type, results);
 			return results;
 		}
+
 		/// <summary>
 		/// Collection IDictionary of a specific 'Type' value, matching a search pattern
 		/// </summary>
@@ -611,7 +615,7 @@ namespace Node.Net
 			var matrix3D = new Matrix3D();
 			if (dictionary != null)
 			{
-				matrix3D = Factory.Default.Create<Matrix3D>(dictionary);
+				matrix3D = new Factory().Create<Matrix3D>(dictionary);
 			}
 			return matrix3D;
 		}
@@ -807,6 +811,7 @@ namespace Node.Net
 			var currents = Internal.MetaData.Default.GetMetaData(dictionary)["Currents"] as IDictionary;
 			currents[typeof(T)] = name;
 		}
+
 		public static IList<string> CollectNames<T>(this IDictionary element)
 		{
 			var items = element.Collect<T>();
@@ -824,6 +829,7 @@ namespace Node.Net
 			}
 			return names;
 		}
+
 		public static IList<T> Collect<T>(this IDictionary dictionary, Func<object, bool> filter)
 			=> new List<T>(dictionary.Collect<T>().Where(x => filter(x)));
 

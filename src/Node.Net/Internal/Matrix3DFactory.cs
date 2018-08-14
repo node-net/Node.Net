@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Internal
 {
-	sealed class Matrix3DFactory : IFactory
+	internal sealed class Matrix3DFactory : IFactory
 	{
 		public object Create(Type targetType, object source)
 		{
@@ -37,6 +35,7 @@ namespace Node.Net.Internal
 			data["RotationZ"] = $"{rotationsZXY.Z} deg";
 			return data;
 		}
+
 		private static Matrix3D? CreateFromIDictionary(IDictionary dictionary)
 		{
 			var log = new StringBuilder();
@@ -45,11 +44,9 @@ namespace Node.Net.Internal
 			var yDirection = new Vector3D(0, 1, 0);
 			if (dictionary.Contains("XDirection"))
 			{
-				
 				try
 				{
-					
-					if(dictionary.Contains("XDirection"))
+					if (dictionary.Contains("XDirection"))
 					{
 						var xDirectionValue = dictionary.Get<string>("XDirection", "1,0,0");
 						log.AppendLine($" XDirection = {xDirectionValue}");
@@ -62,7 +59,7 @@ namespace Node.Net.Internal
 						yDirection = Vector3D.Parse(yDirectionValue);
 					}
 				}
-				catch(Exception e)
+				catch (Exception e)
 				{
 					log.AppendLine($" IDictionary FullName {dictionary.GetFullName()}");
 					throw new InvalidOperationException($"Matrix3DFactory.CreateFromIDictionary{Environment.NewLine}{log}", e);
@@ -82,6 +79,7 @@ namespace Node.Net.Internal
 		public static string RotationXKey = "Spin,RotationX,Roll";
 		public static string RotationYKey = "Tilt,RotationY,Pitch";
 		public static string RotationZKey = "Orientation,RotationZ,Yaw";
+
 		public static Vector3D GetRotationsXYZ(IDictionary source)
 		{
 			return new Vector3D(

@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
 	/// <summary>
 	/// Extension methods for System.Object
 	/// </summary>
-    public static class ObjectExtension
-    {
+	public static class ObjectExtension
+	{
 		/// <summary>
 		/// Get the Name of an Object
 		/// </summary>
@@ -60,38 +56,40 @@ namespace Node.Net
 			}
 			return fullName;
 		}
+
 		/// <summary>
 		/// Set the Name of an Object
 		/// </summary>
 		/// <param name="instance"></param>
 		/// <param name="name"></param>
-		public static void SetName(this object instance,string name)
-        {
+		public static void SetName(this object instance, string name)
+		{
 			Internal.MetaData.Default.SetMetaData(instance, "Name", name);
-        }
+		}
+
 		/// <summary>
 		/// Get the parent of an Object
 		/// </summary>
 		/// <param name="instance"></param>
 		/// <returns></returns>
-        public static object GetParent(this object instance)
-        {
+		public static object GetParent(this object instance)
+		{
 			var parent = Internal.MetaData.Default.GetMetaData<object>(instance, "Parent");
-			if(instance.HasPropertyValue("Parent"))
+			if (instance.HasPropertyValue("Parent"))
 			{
 				return instance.GetPropertyValue("Parent");
 			}
 			return parent;
 		}
+
 		/// <summary>
 		/// Set the parent of an object
 		/// </summary>
 		/// <param name="instance"></param>
 		/// <param name="parent"></param>
-        public static void SetParent(this object instance,object parent)
-        {
-			
-			if(instance.HasPropertyValue("Parent"))
+		public static void SetParent(this object instance, object parent)
+		{
+			if (instance.HasPropertyValue("Parent"))
 			{
 				instance.SetPropertyValue("Parent", parent);
 			}
@@ -101,6 +99,7 @@ namespace Node.Net
 				//Internal.MetaData.Default.SetMetaData(instance, "Parent", parent);
 			}
 		}
+
 		/// <summary>
 		/// Check if IDictionary has a specific Property
 		/// </summary>
@@ -119,6 +118,7 @@ namespace Node.Net
 			}
 			return false;
 		}
+
 		/// <summary>
 		/// Get the value of a specific Property
 		/// </summary>
@@ -138,6 +138,7 @@ namespace Node.Net
 			}
 			return defaultValue;
 		}
+
 		/// <summary>
 		/// Get the value of a specific Property
 		/// </summary>
@@ -158,6 +159,7 @@ namespace Node.Net
 			}
 			return defaultValue;
 		}
+
 		/// <summary>
 		/// Set the value of a specific Property
 		/// </summary>
@@ -175,6 +177,7 @@ namespace Node.Net
 				}
 			}
 		}
+
 		/// <summary>
 		/// Get the FileName of an Object
 		/// </summary>
@@ -184,6 +187,7 @@ namespace Node.Net
 		{
 			return Internal.MetaData.Default.GetMetaData<string>(instance, "FileName");
 		}
+
 		/// <summary>
 		/// Set the FileName of an Object
 		/// </summary>
@@ -193,6 +197,7 @@ namespace Node.Net
 		{
 			Internal.MetaData.Default.SetMetaData(instance, "FileName", name);
 		}
+
 		public static void SetFullName(this object instance, string fullname)
 		{
 			Internal.MetaData.Default.GetMetaData(instance)["FullName"] = fullname;
@@ -204,6 +209,7 @@ namespace Node.Net
 			if (metaData != null && metaData.Contains("FullName")) return metaData["FullName"].ToString();
 			return string.Empty;
 		}
+
 		public static void SetMetaData(this object instance, string name, object value)
 		{
 			var idictionary = Internal.MetaData.Default.GetMetaData(instance)[name] = value;
@@ -213,10 +219,12 @@ namespace Node.Net
 		{
 			return Internal.MetaData.Default.GetMetaData<T>(instance, name);
 		}
+
 		public static void ClearMetaData(this object instance)
 		{
 			Internal.MetaData.Default.ClearMetaData(instance);
 		}
+
 		public static void CleanMetaData()
 		{
 			Internal.MetaData.Default.Clean();

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
@@ -16,6 +13,7 @@ namespace Node.Net
 				reader.Read();
 			}
 		}
+
 		public static void FastSeek(this TextReader reader, char value, bool ignoreEscaped = false)
 		{
 			//if (reader.Peek() == -1) return;
@@ -34,6 +32,7 @@ namespace Node.Net
 				}
 			}
 		}
+
 		public static void FastSeek(this TextReader reader, char[] values, bool ignoreEscaped = false)
 		{
 			//if (reader.Peek() == -1) return;
@@ -55,6 +54,7 @@ namespace Node.Net
 				}
 			}
 		}
+
 		//private static StringBuilder builder = new StringBuilder();
 		//private static int iPeek = -1;
 		//private static int iChar = -1;
@@ -85,6 +85,7 @@ namespace Node.Net
 			if (builder.Length == 0) return string.Empty;
 			return builder.ToString();
 		}
+
 		//public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false) => SeekB(reader, value, ignoreEscaped);
 		public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false)
 		{
@@ -117,6 +118,7 @@ namespace Node.Net
 			if (builder.Length == 0) return string.Empty;
 			return builder.ToString();
 		}
+
 		/*
         public static string SeekA(this TextReader reader, char value, bool ignoreEscaped = false)
         {
@@ -145,6 +147,7 @@ namespace Node.Net
             if (builder.Length == 0) return "";
             return builder.ToString();
         }*/
+
 		public static string Seek(this TextReader reader, char[] values, bool ignoreEscaped = false)
 		{
 			var done = false;

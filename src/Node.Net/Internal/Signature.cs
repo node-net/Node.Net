@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Internal
 {
-	interface IStreamSignature { }
-	class Signature : IStreamSignature
+	internal interface IStreamSignature
+	{ }
+
+	internal class Signature : IStreamSignature
 	{
 		public Signature(byte[] bytesSignature)
 		{
@@ -17,6 +16,7 @@ namespace Node.Net.Internal
 
 		private byte[] bytes = null;
 		private string text = "";
+
 		public string Text
 		{
 			get
@@ -43,6 +43,7 @@ namespace Node.Net.Internal
 				return text;
 			}
 		}
+
 		public bool IsText
 		{
 			get

@@ -1,15 +1,12 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Node.Net.JsonRPC
 {
 	[TestFixture]
-	class ResponderTest
+	internal class ResponderTest
 	{
 		[Test]
 		public void Respond()
@@ -18,6 +15,7 @@ namespace Node.Net.JsonRPC
 			var response = responder.Respond(new Request("sayHello"));
 			Assert.AreEqual("hello", response.Result.ToString());
 		}
+
 		public static Responder GetTestResponder()
 		{
 			return new Responder
@@ -28,10 +26,10 @@ namespace Node.Net.JsonRPC
 					}
 			};
 		}
+
 		public static object SayHelloResponder(IDictionary parameters)
 		{
 			return "hello";
 		}
 	}
-	
 }

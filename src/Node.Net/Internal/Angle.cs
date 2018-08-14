@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Internal
 {
@@ -34,10 +32,12 @@ namespace Node.Net.Internal
 		{
 			{ "radians", 1.0 / 0.0174533}
 		};
+
 		private static readonly Dictionary<string, string> UnitsAliases = new Dictionary<string, string>
 		{
 			{ "rad", "radians" }
 		};
+
 		private static double GetUnitsConversion(string units)
 		{
 			if (UnitsAliases.ContainsKey(units))

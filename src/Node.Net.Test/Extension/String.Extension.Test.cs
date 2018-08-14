@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NUnit.Framework;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Node.Net.Test.Extension
 {
 	[TestFixture]
-	class StringExtensionTest
+	internal class StringExtensionTest
 	{
 		[Test]
 		public void GetStream()
@@ -18,7 +13,7 @@ namespace Node.Net.Test.Extension
 			Assert.AreEqual("test", text);
 
 			text = new StreamReader("Object.Coverage.json".GetStream()).ReadToEnd();
-			Assert.True(text.Contains("array_empty"),"array_empty not found in Object.Coverage.json");
+			Assert.True(text.Contains("array_empty"), "array_empty not found in Object.Coverage.json");
 		}
 	}
 }

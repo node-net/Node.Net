@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
@@ -36,6 +33,7 @@ namespace Node.Net
 			}
 			return results.ToArray();
 		}
+
 		/// <summary>
 		/// Get Point[] from Point3D[]
 		/// </summary>
@@ -50,6 +48,7 @@ namespace Node.Net
 			}
 			return results.ToArray();
 		}
+
 		/// <summary>
 		/// Transform Point3D[] with a Matrix3D
 		/// </summary>

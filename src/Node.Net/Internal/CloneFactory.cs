@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Markup;
 
 namespace Node.Net.Internal
@@ -13,6 +9,7 @@ namespace Node.Net.Internal
 	{
 		public Func<Stream, object> ReadFunction { get; set; } = new Node.Net.Reader().Read;
 		public Action<Stream, object> WriteFunction { get; set; } = Write;
+
 		public object Create(Type targetType, object source)
 		{
 			if (source == null) return null;
@@ -34,7 +31,7 @@ namespace Node.Net.Internal
 		{
 			if (typeof(IDictionary).IsAssignableFrom(value.GetType()))
 			{
-				JSONWriter.Default.Write(stream, value);
+				new JSONWriter().Write(stream, value);
 			}
 			else
 			{
