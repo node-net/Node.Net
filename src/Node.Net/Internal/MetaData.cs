@@ -107,7 +107,10 @@ namespace Node.Net.Internal
 			{
 				if (!wr.IsAlive) deadKeys.Add(wr);
 			}
-			foreach (var deadKey in deadKeys) { data.Remove(deadKey); }
+			foreach (var deadKey in deadKeys)
+			{
+				data.Remove(new WeakReference(deadKey.Target));
+			}
 		}
 
 		private readonly Dictionary<WeakReference, IDictionary> data = null;
