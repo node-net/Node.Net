@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Node.Net.Internal
@@ -28,6 +24,7 @@ namespace Node.Net.Internal
 		}
 
 		public IFactory ParentFactory { get; set; }
+
 		private static Brush CreateFromImageSource(ImageSource source)
 		{
 			if (source != null)

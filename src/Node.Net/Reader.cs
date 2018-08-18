@@ -2,27 +2,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
 	/// <summary>
 	/// Reader
 	/// </summary>
-	public sealed class Reader : Dictionary<string, Func<Stream, object>>,IRead
+	public sealed class Reader : Dictionary<string, Func<Stream, object>>, IRead
 	{
 		public Reader()
 		{
 			Add("<", ReadXml);
 			Add("[", ReadJSON);
 			Add("{", ReadJSON);
-			foreach (var signature in Internal.ImageSourceReader.Default.Signatures)
+			foreach (var signature in new Internal.ImageSourceReader().Signatures)
 			{
 				Add(signature, ReadImageSource);
 			}
 		}
+
+		~Reader()
+		{
+			jsonReader = null;
+			Clear();
+		}
+
 		//public static Reader Default { get; } = new Reader();
 		public object Read(Stream original_stream)
 		{
@@ -49,13 +53,17 @@ namespace Node.Net
 			}
 			return default(T);
 		}
+
 		public T Read<T>(Stream stream) => Convert<T>(Read(stream));
+
 		public T Read<T>(string filename) => Convert<T>(Read(filename));
+
 		private static List<string> xaml_markers = new List<string>
 		{
 			"http://schemas.microsoft.com/winfx/2006/xaml/presentation",
 			"<MeshGeometry3D",
 		};
+
 		public static object ReadXml(Stream original_stream)
 		{
 			using (var signatureReader = new Internal.SignatureReader(original_stream))
@@ -89,24 +97,29 @@ namespace Node.Net
 			}
 			return null;
 		}
+
 		public object ReadJSON(Stream stream)
 		{
-			var i= jsonReader.Read(stream);
+			var i = jsonReader.Read(stream);
 			var dictionary = i as IDictionary;
 			if (dictionary != null) dictionary.DeepUpdateParents();
 			return i;
 		}
-		public static object ReadImageSource(Stream stream) => Internal.ImageSourceReader.Default.Read(stream);
+
+		public static object ReadImageSource(Stream stream) => new Internal.ImageSourceReader().Read(stream);
+
 		public Type DefaultDocumentType
 		{
 			get { return jsonReader.DefaultDocumentType; }
 			set { jsonReader.DefaultDocumentType = value; }
 		}
+
 		public Type DefaultObjectType
 		{
 			get { return jsonReader.DefaultObjectType; }
 			set { jsonReader.DefaultObjectType = value; }
 		}
+
 		public Dictionary<string, Type> ConversionTypeNames
 		{
 			get { return jsonReader.ConversionTypeNames; }
@@ -114,6 +127,7 @@ namespace Node.Net
 		}
 
 		private Internal.JSONReader jsonReader = new Internal.JSONReader();
+
 		public object Open(string name)
 		{
 			if (name.IsFileDialogFilter())

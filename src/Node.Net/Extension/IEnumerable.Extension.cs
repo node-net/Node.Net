@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
@@ -33,6 +30,7 @@ namespace Node.Net
 			}
 			return hashCode;
 		}
+
 		public static IEnumerable Simplify(this IEnumerable list)
 		{
 			var count = GetCount(list);
@@ -87,7 +85,6 @@ namespace Node.Net
 					foreach (var value in list) { doubles.Add(Convert.ToDouble(value)); }
 					return doubles.ToArray();
 				}
-
 			}
 
 			return list;
@@ -106,6 +103,7 @@ namespace Node.Net
 			}
 			return null;
 		}
+
 		public static int GetCount(this IEnumerable source)
 		{
 			if (source != null)

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using static System.Math;
@@ -29,6 +27,7 @@ namespace Node.Net
 			}
 			return length;
 		}
+
 		/// <summary>
 		/// Get the area of a Point[]
 		/// </summary>
@@ -54,6 +53,7 @@ namespace Node.Net
 			}
 			return 0.0;
 		}
+
 		/// <summary>
 		/// Get the point along a Point[] at a specified distance
 		/// </summary>
@@ -85,6 +85,7 @@ namespace Node.Net
 			if (points.Length > 0) return points[points.Length - 1];
 			return new Point(0, 0);
 		}
+
 		/// <summary>
 		/// Determine if Point[] is closed
 		/// </summary>
@@ -98,6 +99,7 @@ namespace Node.Net
 			if (delta.Length < tolerance) return true;
 			return false;
 		}
+
 		/// <summary>
 		/// Closes a Point[] if not already closed
 		/// </summary>
@@ -116,6 +118,7 @@ namespace Node.Net
 			}
 			return points;
 		}
+
 		public static Point[] Open(this Point[] points, double tolerance = 0.0001)
 		{
 			if (points.Length < 2) return points;
@@ -131,6 +134,7 @@ namespace Node.Net
 			}
 			return points;
 		}
+
 		public static Point[] Scale(this Point[] points, double scale)
 		{
 			var dims = points.GetDimensions();
@@ -144,6 +148,7 @@ namespace Node.Net
 			}
 			return result.ToArray();
 		}
+
 		public static Point GetDimensions(this Point[] points)
 		{
 			if (points.Length > 0)
@@ -161,6 +166,7 @@ namespace Node.Net
 			}
 			return new Point(0, 0);
 		}
+
 		/// <summary>
 		/// Offset a Point[]
 		/// </summary>
@@ -190,6 +196,7 @@ namespace Node.Net
 			if (points.IsClosed()) offsetPoints = offsetPoints.Close();
 			return offsetPoints;
 		}
+
 		/// <summary>
 		/// Offset a Point[] with arcs
 		/// </summary>
@@ -256,6 +263,7 @@ namespace Node.Net
 			}
 			return offsetPointList.ToArray();
 		}
+
 		/// <summary>
 		/// Get the arc points to connect two line segments
 		/// </summary>
@@ -304,6 +312,7 @@ namespace Node.Net
 
 			return results;
 		}
+
 		/// <summary>
 		/// Checks if two line segments intersect
 		/// </summary>
@@ -345,6 +354,7 @@ namespace Node.Net
 			}
 			return hasIntersection;
 		}
+
 		/// <summary>
 		/// Get the slope of a line
 		/// </summary>
@@ -355,6 +365,7 @@ namespace Node.Net
 		{
 			return (pointB.Y - pointA.Y) / (pointB.X - pointA.X);
 		}
+
 		/// <summary>
 		/// For the general form of a linear equation: Ax + By = C, computes the value of A
 		/// </summary>
@@ -365,6 +376,7 @@ namespace Node.Net
 		{
 			return -1.0 * GetSlope(pointA, pointB);
 		}
+
 		/// <summary>
 		/// For the general form of a linear equation: Ax + By = C, computes the value of C
 		/// </summary>
@@ -375,6 +387,7 @@ namespace Node.Net
 		{
 			return pointA.Y - GetSlope(pointA, pointB) * pointA.X;
 		}
+
 		/// <summary>
 		/// Determine if a line segment is vertical
 		/// </summary>
@@ -386,6 +399,7 @@ namespace Node.Net
 		{
 			return Abs(pointB.X - pointA.X) < tolerance;
 		}
+
 		/// <summary>
 		/// Parse Point[] from string
 		/// </summary>
@@ -405,6 +419,7 @@ namespace Node.Net
 			}
 			return results.ToArray();
 		}
+
 		/// <summary>
 		/// Get a string representation Point[]
 		/// </summary>
@@ -421,6 +436,7 @@ namespace Node.Net
 			}
 			return builder.ToString();
 		}
+
 		/// <summary>
 		/// Get the centroid of Point[]
 		/// </summary>
@@ -456,6 +472,7 @@ namespace Node.Net
 
 			return new Point(X, Y);
 		}
+
 		/// <summary>
 		/// Check if a point is contained in a polygon defined by Point[]
 		/// </summary>
@@ -491,6 +508,7 @@ namespace Node.Net
 			}
 			return inside;
 		}
+
 		/// <summary>
 		/// Check if a point is on a polyline
 		/// </summary>
@@ -508,6 +526,7 @@ namespace Node.Net
 			}
 			return false;
 		}
+
 		/// <summary>
 		/// Check if a point is on a line segment
 		/// </summary>

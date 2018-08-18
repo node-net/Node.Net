@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Node.Net.Internal
 {
-	internal sealed class ImageSourceReader 
+	internal sealed class ImageSourceReader
 	{
-		public static ImageSourceReader Default { get; } = new ImageSourceReader();
+		//public static ImageSourceReader Default { get; } = new ImageSourceReader();
 		public ImageSourceReader()
 		{
 			readers.Add("png", ReadPng);
@@ -37,43 +34,51 @@ namespace Node.Net.Internal
 				return signatures.ToArray();
 			}
 		}
+
 		private readonly Dictionary<string, string> signatureReaders = new Dictionary<string, string>();
 		private readonly Dictionary<string, Func<Stream, object>> readers = new Dictionary<string, Func<Stream, object>>();
 
 		public object Read(Stream original_stream)
 		{
-			var signatureReader = new Internal.SignatureReader(original_stream);
-			var stream = signatureReader.Stream;
-			var signature = signatureReader.Signature;
-			foreach (string signature_key in signatureReaders.Keys)
+			using (var signatureReader = new Internal.SignatureReader(original_stream))
 			{
-				if (signature.IndexOf(signature_key) == 0)
+				var stream = signatureReader.Stream;
+				var signature = signatureReader.Signature;
+				foreach (string signature_key in signatureReaders.Keys)
 				{
-					var instance = readers[signatureReaders[signature_key]](stream);
-					return instance;
+					if (signature.IndexOf(signature_key) == 0)
+					{
+						var instance = readers[signatureReaders[signature_key]](stream);
+						return instance;
+					}
 				}
+				throw new System.Exception($"unrecognized signature '{signature}'");
 			}
-			throw new System.Exception($"unrecognized signature '{signature}'");
 		}
+
 		public object ReadPng(Stream stream)
 		{
 			var decoder = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
 			return decoder.Frames[0].Clone();
 		}
+
 		public object ReadTif(Stream stream)
 		{
 			var decoder = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
 			return decoder.Frames[0].Clone();
 		}
+
 		public object ReadJpg(Stream stream)
 		{
 			return GetImageSource(System.Drawing.Image.FromStream(stream));
 		}
+
 		public object ReadGif(Stream stream)
 		{
 			var decoder = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
 			return decoder.Frames[0].Clone();
 		}
+
 		public object ReadBmp(Stream stream)
 		{
 			var decoder = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);

@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Internal
 {
 	internal class SignatureReader : IDisposable
 	{
-		private SignatureReader() { }
+		private SignatureReader()
+		{
+		}
+
 		public SignatureReader(Stream original_stream)
 		{
 			Signature = (Read(original_stream) as Signature).ToString();
 			if (!original_stream.CanSeek) Stream = MemoryStream;
 			else Stream = original_stream;
 		}
+
 		public string Signature { get; set; }
 		public Stream Stream { get; set; }
 		public int MinimumBytes = 1024;
@@ -25,11 +27,13 @@ namespace Node.Net.Internal
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
+
 		~SignatureReader()
 		{
 			Dispose(false);
 		}
-		void Dispose(bool disposing)
+
+		private void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
@@ -40,6 +44,7 @@ namespace Node.Net.Internal
 				}
 			}
 		}
+
 		private MemoryStream memoryStream = null;
 		public MemoryStream MemoryStream { get { return memoryStream; } }
 
@@ -50,6 +55,7 @@ namespace Node.Net.Internal
 				return sr.Read(stream) as Signature;
 			}
 		}
+
 		private object Read(Stream original_stream)
 		{
 			memoryStream = null;

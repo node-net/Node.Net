@@ -63,12 +63,14 @@
     <Compile Include="Extension\Point.Extension.Test.cs" />
     <Compile Include="Extension\String.Extension.Test.cs" />
     <Compile Include="Factory.Test.cs" />
+    <Compile Include="JSONReader.Test.cs" />
     <Compile Include="JsonRPC\Responder.Test.cs" />
     <Compile Include="JsonRPC\Server.Test.cs" />
     <Compile Include="Reader.Test.cs" />
     <Compile Include="Resources\Node.Net.xaml.cs">
       <DependentUpon>Node.Net.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WordReader.Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -94,7 +96,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Node.Net.256.png" />
+    <EmbeddedResource Include="Resources\Node.Net.256.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

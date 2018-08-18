@@ -2,9 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.JsonRPC
 {
@@ -20,6 +17,7 @@ namespace Node.Net.JsonRPC
 			Add("id", new Random().Next(10000, 20000));
 			Add("params", Parameters);
 		}
+
 		public Request(string _method, int _id)
 		{
 			Add("jsonrpc", "2.0");
@@ -27,6 +25,7 @@ namespace Node.Net.JsonRPC
 			Add("id", _id);
 			Add("params", Parameters);
 		}
+
 		public Request(string _method, IDictionary parameters)
 		{
 			Add("jsonrpc", "2.0");
@@ -38,6 +37,7 @@ namespace Node.Net.JsonRPC
 			}
 			Add("params", Parameters);
 		}
+
 		public Request(IDictionary data)
 		{
 			this.Add("jsonrpc", "2.0");
@@ -52,7 +52,6 @@ namespace Node.Net.JsonRPC
 				var idictionary = data["params"] as IDictionary;
 				if (idictionary != null)
 				{
-
 					foreach (var key in idictionary.Keys)
 					{
 						Parameters.Add(key.ToString(), idictionary[key]);
@@ -60,6 +59,7 @@ namespace Node.Net.JsonRPC
 				}
 			}
 		}
+
 		public string Method { get { return this.Get<string>("method"); } }
 		public Dictionary<string, object> Parameters { get { return parameters; } }
 		private readonly Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -77,10 +77,12 @@ namespace Node.Net.JsonRPC
 				}
 			}
 		}
+
 		public string ToJson()
 		{
 			return IDictionaryExtension.ToJson(this);
 		}
+
 		public override string ToString()
 		{
 			return ToJson();

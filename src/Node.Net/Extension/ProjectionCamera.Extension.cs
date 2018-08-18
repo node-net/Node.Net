@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using static System.Math;
 
@@ -14,12 +10,14 @@ namespace Node.Net
 		{
 			return GetCameraMatrix3D(camera.Position, camera.LookDirection, camera.UpDirection);
 		}
+
 		public static Matrix3D GetWorldToLocal(ProjectionCamera camera)
 		{
 			var tmp = GetLocalToWorld(camera);
 			tmp.Invert();
 			return tmp;
 		}
+
 		public static Matrix3D GetCameraMatrix3D(Point3D position, Vector3D lookDirection, Vector3D upDirection)
 		{
 			var matrix = new Matrix3D();
@@ -33,8 +31,6 @@ namespace Node.Net
 					matrix = new Matrix3D();
 					matrix.Rotate(new Quaternion(normal, -zAngle));
 				}
-
-
 			}
 			var localYAxis = matrix.Transform(new Vector3D(0, 1, 0));
 			var yAngle = Vector3D.AngleBetween(upDirection, localYAxis);
@@ -70,6 +66,7 @@ namespace Node.Net
 		{
 			camera.Position = target - lookDirection;
 		}
+
 		public static void ZoomExtents(this ProjectionCamera camera, Rect3D bounds, double width, double height)
 		{
 			var diagonal = new Vector3D(bounds.SizeX, bounds.SizeY, bounds.SizeZ);
@@ -81,7 +78,6 @@ namespace Node.Net
 			{
 				double disth = radius / Math.Tan(0.5 * perspectiveCamera.FieldOfView * Math.PI / 180);
 				double vfov = perspectiveCamera.GetVerticalFieldOfView(width, height);
-
 
 				double distv = radius / Math.Tan(0.5 * vfov * Math.PI / 180);
 				double dist = Math.Max(disth, distv);
@@ -101,8 +97,11 @@ namespace Node.Net
 				orthographicCamera.Width = newWidth;
 			}
 		}
+
 		public static void ZoomIn(this ProjectionCamera camera, Point3D center, double factor = 0.5) => Zoom(camera, center, factor);
+
 		public static void ZoomOut(this ProjectionCamera camera, Point3D center, double factor = 2.0) => Zoom(camera, center, factor);
+
 		public static void Zoom(this ProjectionCamera camera, Point3D center, double factor)
 		{
 			if (camera != null)
@@ -121,6 +120,7 @@ namespace Node.Net
 				}
 			}
 		}
+
 		public static ProjectionCamera GetTransformedCamera(this ProjectionCamera camera, Transform3D transform)
 		{
 			var perspectiveCamera = camera as PerspectiveCamera;
