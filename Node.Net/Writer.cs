@@ -35,7 +35,7 @@ namespace Node.Net
                 {
                     if (typeof(DependencyObject).IsAssignableFrom(value.GetType()))
                     {
-                        var xmlWriter = XmlWriter.Create(stream, new XmlWriterSettings
+                        var xmlWriter = XmlWritereate(stream, new XmlWriterSettings
                         {
                             Indent = true
                         });
