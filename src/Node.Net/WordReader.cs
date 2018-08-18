@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
 	public sealed class WordReader : IDisposable
 	{
 		private List<char> _delimiters;
+
 		public List<char> Delimiters
 		{
 			get
@@ -23,30 +21,41 @@ namespace Node.Net
 			}
 			set { _delimiters = value; }
 		}
+
 		private readonly System.IO.StreamReader _sr;
 		private readonly System.Collections.Generic.List<string> _words = new System.Collections.Generic.List<string>();
 
-		public WordReader(System.IO.StreamReader sr) { _sr = sr; }
+		public WordReader(System.IO.StreamReader sr)
+		{
+			_sr = sr;
+		}
 
 		#region Dispose
+
 		public void Dispose()
 		{
 			Dispose(true);
 			System.GC.SuppressFinalize(this);
 		}
-		void Dispose(bool disposing)
+
+		private void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
-				if (_sr != null) _sr.Close();
+				if (_sr != null)
+				{
+					_sr.Close();
+				}
 			}
 		}
-		#endregion
+
+		#endregion Dispose
 
 		public double ReadDouble()
 		{
 			return Convert.ToDouble(ReadWord(), System.Globalization.CultureInfo.CurrentCulture);
 		}
+
 		public int ReadInt32()
 		{
 			return Convert.ToInt32(ReadWord(), System.Globalization.CultureInfo.CurrentCulture);
@@ -95,7 +104,6 @@ namespace Node.Net
 						line = _sr.ReadLine();
 					}
 				}
-
 			}
 
 			return word;

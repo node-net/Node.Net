@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.JsonRPC
 {
@@ -15,6 +11,7 @@ namespace Node.Net.JsonRPC
 		InvalidParameters = -32602,
 		InternalError = -32603
 	}
+
 	public sealed class Error : Dictionary<string, dynamic>
 	{
 		public Error(IDictionary data)
@@ -23,17 +20,20 @@ namespace Node.Net.JsonRPC
 			if (data.Contains("message")) this.Add("message", data["message"]);
 			if (data.Contains("data")) this.Add("data", data["data"]);
 		}
+
 		public Error(int code, string message)
 		{
 			Add("code", code);
 			Add("message", message);
 		}
+
 		public Error(int code, string message, string data)
 		{
 			Add("code", code);
 			Add("message", message);
 			Add("data", data);
 		}
+
 		public int Code { get { return this.Get<int>("code"); } }
 		public string Message { get { return this.Get<string>("message"); } }
 		public object Data { get { return this.Get<object>("data"); } }

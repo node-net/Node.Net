@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Internal
 {
-	sealed class GeometryModel3DFactory : IFactory
+	internal sealed class GeometryModel3DFactory : IFactory
 	{
 		public object Create(Type targetType, object source)
 		{
@@ -49,6 +45,7 @@ namespace Node.Net.Internal
 
 			return null;
 		}
+
 		private static GeometryModel3D CreateFromMeshGeometry3D(MeshGeometry3D mesh)
 		{
 			if (mesh == null) return null;
@@ -57,7 +54,6 @@ namespace Node.Net.Internal
 				Geometry = mesh,
 				Material = new DiffuseMaterial(Brushes.Blue)
 			};
-
 		}
 	}
 }

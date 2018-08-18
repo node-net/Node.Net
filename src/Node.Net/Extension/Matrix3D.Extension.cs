@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 using static System.Math;
 
@@ -22,6 +18,7 @@ namespace Node.Net
 			matrix.Rotate(new Quaternion(localX, rotationsXYZ.X));
 			return matrix;
 		}
+
 		public static Vector3D GetRotationsXYZ(this Matrix3D matrix)
 		{
 			var rotationZ = GetRotationZ(matrix);
@@ -40,6 +37,7 @@ namespace Node.Net
 			matrix.Rotate(new Quaternion(localY, rotationsXYZ.Y));
 			return matrix;
 		}
+
 		public static Vector3D GetRotationsZXY(this Matrix3D matrix)
 		{
 			var rotationZ = GetRotationZ(matrix);
@@ -47,10 +45,12 @@ namespace Node.Net
 			var rotationY = GetRotationYXZ(matrix, rotationX, rotationZ);
 			return new Vector3D(rotationX, rotationY, rotationZ);
 		}
+
 		public static Point3D GetTranslation(this Matrix3D matrix)
 		{
 			return matrix.Transform(new Point3D(0, 0, 0));
 		}
+
 		public static double GetRotationZ(this Matrix3D matrix)
 		{
 			var localX = matrix.Transform(new Vector3D(1, 0, 0));
@@ -64,10 +64,12 @@ namespace Node.Net
 			if (Abs(localZ.Z + 1.0) < 0.01) rotationZ = 0.0;
 			return rotationZ;
 		}
+
 		public static double GetRotationY(this Matrix3D matrix)
 		{
 			return GetRotationY(matrix, GetRotationZ(matrix));
 		}
+
 		public static double GetRotationY(this Matrix3D matrix, double rotationZ)
 		{
 			// back off z rotation
@@ -87,6 +89,7 @@ namespace Node.Net
 
 			return rotationY;
 		}
+
 		public static double GetRotationXZ(this Matrix3D matrix, double rotationZ)
 		{
 			// back off z rotation
@@ -113,6 +116,7 @@ namespace Node.Net
 			var rotationY = matrix.GetRotationY(rotationZ);
 			return GetRotationX(matrix, rotationZ, rotationY);
 		}
+
 		public static double GetRotationX(this Matrix3D matrix, double rotationZ, double rotationY)
 		{
 			// back off z rotation and y rotation
@@ -131,6 +135,7 @@ namespace Node.Net
 			// rotation about the X axis
 			return rotationX;
 		}
+
 		public static double GetRotationYXZ(this Matrix3D matrix, double rotationX, double rotationZ)
 		{
 			return 0.0;
@@ -164,8 +169,6 @@ namespace Node.Net
 			}
 			////////////////////////
 			matrix.Rotate(new Quaternion(localY, deltaY));
-
-
 
 			// xRotation
 			yDirection.Normalize();
@@ -213,6 +216,7 @@ namespace Node.Net
 
 			return matrix;
 		}
+
 		public static IDictionary GetDictionary(this Matrix3D matrix)
 		{
 			var data = new Dictionary<string, dynamic>();

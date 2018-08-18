@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Internal
 {
@@ -31,6 +29,7 @@ namespace Node.Net.Internal
 		}
 
 		private static readonly Dictionary<string, double> unitsConversionFactors = new Dictionary<string, double>();
+
 		private static Dictionary<string, double> UnitsConversionFactors
 		{
 			get
@@ -45,7 +44,9 @@ namespace Node.Net.Internal
 				return unitsConversionFactors;
 			}
 		}
+
 		private static readonly Dictionary<string, string> unitsAliases = new Dictionary<string, string>();
+
 		private static Dictionary<string, string> UnitsAliases
 		{
 			get
@@ -64,6 +65,7 @@ namespace Node.Net.Internal
 				return unitsAliases;
 			}
 		}
+
 		private static double GetUnitsConversion(string units)
 		{
 			if (UnitsAliases.ContainsKey(units))

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Node.Net.Internal
@@ -18,10 +14,10 @@ namespace Node.Net.Internal
 				{
 					return instance;
 				}
-
 			}
 			return null;
 		}
+
 		public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
 	}
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
@@ -30,7 +27,9 @@ namespace Node.Net
 			}
 			return true;
 		}
+
 		public static double GetMeters(this string value) => Internal.Length.GetMeters(value);
+
 		public static Stream GetStream(this string value)
 		{
 			if (File.Exists(value))

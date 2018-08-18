@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -58,6 +55,7 @@ namespace Node.Net
 				}
 			}
 		}
+
 		public void Write(string filename, object value)
 		{
 			var filestream = new FileStream(filename, FileMode.Create);
@@ -66,6 +64,7 @@ namespace Node.Net
 			filestream.Close();
 			filestream = null;
 		}
+
 		public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
 		private Internal.JSONWriter jsonWriter = new Internal.JSONWriter();
 		private Internal.BitmapSourceWriter bitmapSourceWriter = new Internal.BitmapSourceWriter();

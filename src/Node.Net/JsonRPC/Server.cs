@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Node.Net.JsonRPC
 {
-	public sealed class Server :IDisposable
+	public sealed class Server : IDisposable
 	{
 		public Server(Func<Stream, Stream> responder, string prefix)
 		{
@@ -18,23 +15,26 @@ namespace Node.Net.JsonRPC
 			_listener = new HttpListener();
 			_listener.Prefixes.Add(prefix);
 		}
+
 		~Server()
 		{
 			Dispose(false);
 		}
+
 		public void Dispose()
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
 
-		void Dispose(bool disposing)
+		private void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
 				_listener.Close();
 			}
 		}
+
 		private readonly Func<Stream, Stream> _responderFunction;
 		private readonly Func<Request, Response> _responseFunction;
 		private readonly HttpListener _listener;
@@ -48,11 +48,10 @@ namespace Node.Net.JsonRPC
 				return request;
 			}
 			return new Request("Http.Get", 0);
-
 		}
+
 		public void Start()
 		{
-			
 			_listener.Start();
 			ThreadPool.QueueUserWorkItem((o) =>
 			{
@@ -102,6 +101,7 @@ namespace Node.Net.JsonRPC
 				catch { } // suppress any exceptions
 			});
 		}
+
 		public void Stop()
 		{
 			_listener.Stop();

@@ -1,15 +1,11 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Node.Net.Test.Extension
 {
 	[TestFixture]
-	class IDictionaryExtensionTest
+	internal class IDictionaryExtensionTest
 	{
 		[Test]
 		public void GetRotations()
@@ -17,6 +13,7 @@ namespace Node.Net.Test.Extension
 			var rotations = new Dictionary<string, string>().GetRotations();
 			Assert.AreEqual(0, rotations.Z, "rotations.Z");
 		}
+
 		[Test]
 		public void Find()
 		{

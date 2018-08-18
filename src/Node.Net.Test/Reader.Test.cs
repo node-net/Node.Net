@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NUnit.Framework;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Node.Net;
-using NUnit.Framework;
+using System.Windows.Media;
 
 namespace Node.Net.Test
 {
 	[TestFixture]
-	class ReaderTest
+	internal class ReaderTest
 	{
 		//[Test]
 		//[TestCase("Object.Coverage.json")]
@@ -37,6 +33,39 @@ namespace Node.Net.Test
 				i = reader.Read(filename);
 				Assert.NotNull(i, nameof(i));
 			}
+		}
+
+		[Test]
+		public void MemoryCheck()
+		{
+			var reader = new Reader();
+			reader = null;
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			GC.WaitForFullGCComplete();
+			GC.Collect();
+
+			int x = 0;
+
+			reader = new Reader();
+			reader = null;
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			GC.WaitForFullGCComplete();
+			GC.Collect();
+			int y = 0;
+
+			reader = new Reader();
+			var imageStream = typeof(ReaderTest).Assembly.GetManifestResourceStream
+				("Node.Net.Test.Resources.Node.Net.256.png");
+			var image = reader.Read<ImageSource>(imageStream);
+			Assert.NotNull(image);
+			image = null;
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			GC.WaitForFullGCComplete();
+			GC.Collect();
+			int z = 0;
 		}
 	}
 }

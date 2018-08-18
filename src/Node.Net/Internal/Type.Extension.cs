@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Internal
 {
@@ -13,6 +10,7 @@ namespace Node.Net.Internal
 			object[] parameters = { value };
 			return Construct(type, parameters);
 		}
+
 		public static object Construct(this Type type, object[] parameters = null)
 		{
 			var types = Type.EmptyTypes;

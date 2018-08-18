@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
+﻿using System.Windows.Media.Media3D;
 using static System.Math;
 
 namespace Node.Net
@@ -26,6 +21,7 @@ namespace Node.Net
 			}
 			catch { return false; }
 		}
+
 		public static bool IsVisible(this PerspectiveCamera camera, Point3D worldPoint, double aspectRatio)
 		{
 			try
@@ -54,6 +50,7 @@ namespace Node.Net
 			}
 			catch { return false; }
 		}
+
 		public static PerspectiveCamera GetTransformedPerspectiveCamera(this PerspectiveCamera camera, Transform3D transform)
 		{
 			return new PerspectiveCamera
@@ -66,6 +63,7 @@ namespace Node.Net
 				Position = transform.Transform(camera.Position)
 			};
 		}
+
 		public static double GetVerticalFieldOfView(this PerspectiveCamera camera, double width, double height)
 		{
 			if (height > 0 && width > 0) return camera.FieldOfView * (height / width);

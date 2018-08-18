@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Node.Net.Internal
@@ -11,6 +8,7 @@ namespace Node.Net.Internal
 	internal sealed class ColorFactory : Dictionary<string, Color>, IFactory
 	{
 		public static ColorFactory Default { get; } = new ColorFactory();
+
 		public object Create(Type targetType, object source)
 		{
 			if (source != null)
@@ -41,7 +39,6 @@ namespace Node.Net.Internal
 			if (words.Length == 3)
 			{
 				return Color.FromRgb(Convert.ToByte(words[0]), Convert.ToByte(words[1]), Convert.ToByte(words[2]));
-
 			}
 			if (words.Length == 4)
 			{

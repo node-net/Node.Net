@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.JsonRPC
 {
@@ -25,6 +21,7 @@ namespace Node.Net.JsonRPC
 				}
 			}
 		}
+
 		public Response(IDictionary data)
 		{
 			this.Add("jsonrpc", "2.0");
@@ -36,12 +33,14 @@ namespace Node.Net.JsonRPC
 				this.Add("error", error);
 			}
 		}
+
 		public Response(object result, int id)
 		{
 			Add("jsonrpc", "2.0");
 			Add("result", result);
 			Add("id", id);
 		}
+
 		public Response(Error error, int id)
 		{
 			Add("jsonrpc", "2.0");
@@ -65,6 +64,7 @@ namespace Node.Net.JsonRPC
 				return result;
 			}
 		}
+
 		public Error Error { get { return this.Get<Error>("error"); } }
 		public int Id { get { return this.Get<int>("id"); } }
 
@@ -80,7 +80,12 @@ namespace Node.Net.JsonRPC
 				}
 			}
 		}
-		public string ToJson() { return IDictionaryExtension.ToJson(this); }
+
+		public string ToJson()
+		{
+			return IDictionaryExtension.ToJson(this);
+		}
+
 		public override string ToString()
 		{
 			return ToJson();
