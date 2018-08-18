@@ -52,6 +52,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\HiddenWhenNull.cs" />
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="Exceptions\UnrecognizedSignatureException.cs" />
     <Compile Include="Extension\Assembly.Extension.cs" />
     <Compile Include="AssemblyInfo.cs" />
