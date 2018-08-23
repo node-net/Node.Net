@@ -11,7 +11,7 @@ namespace Node.Net.Internal
 		{
 			if (source != null)
 			{
-				if (typeof(IDictionary).IsAssignableFrom(source.GetType())) return CreateFromDictionary(source as IDictionary);
+				if (source is IDictionary) return CreateFromDictionary(source as IDictionary);
 			}
 			if (ParentFactory != null)
 			{
@@ -25,7 +25,7 @@ namespace Node.Net.Internal
 
 		public IFactory ParentFactory { get; set; }
 
-		private Dictionary<string, MeshGeometry3D> cache = new Dictionary<string, MeshGeometry3D>();
+		private readonly Dictionary<string, MeshGeometry3D> cache = new Dictionary<string, MeshGeometry3D>();
 
 		private MeshGeometry3D CreateFromDictionary(IDictionary source)
 		{

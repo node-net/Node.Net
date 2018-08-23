@@ -26,14 +26,14 @@ namespace Node.Net.Internal
 			{
 				if (source != null)
 				{
-					if (source.GetType() == typeof(string)) return Create(source.ToString());
+					if (source is string) return Create(source.ToString());
 				}
 			}
 			if (typeof(IStreamSignature).IsAssignableFrom(targetType))
 			{
 				if (source != null)
 				{
-					if (typeof(Stream).IsAssignableFrom(source.GetType()))
+					if (source is Stream)
 					{
 						return Internal.SignatureReader.GetSignature(source as Stream);
 					}

@@ -131,7 +131,7 @@ namespace Node.Net.Internal
 					{
 						if (!InstanceCounts.ContainsKey(targetType)) InstanceCounts.Add(targetType, 1);
 						else InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
-						if (source != null && source.GetType() == typeof(string) && IsResourceType(targetType))
+						if (source != null && (source is string) && IsResourceType(targetType))
 						{
 							if (!Resources.Contains(source.ToString()))
 							{

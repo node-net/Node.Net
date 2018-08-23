@@ -13,7 +13,7 @@ namespace Node.Net.Internal
 		public object Create(Type targetType, object source)
 		{
 			if (source == null) return null;
-			if (targetType.IsAssignableFrom(source.GetType()))
+			if (targetType.IsInstanceOfType(source))
 			{
 				using (MemoryStream memory = new MemoryStream())
 				{
@@ -21,7 +21,7 @@ namespace Node.Net.Internal
 					memory.Flush();
 					memory.Seek(0, SeekOrigin.Begin);
 					var clone = ReadFunction(memory);
-					if (clone != null && targetType.IsAssignableFrom(clone.GetType())) return clone;
+					if (clone != null && targetType.IsInstanceOfType(clone)) return clone;
 				}
 			}
 			return null;
@@ -29,7 +29,7 @@ namespace Node.Net.Internal
 
 		private static void Write(Stream stream, object value)
 		{
-			if (typeof(IDictionary).IsAssignableFrom(value.GetType()))
+			if (value is IDictionary)
 			{
 				new JSONWriter().Write(stream, value);
 			}

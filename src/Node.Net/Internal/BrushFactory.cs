@@ -9,8 +9,8 @@ namespace Node.Net.Internal
 		{
 			if (source != null)
 			{
-				if (source.GetType() == typeof(Color)) return new SolidColorBrush((Color)source);
-				if (typeof(ImageSource).IsAssignableFrom(source.GetType())) return CreateFromImageSource(source as ImageSource);
+				if (source is Color) return new SolidColorBrush((Color)source);
+				if (source is ImageSource) return CreateFromImageSource(source as ImageSource);
 			}
 			if (ParentFactory != null)
 			{

@@ -11,7 +11,7 @@ namespace Node.Net.JsonRPC
 			_url = url;
 		}
 
-		private string _url;
+		private readonly string _url;
 
 		public Stream Respond(Stream request)
 		{

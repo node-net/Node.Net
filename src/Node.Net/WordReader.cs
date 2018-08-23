@@ -40,12 +40,9 @@ namespace Node.Net
 
 		private void Dispose(bool disposing)
 		{
-			if (disposing)
+			if (disposing && _sr != null)
 			{
-				if (_sr != null)
-				{
-					_sr.Close();
-				}
+				_sr.Close();
 			}
 		}
 

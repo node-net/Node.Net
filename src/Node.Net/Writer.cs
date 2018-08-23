@@ -10,7 +10,6 @@ namespace Node.Net
 {
 	public class Writer : IWrite
 	{
-		//public static Writer Default { get; } = new Writer();
 
 		public void Write(Stream stream, object value)
 		{
@@ -18,7 +17,7 @@ namespace Node.Net
 			{
 				foreach (var type in WriteFunctions.Keys)
 				{
-					if (type.IsAssignableFrom(value.GetType()))
+					if (type.IsInstanceOfType(value))
 					{
 						WriteFunctions[type](stream, value);
 						return;
@@ -27,13 +26,13 @@ namespace Node.Net
 			}
 			if (value != null)
 			{
-				if (typeof(ImageSource).IsAssignableFrom(value.GetType()))
+				if (value is ImageSource)
 				{
 					bitmapSourceWriter.Write(stream, value);
 				}
 				else
 				{
-					if (typeof(DependencyObject).IsAssignableFrom(value.GetType()))
+					if (value is DependencyObject)
 					{
 						var xmlWriter = XmlWriter.Create(stream, new XmlWriterSettings
 						{
@@ -43,7 +42,7 @@ namespace Node.Net
 					}
 					else
 					{
-						if (typeof(XmlDocument).IsAssignableFrom(value.GetType()))
+						if (value is XmlDocument)
 						{
 							(value as XmlDocument).Save(stream);
 						}
@@ -62,11 +61,10 @@ namespace Node.Net
 			Write(filestream, value);
 			filestream.Flush();
 			filestream.Close();
-			filestream = null;
 		}
 
 		public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
-		private Internal.JSONWriter jsonWriter = new Internal.JSONWriter();
-		private Internal.BitmapSourceWriter bitmapSourceWriter = new Internal.BitmapSourceWriter();
+		private readonly Internal.JSONWriter jsonWriter = new Internal.JSONWriter();
+		private readonly Internal.BitmapSourceWriter bitmapSourceWriter = new Internal.BitmapSourceWriter();
 	}
 }

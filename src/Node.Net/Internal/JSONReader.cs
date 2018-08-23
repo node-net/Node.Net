@@ -32,12 +32,15 @@ namespace Node.Net.Internal
 			}
 		}
 
-		public Type DefaultArrayType = typeof(List<dynamic>);
-		public Type DefaultObjectType = typeof(Dictionary<string, dynamic>);
-		public Type DefaultDocumentType = typeof(Dictionary<string, dynamic>);
+		private Type defaultArrayType = typeof(List<dynamic>);
+		private Type defaultObjectType = typeof(Dictionary<string, dynamic>);
+		private Type defaultDocumentType = typeof(Dictionary<string, dynamic>);
 		public Func<IDictionary> CreateDefaultObject { get; set; } = null;
 		public Dictionary<string, Type> ConversionTypeNames { get; set; } = new Dictionary<string, Type>();
 		public int ObjectCount { get; set; }
+		public Type DefaultObjectType { get => defaultObjectType; set => defaultObjectType = value; }
+		public Type DefaultDocumentType { get => defaultDocumentType; set => defaultDocumentType = value; }
+		public Type DefaultArrayType { get => defaultArrayType; set => defaultArrayType = value; }
 
 		public object Read(Stream stream)
 		{
@@ -52,7 +55,7 @@ namespace Node.Net.Internal
 				catch (Exception e)
 				{
 					var exception_info = $"JsonRead.Load raised an exception at stream position {stream.Position}";
-					throw new Exception(exception_info, e);
+					throw new InvalidOperationException(exception_info, e);
 				}
 			}
 		}
@@ -141,11 +144,11 @@ namespace Node.Net.Internal
 		{
 			var list = Activator.CreateInstance(DefaultArrayType) as IList;
 			reader.FastSeek('[');
-			var ch = ' ';
+			//var ch = ' ';
 			reader.Read(); // consume the '['
 			reader.EatWhiteSpace();
 			var done = false;
-			ch = (char)reader.Peek();
+			var ch = (char)reader.Peek();
 			if (ch == ']')
 			{
 				done = true;
@@ -167,7 +170,7 @@ namespace Node.Net.Internal
 				reader.EatWhiteSpace();
 				list.Add(Read(reader));
 				reader.EatWhiteSpace();
-				var ichar = reader.Peek();
+				//var ichar = reader.Peek();
 				ch = (char)reader.Peek();
 				if (ch == ',') reader.Read(); // consume ','
 
@@ -190,11 +193,11 @@ namespace Node.Net.Internal
 			IDictionary dictionary = null;
 			if (ObjectCount == 0)
 			{
-				if (DefaultDocumentType == null) throw new Exception("DefaultDocumentType is null");
+				if (DefaultDocumentType == null) throw new InvalidOperationException("DefaultDocumentType is null");
 				dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
 				if (dictionary == null)
 				{
-					throw new Exception($"Unable to create instance of {DefaultDocumentType.FullName}");
+					throw new InvalidOperationException($"Unable to create instance of {DefaultDocumentType.FullName}");
 				}
 			}
 			else
@@ -202,15 +205,15 @@ namespace Node.Net.Internal
 				if (CreateDefaultObject != null)
 				{
 					dictionary = CreateDefaultObject();
-					if (dictionary == null) { throw new Exception("CreateDefaultObject returned null"); }
+					if (dictionary == null) { throw new InvalidOperationException("CreateDefaultObject returned null"); }
 				}
 				else
 				{
-					if (DefaultObjectType == null) throw new Exception("DefaultObjectType is null");
+					if (DefaultObjectType == null) throw new InvalidOperationException("DefaultObjectType is null");
 					dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
 					if (dictionary == null)
 					{
-						throw new Exception($"Unable to create isntance of {DefaultObjectType.FullName}");
+						throw new InvalidOperationException($"Unable to create isntance of {DefaultObjectType.FullName}");
 					}
 				}
 			}
@@ -229,13 +232,13 @@ namespace Node.Net.Internal
 			{
 				reader.EatWhiteSpace();
 				var key = ReadString(reader) as string;
-				var lastKey = key;
+				//var lastKey = key;
 				reader.EatWhiteSpace();
-				var ch = (char)reader.Peek();
+				//var ch = (char)reader.Peek();
 				reader.Read(); //consume ':'
 				dictionary[key] = Read(reader);
 				reader.EatWhiteSpace();
-				ch = (char)reader.Peek();
+				var ch = (char)reader.Peek();
 				if (ch == comma) reader.Read(); // consume ','
 
 				reader.EatWhiteSpace();
@@ -250,12 +253,12 @@ namespace Node.Net.Internal
 			var type = dictionary.Get<string>("Type", "");
 			if (type.Length > 0 && ConversionTypeNames.ContainsKey(type))
 			{
-				if (!ConversionTypeNames[type].IsAssignableFrom(dictionary.GetType()))
+				if (!ConversionTypeNames[type].IsInstanceOfType(dictionary))
 				{
 					var converted = Activator.CreateInstance(ConversionTypeNames[type]) as IDictionary;
 					if (converted == null)
 					{
-						throw new Exception($"Unable to create instance of {ConversionTypeNames[type].FullName}");
+						throw new InvalidOperationException($"Unable to create instance of {ConversionTypeNames[type].FullName}");
 					}
 					foreach (var key in dictionary.Keys)
 					{

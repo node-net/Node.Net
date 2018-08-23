@@ -56,7 +56,7 @@ namespace Node.Net.JsonRPC
 				//var data = Reader.Default.Read<IDictionary>(new MemoryStream(Encoding.UTF8.GetBytes(json)));
 				//return data.Get<object>("result");
 				var result = this.Get<object>("result");
-				if (result != null && result.GetType() == typeof(string))
+				if (result != null && (result is string))
 				{
 					var original = result.ToString();
 					return original.ToString().Replace(@"\u0022", @"""").Replace("u0022", @"""");

@@ -9,7 +9,7 @@
 			var instance = factory.Create(typeof(T), source);
 			if (instance != null)
 			{
-				if (typeof(T).IsAssignableFrom(instance.GetType()))
+				if (instance is T)
 				{
 					return (T)instance;
 				}
