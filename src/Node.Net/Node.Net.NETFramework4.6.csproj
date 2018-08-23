@@ -53,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\HiddenWhenNull.cs" />
+    <Compile Include="Converters\VisibleWhenFalse.cs" />
+    <Compile Include="Converters\VisibleWhenTrue.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="Exceptions\UnrecognizedSignatureException.cs" />
     <Compile Include="Extension\Assembly.Extension.cs" />
