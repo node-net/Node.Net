@@ -12,7 +12,7 @@ namespace Node.Net.Internal
 			if (!typeof(Material).IsAssignableFrom(targetType)) return null;
 			if (source != null)
 			{
-				if (typeof(Brush).IsAssignableFrom(source.GetType()))
+				if (source is Brush)
 				{
 					return new DiffuseMaterial(source as Brush);
 				}

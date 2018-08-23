@@ -10,7 +10,7 @@ namespace Node.Net.Internal
 		{
 			if (source != null)
 			{
-				if (source.GetType() == typeof(string))
+				if (source is string)
 				{
 					var stream = StreamFactory.Create(source.ToString());
 					if (stream != null)

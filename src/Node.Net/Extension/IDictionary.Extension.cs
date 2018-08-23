@@ -57,7 +57,6 @@ namespace Node.Net
 				if (child != null)
 				{
 					child.DeepClean();
-					child = null;
 				}
 			}
 			dictionary.Clear();
@@ -216,13 +215,10 @@ namespace Node.Net
 		{
 			foreach (var item in idictionary.Values)
 			{
-				if (item != null && item is T)//typeof(T).IsAssignableFrom(item.GetType()))
+				if (item != null && item is T && !results.Contains(item) && (
+						search == null || matchFunction(item as IDictionary, search)))
 				{
-					if (!results.Contains(item) && (
-						search == null || matchFunction(item as IDictionary, search)))// MatchesSearch(item as IDictionary, search)))
-					{
-						results.Add(item);
-					}
+					results.Add(item);
 				}
 				var child_idictionary = item as IDictionary;
 				if (child_idictionary != null) _Collect<T>(child_idictionary, search, results, matchFunction);
@@ -273,7 +269,7 @@ namespace Node.Net
 			{
 				if (item != null)
 				{
-					if (type.IsAssignableFrom(item.GetType()) && !results.Contains(item))
+					if (type.IsInstanceOfType(item) && !results.Contains(item))
 					//if(item.GetType().IsInstanceOfType(type) && !results.Contains(item))
 					{
 						if (search == null || MatchesSearch((item as IDictionary), search))
@@ -482,7 +478,7 @@ namespace Node.Net
 			if (key.Contains("/")) SetValue(dictionary, key, value);
 			else
 			{
-				if (value != null && value.GetType() == typeof(DateTime))
+				if (value != null && (value is DateTime))
 				{
 					dictionary[key] = ((DateTime)value).ToString("o");
 				}
@@ -532,7 +528,6 @@ namespace Node.Net
 				}
 			}
 			return ObjectExtension.GetName(dictionary);
-			//return string.Empty;
 		}
 
 		public static string GetFullName(this IDictionary dictionary)
@@ -597,7 +592,7 @@ namespace Node.Net
 				else
 				{
 					var childEnumerable = value as IEnumerable;
-					if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
+					if (childEnumerable != null && !(childEnumerable is string))
 					{
 						copy[key] = childEnumerable.ConvertTypes(types, defaultType, typeKey);
 					}
@@ -704,7 +699,7 @@ namespace Node.Net
 			var parent = child.GetParent() as IDictionary;
 			if (child != null && parent != null)
 			{
-				if (typeof(T).IsAssignableFrom(parent.GetType()))
+				if (parent is T)
 				{
 					var ancestor = (T)parent;
 					if (ancestor != null) return ancestor;
@@ -726,7 +721,7 @@ namespace Node.Net
 				}
 				if (ancestor == null)
 				{
-					if (typeof(T).IsAssignableFrom(child.GetType()))
+					if (child is T)
 					{
 						ancestor = (IDictionary)(T)(object)child;
 					}

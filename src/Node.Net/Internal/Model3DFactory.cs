@@ -135,7 +135,7 @@ namespace Node.Net.Internal
 			return model3D;
 		}
 
-		private Dictionary<string, Model3D> namedCache = new Dictionary<string, Model3D>();
+		private readonly Dictionary<string, Model3D> namedCache = new Dictionary<string, Model3D>();
 
 		private Model3D GetUnscaledPrimaryModel3D(IDictionary source)
 		{

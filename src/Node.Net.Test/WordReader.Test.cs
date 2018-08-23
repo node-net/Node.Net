@@ -14,17 +14,7 @@ namespace Node.Net.Test
 		[Test]
 		public void Memory()
 		{
-			var streamReader = new StreamReader(new MemoryStream(Encoding.UTF8.GetBytes("a")));
-			using (var wordReader = new WordReader(streamReader))
-			{
-				int x = 0;
-			}
 
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			GC.WaitForFullGCComplete();
-			GC.Collect();
-			int y = 0;
 		}
 	}
 }

@@ -36,7 +36,7 @@ namespace Node.Net.JsonRPC
 		}
 
 		private readonly Func<Stream, Stream> _responderFunction;
-		private readonly Func<Request, Response> _responseFunction;
+		//private readonly Func<Request, Response> _responseFunction;
 		private readonly HttpListener _listener;
 
 		private Request GetRequest(HttpListenerRequest httpRequest)

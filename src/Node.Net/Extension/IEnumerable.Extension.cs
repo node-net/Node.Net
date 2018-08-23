@@ -119,7 +119,7 @@ namespace Node.Net
 		{
 			if (source == null) return null;
 			IList copy = new List<dynamic>();
-			if (typeof(IList).IsAssignableFrom(source.GetType()))
+			if (source is IList)
 			{
 				// TODO: convert arrays of double[], int[], string[], etc when appropriate
 				if (source.GetType().GetConstructor(Type.EmptyTypes) != null)
@@ -137,7 +137,7 @@ namespace Node.Net
 				else
 				{
 					var childEnumerable = value as IEnumerable;
-					if (childEnumerable != null && childEnumerable.GetType() != typeof(string))
+					if (childEnumerable != null && !(childEnumerable is string))
 					{
 						copy.Add(ConvertTypes(childEnumerable, types, defaultType));
 					}

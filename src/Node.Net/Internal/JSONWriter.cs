@@ -11,11 +11,9 @@ namespace Node.Net.Internal
 
 	internal sealed class JSONWriter : IWrite
 	{
-		public JSONFormat Format { get { return format; } set { format = value; } }
-		private JSONFormat format = JSONFormat.Indented;
+		public JSONFormat Format { get; set; } = JSONFormat.Indented;
 		private int IndentLevel;
-		public List<Type> IgnoreTypes { get { return ignoreTypes; } set { ignoreTypes = value; } }
-		private List<Type> ignoreTypes = new List<Type>();
+		public List<Type> IgnoreTypes { get; set; } = new List<Type>();
 		private bool WritingArray { get; set; } = false;
 
 		public void Write(Stream stream, object value)
@@ -37,7 +35,7 @@ namespace Node.Net.Internal
 			{
 				result = sr.ReadToEnd();
 			}
-			memory = null;
+			//memory = null;
 			return result;
 		}
 
@@ -76,11 +74,11 @@ namespace Node.Net.Internal
 		private void Write(System.IO.TextWriter writer, object value)
 		{
 			if (ReferenceEquals(null, value)) WriteNull(writer);
-			else if (typeof(byte[]).IsAssignableFrom(value.GetType())) WriteBytes(writer, (byte[])(value));
-			else if (typeof(string).IsAssignableFrom(value.GetType())) WriteString(writer, value);
-			else if (typeof(IDictionary).IsAssignableFrom(value.GetType())) WriteIDictionary(writer, value);
-			else if (typeof(double[,]).IsAssignableFrom(value.GetType())) WriteDoubleArray2D(writer, value);
-			else if (typeof(IEnumerable).IsAssignableFrom(value.GetType())) WriteIEnumerable(writer, value);
+			else if (value is byte[]) WriteBytes(writer, (byte[])(value));
+			else if (value is string) WriteString(writer, value);
+			else if (value is IDictionary) WriteIDictionary(writer, value);
+			else if (value is double[,]) WriteDoubleArray2D(writer, value);
+			else if (value is IEnumerable) WriteIEnumerable(writer, value);
 			else
 			{
 				WriteValueType(writer, value);
@@ -110,7 +108,7 @@ namespace Node.Net.Internal
 
 		private void WriteValueType(System.IO.TextWriter writer, object value)
 		{
-			if (value.GetType() == typeof(bool))
+			if (value is bool)
 			{
 				if (writingPrimitiveValue) writer.Write(value.ToString().ToLower());
 				else
@@ -123,9 +121,9 @@ namespace Node.Net.Internal
 				if (writingPrimitiveValue) writer.Write(value.ToString());
 				else
 				{
-					if (value.GetType() == typeof(float) || value.GetType() == typeof(double) ||
-					   value.GetType() == typeof(int) || value.GetType() == typeof(long) ||
-					   value.GetType() == typeof(string))
+					if ((value is float) || (value is double) ||
+(value is int) || (value is long) ||
+(value is string))
 					{
 						writer.Write(value.ToString());
 					}
@@ -168,7 +166,7 @@ namespace Node.Net.Internal
 				{
 					if (object.ReferenceEquals(null, item) ||
 					   item.GetType().IsValueType ||
-					   typeof(System.Collections.IEnumerable).IsAssignableFrom(value.GetType()))
+(value is System.Collections.IEnumerable))
 					{
 						if (writeCount > 0)
 						{
@@ -220,7 +218,7 @@ namespace Node.Net.Internal
 					writingPrimitiveValue = false;
 
 					var tmp = dictionary[key];
-					if (tmp == null || tmp.GetType().IsPrimitive || tmp.GetType() == typeof(string))
+					if (tmp == null || tmp.GetType().IsPrimitive || (tmp is string))
 					{
 						writer.Write(": ");
 						writingPrimitiveValue = true;

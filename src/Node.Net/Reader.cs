@@ -47,7 +47,7 @@ namespace Node.Net
 		private T Convert<T>(object instance)
 		{
 			if (instance == null) return default(T);
-			if (typeof(T).IsAssignableFrom(instance.GetType()))
+			if (instance is T)
 			{
 				return (T)instance;
 			}
@@ -143,7 +143,7 @@ namespace Node.Net
 					}
 					catch (Exception ex)
 					{
-						throw new Exception($"Unable to open file {ofd.FileName}", ex);
+						throw new InvalidOperationException($"Unable to open file {ofd.FileName}", ex);
 					}
 				}
 			}

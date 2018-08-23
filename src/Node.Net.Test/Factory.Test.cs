@@ -9,8 +9,7 @@ namespace Node.Net.Test
 		[Test]
 		public void Create()
 		{
-			//Assert.NotNull(Factory.Default, "Factory.Default");
-			var matrix = new Factory().Create<Matrix3D>();
+			Assert.NotNull(new Factory().Create<Matrix3D>());
 		}
 	}
 }

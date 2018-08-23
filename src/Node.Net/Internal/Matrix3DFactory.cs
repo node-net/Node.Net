@@ -12,7 +12,7 @@ namespace Node.Net.Internal
 		{
 			if (source != null)
 			{
-				if (typeof(IDictionary).IsAssignableFrom(source.GetType()))
+				if (source is IDictionary)
 				{
 					var matrix = CreateFromIDictionary(source as IDictionary);
 					if (matrix.HasValue) return matrix.Value;
@@ -76,7 +76,7 @@ namespace Node.Net.Internal
 			return null;
 		}
 
-		public static string RotationXKey = "Spin,RotationX,Roll";
+		private static string RotationXKey = "Spin,RotationX,Roll";
 		public static string RotationYKey = "Tilt,RotationY,Pitch";
 		public static string RotationZKey = "Orientation,RotationZ,Yaw";
 

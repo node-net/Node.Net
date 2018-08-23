@@ -13,7 +13,7 @@ namespace Node.Net.Internal
 		{
 			if (source != null)
 			{
-				if (source.GetType() == typeof(string))
+				if (source is string)
 				{
 					var color = Create(source.ToString());
 					if (color.HasValue) return color.Value;

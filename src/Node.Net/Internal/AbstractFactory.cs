@@ -24,7 +24,7 @@ namespace Node.Net.Internal
 			if (source != null && Resources.Contains(source.ToString()))
 			{
 				var result = Resources[source.ToString()];
-				if (result != null && targetType.IsAssignableFrom(result.GetType())) return result;
+				if (result != null && targetType.IsInstanceOfType(result)) return result;
 			}
 			else
 			{
@@ -35,7 +35,7 @@ namespace Node.Net.Internal
 					var result = CreateFromStream(targetType, stream, source);
 					if (result != null)
 					{
-						if (typeof(string).IsAssignableFrom(source.GetType()))
+						if (source is string)
 						{
 							Resources.Add(source.ToString(), result);
 						}
@@ -92,7 +92,7 @@ namespace Node.Net.Internal
 				{
 					var new_dictionary = IDictionaryExtension.ConvertTypes(dictionary, IDictionaryTypes, DefaultObjectType, TypeKey);
 					new_dictionary.DeepUpdateParents();
-					if (source != null && source.GetType() == typeof(string))
+					if (source != null && (source is string))
 					{
 						string filename = stream.GetFileName();
 						if (filename.Length > 0) new_dictionary.SetFileName(filename);
@@ -102,7 +102,7 @@ namespace Node.Net.Internal
 				}
 				if (instance != null)
 				{
-					if (target_type.IsAssignableFrom(instance.GetType())) return instance;
+					if (target_type.IsInstanceOfType(instance)) return instance;
 					if (ParentFactory != null) return ParentFactory.Create(target_type, instance);
 				}
 			}
