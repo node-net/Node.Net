@@ -187,7 +187,15 @@ namespace Node.Net
 		{
 			return Internal.MetaData.Default.GetMetaData<string>(instance, "FileName");
 		}
-
+		public static string GetShortFileName(this object instance)
+		{
+			var filename = instance.GetFileName();
+			if(filename.Length > 0)
+			{
+				return new FileInfo(filename).Name;
+			}
+			return string.Empty;
+		}
 		/// <summary>
 		/// Set the FileName of an Object
 		/// </summary>
