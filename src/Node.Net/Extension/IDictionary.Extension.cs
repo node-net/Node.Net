@@ -567,8 +567,6 @@ namespace Node.Net
 			var copy = Activator.CreateInstance(source.GetType()) as IDictionary;
 			if (copy == null) throw new Exception($"failed to create instance of type {source.GetType().FullName}");
 			var typename = source.Get<string>(typeKey, "");
-			//if (typename.Length > 0)// && types.ContainsKey(typename))
-			//{
 			var targetType = defaultType;
 			if (types.ContainsKey(typename))
 			{
@@ -580,8 +578,10 @@ namespace Node.Net
 				copy = Activator.CreateInstance(targetType) as IDictionary;
 				if (copy == null) throw new Exception($"failed to create instance of type {targetType.FullName}");
 			}
-			//}
-			foreach (string key in source.Keys)
+			var keys = new List<string>();
+			foreach (string key in source.Keys) { keys.Add(key); }
+			//foreach (string key in source.Keys)
+			foreach(string key in keys)
 			{
 				var value = source[key];
 				var childDictionary = value as IDictionary;

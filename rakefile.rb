@@ -1,4 +1,4 @@
-VERSION='1.2.14'
+VERSION='1.2.15'
 require 'dev'
 CLOBBER.include('**/obj','bin','TestResults')
 
