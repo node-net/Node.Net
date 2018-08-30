@@ -124,6 +124,8 @@ namespace Node.Net.Internal
 			if (x == null)
 				throw new ArgumentNullException(nameof(x));
 			if (y is null) return false;
+			if (x.Target is null && y.Target is null) return true;
+			if (x.Target is null) return false;
 			return x.Target.Equals(y.Target);
 		}
 
