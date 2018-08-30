@@ -109,7 +109,8 @@ namespace Node.Net.Internal
 			}
 			foreach (var deadKey in deadKeys)
 			{
-				data.Remove(new WeakReference(deadKey.Target));
+				data.Remove(deadKey);
+				//data.Remove(new WeakReference(deadKey.Target));
 			}
 		}
 
