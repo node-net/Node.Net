@@ -15,7 +15,11 @@ namespace Node.Net
 		/// <returns></returns>
 		public static Rect3D Scale(this Rect3D source, double factor)
 		{
-			if (source.IsEmpty) return source;
+			if (source.IsEmpty)
+			{
+				return source;
+			}
+
 			var newSize = new Size3D(source.SizeX * factor, source.SizeY * factor, source.SizeZ * factor);
 			return new Rect3D
 			{

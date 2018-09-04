@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections;
 using System.IO;
-using System.Windows.Media;
 
 namespace Node.Net.Test
 {

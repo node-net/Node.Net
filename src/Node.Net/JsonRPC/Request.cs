@@ -44,8 +44,16 @@ namespace Node.Net.JsonRPC
 			var random = new Random();
 			this.Add("id", random.Next(100000, 200000));
 
-			if (data.Contains("id")) this["id"] = data["id"];
-			if (data.Contains("method")) this.Add("method", data["method"]);
+			if (data.Contains("id"))
+			{
+				this["id"] = data["id"];
+			}
+
+			if (data.Contains("method"))
+			{
+				this.Add("method", data["method"]);
+			}
+
 			if (data.Contains("params"))
 			{
 				this.Add("params", data["params"]);

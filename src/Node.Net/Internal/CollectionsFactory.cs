@@ -17,7 +17,11 @@ namespace Node.Net.Internal
 					{
 						var instance = Create(targetType, stream);
 						var idictionary = instance as IDictionary;
-						if (idictionary != null) idictionary.SetFileName(source.ToString());
+						if (idictionary != null)
+						{
+							idictionary.SetFileName(source.ToString());
+						}
+
 						return instance;
 					}
 				}
@@ -25,12 +29,18 @@ namespace Node.Net.Internal
 			if (targetType == typeof(IDictionary))
 			{
 				var stream = source as Stream;
-				if (stream != null) return JSONReader.Read(stream) as IDictionary;
+				if (stream != null)
+				{
+					return JSONReader.Read(stream) as IDictionary;
+				}
 			}
 			if (targetType == typeof(IList))
 			{
 				var stream = source as Stream;
-				if (stream != null) return JSONReader.Read(stream) as IList;
+				if (stream != null)
+				{
+					return JSONReader.Read(stream) as IList;
+				}
 			}
 			return null;
 		}

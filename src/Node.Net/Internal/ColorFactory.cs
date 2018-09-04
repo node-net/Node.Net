@@ -16,7 +16,10 @@ namespace Node.Net.Internal
 				if (source is string)
 				{
 					var color = Create(source.ToString());
-					if (color.HasValue) return color.Value;
+					if (color.HasValue)
+					{
+						return color.Value;
+					}
 				}
 			}
 
@@ -25,7 +28,11 @@ namespace Node.Net.Internal
 
 		public Color? Create(string name)
 		{
-			if (ContainsKey(name)) return this[name];
+			if (ContainsKey(name))
+			{
+				return this[name];
+			}
+
 			foreach (PropertyInfo property in typeof(Colors).GetProperties(BindingFlags.Public | BindingFlags.Static))
 			{
 				if (property.Name == name)
