@@ -54,6 +54,7 @@ namespace Node.Net
 
 		public static void DeepClean(this IDictionary dictionary)
 		{
+			/*
 			foreach (var value in dictionary.Values)
 			{
 				var child = value as IDictionary;
@@ -64,7 +65,8 @@ namespace Node.Net
 			}
 			dictionary.Clear();
 			dictionary.ClearMetaData();
-			ObjectExtension.CleanMetaData();
+			//ObjectExtension.CleanMetaData();
+			*/
 		}
 
 		/// <summary>
