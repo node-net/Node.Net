@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections;
 using System.IO;
 using System.Windows.Media;
 
@@ -9,7 +10,7 @@ namespace Node.Net.Test
 	internal class ReaderTest
 	{
 		//[Test]
-		//[TestCase("Object.Coverage.json")]
+		[TestCase("Object.Coverage.json")]
 		public void Read(string name)
 		{
 			var reader = new Reader();
@@ -30,8 +31,13 @@ namespace Node.Net.Test
 				{
 					memory.CopyTo(fs);
 				}
-				i = reader.Read(filename);
-				Assert.NotNull(i, nameof(i));
+				var d = reader.Read(filename) as IDictionary;
+				Assert.NotNull(d, nameof(d));
+
+				using (var memory2 = new MemoryStream())
+				{
+					d.Save(memory);
+				}
 			}
 		}
 	}
