@@ -68,7 +68,11 @@ namespace Node.Net.Internal
 			char singleQuote = '\'';
 			reader.EatWhiteSpace();
 			var ichar = reader.Peek();
-			if (ichar < 0) throw new InvalidDataException(@"end of stream reached");
+			if (ichar < 0)
+			{
+				throw new InvalidDataException(@"end of stream reached");
+			}
+
 			var c = (char)ichar;
 			// char type
 			//  'n'  null
@@ -77,11 +81,31 @@ namespace Node.Net.Internal
 			//  'f' or 't' bool
 			//  '{' object (hash)
 			//  '[' array
-			if (c == doubleQuote || c == singleQuote) return ReadString(reader);
-			if (c == objectOpenCharacter) return ReadObject(reader);
-			if (c == arrayOpenCharacter) return ReadArray(reader);
-			if (c == 'f' || c == 't') return ReadBool(reader);
-			if (c == 'n') return ReadNull(reader);
+			if (c == doubleQuote || c == singleQuote)
+			{
+				return ReadString(reader);
+			}
+
+			if (c == objectOpenCharacter)
+			{
+				return ReadObject(reader);
+			}
+
+			if (c == arrayOpenCharacter)
+			{
+				return ReadArray(reader);
+			}
+
+			if (c == 'f' || c == 't')
+			{
+				return ReadBool(reader);
+			}
+
+			if (c == 'n')
+			{
+				return ReadNull(reader);
+			}
+
 			return ReadNumber(reader);
 		}
 
@@ -117,13 +141,21 @@ namespace Node.Net.Internal
 			if (nstr.Contains(@"."))
 			{
 				var value = Convert.ToDouble(nstr);
-				if (value <= Single.MaxValue) return Convert.ToSingle(nstr);
+				if (value <= Single.MaxValue)
+				{
+					return Convert.ToSingle(nstr);
+				}
+
 				return value;
 			}
 			else
 			{
 				var value = Convert.ToInt64(nstr);
-				if (value <= Int32.MaxValue) return Convert.ToInt32(nstr);
+				if (value <= Int32.MaxValue)
+				{
+					return Convert.ToInt32(nstr);
+				}
+
 				return value;
 			}
 		}
@@ -172,7 +204,10 @@ namespace Node.Net.Internal
 				reader.EatWhiteSpace();
 				//var ichar = reader.Peek();
 				ch = (char)reader.Peek();
-				if (ch == ',') reader.Read(); // consume ','
+				if (ch == ',')
+				{
+					reader.Read(); // consume ','
+				}
 
 				reader.EatWhiteSpace();
 				ch = (char)reader.Peek();
@@ -193,7 +228,11 @@ namespace Node.Net.Internal
 			IDictionary dictionary = null;
 			if (ObjectCount == 0)
 			{
-				if (DefaultDocumentType == null) throw new InvalidOperationException("DefaultDocumentType is null");
+				if (DefaultDocumentType == null)
+				{
+					throw new InvalidOperationException("DefaultDocumentType is null");
+				}
+
 				dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
 				if (dictionary == null)
 				{
@@ -209,7 +248,11 @@ namespace Node.Net.Internal
 				}
 				else
 				{
-					if (DefaultObjectType == null) throw new InvalidOperationException("DefaultObjectType is null");
+					if (DefaultObjectType == null)
+					{
+						throw new InvalidOperationException("DefaultObjectType is null");
+					}
+
 					dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
 					if (dictionary == null)
 					{
@@ -239,7 +282,10 @@ namespace Node.Net.Internal
 				dictionary[key] = Read(reader);
 				reader.EatWhiteSpace();
 				var ch = (char)reader.Peek();
-				if (ch == comma) reader.Read(); // consume ','
+				if (ch == comma)
+				{
+					reader.Read(); // consume ','
+				}
 
 				reader.EatWhiteSpace();
 				ch = (char)reader.Peek();

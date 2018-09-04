@@ -10,7 +10,6 @@ namespace Node.Net
 {
 	public class Writer : IWrite
 	{
-
 		public void Write(Stream stream, object value)
 		{
 			if (value != null && WriteFunctions != null)

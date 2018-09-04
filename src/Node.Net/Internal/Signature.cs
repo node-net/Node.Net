@@ -54,9 +54,16 @@ namespace Node.Net.Internal
 				foreach (var ch in Text)
 				{
 					var isControl = Char.IsControl(ch);
-					if (isControl) return false;
+					if (isControl)
+					{
+						return false;
+					}
+
 					++i;
-					if (i >= maxCount) return true;
+					if (i >= maxCount)
+					{
+						return true;
+					}
 				}
 
 				return true;
@@ -69,7 +76,10 @@ namespace Node.Net.Internal
 			{
 				var hex = new StringBuilder(bytes.Length * 2);
 				foreach (byte b in bytes)
+				{
 					hex.AppendFormat("{0:x2} ", b);
+				}
+
 				return hex.ToString().ToUpper().Trim();
 			}
 		}

@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 
 namespace Node.Net.Test
 {
@@ -9,7 +8,6 @@ namespace Node.Net.Test
 		[Test]
 		public void MemoryCheck()
 		{
-			
 		}
 	}
 }

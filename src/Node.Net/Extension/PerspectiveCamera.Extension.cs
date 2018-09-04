@@ -11,12 +11,24 @@ namespace Node.Net
 			{
 				var local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
 				// camera lookdirection is along -Z axis
-				if (local.Z >= 0.0) return false;
+				if (local.Z >= 0.0)
+				{
+					return false;
+				}
+
 				const double deg2rad = 0.01745329;
 				var distance = Abs(local.Z);
 				var frustrumHeight = 2.0 * distance * Tan(camera.FieldOfView * deg2rad * 0.5);
-				if (Abs(local.X) > frustrumHeight / 2.0) return false;
-				if (Abs(local.Y) > frustrumHeight / 2.0) return false;
+				if (Abs(local.X) > frustrumHeight / 2.0)
+				{
+					return false;
+				}
+
+				if (Abs(local.Y) > frustrumHeight / 2.0)
+				{
+					return false;
+				}
+
 				return true;
 			}
 			catch { return false; }
@@ -28,7 +40,11 @@ namespace Node.Net
 			{
 				var local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
 				// camera lookdirection is along -Z axis
-				if (local.Z >= 0.0) return false;
+				if (local.Z >= 0.0)
+				{
+					return false;
+				}
+
 				const double deg2rad = 0.01745329;
 				var distance = Abs(local.Z);
 
@@ -44,8 +60,16 @@ namespace Node.Net
 				}
 				var frustrumWidth = 2.0 * distance * Tan(horizontalFOV * deg2rad * 0.5);
 				var frustrumHeight = 2.0 * distance * Tan(verticalFOV * deg2rad * 0.5);
-				if (Abs(local.X) > frustrumWidth / 2.0) return false;
-				if (Abs(local.Y) > frustrumHeight / 2.0) return false;
+				if (Abs(local.X) > frustrumWidth / 2.0)
+				{
+					return false;
+				}
+
+				if (Abs(local.Y) > frustrumHeight / 2.0)
+				{
+					return false;
+				}
+
 				return true;
 			}
 			catch { return false; }
@@ -66,7 +90,11 @@ namespace Node.Net
 
 		public static double GetVerticalFieldOfView(this PerspectiveCamera camera, double width, double height)
 		{
-			if (height > 0 && width > 0) return camera.FieldOfView * (height / width);
+			if (height > 0 && width > 0)
+			{
+				return camera.FieldOfView * (height / width);
+			}
+
 			return camera.FieldOfView;
 		}
 	}

@@ -116,8 +116,15 @@ namespace Node.Net.Internal
 				var instance = Resources[source];
 				if (targetType.IsInstanceOfType(instance))
 				{
-					if (!InstanceCounts.ContainsKey(targetType)) InstanceCounts.Add(targetType, 1);
-					else InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+					if (!InstanceCounts.ContainsKey(targetType))
+					{
+						InstanceCounts.Add(targetType, 1);
+					}
+					else
+					{
+						InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+					}
+
 					return instance;
 				}
 			}
@@ -129,8 +136,15 @@ namespace Node.Net.Internal
 					var instance = FactoryFunctions[type](targetType, source);
 					if (instance != null)
 					{
-						if (!InstanceCounts.ContainsKey(targetType)) InstanceCounts.Add(targetType, 1);
-						else InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+						if (!InstanceCounts.ContainsKey(targetType))
+						{
+							InstanceCounts.Add(targetType, 1);
+						}
+						else
+						{
+							InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+						}
+
 						if (source != null && (source is string) && IsResourceType(targetType))
 						{
 							if (!Resources.Contains(source.ToString()))
@@ -147,8 +161,16 @@ namespace Node.Net.Internal
 
 		public bool IsResourceType(Type type)
 		{
-			if (typeof(Model3D).IsAssignableFrom(type)) return true;
-			if (typeof(MeshGeometry3D).IsAssignableFrom(type)) return true;
+			if (typeof(Model3D).IsAssignableFrom(type))
+			{
+				return true;
+			}
+
+			if (typeof(MeshGeometry3D).IsAssignableFrom(type))
+			{
+				return true;
+			}
+
 			return false;
 		}
 
