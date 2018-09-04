@@ -198,7 +198,10 @@ namespace Node.Net.Internal
 
 			var dictionary = value as System.Collections.IDictionary;
 
-			foreach (object key in dictionary.Keys)
+			var keys = new List<string>();
+			foreach(string key in dictionary.Keys) { keys.Add(key); }
+			//foreach (object key in dictionary.Keys)
+			foreach(string key in keys)
 			{
 				var item = dictionary[key];
 				var skip = false;
