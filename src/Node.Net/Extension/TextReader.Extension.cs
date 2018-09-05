@@ -63,7 +63,7 @@ namespace Node.Net
 
 		public static string SeekIgnoreEscaped(this TextReader reader, char value)
 		{
-			int iBackslash = (int)'\\';
+			int iBackslash = '\\';
 			int iPeek = reader.Peek();
 			if ((char)iPeek == value) { return string.Empty; }
 			var done = false;
@@ -74,15 +74,26 @@ namespace Node.Net
 				if (iChar < 0) { done = true; }
 				else
 				{
-					if (iChar != iBackslash) builder.Append((char)iChar);
+					if (iChar != iBackslash)
+					{
+						builder.Append((char)iChar);
+					}
+
 					iPeek = reader.Peek();
 					if ((char)iPeek == value)
 					{
-						if (iChar != iBackslash) done = true;
+						if (iChar != iBackslash)
+						{
+							done = true;
+						}
 					}
 				}
 			}
-			if (builder.Length == 0) return string.Empty;
+			if (builder.Length == 0)
+			{
+				return string.Empty;
+			}
+
 			return builder.ToString();
 		}
 
@@ -115,7 +126,11 @@ namespace Node.Net
 					}
 				}
 			}
-			if (builder.Length == 0) return string.Empty;
+			if (builder.Length == 0)
+			{
+				return string.Empty;
+			}
+
 			return builder.ToString();
 		}
 

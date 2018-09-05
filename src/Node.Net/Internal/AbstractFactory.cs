@@ -19,12 +19,18 @@ namespace Node.Net.Internal
 
 		public object Create(Type targetType, object source)
 		{
-			if (targetType == null) return null;
+			if (targetType == null)
+			{
+				return null;
+			}
 
 			if (source != null && Resources.Contains(source.ToString()))
 			{
 				var result = Resources[source.ToString()];
-				if (result != null && targetType.IsInstanceOfType(result)) return result;
+				if (result != null && targetType.IsInstanceOfType(result))
+				{
+					return result;
+				}
 			}
 			else
 			{
@@ -53,11 +59,18 @@ namespace Node.Net.Internal
 				}
 			}
 			var instance = targetType.Construct(source);
-			if (instance != null) return instance;
+			if (instance != null)
+			{
+				return instance;
+			}
 
 			instance = ResourceFactory.Create(targetType, source);
 
-			if (instance == null) instance = CloneFactory.Create(targetType, source);
+			if (instance == null)
+			{
+				instance = CloneFactory.Create(targetType, source);
+			}
+
 			return instance;
 		}
 
@@ -81,7 +94,11 @@ namespace Node.Net.Internal
 
 		private object CreateFromStream(Type target_type, Stream stream, object source)
 		{
-			if (stream == null) return null;
+			if (stream == null)
+			{
+				return null;
+			}
+
 			if (ReadFunction != null)
 			{
 				var instance = ReadFunction(stream);
@@ -95,15 +112,28 @@ namespace Node.Net.Internal
 					if (source != null && (source is string))
 					{
 						string filename = stream.GetFileName();
-						if (filename.Length > 0) new_dictionary.SetFileName(filename);
-						else new_dictionary.SetFileName(source.ToString());
+						if (filename.Length > 0)
+						{
+							new_dictionary.SetFileName(filename);
+						}
+						else
+						{
+							new_dictionary.SetFileName(source.ToString());
+						}
 					}
 					instance = new_dictionary;
 				}
 				if (instance != null)
 				{
-					if (target_type.IsInstanceOfType(instance)) return instance;
-					if (ParentFactory != null) return ParentFactory.Create(target_type, instance);
+					if (target_type.IsInstanceOfType(instance))
+					{
+						return instance;
+					}
+
+					if (ParentFactory != null)
+					{
+						return ParentFactory.Create(target_type, instance);
+					}
 				}
 			}
 			return null;

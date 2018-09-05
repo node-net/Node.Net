@@ -11,7 +11,10 @@ namespace Node.Net.Internal
 		{
 			if (source != null)
 			{
-				if (source is IDictionary) return CreateFromDictionary(source as IDictionary);
+				if (source is IDictionary)
+				{
+					return CreateFromDictionary(source as IDictionary);
+				}
 			}
 			if (ParentFactory != null)
 			{
@@ -35,7 +38,11 @@ namespace Node.Net.Internal
 				{
 					var type = source.Get<string>("Type");
 					var name = $"MeshGeometry3D.{type}.xaml";
-					if (cache.ContainsKey(name)) return cache[name];
+					if (cache.ContainsKey(name))
+					{
+						return cache[name];
+					}
+
 					var mesh = ParentFactory.Create<MeshGeometry3D>(name);
 					cache.Add(name, mesh);
 					return mesh;

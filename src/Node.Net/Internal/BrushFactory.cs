@@ -9,16 +9,29 @@ namespace Node.Net.Internal
 		{
 			if (source != null)
 			{
-				if (source is Color) return new SolidColorBrush((Color)source);
-				if (source is ImageSource) return CreateFromImageSource(source as ImageSource);
+				if (source is Color)
+				{
+					return new SolidColorBrush((Color)source);
+				}
+
+				if (source is ImageSource)
+				{
+					return CreateFromImageSource(source as ImageSource);
+				}
 			}
 			if (ParentFactory != null)
 			{
 				var color = ParentFactory.Create(typeof(Color), source);
-				if (color != null) return Create(targetType, color);
+				if (color != null)
+				{
+					return Create(targetType, color);
+				}
 
 				var image = ParentFactory.Create(typeof(ImageSource), source);
-				if (image != null) return Create(targetType, image);
+				if (image != null)
+				{
+					return Create(targetType, image);
+				}
 			}
 			return null;
 		}

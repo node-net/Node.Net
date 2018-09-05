@@ -12,7 +12,11 @@ namespace Node.Net.Internal
 
 		public object Create(Type targetType, object source)
 		{
-			if (source == null) return null;
+			if (source == null)
+			{
+				return null;
+			}
+
 			if (targetType.IsInstanceOfType(source))
 			{
 				using (MemoryStream memory = new MemoryStream())
@@ -21,7 +25,10 @@ namespace Node.Net.Internal
 					memory.Flush();
 					memory.Seek(0, SeekOrigin.Begin);
 					var clone = ReadFunction(memory);
-					if (clone != null && targetType.IsInstanceOfType(clone)) return clone;
+					if (clone != null && targetType.IsInstanceOfType(clone))
+					{
+						return clone;
+					}
 				}
 			}
 			return null;

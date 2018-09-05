@@ -26,7 +26,10 @@ namespace Node.Net.Internal
 			{
 				if (source != null)
 				{
-					if (source is string) return Create(source.ToString());
+					if (source is string)
+					{
+						return Create(source.ToString());
+					}
 				}
 			}
 			if (typeof(IStreamSignature).IsAssignableFrom(targetType))
@@ -47,7 +50,11 @@ namespace Node.Net.Internal
 
 		public Stream Create(string name)
 		{
-			if (File.Exists(name)) return new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read);
+			if (File.Exists(name))
+			{
+				return new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read);
+			}
+
 			foreach (var assembly in ResourceAssemblies)
 			{
 				foreach (var manifestResourceName in assembly.GetManifestResourceNames())

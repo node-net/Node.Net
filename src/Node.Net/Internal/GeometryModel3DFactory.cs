@@ -12,8 +12,16 @@ namespace Node.Net.Internal
 			if (source != null)
 			{
 				var sourceType = source.GetType();
-				if (typeof(IDictionary).IsAssignableFrom(sourceType)) return CreateFromDictionary(source as IDictionary);
-				if (typeof(MeshGeometry3D).IsAssignableFrom(sourceType)) return CreateFromMeshGeometry3D(source as MeshGeometry3D);
+				if (typeof(IDictionary).IsAssignableFrom(sourceType))
+				{
+					return CreateFromDictionary(source as IDictionary);
+				}
+
+				if (typeof(MeshGeometry3D).IsAssignableFrom(sourceType))
+				{
+					return CreateFromMeshGeometry3D(source as MeshGeometry3D);
+				}
+
 				if (ParentFactory != null)
 				{
 					return Create(targetType, ParentFactory.Create<IDictionary>(source));
@@ -26,7 +34,11 @@ namespace Node.Net.Internal
 
 		private GeometryModel3D CreateFromDictionary(IDictionary source)
 		{
-			if (source == null) return null;
+			if (source == null)
+			{
+				return null;
+			}
+
 			if (ParentFactory != null)
 			{
 				if (source != null && source.Contains("Type"))
@@ -36,9 +48,16 @@ namespace Node.Net.Internal
 					{
 						var name = $"GeometryModel3D.{type}.xaml";
 						var geometryModel3D = ParentFactory.Create<GeometryModel3D>(name);
-						if (geometryModel3D != null) return geometryModel3D;
+						if (geometryModel3D != null)
+						{
+							return geometryModel3D;
+						}
+
 						var mesh = ParentFactory.Create<MeshGeometry3D>(source);
-						if (mesh != null) return CreateFromMeshGeometry3D(mesh);
+						if (mesh != null)
+						{
+							return CreateFromMeshGeometry3D(mesh);
+						}
 					}
 				}
 			}
@@ -48,7 +67,11 @@ namespace Node.Net.Internal
 
 		private static GeometryModel3D CreateFromMeshGeometry3D(MeshGeometry3D mesh)
 		{
-			if (mesh == null) return null;
+			if (mesh == null)
+			{
+				return null;
+			}
+
 			return new GeometryModel3D
 			{
 				Geometry = mesh,
