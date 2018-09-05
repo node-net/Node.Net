@@ -141,9 +141,10 @@ namespace Node.Net.Internal
 	{
 		public bool Equals(WeakReference x, WeakReference y)
 		{
-			if (x == null)
+			if (x is null)
 			{
-				throw new ArgumentNullException(nameof(x));
+				if (y is null) return true;
+				return false;
 			}
 
 			if (y is null)
