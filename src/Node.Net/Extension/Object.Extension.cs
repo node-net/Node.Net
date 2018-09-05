@@ -92,14 +92,20 @@ namespace Node.Net
 		/// <param name="parent"></param>
 		public static void SetParent(this object instance, object parent)
 		{
+			if (instance is null) return;
 			if (instance.HasPropertyValue("Parent"))
 			{
 				instance.SetPropertyValue("Parent", parent);
 			}
 			else
 			{
-				Internal.MetaData.Default.GetMetaData(instance)["Parent"] = parent;
-				//Internal.MetaData.Default.SetMetaData(instance, "Parent", parent);
+				var metaData = Internal.MetaData.Default.GetMetaData(instance);
+				if(metaData != null)
+				{
+					if (metaData.Contains("Parent")) metaData["Parent"] = parent;
+					else metaData.Add("Parent", parent);
+				}
+				//Internal.MetaData.Default.GetMetaData(instance)["Parent"] = parent;
 			}
 		}
 
