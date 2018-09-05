@@ -38,9 +38,9 @@ namespace Node.Net
 		/// <param name="dictionary"></param>
 		public static void DeepUpdateParents(this IDictionary dictionary)
 		{
+			if (dictionary is null) return;
 			var values = new List<object>();
 			foreach (var value in dictionary.Values) { values.Add(value); }
-			//foreach (var value in dictionary.Values)
 			foreach (var value in values)
 			{
 				var child = value as IDictionary;
