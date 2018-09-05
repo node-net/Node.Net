@@ -39,6 +39,7 @@ namespace Node.Net.Internal
 
 		public IDictionary GetMetaData(object item)
 		{
+			if (item is null) return null;
 			if (data.ContainsKey(new WeakReference(item)))
 			{
 				return data[new WeakReference(item)];
