@@ -27,7 +27,10 @@ namespace Node.Net
 			{
 				foreach (var manifestResourceName in assembly.GetManifestResourceNames())
 				{
-					if (manifestResourceName.Contains(name)) return assembly.GetManifestResourceStream(manifestResourceName);
+					if (manifestResourceName.Contains(name))
+					{
+						return assembly.GetManifestResourceStream(manifestResourceName);
+					}
 				}
 			}
 			return null;

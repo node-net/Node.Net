@@ -19,7 +19,11 @@ namespace Node.Net
 		/// <returns></returns>
 		public static double GetLength(this Point[] points)
 		{
-			if (points.Length < 2) return 0.0;
+			if (points.Length < 2)
+			{
+				return 0.0;
+			}
+
 			var length = 0.0;
 			for (int i = 1; i < points.Length; ++i)
 			{
@@ -73,7 +77,11 @@ namespace Node.Net
 					{
 						var delta = Point.Subtract(points[i], points[i - 1]);
 						lengthToI += delta.Length;
-						if (lengthToI == distance) return points[i];
+						if (lengthToI == distance)
+						{
+							return points[i];
+						}
+
 						if (lengthToI > distance)
 						{
 							return points[i - 1] + delta * ((distance - lastLength) / delta.Length);
@@ -82,7 +90,11 @@ namespace Node.Net
 					}
 				}
 			}
-			if (points.Length > 0) return points[points.Length - 1];
+			if (points.Length > 0)
+			{
+				return points[points.Length - 1];
+			}
+
 			return new Point(0, 0);
 		}
 
@@ -94,9 +106,17 @@ namespace Node.Net
 		/// <returns></returns>
 		public static bool IsClosed(this Point[] points, double tolerance = 0.0001)
 		{
-			if (points.Length < 3) return false;
+			if (points.Length < 3)
+			{
+				return false;
+			}
+
 			var delta = Point.Subtract(points[points.Length - 1], points[0]);
-			if (delta.Length < tolerance) return true;
+			if (delta.Length < tolerance)
+			{
+				return true;
+			}
+
 			return false;
 		}
 
@@ -108,7 +128,11 @@ namespace Node.Net
 		/// <returns></returns>
 		public static Point[] Close(this Point[] points, double tolerance = 0.0001)
 		{
-			if (points.Length < 2) return points;
+			if (points.Length < 2)
+			{
+				return points;
+			}
+
 			var delta = Point.Subtract(points[points.Length - 1], points[0]);
 			if (delta.Length > tolerance)
 			{
@@ -121,7 +145,11 @@ namespace Node.Net
 
 		public static Point[] Open(this Point[] points, double tolerance = 0.0001)
 		{
-			if (points.Length < 2) return points;
+			if (points.Length < 2)
+			{
+				return points;
+			}
+
 			var delta = Point.Subtract(points[points.Length - 1], points[0]);
 			if (delta.Length < tolerance)
 			{
@@ -157,10 +185,25 @@ namespace Node.Net
 				var max = points[0];
 				foreach (var point in points)
 				{
-					if (point.X < min.X) min.X = point.X;
-					if (point.Y < min.Y) min.Y = point.Y;
-					if (point.X > max.X) max.X = point.X;
-					if (point.Y > max.Y) max.Y = point.Y;
+					if (point.X < min.X)
+					{
+						min.X = point.X;
+					}
+
+					if (point.Y < min.Y)
+					{
+						min.Y = point.Y;
+					}
+
+					if (point.X > max.X)
+					{
+						max.X = point.X;
+					}
+
+					if (point.Y > max.Y)
+					{
+						max.Y = point.Y;
+					}
 				}
 				return new Point(max.X - min.X, max.Y - min.Y);
 			}
@@ -193,7 +236,11 @@ namespace Node.Net
 			}
 
 			var offsetPoints = offsetPointList.ToArray();
-			if (points.IsClosed()) offsetPoints = offsetPoints.Close();
+			if (points.IsClosed())
+			{
+				offsetPoints = offsetPoints.Close();
+			}
+
 			return offsetPoints;
 		}
 
@@ -233,7 +280,10 @@ namespace Node.Net
 					var arc_points = GetConnectingArcPoints(offsetPointA, offsetPointB, offsetPointC, offsetPointD);
 					if (arc_points.Count > 0)
 					{
-						foreach (var arc_point in arc_points) offsetPointList.Add(arc_point);
+						foreach (var arc_point in arc_points)
+						{
+							offsetPointList.Add(arc_point);
+						}
 					}
 				}
 
@@ -255,7 +305,10 @@ namespace Node.Net
 				var arc_points = GetConnectingArcPoints(offsetPointC, offsetPointD, originalOffsetA, originalOffsetB);
 				if (arc_points.Count > 0)
 				{
-					foreach (var arc_point in arc_points) offsetPointList.Add(arc_point);
+					foreach (var arc_point in arc_points)
+					{
+						offsetPointList.Add(arc_point);
+					}
 				}
 				var offsetPoints = offsetPointList.ToArray();
 				offsetPoints = offsetPoints.Close();
@@ -276,7 +329,10 @@ namespace Node.Net
 		{
 			var results = new List<Point>();
 			Point intersection;
-			if (!IsIntersection(pointA, pointB, pointC, pointD, out intersection)) return results;
+			if (!IsIntersection(pointA, pointB, pointC, pointD, out intersection))
+			{
+				return results;
+			}
 
 			Vector tangent1 = (pointB - pointA);
 			tangent1.Normalize();
@@ -325,7 +381,11 @@ namespace Node.Net
 		public static bool IsIntersection(Point pointA, Point pointB, Point pointC, Point pointD, out Point intersectionPoint)
 		{
 			intersectionPoint = new Point();
-			if (pointA.IsVertical(pointB) && pointC.IsVertical(pointD)) return false;
+			if (pointA.IsVertical(pointB) && pointC.IsVertical(pointD))
+			{
+				return false;
+			}
+
 			if (pointA.IsVertical(pointB))
 			{
 				var y = (pointA.X - pointC.X) * (pointD.Y - pointC.Y) / (pointD.X - pointC.X) + pointC.Y;
@@ -431,7 +491,11 @@ namespace Node.Net
 			var builder = new StringBuilder();
 			foreach (var point in points)
 			{
-				if (builder.Length > 0) builder.Append(' ');
+				if (builder.Length > 0)
+				{
+					builder.Append(' ');
+				}
+
 				builder.Append($"{Round(point.X, decimals)},{Round(point.Y, decimals)}");
 			}
 			return builder.ToString();
@@ -482,7 +546,11 @@ namespace Node.Net
 		/// <returns></returns>
 		public static bool Contains(this Point[] polygon, Point point, double epsilon = 0.00001)
 		{
-			if (polygon == null) return false;
+			if (polygon == null)
+			{
+				return false;
+			}
+
 			int polygonLength = polygon.Length, i = 0;
 			bool inside = false;
 			double pointX = point.X, pointY = point.Y;
@@ -504,7 +572,10 @@ namespace Node.Net
 			{
 				// test if point is on outline
 				var closed = polygon.Close(epsilon);
-				if (closed.IsPointOnPolyline(point)) return true;
+				if (closed.IsPointOnPolyline(point))
+				{
+					return true;
+				}
 			}
 			return inside;
 		}
@@ -522,7 +593,10 @@ namespace Node.Net
 			{
 				var pointA = points[i - 1];
 				var pointB = points[i];
-				if (IsPointOnLine(pointA, pointB, point, epsilon)) return true;
+				if (IsPointOnLine(pointA, pointB, point, epsilon))
+				{
+					return true;
+				}
 			}
 			return false;
 		}
@@ -542,17 +616,35 @@ namespace Node.Net
 				// vertical line
 				if (Abs(testPoint.X - pointA.X) < epsilon)
 				{
-					if (Abs(testPoint.Y - pointA.Y) < epsilon) return true;
-					if (Abs(testPoint.Y - pointB.Y) < epsilon) return true;
-					if (testPoint.Y < pointB.Y && testPoint.Y > pointA.Y) return true;
-					if (testPoint.Y > pointB.Y && testPoint.Y < pointA.Y) return true;
+					if (Abs(testPoint.Y - pointA.Y) < epsilon)
+					{
+						return true;
+					}
+
+					if (Abs(testPoint.Y - pointB.Y) < epsilon)
+					{
+						return true;
+					}
+
+					if (testPoint.Y < pointB.Y && testPoint.Y > pointA.Y)
+					{
+						return true;
+					}
+
+					if (testPoint.Y > pointB.Y && testPoint.Y < pointA.Y)
+					{
+						return true;
+					}
 				}
 			}
 			else
 			{
 				var a = (pointB.Y - pointA.Y) / (pointB.X - pointA.X);
 				var b = pointA.Y - a * pointA.X;
-				if (Abs(testPoint.Y - (a * testPoint.X + b)) < epsilon) return true;
+				if (Abs(testPoint.Y - (a * testPoint.X + b)) < epsilon)
+				{
+					return true;
+				}
 			}
 			return false;
 		}

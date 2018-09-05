@@ -8,7 +8,11 @@ namespace Node.Net.Internal
 	{
 		public void Write(Stream stream, object value)
 		{
-			if (value == null) return;
+			if (value == null)
+			{
+				return;
+			}
+
 			var bitmapSource = value as BitmapSource;
 			if (bitmapSource != null && BitmapEncoder != null)
 			{

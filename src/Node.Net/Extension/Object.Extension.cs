@@ -49,7 +49,10 @@ namespace Node.Net
 						var test_element = parent.Get<IDictionary>(key);
 						if (test_element != null)
 						{
-							if (object.ReferenceEquals(test_element, dictionary)) return key;
+							if (object.ReferenceEquals(test_element, dictionary))
+							{
+								return key;
+							}
 						}
 					}
 				}
@@ -187,15 +190,17 @@ namespace Node.Net
 		{
 			return Internal.MetaData.Default.GetMetaData<string>(instance, "FileName");
 		}
+
 		public static string GetShortFileName(this object instance)
 		{
 			var filename = instance.GetFileName();
-			if(filename.Length > 0)
+			if (filename.Length > 0)
 			{
 				return new FileInfo(filename).Name;
 			}
 			return string.Empty;
 		}
+
 		/// <summary>
 		/// Set the FileName of an Object
 		/// </summary>
@@ -214,7 +219,11 @@ namespace Node.Net
 		public static string GetFullName(this object instance)
 		{
 			var metaData = Internal.MetaData.Default.GetMetaData(instance);
-			if (metaData != null && metaData.Contains("FullName")) return metaData["FullName"].ToString();
+			if (metaData != null && metaData.Contains("FullName"))
+			{
+				return metaData["FullName"].ToString();
+			}
+
 			return string.Empty;
 		}
 

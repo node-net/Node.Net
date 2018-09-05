@@ -10,7 +10,6 @@ namespace Node.Net
 {
 	public class Writer : IWrite
 	{
-
 		public void Write(Stream stream, object value)
 		{
 			if (value != null && WriteFunctions != null)
@@ -55,7 +54,7 @@ namespace Node.Net
 			}
 		}
 
-		public void Write(string filename, object value)
+		public void Write(string filename,object value)
 		{
 			var filestream = new FileStream(filename, FileMode.Create);
 			Write(filestream, value);

@@ -40,7 +40,10 @@ namespace Node.Net
 			if (Logging)
 			{
 				var sourceInfo = "null";
-				if (source != null) sourceInfo = source.ToString();
+				if (source != null)
+				{
+					sourceInfo = source.ToString();
+				}
 
 				Log.Add($"Create(typeof({targetType.FullName}),{sourceInfo}");
 			}

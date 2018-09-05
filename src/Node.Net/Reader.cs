@@ -36,7 +36,10 @@ namespace Node.Net
 				var signature = signatureReader.Signature;
 				foreach (string signature_key in Keys)
 				{
-					if (signature.IndexOf(signature_key) == 0) return this[signature_key](stream);
+					if (signature.IndexOf(signature_key) == 0)
+					{
+						return this[signature_key](stream);
+					}
 				}
 				throw new UnrecognizedSignatureException($"unrecognized signature '{signature.Substring(0, 24)}'");
 			}
@@ -46,7 +49,11 @@ namespace Node.Net
 
 		private T Convert<T>(object instance)
 		{
-			if (instance == null) return default(T);
+			if (instance == null)
+			{
+				return default(T);
+			}
+
 			if (instance is T)
 			{
 				return (T)instance;
@@ -58,7 +65,7 @@ namespace Node.Net
 
 		public T Read<T>(string filename) => Convert<T>(Read(filename));
 
-		private static List<string> xaml_markers = new List<string>
+		private static readonly List<string> xaml_markers = new List<string>
 		{
 			"http://schemas.microsoft.com/winfx/2006/xaml/presentation",
 			"<MeshGeometry3D",
@@ -102,7 +109,11 @@ namespace Node.Net
 		{
 			var i = jsonReader.Read(stream);
 			var dictionary = i as IDictionary;
-			if (dictionary != null) dictionary.DeepUpdateParents();
+			if (dictionary != null)
+			{
+				dictionary.DeepUpdateParents();
+			}
+
 			return i;
 		}
 

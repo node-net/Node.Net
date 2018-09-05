@@ -73,7 +73,11 @@ namespace Node.Net
 						var stream = new FileStream(ofd.FileName, FileMode.Open);
 						//stream.SetFileName(ofd.FileName);
 						var instance = read.Read(stream);
-						if (instance != null) instance.SetFileName(ofd.FileName);
+						if (instance != null)
+						{
+							instance.SetFileName(ofd.FileName);
+						}
+
 						return instance;
 					}
 				}
@@ -88,7 +92,11 @@ namespace Node.Net
 				{
 					var item = read.Read(fs);
 					SetPropertyValue(item, "FileName", filename);
-					if (item != null) item.SetFileName(filename);
+					if (item != null)
+					{
+						item.SetFileName(filename);
+					}
+
 					return item;
 				}
 			}
@@ -102,7 +110,11 @@ namespace Node.Net
 					{
 						var item = read.Read(stream);
 						SetPropertyValue(item, "FileName", filename);
-						if (item != null) item.SetFileName(filename);
+						if (item != null)
+						{
+							item.SetFileName(filename);
+						}
+
 						return item;
 					}
 				}

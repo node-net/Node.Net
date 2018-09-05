@@ -15,7 +15,10 @@ namespace Node.Net.Internal
 				if (source is IDictionary)
 				{
 					var matrix = CreateFromIDictionary(source as IDictionary);
-					if (matrix.HasValue) return matrix.Value;
+					if (matrix.HasValue)
+					{
+						return matrix.Value;
+					}
 				}
 			}
 
@@ -72,11 +75,15 @@ namespace Node.Net.Internal
 			}
 			matrix3D = RotateXYZ(matrix3D, GetRotationsXYZ(dictionary));
 			matrix3D.Translate(GetTranslation(dictionary));
-			if (!matrix3D.IsIdentity) return matrix3D;
+			if (!matrix3D.IsIdentity)
+			{
+				return matrix3D;
+			}
+
 			return null;
 		}
 
-		private static string RotationXKey = "Spin,RotationX,Roll";
+		private static readonly string RotationXKey = "Spin,RotationX,Roll";
 		public static string RotationYKey = "Tilt,RotationY,Pitch";
 		public static string RotationZKey = "Orientation,RotationZ,Yaw";
 

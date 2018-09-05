@@ -60,8 +60,16 @@ namespace Node.Net
 			localX.Z = 0.0;
 			var angle = Vector3D.AngleBetween(localX, new Vector3D(1, 0, 0));
 			var rotationZ = localX.Y < 0.0 ? angle * -1.0 : angle;
-			if (Abs(rotationZ - 180.0) > 0.01 && Abs(localX.Y) < 0.0001) rotationZ = 0.0;
-			if (Abs(localZ.Z + 1.0) < 0.01) rotationZ = 0.0;
+			if (Abs(rotationZ - 180.0) > 0.01 && Abs(localX.Y) < 0.0001)
+			{
+				rotationZ = 0.0;
+			}
+
+			if (Abs(localZ.Z + 1.0) < 0.01)
+			{
+				rotationZ = 0.0;
+			}
+
 			return rotationZ;
 		}
 
@@ -84,8 +92,15 @@ namespace Node.Net
 			localX.Y = 0.0;
 			var angle = Vector3D.AngleBetween(localX, new Vector3D(1, 0, 0));
 			var rotationY = localX.Z > 0 ? angle * -1.0 : angle;
-			if (Abs(rotationY - 180.0) > 0.01 && Abs(localX.Z) < 0.0001) rotationY = 0.0;
-			if (Abs(localY.Y + 1.0) < 0.01) rotationY = 0.0;
+			if (Abs(rotationY - 180.0) > 0.01 && Abs(localX.Z) < 0.0001)
+			{
+				rotationY = 0.0;
+			}
+
+			if (Abs(localY.Y + 1.0) < 0.01)
+			{
+				rotationY = 0.0;
+			}
 
 			return rotationY;
 		}
@@ -104,8 +119,15 @@ namespace Node.Net
 			localY.X = 0.0;
 			var angle = Vector3D.AngleBetween(localY, new Vector3D(0, 1, 0));
 			var rotationX = localX.Z > 0 ? angle * -1.0 : angle;
-			if (Abs(rotationX - 180.0) > 0.01 && Abs(localY.Z) < 0.0001) rotationX = 0.0;
-			if (Abs(localY.Y + 1.0) < 0.01) rotationX = 0.0;
+			if (Abs(rotationX - 180.0) > 0.01 && Abs(localY.Z) < 0.0001)
+			{
+				rotationX = 0.0;
+			}
+
+			if (Abs(localY.Y + 1.0) < 0.01)
+			{
+				rotationX = 0.0;
+			}
 
 			return rotationX;
 		}
@@ -147,8 +169,15 @@ namespace Node.Net
 			xDirection.Z = 0;
 			xDirection.Normalize();
 			var deltaZ = Abs(Vector3D.AngleBetween(new Vector3D(1, 0, 0), xDirection));
-			if (Abs(xDirection.Z - 1.0) < 0.001) deltaZ = 0.0;
-			if (xDirection.Y < 0.0) deltaZ *= -1.0;
+			if (Abs(xDirection.Z - 1.0) < 0.001)
+			{
+				deltaZ = 0.0;
+			}
+
+			if (xDirection.Y < 0.0)
+			{
+				deltaZ *= -1.0;
+			}
 
 			matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), deltaZ));
 
@@ -159,7 +188,10 @@ namespace Node.Net
 			var zDir2 = inverse.Transform(zDirection);
 			var localY = matrix.Transform(new Vector3D(0, 1, 0));
 			var deltaY = Abs(Vector3D.AngleBetween(new Vector3D(0, 0, 1), zDir2));
-			if (zDir2.X < 0.0) deltaY *= -1.0;
+			if (zDir2.X < 0.0)
+			{
+				deltaY *= -1.0;
+			}
 
 			////////////////////////
 			if (Abs(Abs(deltaY) - 180.0) < 0.001)
@@ -177,7 +209,11 @@ namespace Node.Net
 			var yDir2 = inverse.Transform(yDirection);
 			var localX = matrix.Transform(new Vector3D(1, 0, 0));
 			var deltaX = Abs(Vector3D.AngleBetween(new Vector3D(0, 1, 0), yDir2));
-			if (yDir2.Z < 0.0) deltaX *= -1.0;
+			if (yDir2.Z < 0.0)
+			{
+				deltaX *= -1.0;
+			}
+
 			matrix.Rotate(new Quaternion(localX, deltaX));
 			return matrix;
 		}
