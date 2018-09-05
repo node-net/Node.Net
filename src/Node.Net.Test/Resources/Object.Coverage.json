@@ -7,5 +7,16 @@
   "null": null,
   "array_0": [ 0, 1, 2, 3 ],
   "array_empty": [],
-  "objectA": {}
+  "objectA": {},
+  "foo": {
+    "type": "foo",
+    "bar0": {
+      "type": "bar",
+      "id": "0"
+    },
+    "bar1": {
+      "type": "bar",
+      "id" : "1"
+    }
+  }
 }
