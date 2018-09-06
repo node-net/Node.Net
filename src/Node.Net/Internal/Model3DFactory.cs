@@ -36,8 +36,7 @@ namespace Node.Net.Internal
 			}*/
 			if (source != null)
 			{
-				var dictionary = source as IDictionary;
-				if (dictionary != null)
+				if (source is IDictionary dictionary)
 				{
 					return CreateFromDictionary(dictionary);
 				}
@@ -116,12 +115,9 @@ namespace Node.Net.Internal
 				return null;
 			}
 
-			if (cache)
+			if (cache && model3DCache.ContainsKey(source))
 			{
-				if (model3DCache.ContainsKey(source))
-				{
-					return model3DCache[source];
-				}
+				return model3DCache[source];
 			}
 			var model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
 			var primaryModel = GetPrimaryModel3D(source);
@@ -132,17 +128,13 @@ namespace Node.Net.Internal
 
 			foreach (var key in source.Keys)
 			{
-				var child_dictionary = source[key] as IDictionary;
-				if (child_dictionary != null)
+				if (source[key] is IDictionary child_dictionary && !Ignore(child_dictionary))
 				{
-					if (!Ignore(child_dictionary))
+					//var child_model = Create(typeof(Model3D), child_dictionary) as Model3D;
+					var child_model = CreateFromDictionary(child_dictionary);
+					if (child_model != null)
 					{
-						//var child_model = Create(typeof(Model3D), child_dictionary) as Model3D;
-						var child_model = CreateFromDictionary(child_dictionary);
-						if (child_model != null)
-						{
-							model3DGroup.Children.Add(child_model);
-						}
+						model3DGroup.Children.Add(child_model);
 					}
 				}
 			}
@@ -214,8 +206,7 @@ namespace Node.Net.Internal
 					}
 				}
 
-				var geometry3D = ParentFactory.Create(typeof(GeometryModel3D), source) as GeometryModel3D;
-				if (geometry3D != null)
+				if (ParentFactory.Create(typeof(GeometryModel3D), source) is GeometryModel3D geometry3D)
 				{
 					return geometry3D;
 				}

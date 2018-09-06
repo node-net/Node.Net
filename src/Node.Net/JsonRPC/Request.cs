@@ -57,8 +57,7 @@ namespace Node.Net.JsonRPC
 			if (data.Contains("params"))
 			{
 				this.Add("params", data["params"]);
-				var idictionary = data["params"] as IDictionary;
-				if (idictionary != null)
+				if (data["params"] is IDictionary idictionary)
 				{
 					foreach (var key in idictionary.Keys)
 					{

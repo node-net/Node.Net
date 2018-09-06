@@ -9,7 +9,7 @@ namespace Node.Net.Internal
 {
 	internal enum JSONFormat { Compact, Indented };
 
-	internal sealed class JSONWriter : IWrite
+	internal sealed class JsonWriter : IWrite
 	{
 		public JSONFormat Format { get; set; } = JSONFormat.Indented;
 		private int IndentLevel;
@@ -35,11 +35,8 @@ namespace Node.Net.Internal
 			{
 				result = sr.ReadToEnd();
 			}
-			//memory = null;
 			return result;
 		}
-
-		//public static JSONWriter Default { get; } = new JSONWriter();
 
 		private void PushIndent()
 		{
@@ -151,9 +148,9 @@ namespace Node.Net.Internal
 				}
 				else
 				{
-					if ((value is float) || (value is double) ||
-(value is int) || (value is long) ||
-(value is string))
+					if ((value is float) || (value is double)
+|| (value is int) || (value is long)
+|| (value is string))
 					{
 						writer.Write(value.ToString());
 					}
@@ -182,8 +179,6 @@ namespace Node.Net.Internal
 		private void WriteIEnumerable(System.IO.TextWriter writer, object value)
 		{
 			WritingArray = true;
-			//writer.Write($"{GetIndent()}[{GetLineFeed()}");
-			//writer.Write($"{GetIndent()}[");
 			writer.Write("[");
 			PushIndent();
 			var enumerable = value as System.Collections.IEnumerable;
@@ -196,23 +191,20 @@ namespace Node.Net.Internal
 					skip = true;
 				}
 
-				if (!skip)
+				if (!skip && (object.ReferenceEquals(null, item)
+					   || item.GetType().IsValueType
+|| (value is System.Collections.IEnumerable)))
 				{
-					if (object.ReferenceEquals(null, item) ||
-					   item.GetType().IsValueType ||
-(value is System.Collections.IEnumerable))
+					if (writeCount > 0)
 					{
-						if (writeCount > 0)
+						if (!WritingArray)
 						{
-							if (!WritingArray)
-							{
-								writer.Write($",{GetLineFeed()}{GetIndent()}");
-							}
-							else { writer.Write(","); }
+							writer.Write($",{GetLineFeed()}{GetIndent()}");
 						}
-						Write(writer, item);
-						++writeCount;
+						else { writer.Write(","); }
 					}
+					Write(writer, item);
+					++writeCount;
 				}
 			}
 			PopIndent();

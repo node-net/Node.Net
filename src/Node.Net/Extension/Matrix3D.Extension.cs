@@ -196,7 +196,6 @@ namespace Node.Net
 			////////////////////////
 			if (Abs(Abs(deltaY) - 180.0) < 0.001)
 			{
-				deltaZ = 0.0;
 				matrix.SetIdentity();
 			}
 			////////////////////////

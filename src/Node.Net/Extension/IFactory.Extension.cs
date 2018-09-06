@@ -7,12 +7,9 @@
 		public static T Create<T>(this IFactory factory, object source)
 		{
 			var instance = factory.Create(typeof(T), source);
-			if (instance != null)
+			if (instance != null && instance is T)
 			{
-				if (instance is T)
-				{
-					return (T)instance;
-				}
+				return (T)instance;
 			}
 			return default(T);
 		}
