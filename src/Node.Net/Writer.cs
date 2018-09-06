@@ -54,7 +54,7 @@ namespace Node.Net
 			}
 		}
 
-		public void Write(string filename,object value)
+		public void Write(string filename, object value)
 		{
 			var filestream = new FileStream(filename, FileMode.Create);
 			Write(filestream, value);
@@ -63,7 +63,7 @@ namespace Node.Net
 		}
 
 		public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
-		private readonly Internal.JSONWriter jsonWriter = new Internal.JSONWriter();
+		private readonly Internal.JsonWriter jsonWriter = new Internal.JsonWriter();
 		private readonly Internal.BitmapSourceWriter bitmapSourceWriter = new Internal.BitmapSourceWriter();
 	}
 }

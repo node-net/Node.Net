@@ -13,8 +13,8 @@ namespace Node.Net
 			{
 				if (value != null)
 				{
-					if (value is bool || value is double || value is float ||
-						value is int || value is long || value is string)
+					if (value is bool || value is double || value is float
+						|| value is int || value is long || value is string)
 					{
 						hashCode = hashCode ^ value.GetHashCode();
 					}
@@ -164,15 +164,13 @@ namespace Node.Net
 			}
 			foreach (var value in source)
 			{
-				var childDictionary = value as IDictionary;
-				if (childDictionary != null)
+				if (value is IDictionary childDictionary)
 				{
 					copy.Add(childDictionary.ConvertTypes(types, defaultType, typeKey));
 				}
 				else
 				{
-					var childEnumerable = value as IEnumerable;
-					if (childEnumerable != null && !(childEnumerable is string))
+					if (value is IEnumerable childEnumerable && !(childEnumerable is string))
 					{
 						copy.Add(ConvertTypes(childEnumerable, types, defaultType));
 					}

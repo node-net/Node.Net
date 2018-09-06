@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Node.Net.Internal
 {
-	internal class SignatureReader : IDisposable
+	internal sealed class SignatureReader : IDisposable
 	{
 		private SignatureReader()
 		{
@@ -41,13 +41,10 @@ namespace Node.Net.Internal
 
 		private void Dispose(bool disposing)
 		{
-			if (disposing)
+			if (disposing && memoryStream != null)
 			{
-				if (memoryStream != null)
-				{
-					memoryStream.Dispose();
-					memoryStream = null;
-				}
+				memoryStream.Dispose();
+				memoryStream = null;
 			}
 		}
 
@@ -84,7 +81,6 @@ namespace Node.Net.Internal
 			}
 
 			var bytes = new List<byte>();
-			var textSignature = new StringBuilder();
 			var ibyte = stream.ReadByte();
 			while (ibyte > -1)
 			{

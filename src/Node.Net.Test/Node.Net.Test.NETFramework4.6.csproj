@@ -63,7 +63,6 @@
     <Compile Include="Extension\Point.Extension.Test.cs" />
     <Compile Include="Extension\String.Extension.Test.cs" />
     <Compile Include="Factory.Test.cs" />
-    <Compile Include="JSONReader.Test.cs" />
     <Compile Include="JsonRPC\Responder.Test.cs" />
     <Compile Include="JsonRPC\Server.Test.cs" />
     <Compile Include="Reader.Test.cs" />

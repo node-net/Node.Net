@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
@@ -20,11 +16,12 @@ namespace Node.Net
 			}
 			return data;
 		}
+
 		public static void SetPersistentData(this SerializationInfo info, IDictionary data)
 		{
 			foreach (string key in data.Keys)
 			{
-				info.AddValue(key,data[key]);
+				info.AddValue(key, data[key]);
 			}
 		}
 	}

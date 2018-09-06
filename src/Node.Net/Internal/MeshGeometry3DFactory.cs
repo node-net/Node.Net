@@ -9,19 +9,13 @@ namespace Node.Net.Internal
 	{
 		public object Create(Type targetType, object source)
 		{
-			if (source != null)
+			if (source != null && source is IDictionary)
 			{
-				if (source is IDictionary)
-				{
-					return CreateFromDictionary(source as IDictionary);
-				}
+				return CreateFromDictionary(source as IDictionary);
 			}
-			if (ParentFactory != null)
+			if (ParentFactory != null && source != null)
 			{
-				if (source != null)
-				{
-					return Create(targetType, ParentFactory.Create<IDictionary>(source));
-				}
+				return Create(targetType, ParentFactory.Create<IDictionary>(source));
 			}
 			return null;
 		}
@@ -32,21 +26,18 @@ namespace Node.Net.Internal
 
 		private MeshGeometry3D CreateFromDictionary(IDictionary source)
 		{
-			if (ParentFactory != null)
+			if (ParentFactory != null && source != null)
 			{
-				if (source != null)
+				var type = source.Get<string>("Type");
+				var name = $"MeshGeometry3D.{type}.xaml";
+				if (cache.ContainsKey(name))
 				{
-					var type = source.Get<string>("Type");
-					var name = $"MeshGeometry3D.{type}.xaml";
-					if (cache.ContainsKey(name))
-					{
-						return cache[name];
-					}
-
-					var mesh = ParentFactory.Create<MeshGeometry3D>(name);
-					cache.Add(name, mesh);
-					return mesh;
+					return cache[name];
 				}
+
+				var mesh = ParentFactory.Create<MeshGeometry3D>(name);
+				cache.Add(name, mesh);
+				return mesh;
 			}
 
 			return null;

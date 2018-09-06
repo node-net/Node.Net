@@ -34,25 +34,21 @@ namespace Node.Net
 					}
 					catch (Exception exception)
 					{
-						throw new Exception($"filename:{filename}", exception);
+						throw new InvalidOperationException($"filename:{filename}", exception);
 					}
 				}
 			}
 			if (fullName.Length == 0)
 			{
 				var dictionary = instance as IDictionary;
-				var parent = dictionary.GetParent() as IDictionary;
-				if (parent != null)
+				if (dictionary.GetParent() is IDictionary parent)
 				{
 					foreach (string key in parent.Keys)
 					{
 						var test_element = parent.Get<IDictionary>(key);
-						if (test_element != null)
+						if (test_element != null && object.ReferenceEquals(test_element, dictionary))
 						{
-							if (object.ReferenceEquals(test_element, dictionary))
-							{
-								return key;
-							}
+							return key;
 						}
 					}
 				}
@@ -92,7 +88,11 @@ namespace Node.Net
 		/// <param name="parent"></param>
 		public static void SetParent(this object instance, object parent)
 		{
-			if (instance is null) return;
+			if (instance is null)
+			{
+				return;
+			}
+
 			if (instance.HasPropertyValue("Parent"))
 			{
 				instance.SetPropertyValue("Parent", parent);
@@ -100,12 +100,17 @@ namespace Node.Net
 			else
 			{
 				var metaData = Internal.MetaData.Default.GetMetaData(instance);
-				if(metaData != null)
+				if (metaData != null)
 				{
-					if (metaData.Contains("Parent")) metaData["Parent"] = parent;
-					else metaData.Add("Parent", parent);
+					if (metaData.Contains("Parent"))
+					{
+						metaData["Parent"] = parent;
+					}
+					else
+					{
+						metaData.Add("Parent", parent);
+					}
 				}
-				//Internal.MetaData.Default.GetMetaData(instance)["Parent"] = parent;
 			}
 		}
 
@@ -235,7 +240,7 @@ namespace Node.Net
 
 		public static void SetMetaData(this object instance, string name, object value)
 		{
-			var idictionary = Internal.MetaData.Default.GetMetaData(instance)[name] = value;
+			Internal.MetaData.Default.GetMetaData(instance)[name] = value;
 		}
 
 		public static T GetMetaData<T>(this object instance, string name)

@@ -39,7 +39,11 @@ namespace Node.Net.Internal
 
 		public IDictionary GetMetaData(object item)
 		{
-			if (item is null) return null;
+			if (item is null)
+			{
+				return null;
+			}
+
 			if (data.ContainsKey(new WeakReference(item)))
 			{
 				return data[new WeakReference(item)];
@@ -130,7 +134,6 @@ namespace Node.Net.Internal
 			foreach (var deadKey in deadKeys)
 			{
 				data.Remove(deadKey);
-				//data.Remove(new WeakReference(deadKey.Target));
 			}
 		}
 
@@ -143,7 +146,11 @@ namespace Node.Net.Internal
 		{
 			if (x is null)
 			{
-				if (y is null) return true;
+				if (y is null)
+				{
+					return true;
+				}
+
 				return false;
 			}
 

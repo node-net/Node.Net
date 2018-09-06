@@ -27,18 +27,17 @@ namespace Node.Net
 			Clear();
 		}
 
-		//public static Reader Default { get; } = new Reader();
-		public object Read(Stream original_stream)
+		public object Read(Stream stream)
 		{
-			using (var signatureReader = new Internal.SignatureReader(original_stream))
+			using (var signatureReader = new Internal.SignatureReader(stream))
 			{
-				var stream = signatureReader.Stream;
+				var stream2 = signatureReader.Stream;
 				var signature = signatureReader.Signature;
 				foreach (string signature_key in Keys)
 				{
 					if (signature.IndexOf(signature_key) == 0)
 					{
-						return this[signature_key](stream);
+						return this[signature_key](stream2);
 					}
 				}
 				throw new UnrecognizedSignatureException($"unrecognized signature '{signature.Substring(0, 24)}'");
@@ -87,13 +86,6 @@ namespace Node.Net
 						return item;
 					}
 				}
-				/*
-				if (signature_string.Contains("http://schemas.microsoft.com/winfx/2006/xaml/presentation"))
-				{
-					var item = System.Windows.Markup.XamlReader.Load(stream);
-					item.SetFileName(filename);
-					return item;
-				}*/
 				if (signature_string.IndexOf("<") == 0)
 				{
 					var xdoc = new System.Xml.XmlDocument();
@@ -108,8 +100,7 @@ namespace Node.Net
 		public object ReadJSON(Stream stream)
 		{
 			var i = jsonReader.Read(stream);
-			var dictionary = i as IDictionary;
-			if (dictionary != null)
+			if (i is IDictionary dictionary)
 			{
 				dictionary.DeepUpdateParents();
 			}
@@ -137,7 +128,7 @@ namespace Node.Net
 			set { jsonReader.ConversionTypeNames = value; }
 		}
 
-		private Internal.JSONReader jsonReader = new Internal.JSONReader();
+		private Internal.JsonReader jsonReader = new Internal.JsonReader();
 
 		public object Open(string name)
 		{

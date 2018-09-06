@@ -10,7 +10,6 @@ namespace Node.Net
 {
 	public sealed class Factory : IFactory
 	{
-		//public static Factory Default { get; } = new Factory();
 		public Factory()
 		{
 			ReadFunction = new Reader().Read;
