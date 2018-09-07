@@ -9,7 +9,7 @@ namespace Node.Net.Internal
 	internal sealed class AbstractFactory : Dictionary<Type, Type>, IFactory
 	{
 		public IFactory ParentFactory { get; set; }
-		public Func<Stream, object> ReadFunction { get; set; } = new Internal.JSONReader().Read;
+		public Func<Stream, object> ReadFunction { get; set; } = new Internal.JsonReader().Read;
 		public Dictionary<string, Type> IDictionaryTypes { get; set; } = new Dictionary<string, Type>();
 		public Type DefaultObjectType { get; set; } = typeof(Dictionary<string, dynamic>);
 		public string TypeKey = "Type";
@@ -104,10 +104,9 @@ namespace Node.Net.Internal
 				var instance = ReadFunction(stream);
 				stream.Close();
 
-				var dictionary = instance as IDictionary;
-				if (dictionary != null)
+				if (instance is IDictionary dictionary)
 				{
-					var new_dictionary = IDictionaryExtension.ConvertTypes(dictionary, IDictionaryTypes, DefaultObjectType, TypeKey);
+					var new_dictionary = dictionary.ConvertTypes(IDictionaryTypes, DefaultObjectType, TypeKey);
 					new_dictionary.DeepUpdateParents();
 					if (source != null && (source is string))
 					{

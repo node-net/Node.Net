@@ -72,6 +72,7 @@
     <Compile Include="Extension\Point3D.Extension.cs" />
     <Compile Include="Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Extension\Rect3D.Extension.cs" />
+    <Compile Include="Extension\SerializationInfo.Extension.cs" />
     <Compile Include="Extension\StackTrace.Extension.cs" />
     <Compile Include="Extension\Stream.Extension.cs" />
     <Compile Include="Extension\String.Extension.cs" />
@@ -92,8 +93,8 @@
     <Compile Include="Internal\Factory.cs" />
     <Compile Include="Internal\GeometryModel3DFactory.cs" />
     <Compile Include="Internal\ImageSourceReader.cs" />
-    <Compile Include="Internal\JSONReader.cs" />
-    <Compile Include="Internal\JSONWriter.cs" />
+    <Compile Include="Internal\JsonReader.cs" />
+    <Compile Include="Internal\JsonWriter.cs" />
     <Compile Include="Internal\Length.cs" />
     <Compile Include="Internal\MaterialFactory.cs" />
     <Compile Include="Internal\Matrix3DFactory.cs" />

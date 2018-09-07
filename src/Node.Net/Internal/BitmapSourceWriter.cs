@@ -13,11 +13,9 @@ namespace Node.Net.Internal
 				return;
 			}
 
-			var bitmapSource = value as BitmapSource;
-			if (bitmapSource != null && BitmapEncoder != null)
+			if (value is BitmapSource bitmapSource && BitmapEncoder != null)
 			{
-				var encoder = Activator.CreateInstance(BitmapEncoder.GetType()) as BitmapEncoder;
-				if (encoder != null)
+				if (Activator.CreateInstance(BitmapEncoder.GetType()) is BitmapEncoder encoder)
 				{
 					encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
 					encoder.Save(stream);

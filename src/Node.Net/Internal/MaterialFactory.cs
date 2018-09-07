@@ -18,12 +18,9 @@ namespace Node.Net.Internal
 				return null;
 			}
 
-			if (source != null)
+			if (source != null && source is Brush)
 			{
-				if (source is Brush)
-				{
-					return new DiffuseMaterial(source as Brush);
-				}
+				return new DiffuseMaterial(source as Brush);
 			}
 			if (ParentFactory != null)
 			{

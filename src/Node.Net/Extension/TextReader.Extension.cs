@@ -80,12 +80,9 @@ namespace Node.Net
 					}
 
 					iPeek = reader.Peek();
-					if ((char)iPeek == value)
+					if ((char)iPeek == value && iChar != iBackslash)
 					{
-						if (iChar != iBackslash)
-						{
-							done = true;
-						}
+						done = true;
 					}
 				}
 			}
