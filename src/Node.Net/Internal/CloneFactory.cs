@@ -38,7 +38,7 @@ namespace Node.Net.Internal
 		{
 			if (value is IDictionary)
 			{
-				new JSONWriter().Write(stream, value);
+				new JsonWriter().Write(stream, value);
 			}
 			else
 			{

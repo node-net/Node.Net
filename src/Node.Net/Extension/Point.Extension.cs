@@ -48,8 +48,8 @@ namespace Node.Net
 				double area = 0.0;
 				for (int i = 0; i < points.Length; i++)
 				{
-					var segment_area = (pts[i + 1].X - pts[i].X) *
-						(pts[i + 1].Y + pts[i].Y) / 2;
+					var segment_area = (pts[i + 1].X - pts[i].X)
+						* (pts[i + 1].Y + pts[i].Y) / 2;
 					area += segment_area;
 				}
 
@@ -165,11 +165,8 @@ namespace Node.Net
 
 		public static Point[] Scale(this Point[] points, double scale)
 		{
-			var dims = points.GetDimensions();
 			var scaleTransform = new ScaleTransform(scale, scale);
-
 			var result = new List<Point>();
-			var pointFs = new List<System.Drawing.PointF>();
 			foreach (var point in points)
 			{
 				result.Add(scaleTransform.Transform(point));
@@ -518,8 +515,8 @@ namespace Node.Net
 			for (int i = 0; i < num_points; i++)
 			{
 				second_factor =
-					pts[i].X * pts[i + 1].Y -
-					pts[i + 1].X * pts[i].Y;
+					pts[i].X * pts[i + 1].Y
+					- pts[i + 1].X * pts[i].Y;
 				X += (pts[i].X + pts[i + 1].X) * second_factor;
 				Y += (pts[i].Y + pts[i + 1].Y) * second_factor;
 			}

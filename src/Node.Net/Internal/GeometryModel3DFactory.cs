@@ -39,25 +39,22 @@ namespace Node.Net.Internal
 				return null;
 			}
 
-			if (ParentFactory != null)
+			if (ParentFactory != null && source != null && source.Contains("Type"))
 			{
-				if (source != null && source.Contains("Type"))
+				var type = source["Type"].ToString();
+				if (type.Length > 0)
 				{
-					var type = source["Type"].ToString();
-					if (type.Length > 0)
+					var name = $"GeometryModel3D.{type}.xaml";
+					var geometryModel3D = ParentFactory.Create<GeometryModel3D>(name);
+					if (geometryModel3D != null)
 					{
-						var name = $"GeometryModel3D.{type}.xaml";
-						var geometryModel3D = ParentFactory.Create<GeometryModel3D>(name);
-						if (geometryModel3D != null)
-						{
-							return geometryModel3D;
-						}
+						return geometryModel3D;
+					}
 
-						var mesh = ParentFactory.Create<MeshGeometry3D>(source);
-						if (mesh != null)
-						{
-							return CreateFromMeshGeometry3D(mesh);
-						}
+					var mesh = ParentFactory.Create<MeshGeometry3D>(source);
+					if (mesh != null)
+					{
+						return CreateFromMeshGeometry3D(mesh);
 					}
 				}
 			}
