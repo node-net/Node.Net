@@ -116,6 +116,8 @@
     <Compile Include="JsonRPC\Server.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Reader.cs" />
+    <Compile Include="Service\WebResponder.cs" />
+    <Compile Include="Service\WebServer.cs" />
     <Compile Include="WordReader.cs" />
     <Compile Include="Writer.cs" />
   </ItemGroup>

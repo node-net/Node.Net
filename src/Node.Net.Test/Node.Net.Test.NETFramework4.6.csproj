@@ -69,6 +69,7 @@
     <Compile Include="Resources\Node.Net.xaml.cs">
       <DependentUpon>Node.Net.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Service\WebServer.Test.cs" />
     <Compile Include="WordReader.Test.cs" />
   </ItemGroup>
   <ItemGroup>
