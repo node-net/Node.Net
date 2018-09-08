@@ -31,5 +31,6 @@ namespace Node.Net.JsonRPC
 		{
 			return "hello";
 		}
+		
 	}
 }
