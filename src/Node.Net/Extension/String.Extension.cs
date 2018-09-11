@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,23 @@ namespace Node.Net
 		}
 
 		public static double GetMeters(this string value) => Internal.Length.GetMeters(value);
-
+		public static double GetRawValue(this string value)
+		{
+			try
+			{
+				var words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+				if (words.Length > 0)
+				{
+					var word = words[0].Replace("'","");
+					return Convert.ToDouble(word);
+				}
+				return 0.0;
+			}
+			catch
+			{
+				return 0.0;
+			}
+		}
 		public static Stream GetStream(this string value)
 		{
 			if (File.Exists(value))
