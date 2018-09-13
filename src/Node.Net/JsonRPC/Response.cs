@@ -32,6 +32,30 @@ namespace Node.Net.JsonRPC
 
 		public Response(IDictionary data)
 		{
+			SetData(data);
+		}
+
+		public Response(object result, int id)
+		{
+			Add("jsonrpc", "2.0");
+			Add("result", result);
+			Add("id", id);
+		}
+
+		public Response(Error error, int id)
+		{
+			Add("jsonrpc", "2.0");
+			Add("error", error);
+			Add("id", id);
+		}
+		public Response(Stream stream)
+		{
+			var data = new Reader().Read<IDictionary>(stream);
+			if (data != null) SetData(data);
+		}
+
+		private void SetData(IDictionary data)
+		{
 			this.Add("jsonrpc", "2.0");
 			if (data.Contains("id"))
 			{
@@ -49,21 +73,6 @@ namespace Node.Net.JsonRPC
 				this.Add("error", error);
 			}
 		}
-
-		public Response(object result, int id)
-		{
-			Add("jsonrpc", "2.0");
-			Add("result", result);
-			Add("id", id);
-		}
-
-		public Response(Error error, int id)
-		{
-			Add("jsonrpc", "2.0");
-			Add("error", error);
-			Add("id", id);
-		}
-
 		public object Result
 		{
 			get
