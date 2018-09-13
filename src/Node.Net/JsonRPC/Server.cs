@@ -5,12 +5,30 @@ using System.Net;
 
 namespace Node.Net.JsonRPC
 {
+	internal class StreamResponder
+	{
+		public StreamResponder(Func<Stream,Stream> responder)
+		{
+			_responder = responder;
+		}
+		public Response Respond(Request request)
+		{
+			var responseStream = _responder(request.ToStream());
+			return new Response(responseStream);
+		}
+		private Func<Stream, Stream> _responder;
+	}
 	public sealed class Server : IDisposable
 	{
 		public Server(Func<Request, Response> responder)
 		{
 			_webServer = new Service.WebServer(Service.Protocol.HTTP,5000,ContextAction);
 			_responder = responder;
+		}
+		public Server(Func<Stream,Stream> responder)
+		{
+			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);
+			_responder = new StreamResponder(responder).Respond;
 		}
 
 		~Server()
