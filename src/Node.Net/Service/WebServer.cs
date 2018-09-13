@@ -93,24 +93,55 @@ namespace Node.Net.Service
 
 		private readonly Action<HttpListenerContext> _contextAction;
 		private readonly HttpListener _listener;
-
+		private readonly object _locker = new object();
+		public bool Shutdown
+		{
+			get
+			{
+				lock(_locker)
+				{
+					return _shutdown;
+				}
+			}
+			set
+			{
+				lock(_locker)
+				{
+					_shutdown = value;
+				}
+			}
+		}
+		private bool _shutdown = false;
+		//private int workItemCount = 0;
+		//private EventWaitHandle _eventWaitHandle = new EventWaitHandle(false,EventResetMode.AutoReset);
+		//private EventWaitHandle _clearCount = new EventWaitHandle(false, EventResetMode.AutoReset);
 		public void Start()
 		{
 			_listener.Start();
 			ThreadPool.QueueUserWorkItem((o) =>
 			{
-				while (_listener.IsListening)
+				while (_listener.IsListening && !Shutdown)
 				{
-					ThreadPool.QueueUserWorkItem((c) =>
+					try
 					{
-						_contextAction(c as HttpListenerContext);
-					}, _listener.GetContext());
+						ThreadPool.QueueUserWorkItem(WorkItemCallback, _listener.GetContext());
+					}
+					catch { }
 				}
 			});
+		}
+	
+		public void WorkItemCallback(object context)
+		{
+			_contextAction(context as HttpListenerContext);
+			
 		}
 
 		public void Stop()
 		{
+			Shutdown = true;
+			//Thread.Sleep(500);
+			//_listener.Close();
 			_listener.Stop();
 		}
 		public static int GetNextAvailablePort(int starting_port)
