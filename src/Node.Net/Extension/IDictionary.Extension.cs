@@ -304,6 +304,30 @@ namespace Node.Net
 			}
 		}
 
+		public static IDictionary<string,int> CollectKeys(this IDictionary dictionary)
+		{
+			var results = new Dictionary<string, int>();
+			foreach(string key in dictionary.Keys)
+			{
+				if (key.Length > 0)
+				{
+					if (!results.ContainsKey(key)) results.Add(key, 1);
+					else results[key] = results[key] + 1;
+
+					var subDictionary = dictionary[key] as IDictionary;
+					if (subDictionary != null)
+					{
+						var subKeys = subDictionary.CollectKeys();
+						foreach (var subKey in subKeys.Keys)
+						{
+							if (!results.ContainsKey(key)) results.Add(key, subKeys[subKey]);
+							else results[key] = results[key] + subKeys[subKey];
+						}
+					}
+				}
+			}
+			return results;
+		}
 		public static IList<T> CollectValues<T>(this IDictionary dictionary, string key)
 		{
 			var results = new List<T>();
@@ -327,7 +351,6 @@ namespace Node.Net
 				}
 			}
 		}
-
 		public static IDictionary Copy(this IDictionary dictionary, IDictionary source)
 		{
 			dictionary.Clear();

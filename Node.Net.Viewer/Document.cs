@@ -14,7 +14,7 @@ namespace Node.Net.Viewer
             var reader = new Node.Net.Reader { DefaultDocumentType = typeof(Document) };
             //using (var reader = new Node.Net.Reader { DefaultDocumentType = typeof(Document) })
             //{
-                return reader.Open() as Document;
+                //return reader.Open() as Document;
             //}
         }
         public object SelectedItem
@@ -33,11 +33,11 @@ namespace Node.Net.Viewer
                     treeViewItemsSource = new ObservableCollection<object>();
                     foreach(string key in Keys)
                     {
-                        var element = this[key] as Node.Net.Deprecated.Element;
-                        if(element != null)
-                        {
-                            treeViewItemsSource.Add(new TreeElement { Element = element });
-                        }
+                        //var element = this[key] as Node.Net.Deprecated.Element;
+                        //if(element != null)
+                        //{
+                        //    treeViewItemsSource.Add(new TreeElement { Element = element });
+                        //}
                     }
                 }
                 return treeViewItemsSource;
