@@ -2,25 +2,40 @@
 using System.Collections;
 using System.IO;
 using System.Net;
-using System.Text;
-using System.Threading;
 
 namespace Node.Net.JsonRPC
 {
+	internal class StreamResponder
+	{
+		public StreamResponder(Func<Stream,Stream> responder)
+		{
+			_responder = responder;
+		}
+		public Response Respond(Request request)
+		{
+			var responseStream = _responder(request.ToStream());
+			return new Response(responseStream);
+		}
+		private Func<Stream, Stream> _responder;
+	}
 	public sealed class Server : IDisposable
 	{
-		public Server(Func<Stream, Stream> responder, string prefix)
+		public Server(Func<Request, Response> responder)
 		{
-			_responderFunction = responder;
-			_listener = new HttpListener();
-			_listener.Prefixes.Add(prefix);
+			_webServer = new Service.WebServer(Service.Protocol.HTTP,5000,ContextAction);
+			_responder = responder;
+		}
+		public Server(Func<Stream,Stream> responder)
+		{
+			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);
+			_responder = new StreamResponder(responder).Respond;
 		}
 
 		~Server()
 		{
 			Dispose(false);
 		}
-
+		#region Dispose
 		public void Dispose()
 		{
 			Dispose(true);
@@ -31,80 +46,49 @@ namespace Node.Net.JsonRPC
 		{
 			if (disposing)
 			{
-				_listener.Close();
+				if (_webServer != null)
+				{
+					_webServer.Dispose();
+				}
 			}
 		}
+		#endregion
 
-		private readonly Func<Stream, Stream> _responderFunction;
-		//private readonly Func<Request, Response> _responseFunction;
-		private readonly HttpListener _listener;
-
-		private Request GetRequest(HttpListenerRequest httpRequest)
+		private void ContextAction(HttpListenerContext context)
 		{
-			if (httpRequest.HttpMethod == "POST")
+			try
 			{
-				var data = new Reader().Read<IDictionary>(httpRequest.InputStream);
-				var request = new Request(data);
-				return request;
-			}
-			return new Request("Http.Get", 0);
-		}
-
-		public void Start()
-		{
-			_listener.Start();
-			ThreadPool.QueueUserWorkItem((o) =>
-			{
-				Console.WriteLine("Webserver running...");
+				var request_dictionary = new Internal.JsonReader().Read(context.Request.InputStream) as IDictionary;
+				var request = new Request(request_dictionary);
 				try
 				{
-					while (_listener.IsListening)
+					using (var sw = new StreamWriter(context.Response.OutputStream))
 					{
-						ThreadPool.QueueUserWorkItem((c) =>
-						{
-							var context = c as HttpListenerContext;
-							var id = 0;
-							try
-							{
-								Stream requestStream = null;
-								if (context.Request.HttpMethod == "POST")
-								{
-									requestStream = context.Request.InputStream;
-									var responseStream = _responderFunction(requestStream);
-									using (var sr = new StreamReader(responseStream))
-									{
-										var text = sr.ReadToEnd();
-										byte[] response_bytes = Encoding.UTF8.GetBytes(text);
-										context.Response.ContentLength64 = response_bytes.Length;
-										context.Response.OutputStream.Write(response_bytes, 0, response_bytes.Length);
-									}
-								}
-							}
-							catch (Exception ex)
-							{
-								var response = new Response(new Error(
-									(int)(ErrorCode.InternalError),
-									$"exception of type {ex.GetType().FullName} occurred.",
-									ex.ToString()), id);
-								byte[] response_bytes = response.GetBytes();
-								context.Response.ContentLength64 = response_bytes.Length;
-								context.Response.OutputStream.Write(response_bytes, 0, response_bytes.Length);
-							} // suppress any exceptions
-							finally
-							{
-								// always close the stream
-								context.Response.OutputStream.Close();
-							}
-						}, _listener.GetContext());
+						sw.Write(_responder(request).ToJson());
 					}
 				}
-				catch { } // suppress any exceptions
-			});
+				catch (Exception e)
+				{
+					using (var sw = new StreamWriter(context.Response.OutputStream))
+					{
+						sw.Write(new Response(new Error(-32000, e.ToString()), 0).ToJson());
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				using (var sw = new StreamWriter(context.Response.OutputStream))
+				{
+					sw.Write(new Response(new Error(-32600, e.ToString()), 0).ToJson());
+				}
+			}
 		}
 
-		public void Stop()
-		{
-			_listener.Stop();
-		}
+		private Service.WebServer _webServer;
+		private readonly Func<Request, Response> _responder;
+		public int Port { get { return _webServer.Port; } }
+		public Uri Uri { get { return _webServer.Uri; } }
+		public void Start() { _webServer.Start(); }
+		public void Stop() { _webServer.Stop(); }
 	}
 }

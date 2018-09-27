@@ -8,7 +8,6 @@ namespace Node.Net.Internal
 {
 	internal sealed class ImageSourceReader
 	{
-		//public static ImageSourceReader Default { get; } = new ImageSourceReader();
 		public ImageSourceReader()
 		{
 			readers.Add("png", ReadPng);
@@ -52,7 +51,7 @@ namespace Node.Net.Internal
 						return instance;
 					}
 				}
-				throw new System.Exception($"unrecognized signature '{signature}'");
+				throw new System.InvalidOperationException($"unrecognized signature '{signature}'");
 			}
 		}
 

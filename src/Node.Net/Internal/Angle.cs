@@ -12,8 +12,8 @@ namespace Node.Net.Internal
 			var numberSB = new StringBuilder();
 			foreach (char ch in value)
 			{
-				if (unitsSB.Length < 1 &&
-					(Char.IsDigit(ch) || ch == '.' || ch == 'E' || ch == '+' || ch == 'e' || ch == '-'))
+				if (unitsSB.Length < 1
+					&& (Char.IsDigit(ch) || ch == '.' || ch == 'E' || ch == '+' || ch == 'e' || ch == '-'))
 				{
 					numberSB.Append(ch);
 				}
@@ -23,7 +23,11 @@ namespace Node.Net.Internal
 				}
 			}
 
-			if (numberSB.Length == 0) return 0.0;
+			if (numberSB.Length == 0)
+			{
+				return 0.0;
+			}
+
 			var double_value = Convert.ToDouble(numberSB.ToString());
 			return double_value * GetUnitsConversion(unitsSB.ToString().Trim());
 		}

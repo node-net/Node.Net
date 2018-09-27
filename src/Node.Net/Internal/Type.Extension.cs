@@ -24,13 +24,22 @@ namespace Node.Net.Internal
 						typesList.Add(item.GetType());
 					}
 				}
-				if (typesList.Count == parameters.Length) types = typesList.ToArray();
+				if (typesList.Count == parameters.Length)
+				{
+					types = typesList.ToArray();
+				}
 			}
 			var constructor = type.GetConstructor(types);
 			if (constructor != null)
 			{
-				if (parameters == null || parameters.Length == 0 || parameters[0] == null) return constructor.Invoke(null);
-				else return constructor.Invoke(parameters);
+				if (parameters == null || parameters.Length == 0 || parameters[0] == null)
+				{
+					return constructor.Invoke(null);
+				}
+				else
+				{
+					return constructor.Invoke(parameters);
+				}
 			}
 			return null;
 		}

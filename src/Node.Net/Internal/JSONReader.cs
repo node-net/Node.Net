@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Node.Net.Internal
 {
-	public sealed class JSONReader : IDisposable
+	public sealed class JsonReader : IDisposable
 	{
 		public void Dispose()
 		{
@@ -14,7 +14,7 @@ namespace Node.Net.Internal
 			GC.SuppressFinalize(this);
 		}
 
-		~JSONReader()
+		~JsonReader()
 		{
 			Dispose(false);
 		}
@@ -32,15 +32,12 @@ namespace Node.Net.Internal
 			}
 		}
 
-		private Type defaultArrayType = typeof(List<dynamic>);
-		private Type defaultObjectType = typeof(Dictionary<string, dynamic>);
-		private Type defaultDocumentType = typeof(Dictionary<string, dynamic>);
 		public Func<IDictionary> CreateDefaultObject { get; set; } = null;
 		public Dictionary<string, Type> ConversionTypeNames { get; set; } = new Dictionary<string, Type>();
 		public int ObjectCount { get; set; }
-		public Type DefaultObjectType { get => defaultObjectType; set => defaultObjectType = value; }
-		public Type DefaultDocumentType { get => defaultDocumentType; set => defaultDocumentType = value; }
-		public Type DefaultArrayType { get => defaultArrayType; set => defaultArrayType = value; }
+		public Type DefaultObjectType { get; set; } = typeof(Dictionary<string, dynamic>);
+		public Type DefaultDocumentType { get; set; } = typeof(Dictionary<string, dynamic>);
+		public Type DefaultArrayType { get; set; } = typeof(List<dynamic>);
 
 		public object Read(Stream stream)
 		{
@@ -68,7 +65,11 @@ namespace Node.Net.Internal
 			char singleQuote = '\'';
 			reader.EatWhiteSpace();
 			var ichar = reader.Peek();
-			if (ichar < 0) throw new InvalidDataException(@"end of stream reached");
+			if (ichar < 0)
+			{
+				throw new InvalidDataException(@"end of stream reached");
+			}
+
 			var c = (char)ichar;
 			// char type
 			//  'n'  null
@@ -77,11 +78,31 @@ namespace Node.Net.Internal
 			//  'f' or 't' bool
 			//  '{' object (hash)
 			//  '[' array
-			if (c == doubleQuote || c == singleQuote) return ReadString(reader);
-			if (c == objectOpenCharacter) return ReadObject(reader);
-			if (c == arrayOpenCharacter) return ReadArray(reader);
-			if (c == 'f' || c == 't') return ReadBool(reader);
-			if (c == 'n') return ReadNull(reader);
+			if (c == doubleQuote || c == singleQuote)
+			{
+				return ReadString(reader);
+			}
+
+			if (c == objectOpenCharacter)
+			{
+				return ReadObject(reader);
+			}
+
+			if (c == arrayOpenCharacter)
+			{
+				return ReadArray(reader);
+			}
+
+			if (c == 'f' || c == 't')
+			{
+				return ReadBool(reader);
+			}
+
+			if (c == 'n')
+			{
+				return ReadNull(reader);
+			}
+
 			return ReadNumber(reader);
 		}
 
@@ -117,13 +138,21 @@ namespace Node.Net.Internal
 			if (nstr.Contains(@"."))
 			{
 				var value = Convert.ToDouble(nstr);
-				if (value <= Single.MaxValue) return Convert.ToSingle(nstr);
+				if (value <= Single.MaxValue)
+				{
+					return Convert.ToSingle(nstr);
+				}
+
 				return value;
 			}
 			else
 			{
 				var value = Convert.ToInt64(nstr);
-				if (value <= Int32.MaxValue) return Convert.ToInt32(nstr);
+				if (value <= Int32.MaxValue)
+				{
+					return Convert.ToInt32(nstr);
+				}
+
 				return value;
 			}
 		}
@@ -144,7 +173,6 @@ namespace Node.Net.Internal
 		{
 			var list = Activator.CreateInstance(DefaultArrayType) as IList;
 			reader.FastSeek('[');
-			//var ch = ' ';
 			reader.Read(); // consume the '['
 			reader.EatWhiteSpace();
 			var done = false;
@@ -156,12 +184,9 @@ namespace Node.Net.Internal
 			}
 			else
 			{
-				if (ch != 't' && ch != 'f' && ch != 'n')
+				if (ch != 't' && ch != 'f' && ch != 'n' && Char.IsLetter(ch))
 				{
-					if (Char.IsLetter(ch))
-					{
-						throw new InvalidDataException($"LoadArray char {ch} is not allowed after [");
-					}
+					throw new InvalidDataException($"LoadArray char {ch} is not allowed after [");
 				}
 			}
 
@@ -170,9 +195,11 @@ namespace Node.Net.Internal
 				reader.EatWhiteSpace();
 				list.Add(Read(reader));
 				reader.EatWhiteSpace();
-				//var ichar = reader.Peek();
 				ch = (char)reader.Peek();
-				if (ch == ',') reader.Read(); // consume ','
+				if (ch == ',')
+				{
+					reader.Read(); // consume ','
+				}
 
 				reader.EatWhiteSpace();
 				ch = (char)reader.Peek();
@@ -193,7 +220,11 @@ namespace Node.Net.Internal
 			IDictionary dictionary = null;
 			if (ObjectCount == 0)
 			{
-				if (DefaultDocumentType == null) throw new InvalidOperationException("DefaultDocumentType is null");
+				if (DefaultDocumentType == null)
+				{
+					throw new InvalidOperationException("DefaultDocumentType is null");
+				}
+
 				dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
 				if (dictionary == null)
 				{
@@ -209,7 +240,11 @@ namespace Node.Net.Internal
 				}
 				else
 				{
-					if (DefaultObjectType == null) throw new InvalidOperationException("DefaultObjectType is null");
+					if (DefaultObjectType == null)
+					{
+						throw new InvalidOperationException("DefaultObjectType is null");
+					}
+
 					dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
 					if (dictionary == null)
 					{
@@ -219,7 +254,7 @@ namespace Node.Net.Internal
 			}
 
 			ObjectCount++;
-			reader.FastSeek(objectOpenCharacter);// '{');
+			reader.FastSeek(objectOpenCharacter);
 			reader.Read(); // consume the '{'
 			reader.EatWhiteSpace();
 			var done = false;
@@ -232,14 +267,15 @@ namespace Node.Net.Internal
 			{
 				reader.EatWhiteSpace();
 				var key = ReadString(reader) as string;
-				//var lastKey = key;
 				reader.EatWhiteSpace();
-				//var ch = (char)reader.Peek();
 				reader.Read(); //consume ':'
 				dictionary[key] = Read(reader);
 				reader.EatWhiteSpace();
 				var ch = (char)reader.Peek();
-				if (ch == comma) reader.Read(); // consume ','
+				if (ch == comma)
+				{
+					reader.Read(); // consume ','
+				}
 
 				reader.EatWhiteSpace();
 				ch = (char)reader.Peek();
@@ -251,24 +287,20 @@ namespace Node.Net.Internal
 			}
 
 			var type = dictionary.Get<string>("Type", "");
-			if (type.Length > 0 && ConversionTypeNames.ContainsKey(type))
+			if (type.Length > 0 && ConversionTypeNames.ContainsKey(type) && !ConversionTypeNames[type].IsInstanceOfType(dictionary))
 			{
-				if (!ConversionTypeNames[type].IsInstanceOfType(dictionary))
+				if (!(Activator.CreateInstance(ConversionTypeNames[type]) is IDictionary converted))
 				{
-					var converted = Activator.CreateInstance(ConversionTypeNames[type]) as IDictionary;
-					if (converted == null)
-					{
-						throw new InvalidOperationException($"Unable to create instance of {ConversionTypeNames[type].FullName}");
-					}
-					foreach (var key in dictionary.Keys)
-					{
-						if (!converted.Contains(key))
-						{
-							converted.Add(key, dictionary[key]);
-						}
-					}
-					return converted;
+					throw new InvalidOperationException($"Unable to create instance of {ConversionTypeNames[type].FullName}");
 				}
+				foreach (var key in dictionary.Keys)
+				{
+					if (!converted.Contains(key))
+					{
+						converted.Add(key, dictionary[key]);
+					}
+				}
+				return converted;
 			}
 			return dictionary;
 		}

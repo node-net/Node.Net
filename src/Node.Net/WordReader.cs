@@ -84,7 +84,10 @@ namespace Node.Net
 					var wordsB = new System.Collections.Generic.List<string>();
 					foreach (string w in wordsA)
 					{
-						if (w.Length > 0) wordsB.Add(w);
+						if (w.Length > 0)
+						{
+							wordsB.Add(w);
+						}
 					}
 					var words = wordsB.ToArray();
 

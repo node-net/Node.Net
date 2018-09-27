@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Node.Net.JsonRPC
 {
@@ -40,17 +41,33 @@ namespace Node.Net.JsonRPC
 
 		public Request(IDictionary data)
 		{
+			SetData(data);
+		}
+		public Request(Stream stream)
+		{
+			var data = new Reader().Read(stream) as IDictionary;
+			SetData(data);
+		}
+		private void SetData(IDictionary data)
+		{
 			this.Add("jsonrpc", "2.0");
 			var random = new Random();
 			this.Add("id", random.Next(100000, 200000));
 
-			if (data.Contains("id")) this["id"] = data["id"];
-			if (data.Contains("method")) this.Add("method", data["method"]);
+			if (data.Contains("id"))
+			{
+				this["id"] = data["id"];
+			}
+
+			if (data.Contains("method"))
+			{
+				this.Add("method", data["method"]);
+			}
+
 			if (data.Contains("params"))
 			{
 				this.Add("params", data["params"]);
-				var idictionary = data["params"] as IDictionary;
-				if (idictionary != null)
+				if (data["params"] is IDictionary idictionary)
 				{
 					foreach (var key in idictionary.Keys)
 					{
@@ -59,7 +76,6 @@ namespace Node.Net.JsonRPC
 				}
 			}
 		}
-
 		public string Method { get { return this.Get<string>("method"); } }
 		public Dictionary<string, object> Parameters { get { return parameters; } }
 		private readonly Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -86,6 +102,10 @@ namespace Node.Net.JsonRPC
 		public override string ToString()
 		{
 			return ToJson();
+		}
+		public Stream ToStream()
+		{
+			return new MemoryStream(Encoding.UTF8.GetBytes(ToJson()));
 		}
 	}
 }

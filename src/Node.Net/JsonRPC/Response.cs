@@ -12,8 +12,16 @@ namespace Node.Net.JsonRPC
 			using (var memory = new MemoryStream(data))
 			{
 				var dictionary = new Reader().Read<IDictionary>(memory);
-				if (dictionary.Contains("id")) this.Add("id", dictionary["id"]);
-				if (dictionary.Contains("result")) this.Add("result", dictionary["result"]);
+				if (dictionary.Contains("id"))
+				{
+					this.Add("id", dictionary["id"]);
+				}
+
+				if (dictionary.Contains("result"))
+				{
+					this.Add("result", dictionary["result"]);
+				}
+
 				if (dictionary.Contains("error"))
 				{
 					var error = new Error(dictionary["error"] as IDictionary);
@@ -24,14 +32,7 @@ namespace Node.Net.JsonRPC
 
 		public Response(IDictionary data)
 		{
-			this.Add("jsonrpc", "2.0");
-			if (data.Contains("id")) this.Add("id", data["id"]);
-			if (data.Contains("result")) this.Add("result", data["result"]);
-			if (data.Contains("error"))
-			{
-				var error = new Error(data["error"] as IDictionary);
-				this.Add("error", error);
-			}
+			SetData(data);
 		}
 
 		public Response(object result, int id)
@@ -47,7 +48,31 @@ namespace Node.Net.JsonRPC
 			Add("error", error);
 			Add("id", id);
 		}
+		public Response(Stream stream)
+		{
+			var data = new Reader().Read<IDictionary>(stream);
+			if (data != null) SetData(data);
+		}
 
+		private void SetData(IDictionary data)
+		{
+			this.Add("jsonrpc", "2.0");
+			if (data.Contains("id"))
+			{
+				this.Add("id", data["id"]);
+			}
+
+			if (data.Contains("result"))
+			{
+				this.Add("result", data["result"]);
+			}
+
+			if (data.Contains("error"))
+			{
+				var error = new Error(data["error"] as IDictionary);
+				this.Add("error", error);
+			}
+		}
 		public object Result
 		{
 			get

@@ -29,12 +29,21 @@ namespace Node.Net.Internal
 		/// <returns></returns>
 		public bool HasMetaData(object item)
 		{
-			if (data.ContainsKey(new WeakReference(item))) return true;
+			if (data.ContainsKey(new WeakReference(item)))
+			{
+				return true;
+			}
+
 			return false;
 		}
 
 		public IDictionary GetMetaData(object item)
 		{
+			if (item is null)
+			{
+				return null;
+			}
+
 			if (data.ContainsKey(new WeakReference(item)))
 			{
 				return data[new WeakReference(item)];
@@ -63,9 +72,17 @@ namespace Node.Net.Internal
 		/// <returns></returns>
 		public object GetMetaData(object item, string name)
 		{
-			if (item == null) return null;
+			if (item == null)
+			{
+				return null;
+			}
+
 			var metaData = GetMetaData(item);
-			if (metaData.Contains(name)) return metaData[name];
+			if (metaData.Contains(name))
+			{
+				return metaData[name];
+			}
+
 			return null;
 		}
 
@@ -83,7 +100,11 @@ namespace Node.Net.Internal
 			{
 				return (T)instance;
 			}
-			if (typeof(T) == typeof(string)) return (T)(object)"";
+			if (typeof(T) == typeof(string))
+			{
+				return (T)(object)"";
+			}
+
 			return default(T);
 		}
 
@@ -105,11 +126,14 @@ namespace Node.Net.Internal
 			var deadKeys = new List<WeakReference>();
 			foreach (var wr in data.Keys)
 			{
-				if (!wr.IsAlive) deadKeys.Add(wr);
+				if (!wr.IsAlive)
+				{
+					deadKeys.Add(wr);
+				}
 			}
 			foreach (var deadKey in deadKeys)
 			{
-				data.Remove(new WeakReference(deadKey.Target));
+				data.Remove(deadKey);
 			}
 		}
 
@@ -120,17 +144,41 @@ namespace Node.Net.Internal
 	{
 		public bool Equals(WeakReference x, WeakReference y)
 		{
-			if (x == null)
-				throw new ArgumentNullException(nameof(x));
-			if (y is null) return false;
-			if (x.Target is null && y.Target is null) return true;
-			if (x.Target is null) return false;
+			if (x is null)
+			{
+				if (y is null)
+				{
+					return true;
+				}
+
+				return false;
+			}
+
+			if (y is null)
+			{
+				return false;
+			}
+
+			if (x.Target is null && y.Target is null)
+			{
+				return true;
+			}
+
+			if (x.Target is null)
+			{
+				return false;
+			}
+
 			return x.Target.Equals(y.Target);
 		}
 
 		public int GetHashCode(WeakReference obj)
 		{
-			if (obj.Target == null) return 0;
+			if (obj.Target == null)
+			{
+				return 0;
+			}
+
 			return obj.Target.GetHashCode();
 		}
 	}

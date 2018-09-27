@@ -8,12 +8,14 @@ namespace Node.Net.Internal
 	{
 		public void Write(Stream stream, object value)
 		{
-			if (value == null) return;
-			var bitmapSource = value as BitmapSource;
-			if (bitmapSource != null && BitmapEncoder != null)
+			if (value == null)
 			{
-				var encoder = Activator.CreateInstance(BitmapEncoder.GetType()) as BitmapEncoder;
-				if (encoder != null)
+				return;
+			}
+
+			if (value is BitmapSource bitmapSource && BitmapEncoder != null)
+			{
+				if (Activator.CreateInstance(BitmapEncoder.GetType()) is BitmapEncoder encoder)
 				{
 					encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
 					encoder.Save(stream);

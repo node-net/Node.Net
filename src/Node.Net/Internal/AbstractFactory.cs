@@ -9,7 +9,7 @@ namespace Node.Net.Internal
 	internal sealed class AbstractFactory : Dictionary<Type, Type>, IFactory
 	{
 		public IFactory ParentFactory { get; set; }
-		public Func<Stream, object> ReadFunction { get; set; } = new Internal.JSONReader().Read;
+		public Func<Stream, object> ReadFunction { get; set; } = new Internal.JsonReader().Read;
 		public Dictionary<string, Type> IDictionaryTypes { get; set; } = new Dictionary<string, Type>();
 		public Type DefaultObjectType { get; set; } = typeof(Dictionary<string, dynamic>);
 		public string TypeKey = "Type";
@@ -19,12 +19,18 @@ namespace Node.Net.Internal
 
 		public object Create(Type targetType, object source)
 		{
-			if (targetType == null) return null;
+			if (targetType == null)
+			{
+				return null;
+			}
 
 			if (source != null && Resources.Contains(source.ToString()))
 			{
 				var result = Resources[source.ToString()];
-				if (result != null && targetType.IsInstanceOfType(result)) return result;
+				if (result != null && targetType.IsInstanceOfType(result))
+				{
+					return result;
+				}
 			}
 			else
 			{
@@ -53,11 +59,18 @@ namespace Node.Net.Internal
 				}
 			}
 			var instance = targetType.Construct(source);
-			if (instance != null) return instance;
+			if (instance != null)
+			{
+				return instance;
+			}
 
 			instance = ResourceFactory.Create(targetType, source);
 
-			if (instance == null) instance = CloneFactory.Create(targetType, source);
+			if (instance == null)
+			{
+				instance = CloneFactory.Create(targetType, source);
+			}
+
 			return instance;
 		}
 
@@ -81,29 +94,45 @@ namespace Node.Net.Internal
 
 		private object CreateFromStream(Type target_type, Stream stream, object source)
 		{
-			if (stream == null) return null;
+			if (stream == null)
+			{
+				return null;
+			}
+
 			if (ReadFunction != null)
 			{
 				var instance = ReadFunction(stream);
 				stream.Close();
 
-				var dictionary = instance as IDictionary;
-				if (dictionary != null)
+				if (instance is IDictionary dictionary)
 				{
-					var new_dictionary = IDictionaryExtension.ConvertTypes(dictionary, IDictionaryTypes, DefaultObjectType, TypeKey);
+					var new_dictionary = dictionary.ConvertTypes(IDictionaryTypes, DefaultObjectType, TypeKey);
 					new_dictionary.DeepUpdateParents();
 					if (source != null && (source is string))
 					{
 						string filename = stream.GetFileName();
-						if (filename.Length > 0) new_dictionary.SetFileName(filename);
-						else new_dictionary.SetFileName(source.ToString());
+						if (filename.Length > 0)
+						{
+							new_dictionary.SetFileName(filename);
+						}
+						else
+						{
+							new_dictionary.SetFileName(source.ToString());
+						}
 					}
 					instance = new_dictionary;
 				}
 				if (instance != null)
 				{
-					if (target_type.IsInstanceOfType(instance)) return instance;
-					if (ParentFactory != null) return ParentFactory.Create(target_type, instance);
+					if (target_type.IsInstanceOfType(instance))
+					{
+						return instance;
+					}
+
+					if (ParentFactory != null)
+					{
+						return ParentFactory.Create(target_type, instance);
+					}
 				}
 			}
 			return null;
