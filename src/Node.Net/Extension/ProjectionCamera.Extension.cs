@@ -73,8 +73,7 @@ namespace Node.Net
 			var center = bounds.Location + (diagonal * 0.5);
 			double radius = diagonal.Length * 0.5;
 
-			var perspectiveCamera = camera as PerspectiveCamera;
-			if (perspectiveCamera != null)
+			if (camera is PerspectiveCamera perspectiveCamera)
 			{
 				double disth = radius / Math.Tan(0.5 * perspectiveCamera.FieldOfView * Math.PI / 180);
 				double vfov = perspectiveCamera.GetVerticalFieldOfView(width, height);
@@ -85,8 +84,7 @@ namespace Node.Net
 				dir.Normalize();
 				perspectiveCamera.LookAt(center, dir * dist);
 			}
-			var orthographicCamera = camera as OrthographicCamera;
-			if (orthographicCamera != null)
+			if (camera is OrthographicCamera orthographicCamera)
 			{
 				double newWidth = radius * 2;
 				if (width > height)
@@ -106,15 +104,13 @@ namespace Node.Net
 		{
 			if (camera != null)
 			{
-				var perspectiveCamera = camera as PerspectiveCamera;
-				if (perspectiveCamera != null)
+				if (camera is PerspectiveCamera perspectiveCamera)
 				{
 					var scaledLookDir = center - camera.Position;
 					scaledLookDir *= factor;
 					camera.LookAt(center, scaledLookDir);
 				}
-				var orthographicCamera = camera as OrthographicCamera;
-				if (orthographicCamera != null)
+				if (camera is OrthographicCamera orthographicCamera)
 				{
 					orthographicCamera.Width = orthographicCamera.Width * factor;
 				}
@@ -123,10 +119,16 @@ namespace Node.Net
 
 		public static ProjectionCamera GetTransformedCamera(this ProjectionCamera camera, Transform3D transform)
 		{
-			var perspectiveCamera = camera as PerspectiveCamera;
-			if (perspectiveCamera != null) return perspectiveCamera.GetTransformedPerspectiveCamera(transform);
-			var orthographicCamera = camera as OrthographicCamera;
-			if (orthographicCamera != null) return orthographicCamera.GetTransformedCamera(transform);
+			if (camera is PerspectiveCamera perspectiveCamera)
+			{
+				return perspectiveCamera.GetTransformedPerspectiveCamera(transform);
+			}
+
+			if (camera is OrthographicCamera orthographicCamera)
+			{
+				return orthographicCamera.GetTransformedCamera(transform);
+			}
+
 			return camera;
 		}
 	}

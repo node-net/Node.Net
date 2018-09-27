@@ -16,9 +16,20 @@ namespace Node.Net.JsonRPC
 	{
 		public Error(IDictionary data)
 		{
-			if (data.Contains("code")) this.Add("code", data["code"]);
-			if (data.Contains("message")) this.Add("message", data["message"]);
-			if (data.Contains("data")) this.Add("data", data["data"]);
+			if (data.Contains("code"))
+			{
+				this.Add("code", data["code"]);
+			}
+
+			if (data.Contains("message"))
+			{
+				this.Add("message", data["message"]);
+			}
+
+			if (data.Contains("data"))
+			{
+				this.Add("data", data["data"]);
+			}
 		}
 
 		public Error(int code, string message)

@@ -34,22 +34,21 @@ namespace Node.Net
 					}
 					catch (Exception exception)
 					{
-						throw new Exception($"filename:{filename}", exception);
+						throw new InvalidOperationException($"filename:{filename}", exception);
 					}
 				}
 			}
 			if (fullName.Length == 0)
 			{
 				var dictionary = instance as IDictionary;
-				var parent = dictionary.GetParent() as IDictionary;
-				if (parent != null)
+				if (dictionary.GetParent() is IDictionary parent)
 				{
 					foreach (string key in parent.Keys)
 					{
 						var test_element = parent.Get<IDictionary>(key);
-						if (test_element != null)
+						if (test_element != null && object.ReferenceEquals(test_element, dictionary))
 						{
-							if (object.ReferenceEquals(test_element, dictionary)) return key;
+							return key;
 						}
 					}
 				}
@@ -89,14 +88,29 @@ namespace Node.Net
 		/// <param name="parent"></param>
 		public static void SetParent(this object instance, object parent)
 		{
+			if (instance is null)
+			{
+				return;
+			}
+
 			if (instance.HasPropertyValue("Parent"))
 			{
 				instance.SetPropertyValue("Parent", parent);
 			}
 			else
 			{
-				Internal.MetaData.Default.GetMetaData(instance)["Parent"] = parent;
-				//Internal.MetaData.Default.SetMetaData(instance, "Parent", parent);
+				var metaData = Internal.MetaData.Default.GetMetaData(instance);
+				if (metaData != null)
+				{
+					if (metaData.Contains("Parent"))
+					{
+						metaData["Parent"] = parent;
+					}
+					else
+					{
+						metaData.Add("Parent", parent);
+					}
+				}
 			}
 		}
 
@@ -187,15 +201,17 @@ namespace Node.Net
 		{
 			return Internal.MetaData.Default.GetMetaData<string>(instance, "FileName");
 		}
+
 		public static string GetShortFileName(this object instance)
 		{
 			var filename = instance.GetFileName();
-			if(filename.Length > 0)
+			if (filename.Length > 0)
 			{
 				return new FileInfo(filename).Name;
 			}
 			return string.Empty;
 		}
+
 		/// <summary>
 		/// Set the FileName of an Object
 		/// </summary>
@@ -214,13 +230,17 @@ namespace Node.Net
 		public static string GetFullName(this object instance)
 		{
 			var metaData = Internal.MetaData.Default.GetMetaData(instance);
-			if (metaData != null && metaData.Contains("FullName")) return metaData["FullName"].ToString();
+			if (metaData != null && metaData.Contains("FullName"))
+			{
+				return metaData["FullName"].ToString();
+			}
+
 			return string.Empty;
 		}
 
 		public static void SetMetaData(this object instance, string name, object value)
 		{
-			var idictionary = Internal.MetaData.Default.GetMetaData(instance)[name] = value;
+			Internal.MetaData.Default.GetMetaData(instance)[name] = value;
 		}
 
 		public static T GetMetaData<T>(this object instance, string name)

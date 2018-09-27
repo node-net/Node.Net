@@ -13,17 +13,23 @@ namespace Node.Net
 			{
 				if (value != null)
 				{
-					if (value is bool || value is double || value is float ||
-						value is int || value is long || value is string)
+					if (value is bool || value is double || value is float
+						|| value is int || value is long || value is string)
 					{
 						hashCode = hashCode ^ value.GetHashCode();
 					}
 					else
 					{
-						if (value is IDictionary) hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
+						if (value is IDictionary)
+						{
+							hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
+						}
 						else
 						{
-							if (value is IEnumerable) hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+							if (value is IEnumerable)
+							{
+								hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+							}
 						}
 					}
 				}
@@ -34,17 +40,31 @@ namespace Node.Net
 		public static IEnumerable Simplify(this IEnumerable list)
 		{
 			var count = GetCount(list);
-			if (count == 0) return list;
+			if (count == 0)
+			{
+				return list;
+			}
+
 			var hasNull = false;
 			var allTypesConvertToDouble = true;
 			var types = new List<Type>();
 			foreach (var item in list)
 			{
-				if (item == null) hasNull = true;
+				if (item == null)
+				{
+					hasNull = true;
+				}
 				else
 				{
-					if (!types.Contains(item.GetType())) types.Add(item.GetType());
-					if (!item.GetType().IsPrimitive) allTypesConvertToDouble = false;
+					if (!types.Contains(item.GetType()))
+					{
+						types.Add(item.GetType());
+					}
+
+					if (!item.GetType().IsPrimitive)
+					{
+						allTypesConvertToDouble = false;
+					}
 				}
 			}
 			if (types.Count == 1 && !hasNull)
@@ -60,8 +80,15 @@ namespace Node.Net
 					var length = 0;
 					foreach (double[] dar in list)
 					{
-						if (length == 0) length = dar.Length;
-						if (length != dar.Length) length = -1;
+						if (length == 0)
+						{
+							length = dar.Length;
+						}
+
+						if (length != dar.Length)
+						{
+							length = -1;
+						}
 					}
 					if (length > -1)
 					{
@@ -97,7 +124,11 @@ namespace Node.Net
 				var i = 0;
 				foreach (var item in source)
 				{
-					if (i == index) return item;
+					if (i == index)
+					{
+						return item;
+					}
+
 					++i;
 				}
 			}
@@ -117,7 +148,11 @@ namespace Node.Net
 
 		public static IEnumerable ConvertTypes(this IEnumerable source, Dictionary<string, Type> types, Type defaultType, string typeKey = "Type")
 		{
-			if (source == null) return null;
+			if (source == null)
+			{
+				return null;
+			}
+
 			IList copy = new List<dynamic>();
 			if (source is IList)
 			{
@@ -129,15 +164,13 @@ namespace Node.Net
 			}
 			foreach (var value in source)
 			{
-				var childDictionary = value as IDictionary;
-				if (childDictionary != null)
+				if (value is IDictionary childDictionary)
 				{
 					copy.Add(childDictionary.ConvertTypes(types, defaultType, typeKey));
 				}
 				else
 				{
-					var childEnumerable = value as IEnumerable;
-					if (childEnumerable != null && !(childEnumerable is string))
+					if (value is IEnumerable childEnumerable && !(childEnumerable is string))
 					{
 						copy.Add(ConvertTypes(childEnumerable, types, defaultType));
 					}

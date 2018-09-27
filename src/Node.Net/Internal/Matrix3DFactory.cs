@@ -10,12 +10,12 @@ namespace Node.Net.Internal
 	{
 		public object Create(Type targetType, object source)
 		{
-			if (source != null)
+			if (source != null && source is IDictionary)
 			{
-				if (source is IDictionary)
+				var matrix = CreateFromIDictionary(source as IDictionary);
+				if (matrix.HasValue)
 				{
-					var matrix = CreateFromIDictionary(source as IDictionary);
-					if (matrix.HasValue) return matrix.Value;
+					return matrix.Value;
 				}
 			}
 
@@ -25,8 +25,8 @@ namespace Node.Net.Internal
 		public static IDictionary GetDictionary(Matrix3D matrix)
 		{
 			var data = new Dictionary<string, dynamic>();
-			var rotationsZXY = Matrix3DExtension.GetRotationsZXY(matrix);
-			var translation = Matrix3DExtension.GetTranslation(matrix);
+			var rotationsZXY = matrix.GetRotationsZXY();
+			var translation = matrix.GetTranslation();
 			data["X"] = $"{translation.X} m";
 			data["Y"] = $"{translation.Y} m";
 			data["Z"] = $"{translation.Z} m";
@@ -64,21 +64,24 @@ namespace Node.Net.Internal
 					log.AppendLine($" IDictionary FullName {dictionary.GetFullName()}");
 					throw new InvalidOperationException($"Matrix3DFactory.CreateFromIDictionary{Environment.NewLine}{log}", e);
 				}
-				//var xDirection = Vector3D.Parse(dictionary.Get<string>("XDirection", "1,0,0"));
-				//var yDirection = Vector3D.Parse(dictionary.Get<string>("YDirection", "0,1,0"));
 				matrix3D = matrix3D.SetDirectionVectorsXY(xDirection, yDirection);
 				matrix3D.Translate(GetTranslation(dictionary));
 				return matrix3D;
 			}
 			matrix3D = RotateXYZ(matrix3D, GetRotationsXYZ(dictionary));
 			matrix3D.Translate(GetTranslation(dictionary));
-			if (!matrix3D.IsIdentity) return matrix3D;
+			if (!matrix3D.IsIdentity)
+			{
+				return matrix3D;
+			}
+
 			return null;
 		}
 
-		private static string RotationXKey = "Spin,RotationX,Roll";
-		public static string RotationYKey = "Tilt,RotationY,Pitch";
-		public static string RotationZKey = "Orientation,RotationZ,Yaw";
+		private static readonly string RotationXKey = "Spin,RotationX,Roll";
+		private static readonly string RotationZKey = "Orientation,RotationZ,Yaw";
+
+		public static string RotationYKey { get; set; } = "Tilt,RotationY,Pitch";
 
 		public static Vector3D GetRotationsXYZ(IDictionary source)
 		{

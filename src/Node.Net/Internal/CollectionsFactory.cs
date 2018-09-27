@@ -8,34 +8,38 @@ namespace Node.Net.Internal
 	{
 		public object Create(Type targetType, object source)
 		{
-			if (source != null)
+			if (source != null && source is string)
 			{
-				if (source is string)
+				var stream = StreamFactory.Create(source.ToString());
+				if (stream != null)
 				{
-					var stream = StreamFactory.Create(source.ToString());
-					if (stream != null)
+					var instance = Create(targetType, stream);
+					if (instance is IDictionary idictionary)
 					{
-						var instance = Create(targetType, stream);
-						var idictionary = instance as IDictionary;
-						if (idictionary != null) idictionary.SetFileName(source.ToString());
-						return instance;
+						idictionary.SetFileName(source.ToString());
 					}
+
+					return instance;
 				}
 			}
 			if (targetType == typeof(IDictionary))
 			{
-				var stream = source as Stream;
-				if (stream != null) return JSONReader.Read(stream) as IDictionary;
+				if (source is Stream stream)
+				{
+					return JSONReader.Read(stream) as IDictionary;
+				}
 			}
 			if (targetType == typeof(IList))
 			{
-				var stream = source as Stream;
-				if (stream != null) return JSONReader.Read(stream) as IList;
+				if (source is Stream stream)
+				{
+					return JSONReader.Read(stream) as IList;
+				}
 			}
 			return null;
 		}
 
 		public StreamFactory StreamFactory { get; set; } = new StreamFactory();
-		private readonly Internal.JSONReader JSONReader = new Internal.JSONReader();
+		private readonly Internal.JsonReader JSONReader = new Internal.JsonReader();
 	}
 }

@@ -9,7 +9,7 @@ namespace Node.Net.Internal
 {
 	internal enum JSONFormat { Compact, Indented };
 
-	internal sealed class JSONWriter : IWrite
+	internal sealed class JsonWriter : IWrite
 	{
 		public JSONFormat Format { get; set; } = JSONFormat.Indented;
 		private int IndentLevel;
@@ -35,11 +35,8 @@ namespace Node.Net.Internal
 			{
 				result = sr.ReadToEnd();
 			}
-			//memory = null;
 			return result;
 		}
-
-		//public static JSONWriter Default { get; } = new JSONWriter();
 
 		private void PushIndent()
 		{
@@ -73,12 +70,30 @@ namespace Node.Net.Internal
 
 		private void Write(System.IO.TextWriter writer, object value)
 		{
-			if (ReferenceEquals(null, value)) WriteNull(writer);
-			else if (value is byte[]) WriteBytes(writer, (byte[])(value));
-			else if (value is string) WriteString(writer, value);
-			else if (value is IDictionary) WriteIDictionary(writer, value);
-			else if (value is double[,]) WriteDoubleArray2D(writer, value);
-			else if (value is IEnumerable) WriteIEnumerable(writer, value);
+			if (ReferenceEquals(null, value))
+			{
+				WriteNull(writer);
+			}
+			else if (value is byte[])
+			{
+				WriteBytes(writer, (byte[])(value));
+			}
+			else if (value is string)
+			{
+				WriteString(writer, value);
+			}
+			else if (value is IDictionary)
+			{
+				WriteIDictionary(writer, value);
+			}
+			else if (value is double[,])
+			{
+				WriteDoubleArray2D(writer, value);
+			}
+			else if (value is IEnumerable)
+			{
+				WriteIEnumerable(writer, value);
+			}
 			else
 			{
 				WriteValueType(writer, value);
@@ -102,15 +117,24 @@ namespace Node.Net.Internal
 			var escaped_value = svalue.Replace("\\", "\\u005c");
 			// Escape '"'
 			escaped_value = escaped_value.Replace("\"", "\\u0022");
-			if (writingPrimitiveValue) writer.Write($"\"{escaped_value}\"");
-			else writer.Write($"{GetIndent()}\"{escaped_value}\"");
+			if (writingPrimitiveValue)
+			{
+				writer.Write($"\"{escaped_value}\"");
+			}
+			else
+			{
+				writer.Write($"{GetIndent()}\"{escaped_value}\"");
+			}
 		}
 
 		private void WriteValueType(System.IO.TextWriter writer, object value)
 		{
 			if (value is bool)
 			{
-				if (writingPrimitiveValue) writer.Write(value.ToString().ToLower());
+				if (writingPrimitiveValue)
+				{
+					writer.Write(value.ToString().ToLower());
+				}
 				else
 				{
 					writer.Write($"{GetIndent()}{value.ToString().ToLower()}");
@@ -118,12 +142,15 @@ namespace Node.Net.Internal
 			}
 			else
 			{
-				if (writingPrimitiveValue) writer.Write(value.ToString());
+				if (writingPrimitiveValue)
+				{
+					writer.Write(value.ToString());
+				}
 				else
 				{
-					if ((value is float) || (value is double) ||
-(value is int) || (value is long) ||
-(value is string))
+					if ((value is float) || (value is double)
+|| (value is int) || (value is long)
+|| (value is string))
 					{
 						writer.Write(value.ToString());
 					}
@@ -152,8 +179,6 @@ namespace Node.Net.Internal
 		private void WriteIEnumerable(System.IO.TextWriter writer, object value)
 		{
 			WritingArray = true;
-			//writer.Write($"{GetIndent()}[{GetLineFeed()}");
-			//writer.Write($"{GetIndent()}[");
 			writer.Write("[");
 			PushIndent();
 			var enumerable = value as System.Collections.IEnumerable;
@@ -161,29 +186,37 @@ namespace Node.Net.Internal
 			foreach (object item in enumerable)
 			{
 				var skip = false;
-				if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
-				if (!skip)
+				if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType()))
 				{
-					if (object.ReferenceEquals(null, item) ||
-					   item.GetType().IsValueType ||
-(value is System.Collections.IEnumerable))
+					skip = true;
+				}
+
+				if (!skip && (object.ReferenceEquals(null, item)
+					   || item.GetType().IsValueType
+|| (value is System.Collections.IEnumerable)))
+				{
+					if (writeCount > 0)
 					{
-						if (writeCount > 0)
+						if (!WritingArray)
 						{
-							if (!WritingArray)
-							{
-								writer.Write($",{GetLineFeed()}{GetIndent()}");
-							}
-							else { writer.Write(","); }
+							writer.Write($",{GetLineFeed()}{GetIndent()}");
 						}
-						Write(writer, item);
-						++writeCount;
+						else { writer.Write(","); }
 					}
+					Write(writer, item);
+					++writeCount;
 				}
 			}
 			PopIndent();
-			if (!WritingArray) writer.Write($"{GetLineFeed()}{GetIndent()}]{GetLineFeed()}");
-			else writer.Write($"]");
+			if (!WritingArray)
+			{
+				writer.Write($"{GetLineFeed()}{GetIndent()}]{GetLineFeed()}");
+			}
+			else
+			{
+				writer.Write($"]");
+			}
+
 			WritingArray = false;
 		}
 
@@ -198,11 +231,18 @@ namespace Node.Net.Internal
 
 			var dictionary = value as System.Collections.IDictionary;
 
-			foreach (object key in dictionary.Keys)
+			var keys = new List<string>();
+			foreach (string key in dictionary.Keys) { keys.Add(key); }
+			//foreach (object key in dictionary.Keys)
+			foreach (string key in keys)
 			{
 				var item = dictionary[key];
 				var skip = false;
-				if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType())) skip = true;
+				if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType()))
+				{
+					skip = true;
+				}
+
 				if (!skip)
 				{
 					if (index > 0)
@@ -235,7 +275,11 @@ namespace Node.Net.Internal
 				}
 			}
 			PopIndent();
-			if (dictionary.Count > 0) writer.Write(GetLineFeed());
+			if (dictionary.Count > 0)
+			{
+				writer.Write(GetLineFeed());
+			}
+
 			writer.Write($"{GetIndent()}}}");
 		}
 	}

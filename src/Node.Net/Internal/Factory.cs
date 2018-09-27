@@ -22,11 +22,6 @@ namespace Node.Net.Internal
 			{
 				{typeof(Stream), StreamFactory.Create },
 				{typeof(IStreamSignature),StreamFactory.Create },
-				//{typeof(IChildren),new ChildrenFactory().Create },
-				//{typeof(ITreeViewItemHeader),new TreeViewItemHeaderFactory().Create },
-				//{typeof(TreeViewItem),new TreeViewItemFactory{ParentFactory = this }.Create },
-				//{typeof(String),new StringFactory().Create },
-				//{typeof(double),new DoubleFactory().Create },
 				{typeof(Color),new ColorFactory().Create },
 				{typeof(Brush),new BrushFactory {ParentFactory=this}.Create },
 				{typeof(Material),new MaterialFactory {ParentFactory=this}.Create },
@@ -34,17 +29,11 @@ namespace Node.Net.Internal
 				{typeof(Transform3D), new Transform3DFactory {ParentFactory = this }.Create },
 				{typeof(MeshGeometry3D),new MeshGeometry3DFactory {ParentFactory=this }.Create },
 				{typeof(GeometryModel3D),new GeometryModel3DFactory {ParentFactory=this }.Create },
-				//{typeof(ISymbol), new SymbolFactory{ParentFactory=this }.Create },
 				{typeof(Model3D),Model3DFactory.Create },
 				{typeof(Visual3D), new Visual3DFactory {ParentFactory = this }.Create },
-				//{typeof(IReadOnlyDocument), CollectionsFactory.Create },
-				//{typeof(Viewport3D), new Viewport3DFactory{ParentFactory = this}.Create },
 				{typeof(object), AbstractFactory.Create }
 			};
 			Resources = new ResourceDictionary();
-
-			//Resources = XamlReader.Load(typeof(Factory).Assembly.GetManifestResourceStream
-			//							("Node.Net.Resources.Factory.Resources.xaml")) as ResourceDictionary;
 		}
 
 		public ResourceDictionary Resources
@@ -116,8 +105,15 @@ namespace Node.Net.Internal
 				var instance = Resources[source];
 				if (targetType.IsInstanceOfType(instance))
 				{
-					if (!InstanceCounts.ContainsKey(targetType)) InstanceCounts.Add(targetType, 1);
-					else InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+					if (!InstanceCounts.ContainsKey(targetType))
+					{
+						InstanceCounts.Add(targetType, 1);
+					}
+					else
+					{
+						InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+					}
+
 					return instance;
 				}
 			}
@@ -129,14 +125,18 @@ namespace Node.Net.Internal
 					var instance = FactoryFunctions[type](targetType, source);
 					if (instance != null)
 					{
-						if (!InstanceCounts.ContainsKey(targetType)) InstanceCounts.Add(targetType, 1);
-						else InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
-						if (source != null && (source is string) && IsResourceType(targetType))
+						if (!InstanceCounts.ContainsKey(targetType))
 						{
-							if (!Resources.Contains(source.ToString()))
-							{
-								Resources.Add(source.ToString(), instance);
-							}
+							InstanceCounts.Add(targetType, 1);
+						}
+						else
+						{
+							InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+						}
+
+						if (source != null && (source is string) && IsResourceType(targetType) && !Resources.Contains(source.ToString()))
+						{
+							Resources.Add(source.ToString(), instance);
 						}
 						return instance;
 					}
@@ -147,8 +147,16 @@ namespace Node.Net.Internal
 
 		public bool IsResourceType(Type type)
 		{
-			if (typeof(Model3D).IsAssignableFrom(type)) return true;
-			if (typeof(MeshGeometry3D).IsAssignableFrom(type)) return true;
+			if (typeof(Model3D).IsAssignableFrom(type))
+			{
+				return true;
+			}
+
+			if (typeof(MeshGeometry3D).IsAssignableFrom(type))
+			{
+				return true;
+			}
+
 			return false;
 		}
 

@@ -10,7 +10,6 @@ namespace Node.Net
 {
 	public sealed class Factory : IFactory
 	{
-		//public static Factory Default { get; } = new Factory();
 		public Factory()
 		{
 			ReadFunction = new Reader().Read;
@@ -40,7 +39,10 @@ namespace Node.Net
 			if (Logging)
 			{
 				var sourceInfo = "null";
-				if (source != null) sourceInfo = source.ToString();
+				if (source != null)
+				{
+					sourceInfo = source.ToString();
+				}
 
 				Log.Add($"Create(typeof({targetType.FullName}),{sourceInfo}");
 			}

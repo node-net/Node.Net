@@ -22,23 +22,17 @@ namespace Node.Net.Internal
 
 		public object Create(Type targetType, object source)
 		{
-			if (targetType == typeof(Stream))
+			if (targetType == typeof(Stream) && source != null && source is string)
 			{
-				if (source != null)
-				{
-					if (source is string) return Create(source.ToString());
-				}
+				return Create(source.ToString());
 			}
-			if (typeof(IStreamSignature).IsAssignableFrom(targetType))
+			if (typeof(IStreamSignature).IsAssignableFrom(targetType) && source != null)
 			{
-				if (source != null)
+				if (source is Stream)
 				{
-					if (source is Stream)
-					{
-						return Internal.SignatureReader.GetSignature(source as Stream);
-					}
-					return Create(targetType, Create(typeof(Stream), source));
+					return Internal.SignatureReader.GetSignature(source as Stream);
 				}
+				return Create(targetType, Create(typeof(Stream), source));
 			}
 			return null;
 		}
@@ -47,7 +41,11 @@ namespace Node.Net.Internal
 
 		public Stream Create(string name)
 		{
-			if (File.Exists(name)) return new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read);
+			if (File.Exists(name))
+			{
+				return new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read);
+			}
+
 			foreach (var assembly in ResourceAssemblies)
 			{
 				foreach (var manifestResourceName in assembly.GetManifestResourceNames())
@@ -76,53 +74,44 @@ namespace Node.Net.Internal
 					}
 				}
 			}
-			if (name.Contains("(") || name.Contains("*") && name.Contains(".") && name.Contains(")") || name.Contains("|"))
+			if ((name.Contains("(") || name.Contains("*") && name.Contains(".") && name.Contains(")") || name.Contains("|")) && ignoreFilter != name)
 			{
-				if (ignoreFilter != name)
+				// open file dialog filter
+				var ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
+				var result = ofd.ShowDialog();
+				if (result == true)
 				{
-					// open file dialog filter
-					var ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
-					var result = ofd.ShowDialog();
-					if (result == true)
+					if (File.Exists(ofd.FileName))
 					{
-						if (File.Exists(ofd.FileName))
-						{
-							var stream = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-							stream.SetFileName(ofd.FileName);
-							return stream;
-						}
+						var stream = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+						stream.SetFileName(ofd.FileName);
+						return stream;
 					}
-					else
-					{
-						// cancelled
-						ignoreFilter = name;
-					}
+				}
+				else
+				{
+					// cancelled
+					ignoreFilter = name;
 				}
 			}
-			if (name.Contains(":"))
+			if (name.Contains(":") && Uri.IsWellFormedUriString(name, UriKind.Absolute))
 			{
-				try
+				var uri = new Uri(name);
+				switch (uri.Scheme)
 				{
-					var uri = new Uri(name);
-					switch (uri.Scheme)
-					{
-						case "http":
-						case "https":
+					case "http":
+					case "https":
+						{
+							using (var webClient = new WebClient())
 							{
-								using (var webClient = new WebClient())
-								{
-									return webClient.OpenRead(name);
-								}
-								//break;
+								return webClient.OpenRead(name);
 							}
-						case "file":
-							{
-								return new FileStream(uri.LocalPath, FileMode.Open);
-								//break;
-							}
-					}
+						}
+					case "file":
+						{
+							return new FileStream(uri.LocalPath, FileMode.Open);
+						}
 				}
-				catch { }
 			}
 			if (name.Contains("{"))
 			{

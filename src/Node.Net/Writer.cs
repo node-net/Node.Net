@@ -10,7 +10,6 @@ namespace Node.Net
 {
 	public class Writer : IWrite
 	{
-
 		public void Write(Stream stream, object value)
 		{
 			if (value != null && WriteFunctions != null)
@@ -64,7 +63,7 @@ namespace Node.Net
 		}
 
 		public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
-		private readonly Internal.JSONWriter jsonWriter = new Internal.JSONWriter();
+		private readonly Internal.JsonWriter jsonWriter = new Internal.JsonWriter();
 		private readonly Internal.BitmapSourceWriter bitmapSourceWriter = new Internal.BitmapSourceWriter();
 	}
 }

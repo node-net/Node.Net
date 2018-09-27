@@ -18,11 +18,17 @@ namespace Node.Net
 		{
 			foreach (var resourceName in assembly.GetManifestResourceNames())
 			{
-				if (resourceName == name) return assembly.GetManifestResourceStream(resourceName);
+				if (resourceName == name)
+				{
+					return assembly.GetManifestResourceStream(resourceName);
+				}
 			}
 			foreach (var resourceName in assembly.GetManifestResourceNames())
 			{
-				if (resourceName.Contains(name)) return assembly.GetManifestResourceStream(resourceName);
+				if (resourceName.Contains(name))
+				{
+					return assembly.GetManifestResourceStream(resourceName);
+				}
 			}
 			return null;
 		}
@@ -37,7 +43,10 @@ namespace Node.Net
 		{
 			foreach (var resourceName in assembly.GetManifestResourceNames())
 			{
-				if (resourceName.Contains(name)) return assembly.GetManifestResourceStream(resourceName);
+				if (resourceName.Contains(name))
+				{
+					return assembly.GetManifestResourceStream(resourceName);
+				}
 			}
 			return null;
 		}
