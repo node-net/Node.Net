@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Node.Net.Internal
 {
-	internal class Length
+	internal static class Length
 	{
 		public static double GetMeters(string value)
 		{

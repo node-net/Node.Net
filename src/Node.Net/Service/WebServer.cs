@@ -14,24 +14,6 @@ namespace Node.Net.Service
 	public sealed class WebServer : IDisposable
 	{
 		#region Construction
-		/*
-		public WebServer()
-		{
-			_port = GetNextAvailablePort(5000);
-			_protocol = Protocol.HTTP;
-			_listener = new HttpListener();
-			_listener.Prefixes.Add(Uri.ToString());
-			_contextAction = new WebResponder().Respond;
-		}*/
-		/*
-		public WebServer(Protocol protocol) : this()
-		{
-			//_port = GetNextAvailablePort(5000);
-			_protocol = protocol;
-			//_listener = new HttpListener();
-			//_listener.Prefixes.Add(Uri.ToString());
-			//_contextAction = new WebResponder().Respond;
-		}*/
 		public WebServer(Protocol protocol,int port)
 		{
 			_port = GetNextAvailablePort(port);
@@ -112,13 +94,10 @@ namespace Node.Net.Service
 			}
 		}
 		private bool _shutdown = false;
-		//private int workItemCount = 0;
-		//private EventWaitHandle _eventWaitHandle = new EventWaitHandle(false,EventResetMode.AutoReset);
-		//private EventWaitHandle _clearCount = new EventWaitHandle(false, EventResetMode.AutoReset);
 		public void Start()
 		{
 			_listener.Start();
-			ThreadPool.QueueUserWorkItem((o) =>
+			ThreadPool.QueueUserWorkItem((_) =>
 			{
 				while (_listener.IsListening && !Shutdown)
 				{
@@ -140,8 +119,6 @@ namespace Node.Net.Service
 		public void Stop()
 		{
 			Shutdown = true;
-			//Thread.Sleep(500);
-			//_listener.Close();
 			_listener.Stop();
 		}
 		public static int GetNextAvailablePort(int starting_port)

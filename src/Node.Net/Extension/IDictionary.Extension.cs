@@ -435,9 +435,6 @@ namespace Node.Net
 			foreach (var item in items)
 			{
 				if (deepUpdateParents && item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
-#if DEBUG
-				var fullName = item.GetFullName();
-#endif
 				if (item.GetFullName() == name)
 				{
 					return item;
@@ -558,7 +555,7 @@ namespace Node.Net
 				}
 			}
 
-			if (typeof(T) == typeof(string) && defaultValue == null)
+			if (typeof(T) == typeof(string) && EqualityComparer<T>.Default.Equals(defaultValue, default(T)))
 			{
 				return (T)(object)string.Empty;
 			}
@@ -817,12 +814,9 @@ namespace Node.Net
 			var parent = child.GetParent() as IDictionary;
 			if (child != null && parent != null)
 			{
-				if (parent is T ancestor)
+				if (parent is T ancestor && !EqualityComparer<T>.Default.Equals(ancestor, default(T)))
 				{
-					if (ancestor != null)
-					{
-						return ancestor;
-					}
+					return ancestor;
 				}
 				return GetNearestAncestor<T>(parent);
 			}
@@ -837,7 +831,7 @@ namespace Node.Net
 				if (ancestor != null)
 				{
 					var further_ancestor = GetFurthestAncestor<T>(ancestor);
-					if (further_ancestor != null)
+					if (!EqualityComparer<T>.Default.Equals(further_ancestor, default(T)))
 					{
 						return further_ancestor;
 					}
@@ -912,13 +906,10 @@ namespace Node.Net
 		public static T GetCurrent<T>(this IDictionary dictionary) where T : IDictionary
 		{
 			var metaData = Internal.MetaData.Default.GetMetaData(dictionary);
-			if (metaData.Contains("Currents"))
+			if (metaData.Contains("Currents") && Internal.MetaData.Default.GetMetaData(dictionary)["Currents"] is IDictionary currents && currents.Contains(typeof(T)))
 			{
-				if (Internal.MetaData.Default.GetMetaData(dictionary)["Currents"] is IDictionary currents && currents.Contains(typeof(T)))
-				{
-					var current_name = currents[typeof(T)].ToString();
-					return dictionary.Find<T>(current_name);
-				}
+				var current_name = currents[typeof(T)].ToString();
+				return dictionary.Find<T>(current_name);
 			}
 
 			var items = dictionary.Collect<T>();

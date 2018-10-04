@@ -15,7 +15,7 @@ namespace Node.Net.JsonRPC
 		{
 			Add("jsonrpc", "2.0");
 			Add("method", _method);
-			Add("id", new Random().Next(10000, 20000));
+			Add("id", 10000);
 			Add("params", Parameters);
 		}
 
@@ -31,7 +31,7 @@ namespace Node.Net.JsonRPC
 		{
 			Add("jsonrpc", "2.0");
 			Add("method", _method);
-			Add("id", new Random().Next(10000, 20000));
+			Add("id", 10000);
 			foreach (var key in parameters.Keys)
 			{
 				Parameters.Add(key.ToString(), parameters[key]);
@@ -52,7 +52,7 @@ namespace Node.Net.JsonRPC
 		{
 			this.Add("jsonrpc", "2.0");
 			var random = new Random();
-			this.Add("id", random.Next(100000, 200000));
+			this.Add("id", 100000);
 
 			if (data.Contains("id"))
 			{
