@@ -67,9 +67,6 @@
     <Compile Include="JsonRPC\Responder.Test.cs" />
     <Compile Include="JsonRPC\Server.Test.cs" />
     <Compile Include="Reader.Test.cs" />
-    <None Include="Resources\Node.Net.xaml.cs">
-      <DependentUpon>Node.Net.xaml</DependentUpon>
-    </None>
     <Compile Include="Service\WebServer.Test.cs" />
     <Compile Include="WordReader.Test.cs" />
   </ItemGroup>
@@ -89,12 +86,6 @@
       <Project>{f29b2594-8a0b-4521-bb96-3da2a5d578a0}</Project>
       <Name>Node.Net.NETFramework4.6</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Node.Net.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Node.Net.256.png" />

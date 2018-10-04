@@ -23,8 +23,10 @@ namespace Node.Net.JsonRPC
 
 		public Response Respond(Request request)
 		{
-			var webClient = new WebClient();
-			return new Response(webClient.UploadData(_url, request.GetBytes()));
+			using (var webClient = new WebClient())
+			{
+				return new Response(webClient.UploadData(_url, request.GetBytes()));
+			}
 		}
 	}
 }
