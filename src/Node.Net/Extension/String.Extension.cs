@@ -52,7 +52,7 @@ namespace Node.Net
 				var words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 				if (words.Length > 0)
 				{
-					var word = words[0].Replace("'","");
+					var word = words[0].Replace("'", "");
 					return Convert.ToDouble(word);
 				}
 				return 0.0;

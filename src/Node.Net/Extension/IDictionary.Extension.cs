@@ -200,7 +200,6 @@ namespace Node.Net
 			var tmp = dictionary.Collect<T>();
 			foreach (var result in tmp)
 			{
-
 				if (result is IDictionary d && d.Contains(kvp.Key))
 				{
 					var value = d[kvp.Key];
@@ -331,15 +330,21 @@ namespace Node.Net
 			}
 		}
 
-		public static IDictionary<string,int> CollectKeys(this IDictionary dictionary)
+		public static IDictionary<string, int> CollectKeys(this IDictionary dictionary)
 		{
 			var results = new Dictionary<string, int>();
-			foreach(string key in dictionary.Keys)
+			foreach (string key in dictionary.Keys)
 			{
 				if (key.Length > 0)
 				{
-					if (!results.ContainsKey(key)) results.Add(key, 1);
-					else results[key] = results[key] + 1;
+					if (!results.ContainsKey(key))
+					{
+						results.Add(key, 1);
+					}
+					else
+					{
+						results[key] = results[key] + 1;
+					}
 
 					var subDictionary = dictionary[key] as IDictionary;
 					if (subDictionary != null)
@@ -347,8 +352,14 @@ namespace Node.Net
 						var subKeys = subDictionary.CollectKeys();
 						foreach (var subKey in subKeys.Keys)
 						{
-							if (!results.ContainsKey(key)) results.Add(key, subKeys[subKey]);
-							else results[key] = results[key] + subKeys[subKey];
+							if (!results.ContainsKey(key))
+							{
+								results.Add(key, subKeys[subKey]);
+							}
+							else
+							{
+								results[key] = results[key] + subKeys[subKey];
+							}
 						}
 					}
 				}

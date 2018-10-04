@@ -52,7 +52,10 @@ namespace Node.Net.JsonRPC
 		public Response(Stream stream)
 		{
 			var data = new Reader().Read<IDictionary>(stream);
-			if (data != null) SetData(data);
+			if (data != null)
+			{
+				SetData(data);
+			}
 		}
 
 		private void SetData(IDictionary data)

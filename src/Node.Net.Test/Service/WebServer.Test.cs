@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NUnit.Framework;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Node.Net.Service
 {
-	[TestFixture,Category(nameof(WebServer))]
+	[TestFixture, Category(nameof(WebServer))]
 	internal class WebServerTest
 	{
 		[Test]
 		public void Default_Usage()
 		{
-			using (var server = new WebServer(Protocol.HTTP,5000))
+			using (var server = new WebServer(Protocol.HTTP, 5000))
 			{
 				var port = server.Port;
 				server.Start();

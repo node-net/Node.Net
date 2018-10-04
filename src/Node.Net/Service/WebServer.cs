@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Node.Net.Service
 {
@@ -14,7 +12,8 @@ namespace Node.Net.Service
 	public sealed class WebServer : IDisposable
 	{
 		#region Construction
-		public WebServer(Protocol protocol,int port)
+
+		public WebServer(Protocol protocol, int port)
 		{
 			_port = GetNextAvailablePort(port);
 			_protocol = Protocol.HTTP;
@@ -23,7 +22,7 @@ namespace Node.Net.Service
 			_contextAction = new WebResponder().Respond;
 		}
 
-		public WebServer(Protocol protocol,int port,Action<HttpListenerContext> action)
+		public WebServer(Protocol protocol, int port, Action<HttpListenerContext> action)
 			: this(protocol, port)
 		{
 			_contextAction = action;
@@ -82,14 +81,14 @@ namespace Node.Net.Service
 		{
 			get
 			{
-				lock(_locker)
+				lock (_locker)
 				{
 					return _shutdown;
 				}
 			}
 			set
 			{
-				lock(_locker)
+				lock (_locker)
 				{
 					_shutdown = value;
 				}
@@ -113,11 +112,10 @@ namespace Node.Net.Service
 				}
 			});
 		}
-	
+
 		public void WorkItemCallback(object context)
 		{
 			_contextAction(context as HttpListenerContext);
-			
 		}
 
 		public void Stop()
