@@ -61,7 +61,10 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Extension\IDictionary.Extension.Test.cs" />
     <Compile Include="Extension\Object.Extension.Test.cs" />
+    <Compile Include="Extension\PerspectiveCamera.Extension.Test.cs" />
     <Compile Include="Extension\Point.Extension.Test.cs" />
+    <Compile Include="Extension\Point3D.Extension.Test.cs" />
+    <Compile Include="Extension\Rect3D.Extension.Test.cs" />
     <Compile Include="Extension\String.Extension.Test.cs" />
     <Compile Include="Factory.Test.cs" />
     <Compile Include="JsonRPC\Request.Test.cs" />

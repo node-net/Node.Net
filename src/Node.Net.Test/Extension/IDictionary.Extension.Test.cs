@@ -34,5 +34,14 @@ namespace Node.Net.Test.Extension
 			data.Collect(typeof(IDictionary));
 			data.Collect<IDictionary>(Filter);
 		}
+		[Test]
+		public void DeepUpdateParents()
+		{
+			var assembly = typeof(IDictionaryExtensionTest).Assembly;
+			var data = new Reader().Read<IDictionary>(assembly.FindManifestResourceStream("Object.Coverage.json"));
+			Assert.NotNull(data, nameof(data));
+			data.DeepUpdateParents();
+			IDictionaryExtension.DeepUpdateParents(null);
+		}
 	}
 }
