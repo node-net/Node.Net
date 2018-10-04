@@ -27,3 +27,5 @@ task :publish  do
 		puts `nuget push Node.Net.#{VERSION}.nupkg -Source https://api.nuget.org/v3/index.json`
 	end
 end
+
+task :default => [:analyze]
