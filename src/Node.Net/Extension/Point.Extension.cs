@@ -406,7 +406,7 @@ namespace Node.Net
 			if (hasIntersection)
 			{
 				double x = (B2 * C1 - B1 * C2) / delta;
-				double y = (A1 * C2 - A2 * C1) / delta;
+				double y = (A1 * C2 - (A2 * C1)) / delta;
 				intersectionPoint = new Point(x, y);
 			}
 			return hasIntersection;

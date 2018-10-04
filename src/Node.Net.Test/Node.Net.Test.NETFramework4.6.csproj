@@ -67,9 +67,9 @@
     <Compile Include="JsonRPC\Responder.Test.cs" />
     <Compile Include="JsonRPC\Server.Test.cs" />
     <Compile Include="Reader.Test.cs" />
-    <Compile Include="Resources\Node.Net.xaml.cs">
+    <None Include="Resources\Node.Net.xaml.cs">
       <DependentUpon>Node.Net.xaml</DependentUpon>
-    </Compile>
+    </None>
     <Compile Include="Service\WebServer.Test.cs" />
     <Compile Include="WordReader.Test.cs" />
   </ItemGroup>
@@ -91,10 +91,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Resources\Node.Net.xaml">
+    <None Include="Resources\Node.Net.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Node.Net.256.png" />
