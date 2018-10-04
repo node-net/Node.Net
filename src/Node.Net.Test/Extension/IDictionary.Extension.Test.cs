@@ -33,6 +33,9 @@ namespace Node.Net.Test.Extension
 			Assert.NotNull(data, nameof(data));
 			data.Collect(typeof(IDictionary));
 			data.Collect<IDictionary>(Filter);
+			data.Collect<IDictionary>("");
+			data.Collect<IDictionary>("test");
+			data.CollectKeys();
 		}
 		[Test]
 		public void DeepUpdateParents()
@@ -42,6 +45,7 @@ namespace Node.Net.Test.Extension
 			Assert.NotNull(data, nameof(data));
 			data.DeepUpdateParents();
 			IDictionaryExtension.DeepUpdateParents(null);
+			data.ComputeHashCode();
 		}
 		[Test]
 		public void GetLengthMeters()
