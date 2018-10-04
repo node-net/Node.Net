@@ -355,6 +355,7 @@ namespace Node.Net
 			}
 			return results;
 		}
+
 		public static IList<T> CollectValues<T>(this IDictionary dictionary, string key)
 		{
 			var results = new List<T>();
@@ -380,6 +381,7 @@ namespace Node.Net
 				}
 			}
 		}
+
 		public static IDictionary Copy(this IDictionary dictionary, IDictionary source)
 		{
 			dictionary.Clear();

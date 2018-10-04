@@ -11,13 +11,16 @@ namespace Node.Net.JsonRPC
 		{
 			_responder = responder;
 		}
+
 		public Response Respond(Request request)
 		{
 			var responseStream = _responder(request.ToStream());
 			return new Response(responseStream);
 		}
+
 		private readonly Func<Stream, Stream> _responder;
 	}
+
 	public sealed class Server : IDisposable
 	{
 		public Server(Func<Request, Response> responder)
@@ -25,6 +28,7 @@ namespace Node.Net.JsonRPC
 			_webServer = new Service.WebServer(Service.Protocol.HTTP,5000,ContextAction);
 			_responder = responder;
 		}
+
 		public Server(Func<Stream,Stream> responder)
 		{
 			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);

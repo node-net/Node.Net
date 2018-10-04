@@ -48,6 +48,7 @@ namespace Node.Net.JsonRPC
 			Add("error", error);
 			Add("id", id);
 		}
+
 		public Response(Stream stream)
 		{
 			var data = new Reader().Read<IDictionary>(stream);
@@ -73,6 +74,7 @@ namespace Node.Net.JsonRPC
 				this.Add("error", error);
 			}
 		}
+
 		public object Result
 		{
 			get

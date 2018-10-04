@@ -43,15 +43,16 @@ namespace Node.Net.JsonRPC
 		{
 			SetData(data);
 		}
+
 		public Request(Stream stream)
 		{
 			var data = new Reader().Read(stream) as IDictionary;
 			SetData(data);
 		}
+
 		private void SetData(IDictionary data)
 		{
 			this.Add("jsonrpc", "2.0");
-			var random = new Random();
 			this.Add("id", 100000);
 
 			if (data.Contains("id"))
@@ -76,6 +77,7 @@ namespace Node.Net.JsonRPC
 				}
 			}
 		}
+
 		public string Method { get { return this.Get<string>("method"); } }
 		public Dictionary<string, object> Parameters { get { return parameters; } }
 		private readonly Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -103,6 +105,7 @@ namespace Node.Net.JsonRPC
 		{
 			return ToJson();
 		}
+
 		public Stream ToStream()
 		{
 			return new MemoryStream(Encoding.UTF8.GetBytes(ToJson()));

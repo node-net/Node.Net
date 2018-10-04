@@ -15,6 +15,7 @@ namespace Node.Net.JsonRPC
 			}
 			return new Response(new Error(-32601,"Method not found"),request.Id);
 		}
+
 		[Test]
 		public void Default_Usage()
 		{
