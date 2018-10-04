@@ -7,7 +7,7 @@ namespace Node.Net.JsonRPC
 {
 	internal class StreamResponder
 	{
-		public StreamResponder(Func<Stream,Stream> responder)
+		public StreamResponder(Func<Stream, Stream> responder)
 		{
 			_responder = responder;
 		}
@@ -25,11 +25,11 @@ namespace Node.Net.JsonRPC
 	{
 		public Server(Func<Request, Response> responder)
 		{
-			_webServer = new Service.WebServer(Service.Protocol.HTTP,5000,ContextAction);
+			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);
 			_responder = responder;
 		}
 
-		public Server(Func<Stream,Stream> responder)
+		public Server(Func<Stream, Stream> responder)
 		{
 			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);
 			_responder = new StreamResponder(responder).Respond;
@@ -39,7 +39,9 @@ namespace Node.Net.JsonRPC
 		{
 			Dispose(false);
 		}
+
 		#region Dispose
+
 		public void Dispose()
 		{
 			Dispose(true);
@@ -53,7 +55,8 @@ namespace Node.Net.JsonRPC
 				_webServer?.Dispose();
 			}
 		}
-		#endregion
+
+		#endregion Dispose
 
 		private void ContextAction(HttpListenerContext context)
 		{
@@ -89,7 +92,15 @@ namespace Node.Net.JsonRPC
 		private readonly Func<Request, Response> _responder;
 		public int Port { get { return _webServer.Port; } }
 		public Uri Uri { get { return _webServer.Uri; } }
-		public void Start() { _webServer.Start(); }
-		public void Stop() { _webServer.Stop(); }
+
+		public void Start()
+		{
+			_webServer.Start();
+		}
+
+		public void Stop()
+		{
+			_webServer.Stop();
+		}
 	}
 }

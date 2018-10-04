@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Node.Net.JsonRPC
 {
-	[TestFixture,Category(nameof(Request))]
+	[TestFixture, Category(nameof(Request))]
 	internal static class RequestTest
 	{
 		[Test]
@@ -18,7 +13,7 @@ namespace Node.Net.JsonRPC
 
 			var rs = request.ToStream();
 			Request request1 = new Request(rs);
-			
+
 			var name = request1.Parameters["name"];
 			Assert.AreEqual("test", name);
 		}

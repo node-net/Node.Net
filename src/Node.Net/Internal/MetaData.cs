@@ -41,7 +41,7 @@ namespace Node.Net.Internal
 		{
 			if (item is null)
 			{
-				return new Dictionary<string,object>();
+				return new Dictionary<string, object>();
 			}
 
 			if (data.ContainsKey(new WeakReference(item)))
