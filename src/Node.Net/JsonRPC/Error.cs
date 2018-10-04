@@ -49,13 +49,13 @@ namespace Node.Net.JsonRPC
 		public string Message { get { return this.Get<string>("message"); } }
 		public object Data { get { return this.Get<object>("data"); } }
 
-		public static Dictionary<ErrorCode, string> ErrorCodeNames = new Dictionary<ErrorCode, string>
+		public static Dictionary<ErrorCode, string> ErrorCodeNames { get; set; } = new Dictionary<ErrorCode, string>
 		{
 			{ ErrorCode.ParseError,"Parse error"},
-			{ErrorCode.InvalidRequest,"Invalid request" },
-			{ErrorCode.MethodNotFound,"Method not found" },
-			{ErrorCode.InvalidParameters,"Invalid params" },
-			{ErrorCode.InternalError,"Internal error" }
+			{ ErrorCode.InvalidRequest,"Invalid request" },
+			{ ErrorCode.MethodNotFound,"Method not found" },
+			{ ErrorCode.InvalidParameters,"Invalid params" },
+			{ ErrorCode.InternalError,"Internal error" }
 		};
 	}
 }
