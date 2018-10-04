@@ -43,5 +43,14 @@ namespace Node.Net.Test.Extension
 			data.DeepUpdateParents();
 			IDictionaryExtension.DeepUpdateParents(null);
 		}
+		[Test]
+		public void GetLengthMeters()
+		{
+			var data = new Dictionary<string, object>
+			{
+				{"X" ,"2 m" }
+			};
+			Assert.AreEqual(2.0, data.GetLengthMeters("X"));
+		}
 	}
 }
