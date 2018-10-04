@@ -15,6 +15,7 @@ namespace Node.Net.Test.Extension
 			text = new StreamReader("Object.Coverage.json".GetStream()).ReadToEnd();
 			Assert.True(text.Contains("array_empty"), "array_empty not found in Object.Coverage.json");
 		}
+
 		[Test]
 		public void GetRawValue()
 		{

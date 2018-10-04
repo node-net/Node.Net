@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net.Service
 {
@@ -15,23 +13,25 @@ namespace Node.Net.Service
 			MethodResponseFunctions["GET"] = RespondGET;
 			MethodResponseFunctions["POST"] = RespondPOST;
 		}
-		public Dictionary<string,Action<HttpListenerContext>> MethodResponseFunctions { get { return _methodResponseFunctions; } }
+
+		public Dictionary<string, Action<HttpListenerContext>> MethodResponseFunctions { get { return _methodResponseFunctions; } }
 		private readonly Dictionary<string, Action<HttpListenerContext>> _methodResponseFunctions = new Dictionary<string, Action<HttpListenerContext>>();
+
 		public void Respond(HttpListenerContext context)
 		{
 			try
 			{
-				if(MethodResponseFunctions.ContainsKey(context.Request.HttpMethod))
+				if (MethodResponseFunctions.ContainsKey(context.Request.HttpMethod))
 				{
 					try
 					{
 						MethodResponseFunctions[context.Request.HttpMethod](context);
 					}
-					catch(Exception e)
+					catch (Exception e)
 					{
 						context.Response.StatusCode = 500;
 						var bytes = Encoding.UTF8.GetBytes(e.ToString());
-						context.Response.OutputStream.Write(bytes,0,bytes.Length);
+						context.Response.OutputStream.Write(bytes, 0, bytes.Length);
 					}
 				}
 			}
@@ -44,6 +44,7 @@ namespace Node.Net.Service
 				context.Response.OutputStream.Close();
 			}
 		}
+
 		public void RespondGET(HttpListenerContext context)
 		{
 			var raw = context.Request.RawUrl;
@@ -65,6 +66,7 @@ namespace Node.Net.Service
 				context.Response.StatusCode = 404;
 			}
 		}
+
 		public void RespondPOST(HttpListenerContext context)
 		{
 			var raw = context.Request.RawUrl;

@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Node.Net.Service
 {
 	[TestFixture,Category(nameof(WebServer))]
-	class WebServerTest
+	internal class WebServerTest
 	{
 		[Test]
 		public void Default_Usage()

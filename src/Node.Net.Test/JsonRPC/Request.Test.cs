@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Node.Net.JsonRPC
 {
 	[TestFixture,Category(nameof(Request))]
-	static class RequestTest
+	internal static class RequestTest
 	{
 		[Test]
 		public static void StreamConstructor()

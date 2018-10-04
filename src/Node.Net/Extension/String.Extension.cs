@@ -44,6 +44,7 @@ namespace Node.Net
 		}
 
 		public static double GetMeters(this string value) => Internal.Length.GetMeters(value);
+
 		public static double GetRawValue(this string value)
 		{
 			try
@@ -61,6 +62,7 @@ namespace Node.Net
 				return 0.0;
 			}
 		}
+
 		public static Stream GetStream(this string value)
 		{
 			if (File.Exists(value))

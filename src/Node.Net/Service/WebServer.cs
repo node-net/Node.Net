@@ -22,6 +22,7 @@ namespace Node.Net.Service
 			_listener.Prefixes.Add(Uri.ToString());
 			_contextAction = new WebResponder().Respond;
 		}
+
 		public WebServer(Protocol protocol,int port,Action<HttpListenerContext> action)
 			: this(protocol, port)
 		{
@@ -76,6 +77,7 @@ namespace Node.Net.Service
 		private readonly Action<HttpListenerContext> _contextAction;
 		private readonly HttpListener _listener;
 		private readonly object _locker = new object();
+
 		public bool Shutdown
 		{
 			get
@@ -93,7 +95,9 @@ namespace Node.Net.Service
 				}
 			}
 		}
+
 		private bool _shutdown = false;
+
 		public void Start()
 		{
 			_listener.Start();
@@ -121,6 +125,7 @@ namespace Node.Net.Service
 			Shutdown = true;
 			_listener.Stop();
 		}
+
 		public static int GetNextAvailablePort(int starting_port)
 		{
 			int PortStartIndex = starting_port;
