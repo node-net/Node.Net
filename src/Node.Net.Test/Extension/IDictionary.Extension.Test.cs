@@ -24,5 +24,15 @@ namespace Node.Net.Test.Extension
 			var a = data.Find<IDictionary>("objectA");
 			Assert.NotNull(a, nameof(a));
 		}
+		private bool Filter(object v) { return true; }
+		[Test]
+		public void Collect()
+		{
+			var assembly = typeof(IDictionaryExtensionTest).Assembly;
+			var data = new Reader().Read<IDictionary>(assembly.FindManifestResourceStream("Object.Coverage.json"));
+			Assert.NotNull(data, nameof(data));
+			data.Collect(typeof(IDictionary));
+			data.Collect<IDictionary>(Filter);
+		}
 	}
 }
