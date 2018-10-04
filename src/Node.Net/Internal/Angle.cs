@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Node.Net.Internal
 {
-	internal class Angle
+	internal static class Angle
 	{
 		public static double GetDegrees(string value)
 		{

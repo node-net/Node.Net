@@ -77,9 +77,6 @@ namespace Node.Net.JsonRPC
 		{
 			get
 			{
-				//var json = this.ToJson();
-				//var data = Reader.Default.Read<IDictionary>(new MemoryStream(Encoding.UTF8.GetBytes(json)));
-				//return data.Get<object>("result");
 				var result = this.Get<object>("result");
 				if (result != null && (result is string))
 				{

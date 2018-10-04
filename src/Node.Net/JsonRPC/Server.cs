@@ -16,7 +16,7 @@ namespace Node.Net.JsonRPC
 			var responseStream = _responder(request.ToStream());
 			return new Response(responseStream);
 		}
-		private Func<Stream, Stream> _responder;
+		private readonly Func<Stream, Stream> _responder;
 	}
 	public sealed class Server : IDisposable
 	{
@@ -46,10 +46,7 @@ namespace Node.Net.JsonRPC
 		{
 			if (disposing)
 			{
-				if (_webServer != null)
-				{
-					_webServer.Dispose();
-				}
+				_webServer?.Dispose();
 			}
 		}
 		#endregion
@@ -84,7 +81,7 @@ namespace Node.Net.JsonRPC
 			}
 		}
 
-		private Service.WebServer _webServer;
+		private readonly Service.WebServer _webServer;
 		private readonly Func<Request, Response> _responder;
 		public int Port { get { return _webServer.Port; } }
 		public Uri Uri { get { return _webServer.Uri; } }

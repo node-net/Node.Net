@@ -35,9 +35,6 @@ namespace Node.Net.JsonRPC
 			);
 		}
 
-		private Dictionary<string, Func<IDictionary, object>> methodResponseFunctions
-			= new Dictionary<string, Func<IDictionary, object>>();
-
-		public Dictionary<string, Func<IDictionary, object>> MethodResponseFunctions { get => methodResponseFunctions; set => methodResponseFunctions = value; }
+		public Dictionary<string, Func<IDictionary, object>> MethodResponseFunctions { get; set; } = new Dictionary<string, Func<IDictionary, object>>();
 	}
 }

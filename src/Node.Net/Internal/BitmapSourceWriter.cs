@@ -13,13 +13,10 @@ namespace Node.Net.Internal
 				return;
 			}
 
-			if (value is BitmapSource bitmapSource && BitmapEncoder != null)
+			if (value is BitmapSource bitmapSource && BitmapEncoder != null && Activator.CreateInstance(BitmapEncoder.GetType()) is BitmapEncoder encoder)
 			{
-				if (Activator.CreateInstance(BitmapEncoder.GetType()) is BitmapEncoder encoder)
-				{
-					encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-					encoder.Save(stream);
-				}
+				encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+				encoder.Save(stream);
 			}
 		}
 
