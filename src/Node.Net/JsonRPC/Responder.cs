@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Node.Net.JsonRPC
 {
-	public sealed class Responder
+	public sealed class Responder : IResponder
 	{
 		public Stream Respond(Stream request)
 		{
@@ -17,12 +17,12 @@ namespace Node.Net.JsonRPC
 
 		public Response Respond(Request request)
 		{
-			if (MethodResponseFunctions.ContainsKey(request.Method))
+			if (Methods.ContainsKey(request.Method))
 			{
 				try
 				{
-					var result = MethodResponseFunctions[request.Method](request.Parameters);
-					return new Response(result, request.Id);
+					var method_responder = Methods[request.Method];
+					return method_responder.Respond(request);
 				}
 				catch (Exception e)
 				{
@@ -35,6 +35,6 @@ namespace Node.Net.JsonRPC
 			);
 		}
 
-		public Dictionary<string, Func<IDictionary, object>> MethodResponseFunctions { get; set; } = new Dictionary<string, Func<IDictionary, object>>();
+		public Dictionary<string, IResponder> Methods { get; set; } = new Dictionary<string, IResponder>();
 	}
 }

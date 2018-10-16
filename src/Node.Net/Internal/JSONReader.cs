@@ -59,10 +59,10 @@ namespace Node.Net.Internal
 
 		private object Read(System.IO.TextReader reader)
 		{
-			char objectOpenCharacter = '{';
-			char arrayOpenCharacter = '[';
-			char doubleQuote = '"';
-			char singleQuote = '\'';
+			const char objectOpenCharacter = '{';
+			const char arrayOpenCharacter = '[';
+			const char doubleQuote = '"';
+			const char singleQuote = '\'';
 			reader.EatWhiteSpace();
 			var ichar = reader.Peek();
 			if (ichar < 0)
@@ -159,10 +159,10 @@ namespace Node.Net.Internal
 
 		private object ReadString(System.IO.TextReader reader)
 		{
-			string unicodeDoubleQuotes = @"\u0022";
-			string doubleQuotes = @"""";
-			string unicodeBackslash = @"\u005c";
-			string backslash = @"\";
+			const string unicodeDoubleQuotes = @"\u0022";
+			const string doubleQuotes = @"""";
+			const string unicodeBackslash = @"\u005c";
+			const string backslash = @"\";
 			reader.EatWhiteSpace();
 			string stringResult = reader.SeekIgnoreEscaped((char)reader.Read());
 			reader.Read(); // consume escaped character
@@ -214,9 +214,9 @@ namespace Node.Net.Internal
 
 		private object ReadObject(System.IO.TextReader reader)
 		{
-			char objectOpenCharacter = '{';
-			char objectCloseCharacter = '}';
-			char comma = ',';
+			const char objectOpenCharacter = '{';
+			const char objectCloseCharacter = '}';
+			const char comma = ',';
 			IDictionary dictionary = null;
 			if (ObjectCount == 0)
 			{

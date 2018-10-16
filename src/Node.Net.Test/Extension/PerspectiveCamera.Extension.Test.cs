@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using System.Windows.Media.Media3D;
-using NUnit.Framework;
 
 namespace Node.Net.Test.Extension
 {
 	[TestFixture]
-	class PerspectiveCameraExtensionTest
+	internal class PerspectiveCameraExtensionTest
 	{
 		[Test]
 		public void IsVisible()
@@ -21,8 +16,9 @@ namespace Node.Net.Test.Extension
 				UpDirection = new Vector3D(0, 1, 0)
 			};
 			Assert.True(camera.IsVisible(new Point3D(0, 0, 0)));
-			Assert.True(camera.IsVisible(new Point3D(0, 0, 0),.8));
+			Assert.True(camera.IsVisible(new Point3D(0, 0, 0), .8));
 		}
+
 		[Test]
 		public void GetVerticalFieldOfView()
 		{

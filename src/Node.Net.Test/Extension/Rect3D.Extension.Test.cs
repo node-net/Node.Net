@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using System.Windows.Media.Media3D;
-using NUnit.Framework;
 
 namespace Node.Net.Test.Extension
 {
 	[TestFixture]
-	class Rect3DExtensionTest
+	internal class Rect3DExtensionTest
 	{
 		[Test]
 		public void Usage()

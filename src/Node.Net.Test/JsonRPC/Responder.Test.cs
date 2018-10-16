@@ -1,6 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Node.Net.JsonRPC
@@ -20,16 +18,22 @@ namespace Node.Net.JsonRPC
 		{
 			return new Responder
 			{
-				MethodResponseFunctions = new Dictionary<string, Func<IDictionary, object>>
-					{
-						{"sayHello", SayHelloResponder }
-					}
+				Methods = new Dictionary<string, IResponder>
+				{
+					{"sayHello", new JsonRPC.Function<string>(SayHello) }
+				}
 			};
 		}
 
-		public static object SayHelloResponder(IDictionary parameters)
+		public static string SayHello()
 		{
 			return "hello";
 		}
+
+		/*
+		public static object SayHelloResponder(IDictionary parameters)
+		{
+			return "hello";
+		}*/
 	}
 }

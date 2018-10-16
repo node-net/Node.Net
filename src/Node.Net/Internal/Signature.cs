@@ -48,7 +48,7 @@ namespace Node.Net.Internal
 		{
 			get
 			{
-				var maxCount = 16;
+				const int maxCount = 16;
 				var t = Text;
 				var i = 0;
 				foreach (var ch in Text)

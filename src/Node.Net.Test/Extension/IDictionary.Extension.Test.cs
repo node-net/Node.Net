@@ -24,7 +24,12 @@ namespace Node.Net.Test.Extension
 			var a = data.Find<IDictionary>("objectA");
 			Assert.NotNull(a, nameof(a));
 		}
-		private bool Filter(object v) { return true; }
+
+		private bool Filter(object v)
+		{
+			return true;
+		}
+
 		[Test]
 		public void Collect()
 		{
@@ -37,6 +42,7 @@ namespace Node.Net.Test.Extension
 			data.Collect<IDictionary>("test");
 			data.CollectKeys();
 		}
+
 		[Test]
 		public void DeepUpdateParents()
 		{
@@ -47,6 +53,7 @@ namespace Node.Net.Test.Extension
 			IDictionaryExtension.DeepUpdateParents(null);
 			data.ComputeHashCode();
 		}
+
 		[Test]
 		public void GetLengthMeters()
 		{

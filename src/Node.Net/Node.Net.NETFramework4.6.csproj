@@ -72,6 +72,7 @@
     <Compile Include="Extension\Point3D.Extension.cs" />
     <Compile Include="Extension\ProjectionCamera.Extension.cs" />
     <Compile Include="Extension\Rect3D.Extension.cs" />
+    <Compile Include="Extension\Request.Extension.cs" />
     <Compile Include="Extension\SerializationInfo.Extension.cs" />
     <Compile Include="Extension\StackTrace.Extension.cs" />
     <Compile Include="Extension\Stream.Extension.cs" />
@@ -108,8 +109,11 @@
     <Compile Include="Internal\Transform3DFactory.cs" />
     <Compile Include="Internal\Type.Extension.cs" />
     <Compile Include="Internal\Visual3DFactory.cs" />
+    <Compile Include="JsonRPC\Action.cs" />
     <Compile Include="JsonRPC\Client.cs" />
     <Compile Include="JsonRPC\Error.cs" />
+    <Compile Include="JsonRPC\Function.cs" />
+    <Compile Include="JsonRPC\IResponder.cs" />
     <Compile Include="JsonRPC\Request.cs" />
     <Compile Include="JsonRPC\Responder.cs" />
     <Compile Include="JsonRPC\Response.cs" />
