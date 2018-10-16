@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Node.Net.Test
 {
 	[TestFixture]
-	class DelegateCommandTest
+	internal class DelegateCommandTest
 	{
 		[Test]
 		public void Usage()
@@ -16,6 +11,9 @@ namespace Node.Net.Test
 			var command = new DelegateCommand(TestCommand);
 			command.Execute(null);
 		}
-		public void TestCommand(object i) { }
+
+		public void TestCommand(object i)
+		{
+		}
 	}
 }

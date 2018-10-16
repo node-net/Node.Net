@@ -63,7 +63,7 @@ namespace Node.Net
 
 		public static string SeekIgnoreEscaped(this TextReader reader, char value)
 		{
-			int iBackslash = '\\';
+			const int iBackslash = '\\';
 			int iPeek = reader.Peek();
 			if ((char)iPeek == value) { return string.Empty; }
 			var done = false;
@@ -97,7 +97,7 @@ namespace Node.Net
 		//public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false) => SeekB(reader, value, ignoreEscaped);
 		public static string Seek(this TextReader reader, char value, bool ignoreEscaped = false)
 		{
-			char backslash = '\\';
+			const char backslash = '\\';
 			int iPeek = reader.Peek();
 			if ((char)iPeek == value) { return string.Empty; }
 			var done = false;

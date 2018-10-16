@@ -397,8 +397,8 @@ namespace Node.Net
 			}
 			var A1 = pointA.GetA(pointB);
 			var A2 = pointC.GetA(pointD);
-			var B1 = 1.0;
-			var B2 = 1.0;
+			const double B1 = 1.0;
+			const double B2 = 1.0;
 			var C1 = pointA.GetC(pointB);
 			var C2 = pointC.GetC(pointD);
 			double delta = A1 * B2 - A2 * B1;
