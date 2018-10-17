@@ -10,7 +10,7 @@ namespace Node.Net.JsonRPC
 		{
 			if (request.Method == "sayHello")
 			{
-				return new Response("hello", request.Id);
+				return new Response(request.Id,"hello");
 			}
 			return new Response(new Error(-32601, "Method not found"), request.Id);
 		}

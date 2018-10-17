@@ -25,8 +25,7 @@
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray();
-			_action((T)parameters[0]);
+			_action.Invoke(request.GetParameterArray());
 			return new Response(null, request.Id);
 		}
 
@@ -42,8 +41,7 @@
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray();
-			_action((T1)parameters[0], (T2)parameters[1]);
+			_action.Invoke(request.GetParameterArray());
 			return new Response(null, request.Id);
 		}
 
