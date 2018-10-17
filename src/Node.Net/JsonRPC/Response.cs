@@ -35,18 +35,18 @@ namespace Node.Net.JsonRPC
 			SetData(data);
 		}
 
-		public Response(object result, int id)
+		public Response(int id,object result)
 		{
 			Add("jsonrpc", "2.0");
-			Add("result", result);
 			Add("id", id);
+			Add("result", result);
 		}
 
 		public Response(Error error, int id)
 		{
 			Add("jsonrpc", "2.0");
-			Add("error", error);
 			Add("id", id);
+			Add("error", error);
 		}
 
 		public Response(Stream stream)

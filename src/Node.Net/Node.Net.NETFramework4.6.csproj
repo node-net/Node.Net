@@ -59,6 +59,7 @@
     <Compile Include="Converters\VisibleWhenTrue.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="Exceptions\UnrecognizedSignatureException.cs" />
+    <Compile Include="Extension\Action.Extension.cs" />
     <Compile Include="Extension\Assembly.Extension.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Extension\IDictionary.Extension.cs" />
