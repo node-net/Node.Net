@@ -1,0 +1,12 @@
+﻿{
+  "say_hello_request": {
+    "jsonrpc": "2.0",
+    "id": 3344,
+    "method": "say_hello"
+  },
+  "say_hello_response": {
+    "jsonrpc": "2.0",
+    "id": 3344,
+    "result": "hello"
+  }
+}
