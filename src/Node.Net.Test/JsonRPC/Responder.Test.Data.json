@@ -8,5 +8,16 @@
     "jsonrpc": "2.0",
     "id": 3344,
     "result": "hello"
+  },
+  "action3_request": {
+    "jsonrpc": "2.0",
+    "id": 4433,
+    "method": "action3",
+    "params": [ "a", "b", "c" ]
+  },
+  "action3_response": {
+    "jsonrpc": "2.0",
+    "id": 4433,
+    "result": null
   }
 }

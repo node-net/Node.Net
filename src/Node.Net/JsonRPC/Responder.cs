@@ -7,7 +7,6 @@ namespace Node.Net.JsonRPC
 {
 	public sealed class Responder : IResponder
 	{
-		
 
 		public Response Respond(Request request)
 		{

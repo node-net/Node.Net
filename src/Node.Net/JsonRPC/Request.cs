@@ -74,6 +74,18 @@ namespace Node.Net.JsonRPC
 						Parameters.Add(key.ToString(), idictionary[key]);
 					}
 				}
+				else
+				{
+					if(data["params"] is IEnumerable ienumerable)
+					{
+						int i = 0;
+						foreach(var p in ienumerable)
+						{
+							Parameters.Add(i.ToString(), p);
+							++i;
+						}
+					}
+				}
 			}
 		}
 

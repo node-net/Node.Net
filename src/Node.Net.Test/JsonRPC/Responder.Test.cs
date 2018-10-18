@@ -44,14 +44,13 @@ namespace Node.Net.JsonRPC
 			{
 				Methods = new Dictionary<string, IResponder>
 				{
-					{"say_hello", new JsonRPC.Function<string>(SayHello) }
+					{"say_hello", new JsonRPC.Function<string>(SayHello) },
+					{"action3",new JsonRPC.Action<string,string,string>(Action3) }
 				}
 			};
 		}
 
-		public static string SayHello()
-		{
-			return "hello";
-		}
+		public static string SayHello() { return "hello"; }
+		public static void Action3(string a, string b, string c) { }
 	}
 }
