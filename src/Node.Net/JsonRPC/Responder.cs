@@ -7,13 +7,7 @@ namespace Node.Net.JsonRPC
 {
 	public sealed class Responder : IResponder
 	{
-		public Stream Respond(Stream request)
-		{
-			var _request = new Request(new Reader().Read<IDictionary>(request));
-			var response = Respond(_request);
-			byte[] response_bytes = response.GetBytes();
-			return new MemoryStream(response_bytes);
-		}
+		
 
 		public Response Respond(Request request)
 		{
@@ -31,7 +25,7 @@ namespace Node.Net.JsonRPC
 				}
 			}
 			return new Response(
-				new Error(1, "unrecognized method"), request.Id
+				new Error(1, $"unrecognized method '{request.Method}'"), request.Id
 			);
 		}
 

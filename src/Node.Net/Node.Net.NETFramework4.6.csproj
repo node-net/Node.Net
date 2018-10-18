@@ -66,6 +66,7 @@
     <Compile Include="Extension\IEnumerable.Extension.cs" />
     <Compile Include="Extension\IFactory.Extension.cs" />
     <Compile Include="Extension\IRead.Extension.cs" />
+    <Compile Include="Extension\IResponder.Extension.cs" />
     <Compile Include="Extension\Matrix3D.Extension.cs" />
     <Compile Include="Extension\Object.Extension.cs" />
     <Compile Include="Extension\PerspectiveCamera.Extension.cs" />

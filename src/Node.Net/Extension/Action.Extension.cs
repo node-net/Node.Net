@@ -12,6 +12,7 @@ namespace Node.Net
 		{
 			action((T)parameters[0]);
 		}
+
 		public static void Invoke<T1,T2>(this Action<T1,T2> action, object[] parameters)
 		{
 			action((T1)parameters[0],(T2)parameters[1]);
