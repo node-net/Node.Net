@@ -1,4 +1,4 @@
-VERSION='1.2.34'
+VERSION='1.2.35'
 SLN_FILES=FileList.new('Node.Net.NETFramework4.6.sln')
 require 'dev'
 CLOBBER.include('**/obj','bin','TestResults')
@@ -29,4 +29,4 @@ task :publish  do
 	end
 end
 
-task :default => [:analyze]
+#task :default => [:analyze]
