@@ -650,10 +650,10 @@ namespace Node.Net
 					var parent_full_key = GetFullName(parent);
 					if (parent_full_key.Length > 0)
 					{
-						return $"{parent_full_key}/{key.ToString()}";
+						return $"{parent_full_key}/{key}";
 					}
 				}
-				return key.ToString();
+				return key;
 			}
 			return string.Empty;
 		}

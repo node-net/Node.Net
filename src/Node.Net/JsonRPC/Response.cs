@@ -86,7 +86,7 @@ namespace Node.Net.JsonRPC
 				if (result != null && (result is string))
 				{
 					var original = result.ToString();
-					return original.ToString().Replace(@"\u0022", @"""").Replace("u0022", @"""");
+					return original.Replace(@"\u0022", @"""").Replace("u0022", @"""");
 				}
 				return result;
 			}

@@ -53,9 +53,9 @@ namespace Node.Net
 				return default(T);
 			}
 
-			if (instance is T)
+			if (instance is T t)
 			{
-				return (T)instance;
+				return t;
 			}
 			return default(T);
 		}
