@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.IO;
 using System.Net;
+using System.Text;
 
 namespace Node.Net.JsonRPC
 {
@@ -12,6 +13,12 @@ namespace Node.Net.JsonRPC
 		}
 
 		private readonly string _url;
+
+		public string Respond(string request)
+		{
+			var srequest = new MemoryStream(Encoding.UTF8.GetBytes(request));
+			return new StreamReader(Respond(srequest)).ReadToEnd();
+		}
 
 		public Stream Respond(Stream request)
 		{
