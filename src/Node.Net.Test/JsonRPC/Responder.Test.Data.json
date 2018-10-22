@@ -19,5 +19,18 @@
     "jsonrpc": "2.0",
     "id": 4433,
     "result": null
+  },
+  "not_there_request": {
+    "jsonrpc": "2.0",
+    "id": 555,
+    "method": "not_there"
+  },
+  "not_there_response": {
+    "jsonrpc": "2.0",
+    "id": 555,
+    "error": {
+      "code": -32601,
+      "message": "method not found 'not_there'."
+    }
   }
 }
