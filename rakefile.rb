@@ -29,4 +29,4 @@ task :publish  do
 	end
 end
 
-task :default => [:analyze]
+#task :default => [:analyze]

@@ -7,7 +7,8 @@ namespace Node.Net.JsonRPC
 {
 	public sealed class Responder : IResponder
 	{
-
+		public string Respond(string request) { return IResponderExtension.Respond(this, request); }
+		public Stream Respond(Stream request) { return IResponderExtension.Respond(this, request); }
 		public Response Respond(Request request)
 		{
 			if (Methods.ContainsKey(request.Method))
