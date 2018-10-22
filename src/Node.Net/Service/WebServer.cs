@@ -13,6 +13,11 @@ namespace Node.Net.Service
 	{
 		#region Construction
 
+		public WebServer(HttpListener listener, Action<HttpListenerContext> action)
+		{
+			_listener = listener;
+			_contextAction = action;
+		}
 		public WebServer(Protocol protocol, int port)
 		{
 			_port = GetNextAvailablePort(port);
