@@ -57,5 +57,10 @@ namespace Node.Net.JsonRPC
 			{ ErrorCode.InvalidParameters,"Invalid params" },
 			{ ErrorCode.InternalError,"Internal error" }
 		};
+
+		public string ToJson()
+		{
+			return IDictionaryExtension.ToJson(this);
+		}
 	}
 }
