@@ -35,7 +35,7 @@ namespace Node.Net.JsonRPC
 			SetData(data);
 		}
 
-		public Response(int id,object result)
+		public Response(int id, object result)
 		{
 			Add("jsonrpc", "2.0");
 			Add("id", id);

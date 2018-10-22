@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Node.Net
 {
 	public static class IResponderExtension
 	{
-		public static Stream Respond(this JsonRPC.IResponder responder,Stream request)
+		public static Stream Respond(this JsonRPC.IResponder responder, Stream request)
 		{
 			var _request = new JsonRPC.Request(new Reader().Read<IDictionary>(request));
 			var response = responder.Respond(_request);

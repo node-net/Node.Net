@@ -23,18 +23,11 @@ namespace Node.Net.JsonRPC
 
 	public sealed class Server : IDisposable
 	{
-		public Server(Func<Request, Response> responder)
+		public Server(Func<string,string> responder)
 		{
 			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);
 			_responder = responder;
 		}
-
-		public Server(Func<Stream, Stream> responder)
-		{
-			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);
-			_responder = new StreamResponder(responder).Respond;
-		}
-
 		~Server()
 		{
 			Dispose(false);
@@ -68,7 +61,7 @@ namespace Node.Net.JsonRPC
 				{
 					using (var sw = new StreamWriter(context.Response.OutputStream))
 					{
-						sw.Write(_responder(request).ToJson());
+						sw.Write(_responder(request.ToJson()));
 					}
 				}
 				catch (Exception e)
@@ -89,8 +82,9 @@ namespace Node.Net.JsonRPC
 		}
 
 		private readonly Service.WebServer _webServer;
-		private readonly Func<Request, Response> _responder;
+		private readonly Func<string,string> _responder;
 		public int Port { get { return _webServer.Port; } }
+
 		public Uri Uri { get { return _webServer.Uri; } }
 
 		public void Start()
