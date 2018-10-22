@@ -28,11 +28,11 @@ namespace Node.Net.JsonRPC
 				catch (Exception e)
 				{
 					return new Response(
-						new Error(11, e.ToString()));
+						new Error((int)ErrorCode.InternalError, e.ToString()));
 				}
 			}
 			return new Response(
-				new Error(1, $"unrecognized method '{request.Method}'"), request.Id
+				new Error((int)ErrorCode.MethodNotFound, $"method not found '{request.Method}'."), request.Id
 			);
 		}
 
