@@ -76,10 +76,10 @@ namespace Node.Net.JsonRPC
 				}
 				else
 				{
-					if(data["params"] is IEnumerable ienumerable)
+					if (data["params"] is IEnumerable ienumerable)
 					{
 						int i = 0;
-						foreach(var p in ienumerable)
+						foreach (var p in ienumerable)
 						{
 							Parameters.Add(i.ToString(), p);
 							++i;

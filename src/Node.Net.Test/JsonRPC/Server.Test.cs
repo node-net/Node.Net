@@ -6,6 +6,7 @@ namespace Node.Net.JsonRPC
 	[TestFixture]
 	internal class ServerTest
 	{
+		/*
 		public Response Respond(Request request)
 		{
 			if (request.Method == "sayHello")
@@ -13,12 +14,13 @@ namespace Node.Net.JsonRPC
 				return new Response(request.Id,"hello");
 			}
 			return new Response(new Error(-32601, "Method not found"), request.Id);
-		}
+		}*/
 
 		[Test]
 		public void Default_Usage()
 		{
-			using (var server = new Server(Respond))
+			var responder = ResponderTest.GetTestResponder();
+			using (var server = new Server(responder.Respond))
 			{
 				var port = server.Port;
 				server.Start();
@@ -27,13 +29,13 @@ namespace Node.Net.JsonRPC
 				Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
 				using (var client = new WebClient())
 				{
-					var request = new Request("sayHello");
+					var request = new Request("say_hello");
 					var json_response = client.UploadString(uri.ToString(), request.ToJson());
 					Assert.NotNull(json_response, nameof(json_response));
 					Assert.True(json_response.Contains("hello"));
 				}
 				var jsonRpcClient = new Client(server.Uri.ToString());
-				var response = jsonRpcClient.Respond(new Request("sayHello"));
+				var response = jsonRpcClient.Respond(new Request("say_hello"));
 				Assert.NotNull(response, nameof(response));
 				Assert.AreEqual("hello", response.Result.ToString());
 				server.Stop();

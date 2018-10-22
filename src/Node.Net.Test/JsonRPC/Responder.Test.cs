@@ -50,7 +50,13 @@ namespace Node.Net.JsonRPC
 			};
 		}
 
-		public static string SayHello() { return "hello"; }
-		public static void Action3(string a, string b, string c) { }
+		public static string SayHello()
+		{
+			return "hello";
+		}
+
+		public static void Action3(string a, string b, string c)
+		{
+		}
 	}
 }
