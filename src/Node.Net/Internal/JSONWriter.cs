@@ -70,13 +70,14 @@ namespace Node.Net.Internal
 
 		private void Write(System.IO.TextWriter writer, object value)
 		{
-			if (ReferenceEquals(null, value))
+			if (value is null)
+			//if (ReferenceEquals(null, value))
 			{
 				WriteNull(writer);
 			}
-			else if (value is byte[])
+			else if (value is byte[] x)
 			{
-				WriteBytes(writer, (byte[])(value));
+				WriteBytes(writer, x);
 			}
 			else if (value is string)
 			{
@@ -186,13 +187,12 @@ namespace Node.Net.Internal
 			foreach (object item in enumerable)
 			{
 				var skip = false;
-				if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType()))
+				if (!(item is null) && IgnoreTypes.Contains(item.GetType()))
 				{
 					skip = true;
 				}
 
-				if (!skip && (object.ReferenceEquals(null, item)
-					   || item.GetType().IsValueType
+				if (!skip && ((item?.GetType().IsValueType != false)
 || (value is System.Collections.IEnumerable)))
 				{
 					if (writeCount > 0)
@@ -238,7 +238,7 @@ namespace Node.Net.Internal
 			{
 				var item = dictionary[key];
 				var skip = false;
-				if (!object.ReferenceEquals(null, item) && IgnoreTypes.Contains(item.GetType()))
+				if (!(item is null) && IgnoreTypes.Contains(item.GetType()))
 				{
 					skip = true;
 				}
@@ -254,11 +254,11 @@ namespace Node.Net.Internal
 						writer.Write($"{GetLineFeed()}{GetIndent()}");
 					}
 					writingPrimitiveValue = true;
-					Write(writer, key.ToString());
+					Write(writer, key);
 					writingPrimitiveValue = false;
 
 					var tmp = dictionary[key];
-					if (tmp == null || tmp.GetType().IsPrimitive || (tmp is string))
+					if (tmp?.GetType().IsPrimitive != false || (tmp is string))
 					{
 						writer.Write(": ");
 						writingPrimitiveValue = true;

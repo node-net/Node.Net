@@ -22,19 +22,13 @@ namespace Node.Net.Internal
 					return instance;
 				}
 			}
-			if (targetType == typeof(IDictionary))
+			if (targetType == typeof(IDictionary) && source is Stream s)
 			{
-				if (source is Stream stream)
-				{
-					return JSONReader.Read(stream) as IDictionary;
-				}
+				return JSONReader.Read(s) as IDictionary;
 			}
-			if (targetType == typeof(IList))
+			if (targetType == typeof(IList) && source is Stream s2)
 			{
-				if (source is Stream stream)
-				{
-					return JSONReader.Read(stream) as IList;
-				}
+				return JSONReader.Read(s2) as IList;
 			}
 			return null;
 		}

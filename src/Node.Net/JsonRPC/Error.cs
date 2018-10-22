@@ -6,10 +6,10 @@ namespace Node.Net.JsonRPC
 	public enum ErrorCode
 	{
 		ParseError = -32700,
-		InvalidRequest = -32600,
-		MethodNotFound = -32601,
+		InternalError = -32603,
 		InvalidParameters = -32602,
-		InternalError = -32603
+		MethodNotFound = -32601,
+		InvalidRequest = -32600
 	}
 
 	public sealed class Error : Dictionary<string, dynamic>

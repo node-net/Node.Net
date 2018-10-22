@@ -90,8 +90,7 @@ namespace Node.Net.JsonRPC
 		}
 
 		public string Method { get { return this.Get<string>("method"); } }
-		public Dictionary<string, object> Parameters { get { return parameters; } }
-		private readonly Dictionary<string, object> parameters = new Dictionary<string, object>();
+		public Dictionary<string, object> Parameters { get; } = new Dictionary<string, object>();
 		public int Id { get { return this.Get<int>("id"); } }
 
 		public byte[] GetBytes()

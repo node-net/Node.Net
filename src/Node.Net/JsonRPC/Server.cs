@@ -23,11 +23,12 @@ namespace Node.Net.JsonRPC
 
 	public sealed class Server : IDisposable
 	{
-		public Server(Func<string,string> responder)
+		public Server(Func<string, string> responder)
 		{
 			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);
 			_responder = responder;
 		}
+
 		~Server()
 		{
 			Dispose(false);
@@ -82,7 +83,7 @@ namespace Node.Net.JsonRPC
 		}
 
 		private readonly Service.WebServer _webServer;
-		private readonly Func<string,string> _responder;
+		private readonly Func<string, string> _responder;
 		public int Port { get { return _webServer.Port; } }
 
 		public Uri Uri { get { return _webServer.Uri; } }

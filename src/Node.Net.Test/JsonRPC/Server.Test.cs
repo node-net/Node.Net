@@ -6,16 +6,6 @@ namespace Node.Net.JsonRPC
 	[TestFixture]
 	internal class ServerTest
 	{
-		/*
-		public Response Respond(Request request)
-		{
-			if (request.Method == "sayHello")
-			{
-				return new Response(request.Id,"hello");
-			}
-			return new Response(new Error(-32601, "Method not found"), request.Id);
-		}*/
-
 		[Test]
 		public void Default_Usage()
 		{
