@@ -28,7 +28,10 @@ namespace Node.Net.JsonRPC
 				catch (Exception e)
 				{
 					return new Response(
-						new Error((int)ErrorCode.InternalError, e.ToString()));
+						new Error((int)ErrorCode.InternalError,
+								  $"exception raised from method '{request.Method}.'," +
+								  e.ToString()),
+						request.Id);
 				}
 			}
 			return new Response(
