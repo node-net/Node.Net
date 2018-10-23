@@ -27,8 +27,11 @@ namespace Node.Net.JsonRPC
 					{
 						var request_data = (test_data[key] as IDictionary)?.ToJson();
 						var response_text = responder.Respond(request_data);
-						var response_json = (test_data[key.Replace("_request", "_response")] as IDictionary)?.ToJson();
-						Assert.AreEqual(response_json, response_text, key);
+						if (test_data.Contains(key.Replace("_request", "_response")))
+						{
+							var response_json = (test_data[key.Replace("_request", "_response")] as IDictionary)?.ToJson();
+							Assert.AreEqual(response_json, response_text, key);
+						}
 					}
 					catch (System.Exception e)
 					{
@@ -45,7 +48,8 @@ namespace Node.Net.JsonRPC
 				Methods = new Dictionary<string, IResponder>
 				{
 					{"say_hello", new JsonRPC.Function<string>(SayHello) },
-					{"action3",new JsonRPC.Action<string,string,string>(Action3) }
+					{"action3",new JsonRPC.Action<string,string,string>(Action3) },
+					{"bad_action",new JsonRPC.Action(BadAction) }
 				}
 			};
 		}
@@ -57,6 +61,10 @@ namespace Node.Net.JsonRPC
 
 		public static void Action3(string a, string b, string c)
 		{
+		}
+		public static void BadAction()
+		{
+			throw new System.InvalidOperationException("BadAction");
 		}
 	}
 }

@@ -32,5 +32,10 @@
       "code": -32601,
       "message": "method not found 'not_there'."
     }
+  },
+  "bad_action_request": {
+    "jsonrpc": "2.0",
+    "id": 666,
+    "method": "bad_action"
   }
 }
