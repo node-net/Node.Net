@@ -46,11 +46,23 @@
       "a": 2,
       "b": 3,
       "c": 10
-    },
-    "add_multiply_response": {
-      "jsonrpc": "2.0",
-      "id": 5,
-      "result": 60
     }
+  },
+  "add_multiply_response": {
+    "jsonrpc": "2.0",
+    "id": 5,
+    "result": 50
+
+  },
+  "add_multiply2_request": {
+    "jsonrpc": "2.0",
+    "id": 7,
+    "method": "add_multiply",
+    "params": [ 2, 3, 10 ]
+  },
+  "add_multiply2_response": {
+    "jsonrpc": "2.0",
+    "id": 7,
+    "result": 50
   }
-}
+} 

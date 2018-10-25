@@ -31,12 +31,12 @@
 
 		public Response Respond(Request request)
 		{
-			_action.Invoke(request.GetParameterArray(_parameter_names));
+			_action.Invoke(request.GetParameterArray<T>(_parameter_names));
 			return new Response(request.Id, null);
 		}
 
 		private readonly System.Action<T> _action;
-		private string[] _parameter_names = null;
+		private readonly string[] _parameter_names = null;
 	}
 
 	public sealed class Action<T1, T2> : IResponder
@@ -53,12 +53,12 @@
 
 		public Response Respond(Request request)
 		{
-			_action.Invoke(request.GetParameterArray(_parameter_names));
+			_action.Invoke(request.GetParameterArray<T1,T2>(_parameter_names));
 			return new Response(request.Id, null);
 		}
 
 		private readonly System.Action<T1, T2> _action;
-		private string[] _parameter_names = null;
+		private readonly string[] _parameter_names = null;
 	}
 
 	public sealed class Action<T1, T2, T3> : IResponder
@@ -76,13 +76,13 @@
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray(_parameter_names);
+			var parameters = request.GetParameterArray<T1,T2,T3>(_parameter_names);
 			_action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2]);
 			return new Response(request.Id, null);
 		}
 
 		private readonly System.Action<T1, T2, T3> _action;
-		private string[] _parameter_names = null;
+		private readonly string[] _parameter_names = null;
 	}
 
 	public sealed class Action<T1, T2, T3, T4> : IResponder
@@ -100,13 +100,13 @@
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray(_parameter_names);
+			var parameters = request.GetParameterArray<T1,T2,T3,T4>(_parameter_names);
 			_action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3]);
 			return new Response(request.Id, null);
 		}
 
 		private readonly System.Action<T1, T2, T3, T4> _action;
-		private string[] _parameter_names = null;
+		private readonly string[] _parameter_names = null;
 	}
 
 	public sealed class Action<T1, T2, T3, T4, T5> : IResponder
@@ -124,13 +124,13 @@
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray(_parameter_names);
+			var parameters = request.GetParameterArray<T1,T2,T3,T4,T5>(_parameter_names);
 			_action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4]);
 			return new Response(request.Id, null);
 		}
 
 		private readonly System.Action<T1, T2, T3, T4, T5> _action;
-		private string[] _parameter_names = null;
+		private readonly string[] _parameter_names = null;
 	}
 
 	public sealed class Action<T1, T2, T3, T4, T5, T6> : IResponder
@@ -147,12 +147,12 @@
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray(_parameter_names);
+			var parameters = request.GetParameterArray<T1,T2,T3,T4,T5,T6>(_parameter_names);
 			_action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4], (T6)parameters[4]);
 			return new Response(request.Id, null);
 		}
 
 		private readonly System.Action<T1, T2, T3, T4, T5, T6> _action;
-		private string[] _parameter_names = null;
+		private readonly string[] _parameter_names = null;
 	}
 }
