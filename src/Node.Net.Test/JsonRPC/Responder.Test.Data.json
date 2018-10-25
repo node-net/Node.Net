@@ -37,5 +37,20 @@
     "jsonrpc": "2.0",
     "id": 666,
     "method": "bad_action"
+  },
+  "add_multiply_request": {
+    "jsonrpc": "2.0",
+    "id": 5,
+    "method": "add_multiply",
+    "params": {
+      "a": 2,
+      "b": 3,
+      "c": 10
+    },
+    "add_multiply_response": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "result": 60
+    }
   }
 }

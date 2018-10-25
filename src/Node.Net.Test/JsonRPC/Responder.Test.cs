@@ -49,7 +49,8 @@ namespace Node.Net.JsonRPC
 				{
 					{"say_hello", new JsonRPC.Function<string>(SayHello) },
 					{"action3",new JsonRPC.Action<string,string,string>(Action3) },
-					{"bad_action",new JsonRPC.Action(BadAction) }
+					{"bad_action",new JsonRPC.Action(BadAction) },
+					{ "add_multiply",new JsonRPC.Function<int,int,int,int>(AddMultiply,"a","b","c") }
 				}
 			};
 		}
@@ -66,5 +67,6 @@ namespace Node.Net.JsonRPC
 		{
 			throw new System.InvalidOperationException("BadAction");
 		}
+		public static int AddMultiply(int a,int b,int c) { return (a + b) * c; }
 	}
 }
