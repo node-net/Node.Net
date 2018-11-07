@@ -8,6 +8,7 @@ using System.Xml;
 
 namespace Node.Net
 {
+	public enum JsonFormat{ Compact = 0, Pretty = 1 }
 	public class Writer : IWrite
 	{
 		public void Write(Stream stream, object value)
@@ -62,6 +63,11 @@ namespace Node.Net
 			filestream.Close();
 		}
 
+		public JsonFormat JsonFormat
+		{
+			get { return (JsonFormat)(int)jsonWriter.Format; }
+			set { jsonWriter.Format = (Internal.JSONFormat)(int)value; }
+		}
 		public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
 		private readonly Internal.JsonWriter jsonWriter = new Internal.JsonWriter();
 		private readonly Internal.BitmapSourceWriter bitmapSourceWriter = new Internal.BitmapSourceWriter();

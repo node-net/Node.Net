@@ -7,7 +7,7 @@ using static System.Environment;
 
 namespace Node.Net.Internal
 {
-	internal enum JSONFormat { Compact, Indented };
+	internal enum JSONFormat { Compact = 0, Indented = 1};
 
 	internal sealed class JsonWriter : IWrite
 	{
@@ -260,7 +260,7 @@ namespace Node.Net.Internal
 					var tmp = dictionary[key];
 					if (tmp?.GetType().IsPrimitive != false || (tmp is string))
 					{
-						writer.Write(": ");
+						writer.Write(":");
 						writingPrimitiveValue = true;
 						Write(writer, dictionary[key]);
 						writingPrimitiveValue = false;
