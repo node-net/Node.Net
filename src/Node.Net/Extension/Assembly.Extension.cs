@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 
 namespace Node.Net
@@ -49,6 +50,25 @@ namespace Node.Net
 				}
 			}
 			return null;
+		}
+
+		public static Dictionary<string, byte[]> GetManifestResourceData(this Assembly assembly, string prefix)
+		{
+			var data = new Dictionary<string, byte[]>();
+			foreach (var resource_name in assembly.GetManifestResourceNames())
+			{
+				if (resource_name.Contains(prefix))
+				{
+					var name = resource_name.Replace(prefix, string.Empty);
+					using (var memory = new MemoryStream())
+					{
+						var stream = assembly.GetManifestResourceStream(resource_name);
+						stream.CopyTo(memory);
+						data.Add(name, memory.ToArray());
+					}
+				}
+			}
+			return data;
 		}
 	}
 }
