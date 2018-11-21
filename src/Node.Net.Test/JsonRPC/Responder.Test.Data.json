@@ -64,5 +64,39 @@
     "jsonrpc": "2.0",
     "id": 7,
     "result": 50
+  },
+  "set_properties_request": {
+    "jsonrpc": "2.0",
+    "id": 8,
+    "method": "set_properties",
+    "params": [
+      "widget",
+      {
+        "name": "w",
+        "color": "blue"
+      }
+    ]
+  },
+  "set_properties_response": {
+    "jsonrpc": "2.0",
+    "id": 8,
+    "result": null
+  },
+  "get_properties_request": {
+    "jsonrpc": "2.0",
+    "id": 9,
+    "method": "get_properties",
+    "params": [
+      "widget",
+      ["name","color"]
+    ]
+  },
+  "get_properties_response": {
+    "jsonrpc": "2.0",
+    "id": 9,
+    "result": {
+      "name": "w",
+      "color": "blue"
+    }
   }
 } 
