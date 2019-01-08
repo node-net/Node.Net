@@ -14,11 +14,7 @@ namespace Node.Net
 		/// <summary>
 		/// CanExecuteChanged
 		/// </summary>
-		public event EventHandler CanExecuteChanged
-		{
-			add { return; }
-			remove { return; }
-		}
+		public event EventHandler CanExecuteChanged;
 
 		/// <summary>
 		/// Constructor

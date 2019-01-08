@@ -23,7 +23,7 @@
 			_action = action;
 		}
 
-		public Action(System.Action<T> action,string a)
+		public Action(System.Action<T> action, string a)
 		{
 			_action = action;
 			_parameter_names = new string[] { a };
@@ -45,15 +45,16 @@
 		{
 			_action = action;
 		}
-		public Action(System.Action<T1,T2> action, string a,string b)
+
+		public Action(System.Action<T1, T2> action, string a, string b)
 		{
 			_action = action;
-			_parameter_names = new string[] { a,b };
+			_parameter_names = new string[] { a, b };
 		}
 
 		public Response Respond(Request request)
 		{
-			_action.Invoke(request.GetParameterArray<T1,T2>(_parameter_names));
+			_action.Invoke(request.GetParameterArray<T1, T2>(_parameter_names));
 			return new Response(request.Id, null);
 		}
 
@@ -68,15 +69,15 @@
 			_action = action;
 		}
 
-		public Action(System.Action<T1, T2, T3> action, string a,string b,string c)
+		public Action(System.Action<T1, T2, T3> action, string a, string b, string c)
 		{
 			_action = action;
-			_parameter_names = new string[] { a,b,c };
+			_parameter_names = new string[] { a, b, c };
 		}
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray<T1,T2,T3>(_parameter_names);
+			var parameters = request.GetParameterArray<T1, T2, T3>(_parameter_names);
 			_action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2]);
 			return new Response(request.Id, null);
 		}
@@ -92,15 +93,15 @@
 			_action = action;
 		}
 
-		public Action(System.Action<T1, T2, T3, T4> action, string a, string b, string c,string d)
+		public Action(System.Action<T1, T2, T3, T4> action, string a, string b, string c, string d)
 		{
 			_action = action;
-			_parameter_names = new string[] { a, b, c,d };
+			_parameter_names = new string[] { a, b, c, d };
 		}
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray<T1,T2,T3,T4>(_parameter_names);
+			var parameters = request.GetParameterArray<T1, T2, T3, T4>(_parameter_names);
 			_action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3]);
 			return new Response(request.Id, null);
 		}
@@ -116,15 +117,15 @@
 			_action = action;
 		}
 
-		public Action(System.Action<T1, T2, T3, T4, T5> action, string a, string b, string c, string d,string e)
+		public Action(System.Action<T1, T2, T3, T4, T5> action, string a, string b, string c, string d, string e)
 		{
 			_action = action;
-			_parameter_names = new string[] { a, b, c, d,e };
+			_parameter_names = new string[] { a, b, c, d, e };
 		}
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray<T1,T2,T3,T4,T5>(_parameter_names);
+			var parameters = request.GetParameterArray<T1, T2, T3, T4, T5>(_parameter_names);
 			_action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4]);
 			return new Response(request.Id, null);
 		}
@@ -139,15 +140,16 @@
 		{
 			_action = action;
 		}
-		public Action(System.Action<T1, T2, T3, T4, T5,T6> action, string a, string b, string c, string d, string e,string f)
+
+		public Action(System.Action<T1, T2, T3, T4, T5, T6> action, string a, string b, string c, string d, string e, string f)
 		{
 			_action = action;
-			_parameter_names = new string[] { a, b, c, d, e,f };
+			_parameter_names = new string[] { a, b, c, d, e, f };
 		}
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray<T1,T2,T3,T4,T5,T6>(_parameter_names);
+			var parameters = request.GetParameterArray<T1, T2, T3, T4, T5, T6>(_parameter_names);
 			_action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4], (T6)parameters[4]);
 			return new Response(request.Id, null);
 		}

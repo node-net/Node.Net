@@ -1,10 +1,7 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Node.Net.Test
 {
@@ -27,7 +24,7 @@ namespace Node.Net.Test
 				Assert.AreEqual("{\"name\":\"test\"}", json);
 			}
 
-			writer = new Writer { JsonFormat = JsonFormat.Pretty};
+			writer = new Writer { JsonFormat = JsonFormat.Pretty };
 			using (var memory = new MemoryStream())
 			{
 				writer.Write(memory, data);

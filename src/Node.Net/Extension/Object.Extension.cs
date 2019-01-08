@@ -258,16 +258,35 @@ namespace Node.Net
 			Internal.MetaData.Default.Clean();
 		}
 
-		public static T Get<T>(this object[] items,int index)
+		public static T Get<T>(this object[] items, int index)
 		{
 			var item = items[index];
-			if(item != null)
+			if (item != null)
 			{
-				if (typeof(T).IsAssignableFrom(item.GetType())) return (T)item;
-				if (typeof(T) == typeof(int)) return (T)(object)Convert.ToInt32(item);
-				if (typeof(T) == typeof(long)) return (T)(object)Convert.ToInt64(item);
-				if (typeof(T) == typeof(float)) return (T)(object)Convert.ToSingle(item);
-				if (typeof(T) == typeof(double)) return (T)(object)Convert.ToDouble(item);
+				if (typeof(T).IsAssignableFrom(item.GetType()))
+				{
+					return (T)item;
+				}
+
+				if (typeof(T) == typeof(int))
+				{
+					return (T)(object)Convert.ToInt32(item);
+				}
+
+				if (typeof(T) == typeof(long))
+				{
+					return (T)(object)Convert.ToInt64(item);
+				}
+
+				if (typeof(T) == typeof(float))
+				{
+					return (T)(object)Convert.ToSingle(item);
+				}
+
+				if (typeof(T) == typeof(double))
+				{
+					return (T)(object)Convert.ToDouble(item);
+				}
 			}
 			return default(T);
 		}

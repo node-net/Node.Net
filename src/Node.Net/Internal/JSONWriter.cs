@@ -7,7 +7,7 @@ using static System.Environment;
 
 namespace Node.Net.Internal
 {
-	internal enum JSONFormat { Compact = 0, Indented = 1};
+	internal enum JSONFormat { Compact = 0, Indented = 1 };
 
 	internal sealed class JsonWriter : IWrite
 	{
