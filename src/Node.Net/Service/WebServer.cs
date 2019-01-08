@@ -18,6 +18,7 @@ namespace Node.Net.Service
 			_listener = listener;
 			_contextAction = action;
 		}
+
 		public WebServer(Protocol protocol, int port)
 		{
 			_port = GetNextAvailablePort(port);

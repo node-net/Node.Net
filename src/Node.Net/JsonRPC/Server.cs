@@ -28,7 +28,8 @@ namespace Node.Net.JsonRPC
 			_webServer = new Service.WebServer(Service.Protocol.HTTP, 5000, ContextAction);
 			_responder = responder;
 		}
-		public Server(HttpListener listener,Func<string,string> responder)
+
+		public Server(HttpListener listener, Func<string, string> responder)
 		{
 			_webServer = new Service.WebServer(listener, ContextAction);
 			_responder = responder;

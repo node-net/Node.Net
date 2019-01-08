@@ -21,7 +21,8 @@
 		{
 			_function = function;
 		}
-		public Function(System.Func<T1, T2> function,string nameA)
+
+		public Function(System.Func<T1, T2> function, string nameA)
 		{
 			_function = function;
 			_parameter_names = new string[] { nameA };
@@ -43,7 +44,8 @@
 		{
 			_function = function;
 		}
-		public Function(System.Func<T1, T2, T3> function,string a,string b)
+
+		public Function(System.Func<T1, T2, T3> function, string a, string b)
 		{
 			_function = function;
 			_parameter_names = new string[] { a, b };
@@ -51,7 +53,7 @@
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray<T1,T2>(_parameter_names);
+			var parameters = request.GetParameterArray<T1, T2>(_parameter_names);
 			return new Response(request.Id, _function((T1)parameters[0], (T2)parameters[1]));
 		}
 
@@ -65,6 +67,7 @@
 		{
 			_function = function;
 		}
+
 		public Function(System.Func<T1, T2, T3, T4> function, string a, string b, string c)
 		{
 			_function = function;
@@ -81,8 +84,6 @@
 				parameters.Get<T3>(2)));
 		}
 
-		
-
 		private readonly System.Func<T1, T2, T3, T4> _function;
 		private readonly string[] _parameter_names = null;
 	}
@@ -93,7 +94,8 @@
 		{
 			_function = function;
 		}
-		public Function(System.Func<T1, T2, T3, T4, T5> function,string a,string b,string c,string d)
+
+		public Function(System.Func<T1, T2, T3, T4, T5> function, string a, string b, string c, string d)
 		{
 			_function = function;
 			_parameter_names = new string[] { a, b, c, d };
@@ -101,7 +103,7 @@
 
 		public Response Respond(Request request)
 		{
-			var parameters = request.GetParameterArray<T1,T2,T3,T4>(_parameter_names);
+			var parameters = request.GetParameterArray<T1, T2, T3, T4>(_parameter_names);
 			return new Response(request.Id, _function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3]));
 		}
 

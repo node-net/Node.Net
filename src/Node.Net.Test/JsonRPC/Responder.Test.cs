@@ -63,10 +63,15 @@ namespace Node.Net.JsonRPC
 		public static void Action3(string a, string b, string c)
 		{
 		}
+
 		public static void BadAction()
 		{
 			throw new System.InvalidOperationException("BadAction");
 		}
-		public static int AddMultiply(int a,int b,int c) { return (a + b) * c; }
+
+		public static int AddMultiply(int a, int b, int c)
+		{
+			return (a + b) * c;
+		}
 	}
 }

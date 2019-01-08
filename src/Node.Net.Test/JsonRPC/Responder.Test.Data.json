@@ -52,7 +52,6 @@
     "jsonrpc": "2.0",
     "id": 5,
     "result": 50
-
   },
   "add_multiply2_request": {
     "jsonrpc": "2.0",
@@ -65,4 +64,4 @@
     "id": 7,
     "result": 50
   }
-} 
+}

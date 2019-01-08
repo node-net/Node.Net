@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Converters\HiddenWhenNull.Test.cs" />
     <Compile Include="DelegateCommand.Test.cs" />
+    <Compile Include="Extension\Action.Extension.Test.cs" />
     <Compile Include="Extension\Assembly.Extension.Test.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Extension\IDictionary.Extension.Test.cs" />
