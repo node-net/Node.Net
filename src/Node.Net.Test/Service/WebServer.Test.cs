@@ -7,7 +7,7 @@ namespace Node.Net.Service
 	[TestFixture, Category(nameof(WebServer))]
 	internal class WebServerTest
 	{
-		[Test]
+		[Test,Explicit]
 		public void Default_Usage()
 		{
 			using (var server = new WebServer(Protocol.HTTP, 5000))

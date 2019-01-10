@@ -21,6 +21,10 @@ namespace Node.Net.JsonRPC
 
 			foreach (string key in test_data.Keys)
 			{
+				if(key.Contains("get_properties"))
+				{
+					int x = 0;
+				}
 				if (key.Contains("_request"))
 				{
 					try
@@ -50,7 +54,9 @@ namespace Node.Net.JsonRPC
 					{"say_hello", new JsonRPC.Function<string>(SayHello) },
 					{"action3",new JsonRPC.Action<string,string,string>(Action3) },
 					{"bad_action",new JsonRPC.Action(BadAction) },
-					{ "add_multiply",new JsonRPC.Function<int,int,int,int>(AddMultiply,"a","b","c") }
+					{ "add_multiply",new JsonRPC.Function<int,int,int,int>(AddMultiply,"a","b","c") },
+					{"set_properties",new JsonRPC.Action<string,IDictionary<string,string>>(SetProperties) },
+					{"get_properties",new JsonRPC.Function<string,string[],IDictionary<string,string>>(GetProperties) }
 				}
 			};
 		}
@@ -63,15 +69,36 @@ namespace Node.Net.JsonRPC
 		public static void Action3(string a, string b, string c)
 		{
 		}
-
 		public static void BadAction()
 		{
 			throw new System.InvalidOperationException("BadAction");
 		}
+		public static int AddMultiply(int a,int b,int c) { return (a + b) * c; }
 
-		public static int AddMultiply(int a, int b, int c)
+		public static void SetProperties(string name,IDictionary<string,string> properties)
 		{
-			return (a + b) * c;
+			if (!_properties.ContainsKey(name)) { _properties.Add(name, new Dictionary<string, string>()); }
+
+			foreach(var property in properties.Keys)
+			{
+				_properties[name][property] = properties[property];
+			}
 		}
+
+		public static IDictionary<string,string> GetProperties(string name,string[] property_names)
+		{
+			var result = new Dictionary<string, string>();
+			foreach(var property_name in property_names)
+			{
+				string value = string.Empty;
+				if(_properties.ContainsKey(name) && _properties[name].ContainsKey(property_name))
+				{
+					value = _properties[name][property_name];
+					result.Add(property_name, value);
+				}
+			}
+			return result;
+		}
+		public static Dictionary<string, Dictionary<string, string>> _properties = new Dictionary<string, Dictionary<string, string>>();
 	}
 }
