@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Node.Net
@@ -258,37 +259,37 @@ namespace Node.Net
 			Internal.MetaData.Default.Clean();
 		}
 
-		public static T Get<T>(this object[] items, int index)
+		public static T Get<T>(this object[] items,int index)
 		{
 			var item = items[index];
-			if (item != null)
+			if(item != null)
 			{
-				if (typeof(T).IsAssignableFrom(item.GetType()))
-				{
-					return (T)item;
-				}
-
-				if (typeof(T) == typeof(int))
-				{
-					return (T)(object)Convert.ToInt32(item);
-				}
-
-				if (typeof(T) == typeof(long))
-				{
-					return (T)(object)Convert.ToInt64(item);
-				}
-
-				if (typeof(T) == typeof(float))
-				{
-					return (T)(object)Convert.ToSingle(item);
-				}
-
-				if (typeof(T) == typeof(double))
-				{
-					return (T)(object)Convert.ToDouble(item);
-				}
+				if (typeof(T).IsAssignableFrom(item.GetType())) return (T)item;
+				if (typeof(T) == typeof(int)) return (T)(object)System.Convert.ToInt32(item);
+				if (typeof(T) == typeof(long)) return (T)(object)System.Convert.ToInt64(item);
+				if (typeof(T) == typeof(float)) return (T)(object)System.Convert.ToSingle(item);
+				if (typeof(T) == typeof(double)) return (T)(object)System.Convert.ToDouble(item);
+				if (typeof(T) == typeof(IDictionary<string, string>)) return Convert<T>(item);
 			}
 			return default(T);
+		}
+
+		public static T Convert<T>(object value)
+		{
+			var dictionary = value as IDictionary;
+			if (typeof(T) == typeof(IDictionary<string, string>))
+			{
+				if (dictionary != null)
+				{
+					var result = new Dictionary<string, string>();
+					foreach (string key in dictionary.Keys)
+					{
+						result.Add(key, dictionary[key].ToString());
+					}
+					return (T)(object)result;
+				}
+			}
+			return (T)value;
 		}
 	}
 }

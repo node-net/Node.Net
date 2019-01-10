@@ -83,5 +83,7 @@ namespace Node.Net
 			var parameters = request.GetParameterArray(names);
 			return new object[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2), parameters.Get<T4>(3), parameters.Get<T5>(4), parameters.Get<T6>(5) };
 		}
+
+		
 	}
 }
