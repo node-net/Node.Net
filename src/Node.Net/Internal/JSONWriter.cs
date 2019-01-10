@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
 using static System.Environment;
 
@@ -94,6 +95,10 @@ namespace Node.Net.Internal
 			else if (value is IEnumerable)
 			{
 				WriteIEnumerable(writer, value);
+			}
+			else if(value is ISerializable)
+			{
+				WriteISerializable(writer, value as ISerializable);
 			}
 			else
 			{
@@ -281,6 +286,12 @@ namespace Node.Net.Internal
 			}
 
 			writer.Write($"{GetIndent()}}}");
+		}
+
+		private void WriteISerializable(TextWriter writer, ISerializable serializable)
+		{
+			var info = serializable.GetSerializationInfo();
+			WriteIDictionary(writer, info.GetPersistentData());
 		}
 	}
 }
