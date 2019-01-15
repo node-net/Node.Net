@@ -35,7 +35,6 @@ namespace Node.Net.Test
 			}
 		}
 
-		
 		[Test]
 		public static void WriteISerializableJson()
 		{

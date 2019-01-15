@@ -469,7 +469,7 @@ namespace Node.Net
 			foreach (var word in words)
 			{
 				var svalues = word.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-				if (svalues.Length == 2)
+				if (svalues.Length > 1)
 				{
 					results.Add(new Point(Convert.ToSingle(svalues[0]), Convert.ToSingle(svalues[1])));
 				}
