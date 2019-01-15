@@ -78,6 +78,9 @@ namespace Node.Net.Test
 		{
 			var points = PointExtension.ParsePoints("0,0 1,0");
 			Assert.AreEqual(2, points.Length);
+
+			points = PointExtension.ParsePoints("0,0,0 1,0,0");
+			Assert.AreEqual(2, points.Length);
 		}
 
 		[Test]
