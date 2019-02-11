@@ -12,6 +12,12 @@ namespace Node.Net.Test.Extension
 		{
 			var rotations = new Dictionary<string, string>().GetRotations();
 			Assert.AreEqual(0, rotations.Z, "rotations.Z");
+
+			rotations = new Dictionary<string, string>
+			{
+				{ "Orientation","-180 deg" }
+			}.GetRotations();
+			Assert.AreEqual(-180.0, rotations.Z, "rotations.Z");
 		}
 
 		[Test]
