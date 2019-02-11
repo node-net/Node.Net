@@ -60,7 +60,7 @@ namespace Node.Net
 			localX.Z = 0.0;
 			var angle = Vector3D.AngleBetween(localX, new Vector3D(1, 0, 0));
 			var rotationZ = localX.Y < 0.0 ? angle * -1.0 : angle;
-			if (Abs(rotationZ - 180.0) > 0.01 && Abs(localX.Y) < 0.0001)
+			if ((Abs(rotationZ) - 180.0) > 0.01 && Abs(localX.Y) < 0.0001)
 			{
 				rotationZ = 0.0;
 			}
