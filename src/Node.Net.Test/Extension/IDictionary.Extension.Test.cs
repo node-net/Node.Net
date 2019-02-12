@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net.Test.Extension
 {
@@ -68,6 +69,32 @@ namespace Node.Net.Test.Extension
 				{"X" ,"2 m" }
 			};
 			Assert.AreEqual(2.0, data.GetLengthMeters("X"));
+		}
+
+		[Test]
+		public void GetLocalToParent()
+		{
+			var data = new Dictionary<string, object>
+			{
+				{"X", "10 m" },
+				{"Y","1 m" }
+			};
+
+			var localToParent = data.GetLocalToParent();
+			var origin = localToParent.Transform(new System.Windows.Media.Media3D.Point3D(0, 0, 0));
+			Assert.AreEqual(10, origin.X);
+			Assert.AreEqual(1, origin.Y);
+
+			var mstring = localToParent.ToString();
+			Assert.AreEqual(32, mstring.Length);
+
+			var m = Matrix3D.Parse(mstring);
+			var origin2 = m.Transform(new System.Windows.Media.Media3D.Point3D(0, 0, 0));
+			Assert.AreEqual(10, origin2.X);
+			Assert.AreEqual(1, origin2.Y);
+
+			var i = Matrix3D.Parse("Identity");
+			Assert.True(i.IsIdentity);
 		}
 	}
 }
