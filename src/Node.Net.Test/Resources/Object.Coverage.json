@@ -5,6 +5,7 @@
   "int_0": 0,
   "float_1": 1.23,
   "null": null,
+  "string_symbol": "0°",
   "array_0": [ 0, 1, 2, 3 ],
   "array_empty": [],
   "objectA": {},
@@ -16,7 +17,7 @@
     },
     "bar1": {
       "type": "bar",
-      "id" : "1"
+      "id": "1"
     }
   }
 }
