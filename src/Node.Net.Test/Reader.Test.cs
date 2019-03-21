@@ -50,11 +50,11 @@ namespace Node.Net.Test
 			// https://stackoverflow.com/questions/19176024/how-to-escape-special-characters-in-building-a-json-string
 			var data = new Dictionary<string, object>
 			{
-				{"User","Domain\\User" }
+				{"User",@"Domain\User" }
 			};
 
 			var json = data.ToJson();
-			Assert.True(json.Contains(@"Domain\u005cUser"), "json contains 'Domain\u005cUser'");
+			Assert.True(json.Contains(@"Domain\User"), "json contains 'Domain\\User'");
 
 			using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))
 			{
