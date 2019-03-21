@@ -119,9 +119,9 @@ namespace Node.Net.Internal
 		private void WriteString(System.IO.TextWriter writer, object value)
 		{
 			var svalue = value.ToString();
-			var escaped_value = svalue;
+			//var escaped_value = svalue;
 			// Escape '\' first
-			//var escaped_value = svalue.Replace("\\", "\\u005c");
+			var escaped_value = svalue.Replace("\\", "\\u005c");
 			// Escape '"'
 			escaped_value = escaped_value.Replace("\"", "\\u0022");
 			if (writingPrimitiveValue)
