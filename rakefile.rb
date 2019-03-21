@@ -1,4 +1,4 @@
-VERSION='1.2.51'
+VERSION='1.2.52'
 SLN_FILES=FileList.new('Node.Net.NETFramework4.6.sln')
 require 'dev'
 CLOBBER.include('**/obj','bin','TestResults')
