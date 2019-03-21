@@ -84,6 +84,14 @@ namespace Node.Net
 					{
 						done = true;
 					}
+					// Added 3/21/2019 to correct parsing of \\ embedded in a json string
+					else
+					{
+						if (iChar == iBackslash)
+						{
+							builder.Append((char)iChar);
+						}
+					}
 				}
 			}
 			if (builder.Length == 0)
