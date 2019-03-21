@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Node.Net.Test
 {
@@ -39,6 +41,26 @@ namespace Node.Net.Test
 				{
 					d.Save(memory);
 				}
+			}
+		}
+
+		[Test]
+		public void PreserveBackslash()
+		{
+			var data = new Dictionary<string, object>
+			{
+				{"User","Domain\\User" }
+			};
+
+			var json = data.ToJson();
+			Assert.True(json.Contains(@"Domain\u005cUser"), "json contains 'Domain\u005cUser'");
+
+			using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+			{
+				var d = new Reader().Read<IDictionary>(memory);
+				Assert.True(d.Contains("User"));
+				var user = d["User"].ToString();
+				Assert.AreEqual(@"Domain\User", d["User"].ToString());
 			}
 		}
 	}

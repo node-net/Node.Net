@@ -5,7 +5,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DebugType>Full</DebugType>
     <PackageId>Node.Net</PackageId>
-    <PackageVersion>1.2.49</PackageVersion>
+    <PackageVersion>1.2.50</PackageVersion>
     <Authors>Lou Parslow</Authors>
     <Description>Persistence Framework</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

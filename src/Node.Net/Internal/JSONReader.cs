@@ -166,7 +166,9 @@ namespace Node.Net.Internal
 			reader.EatWhiteSpace();
 			string stringResult = reader.SeekIgnoreEscaped((char)reader.Read());
 			reader.Read(); // consume escaped character
-			return stringResult.Replace(unicodeDoubleQuotes, doubleQuotes).Replace(unicodeBackslash, backslash);
+			return stringResult.Replace(unicodeDoubleQuotes, doubleQuotes)
+				.Replace(unicodeBackslash, backslash)
+				.Replace("u005c",backslash);
 		}
 
 		private object ReadArray(System.IO.TextReader reader)
