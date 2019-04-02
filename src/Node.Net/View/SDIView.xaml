@@ -8,8 +8,23 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <local:SDIOpenView Visibility="{Binding Document,Converter={x:Static converter:VisibleWhenNull.Default}}" />
-        <Label Content="{Binding Views.SelectedItem}" Visibility="{Binding Document,Converter={x:Static converter:HiddenWhenNull.Default}}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <ToolBar>
+            <Button Command="{Binding OpenCommand}">Open</Button>
+        </ToolBar>
+        <Grid Grid.Row="1">
+            <local:SDIOpenView Visibility="{Binding Document,Converter={x:Static converter:VisibleWhenNull.Default}}" />
+            <Label Content="{Binding Views.SelectedItem}" Visibility="{Binding Document,Converter={x:Static converter:HiddenWhenNull.Default}}"
                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+        </Grid>
     </Grid>
 </UserControl>

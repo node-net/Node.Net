@@ -1,4 +1,4 @@
-VERSION='1.2.54'
+VERSION='1.2.55'
 SLN_FILES=FileList.new('Node.Net.NETFramework4.6.sln')
 require 'dev'
 CLOBBER.include('**/obj','bin','TestResults')
@@ -21,6 +21,10 @@ task :coverage do
 		puts `#{opencover} -target:#{runner} -targetargs:"Node.Net.Test.dll" -register:user -output:coverage.opencover.xml -filter:"+[Node.Net.*]*"`
 	end
 end
+
+#task :package => [:build] do
+#	puts `nuget pack Node.Net/Node.Net.csproj -Symbols -SymbolPackageFormat snupkg`
+#end
 
 task :publish  do
 	list=`nuget list Node.Net -Source nuget.org`
