@@ -54,8 +54,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Dictionary.cs" />
+    <Compile Include="Collections\Items.cs" />
     <Compile Include="Converters\HiddenWhenNull.cs" />
+    <Compile Include="Converters\HiddenWhenZero.cs" />
     <Compile Include="Converters\VisibleWhenFalse.cs" />
+    <Compile Include="Converters\VisibleWhenNull.cs" />
     <Compile Include="Converters\VisibleWhenTrue.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="Exceptions\UnrecognizedSignatureException.cs" />
@@ -123,13 +127,37 @@
     <Compile Include="JsonRPC\Server.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Reader.cs" />
+    <Compile Include="View\JsonView.xaml.cs">
+      <DependentUpon>JsonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SDIOpenView.xaml.cs">
+      <DependentUpon>SDIOpenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SDIViewVM.cs" />
     <Compile Include="Service\WebResponder.cs" />
     <Compile Include="Service\WebServer.cs" />
+    <Compile Include="View\SDIView.xaml.cs">
+      <DependentUpon>SDIView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WordReader.cs" />
     <Compile Include="Writer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\JsonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SDIOpenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SDIView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,16 +1,26 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
+
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Globalization;
 
 namespace Node.Net.Converters
 {
 	/// <summary>
 	/// Converts an object to Visibilty.Hidden when null, otherwise Visibility.Visible
 	/// </summary>
-	public class HiddenWhenNull : IValueConverter
+	public class VisibleWhenNull : IValueConverter
 	{
-		public static HiddenWhenNull Default { get; } = new HiddenWhenNull();
+		public static VisibleWhenNull Default { get; } = new VisibleWhenNull();
 		/// <summary>
 		/// Convert
 		/// </summary>
@@ -21,7 +31,7 @@ namespace Node.Net.Converters
 		/// <returns></returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return value == null ? Visibility.Hidden : Visibility.Visible;
+			return value == null ? Visibility.Visible : Visibility.Hidden;
 		}
 
 		/// <summary>
