@@ -200,7 +200,7 @@ namespace Node.Net.View
 
 		#region PropertyChanged
 		public event PropertyChangedEventHandler PropertyChanged;
-		private void OnPropertyChanged([CallerMemberName]string caller = null)
+		protected void OnPropertyChanged([CallerMemberName]string caller = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(caller));
 		}
