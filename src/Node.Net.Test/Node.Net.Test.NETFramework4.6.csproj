@@ -75,6 +75,7 @@
     <Compile Include="Log.Test.cs" />
     <Compile Include="Reader.Test.cs" />
     <Compile Include="Service\WebServer.Test.cs" />
+    <Compile Include="View\SDIView.Test.cs" />
     <Compile Include="Widget.cs" />
     <Compile Include="Writer.Test.cs" />
   </ItemGroup>
