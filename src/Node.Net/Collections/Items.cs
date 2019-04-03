@@ -15,6 +15,13 @@ namespace Node.Net.Collections
 {
 	public class Items<T> : ObservableCollection<T>
 	{
+        public Items() { }
+        public Items(IEnumerable<T> items)
+        {
+            foreach(var item in items) { Add(item); }
+            if (Count > 0) SelectedItem = this[0];
+        }
+
 		/// <summary>
 		/// The currently selected item
 		/// </summary>
@@ -31,6 +38,19 @@ namespace Node.Net.Collections
 
 		private T _selectedItem;
 
+        private string GetName(T item)
+        {
+            if (item != null)
+            {
+                var nameProperty = item.GetType().GetProperty("Name");
+                if (nameProperty != null)
+                {
+                    return nameProperty.GetValue(SelectedItem).ToString();
+                }
+            }
+            return string.Empty;
+        }
+
 		/// <summary>
 		/// Names of items
 		/// </summary>
@@ -39,13 +59,9 @@ namespace Node.Net.Collections
 			get
 			{
 				var names = new List<string>();
-				var nameProperty = typeof(T).GetProperty("Name");
-				if (nameProperty != null)
+				foreach (var item in this)
 				{
-					foreach (var item in this)
-					{
-						names.Add(nameProperty.GetValue(item).ToString());
-					}
+                    names.Add(GetName(item));
 				}
 				return names;
 			}
@@ -58,31 +74,15 @@ namespace Node.Net.Collections
 		{
 			get
 			{
-				if (SelectedItem != null)
-				{
-					var nameProperty = SelectedItem.GetType().GetProperty("Name");
-					if (nameProperty != null)
-					{
-						return nameProperty.GetValue(SelectedItem).ToString();
-					}
-				}
-				return string.Empty;
+                return GetName(SelectedItem);
 			}
 			set
 			{
-				var nameProperty = typeof(T).GetProperty("Name");
-				if (nameProperty != null)
-				{
-					foreach (T item in this)
-					{
-						var cur_name = nameProperty.GetValue(item).ToString();
-						if (cur_name == value)
-						{
-							SelectedItem = item;
-							break;
-						}
-					}
-				}
+                foreach(T item in this)
+                {
+                    if (GetName(item) == value) SelectedItem = item;
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedName)));
+                }
 			}
 		}
 
