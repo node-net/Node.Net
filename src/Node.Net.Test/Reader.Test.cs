@@ -73,5 +73,17 @@ namespace Node.Net.Test
 				Assert.AreEqual(@"Domain\User", d["User"].ToString());
 			}
 		}
+
+        [Test]
+        public void PreserveBackslash2()
+        {
+            var json = "{ \"path\" : \"C:\\\\tmp\" }";
+            var data = new Reader()
+                .Read<IDictionary>(new MemoryStream(Encoding.UTF8.GetBytes(json)));
+            Assert.True(data.Contains("path"),"data.Contains 'path'");
+            var path = data["path"].ToString();
+            Assert.True(path.Contains("\\"), "path contains \\");
+            Assert.AreEqual("C:\\tmp", path);
+        }
 	}
 }
