@@ -70,6 +70,12 @@ namespace Node.Net
 			set { jsonWriter.Format = (Internal.JSONFormat)(int)value; }
 		}
 
+        public string IndentString
+        {
+            get { return jsonWriter.IndentString; }
+            set { jsonWriter.IndentString = value; }
+        }
+
 		public Dictionary<Type, Action<Stream, object>> WriteFunctions { get; set; }
 		private readonly Internal.JsonWriter jsonWriter = new Internal.JsonWriter();
 		private readonly Internal.BitmapSourceWriter bitmapSourceWriter = new Internal.BitmapSourceWriter();

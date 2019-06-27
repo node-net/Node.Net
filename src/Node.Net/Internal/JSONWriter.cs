@@ -14,6 +14,7 @@ namespace Node.Net.Internal
 	{
 		public JSONFormat Format { get; set; } = JSONFormat.Indented;
 		private int IndentLevel;
+        public string IndentString { get; set; } = "  ";
 		public List<Type> IgnoreTypes { get; set; } = new List<Type>();
 		private bool WritingArray { get; set; } = false;
 
@@ -54,7 +55,7 @@ namespace Node.Net.Internal
 			if (Format == JSONFormat.Indented)
 			{
 				var sb = new StringBuilder();
-				while (sb.Length < IndentLevel * 2) { sb.Append(" "); }
+				while (sb.Length < IndentLevel * 2) { sb.Append(IndentString); }
 				return sb.ToString();
 			}
 			return string.Empty;

@@ -38,14 +38,14 @@ namespace Node.Net.Collections
 
 		private T _selectedItem;
 
-        private string GetName(T item)
+        private static string GetName(T item)
         {
             if (item != null)
             {
                 var nameProperty = item.GetType().GetProperty("Name");
                 if (nameProperty != null)
                 {
-                    return nameProperty.GetValue(SelectedItem).ToString();
+                    return nameProperty.GetValue(item).ToString();
                 }
             }
             return string.Empty;
