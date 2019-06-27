@@ -98,5 +98,8 @@ namespace Node.Net.Test
 			var centroid = points.GetCentroid();
 			Assert.AreEqual(2.5, centroid.X);
 		}
+
+        
+  
 	}
 }
