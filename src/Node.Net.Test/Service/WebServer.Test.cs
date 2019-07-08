@@ -14,6 +14,7 @@ namespace Node.Net.Service
 			{
 				var port = server.Port;
 				server.Start();
+                Assert.NotNull(server.Listener, "server.Listener");
 
 				var uri = server.Uri;
 				Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
