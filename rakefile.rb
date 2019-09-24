@@ -3,7 +3,7 @@ CLEAN.include('**/obj')
 
 task :default do
     PROJECT.info
-    target='Quemulus.Standard.Test/obj/Quemulus.Standard.Test.csproj.nuget.cache'
+    target="#{PROJECT.name}.#{PROJECT.version}.nupkg"
     CLEAN.exclude(target)
     if(PROJECT.last_modified_filename != target)
         PROJECT.run(["MsBuild.exe /t:Rebuild Node.Net.NETFramework4.6.sln /p:Configuration=Release",
