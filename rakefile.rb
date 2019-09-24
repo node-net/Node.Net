@@ -6,7 +6,9 @@ task :default do
     target="#{PROJECT.name}.#{PROJECT.version}.nupkg"
     CLEAN.exclude(target)
     if(PROJECT.last_modified_filename != target)
-        PROJECT.run(["MsBuild.exe /t:Rebuild Node.Net.NETFramework4.6.sln /p:Configuration=Release",
+        PROJECT.run([
+            "nuget restore Node.Net.NETFramework4.6.sln",
+            "MsBuild.exe /t:Rebuild Node.Net.NETFramework4.6.sln /p:Configuration=Release",
                     "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.csproj -c Release -v normal",
                     "nuget pack Node.Net.nuspec"])
 
