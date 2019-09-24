@@ -10,10 +10,7 @@ task :default do
                     "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.csproj -c Release -v normal",
                     "nuget pack Node.Net.nuspec"])
 
-        #list=`nuget list Node.Net -Source nuget.org`
-	    #if(!list.include?("Node.Net #{VERSION}"))
-		    puts `nuget push Node.Net.#{PROJECT.version}.nupkg -Source https://api.nuget.org/v3/index.json`
-	    #end
+		puts `nuget push Node.Net.#{PROJECT.version}.nupkg -Source https://api.nuget.org/v3/index.json`
         PROJECT.commit.tag.push.pull
     end
     PROJECT.summary
