@@ -2,6 +2,7 @@ require 'raykit'
 CLEAN.include('**/obj')
 
 task :default do
+	PROJECT.verbose = true
     PROJECT.info
     target="#{PROJECT.name}.#{PROJECT.version}.nupkg"
     CLEAN.exclude(target)
