@@ -112,7 +112,7 @@ namespace Node.Net
 				}
 				if (camera is OrthographicCamera orthographicCamera)
 				{
-					orthographicCamera.Width = orthographicCamera.Width * factor;
+					orthographicCamera.Width *= factor;
 				}
 			}
 		}

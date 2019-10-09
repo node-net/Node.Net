@@ -39,7 +39,7 @@ namespace Node.Net.Internal
 				return null;
 			}
 
-			if (ParentFactory != null && source != null && source.Contains("Type"))
+			if (ParentFactory != null && source?.Contains("Type") == true)
 			{
 				var type = source["Type"].ToString();
 				if (type.Length > 0)

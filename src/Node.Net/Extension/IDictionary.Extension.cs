@@ -125,11 +125,11 @@ namespace Node.Net
 					{
 						if (value is IEnumerable)
 						{
-							hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+							hashCode ^= (value as IEnumerable).ComputeHashCode();
 						}
 						else
 						{
-							hashCode = hashCode ^ value.GetHashCode();
+							hashCode ^= value.GetHashCode();
 						}
 					}
 				}
@@ -230,7 +230,7 @@ namespace Node.Net
 
 		private static bool MatchesSearch(this IDictionary idictionary, string search)
 		{
-			if (search == null || search.Length == 0 || idictionary == null)
+			if (string.IsNullOrEmpty(search) || idictionary == null)
 			{
 				return true;
 			}
@@ -346,23 +346,22 @@ namespace Node.Net
 						results[key] = results[key] + 1;
 					}
 
-					var subDictionary = dictionary[key] as IDictionary;
-					if (subDictionary != null)
-					{
-						var subKeys = subDictionary.CollectKeys();
-						foreach (var subKey in subKeys.Keys)
-						{
-							if (!results.ContainsKey(key))
-							{
-								results.Add(key, subKeys[subKey]);
-							}
-							else
-							{
-								results[key] = results[key] + subKeys[subKey];
-							}
-						}
-					}
-				}
+                    if (dictionary[key] is IDictionary subDictionary)
+                    {
+                        var subKeys = subDictionary.CollectKeys();
+                        foreach (var subKey in subKeys.Keys)
+                        {
+                            if (!results.ContainsKey(key))
+                            {
+                                results.Add(key, subKeys[subKey]);
+                            }
+                            else
+                            {
+                                results[key] = results[key] + subKeys[subKey];
+                            }
+                        }
+                    }
+                }
 			}
 			return results;
 		}
@@ -817,30 +816,28 @@ namespace Node.Net
      
         public static IDictionary GetAncestor(this IDictionary child, string key, string value)
 		{
-			var parent = child.GetParent() as IDictionary;
-			if (child != null && parent != null)
-			{
-				if (parent.Contains(key) && parent[key].ToString() == value)
-				{
-					return parent;
-				}
-				return parent.GetAncestor(key, value);
-			}
-			return null;
+            if (child?.GetParent() is IDictionary parent)
+            {
+                if (parent.Contains(key) && parent[key].ToString() == value)
+                {
+                    return parent;
+                }
+                return parent.GetAncestor(key, value);
+            }
+            return null;
 		}
 
 		public static T GetNearestAncestor<T>(this IDictionary child)
 		{
-			var parent = child.GetParent() as IDictionary;
-			if (child != null && parent != null)
-			{
-				if (parent is T ancestor && !EqualityComparer<T>.Default.Equals(ancestor, default(T)))
-				{
-					return ancestor;
-				}
-				return GetNearestAncestor<T>(parent);
-			}
-			return default(T);
+            if (child?.GetParent() is IDictionary parent)
+            {
+                if (parent is T ancestor && !EqualityComparer<T>.Default.Equals(ancestor, default(T)))
+                {
+                    return ancestor;
+                }
+                return GetNearestAncestor<T>(parent);
+            }
+            return default(T);
 		}
 
 		public static T GetFurthestAncestor<T>(this IDictionary child)
@@ -958,7 +955,7 @@ namespace Node.Net
 				if (child != null)
 				{
 					var name = child.GetName();
-					if (name != null && name.Length > 0 && !names.Contains(name))
+					if (name?.Length > 0 && !names.Contains(name))
 					{
 						names.Add(name);
 					}

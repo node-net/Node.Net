@@ -26,7 +26,7 @@ namespace Node.Net
 			if (fullName.Length == 0)
 			{
 				var filename = instance.GetFileName();
-				if (filename != null && filename.Length > 0)
+				if (filename?.Length > 0)
 				{
 					try
 					{
@@ -186,10 +186,7 @@ namespace Node.Net
 			if (item != null)
 			{
 				var propertyInfo = item.GetType().GetProperty(propertyName);
-				if (propertyInfo != null)
-				{
-					propertyInfo.SetValue(item, propertyValue);
-				}
+				propertyInfo?.SetValue(item, propertyValue);
 			}
 		}
 
@@ -231,7 +228,7 @@ namespace Node.Net
 		public static string GetFullName(this object instance)
 		{
 			var metaData = Internal.MetaData.Default.GetMetaData(instance);
-			if (metaData != null && metaData.Contains("FullName"))
+			if (metaData?.Contains("FullName") == true)
 			{
 				return metaData["FullName"].ToString();
 			}
@@ -276,20 +273,19 @@ namespace Node.Net
 
 		public static T Convert<T>(object value)
 		{
-			var dictionary = value as IDictionary;
-			if (typeof(T) == typeof(IDictionary<string, string>))
-			{
-				if (dictionary != null)
-				{
-					var result = new Dictionary<string, string>();
-					foreach (string key in dictionary.Keys)
-					{
-						result.Add(key, dictionary[key].ToString());
-					}
-					return (T)(object)result;
-				}
-			}
-			return (T)value;
+            if (typeof(T) == typeof(IDictionary<string, string>))
+            {
+                if (value is IDictionary dictionary)
+                {
+                    var result = new Dictionary<string, string>();
+                    foreach (string key in dictionary.Keys)
+                    {
+                        result.Add(key, dictionary[key].ToString());
+                    }
+                    return (T)(object)result;
+                }
+            }
+            return (T)value;
 		}
 	}
 }
