@@ -808,7 +808,14 @@ namespace Node.Net
 			return GetLocalToParent(dictionary).GetRotationsXYZ();
 		}
 
-		public static IDictionary GetAncestor(this IDictionary child, string key, string value)
+        public static void SetRotations(this IDictionary dictionary,Vector3D rotations)
+        {
+            dictionary["RotationX"] = $"{rotations.X} deg";
+            dictionary["RotationY"] = $"{rotations.Y} deg";
+            dictionary["RotationZ"] = $"{rotations.Z} deg";
+        }
+     
+        public static IDictionary GetAncestor(this IDictionary child, string key, string value)
 		{
 			var parent = child.GetParent() as IDictionary;
 			if (child != null && parent != null)
