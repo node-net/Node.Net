@@ -65,7 +65,6 @@
     <Compile Include="Exceptions\UnrecognizedSignatureException.cs" />
     <Compile Include="Extension\Action.Extension.cs" />
     <Compile Include="Extension\Assembly.Extension.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Extension\IDictionary.Extension.cs" />
     <Compile Include="Extension\IEnumerable.Extension.cs" />
     <Compile Include="Extension\IFactory.Extension.cs" />
