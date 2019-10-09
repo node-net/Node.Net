@@ -16,19 +16,19 @@ namespace Node.Net
 					if (value is bool || value is double || value is float
 						|| value is int || value is long || value is string)
 					{
-						hashCode = hashCode ^ value.GetHashCode();
+						hashCode ^= value.GetHashCode();
 					}
 					else
 					{
 						if (value is IDictionary)
 						{
-							hashCode = hashCode ^ (value as IDictionary).ComputeHashCode();
+							hashCode ^= (value as IDictionary).ComputeHashCode();
 						}
 						else
 						{
 							if (value is IEnumerable)
 							{
-								hashCode = hashCode ^ (value as IEnumerable).ComputeHashCode();
+								hashCode ^= (value as IEnumerable).ComputeHashCode();
 							}
 						}
 					}

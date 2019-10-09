@@ -78,8 +78,8 @@ namespace Node.Net.Internal
 			return null;
 		}
 
-		private static readonly string RotationXKey = "Spin,RotationX,Roll";
-		private static readonly string RotationZKey = "Orientation,RotationZ,Yaw";
+		private const string RotationXKey = "Spin,RotationX,Roll";
+		private const string RotationZKey = "Orientation,RotationZ,Yaw";
 
 		public static string RotationYKey { get; set; } = "Tilt,RotationY,Pitch";
 
