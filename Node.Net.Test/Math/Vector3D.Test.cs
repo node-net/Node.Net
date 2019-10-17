@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Node.Net.Math
 {
-	class Vector3DTest
+	internal class Vector3DTest
 	{
 		[Test]
 		public void Usage()

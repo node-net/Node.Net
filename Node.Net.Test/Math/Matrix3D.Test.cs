@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Node.Net.Math
 {
 	[TestFixture]
-	class Matrix3DTest
+	internal class Matrix3DTest
 	{
 		[Test]
 		public void Usage()
