@@ -1,0 +1,26 @@
+{
+  "base64": "base64:dGVzdA==",
+  "bool_true ": true,
+  "bool_false": false,
+  "int_0": 0,
+  "float_1": 1.23,
+  "null": null,
+  "string_symbol": "0°",
+  "array_0": [ 0, 1, 2, 3 ],
+  "array_empty": [],
+  "array_mixed": [ null, 1, "a", null ],
+  "array_float": [ 1.23, 4.56, 7.89 ],
+  "array_strings" : ["a","b","c"]
+  "objectA": {},
+  "foo": {
+    "type": "foo",
+    "bar0": {
+      "type": "bar",
+      "id": "0"
+    },
+    "bar1": {
+      "type": "bar",
+      "id": "1"
+    }
+  }
+}
