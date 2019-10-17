@@ -1,8 +1,0 @@
-{
-    "Sunlight": { "Type": "Sunlight" }
-    "Room": {
-        "Floor": { "Type": "Cube.Top", "Length": "20 ft", "Width": "16 ft", "Height": "6 in" }
-        "BackWall": { "Type": "Cube.Back.Bottom", "X": "-8 ft", "Length": "6 in", "Width": "16 ft", "Height": "8 ft" }
-        "Source": {"Type": "Source", "Z": "10 ft"}
-    }
-}
