@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Node.Net
 {
     [TestFixture]
-    class IEnumerableTest
+    internal class IEnumerableTest
     {
         [Test]
         public void GetAt()

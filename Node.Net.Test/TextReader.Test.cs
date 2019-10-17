@@ -1,24 +1,25 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using NUnit.Framework;
 
 namespace Node.Net
 {
     [TestFixture]
-    internal class JsonReaderTest
+    internal class TextReaderTest
     {
         [Test]
-        public void Read()
+        public void FastSeek()
         {
             var stream = typeof(JsonReaderTest)
                 .Assembly
                 .GetManifestResourceStream("Node.Net.Test.Resources.Object.Coverage.json");
-
-            var dictionary = new JsonReader().Read(stream) as IDictionary;
-            Assert.NotNull(dictionary, nameof(dictionary));
-            Assert.AreEqual(14, dictionary.Count, "dictionary.Count");
+            using var reader = new StreamReader(stream);
+            reader.FastSeek(':', false);
+            reader.FastSeek(':', true);
+            reader.FastSeek('"', false);
+            reader.FastSeek('"', true);
         }
     }
 }

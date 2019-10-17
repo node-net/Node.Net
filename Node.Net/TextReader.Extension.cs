@@ -28,16 +28,14 @@ namespace Node.Net
                 {
                     if (ignoreEscaped)
                     {
-                        if (((char)ichar) == '\\') { }
-                        else { builder.Append((char)ichar); }
+                        if (((char)ichar) != '\\') { builder.Append((char)ichar); }
                     }
                     else { builder.Append((char)ichar); }
                     foreach (char ch in values)
                     {
                         if ((char)reader.Peek() == ch)
                         {
-                            if (ignoreEscaped && ((char)(ichar)) == '\\') { } // ignore
-                            else { done = true; }
+                            if (!ignoreEscaped || ((char)(ichar)) != '\\') { done = true; }
                         }
                     }
                 }
@@ -56,12 +54,12 @@ namespace Node.Net
                 {
                     if ((char)reader.Peek() == value)
                     {
-                        if (ignoreEscaped && ((char)(ichar)) == '\\') { }// ignore
-                        else { return; }
+                        if (!ignoreEscaped || ((char)(ichar)) != '\\') { return; }
                     }
                 }
             }
         }
+
         public static string SeekIgnoreEscaped(this TextReader reader, char value)
         {
             const int iBackslash = '\\';

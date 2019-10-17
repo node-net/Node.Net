@@ -6,7 +6,7 @@ namespace Node.Net
 {
     public static class IDictionaryExtension
     {
-        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default(T))
+        public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default)
         {
             if (name.IndexOf(',') > -1)
             {
@@ -21,7 +21,7 @@ namespace Node.Net
                 return (T)dictionary[name];
             }
 
-            if (typeof(T) == typeof(string) && EqualityComparer<T>.Default.Equals(defaultValue, default(T)!))
+            if (typeof(T) == typeof(string) && EqualityComparer<T>.Default.Equals(defaultValue, default!))
             {
                 return (T)(object)string.Empty;
             }

@@ -8,7 +8,9 @@ namespace Node.Net
 {
     public sealed class JsonReader
     {
-        public Dictionary<string, Type> ConversionTypeNames { get; set; } = new Dictionary<string, Type>();
+        // public Dictionary<string, Type> ConversionTypeNames { get; set; } = new Dictionary<string, Type>();
+        public Func<IDictionary, object> ConvertFunction { get; set; } = DefaultConvertFunction;
+        private static object DefaultConvertFunction(IDictionary dictionary) { return dictionary; }
         public int ObjectCount { get; set; }
         public Type DefaultObjectType { get; set; } = typeof(Dictionary<string, dynamic>);
         public Type DefaultDocumentType { get; set; } = typeof(Dictionary<string, dynamic>);
@@ -16,19 +18,17 @@ namespace Node.Net
 
         public object? Read(Stream stream)
         {
-            using (System.IO.TextReader reader = new StreamReader(stream, Encoding.Default, true, 1024, true))
+            using System.IO.TextReader reader = new StreamReader(stream, Encoding.Default, true, 1024, true);
+            try
             {
-                try
-                {
-                    ObjectCount = 0;
-                    var item = Read(reader);
-                    return item;
-                }
-                catch (Exception e)
-                {
-                    var exception_info = $"JsonRead.Load raised an exception at stream position {stream.Position}";
-                    throw new InvalidOperationException(exception_info, e);
-                }
+                ObjectCount = 0;
+                var item = Read(reader);
+                return item;
+            }
+            catch (Exception e)
+            {
+                var exception_info = $"JsonRead.Load raised an exception at stream position {stream.Position}";
+                throw new InvalidOperationException(exception_info, e);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Node.Net
             var ichar = reader.Peek();
             if (ichar < 0)
             {
-                throw new InvalidDataException(@"end of stream reached");
+                throw new InvalidDataException("end of stream reached");
             }
 
             var c = (char)ichar;
@@ -110,7 +110,7 @@ namespace Node.Net
             reader.EatWhiteSpace();
             char[] endchars = { '}', ']', ',', ' ' };
             var nstr = reader.Seek(endchars);
-            if (nstr.Contains(@"."))
+            if (nstr.Contains("."))
             {
                 var value = Convert.ToDouble(nstr);
                 if (value <= Single.MaxValue)
@@ -187,7 +187,7 @@ namespace Node.Net
                     done = true;
                 }
             }
-            return list.Simplify();
+            return list;//.Simplify();
         }
 
         private IDictionary GetDictionary()
@@ -207,7 +207,7 @@ namespace Node.Net
             const char objectOpenCharacter = '{';
             const char objectCloseCharacter = '}';
             const char comma = ',';
-            IDictionary dictionary = GetDictionary();;
+            IDictionary dictionary = GetDictionary();
 
             ObjectCount++;
             reader.FastSeek(objectOpenCharacter);
@@ -242,23 +242,7 @@ namespace Node.Net
                 }
             }
 
-            var type = dictionary.Get<string>("Type", "");
-            if (type.Length > 0 && ConversionTypeNames.ContainsKey(type) && !ConversionTypeNames[type].IsInstanceOfType(dictionary))
-            {
-                if (!(Activator.CreateInstance(ConversionTypeNames[type]) is IDictionary converted))
-                {
-                    throw new InvalidOperationException($"Unable to create instance of {ConversionTypeNames[type].FullName}");
-                }
-                foreach (var key in dictionary.Keys)
-                {
-                    if (!converted.Contains(key))
-                    {
-                        converted.Add(key, dictionary[key]);
-                    }
-                }
-                return converted;
-            }
-            return dictionary;
+            return ConvertFunction(dictionary);
         }
     }
 }

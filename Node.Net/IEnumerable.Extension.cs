@@ -7,12 +7,13 @@ namespace Node.Net
 {
     public static class IEnumerableExtension
     {
+        /*
         public static int GetCount(this IEnumerable source)
         {
             var result = 0;
             foreach (var item in source) { ++result; }
             return result;
-        }
+        }*/
 
         public static object? GetAt(this IEnumerable source, int index)
         {
@@ -32,6 +33,7 @@ namespace Node.Net
             return null;
         }
 
+        /*
         public static IEnumerable Simplify(this IEnumerable list)
         {
             var count = GetCount(list);
@@ -111,5 +113,6 @@ namespace Node.Net
 
             return list;
         }
+        */
     }
 }
