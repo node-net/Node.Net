@@ -28,7 +28,7 @@ namespace Node.Net
                 {
                     return (T)value;
                 }
-                return default(T);
+                return defaultValue;
             }
 
             if (typeof(T) == typeof(string) && EqualityComparer<T>.Default.Equals(defaultValue, default!))
@@ -39,7 +39,7 @@ namespace Node.Net
             return defaultValue;
         }
 
-        public static List<T> Collect<T>(this IDictionary idictionary)
+        public static List<T> Collect<T>(this IDictionary idictionary,bool deep = true)
         {
             var results = new List<T>();
             foreach (var item in idictionary.Values)
@@ -48,11 +48,14 @@ namespace Node.Net
                 {
                     results.Add((T)item);
                 }
-                if (item is IDictionary child_idictionary)
+                if (deep)
                 {
-                    foreach(var childItem in child_idictionary.Collect<T>())
+                    if (item is IDictionary child_idictionary)
                     {
-                        results.Add(childItem);
+                        foreach (var childItem in child_idictionary.Collect<T>(true))
+                        {
+                            results.Add(childItem);
+                        }
                     }
                 }
             }
