@@ -32,6 +32,11 @@ namespace Node.Net.Windows.Test
             Assert.AreEqual(0, matrix.OffsetX, "matrix.OffsetX");
             Assert.AreEqual(0, matrix.OffsetY, "matrix.OffsetY");
             Assert.AreEqual(0, matrix.OffsetZ, "matrix.OffsetZ");
+
+            var point = matrix.Transform(new Point3D());
+            Assert.AreEqual(0, point.X, "point.X");
+            Assert.AreEqual(0, point.Y, "point.Y");
+            Assert.AreEqual(0, point.Z, "point.Z");
         }
     }
 }

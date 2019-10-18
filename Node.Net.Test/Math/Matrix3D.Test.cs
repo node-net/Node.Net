@@ -8,7 +8,7 @@ namespace Node.Net.Math
 	[TestFixture]
 	internal class Matrix3DTest
 	{
-       // [Test]
+        [Test]
         public void Identity()
         {
             var matrix = new Matrix3D();
