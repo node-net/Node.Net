@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Node.Net
 {
     [TestFixture]
-    internal class IDictionaryConverterTest
+    internal class IDictionaryTypeConverterTest
     {
         [Test]
         public void Convert()
@@ -17,7 +17,7 @@ namespace Node.Net
                 {"Name","widget" }
             };
 
-            var converter = new IDictionaryConverter
+            var converter = new IDictionaryTypeConverter
             {
                 ConversionTypeNames = new Dictionary<string, Type>
                 {

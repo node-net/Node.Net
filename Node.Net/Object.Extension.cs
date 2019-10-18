@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -42,6 +43,23 @@ namespace Node.Net
                 return instance.GetPropertyValue("Parent");
             }
             return parent;
+        }
+
+        public static string GetName(this object instance)
+        {
+            if (instance.HasPropertyValue("Name")) return instance.GetPropertyValue("Name")!.ToString();
+            if (instance.GetParent() is IDictionary parent)
+            {
+                foreach (string key in parent.Keys)
+                {
+                    var test_element = parent.Get<IDictionary>(key);
+                    if (test_element != null && object.ReferenceEquals(test_element, instance))
+                    {
+                        return key;
+                    }
+                }
+            }
+            return string.Empty;
         }
 
         public static bool HasPropertyValue(this object item, string propertyName)

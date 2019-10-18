@@ -6,32 +6,71 @@ namespace Node.Net.Math
 {
 	public class Matrix3D
 	{
-       // public static double[] IdentityArray = new double[16] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        public Matrix3D() { }
 
-        private readonly double[] _data = new double[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0 };
+        private Matrix _matrix = new Matrix(4, 4);
 
-        public double M11 { get { return _data[0]; } set { _data[0] = value; } }
+        public double M11 { get { return _matrix[0,0]; } set { _matrix[0,0] = value; } }
 
-		public double M12 { get { return _data[1]; } set { _data[1] = value; } }
-        public double M13 { get { return _data[2]; } set { _data[2] = value; } }
-        public double M14 { get { return _data[3]; } set { _data[3] = value; } }
+		public double M12 { get { return _matrix[0,1]; } set { _matrix[0,1] = value; } }
+        public double M13 { get { return _matrix[0,2]; } set { _matrix[0,2] = value; } }
+        public double M14 { get { return _matrix[0,3]; } set { _matrix[0,3] = value; } }
 
-        public double M21 { get { return _data[4]; } set { _data[4] = value; } }
+        public double M21 { get { return _matrix[1,0]; } set { _matrix[1,0] = value; } }
 
-        public double M22 { get { return _data[5]; } set { _data[5] = value; } }
-        public double M23 { get { return _data[6]; } set { _data[6] = value; } }
-        public double M24 { get { return _data[7]; } set { _data[7] = value; } }
+        public double M22 { get { return _matrix[1,1]; } set { _matrix[1,1] = value; } }
+        public double M23 { get { return _matrix[1,2]; } set { _matrix[1,2] = value; } }
+        public double M24 { get { return _matrix[1,3]; } set { _matrix[1,3] = value; } }
 
-        public double M31 { get { return _data[8]; } set { _data[8] = value; } }
+        public double M31 { get { return _matrix[2,0]; } set { _matrix[2,0] = value; } }
 
-        public double M32 { get { return _data[9]; } set { _data[9] = value; } }
-        public double M33 { get { return _data[10]; } set { _data[10] = value; } }
-        public double M34 { get { return _data[11]; } set { _data[11] = value; } }
-        public double M44 { get { return _data[12]; } set { _data[12] = value; } }
-        public double OffsetX { get { return _data[13]; } set { _data[13] = value; } }
-        public double OffsetY { get { return _data[14]; } set { _data[14] = value; } }
-        public double OffsetZ { get { return _data[15]; } set { _data[15] = value; } }
+        public double M32 { get { return _matrix[2,1]; } set { _matrix[2,1] = value; } }
+        public double M33 { get { return _matrix[2,2]; } set { _matrix[2,2] = value; } }
+        public double M34 { get { return _matrix[2,3]; } set { _matrix[2,3] = value; } }
 
-        public bool IsIdentity { get { return true; } }
+        public double OffsetX { get { return _matrix[3,0]; } set { _matrix[3,0] = value; } }
+        public double OffsetY { get { return _matrix[3,1]; } set { _matrix[3,1] = value; } }
+        public double OffsetZ { get { return _matrix[3,2]; } set { _matrix[3,2] = value; } }
+        public double M44 { get { return _matrix[3, 3]; } set { _matrix[3, 3] = value; } }
+
+        public bool IsIdentity
+        {
+            get
+            {
+                if (M11 != 1) return false;
+                if (M12 != 0) return false;
+                if (M13 != 0) return false;
+                if (M14 != 0) return false;
+                if (M21 != 0) return false;
+                if (M22 != 1) return false;
+                if (M23 != 0) return false;
+                if (M24 != 0) return false;
+                if (M31 != 0) return false;
+                if (M32 != 0) return false;
+                if (M33 != 1) return false;
+                if (M34 != 0) return false;
+                if (OffsetX != 0) return false;
+                if (OffsetY != 0) return false;
+                if (OffsetZ != 0) return false;
+                if (M44 != 1) return false;
+                return true;
+            }
+        }
+
+        public void Translate(Vector3D translate)
+        {
+            OffsetX += translate.X;
+            OffsetY += translate.Y;
+            OffsetZ += translate.Z;
+        }
+
+        public Point3D Transform(Point3D point)
+        {
+            var pointMatrix = new Matrix(1,new double[] { point.X, point.Y, point.Z, 1 });
+            var result = pointMatrix.Multiply(_matrix);
+            return new Point3D(
+              result[0,0],result[0,1],result[0,2]
+            );
+        }
 	}
 }

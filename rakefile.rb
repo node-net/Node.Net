@@ -12,10 +12,15 @@ task :default do
                     "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.csproj -c Release -v normal",
                     "dotnet pack Node.Net.sln -c Release"])
 
-        package="#{PROJECT.name}/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
-        dest="#{PROJECT.get_dev_dir('nuget')}/#{PROJECT.name}.#{PROJECT.version}.nupkg"
+        package="#{PROJECT.name}/bin/Release/#{PROJECT.name}.#{PROJECT.version}-alpha.nupkg"
+        dest="#{PROJECT.get_dev_dir('nuget')}/#{PROJECT.name}.#{PROJECT.version}-alpha.nupkg"
         puts "copying " + Rainbow(package).yellow.bright + " to " + Rainbow(dest).yellow.bright
-        FileUtils.cp(package,"#{PROJECT.get_dev_dir('nuget')}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
+        FileUtils.cp(package,dest)
+
+		package="#{PROJECT.name}.Windows/bin/Release/#{PROJECT.name}.Windows.#{PROJECT.version}-alpha.nupkg"
+        dest="#{PROJECT.get_dev_dir('nuget')}/#{PROJECT.name}.#{PROJECT.version}-alpha.nupkg"
+        puts "copying " + Rainbow(package).yellow.bright + " to " + Rainbow(dest).yellow.bright
+        FileUtils.cp(package,dest)
         
         PROJECT.commit.tag.push.pull
     end

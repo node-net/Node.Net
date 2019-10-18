@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Node.Net
 {
-    public sealed class IDictionaryConverter
+    public sealed class IDictionaryTypeConverter
     {
         public Dictionary<string, Type> ConversionTypeNames { get; set; } = new Dictionary<string, Type>();
 

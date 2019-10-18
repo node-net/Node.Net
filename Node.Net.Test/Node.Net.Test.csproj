@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <None Remove="Resources\Object.Coverage.json" />
+    <None Remove="Resources\Spatial.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Object.Coverage.json" />
+    <EmbeddedResource Include="Resources\Spatial.json" />
   </ItemGroup>
 
   <ItemGroup>

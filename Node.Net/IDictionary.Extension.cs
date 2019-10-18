@@ -18,7 +18,17 @@ namespace Node.Net
             }
             if (dictionary.Contains(name))
             {
-                return (T)dictionary[name];
+                var value = dictionary[name];
+                if(typeof(T) == typeof(double))
+                {
+                    return (T)(object)Convert.ToDouble(value);
+                }
+
+                if(value != null && typeof(T).IsAssignableFrom(value.GetType()))
+                {
+                    return (T)value;
+                }
+                return default(T);
             }
 
             if (typeof(T) == typeof(string) && EqualityComparer<T>.Default.Equals(defaultValue, default!))
@@ -47,6 +57,30 @@ namespace Node.Net
                 }
             }
             return results;
+        }
+
+        public static Math.Matrix3D GetLocalToParent(this IDictionary dictionary)
+        {
+            return IDictionarySpatialConverter.Default.GetLocalToParent(dictionary);
+        }
+
+        public static void DeepUpdateParents(this IDictionary dictionary)
+        {
+            if (dictionary is null)
+            {
+                return;
+            }
+
+            var values = new List<object>();
+            foreach (var value in dictionary.Values) { values.Add(value); }
+            foreach (var value in values)
+            {
+                if (value is IDictionary child)
+                {
+                    child.SetParent(dictionary);
+                    DeepUpdateParents(child);
+                }
+            }
         }
     }
 }
