@@ -18,7 +18,7 @@ task :default do
         FileUtils.cp(package,dest)
 
 		package="#{PROJECT.name}.Windows/bin/Release/#{PROJECT.name}.Windows.#{PROJECT.version}-alpha.nupkg"
-        dest="#{PROJECT.get_dev_dir('nuget')}/#{PROJECT.name}.#{PROJECT.version}-alpha.nupkg"
+        dest="#{PROJECT.get_dev_dir('nuget')}/#{PROJECT.name}.Windows.#{PROJECT.version}-alpha.nupkg"
         puts "copying " + Rainbow(package).yellow.bright + " to " + Rainbow(dest).yellow.bright
         FileUtils.cp(package,dest)
         
