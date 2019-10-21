@@ -85,5 +85,18 @@ namespace Node.Net
                 }
             }
         }
+
+        public static bool MatchesSearch(this IDictionary dictionary,string search)
+        {
+            foreach(var key in dictionary.Keys)
+            {
+                var value = dictionary[key];
+                if(value is string svalue)
+                {
+                    if (svalue.Contains(search)) return true;
+                }
+            }
+            return false;
+        }
     }
 }

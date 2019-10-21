@@ -1,15 +1,20 @@
 ﻿{
   "widgetA": {
+    "Type": "Widget"
   },
   "widgetB": {
+    "Type": "Widget",
     "X": 10
   },
   "group": {
+    "Type" : "Group",
     "X": 100,
     "fooA": {
+      "Type": "Foo",
       "X": 0
     },
     "fooB": {
+      "Type": "Foo",
       "X": 10
     }
   }
