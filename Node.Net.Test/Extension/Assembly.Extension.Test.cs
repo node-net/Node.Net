@@ -1,43 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Node.Net;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace Node.Net.Tests.Extension
+namespace Node.Net.Test
 {
-	[TestFixture,Category("Assembly")]
-	class AssemblyExtensionTest
+	[TestFixture]
+	internal class AssemblyExtensionTest
 	{
 		[Test]
-		public void GetStream()
+		public void FindManifestResourceStream()
 		{
-			Assert.IsNull(typeof(AssemblyExtensionTest).Assembly.GetStream("not.there"));
-			Assert.NotNull(typeof(AssemblyExtensionTest).Assembly.GetStream("Object.Sample.json"),"Object.Sample.json");
-		}
-		[Test]
-		public void GetManifestResourceNames()
-		{
-			var names =new List<string>( typeof(AssemblyExtensionTest).Assembly.GetManifestResourceNames(".json"));
-			Assert.True(names.Contains("Node.Net.Test.Resources.Object.Sample.json"));
-		}
-		
-		[Test]
-		public void GetNameTypeDictionary()
-		{
-			var dictionary = typeof(AssemblyExtensionTest).Assembly.GetNameTypeDictionary();
-			Assert.True(dictionary.ContainsKey("Bar"));
-		}
-		[Test]
-		public void GetFullNameTypeDictionary()
-		{
-			var dictionary = typeof(AssemblyExtensionTest).Assembly.GetFullNameTypeDictionary();
-			Assert.True(dictionary.ContainsKey("Node.Net.Bar"));
+			var assembly = typeof(AssemblyExtensionTest).Assembly;
+			Assert.IsNull(assembly.FindManifestResourceStream("?"));
+			Assert.NotNull(assembly.FindManifestResourceStream("Object.Coverage.json"));
+			Assert.NotNull(assembly.FindManifestResourceStream("Node.Net.Test.Resources.Object.Coverage.json"));
 		}
 	}
 }

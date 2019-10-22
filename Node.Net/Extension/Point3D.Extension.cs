@@ -5,8 +5,16 @@ using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
+	/// <summary>
+	/// Extension methods for System.Windows.Media.Media3D.Point3D
+	/// </summary>
 	public static class Point3DExtension
 	{
+		/// <summary>
+		/// Parse Point3D[] from a string
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		public static Point3D[] ParsePoints(string value)
 		{
 			var results = new List<Point3D>();
@@ -26,6 +34,11 @@ namespace Node.Net
 			return results.ToArray();
 		}
 
+		/// <summary>
+		/// Get Point[] from Point3D[]
+		/// </summary>
+		/// <param name="points"></param>
+		/// <returns></returns>
 		public static Point[] Get2DPoints(this Point3D[] points)
 		{
 			var results = new List<Point>();
@@ -35,16 +48,21 @@ namespace Node.Net
 			}
 			return results.ToArray();
 		}
-        public static Point3D[] Transform(this Point3D[] points, Matrix3D matrix)
-        {
-            var result = new List<Point3D>();
 
-            var tranformed = new List<Point3D>();
-            foreach (var point in points)
-            {
-                result.Add(matrix.Transform(point));
-            }
-            return result.ToArray();
-        }
-    }
+		/// <summary>
+		/// Transform Point3D[] with a Matrix3D
+		/// </summary>
+		/// <param name="points"></param>
+		/// <param name="matrix"></param>
+		/// <returns></returns>
+		public static Point3D[] Transform(this Point3D[] points, Matrix3D matrix)
+		{
+			var result = new List<Point3D>();
+			foreach (var point in points)
+			{
+				result.Add(matrix.Transform(point));
+			}
+			return result.ToArray();
+		}
+	}
 }
