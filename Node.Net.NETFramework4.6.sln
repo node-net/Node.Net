@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.NETFramework4.6", "src\Node.Net\Node.Net.NETFramework4.6.csproj", "{F29B2594-8A0B-4521-BB96-3DA2A5D578A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.NETFramework4.6", "Node.Net\Node.Net.NETFramework4.6.csproj", "{F29B2594-8A0B-4521-BB96-3DA2A5D578A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.Test.NETFramework4.6", "src\Node.Net.Test\Node.Net.Test.NETFramework4.6.csproj", "{89742391-8CFF-4BE8-8CC7-F5095EA00E62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.Test.NETFramework4.6", "Node.Net.Test\Node.Net.Test.NETFramework4.6.csproj", "{89742391-8CFF-4BE8-8CC7-F5095EA00E62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

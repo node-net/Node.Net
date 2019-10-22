@@ -1,3 +1,4 @@
+NAME="Node.Net"
 require 'raykit'
 CLEAN.include('**/obj')
 
@@ -10,10 +11,11 @@ task :default do
         PROJECT.run([
             "nuget restore Node.Net.NETFramework4.6.sln",
             "MsBuild.exe /t:Rebuild Node.Net.NETFramework4.6.sln /p:Configuration=Release",
-                    "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.csproj -c Release -v normal",
+                    "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.NETFramework4.6.csproj -c Release -v normal",
                     "nuget pack Node.Net.nuspec"])
 
-		puts `nuget push Node.Net.#{PROJECT.version}.nupkg -Source https://api.nuget.org/v3/index.json`
+		NUGET_KEY=ENV['NUGET_KEY']
+		puts `nuget push Node.Net.#{PROJECT.version}.nupkg -k #{NUGET_KEY} -Source https://api.nuget.org/v3/index.json`
         PROJECT.commit.tag.push.pull
     end
     PROJECT.summary

@@ -1,18 +1,27 @@
 ﻿using NUnit.Framework;
-using static System.Math;
+using System.IO;
 
-namespace Node.Net.Extension
+namespace Node.Net.Test.Extension
 {
-    [TestFixture]
-    class StringExtensionTest
-    {
-        [Test]
-        [TestCase("12in", 0.3048)]
-        [TestCase("1ft", 0.3048)]
-        public void GetMeters(string value, double lengthMeters)
-        {
-            var meters = value.GetMeters();
-            Assert.AreEqual(lengthMeters, Round(meters, 4));
-        }
-    }
+	[TestFixture]
+	internal class StringExtensionTest
+	{
+		[Test]
+		public void GetStream()
+		{
+			var text = new StreamReader("test".GetStream()).ReadToEnd();
+			Assert.AreEqual("test", text);
+
+			text = new StreamReader("Object.Coverage.json".GetStream()).ReadToEnd();
+			Assert.True(text.Contains("array_empty"), "array_empty not found in Object.Coverage.json");
+		}
+
+		[Test]
+		public void GetRawValue()
+		{
+			Assert.AreEqual(10.0, "10'".GetRawValue());
+			Assert.AreEqual(10.0, "10 ft".GetRawValue());
+			Assert.AreEqual(10.0, "10 m".GetRawValue());
+		}
+	}
 }
