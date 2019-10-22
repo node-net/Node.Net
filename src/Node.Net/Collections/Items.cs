@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,78 +12,116 @@ using System.Collections.ObjectModel;
 
 namespace Node.Net.Collections
 {
-	public class Items<T> : ObservableCollection<T>
-	{
-        public Items() { }
-        public Items(IEnumerable<T> items)
+    public class Items<T> : ObservableCollection<T>
+    {
+        public Items(IEnumerable<T> source)
         {
-            foreach(var item in items) { Add(item); }
-            if (Count > 0) SelectedItem = this[0];
+            Source = source;
         }
 
-		/// <summary>
-		/// The currently selected item
-		/// </summary>
-		public T SelectedItem
-		{
-			get { return _selectedItem; }
-			set
-			{
-				_selectedItem = value;
-				OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(SelectedItem)));
-				OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedName)));
-			}
-		}
-
-		private T _selectedItem;
-
-        private static string GetName(T item)
+        public IEnumerable<T> Source
         {
-            if (item != null)
+            get { return _source; }
+            set
             {
-                var nameProperty = item.GetType().GetProperty("Name");
-                if (nameProperty != null)
+                if (!object.ReferenceEquals(_source, value))
                 {
-                    return nameProperty.GetValue(item).ToString();
+                    _source = value;
+                    OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(Source)));
+                    Update();
                 }
             }
-            return string.Empty;
         }
 
-		/// <summary>
-		/// Names of items
-		/// </summary>
-		public IEnumerable<string> Names
-		{
-			get
-			{
-				var names = new List<string>();
-				foreach (var item in this)
-				{
-                    names.Add(GetName(item));
-				}
-				return names;
-			}
-		}
+        private IEnumerable<T> _source = new List<T>();
 
-		/// <summary>
-		/// Name of the selected item
-		/// </summary>
-		public string SelectedName
-		{
-			get
-			{
-                return GetName(SelectedItem);
-			}
-			set
-			{
-                foreach(T item in this)
+        public T SelectedItem
+        {
+            get { return (T)_selectedItem!; }
+            set
+            {
+                _selectedItem = (T)value;
+                OnPropertyChanged();
+            }
+        }
+
+        private object _selectedItem = default;
+
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                if (_search != value)
                 {
-                    if (GetName(item) == value) SelectedItem = item;
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedName)));
+                    _search = value;
+                    OnPropertyChanged();
+                    Update();
                 }
-			}
-		}
+            }
+        }
 
-	}
+        private string _search = string.Empty;
+
+        public Func<T, string, bool> SearchFilter { get; set; } = DefaultSearchFilter;
+
+        public static bool DefaultSearchFilter(T item, string search)
+        {
+            if (search.Length == 0) return true;
+            if (item is IDictionary dictionary)
+            {
+                return dictionary.MatchesSearch(search);
+            }
+            return false;
+        }
+
+        public Func<IEnumerable<T>, IEnumerable<T>> SortFunction
+        {
+            get { return _sortFunction; }
+            set
+            {
+                _sortFunction = value;
+                Update();
+            }
+        }
+
+        private Func<IEnumerable<T>, IEnumerable<T>> _sortFunction = null;
+
+        private void Update()
+        {
+            var selectedItem = SelectedItem;
+            var newItems = new List<T>();
+            var removeItems = new List<T>();
+            foreach (var item in Source)
+            {
+                if (SearchFilter(item, Search))
+                {
+                    newItems.Add(item);
+                }
+            }
+            foreach (var existingItem in this)
+            {
+                if (!newItems.Contains(existingItem))
+                {
+                    removeItems.Add(existingItem);
+                }
+            }
+            foreach (var removeItem in removeItems) { this.Remove(removeItem); }
+
+            if (SortFunction != null)
+            {
+                newItems = new List<T>(SortFunction(newItems));
+                Clear();
+            }
+            foreach (var newItem in newItems)
+            {
+                if (!this.Contains(newItem)) { this.Add(newItem); }
+            }
+        }
+
+        private void OnPropertyChanged([CallerMemberName]string caller = null)
+        {
+            OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(caller));
+        }
+    }
 }
