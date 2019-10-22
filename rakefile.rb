@@ -15,7 +15,7 @@ task :default do
                     "nuget pack Node.Net.nuspec"])
 
 		NUGET_KEY=ENV['NUGET_KEY']
-		puts `nuget push Node.Net.#{PROJECT.version}.nupkg -k #{NUGET_KEY} -Source https://api.nuget.org/v3/index.json`
+		puts `nuget push Node.Net.#{PROJECT.version}.nupkg -ApiKey #{NUGET_KEY} -Source https://api.nuget.org/v3/index.json`
         PROJECT.commit.tag.push.pull
     end
     PROJECT.summary
