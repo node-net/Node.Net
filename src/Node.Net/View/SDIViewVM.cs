@@ -195,7 +195,7 @@ namespace Node.Net.View
 			}
 		}
 
-		private Collections.Items<FrameworkElement> _views = new Collections.Items<FrameworkElement>();
+		private Collections.Items<FrameworkElement> _views = new Collections.Items<FrameworkElement>(new List<FrameworkElement>());
 		#endregion
 
 		#region PropertyChanged

@@ -228,7 +228,7 @@ namespace Node.Net
 			}
 		}
 
-		private static bool MatchesSearch(this IDictionary idictionary, string search)
+		public static bool MatchesSearch(this IDictionary idictionary, string search)
 		{
 			if (string.IsNullOrEmpty(search) || idictionary == null)
 			{
@@ -984,5 +984,5 @@ namespace Node.Net
 			}
 			return baseName;
 		}
-	}
+    }
 }
