@@ -123,18 +123,22 @@ namespace Node.Net.Internal
 		/// </summary>
 		public void Clean()
 		{
-			var deadKeys = new List<WeakReference>();
-			foreach (var wr in data.Keys)
-			{
-				if (!wr.IsAlive)
-				{
-					deadKeys.Add(wr);
-				}
-			}
-			foreach (var deadKey in deadKeys)
-			{
-				data.Remove(deadKey);
-			}
+            try
+            {
+                var deadKeys = new List<WeakReference>();
+                foreach (var wr in data.Keys)
+                {
+                    if (!wr.IsAlive)
+                    {
+                        deadKeys.Add(wr);
+                    }
+                }
+                foreach (var deadKey in deadKeys)
+                {
+                    data.Remove(deadKey);
+                }
+            }
+            catch { }
 		}
 
 		private readonly Dictionary<WeakReference, IDictionary> data = null;
