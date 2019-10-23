@@ -39,6 +39,8 @@ namespace Node.Net.Test.Extension
 			Assert.IsNull(widget.GetParent());
 			widget.SetParent(null);
 			Assert.IsNull(widget.GetParent());
+
+            bar.ClearMetaData();
 		}
 	}
 }

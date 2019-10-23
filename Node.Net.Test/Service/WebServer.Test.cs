@@ -30,7 +30,7 @@ namespace Node.Net.Service
 			}
 		}
 
-		[Test, Explicit]
+		//[Test, Explicit]
 		public void Run_30_seconds()
 		{
 			using (var server = new WebServer(Protocol.HTTP, 5000))
