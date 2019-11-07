@@ -58,7 +58,7 @@ namespace Node.Net.Collections
 			}
 		}
 
-		private object _selectedItem = default;
+		private object? _selectedItem = default;
 
 		public string Search
 		{
@@ -98,7 +98,7 @@ namespace Node.Net.Collections
 			}
 		}
 
-		private Func<IEnumerable<T>, IEnumerable<T>> _sortFunction = null;
+		private Func<IEnumerable<T>, IEnumerable<T>>? _sortFunction = null;
 
 		private void Update()
 		{
@@ -132,7 +132,7 @@ namespace Node.Net.Collections
 			}
 		}
 
-		private void OnPropertyChanged([CallerMemberName]string caller = null)
+		private void OnPropertyChanged([CallerMemberName]string? caller = null)
 		{
 			OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(caller));
 		}
