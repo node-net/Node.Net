@@ -1,7 +1,0 @@
-{
-    "Type": "Floor",
-    "table": {
-        "Type" : "Table",
-        "teapot" : {"Type" : "Teapot"}
-    }
-}
