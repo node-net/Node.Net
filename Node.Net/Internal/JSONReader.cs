@@ -41,7 +41,7 @@ namespace Node.Net.Internal
 
 		public object Read(Stream stream)
 		{
-			using (System.IO.TextReader reader = new StreamReader(stream, Encoding.Default, true, 1024, true))
+			using (System.IO.TextReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true))
 			{
 				try
 				{
@@ -270,7 +270,14 @@ namespace Node.Net.Internal
 			{
 				reader.EatWhiteSpace();
 				var key = ReadString(reader) as string;
-				reader.EatWhiteSpace();
+
+#if DEBUG
+                if(key == "string_symbol")
+                {
+                    int x = 0;
+                }
+#endif
+                reader.EatWhiteSpace();
 				reader.Read(); //consume ':'
 				dictionary[key] = Read(reader);
 				reader.EatWhiteSpace();
