@@ -11,15 +11,11 @@ namespace Node.Net
 		{
 			get
 			{
-				if (_delimiters == null)
-				{
-					_delimiters = new List<char>
+				return _delimiters ?? (_delimiters = new List<char>
 					{
 						' ',
 						'\t'
-					};
-				}
-				return _delimiters;
+					});
 			}
 			set { _delimiters = value; }
 		}
