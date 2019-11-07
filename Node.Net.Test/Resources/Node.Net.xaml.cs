@@ -9,7 +9,7 @@ namespace Node.Net.Test.Resources
 	{
 		public Node()
 		{
-			InitializeComponent();
+			//InitializeComponent();
 		}
 	}
 }

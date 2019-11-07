@@ -1,6 +1,0 @@
-{
-    "Sunlight": { "Type": "Sunlight" },
-    "Table": {
-        "Top": { "Type": "Cube.Bottom", "Length": "3 ft", "Width": "3 ft", "Height": "1 in" }
-    }
-}

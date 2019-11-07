@@ -3,51 +3,24 @@ require 'raykit'
 CLEAN.include('**/obj')
 
 task :default do
-	PROJECT.verbose = true
-    PROJECT.info
-    target="#{PROJECT.name}.#{PROJECT.version}.nupkg"
+	PROJECT.info
+    target='tmp.txt'
     CLEAN.exclude(target)
     if(PROJECT.last_modified_filename != target)
-        PROJECT.run([
-            "nuget restore Node.Net.NETFramework4.6.sln",
-            "MsBuild.exe /t:Rebuild Node.Net.NETFramework4.6.sln /p:Configuration=Release",
-                    "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.NETFramework4.6.csproj -c Release -v normal",
-                    "nuget pack Node.Net.nuspec"])
+        PROJECT.run(["dotnet build --configuration Release",
+                    "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.csproj -c Release -v normal",
+                    "dotnet pack #{PROJECT.name}.sln -c Release"])
 
-		NUGET_KEY=ENV['NUGET_KEY']
-		puts `nuget push Node.Net.#{PROJECT.version}.nupkg -ApiKey #{NUGET_KEY} -Source https://api.nuget.org/v3/index.json`
+        #package="#{PROJECT.name}/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
+		#puts "publishing" + Rainbow(package).yellow.bright + " to " + Rainbow("nuget.org").yellow.bright
+		#NUGET_KEY=ENV['NUGET_KEY']
+		#puts `nuget push #{package} -ApiKey #{NUGET_KEY} -Source https://api.nuget.org/v3/index.json`
+        
         PROJECT.commit.tag.push.pull
     end
     PROJECT.summary
 end
 
-#VERSION='1.2.62'
-#SLN_FILES=FileList.new('Node.Net.NETFramework4.6.sln')
-#require 'dev'
-#CLOBBER.include('**/obj','bin','TestResults')
-
-#rake_dir=File.dirname(__FILE__)
-#runner="#{rake_dir}/packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe"
-#opencover="#{rake_dir}/packages/OpenCover.4.6.519/tools/OpenCover.Console.exe"
-
-#task :analyze => [:test] do
-#	Dir.chdir('bin/Release/net46') do
-#		puts `SonarScanner.MSBuild.exe begin /k:"node_net" /d:sonar.organization="node-net" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="17b418d5e80f50397e9a8bc688446a59c08adc2b" /d:sonar.cs.opencover.reportsPaths="coverage.opencover.xml" /v:"#{VERSION}"`
-#		puts `MsBuild.exe /t:Rebuild ../../../Node.Net.NETFramework4.6.sln /p:Configuration=Release`
-#		puts `#{opencover} -target:#{runner} -targetargs:"Node.Net.Test.dll" -register:user -output:coverage.opencover.xml -filter:"+[Node.Net.*]*"`
-#		puts `SonarScanner.MSBuild.exe end /d:sonar.login="17b418d5e80f50397e9a8bc688446a59c08adc2b"`
-#	end
-#end
-
-#task :coverage do
-#	Dir.chdir('bin/Release/net46') do
-#		puts `#{opencover} -target:#{runner} -targetargs:"Node.Net.Test.dll" -register:user -output:coverage.opencover.xml -filter:"+[Node.Net.*]*"`
-#	end
-#end
-
-#task :publish  do
-#	list=`nuget list Node.Net -Source nuget.org`
-#	if(!list.include?("Node.Net #{VERSION}"))
-#		puts `nuget push Node.Net.#{VERSION}.nupkg -Source https://api.nuget.org/v3/index.json`
-#	end
-#end
+task :setup do
+    Raykit::DotNet::initialize_csharp_lib PROJECT.name
+end

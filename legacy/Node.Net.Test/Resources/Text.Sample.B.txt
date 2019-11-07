@@ -1,2 +1,0 @@
-// this is yet another sample text document.
-The quick brown fox jumps over the lazy dog.

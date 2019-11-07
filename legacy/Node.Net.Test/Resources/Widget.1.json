@@ -1,8 +1,0 @@
-{
-  "Type": "Widget",
-  "X" :  "2m",
-  "foo0": {
-    "Type": "Foo",
-    "bar0": { "Type": "Bar" }
-  }
-}
