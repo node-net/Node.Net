@@ -11,10 +11,10 @@ task :default do
                     "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.csproj -c Release -v normal",
                     "dotnet pack #{PROJECT.name}.sln -c Release"])
 
-        #package="#{PROJECT.name}/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
-		#puts "publishing" + Rainbow(package).yellow.bright + " to " + Rainbow("nuget.org").yellow.bright
-		#NUGET_KEY=ENV['NUGET_KEY']
-		#puts `nuget push #{package} -ApiKey #{NUGET_KEY} -Source https://api.nuget.org/v3/index.json`
+        package="#{PROJECT.name}/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
+		puts "publishing" + Rainbow(package).yellow.bright + " to " + Rainbow("nuget.org").yellow.bright
+		NUGET_KEY=ENV['NUGET_KEY']
+		puts `nuget push #{package} -ApiKey #{NUGET_KEY} -Source https://api.nuget.org/v3/index.json`
         
         PROJECT.commit.tag.push.pull
     end
