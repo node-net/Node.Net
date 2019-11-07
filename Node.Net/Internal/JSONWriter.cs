@@ -14,7 +14,7 @@ namespace Node.Net.Internal
 	{
 		public JSONFormat Format { get; set; } = JSONFormat.Indented;
 		private int IndentLevel;
-        public string IndentString { get; set; } = "  ";
+		public string IndentString { get; set; } = "  ";
 		public List<Type> IgnoreTypes { get; set; } = new List<Type>();
 		private bool WritingArray { get; set; } = false;
 
@@ -97,7 +97,7 @@ namespace Node.Net.Internal
 			{
 				WriteIEnumerable(writer, value);
 			}
-			else if(value is ISerializable)
+			else if (value is ISerializable)
 			{
 				WriteISerializable(writer, value as ISerializable);
 			}

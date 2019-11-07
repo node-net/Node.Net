@@ -256,10 +256,10 @@ namespace Node.Net
 			Internal.MetaData.Default.Clean();
 		}
 
-		public static T Get<T>(this object[] items,int index)
+		public static T Get<T>(this object[] items, int index)
 		{
 			var item = items[index];
-			if(item != null)
+			if (item != null)
 			{
 				if (typeof(T).IsAssignableFrom(item.GetType())) return (T)item;
 				if (typeof(T) == typeof(int)) return (T)(object)System.Convert.ToInt32(item);
@@ -273,19 +273,19 @@ namespace Node.Net
 
 		public static T Convert<T>(object value)
 		{
-            if (typeof(T) == typeof(IDictionary<string, string>))
-            {
-                if (value is IDictionary dictionary)
-                {
-                    var result = new Dictionary<string, string>();
-                    foreach (string key in dictionary.Keys)
-                    {
-                        result.Add(key, dictionary[key].ToString());
-                    }
-                    return (T)(object)result;
-                }
-            }
-            return (T)value;
+			if (typeof(T) == typeof(IDictionary<string, string>))
+			{
+				if (value is IDictionary dictionary)
+				{
+					var result = new Dictionary<string, string>();
+					foreach (string key in dictionary.Keys)
+					{
+						result.Add(key, dictionary[key].ToString());
+					}
+					return (T)(object)result;
+				}
+			}
+			return (T)value;
 		}
 	}
 }

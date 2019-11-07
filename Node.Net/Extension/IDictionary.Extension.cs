@@ -346,22 +346,22 @@ namespace Node.Net
 						results[key] = results[key] + 1;
 					}
 
-                    if (dictionary[key] is IDictionary subDictionary)
-                    {
-                        var subKeys = subDictionary.CollectKeys();
-                        foreach (var subKey in subKeys.Keys)
-                        {
-                            if (!results.ContainsKey(key))
-                            {
-                                results.Add(key, subKeys[subKey]);
-                            }
-                            else
-                            {
-                                results[key] = results[key] + subKeys[subKey];
-                            }
-                        }
-                    }
-                }
+					if (dictionary[key] is IDictionary subDictionary)
+					{
+						var subKeys = subDictionary.CollectKeys();
+						foreach (var subKey in subKeys.Keys)
+						{
+							if (!results.ContainsKey(key))
+							{
+								results.Add(key, subKeys[subKey]);
+							}
+							else
+							{
+								results[key] = results[key] + subKeys[subKey];
+							}
+						}
+					}
+				}
 			}
 			return results;
 		}
@@ -807,37 +807,37 @@ namespace Node.Net
 			return GetLocalToParent(dictionary).GetRotationsXYZ();
 		}
 
-        public static void SetRotations(this IDictionary dictionary,Vector3D rotations)
-        {
-            dictionary["RotationX"] = $"{rotations.X} deg";
-            dictionary["RotationY"] = $"{rotations.Y} deg";
-            dictionary["RotationZ"] = $"{rotations.Z} deg";
-        }
-     
-        public static IDictionary GetAncestor(this IDictionary child, string key, string value)
+		public static void SetRotations(this IDictionary dictionary, Vector3D rotations)
 		{
-            if (child?.GetParent() is IDictionary parent)
-            {
-                if (parent.Contains(key) && parent[key].ToString() == value)
-                {
-                    return parent;
-                }
-                return parent.GetAncestor(key, value);
-            }
-            return null;
+			dictionary["RotationX"] = $"{rotations.X} deg";
+			dictionary["RotationY"] = $"{rotations.Y} deg";
+			dictionary["RotationZ"] = $"{rotations.Z} deg";
+		}
+
+		public static IDictionary GetAncestor(this IDictionary child, string key, string value)
+		{
+			if (child?.GetParent() is IDictionary parent)
+			{
+				if (parent.Contains(key) && parent[key].ToString() == value)
+				{
+					return parent;
+				}
+				return parent.GetAncestor(key, value);
+			}
+			return null;
 		}
 
 		public static T GetNearestAncestor<T>(this IDictionary child)
 		{
-            if (child?.GetParent() is IDictionary parent)
-            {
-                if (parent is T ancestor && !EqualityComparer<T>.Default.Equals(ancestor, default(T)))
-                {
-                    return ancestor;
-                }
-                return GetNearestAncestor<T>(parent);
-            }
-            return default(T);
+			if (child?.GetParent() is IDictionary parent)
+			{
+				if (parent is T ancestor && !EqualityComparer<T>.Default.Equals(ancestor, default(T)))
+				{
+					return ancestor;
+				}
+				return GetNearestAncestor<T>(parent);
+			}
+			return default(T);
 		}
 
 		public static T GetFurthestAncestor<T>(this IDictionary child)
@@ -984,5 +984,5 @@ namespace Node.Net
 			}
 			return baseName;
 		}
-    }
+	}
 }

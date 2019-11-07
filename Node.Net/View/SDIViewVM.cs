@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+
+/* Unmerged change from project 'Node.Net (net48)'
+Before:
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+After:
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
+*/
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Node.Net.View
@@ -25,7 +32,7 @@ namespace Node.Net.View
 		private void LoadPersistentData()
 		{
 			_persistentData = new Reader().Read<Dictionary<string, object>>(FileName);
-            OnPropertyChanged(nameof(RecentFileNames));
+			OnPropertyChanged(nameof(RecentFileNames));
 		}
 
 		private Dictionary<string, object> _persistentData = new Dictionary<string, object>()
@@ -43,7 +50,7 @@ namespace Node.Net.View
 			{
 				_filename = value;
 				OnPropertyChanged();
-				if(File.Exists(_filename))
+				if (File.Exists(_filename))
 				{
 					LoadPersistentData();
 				}
@@ -78,14 +85,14 @@ namespace Node.Net.View
 			using (var stream = new FileStream(filename, FileMode.Open))
 			{
 				Document = Open(stream);
-                var recent = new List<string>(RecentFileNames);
+				var recent = new List<string>(RecentFileNames);
 				if (recent.Contains(filename))
 				{
-                    recent.Remove(filename);
+					recent.Remove(filename);
 				}
-                recent.Insert(0, filename);
-                RecentFileNames = recent;
-                SavePersistentData();
+				recent.Insert(0, filename);
+				RecentFileNames = recent;
+				SavePersistentData();
 				return Document;
 			}
 		}

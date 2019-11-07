@@ -1,17 +1,25 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.
+/* Unmerged change from project 'Node.Net (net48)'
+Before:
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
+After:
+using System.Globalization;
+using System.Linq;
+using System.Runtime.CompilerServices;
+*/
+Globalization;
+using System.
+/* Unmerged change from project 'Node.Net (net48)'
+Before:
 using System.Security.Permissions;
 
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+After:
+using System.Security.Permissions;
+*/
+Windows;
 using System.Windows.Data;
-using System.Globalization;
 
 namespace Node.Net.Converters
 {

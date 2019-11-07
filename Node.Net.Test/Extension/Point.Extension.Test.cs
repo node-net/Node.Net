@@ -99,7 +99,6 @@ namespace Node.Net.Test
 			Assert.AreEqual(2.5, centroid.X);
 		}
 
-        
-  
+
 	}
 }

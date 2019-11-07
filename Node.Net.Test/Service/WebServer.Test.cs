@@ -7,14 +7,14 @@ namespace Node.Net.Service
 	[TestFixture, Category(nameof(WebServer))]
 	internal class WebServerTest
 	{
-		[Test,Explicit]
+		[Test, Explicit]
 		public void Default_Usage()
 		{
 			using (var server = new WebServer(Protocol.HTTP, 5000))
 			{
 				var port = server.Port;
 				server.Start();
-                Assert.NotNull(server.Listener, "server.Listener");
+				Assert.NotNull(server.Listener, "server.Listener");
 
 				var uri = server.Uri;
 				Assert.AreEqual($"http://localhost:{port}/", uri.ToString());

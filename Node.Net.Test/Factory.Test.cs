@@ -19,7 +19,7 @@ namespace Node.Net.Test
 			var factory = new Factory();
 			factory.Cache = true;
 			factory.ClearCache();
-			if(factory.Cache) factory.Cache = false;
+			if (factory.Cache) factory.Cache = false;
 
 			var matrix = factory.Create<Matrix3D>();
 			factory.ClearCache(matrix);

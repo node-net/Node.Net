@@ -16,32 +16,28 @@ namespace Node.Net.Test
 			var assembly = typeof(ReaderTest).Assembly;
 			var stream = assembly.FindManifestResourceStream(name);
 			Assert.NotNull(stream, nameof(stream));
-			using (var memory = new MemoryStream())
+			using var memory = new MemoryStream();
+			stream.CopyTo(memory);
+			memory.Seek(0, SeekOrigin.Begin);
+
+			var i = reader.Read<IDictionary>(memory);
+			Assert.NotNull(i, nameof(i));
+			Assert.True(i.Contains("string_symbol"), "i.Contains 'string_symbol'");
+			//Assert.AreEqual("0°", i["string_symbol"].ToString(), "i['string_symbol']");
+
+			memory.Seek(0, SeekOrigin.Begin);
+			var filename = Path.GetTempFileName();
+			using (var fs = new FileStream(filename, FileMode.Create))
 			{
-				stream.CopyTo(memory);
-				memory.Seek(0, SeekOrigin.Begin);
-
-				var i = reader.Read<IDictionary>(memory);
-				Assert.NotNull(i, nameof(i));
-				Assert.True(i.Contains("string_symbol"), "i.Contains 'string_symbol'");
-				//Assert.AreEqual("0°", i["string_symbol"].ToString(), "i['string_symbol']");
-
-				memory.Seek(0, SeekOrigin.Begin);
-				var filename = Path.GetTempFileName();
-				using (var fs = new FileStream(filename, FileMode.Create))
-				{
-					memory.CopyTo(fs);
-				}
-				var d = reader.Read(filename) as IDictionary;
-				Assert.NotNull(d, nameof(d));
-				Assert.True(d.Contains("string_symbol"), "d.Contains 'string_symbol'");
-				//Assert.AreEqual("0°", d["string_symbol"].ToString(), "d['string_symbol']");
-
-				using (var memory2 = new MemoryStream())
-				{
-					d.Save(memory);
-				}
+				memory.CopyTo(fs);
 			}
+			var d = reader.Read(filename) as IDictionary;
+			Assert.NotNull(d, nameof(d));
+			Assert.True(d.Contains("string_symbol"), "d.Contains 'string_symbol'");
+			//Assert.AreEqual("0°", d["string_symbol"].ToString(), "d['string_symbol']");
+
+			using var memory2 = new MemoryStream();
+			d.Save(memory);
 		}
 
 		[Test]
@@ -74,16 +70,16 @@ namespace Node.Net.Test
 			}
 		}
 
-        [Test]
-        public void PreserveBackslash2()
-        {
-            var json = "{ \"path\" : \"C:\\\\tmp\" }";
-            var data = new Reader()
-                .Read<IDictionary>(new MemoryStream(Encoding.UTF8.GetBytes(json)));
-            Assert.True(data.Contains("path"),"data.Contains 'path'");
-            var path = data["path"].ToString();
-            Assert.True(path.Contains("\\"), "path contains \\");
-            Assert.AreEqual("C:\\tmp", path);
-        }
+		[Test]
+		public void PreserveBackslash2()
+		{
+			const string json = "{ \"path\" : \"C:\\\\tmp\" }";
+			var data = new Reader()
+				.Read<IDictionary>(new MemoryStream(Encoding.UTF8.GetBytes(json)));
+			Assert.True(data.Contains("path"), "data.Contains 'path'");
+			var path = data["path"].ToString();
+			Assert.True(path.Contains("\\"), "path contains \\");
+			Assert.AreEqual("C:\\tmp", path);
+		}
 	}
 }

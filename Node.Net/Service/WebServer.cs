@@ -79,7 +79,7 @@ namespace Node.Net.Service
 			}
 		}
 
-        public HttpListener Listener { get { return _listener; } }
+		public HttpListener Listener { get { return _listener; } }
 
 		private readonly Action<HttpListenerContext> _contextAction;
 		private readonly HttpListener _listener;

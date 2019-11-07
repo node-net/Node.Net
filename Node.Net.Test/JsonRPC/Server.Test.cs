@@ -8,7 +8,7 @@ namespace Node.Net.JsonRPC
 	[TestFixture]
 	internal class ServerTest
 	{
-		[Test,Explicit]
+		[Test, Explicit]
 		public void Default_Usage()
 		{
 			var responder = ResponderTest.GetTestResponder();

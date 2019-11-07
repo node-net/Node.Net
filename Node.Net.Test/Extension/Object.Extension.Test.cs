@@ -40,7 +40,7 @@ namespace Node.Net.Test.Extension
 			widget.SetParent(null);
 			Assert.IsNull(widget.GetParent());
 
-            bar.ClearMetaData();
+			bar.ClearMetaData();
 		}
 	}
 }
