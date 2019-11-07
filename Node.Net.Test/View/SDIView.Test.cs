@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using NUnit.Framework;
 
 namespace Node.Net.View
 {
@@ -21,20 +12,20 @@ namespace Node.Net.View
 		public void ShowDialog()
 		{
 			var filename = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Node.Net.View.SDIViewTest.json";
-            var vm = new SDIViewVM
-            {
-                FileName = filename,
-                Views = new Collections.Items<FrameworkElement>(
-                    new List<FrameworkElement>
-                    {
-                        new View.JsonView()
-                    })
-            };
-            vm.Views.SelectedItem = vm.Views[0];
+			var vm = new SDIViewVM
+			{
+				FileName = filename,
+				Views = new Collections.Items<FrameworkElement>(
+					new List<FrameworkElement>
+					{
+						new View.JsonView()
+					})
+			};
+			vm.Views.SelectedItem = vm.Views[0];
 			new Window
 			{
 				Title = "SDIView Test",
-				WindowState=WindowState.Maximized,
+				WindowState = WindowState.Maximized,
 				Content = new SDIView(),
 				DataContext = vm
 			}.ShowDialog();

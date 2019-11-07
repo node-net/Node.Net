@@ -13,9 +13,11 @@ namespace Node.Net
 			{
 				if (_delimiters == null)
 				{
-					_delimiters = new List<char>();
-					_delimiters.Add(' ');
-					_delimiters.Add('\t');
+					_delimiters = new List<char>
+					{
+						' ',
+						'\t'
+					};
 				}
 				return _delimiters;
 			}
@@ -58,7 +60,7 @@ namespace Node.Net
 			return Convert.ToInt32(ReadWord(), System.Globalization.CultureInfo.CurrentCulture);
 		}
 
-		public string ReadLine()
+		public string? ReadLine()
 		{
 			if (_words.Count > 0)
 			{

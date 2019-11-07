@@ -21,7 +21,7 @@ namespace Node.Net.JsonRPC
 
 			foreach (string key in test_data.Keys)
 			{
-				if(key.Contains("get_properties"))
+				if (key.Contains("get_properties"))
 				{
 					int x = 0;
 				}
@@ -73,25 +73,25 @@ namespace Node.Net.JsonRPC
 		{
 			throw new System.InvalidOperationException("BadAction");
 		}
-		public static int AddMultiply(int a,int b,int c) { return (a + b) * c; }
+		public static int AddMultiply(int a, int b, int c) { return (a + b) * c; }
 
-		public static void SetProperties(string name,IDictionary<string,string> properties)
+		public static void SetProperties(string name, IDictionary<string, string> properties)
 		{
 			if (!_properties.ContainsKey(name)) { _properties.Add(name, new Dictionary<string, string>()); }
 
-			foreach(var property in properties.Keys)
+			foreach (var property in properties.Keys)
 			{
 				_properties[name][property] = properties[property];
 			}
 		}
 
-		public static IDictionary<string,string> GetProperties(string name,string[] property_names)
+		public static IDictionary<string, string> GetProperties(string name, string[] property_names)
 		{
 			var result = new Dictionary<string, string>();
-			foreach(var property_name in property_names)
+			foreach (var property_name in property_names)
 			{
 				string value = string.Empty;
-				if(_properties.ContainsKey(name) && _properties[name].ContainsKey(property_name))
+				if (_properties.ContainsKey(name) && _properties[name].ContainsKey(property_name))
 				{
 					value = _properties[name][property_name];
 					result.Add(property_name, value);

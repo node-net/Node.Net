@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
@@ -137,8 +136,10 @@ namespace Node.Net
 			var delta = Point.Subtract(points[points.Length - 1], points[0]);
 			if (delta.Length > tolerance)
 			{
-				var result = new List<Point>(points);
-				result.Add(points[0]);
+				var result = new List<Point>(points)
+				{
+					points[0]
+				};
 				return result.ToArray();
 			}
 			return points;
@@ -647,6 +648,5 @@ namespace Node.Net
 			return false;
 		}
 
-		
 	}
 }
