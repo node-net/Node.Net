@@ -1,11 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net", "Node.Net\Node.Net.csproj", "{C5AB11E2-08D1-4029-8C27-DF809BB7455F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Node.Net", "Node.Net\Node.Net.csproj", "{C5AB11E2-08D1-4029-8C27-DF809BB7455F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Net.Test", "Node.Net.Test\Node.Net.Test.csproj", "{CDEEC0E0-8568-4B87-A868-549CBDC46061}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Node.Net.Test", "Node.Net.Test\Node.Net.Test.csproj", "{CDEEC0E0-8568-4B87-A868-549CBDC46061}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F26594D2-76F2-4085-B850-4B319431AC38}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE.txt = LICENSE.txt
+		rakefile.rb = rakefile.rb
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C5AB11E2-08D1-4029-8C27-DF809BB7455F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +49,11 @@ Global
 		{CDEEC0E0-8568-4B87-A868-549CBDC46061}.Release|x64.Build.0 = Release|Any CPU
 		{CDEEC0E0-8568-4B87-A868-549CBDC46061}.Release|x86.ActiveCfg = Release|Any CPU
 		{CDEEC0E0-8568-4B87-A868-549CBDC46061}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B2F4A452-AD41-4ED8-8B06-6DCBC362BEA7}
 	EndGlobalSection
 EndGlobal
