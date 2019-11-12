@@ -11,7 +11,7 @@
 			{
 				return (T)instance;
 			}
-			return default(T);
+			return default;
 		}
 	}
 }

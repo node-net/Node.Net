@@ -2,5 +2,5 @@
 
 namespace Node.Net
 {
-	public interface IFactory { object Create(Type targetType, object source); }
+	public interface IFactory { object? Create(Type targetType, object source); }
 }

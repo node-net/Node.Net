@@ -111,7 +111,7 @@ namespace Node.Net.Internal
 					}
 					else
 					{
-						InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+                        InstanceCounts[targetType]++;
 					}
 
 					return instance;
@@ -131,7 +131,7 @@ namespace Node.Net.Internal
 						}
 						else
 						{
-							InstanceCounts[targetType] = InstanceCounts[targetType] + 1;
+                            InstanceCounts[targetType]++;
 						}
 
 						if (source != null && (source is string) && IsResourceType(targetType) && !Resources.Contains(source.ToString()))

@@ -1,27 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-
-/* Unmerged change from project 'Node.Net (net48)'
-Before:
-using System.ComponentModel;
-After:
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-*/
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-/* Unmerged change from project 'Node.Net (net48)'
-Before:
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-After:
-using System.Text;
-using System.Threading.Tasks;
-*/
 
 namespace Node.Net.Collections
 {

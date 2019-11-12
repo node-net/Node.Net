@@ -27,6 +27,7 @@ namespace Node.Net.Test
 		}
 
 		public bool TestCanExecute(object i) { return true; }
+
 		public void TestCommand(object i)
 		{
 		}

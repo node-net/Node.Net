@@ -112,13 +112,8 @@ namespace Node.Net
 			}
 
 			var delta = Point.Subtract(points[points.Length - 1], points[0]);
-			if (delta.Length < tolerance)
-			{
-				return true;
-			}
-
-			return false;
-		}
+            return delta.Length < tolerance;
+        }
 
 		/// <summary>
 		/// Closes a Point[] if not already closed
