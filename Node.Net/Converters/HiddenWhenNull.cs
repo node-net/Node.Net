@@ -11,6 +11,7 @@ namespace Node.Net.Converters
 	public class HiddenWhenNull : IValueConverter
 	{
 		public static HiddenWhenNull Default { get; } = new HiddenWhenNull();
+
 		/// <summary>
 		/// Convert
 		/// </summary>

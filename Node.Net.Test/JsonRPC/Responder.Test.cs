@@ -69,10 +69,12 @@ namespace Node.Net.JsonRPC
 		public static void Action3(string a, string b, string c)
 		{
 		}
+
 		public static void BadAction()
 		{
 			throw new System.InvalidOperationException("BadAction");
 		}
+
 		public static int AddMultiply(int a, int b, int c) { return (a + b) * c; }
 
 		public static void SetProperties(string name, IDictionary<string, string> properties)
@@ -99,6 +101,7 @@ namespace Node.Net.JsonRPC
 			}
 			return result;
 		}
+
 		public static Dictionary<string, Dictionary<string, string>> _properties = new Dictionary<string, Dictionary<string, string>>();
 	}
 }

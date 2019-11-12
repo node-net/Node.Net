@@ -15,7 +15,7 @@ namespace Node.Net
 		/// <param name="assembly"></param>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		public static Stream FindManifestResourceStream(this Assembly assembly, string name)
+		public static Stream? FindManifestResourceStream(this Assembly assembly, string name)
 		{
 			foreach (var resourceName in assembly.GetManifestResourceNames())
 			{
@@ -40,7 +40,7 @@ namespace Node.Net
 		/// <param name="assembly"></param>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		public static Stream GetStream(this Assembly assembly, string name)
+		public static Stream? GetStream(this Assembly assembly, string name)
 		{
 			foreach (var resourceName in assembly.GetManifestResourceNames())
 			{
@@ -60,13 +60,14 @@ namespace Node.Net
 				if (resource_name.Contains(prefix))
 				{
 					var name = resource_name.Replace(prefix, string.Empty);
-					using (var memory = new MemoryStream())
-					{
-						var stream = assembly.GetManifestResourceStream(resource_name);
-						stream.CopyTo(memory);
-						data.Add(name, memory.ToArray());
-					}
-				}
+                    using var memory = new MemoryStream();
+                    var stream = assembly.GetManifestResourceStream(resource_name);
+                    if (stream != null)
+                    {
+                        stream.CopyTo(memory);
+                        data.Add(name, memory.ToArray());
+                    }
+                }
 			}
 			return data;
 		}

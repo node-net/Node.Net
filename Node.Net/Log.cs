@@ -82,9 +82,18 @@ namespace Node.Net
 			{
 				var stackTrace = new StackTrace();
 				var stackFrame = stackTrace.GetFrame(stackFrameIndex);
-				var type = stackFrame.GetMethod().DeclaringType;
-
-				LogFunction(type, level, message);
+                if (stackFrame != null)
+                {
+                    var method = stackFrame.GetMethod();
+                    if (method != null)
+                    {
+                        var type = method.DeclaringType;
+                        if (type != null)
+                        {
+                            LogFunction(type, level, message);
+                        }
+                    }
+                }
 			}
 		}
 	}

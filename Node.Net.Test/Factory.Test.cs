@@ -13,6 +13,7 @@ namespace Node.Net.Test
 			Assert.NotNull(factory.Create<Matrix3D>());
 			//Assert.NotNull(factory.Create(typeof(Matrix3D),null));
 		}
+
 		[Test]
 		public void ClearCache()
 		{

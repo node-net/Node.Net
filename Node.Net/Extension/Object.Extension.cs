@@ -162,7 +162,7 @@ namespace Node.Net
 		/// <param name="propertyName"></param>
 		/// <param name="defaultValue"></param>
 		/// <returns></returns>
-		public static T GetPropertyValue<T>(this object item, string propertyName, T defaultValue = default(T))
+		public static T GetPropertyValue<T>(this object item, string propertyName, T defaultValue = default)
 		{
 			if (item != null)
 			{
@@ -268,7 +268,7 @@ namespace Node.Net
 				if (typeof(T) == typeof(double)) return (T)(object)System.Convert.ToDouble(item);
 				if (typeof(T) == typeof(IDictionary<string, string>)) return Convert<T>(item);
 			}
-			return default(T);
+			return default;
 		}
 
 		public static T Convert<T>(object value)

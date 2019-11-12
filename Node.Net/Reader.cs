@@ -50,14 +50,14 @@ namespace Node.Net
 		{
 			if (instance == null)
 			{
-				return default(T);
+				return default;
 			}
 
 			if (instance is T t)
 			{
 				return t;
 			}
-			return default(T);
+			return default;
 		}
 
 		public T Read<T>(Stream stream) => Convert<T>(Read(stream));

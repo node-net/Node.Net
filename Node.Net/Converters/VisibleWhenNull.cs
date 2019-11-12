@@ -29,6 +29,7 @@ namespace Node.Net.Converters
 	public class VisibleWhenNull : IValueConverter
 	{
 		public static VisibleWhenNull Default { get; } = new VisibleWhenNull();
+
 		/// <summary>
 		/// Convert
 		/// </summary>

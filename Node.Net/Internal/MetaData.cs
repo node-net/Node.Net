@@ -29,13 +29,8 @@ namespace Node.Net.Internal
 		/// <returns></returns>
 		public bool HasMetaData(object item)
 		{
-			if (data.ContainsKey(new WeakReference(item)))
-			{
-				return true;
-			}
-
-			return false;
-		}
+            return data.ContainsKey(new WeakReference(item));
+        }
 
 		public IDictionary GetMetaData(object item)
 		{
@@ -105,7 +100,7 @@ namespace Node.Net.Internal
 				return (T)(object)"";
 			}
 
-			return default(T);
+			return default;
 		}
 
 		public void ClearMetaData(object item)
@@ -150,13 +145,8 @@ namespace Node.Net.Internal
 		{
 			if (x is null)
 			{
-				if (y is null)
-				{
-					return true;
-				}
-
-				return false;
-			}
+                return y is null;
+            }
 
 			if (y is null)
 			{

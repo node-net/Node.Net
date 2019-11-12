@@ -10,13 +10,8 @@ namespace Node.Net
 	{
 		public static bool IsFileDialogFilter(this string value)
 		{
-			if (!value.Contains('|'))
-			{
-				return false;
-			}
-
-			return true;
-		}
+            return value.Contains('|');
+        }
 
 		public static bool IsValidFileName(this string value)
 		{

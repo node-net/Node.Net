@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="View\**" />
+    <EmbeddedResource Remove="View\**" />
+    <None Remove="View\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="JsonRPC\Responder.Test.Data.json" />
     <None Remove="Resources\Object.Coverage.json" />
     <None Remove="Resources\States.json" />

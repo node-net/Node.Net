@@ -8,8 +8,10 @@ namespace Node.Net
 	/// </summary>
 	public sealed class DelegateCommand : ICommand
 	{
-		private readonly Action<object> executeMethod = null;
-		private readonly Func<object, bool> canExecuteMethod = null;
+		private readonly Action<object> executeMethod = DoNothing;
+		private readonly Func<object, bool> canExecuteMethod = DefaultCanExecute;
+        private static void DoNothing(object i) { }
+        private static bool DefaultCanExecute(object i) { return true; }
 
 		/// <summary>
 		/// CanExecuteChanged

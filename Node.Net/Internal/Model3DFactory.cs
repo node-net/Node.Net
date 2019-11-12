@@ -7,18 +7,8 @@ namespace Node.Net.Internal
 {
 	internal sealed class Model3DFactory : IFactory
 	{
-		public object Create(Type targetType, object source)
+		public object? Create(Type targetType, object source)
 		{
-			if (source == null)
-			{
-				return null;
-			}
-
-			if (targetType == null)
-			{
-				return null;
-			}
-
 			if (targetType != typeof(Model3D))
 			{
 				return null;
@@ -28,12 +18,6 @@ namespace Node.Net.Internal
 			{
 				return null;
 			}
-			//if (IgnoreTypes.Contains(sourceType)) return null;
-			/*
-			foreach(var ignoreType in IgnoreTypes)
-			{
-				if (ignoreType.IsAssignableFrom(sourceType)) return null;
-			}*/
 			if (source != null)
 			{
 				if (source is IDictionary dictionary)
