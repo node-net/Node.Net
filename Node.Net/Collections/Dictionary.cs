@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
@@ -10,7 +11,7 @@ namespace Node.Net.Collections
 	{
         public Dictionary() { }
 
-		public string Json { get { return this.ToJson(); } set { } }
+		public string ToJson { get { return this.ToJson(); } set { } }
 
         protected Dictionary(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
@@ -18,6 +19,15 @@ namespace Node.Net.Collections
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
+        }
+
+        public Dictionary Parse(Stream stream)
+        {
+            return new Reader
+            {
+                DefaultDocumentType = typeof(Dictionary),
+                DefaultObjectType = typeof(Dictionary)
+            }.Read(stream) as Dictionary;
         }
     }
 }
