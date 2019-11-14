@@ -4,8 +4,8 @@
     <OutputType>Library</OutputType>
     <TargetFrameworks>netcoreapp3.0;net46;net48</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <Version>1.3.2</Version>
-	  <LangVersion>8.0</LangVersion>
+    <Version>1.3.3</Version>
+	<LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <PackageProjectUrl>https://github.com/node-net/Node.Net</PackageProjectUrl>
     <PackageLicense>LICENSE.txt</PackageLicense>
