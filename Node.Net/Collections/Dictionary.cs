@@ -8,7 +8,7 @@ using System.Text;
 namespace Node.Net.Collections
 {
     [Serializable]
-	public class Dictionary : Dictionary<string, object>, ISerializable, IComparable
+	public class Dictionary : Dictionary<string, object>, ISerializable
 	{
         #region Construction
         public Dictionary() { }
@@ -25,6 +25,7 @@ namespace Node.Net.Collections
         }
         #endregion
 
+        /*
         public override bool Equals(object? obj)
         {
             if (obj is null) return false;
@@ -41,7 +42,7 @@ namespace Node.Net.Collections
             if (obj is null) return 1;
             if (object.ReferenceEquals(this, obj)) return 0;
             return GetHashCode().CompareTo(obj.GetHashCode());
-        }
+        }*/
 
         public static Dictionary Parse(Stream stream)
         {
