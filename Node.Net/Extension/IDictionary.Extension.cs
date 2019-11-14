@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
@@ -547,11 +549,11 @@ namespace Node.Net
 
 					if (templateType == typeof(double))
 					{
-						return (T)(object)Convert.ToDouble(value);
+						return (T)(object)System.Convert.ToDouble(value);
 					}
 					if (templateType == typeof(float))
 					{
-						return (T)(object)Convert.ToSingle(value);
+						return (T)(object)System.Convert.ToSingle(value);
 					}
 				}
 			}
@@ -750,7 +752,51 @@ namespace Node.Net
 			return copy;
 		}
 
-		public static Matrix3D GetLocalToParent(this IDictionary dictionary)
+        public static object Convert(this IDictionary value, Type type)
+        {
+            SerializationInfo serializationInfo = value.GetSerializationInfo(type);
+
+            if (typeof(IDictionary).IsAssignableFrom(type))
+            {
+                var data = serializationInfo.GetPersistentData();
+                var defaultConstructor = type.GetConstructor(Type.EmptyTypes);
+                if (defaultConstructor is null)
+                {
+                    throw new InvalidOperationException($"no default constructor availabe for type {type.FullName}");
+                }
+                IDictionary newDictionary = (defaultConstructor.Invoke(Array.Empty<object>()) as IDictionary)!;
+                foreach (var key in data.Keys)
+                {
+                    newDictionary.Add(key, data[key]);
+                }
+                return newDictionary!;
+            }
+
+            var streamingContext = new StreamingContext();
+            var paramTypes = new Type[] { typeof(SerializationInfo), typeof(StreamingContext) };
+            ConstructorInfo ci = type.GetConstructor(
+                                    BindingFlags.Instance | BindingFlags.NonPublic,
+                                    null, paramTypes, null);
+            return ci.Invoke(new object[] { serializationInfo, streamingContext });
+        }
+
+        public static T Convert<T>(this IDictionary value)
+        {
+            var item = value.Convert(typeof(T));
+            return (T)item;
+        }
+
+        public static SerializationInfo GetSerializationInfo(this IDictionary dictionary, Type type)
+        {
+            var info = new SerializationInfo(type, new FormatterConverter());
+            foreach (string key in dictionary.Keys)
+            {
+                info.AddValue(key, dictionary[key]);
+            }
+            return info;
+        }
+
+        public static Matrix3D GetLocalToParent(this IDictionary dictionary)
 		{
 			var matrix3D = new Matrix3D();
 			if (dictionary != null)
