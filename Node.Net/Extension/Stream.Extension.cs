@@ -26,5 +26,12 @@ namespace Node.Net
 			stream.Seek(0, SeekOrigin.Begin);
 			return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
 		}
-	}
+
+        public static string GetBase64String(this Stream stream)
+        {
+            var memory = new MemoryStream();
+            stream.CopyTo(memory);
+            return Convert.ToBase64String(memory.ToArray());
+        }
+    }
 }
