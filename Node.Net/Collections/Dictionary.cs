@@ -21,7 +21,7 @@ namespace Node.Net.Collections
             base.GetObjectData(info, context);
         }
 
-        public Dictionary Parse(Stream stream)
+        public static Dictionary Parse(Stream stream)
         {
             return new Reader
             {
