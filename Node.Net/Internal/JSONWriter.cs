@@ -97,7 +97,11 @@ namespace Node.Net.Internal
 			{
 				WriteIEnumerable(writer, value);
 			}
-			else if (value is ISerializable)
+            else if (value is DateTime dateTime)
+            {
+                WriteString(writer, dateTime.ToString("o"));
+            }
+            else if (value is ISerializable)
 			{
 				WriteISerializable(writer, value as ISerializable);
 			}
