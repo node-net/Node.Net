@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using System.Text;
 
 namespace Node.Net.Collections
 {
@@ -28,6 +29,11 @@ namespace Node.Net.Collections
                 DefaultDocumentType = typeof(Dictionary),
                 DefaultObjectType = typeof(Dictionary)
             }.Read(stream) as Dictionary;
+        }
+
+        public static Dictionary Parse(string json)
+        {
+            return Parse(new MemoryStream(Encoding.UTF8.GetBytes(json)));
         }
     }
 }
