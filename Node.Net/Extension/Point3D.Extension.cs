@@ -64,5 +64,15 @@ namespace Node.Net
 			}
 			return result.ToArray();
 		}
-	}
+
+        public static Point3D[] Transform(this IEnumerable<Point3D> points, Matrix3D matrix)
+        {
+            var points2 = new List<Point3D>();
+            foreach (var p in points)
+            {
+                points2.Add(p);
+            }
+            return Node.Net.Point3DExtension.Transform(points2.ToArray(), matrix);
+        }
+    }
 }

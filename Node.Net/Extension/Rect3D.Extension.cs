@@ -1,18 +1,10 @@
-﻿using System.Windows.Media.Media3D;
+﻿using System.Collections.Generic;
+using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
-	/// <summary>
-	/// Extension methods for Rect3D
-	/// </summary>
 	public static class Rect3DExtension
 	{
-		/// <summary>
-		/// Scale a Rect3D
-		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="factor"></param>
-		/// <returns></returns>
 		public static Rect3D Scale(this Rect3D source, double factor)
 		{
 			if (source.IsEmpty)
@@ -33,16 +25,25 @@ namespace Node.Net
 			};
 		}
 
-		/// <summary>
-		/// Get the center of a Rect3D
-		/// </summary>
-		/// <param name="source"></param>
-		/// <returns></returns>
-
 		public static Point3D GetCenter(this Rect3D source)
 		{
 			var diagonal = new Vector3D(source.SizeX, source.SizeY, source.SizeZ);
 			return source.Location + (diagonal * 0.5);
 		}
-	}
+
+        public static IEnumerable<Point3D> GetCorners(this Rect3D rect3d)
+        {
+            return new List<Point3D>
+            {
+                new Point3D(rect3d.X,rect3d.Y,rect3d.Z),
+                new Point3D(rect3d.X + rect3d.SizeX,rect3d.Y,rect3d.Z),
+                new Point3D(rect3d.X + rect3d.SizeX,rect3d.Y + rect3d.SizeY,rect3d.Z),
+                new Point3D(rect3d.X ,rect3d.Y +rect3d.SizeY,rect3d.Z),
+                new Point3D(rect3d.X,rect3d.Y,rect3d.Z + rect3d.SizeZ),
+                new Point3D(rect3d.X + rect3d.SizeX,rect3d.Y,rect3d.Z+ rect3d.SizeZ),
+                new Point3D(rect3d.X + rect3d.SizeX,rect3d.Y + rect3d.SizeY,rect3d.Z+ rect3d.SizeZ),
+                new Point3D(rect3d.X ,rect3d.Y + rect3d.SizeY,rect3d.Z+ rect3d.SizeZ)
+            };
+        }
+    }
 }
