@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
@@ -29,5 +30,41 @@ namespace Node.Net.Collections
             //Assert.AreEqual(data.ComputeHashCode(), data2.ComputeHashCode(), "hash code");
             //Assert.True(data.Equals(data2), "equals");
         }
+
+        public void Collect()
+        {
+            var states = Dictionary.Parse(Sample.Files.Repository.GetStream("Json/States.json"));
+
+            var dictionaries = states.Collect<IDictionary>();
+            Assert.AreEqual(3205, dictionaries.Count);
+
+            var list = states.Collect(typeof(IDictionary), "");
+            Assert.AreEqual(3205, list.Count);
+
+            var counties = states.Collect("County");
+            Assert.AreEqual(3105, counties.Count, "counties.Count");
+
+            var dictionaries3 = states.Collect<IDictionary>(Include);
+            Assert.AreEqual(3205, dictionaries3.Count, "dictionaries3.Count");
+
+            states.DeepUpdateParents();
+        }
+
+        private bool Include(object item){ return true; }
+
+        [Test]
+        public void Collect1() => Collect();
+
+        [Test]
+        public void Collect2() => Collect();
+
+        [Test]
+        public void Collect3() => Collect();
+
+        [Test]
+        public void Collect4() => Collect();
+
+        [Test]
+        public void Collect5() => Collect();
     }
 }

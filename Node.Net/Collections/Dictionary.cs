@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.Text;
@@ -8,7 +10,7 @@ using System.Text;
 namespace Node.Net.Collections
 {
     [Serializable]
-	public class Dictionary : Dictionary<string, object>, ISerializable
+	public class Dictionary : Dictionary<string, object>, ISerializable, INotifyPropertyChanged
 	{
         #region Construction
         public Dictionary() { }
@@ -25,24 +27,29 @@ namespace Node.Net.Collections
         }
         #endregion
 
-        /*
-        public override bool Equals(object? obj)
+        public object? Parent
         {
-            if (obj is null) return false;
-            return GetHashCode().Equals(obj.GetHashCode());
+            get { return _parent; }
+            set
+            {
+                if(!object.ReferenceEquals(_parent,value))
+                {
+                    _parent = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
-        public override int GetHashCode()
-        {
-            return this.ComputeHashCode();
-        }
+        private object? _parent;
 
-        public int CompareTo(object? obj)
+        #region PropertyChanged
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName]string? propertyName = null)
         {
-            if (obj is null) return 1;
-            if (object.ReferenceEquals(this, obj)) return 0;
-            return GetHashCode().CompareTo(obj.GetHashCode());
-        }*/
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
 
         public static Dictionary Parse(Stream stream)
         {
