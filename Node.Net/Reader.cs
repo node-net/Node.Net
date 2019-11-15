@@ -38,7 +38,7 @@ namespace Node.Net
 					if (signature.IndexOf(signature_key) == 0)
 					{
 						var item = this[signature_key](stream2);
-                        stream.Close();
+                        //stream.Close();
                         return item;
 					}
 				}
