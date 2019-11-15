@@ -20,24 +20,28 @@ namespace Node.Net.Test
 			stream.CopyTo(memory);
 			memory.Seek(0, SeekOrigin.Begin);
 
+            var memory2 = new MemoryStream();
+            memory.CopyTo(memory2);
+            memory.Seek(0, SeekOrigin.Begin);
+
 			var i = reader.Read<IDictionary>(memory);
 			Assert.NotNull(i, nameof(i));
 			Assert.True(i.Contains("string_symbol"), "i.Contains 'string_symbol'");
 			Assert.AreEqual("0°", i["string_symbol"].ToString(), "i['string_symbol']");
 
-			memory.Seek(0, SeekOrigin.Begin);
+			memory2.Seek(0, SeekOrigin.Begin);
 			var filename = Path.GetTempFileName();
 			using (var fs = new FileStream(filename, FileMode.Create))
 			{
-				memory.CopyTo(fs);
+				memory2.CopyTo(fs);
 			}
 			var d = reader.Read(filename) as IDictionary;
 			Assert.NotNull(d, nameof(d));
 			Assert.True(d.Contains("string_symbol"), "d.Contains 'string_symbol'");
 			Assert.AreEqual("0°", d["string_symbol"].ToString(), "d['string_symbol']");
 
-			using var memory2 = new MemoryStream();
-			d.Save(memory);
+			using var memory3 = new MemoryStream();
+			d.Save(memory3);
 		}
 
 		[Test]

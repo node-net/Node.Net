@@ -37,7 +37,9 @@ namespace Node.Net
 				{
 					if (signature.IndexOf(signature_key) == 0)
 					{
-						return this[signature_key](stream2);
+						var item = this[signature_key](stream2);
+                        stream.Close();
+                        return item;
 					}
 				}
 				throw new UnrecognizedSignatureException($"unrecognized signature '{signature.Substring(0, 24)}'");
@@ -64,13 +66,13 @@ namespace Node.Net
 
 		public T Read<T>(string filename) => Convert<T>(Read(filename));
 
-		private static readonly List<string> xaml_markers = new List<string>
+		private readonly List<string> xaml_markers = new List<string>
 		{
 			"http://schemas.microsoft.com/winfx/2006/xaml/presentation",
 			"<MeshGeometry3D",
 		};
 
-		public static object ReadXml(Stream original_stream)
+		public object ReadXml(Stream original_stream)
 		{
 			using (var signatureReader = new Internal.SignatureReader(original_stream))
 			{
@@ -108,7 +110,7 @@ namespace Node.Net
 			return i;
 		}
 
-		public static object ReadImageSource(Stream stream) => new Internal.ImageSourceReader().Read(stream);
+		public object ReadImageSource(Stream stream) => new Internal.ImageSourceReader().Read(stream);
 
 		public Type DefaultDocumentType
 		{
