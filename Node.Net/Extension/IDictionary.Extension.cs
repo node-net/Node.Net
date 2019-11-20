@@ -520,9 +520,10 @@ namespace Node.Net
 				int nextIndex = name.IndexOf(',');
 				while (startIndex < name.Length)
 				{
-					if (dictionary.Contains(name.Substring(startIndex, nextIndex - startIndex)))
+                    var subname = name.Substring(startIndex, nextIndex - startIndex);
+					if (dictionary.Contains(subname))
 					{
-						return dictionary.Get<T>(name.Substring(startIndex, nextIndex - startIndex));
+                        return dictionary.Get<T>(subname);
 					}
 
 					startIndex = nextIndex + 1;
@@ -531,7 +532,7 @@ namespace Node.Net
 						nextIndex = name.IndexOf(',', startIndex);
 						if (nextIndex < 0)
 						{
-							nextIndex = name.Length - 1;
+                            nextIndex = name.Length;// - 1;
 						}
 					}
 				}

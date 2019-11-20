@@ -96,5 +96,27 @@ namespace Node.Net.Test.Extension
 			var i = Matrix3D.Parse("Identity");
 			Assert.True(i.IsIdentity);
 		}
+
+        [Test]
+        public void Get()
+        {
+            var data = new Dictionary<string, object>
+            {
+                {"Name","test" }
+            };
+
+            Assert.AreEqual("test", data.Get<string>("Name"),"Name");
+            Assert.AreEqual("test",data.Get<string>("Name,Description"),"Name,Description");
+            Assert.AreEqual("test", data.Get<string>("Description,Name"),"Description,Name");
+
+            var data2 = new Dictionary<string, object>
+            {
+                {"Description","example" }
+            };
+
+            Assert.AreEqual("example", data2.Get<string>("Description"),"Description");
+            Assert.AreEqual("example", data2.Get<string>("Name,Description"),"Name,Description");
+            Assert.AreEqual("example", data2.Get<string>("Description,Name"),"Description,Name");
+        }
 	}
 }
