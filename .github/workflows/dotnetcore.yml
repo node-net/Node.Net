@@ -15,3 +15,7 @@ jobs:
         dotnet-version: 3.0.100
     - name: Build with dotnet
       run: dotnet build --configuration Release
+    - name: Package with dotnet
+      run: dotnet pack Node.Net.sln -c Release
+    - name: Run Unit Test
+      run: dotnet test Node.Net.Test/Node.Net.Test.csproj -c Release
