@@ -265,5 +265,29 @@ namespace Node.Net
 			data["RotationZ"] = $"{rotationsZXY.Z} deg";
 			return data;
 		}
+
+		public static Rect3D Transform(this Matrix3D matrix,Rect3D bounds)
+		{
+			var center = bounds.GetCenter();
+			var corner = new Point3D(
+				bounds.Location.X + bounds.SizeX,
+				bounds.Location.Y + bounds.SizeY,
+				bounds.Location.Z + bounds.SizeZ);
+
+			var transformedCenter = matrix.Transform(center);
+			var transformedLocation = matrix.Transform(bounds.Location);
+			var transformedCorner = matrix.Transform(corner);
+
+			var transformedSize = new Size3D(
+				Abs(transformedCenter.X - transformedLocation.X) * 2.0,
+				Abs(transformedCenter.Y - transformedLocation.Y) * 2.0,
+				Abs(transformedCenter.Z - transformedLocation.Z) * 2.0);
+
+			transformedLocation = new Point3D(
+				transformedLocation.X < transformedCorner.X ? transformedLocation.X : transformedCorner.X,
+				transformedLocation.Y < transformedCorner.Y ? transformedLocation.Y : transformedCorner.Y,
+				transformedLocation.Z < transformedCorner.Z ? transformedLocation.Z : transformedCorner.Z);
+			return new Rect3D(transformedLocation, transformedSize);
+		}
 	}
 }
