@@ -42,7 +42,7 @@ namespace Node.Net.JsonRPC
 		}
 
 		// https://stackoverflow.com/questions/11403333/httplistener-with-https-support
-		[Test]
+		//[Test]
 		public void Default_Usage_Https()
 		{
 			if (IsAdministrator())
