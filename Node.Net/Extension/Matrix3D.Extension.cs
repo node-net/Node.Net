@@ -284,9 +284,9 @@ namespace Node.Net
 				Abs(transformedCenter.Z - transformedLocation.Z) * 2.0);
 
 			transformedLocation = new Point3D(
-				transformedLocation.X < transformedCorner.X ? transformedLocation.X : transformedCorner.X,
-				transformedLocation.Y < transformedCorner.Y ? transformedLocation.Y : transformedCorner.Y,
-				transformedLocation.Z < transformedCorner.Z ? transformedLocation.Z : transformedCorner.Z);
+				transformedCenter.X - transformedSize.X / 2.0,
+				transformedCenter.Y - transformedSize.Y / 2.0,
+				transformedCenter.Z - transformedSize.Z / 2.0);
 			return new Rect3D(transformedLocation, transformedSize);
 		}
 	}
