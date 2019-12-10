@@ -18,10 +18,10 @@ namespace Node.Net
 				Size = newSize,
 				Location = new Point3D
 				(
-					source.X + (source.SizeX - newSize.X) / 2.0,
-					source.Y + (source.SizeY - newSize.Y) / 2.0,
-					source.Z + (source.SizeZ - newSize.Z) / 2.0
-				)
+					source.X + ((source.SizeX - newSize.X) / 2.0),
+					source.Y + ((source.SizeY - newSize.Y) / 2.0),
+					source.Z + ((source.SizeZ - newSize.Z) / 2.0)
+                )
 			};
 		}
 

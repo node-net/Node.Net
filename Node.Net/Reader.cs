@@ -5,10 +5,11 @@ using System.IO;
 
 namespace Node.Net
 {
-	/// <summary>
-	/// Reader
-	/// </summary>
-	public sealed class Reader : Dictionary<string, Func<Stream, object>>, IRead
+    /// <summary>
+    /// Reader
+    /// </summary>
+    [Serializable]
+    public sealed class Reader : Dictionary<string, Func<Stream, object>>, IRead
 	{
 		public Reader()
 		{
@@ -110,7 +111,7 @@ namespace Node.Net
 			return i;
 		}
 
-		public object ReadImageSource(Stream stream) => new Internal.ImageSourceReader().Read(stream);
+		public static object ReadImageSource(Stream stream) => new Internal.ImageSourceReader().Read(stream);
 
 		public Type DefaultDocumentType
 		{
@@ -160,5 +161,10 @@ namespace Node.Net
 			}
 			return null;
 		}
-	}
+
+        private Reader(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

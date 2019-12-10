@@ -14,10 +14,9 @@ namespace Node.Net.Service
 			MethodResponseFunctions["POST"] = RespondPOST;
 		}
 
-		public Dictionary<string, Action<HttpListenerContext>> MethodResponseFunctions { get { return _methodResponseFunctions; } }
-		private readonly Dictionary<string, Action<HttpListenerContext>> _methodResponseFunctions = new Dictionary<string, Action<HttpListenerContext>>();
+        public Dictionary<string, Action<HttpListenerContext>> MethodResponseFunctions { get; } = new Dictionary<string, Action<HttpListenerContext>>();
 
-		public void Respond(HttpListenerContext context)
+        public void Respond(HttpListenerContext context)
 		{
 			try
 			{
@@ -45,7 +44,7 @@ namespace Node.Net.Service
 			}
 		}
 
-		public void RespondGET(HttpListenerContext context)
+		public static void RespondGET(HttpListenerContext context)
 		{
 			var raw = context.Request.RawUrl;
 
@@ -67,7 +66,7 @@ namespace Node.Net.Service
 			}
 		}
 
-		public void RespondPOST(HttpListenerContext context)
+		public static void RespondPOST(HttpListenerContext context)
 		{
 			var raw = context.Request.RawUrl;
 			var input = new StreamReader(context.Request.InputStream).ReadToEnd();

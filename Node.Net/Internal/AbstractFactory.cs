@@ -59,20 +59,8 @@ namespace Node.Net.Internal
 				}
 			}
 			var instance = targetType.Construct(source);
-			if (instance != null)
-			{
-				return instance;
-			}
-
-			instance = ResourceFactory.Create(targetType, source);
-
-			if (instance == null)
-			{
-				instance = CloneFactory.Create(targetType, source);
-			}
-
-			return instance;
-		}
+            return instance ?? ResourceFactory.Create(targetType, source) ?? CloneFactory.Create(targetType, source);
+        }
 
 		private Stream CreateStream(object source)
 		{

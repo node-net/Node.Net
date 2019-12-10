@@ -4,7 +4,8 @@ using System.IO;
 
 namespace Node.Net.JsonRPC
 {
-	public sealed class Response : Dictionary<string, dynamic>
+    [System.Serializable]
+    public sealed class Response : Dictionary<string, dynamic>
 	{
 		public Response(byte[] data)
 		{
@@ -117,5 +118,10 @@ namespace Node.Net.JsonRPC
 		{
 			return ToJson();
 		}
-	}
+
+        private Response(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }
