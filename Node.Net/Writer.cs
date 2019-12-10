@@ -45,7 +45,7 @@ namespace Node.Net
 					{
 						if (value is XmlDocument)
 						{
-							(value as XmlDocument).Save(stream);
+							(value as XmlDocument)?.Save(stream);
 						}
 						else
 						{

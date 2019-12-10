@@ -74,7 +74,7 @@ namespace Node.Net.Internal
 					}
 				}
 			}
-			if ((name.Contains("(") || name.Contains("*") && name.Contains(".") && name.Contains(")") || name.Contains("|")) && ignoreFilter != name)
+			if ((name.Contains("(") || (name.Contains("*") && name.Contains(".") && name.Contains(")")) || name.Contains("|")) && ignoreFilter != name)
 			{
 				// open file dialog filter
 				var ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };

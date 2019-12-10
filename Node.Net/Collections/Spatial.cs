@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Node.Net.Collections
 {
-    class Spatial
+    internal class Spatial
     {
     }
 }

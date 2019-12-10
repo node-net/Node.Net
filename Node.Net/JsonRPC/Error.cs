@@ -12,7 +12,8 @@ namespace Node.Net.JsonRPC
 		InvalidRequest = -32600
 	}
 
-	public sealed class Error : Dictionary<string, dynamic>
+    [System.Serializable]
+    public sealed class Error : Dictionary<string, dynamic>
 	{
 		public Error(IDictionary data)
 		{
@@ -62,5 +63,10 @@ namespace Node.Net.JsonRPC
 		{
 			return IDictionaryExtension.ToJson(this);
 		}
-	}
+
+        private Error(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

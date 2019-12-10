@@ -5,10 +5,11 @@ using System.Text;
 
 namespace Node.Net.JsonRPC
 {
-	/// <summary>
-	/// Request compatiple with JSON-RPC 2.0 specification for a request object
-	/// </summary>
-	public sealed class Request : Dictionary<string, dynamic>
+    /// <summary>
+    /// Request compatiple with JSON-RPC 2.0 specification for a request object
+    /// </summary>
+    [System.Serializable]
+    public sealed class Request : Dictionary<string, dynamic>
 	{
 		public Request(string _method)
 		{
@@ -120,5 +121,10 @@ namespace Node.Net.JsonRPC
 		{
 			return new MemoryStream(Encoding.UTF8.GetBytes(ToJson()));
 		}
-	}
+
+        private Request(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

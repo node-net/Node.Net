@@ -67,7 +67,7 @@ namespace Node.Net.Internal
 			var ichar = reader.Peek();
 			if (ichar < 0)
 			{
-				throw new InvalidDataException(@"end of stream reached");
+				throw new InvalidDataException("end of stream reached");
 			}
 
 			var c = (char)ichar;
@@ -106,7 +106,7 @@ namespace Node.Net.Internal
 			return ReadNumber(reader);
 		}
 
-		private object ReadNull(System.IO.TextReader reader)
+		private static object ReadNull(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
 			var ch = (char)reader.Peek();
@@ -117,7 +117,7 @@ namespace Node.Net.Internal
 			return null;
 		}
 
-		private object ReadBool(System.IO.TextReader reader)
+		private static object ReadBool(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
 			var ch = (char)reader.Peek();
@@ -130,12 +130,12 @@ namespace Node.Net.Internal
 			return false;
 		}
 
-		private object ReadNumber(System.IO.TextReader reader)
+		private static object ReadNumber(System.IO.TextReader reader)
 		{
 			reader.EatWhiteSpace();
 			char[] endchars = { '}', ']', ',', ' ' };
 			var nstr = reader.Seek(endchars);
-			if (nstr.Contains(@"."))
+			if (nstr.Contains("."))
 			{
 				var value = Convert.ToDouble(nstr);
 				if (value <= Single.MaxValue)
@@ -157,7 +157,7 @@ namespace Node.Net.Internal
 			}
 		}
 
-		private object ReadString(System.IO.TextReader reader)
+		private static object ReadString(System.IO.TextReader reader)
 		{
 			const string unicodeDoubleQuotes = @"\u0022";
 			const string doubleQuotes = @"""";

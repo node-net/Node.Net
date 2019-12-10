@@ -297,7 +297,7 @@ namespace Node.Net
 			{
 				if (item != null)
 				{
-					if (type.IsInstanceOfType(item) && !results.Contains(item) && (search == null || MatchesSearch((item as IDictionary), search)))
+					if (type.IsInstanceOfType(item) && !results.Contains(item) && (search == null || MatchesSearch(item as IDictionary, search)))
 					//if(item.GetType().IsInstanceOfType(type) && !results.Contains(item))
 					{
 						results.Add(item);

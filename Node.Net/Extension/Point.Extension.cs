@@ -84,7 +84,7 @@ namespace Node.Net
 
 						if (lengthToI > distance)
 						{
-							return points[i - 1] + delta * ((distance - lastLength) / delta.Length);
+							return points[i - 1] + (delta * ((distance - lastLength) / delta.Length));
 						}
 						lastLength = lengthToI;
 					}
@@ -305,9 +305,8 @@ namespace Node.Net
 					}
 				}
 				var offsetPoints = offsetPointList.ToArray();
-				offsetPoints = offsetPoints.Close();
-				return offsetPoints;
-			}
+                return offsetPoints.Close();
+            }
 			return offsetPointList.ToArray();
 		}
 
@@ -347,7 +346,7 @@ namespace Node.Net
 					var theta_div = Round(Abs(angle) / 5.0, 0) + 1;
 					if (theta_div > 1)
 					{
-						var delta = angle / (theta_div);
+						var delta = angle / theta_div;
 						for (double i = 1; i < theta_div; ++i)
 						{
 							var rotationMatrix = new System.Windows.Media.Matrix();
@@ -382,13 +381,13 @@ namespace Node.Net
 
 			if (pointA.IsVertical(pointB))
 			{
-				var y = (pointA.X - pointC.X) * (pointD.Y - pointC.Y) / (pointD.X - pointC.X) + pointC.Y;
+				var y = ((pointA.X - pointC.X) * (pointD.Y - pointC.Y) / (pointD.X - pointC.X)) + pointC.Y;
 				intersectionPoint = new Point(pointA.X, y);
 				return true;
 			}
 			if (pointC.IsVertical(pointD))
 			{
-				var y = (pointC.X - pointA.X) * (pointB.Y - pointA.Y) / (pointB.X - pointA.X) + pointA.Y;
+				var y = ((pointC.X - pointA.X) * (pointB.Y - pointA.Y) / (pointB.X - pointA.X)) + pointA.Y;
 				intersectionPoint = new Point(pointC.X, y);
 				return true;
 			}
@@ -398,12 +397,12 @@ namespace Node.Net
 			const double B2 = 1.0;
 			var C1 = pointA.GetC(pointB);
 			var C2 = pointC.GetC(pointD);
-			double delta = A1 * B2 - A2 * B1;
+			double delta = (A1 * B2) - (A2 * B1);
 			bool hasIntersection = Abs(delta - 0) > 0.0001f;
 			if (hasIntersection)
 			{
-				double x = (B2 * C1 - B1 * C2) / delta;
-				double y = (A1 * C2 - (A2 * C1)) / delta;
+				double x = ((B2 * C1) - (B1 * C2)) / delta;
+				double y = ((A1 * C2) - (A2 * C1)) / delta;
 				intersectionPoint = new Point(x, y);
 			}
 			return hasIntersection;
@@ -439,7 +438,7 @@ namespace Node.Net
 		/// <returns></returns>
 		public static double GetC(this Point pointA, Point pointB)
 		{
-			return pointA.Y - GetSlope(pointA, pointB) * pointA.X;
+			return pointA.Y - (GetSlope(pointA, pointB) * pointA.X);
 		}
 
 		/// <summary>
@@ -490,7 +489,7 @@ namespace Node.Net
 					builder.Append(' ');
 				}
 
-				builder.Append($"{Round(point.X, decimals)},{Round(point.Y, decimals)}");
+                builder.Append(Round(point.X, decimals)).Append(',').Append(Round(point.Y, decimals));
 			}
 			return builder.ToString();
 		}
@@ -512,8 +511,8 @@ namespace Node.Net
 			for (int i = 0; i < num_points; i++)
 			{
 				second_factor =
-					pts[i].X * pts[i + 1].Y
-					- pts[i + 1].X * pts[i].Y;
+                    (pts[i].X * pts[i + 1].Y)
+                    - (pts[i + 1].X * pts[i].Y);
 				X += (pts[i].X + pts[i + 1].X) * second_factor;
 				Y += (pts[i].Y + pts[i + 1].Y) * second_factor;
 			}
@@ -634,14 +633,13 @@ namespace Node.Net
 			else
 			{
 				var a = (pointB.Y - pointA.Y) / (pointB.X - pointA.X);
-				var b = pointA.Y - a * pointA.X;
-				if (Abs(testPoint.Y - (a * testPoint.X + b)) < epsilon)
+				var b = pointA.Y - (a * pointA.X);
+				if (Abs(testPoint.Y - ((a * testPoint.X) + b)) < epsilon)
 				{
 					return true;
 				}
 			}
 			return false;
 		}
-
 	}
 }

@@ -49,19 +49,19 @@ namespace Node.Net.Internal
 					if (dictionary.Contains("XDirection"))
 					{
 						var xDirectionValue = dictionary.Get<string>("XDirection", "1,0,0");
-						log.AppendLine($" XDirection = {xDirectionValue}");
+                        log.Append(" XDirection = ").AppendLine(xDirectionValue);
 						xDirection = Vector3D.Parse(xDirectionValue);
 					}
 					if (dictionary.Contains("YDirection"))
 					{
 						var yDirectionValue = dictionary.Get<string>("YDirection", "0,1,0");
-						log.AppendLine($" YDirection = {yDirectionValue}");
+                        log.Append(" YDirection = ").AppendLine(yDirectionValue);
 						yDirection = Vector3D.Parse(yDirectionValue);
 					}
 				}
 				catch (Exception e)
 				{
-					log.AppendLine($" IDictionary FullName {dictionary.GetFullName()}");
+                    log.Append(" IDictionary FullName ").AppendLine(dictionary.GetFullName());
 					throw new InvalidOperationException($"Matrix3DFactory.CreateFromIDictionary{Environment.NewLine}{log}", e);
 				}
 				matrix3D = matrix3D.SetDirectionVectorsXY(xDirection, yDirection);

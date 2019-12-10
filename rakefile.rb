@@ -24,3 +24,8 @@ end
 task :setup do
     Raykit::DotNet::initialize_csharp_lib PROJECT.name
 end
+
+task :fix do
+    analyzer_dir="#{Raykit::Environment::local_application_data}/Microsoft/VisualStudio"
+    PROJECT.run("roslynator fix #{PROJECT.name}.sln --analyzer-assemblies #{analyzer_dir} --msbuild-path \"#{Raykit::MsBuild::msbuild_path}\"")
+end

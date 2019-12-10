@@ -53,9 +53,9 @@ namespace Node.Net.Internal
 			get { return Model3DFactory.IgnoreTypes; }
 		}
 
-		public Dictionary<Type, Func<Type, object, object>> FactoryFunctions { get; private set; }
+        public Dictionary<Type, Func<Type, object, object>> FactoryFunctions { get; }
 
-		public List<Assembly> ManifestResourceAssemblies
+        public List<Assembly> ManifestResourceAssemblies
 		{
 			get { return StreamFactory.ResourceAssemblies; }
 			set { StreamFactory.ResourceAssemblies = value; }

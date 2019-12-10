@@ -12,7 +12,7 @@ namespace Node.Net.Internal
 
 		public SignatureReader(Stream original_stream)
 		{
-			Signature = (Read(original_stream) as Signature).ToString();
+			Signature = (Read(original_stream) as Signature)?.ToString();
 			if (!original_stream.CanSeek)
 			{
 				Stream = MemoryStream;

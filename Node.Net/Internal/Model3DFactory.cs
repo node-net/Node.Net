@@ -61,15 +61,9 @@ namespace Node.Net.Internal
 		public bool ScalePrimaryModel { get; set; } = true;
 		private bool cache = true;
 
-		public Dictionary<object, Model3D> Model3DCache
-		{
-			get { return model3DCache; }
-			set { model3DCache = value; }
-		}
+        public Dictionary<object, Model3D> Model3DCache { get; set; } = new Dictionary<object, Model3D>();
 
-		private Dictionary<object, Model3D> model3DCache = new Dictionary<object, Model3D>();
-
-		public bool Cache
+        public bool Cache
 		{
 			get { return cache; }
 			set
@@ -77,19 +71,19 @@ namespace Node.Net.Internal
 				if (cache != value)
 				{
 					cache = value;
-					model3DCache.Clear();
+                    Model3DCache.Clear();
 				}
 			}
 		}
 
 		public void ClearCache()
 		{
-			model3DCache.Clear(); namedCache.Clear();
+            Model3DCache.Clear(); namedCache.Clear();
 		}
 
 		public void ClearCache(object model)
 		{
-			if (model != null) { model3DCache.Remove(model); }
+			if (model != null) { Model3DCache.Remove(model); }
 		}
 
 		private Model3D CreateFromDictionary(IDictionary source)
@@ -99,9 +93,9 @@ namespace Node.Net.Internal
 				return null;
 			}
 
-			if (cache && model3DCache.ContainsKey(source))
+			if (cache && Model3DCache.ContainsKey(source))
 			{
-				return model3DCache[source];
+				return Model3DCache[source];
 			}
 			var model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
 			var primaryModel = GetPrimaryModel3D(source);
@@ -126,7 +120,7 @@ namespace Node.Net.Internal
 			{
 				if (cache)
 				{
-					model3DCache.Add(source, model3DGroup);
+                    Model3DCache.Add(source, model3DGroup);
 				}
 
 				return model3DGroup;

@@ -15,16 +15,16 @@ namespace Node.Net.Service
 
 		public WebServer(HttpListener listener, Action<HttpListenerContext> action)
 		{
-			_listener = listener;
+            Listener = listener;
 			_contextAction = action;
 		}
 
 		public WebServer(Protocol protocol, int port)
 		{
-			_port = GetNextAvailablePort(port);
-			_protocol = Protocol.HTTP;
-			_listener = new HttpListener();
-			_listener.Prefixes.Add(Uri.ToString());
+            Port = GetNextAvailablePort(port);
+            Protocol = Protocol.HTTP;
+            Listener = new HttpListener();
+            Listener.Prefixes.Add(Uri.ToString());
 			_contextAction = new WebResponder().Respond;
 		}
 
@@ -53,18 +53,16 @@ namespace Node.Net.Service
 		{
 			if (disposing)
 			{
-				_listener.Close();
+                Listener.Close();
 			}
 		}
 
-		#endregion Destruction
+        #endregion Destruction
 
-		public Protocol Protocol { get { return _protocol; } }
-		private readonly Protocol _protocol;
-		public int Port { get { return _port; } }
-		private readonly int _port;
+        public Protocol Protocol { get; }
+        public int Port { get; }
 
-		public Uri Uri
+        public Uri Uri
 		{
 			get
 			{
@@ -79,10 +77,9 @@ namespace Node.Net.Service
 			}
 		}
 
-		public HttpListener Listener { get { return _listener; } }
+        public HttpListener Listener { get; }
 
-		private readonly Action<HttpListenerContext> _contextAction;
-		private readonly HttpListener _listener;
+        private readonly Action<HttpListenerContext> _contextAction;
 		private readonly object _locker = new object();
 
 		public bool Shutdown
@@ -107,14 +104,14 @@ namespace Node.Net.Service
 
 		public void Start()
 		{
-			_listener.Start();
+            Listener.Start();
 			ThreadPool.QueueUserWorkItem((_) =>
 			{
-				while (_listener.IsListening && !Shutdown)
+				while (Listener.IsListening && !Shutdown)
 				{
 					try
 					{
-						ThreadPool.QueueUserWorkItem(WorkItemCallback, _listener.GetContext());
+						ThreadPool.QueueUserWorkItem(WorkItemCallback, Listener.GetContext());
 					}
 					catch { }
 				}
@@ -129,7 +126,7 @@ namespace Node.Net.Service
 		public void Stop()
 		{
 			Shutdown = true;
-			_listener.Stop();
+            Listener.Stop();
 		}
 
 		public static int GetNextAvailablePort(int starting_port)

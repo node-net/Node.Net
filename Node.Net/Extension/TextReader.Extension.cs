@@ -26,9 +26,8 @@ namespace Node.Net
 				{
 					if ((char)reader.Peek() == value)
 					{
-						if (ignoreEscaped && ((char)(ichar)) == '\\') { }// ignore
-						else { return; }
-					}
+                        if (!ignoreEscaped || ((char)(ichar)) != '\\') { return; }
+                    }
 				}
 			}
 		}
@@ -47,9 +46,8 @@ namespace Node.Net
 					{
 						if ((char)reader.Peek() == ch)
 						{
-							if (ignoreEscaped && ((char)(ichar)) == '\\') { }// ignore
-							else { return; }
-						}
+                            if (!ignoreEscaped || ((char)(ichar)) != '\\') { return; }
+                        }
 					}
 				}
 			}
@@ -118,17 +116,15 @@ namespace Node.Net
 				{
 					if (ignoreEscaped)
 					{
-						if (((char)iChar) == backslash) { }
-						else { builder.Append((char)iChar); }
-					}
+                        if (((char)iChar) != backslash) { builder.Append((char)iChar); }
+                    }
 					else { builder.Append((char)iChar); }
 
 					iPeek = reader.Peek();
 					if ((char)iPeek == value)
 					{
-						if (ignoreEscaped && ((char)(iChar)) == backslash) { } // ignore
-						else { done = true; }
-					}
+                        if (!ignoreEscaped || ((char)(iChar)) != backslash) { done = true; }
+                    }
 				}
 			}
 			if (builder.Length == 0)
@@ -181,17 +177,15 @@ namespace Node.Net
 				{
 					if (ignoreEscaped)
 					{
-						if (((char)ichar) == '\\') { }
-						else { builder.Append((char)ichar); }
-					}
+                        if (((char)ichar) != '\\') { builder.Append((char)ichar); }
+                    }
 					else { builder.Append((char)ichar); }
 					foreach (char ch in values)
 					{
 						if ((char)reader.Peek() == ch)
 						{
-							if (ignoreEscaped && ((char)(ichar)) == '\\') { } // ignore
-							else { done = true; }
-						}
+                            if (!ignoreEscaped || ((char)(ichar)) != '\\') { done = true; }
+                        }
 					}
 				}
 			}
