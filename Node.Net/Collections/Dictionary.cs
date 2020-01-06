@@ -10,29 +10,38 @@ using System.Text;
 namespace Node.Net.Collections
 {
     [Serializable]
-	public class Dictionary : Dictionary<string, object>, ISerializable, INotifyPropertyChanged
-	{
+    public class Dictionary : Dictionary<string, object>, ISerializable, INotifyPropertyChanged
+    {
         #region Construction
-        public Dictionary() { }
-        #endregion
+
+        public Dictionary()
+        {
+        }
+
+        #endregion Construction
+
         public string ToJson { get { return this.ToJson(); } set { } }
 
         #region Serialization
-        protected Dictionary(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+        protected Dictionary(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
         }
-        #endregion
+
+        #endregion Serialization
 
         public object? Parent
         {
             get { return _parent; }
             set
             {
-                if(!object.ReferenceEquals(_parent,value))
+                if (!object.ReferenceEquals(_parent, value))
                 {
                     _parent = value;
                     OnPropertyChanged();
@@ -43,15 +52,17 @@ namespace Node.Net.Collections
         private object? _parent;
 
         #region PropertyChanged
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName]string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        #endregion
 
-        public static Dictionary Parse(Stream stream)
+        #endregion PropertyChanged
+
+        public static Dictionary? Parse(Stream stream)
         {
             return new Reader
             {
@@ -60,7 +71,7 @@ namespace Node.Net.Collections
             }.Read(stream) as Dictionary;
         }
 
-        public static Dictionary Parse(string json)
+        public static Dictionary? Parse(string json)
         {
             return Parse(new MemoryStream(Encoding.UTF8.GetBytes(json)));
         }

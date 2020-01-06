@@ -2,8 +2,8 @@
 
 namespace Node.Net
 {
-	public interface IWrite
-	{
-		void Write(Stream stream, object value);
-	}
+    public interface IWrite
+    {
+        void Write(Stream stream, object value);
+    }
 }

@@ -224,7 +224,7 @@ namespace Node.Net
             return results;
         }
 
-        private static void _Collect<T>(this IDictionary idictionary, string search, IList results, Func<IDictionary, string, bool> matchFunction)
+        private static void _Collect<T>(this IDictionary idictionary, string? search, IList results, Func<IDictionary, string, bool> matchFunction)
         {
             foreach (var item in idictionary.Values)
             {
@@ -291,7 +291,7 @@ namespace Node.Net
             return mkey.Length > 0 && search.Length > 0 && mkey.Contains(search);
         }
 
-        private static void _Collect(this IDictionary idictionary, Type type, string search, IList results)
+        private static void _Collect(this IDictionary idictionary, Type type, string? search, IList results)
         {
             foreach (var item in idictionary.Values)
             {
@@ -346,33 +346,36 @@ namespace Node.Net
         public static IDictionary<string, int> CollectKeys(this IDictionary dictionary)
         {
             var results = new Dictionary<string, int>();
-            foreach (string key in dictionary.Keys)
+            foreach (object? okey in dictionary.Keys)
             {
-                if (key != null)
+                if (okey is string key)
                 {
-                    if (key.Length > 0)
+                    if (key != null)
                     {
-                        if (!results.ContainsKey(key))
+                        if (key.Length > 0)
                         {
-                            results.Add(key, 1);
-                        }
-                        else
-                        {
-                            results[key]++;
-                        }
-
-                        if (dictionary[key] is IDictionary subDictionary)
-                        {
-                            var subKeys = subDictionary.CollectKeys();
-                            foreach (var subKey in subKeys.Keys)
+                            if (!results.ContainsKey(key))
                             {
-                                if (!results.ContainsKey(key))
+                                results.Add(key, 1);
+                            }
+                            else
+                            {
+                                results[key]++;
+                            }
+
+                            if (dictionary[key] is IDictionary subDictionary)
+                            {
+                                var subKeys = subDictionary.CollectKeys();
+                                foreach (var subKey in subKeys.Keys)
                                 {
-                                    results.Add(key, subKeys[subKey]);
-                                }
-                                else
-                                {
-                                    results[key] += subKeys[subKey];
+                                    if (!results.ContainsKey(key))
+                                    {
+                                        results.Add(key, subKeys[subKey]);
+                                    }
+                                    else
+                                    {
+                                        results[key] += subKeys[subKey];
+                                    }
                                 }
                             }
                         }
@@ -442,15 +445,18 @@ namespace Node.Net
                     if (keyFilterFunction == null || keyFilterFunction(key))
                     {
                         var value = source[key];
-                        if (valueFilterFunction(value))
+                        if (value != null)
                         {
-                            if (value is IDictionary child_dictionary)
+                            if (valueFilterFunction(value))
                             {
-                                dictionary[key] = new Dictionary<object, dynamic>().Copy(child_dictionary, valueFilterFunction, keyFilterFunction);
-                            }
-                            else
-                            {
-                                dictionary[key] = value;
+                                if (value is IDictionary child_dictionary)
+                                {
+                                    dictionary[key] = new Dictionary<object, dynamic>().Copy(child_dictionary, valueFilterFunction, keyFilterFunction);
+                                }
+                                else
+                                {
+                                    dictionary[key] = value;
+                                }
                             }
                         }
                     }
@@ -593,12 +599,11 @@ namespace Node.Net
                 }
             }
 
-            if (typeof(T) == typeof(string) && EqualityComparer<T>.Default.Equals(defaultValue, default))
-            {
-                return (T)(object)string.Empty;
-            }
-
-            return defaultValue;
+            return typeof(T) == typeof(string) && EqualityComparer<T>.Default.Equals(
+                defaultValue,
+                default)
+                ? (T)(object)string.Empty
+                : defaultValue;
         }
 
         public static void Set(this IDictionary dictionary, string key, object value)
@@ -653,12 +658,15 @@ namespace Node.Net
         {
             if (dictionary.GetParent() is IDictionary parent)
             {
-                foreach (string key in parent.Keys)
+                foreach (object? okey in parent.Keys)
                 {
-                    var test_element = parent.Get<IDictionary>(key);
-                    if (test_element != null && object.ReferenceEquals(test_element, dictionary))
+                    if (okey is string key)
                     {
-                        return key;
+                        var test_element = parent.Get<IDictionary>(key);
+                        if (test_element != null && object.ReferenceEquals(test_element, dictionary))
+                        {
+                            return key;
+                        }
                     }
                 }
             }
@@ -729,7 +737,13 @@ namespace Node.Net
                 }
             }
             var keys = new List<string>();
-            foreach (string key in source.Keys) { keys.Add(key); }
+            foreach (string? key in source.Keys)
+            {
+                if (key != null)
+                {
+                    keys.Add(key);
+                }
+            }
             //foreach (string key in source.Keys)
             foreach (string key in keys)
             {
@@ -790,9 +804,12 @@ namespace Node.Net
         public static SerializationInfo GetSerializationInfo(this IDictionary dictionary, Type type)
         {
             var info = new SerializationInfo(type, new FormatterConverter());
-            foreach (string key in dictionary.Keys)
+            foreach (string? key in dictionary.Keys)
             {
-                info.AddValue(key, dictionary[key]);
+                if (key != null)
+                {
+                    info.AddValue(key, dictionary[key]);
+                }
             }
             return info;
         }
@@ -896,7 +913,9 @@ namespace Node.Net
         {
             if (child?.GetParent() is IDictionary parent)
             {
-                if (parent is T ancestor && !EqualityComparer<T>.Default.Equals(ancestor, default))
+                if (parent is T ancestor && !EqualityComparer<T>.Default.Equals(
+                    ancestor,
+                    default))
                 {
                     return ancestor;
                 }
@@ -909,7 +928,7 @@ namespace Node.Net
         {
             if (child != null)
             {
-                var ancestor = GetNearestAncestor<T>(child) as IDictionary;
+                IDictionary? ancestor = GetNearestAncestor<T>(child) as IDictionary;
                 if (ancestor != null)
                 {
                     var further_ancestor = GetFurthestAncestor<T>(ancestor);
@@ -924,7 +943,9 @@ namespace Node.Net
                 }
                 return (T)ancestor;
             }
+#pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
             return default;
+#pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
         }
 
         public static object GetRootAncestor(this IDictionary child)
