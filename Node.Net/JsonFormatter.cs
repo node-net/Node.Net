@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Node.Net
 {
@@ -15,11 +12,18 @@ namespace Node.Net
             SurrogateSelector = null;
         }
 
-        public object? Deserialize(Stream serializationStream) { return _jsonReader.Read(serializationStream); }
+        public object? Deserialize(Stream serializationStream)
+        {
+            return _jsonReader.Read(serializationStream);
+        }
 
-        public void Serialize(Stream serializationStream, object graph) { _jsonWriter.Write(serializationStream, graph); }
+        public void Serialize(Stream serializationStream, object graph)
+        {
+            _jsonWriter.Write(serializationStream, graph);
+        }
 
         public object Clone(object graph) => IFormatterExtension.Clone(this, graph);
+
         public T Clone<T>(object graph) => IFormatterExtension.Clone<T>(this, graph);
 
         private readonly Internal.JsonReader _jsonReader = new Internal.JsonReader();

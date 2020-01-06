@@ -7,12 +7,12 @@ namespace Node.Net
     /// </summary>
     [Serializable]
     public sealed class UnrecognizedSignatureException : Exception
-	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="message"></param>
-		public UnrecognizedSignatureException(string message) : base(message) { }
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="message"></param>
+        public UnrecognizedSignatureException(string message) : base(message) { }
 
         public UnrecognizedSignatureException()
         {

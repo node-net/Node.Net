@@ -2,19 +2,19 @@
 
 namespace Node.Net
 {
-	public static class ActionExtension
-	{
-		public static void Invoke<T>(this Action<T> action, object[] parameters)
-		{
-			action((T)parameters[0]);
-		}
+    public static class ActionExtension
+    {
+        public static void Invoke<T>(this Action<T> action, object[] parameters)
+        {
+            action((T)parameters[0]);
+        }
 
-		public static void Invoke<T1, T2>(this Action<T1, T2> action, object[] parameters)
-		{
-			action((T1)(parameters[0]), (T2)(parameters[1]));
-		}
+        public static void Invoke<T1, T2>(this Action<T1, T2> action, object[] parameters)
+        {
+            action((T1)(parameters[0]), (T2)(parameters[1]));
+        }
 
-		/*
+        /*
 		public static T Convert<T>(object value)
 		{
 			var dictionary = value as IDictionary;
@@ -32,5 +32,5 @@ namespace Node.Net
 			}
 			return (T)value;
 		}*/
-	}
+    }
 }

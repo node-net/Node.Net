@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 
 namespace Node.Net
@@ -11,7 +8,7 @@ namespace Node.Net
         public static T FindChild<T>(this DependencyObject parent, string childName)
             where T : DependencyObject
         {
-            // Confirm parent and childName are valid. 
+            // Confirm parent and childName are valid.
             if (parent == null) return null;
 
             T foundChild = null;
@@ -27,7 +24,7 @@ namespace Node.Net
                     // recursively drill down the tree
                     foundChild = FindChild<T>(child, childName);
 
-                    // If the child is found, break so we do not overwrite the found child. 
+                    // If the child is found, break so we do not overwrite the found child.
                     if (foundChild != null) break;
                 }
                 else if (!string.IsNullOrEmpty(childName))

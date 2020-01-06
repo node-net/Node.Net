@@ -1,8 +1,6 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
 
 namespace Node.Net.Collections
 {
@@ -50,7 +48,10 @@ namespace Node.Net.Collections
             states.DeepUpdateParents();
         }
 
-        private bool Include(object item){ return true; }
+        private bool Include(object item)
+        {
+            return true;
+        }
 
         [Test]
         public void Collect1() => Collect();

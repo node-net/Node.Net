@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Node.Net
 {
@@ -27,7 +24,7 @@ namespace Node.Net
             return (T)item;
         }
 
-        public static string GetMD5(this IFormatter formatter,object graph)
+        public static string GetMD5(this IFormatter formatter, object graph)
         {
             using var memory = new MemoryStream();
             formatter.Serialize(memory, graph);
