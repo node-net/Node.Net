@@ -18,7 +18,7 @@ namespace Node.Net.Collections
                 {"Timestamp", timestamp }
             };
 
-            var data2 = data.Clone();
+            var data2 = (data as IDictionary).Clone();
             var timestamp2 = (DateTime)data2["Timestamp"];
             Assert.AreEqual(14, timestamp2.Day, "timestamp2.Day");
 

@@ -3,11 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace Node.Net.Collections
 {
-    public class Items<T> : ObservableCollection<T>
+    [Serializable]
+    public class Items<T> : ObservableCollection<T>, ISerializable
     {
+        public Items()
+        {
+        }
+
         public Items(IEnumerable<T> source)
         {
             Source = source;
@@ -117,5 +124,47 @@ namespace Node.Net.Collections
         {
             OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(caller));
         }
+
+        #region Serialization
+
+        protected Items(SerializationInfo info, StreamingContext context)
+        {
+            int count = info.GetInt32("Count");
+            for (int i = 0; i < count; ++i)
+            {
+                var item = info.GetValue(i.ToString(), typeof(object));
+                Add((T)item);
+            }
+            int selected_index = info.GetInt32("SelectedIndex");
+            if (selected_index != -1)
+            {
+                SelectedItem = this[selected_index];
+            }
+        }
+
+        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Count", Count);
+            for (int i = 0; i < Count; ++i)
+            {
+                info.AddValue(i.ToString(), this[i]);
+            }
+            int selected_index = -1;
+            if (SelectedItem != null)
+            {
+                for (int i = 0; i < Count; ++i)
+                {
+                    if (object.ReferenceEquals(SelectedItem, this[i]))
+                    {
+                        selected_index = i;
+                        break;
+                    }
+                }
+            }
+            info.AddValue("SelectedIndex", selected_index);
+        }
+
+        #endregion Serialization
     }
 }
