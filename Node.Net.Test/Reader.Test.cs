@@ -53,7 +53,7 @@ namespace Node.Net.Test
                 {"User",@"Domain\User" }
             };
 
-            var json = data.ToJson();
+            var json = (data as IDictionary).ToJson();
             Assert.True(json.Contains(@"Domain\u005cUser"), "json contains 'Domain\u005cUser'");
 
             using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))

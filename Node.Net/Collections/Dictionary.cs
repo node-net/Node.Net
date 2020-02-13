@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -20,7 +21,7 @@ namespace Node.Net.Collections
 
         #endregion Construction
 
-        public string ToJson { get { return this.ToJson(); } set { } }
+        public string ToJson { get { return (this as IDictionary).ToJson(); } set { } }
 
         #region Serialization
 
