@@ -85,7 +85,7 @@ namespace Node.Net
         public static double GetLengthMeters(this IDictionary dictionary, string name)
         {
             var svalue = dictionary.Get<string>(name);
-            return Internal.Length.GetMeters(svalue);
+            return Length.GetMeters(svalue);
         }
 
         /// <summary>

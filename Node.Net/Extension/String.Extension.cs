@@ -38,7 +38,7 @@ namespace Node.Net
             return true;
         }
 
-        public static double GetMeters(this string value) => Internal.Length.GetMeters(value);
+        public static double GetMeters(this string value) => Length.GetMeters(value);
 
         public static double GetRawValue(this string value)
         {
