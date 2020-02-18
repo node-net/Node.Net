@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Node.Net.Internal
+namespace Node.Net
 {
-    internal static class Length
+    public static class Length
     {
         public static double GetMeters(string value)
         {

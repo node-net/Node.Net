@@ -94,9 +94,9 @@ namespace Node.Net.Internal
         public static Vector3D GetTranslation(IDictionary source)
         {
             return new Vector3D(
-                Internal.Length.GetMeters(source.Get<string>("X")),
-                Internal.Length.GetMeters(source.Get<string>("Y")),
-                Internal.Length.GetMeters(source.Get<string>("Z")));
+                Length.GetMeters(source.Get<string>("X")),
+                Length.GetMeters(source.Get<string>("Y")),
+                Length.GetMeters(source.Get<string>("Z")));
         }
 
         public static Matrix3D RotateXYZ(Matrix3D matrix, Vector3D rotationsXYZ) => matrix.RotateXYZ(rotationsXYZ);
