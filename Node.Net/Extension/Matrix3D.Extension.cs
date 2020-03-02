@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using static System.Math;
@@ -17,6 +18,51 @@ namespace Node.Net
             var localX = matrix.Transform(new Vector3D(1, 0, 0));
             matrix.Rotate(new Quaternion(localX, rotationsXYZ.X));
             return matrix;
+        }
+
+        public static Matrix3D RotateOTS(this Matrix3D matrix, Vector3D rotationsOTS)
+        {
+            var orientation = rotationsOTS.X;
+            var tilt = rotationsOTS.Y;
+            var spin = rotationsOTS.Z;
+            matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), orientation));
+
+            var localX = matrix.Transform(new Vector3D(1, 0, 0));
+            matrix.Rotate(new Quaternion(localX, tilt));
+
+            var localZ = matrix.Transform(new Vector3D(0, 0, 1));
+            matrix.Rotate(new Quaternion(localZ, spin));
+            return matrix;
+        }
+
+        public static Vector3D GetRotationsOTS(this Matrix3D matrix)
+        {
+            var xdirection = matrix.GetXDirectionVector();
+            var ydirection = matrix.GetYDirectionVector();
+            var zdirection = matrix.GetZDirectionVector();
+
+            double orientation = 0.0;
+            double tilt = 0.0;
+            double spin = 0.0;
+            if (Abs(1.0 - zdirection.Z) < 0.0001)
+            {
+                orientation = Math.Atan2(xdirection.Y, xdirection.X);
+            }
+            else if (Abs(zdirection.Z + 1.0) < 0.0001)
+            {
+                tilt = Math.PI;
+                orientation = Math.Atan2(xdirection.Y, xdirection.X);
+            }
+            else
+            {
+                tilt = Math.Acos(zdirection.Z);
+                if (Abs(1.0 - xdirection.X) > 0.0001)
+                {
+                    orientation = Math.Atan2(zdirection.Y * -1.0, zdirection.X * -1.0) - Math.PI * 0.5;
+                }
+            }
+            double rad2Deg = 180 / Math.PI;
+            return new Vector3D(orientation * rad2Deg, tilt * rad2Deg, spin * rad2Deg);
         }
 
         public static Vector3D GetRotationsXYZ(this Matrix3D matrix)
@@ -288,6 +334,21 @@ namespace Node.Net
                 transformedCenter.Y - (transformedSize.Y / 2.0),
                 transformedCenter.Z - (transformedSize.Z / 2.0));
             return new Rect3D(transformedLocation, transformedSize);
+        }
+
+        public static Vector3D GetXDirectionVector(this Matrix3D matrix)
+        {
+            return matrix.Transform(new Vector3D(1, 0, 0));
+        }
+
+        public static Vector3D GetYDirectionVector(this Matrix3D matrix)
+        {
+            return matrix.Transform(new Vector3D(0, 1, 0));
+        }
+
+        public static Vector3D GetZDirectionVector(this Matrix3D matrix)
+        {
+            return matrix.Transform(new Vector3D(0, 0, 1));
         }
     }
 }
