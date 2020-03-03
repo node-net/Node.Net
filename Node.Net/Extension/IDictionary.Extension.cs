@@ -924,6 +924,13 @@ namespace Node.Net
             dictionary["RotationZ"] = $"{rotations.Z} deg";
         }
 
+        public static void SetRotationsOTS(this IDictionary dictionary, Vector3D ots)
+        {
+            dictionary["Orientation"] = $"{ots.X} deg";
+            dictionary["Tilt"] = $"{ots.Y} deg";
+            dictionary["Spin"] = $"{ots.Z} deg";
+        }
+
         public static IDictionary GetAncestor(this IDictionary child, string key, string value)
         {
             if (child?.GetParent() is IDictionary parent)
