@@ -839,6 +839,34 @@ namespace Node.Net
             return localToWorld;
         }
 
+        public static Matrix3D GetParentToWorld(this IDictionary dictionary)
+        {
+            var parentToWorld = new Matrix3D();
+            if (dictionary != null)
+            {
+                var parent = dictionary.GetParent() as IDictionary;
+                if (parent != null)
+                {
+                    return parent.GetLocalToWorld();
+                }
+            }
+            return parentToWorld;
+        }
+
+        public static Matrix3D GetWorldToParent(this IDictionary dictionary)
+        {
+            var worldToParent = new Matrix3D();
+            if (dictionary != null)
+            {
+                var parent = dictionary.GetParent() as IDictionary;
+                if (parent != null)
+                {
+                    return parent.GetWorldToLocal();
+                }
+            }
+            return worldToParent;
+        }
+
         public static Matrix3D GetWorldToLocal(this IDictionary dictionary)
         {
             var m = GetLocalToWorld(dictionary);
