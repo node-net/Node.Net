@@ -85,10 +85,21 @@ namespace Node.Net.Internal
 
         public static Vector3D GetRotationsXYZ(IDictionary source)
         {
-            return new Vector3D(
-                Internal.Angle.GetDegrees(source.Get<string>(RotationXKey)),
-                Internal.Angle.GetDegrees(source.Get<string>(RotationYKey)),
-                Internal.Angle.GetDegrees(source.Get<string>(RotationZKey)));
+            if (source.Contains("Orientation"))
+            {
+                var orientation = Internal.Angle.GetDegrees(source.Get<string>("Orientation"));
+                var tilt = Internal.Angle.GetDegrees(source.Get<string>("Tilt"));
+                var spin = Internal.Angle.GetDegrees(source.Get<string>("Spin"));
+                var matrix = new Matrix3D().RotateOTS(new Vector3D(orientation, tilt, spin));
+                return matrix.GetRotationsXYZ();
+            }
+            else
+            {
+                return new Vector3D(
+                    Internal.Angle.GetDegrees(source.Get<string>(RotationXKey)),
+                    Internal.Angle.GetDegrees(source.Get<string>(RotationYKey)),
+                    Internal.Angle.GetDegrees(source.Get<string>(RotationZKey)));
+            }
         }
 
         public static Vector3D GetTranslation(IDictionary source)
