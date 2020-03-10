@@ -13,8 +13,14 @@ task :default do
                     "dotnet test #{PROJECT.name}.Test/#{PROJECT.name}.Test.csproj -c Release -v normal",
                     "dotnet pack #{PROJECT.name}.sln -c Release",
                     "nuget push #{package} -SkipDuplicate -ApiKey #{SECRETS['NUGET_KEY']} -Source https://api.nuget.org/v3/index.json"])
-        
-        PROJECT.commit.tag.push.pull
+    
+        #PROJECT.commit.tag.push.pull
+        PROJECT.run("git add --all")
+        PROJECT.run("git commit -m\"integrate\"") if(PROJECT.outstanding_commit?)
+        PROJECT.run("git tag #{PROJECT.version} -m'#{PROJECT.version}'") if(PROJECT.latest_tag != PROJECT.version)
+        PROJECT.run("git push")
+        PROJECT.run("git push --tags")
+        PROJECT.run("git pull")
     end
     PROJECT.summary
 end

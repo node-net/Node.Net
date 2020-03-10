@@ -1,7 +1,9 @@
 ﻿using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
+using static System.Math;
 
 namespace Node.Net.Test.Extension
 {
@@ -117,6 +119,84 @@ namespace Node.Net.Test.Extension
             Assert.AreEqual("example", data2.Get<string>("Description"), "Description");
             Assert.AreEqual("example", data2.Get<string>("Name,Description"), "Name,Description");
             Assert.AreEqual("example", data2.Get<string>("Description,Name"), "Description,Name");
+        }
+
+        [Test]
+        public void SettingRotationsXYZ()
+        {
+            var data = new Dictionary<string, object>();
+            data.SetRotations(new Vector3D(0, 0, 45));
+
+            var localToWorld = data.GetLocalToWorld();
+            var point = localToWorld.Transform(new Point3D(1, 0, 0));
+            Assert.AreEqual(0.71, Round(point.X, 2), "point.X");
+            Assert.AreEqual(0.71, Round(point.Y, 2), "point.Y");
+        }
+
+        [Test]
+        public void SettingRotationsOTS()
+        {
+            var data = new Dictionary<string, object>();
+            data.SetRotationsOTS(new Vector3D(45, 0, 0));
+
+            var localToWorld = data.GetLocalToWorld();
+            var point = localToWorld.Transform(new Point3D(1, 0, 0));
+            Assert.AreEqual(0.71, Round(point.X, 2), "point.X");
+            Assert.AreEqual(0.71, Round(point.Y, 2), "point.Y");
+
+            data.SetRotationsOTS(new Vector3D(45, 30, 0));
+            localToWorld = data.GetLocalToWorld();
+            point = localToWorld.Transform(new Point3D(1, 0, 0));
+            Assert.AreEqual(0.71, Round(point.X, 2), "point.X");
+            Assert.AreEqual(0.71, Round(point.Y, 2), "point.Y");
+        }
+
+        [Test]
+        public void Rotate()    // See Matrix3D.Test.Rotate
+        {
+            var d1 = new Dictionary<string, object>
+            {
+                {"Orientation" , "15 deg" }
+            };
+            var m1 = d1.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
+            var xvec1 = m1.Transform(new Vector3D(1, 0, 0));
+            Assert.AreEqual(0.966, Round(xvec1.X, 3), "xvec1.X");
+            Assert.AreEqual(0.259, Round(xvec1.Y, 3), "xvec1.Y");
+            Assert.AreEqual(0.000, Round(xvec1.Z, 3), "xvec1.Z");
+
+            var d2 = new Dictionary<string, object>
+            {
+                {"Orientation", "15 deg" },
+                {"Tilt","-60 deg" }
+            };
+            var m2 = d2.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, -60, 0));
+            var zvec2 = m2.Transform(new Vector3D(0, 0, 1));
+            Assert.AreEqual(-0.224, Round(zvec2.X, 3), "zvec2.X");
+            Assert.AreEqual(0.837, Round(zvec2.Y, 3), "zvec2.Y");
+            Assert.AreEqual(0.500, Round(zvec2.Z, 3), "zvec2.Z");
+            var yvec2 = m2.Transform(new Vector3D(0, 1, 0));
+            Assert.AreEqual(-0.129, Round(yvec2.X, 3), "yvec2.X");
+            Assert.AreEqual(0.483, Round(yvec2.Y, 3), "yvec2.Y");
+            Assert.AreEqual(-0.866, Round(yvec2.Z, 3), "yvec2.Z");
+
+            var d3 = new Dictionary<string, object>
+            {
+                {"Orientation", "15.0 deg" },
+                {"Tilt","-60.0 deg" },
+                {"Spin", "5.0 deg"}
+            };
+            var m3 = d3.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, -60, 5));
+            var zvec3 = m3.Transform(new Vector3D(0, 0, 1));
+            // TODO update Matrix3DFactory CreateFromIDictionary(IDictionary dictionary)
+            /*
+            Assert.AreEqual(-0.224, Round(zvec3.X, 3), "zvec3.X");
+            Assert.AreEqual(0.837, Round(zvec3.Y, 3), "zvec3.Y");
+            Assert.AreEqual(0.500, Round(zvec3.Z, 3), "zvec3.Z");
+            var yvec3 = m3.Transform(new Vector3D(0, 1, 0));
+            Assert.AreEqual(-0.213, Round(yvec3.X, 3), "yvec3.X");
+            Assert.AreEqual(0.459, Round(yvec3.Y, 3), "yvec3.Y");
+            Assert.AreEqual(-0.863, Round(yvec3.Z, 3), "yvec3.Z");
+            */
         }
     }
 }
