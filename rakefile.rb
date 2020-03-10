@@ -2,7 +2,7 @@ NAME="Node.Net"
 require 'raykit'
 CLEAN.include('**/obj')
 
-task :default do
+task :integrate do
 	PROJECT.info
     SECRETS['NUGET_KEY'] = ENV['NUGET_KEY']
     package="#{PROJECT.name}/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
@@ -24,6 +24,9 @@ task :default do
     end
     PROJECT.summary
 end
+
+desc 'default task'
+task :default => [:integrate]
 
 desc 'bump the version'
 task :bump do
