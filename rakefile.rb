@@ -25,6 +25,17 @@ task :default do
     PROJECT.summary
 end
 
+desc 'bump the version'
+task :bump do
+    puts Rainbow(':bump').blue.bright
+    old_version = Raykit::Version.detect(PROJECT.name)
+    new_version = Raykit::Version.bump_file("#{PROJECT.name}/#{PROJECT.name}.csproj")
+    puts "        bumped version from #{old_version} to #{new_version}"
+    puts "        perform rake :integrate to integrate this change."
+    puts ''
+    
+end
+
 task :fix do
     analyzer_dir="#{Raykit::Environment::local_application_data}/Microsoft/VisualStudio"
     PROJECT.run("roslynator fix #{PROJECT.name}.sln --analyzer-assemblies #{analyzer_dir} --msbuild-path \"#{Raykit::MsBuild::msbuild_path}\"")
