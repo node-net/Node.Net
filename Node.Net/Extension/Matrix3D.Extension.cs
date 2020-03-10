@@ -37,6 +37,10 @@ namespace Node.Net
 
         public static Vector3D GetRotationsOTS(this Matrix3D matrix)
         {
+            return new Vector3D(matrix.GetOrientation(),
+                matrix.GetTilt(),
+                matrix.GetSpin());
+            /*
             var xdirection = matrix.GetXDirectionVector();
             var ydirection = matrix.GetYDirectionVector();
             var zdirection = matrix.GetZDirectionVector();
@@ -63,6 +67,7 @@ namespace Node.Net
             }
             double rad2Deg = 180 / Math.PI;
             return new Vector3D(orientation * rad2Deg, tilt * rad2Deg, spin * rad2Deg);
+            */
         }
 
         public static Vector3D GetRotationsXYZ(this Matrix3D matrix)
@@ -349,6 +354,83 @@ namespace Node.Net
         public static Vector3D GetZDirectionVector(this Matrix3D matrix)
         {
             return matrix.Transform(new Vector3D(0, 0, 1));
+        }
+
+        public static double GetOrientation(this System.Windows.Media.Media3D.Matrix3D matrix)
+        {
+            var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            // rotation about the Z axis = angle between localX and parent X
+            return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+        }
+
+        public static double GetTilt(this System.Windows.Media.Media3D.Matrix3D matrix)
+        {
+            // get the rotation about the X` local axis
+            var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            var localY = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 1, 0));
+
+            var orientMatrix = new System.Windows.Media.Media3D.Matrix3D().SetOrientation(matrix.GetOrientation());
+            var orientedY = orientMatrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 1, 0));
+
+            // rotation about the X' axis = angle between localY and orientedY
+            var angle = System.Windows.Media.Media3D.Vector3D.AngleBetween(localY, orientedY);
+            return angle;
+        }
+
+        public static double GetSpin(this System.Windows.Media.Media3D.Matrix3D matrix)
+        {
+            // get the rotatoin about the Z`` axis: angle between localX and tiltedX
+            var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            var tiltMatrix = new System.Windows.Media.Media3D.Matrix3D()
+                .SetOrientation(matrix.GetOrientation())
+                .SetTilt(matrix.GetTilt());
+            var tiltedX = tiltMatrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, tiltedX);
+        }
+
+        public static System.Windows.Media.Media3D.Matrix3D SetOrientation(this System.Windows.Media.Media3D.Matrix3D matrix, double orientationDegrees)
+        {
+            var translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
+            // backoff translation
+            matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-translation.X, -translation.Y, -translation.Z));
+
+            // back off any existing Z rotation
+            matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 0, 1), matrix.GetOrientation() * -1.0));
+            matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(new System.Windows.Media.Media3D.Vector3D(0, 0, 1), orientationDegrees));
+            // add back translation
+            matrix.Translate(translation);
+            return matrix;
+        }
+
+        public static System.Windows.Media.Media3D.Matrix3D SetTilt(
+            this System.Windows.Media.Media3D.Matrix3D matrix, double tilt)
+        {
+            var translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
+            // backoff translation
+            matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-translation.X, -translation.Y, -translation.Z));
+            var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            // backoff exiting tilt
+            matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(localX, matrix.GetTilt() * -1.0));
+            matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(localX, tilt));
+            // add back translation
+            matrix.Translate(translation);
+            return matrix;
+        }
+
+        public static System.Windows.Media.Media3D.Matrix3D SetSpin(
+            this System.Windows.Media.Media3D.Matrix3D matrix, double spin)
+        {
+            var translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
+            // backoff translation
+            matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-translation.X, -translation.Y, -translation.Z));
+
+            var localZ = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 0, 1));
+            // backoff existing spin
+            matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(localZ, matrix.GetSpin() * -1.0));
+            matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(localZ, spin));
+            // add back translation
+            matrix.Translate(translation);
+            return matrix;
         }
     }
 }

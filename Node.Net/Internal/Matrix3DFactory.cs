@@ -85,7 +85,7 @@ namespace Node.Net.Internal
 
         public static Vector3D GetRotationsXYZ(IDictionary source)
         {
-            if (source.Contains("Orientation"))
+            if (source.Contains("Orientation") || source.Contains("Tilt") || source.Contains("Spin"))
             {
                 var orientation = Internal.Angle.GetDegrees(source.Get<string>("Orientation"));
                 var tilt = Internal.Angle.GetDegrees(source.Get<string>("Tilt"));
