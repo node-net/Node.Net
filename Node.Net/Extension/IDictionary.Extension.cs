@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+//using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Windows.Media.Media3D;
+using static System.Math;
 
 namespace Node.Net
 {
@@ -1110,6 +1112,33 @@ namespace Node.Net
                 }
             }
             return baseName;
+        }
+
+        public static IDictionary<string,object> ConvertRotationsXYZtoOTS(this IDictionary<string,object> dictionary)
+        {
+            var result = new Dictionary<string, object>();
+            foreach(string key in dictionary.Keys)
+            {
+                if(key != "RotationX" && key != "RotationY" && key != "RotationZ")
+                {
+                    result.Add(key, dictionary[key]);
+                }
+            }
+            var localToWorld = (dictionary as IDictionary).GetLocalToWorld();
+            var ots = localToWorld.GetRotationsOTS();
+            if(Abs(ots.X) > 0.01)
+            {
+                result["Orientation"] = $"{Round(ots.X,4)} deg";
+            }
+            if (Abs(ots.Y) > 0.01)
+            {
+                result["Tilt"] = $"{Round(ots.Y, 4)} deg";
+            }
+            if (Abs(ots.Z) > 0.01)
+            {
+                result["Spin"] = $"{Round(ots.X, 4)} deg";
+            }
+            return result;
         }
     }
 }

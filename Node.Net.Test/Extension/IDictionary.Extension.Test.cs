@@ -163,6 +163,10 @@ namespace Node.Net.Test.Extension
             Assert.AreEqual(0.966, Round(xvec1.X, 3), "xvec1.X");
             Assert.AreEqual(0.259, Round(xvec1.Y, 3), "xvec1.Y");
             Assert.AreEqual(0.000, Round(xvec1.Z, 3), "xvec1.Z");
+            var rotXYZ1 = m1.GetRotationsXYZ();
+            Assert.AreEqual(0.0, Round(rotXYZ1.X, 3), "rotXYZ1.X");
+            Assert.AreEqual(0.0, Round(rotXYZ1.Y, 3), "rotXYZ1.Y");
+            Assert.AreEqual(15.0, Round(rotXYZ1.Z, 3), "rotXYZ1.Z");
 
             var d2 = new Dictionary<string, object>
             {
@@ -178,6 +182,10 @@ namespace Node.Net.Test.Extension
             Assert.AreEqual(-0.129, Round(yvec2.X, 3), "yvec2.X");
             Assert.AreEqual(0.483, Round(yvec2.Y, 3), "yvec2.Y");
             Assert.AreEqual(-0.866, Round(yvec2.Z, 3), "yvec2.Z");
+            var rotXYZ2 = m2.GetRotationsXYZ();
+            Assert.AreEqual(-60, Round(rotXYZ2.X, 3), "rotXYZ2.X");
+            Assert.AreEqual(0.0, Round(rotXYZ2.Y, 3), "rotXYZ2.Y");
+            Assert.AreEqual(15.0, Round(rotXYZ2.Z, 3), "rotXYZ2.Z");
 
             var d3 = new Dictionary<string, object>
             {
@@ -197,6 +205,44 @@ namespace Node.Net.Test.Extension
             Assert.AreEqual(0.459, Round(yvec3.Y, 3), "yvec3.Y");
             Assert.AreEqual(-0.863, Round(yvec3.Z, 3), "yvec3.Z");
             */
+        }
+
+        [Test]
+        public void ConvertRotationsXYZtoOTS()
+        {
+            var d1 = new Dictionary<string, object>
+            {
+                {"RotationZ" , "15 deg" }
+            };
+            var m1 = d1.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
+            var xvec1 = m1.Transform(new Vector3D(1, 0, 0));
+            Assert.AreEqual(0.966, Round(xvec1.X, 3), "xvec1.X");
+            Assert.AreEqual(0.259, Round(xvec1.Y, 3), "xvec1.Y");
+            Assert.AreEqual(0.000, Round(xvec1.Z, 3), "xvec1.Z");
+
+            var d1c = d1.ConvertRotationsXYZtoOTS() as IDictionary;
+            Assert.AreEqual(d1.Count, d1c.Count);
+            Assert.AreEqual(15.0, Round(d1c.GetAngleDegrees("Orientation"), 3), "d1c Orientation");
+
+            var d2 = new Dictionary<string, object>
+            {
+                {"RotationZ" , "15 deg" },
+                {"RotationX","-60 deg" }
+            };
+            var m2 = d2.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, -60, 0));
+            var zvec2 = m2.Transform(new Vector3D(0, 0, 1));
+            Assert.AreEqual(-0.224, Round(zvec2.X, 3), "zvec2.X");
+            Assert.AreEqual(0.837, Round(zvec2.Y, 3), "zvec2.Y");
+            Assert.AreEqual(0.500, Round(zvec2.Z, 3), "zvec2.Z");
+            var yvec2 = m2.Transform(new Vector3D(0, 1, 0));
+            Assert.AreEqual(-0.129, Round(yvec2.X, 3), "yvec2.X");
+            Assert.AreEqual(0.483, Round(yvec2.Y, 3), "yvec2.Y");
+            Assert.AreEqual(-0.866, Round(yvec2.Z, 3), "yvec2.Z");
+
+            var d2c = d2.ConvertRotationsXYZtoOTS() as IDictionary;
+            Assert.AreEqual(d2.Count, d2c.Count);
+            Assert.AreEqual(15.0, Round(d2c.GetAngleDegrees("Orientation"), 3), "d2c Orientation");
+            //Assert.AreEqual(-60.0, Round(d2c.GetAngleDegrees("Tilt"), 3), "d2c Tilt");
         }
     }
 }
