@@ -18,6 +18,7 @@ task :integrate do
         PROJECT.run("git add --all")
         PROJECT.run("git commit -m\"integrate\"") if(PROJECT.outstanding_commit?)
         PROJECT.run("git tag #{PROJECT.version} -m'#{PROJECT.version}'") if(PROJECT.latest_tag != PROJECT.version)
+        PROJECT.run("git pull")
         PROJECT.run("git push")
         PROJECT.run("git push --tags")
         PROJECT.run("git pull")
