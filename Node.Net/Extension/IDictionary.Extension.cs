@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows.Media.Media3D;
 using static System.Math;
@@ -1141,7 +1142,12 @@ namespace Node.Net
             return result;
         }
 
-       public static IDictionary<string,string> GetLocalToWorldTransforms(this IDictionary dictionary,string type)
+        public static Vector3D GetWorldRotationsOTS(this IDictionary dictionary)
+        {
+            return dictionary.GetLocalToWorld().GetRotationsOTS();
+        }
+
+        public static IDictionary<string,string> GetLocalToWorldTransforms(this IDictionary dictionary,string type)
         {
             var results = new Dictionary<string, string>();
             var items = dictionary.Collect(type);
