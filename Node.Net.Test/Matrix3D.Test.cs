@@ -111,5 +111,15 @@ namespace Node.Net
             Assert.AreEqual(59.868, Round(ots3.Y, 3), "ots3.Y");
             Assert.AreEqual(4.359, Round(ots3.Z, 3), "ots3.Z");
         }
+
+        [Test]
+        public void AlmostEqual()
+        {
+            var m1 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
+            var m2 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
+            Assert.True(m1.AlmostEqual(m2));
+            var m3 = new Matrix3D().RotateOTS(new Vector3D(15, 12, 0));
+            Assert.False(m1.AlmostEqual(m3));
+        }
     }
 }
