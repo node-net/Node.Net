@@ -1124,8 +1124,8 @@ namespace Node.Net
                     result.Add(key, dictionary[key]);
                 }
             }
-            var localToWorld = (dictionary as IDictionary).GetLocalToWorld();
-            var ots = localToWorld.GetRotationsOTS();
+            var localToParent = (dictionary as IDictionary).GetLocalToParent();
+            var ots = localToParent.GetRotationsOTS();
             if(Abs(ots.X) > 0.01)
             {
                 result["Orientation"] = $"{Round(ots.X,4)} deg";
