@@ -193,5 +193,15 @@ namespace Node.Net
             Assert.AreEqual(10.0, Round(intersect45.Y, 3), "intersect45.Y");
             Assert.AreEqual(0, Round(intersect45.Z, 3), "intersect45.Z");
         }
+
+        [Test]
+        public void AlmostEqual()
+        {
+            var m1 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
+            var m2 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
+            Assert.True(m1.AlmostEqual(m2));
+            var m3 = new Matrix3D().RotateOTS(new Vector3D(15, 12, 0));
+            Assert.False(m1.AlmostEqual(m3));
+        }
     }
 }
