@@ -432,5 +432,39 @@ namespace Node.Net
             matrix.Translate(translation);
             return matrix;
         }
+
+        public static List<double> GetValues(this System.Windows.Media.Media3D.Matrix3D matrix, int decimals)
+        {
+            var values = new List<double>();
+            values.Add(Round(matrix.M11, decimals));
+            values.Add(Round(matrix.M12, decimals));
+            values.Add(Round(matrix.M13, decimals));
+            values.Add(Round(matrix.M14, decimals));
+            values.Add(Round(matrix.M21, decimals));
+            values.Add(Round(matrix.M22, decimals));
+            values.Add(Round(matrix.M23, decimals));
+            values.Add(Round(matrix.M24, decimals));
+            values.Add(Round(matrix.M31, decimals));
+            values.Add(Round(matrix.M32, decimals));
+            values.Add(Round(matrix.M33, decimals));
+            values.Add(Round(matrix.M34, decimals));
+            values.Add(Round(matrix.OffsetX, decimals));
+            values.Add(Round(matrix.OffsetY, decimals));
+            values.Add(Round(matrix.OffsetZ, decimals));
+            values.Add(Round(matrix.M44, decimals));
+            return values;
+        }
+
+        public static bool AlmostEqual(this System.Windows.Media.Media3D.Matrix3D matrixA, System.Windows.Media.Media3D.Matrix3D matrixB, int decimals = 4)
+        {
+            var valuesA = matrixA.GetValues(8);
+            var valuesB = matrixB.GetValues(8);
+            for(int i = 0; i < valuesA.Count; ++i)
+            {
+                if (Round(valuesA[i], decimals) != Round(valuesB[i], decimals)) return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -1140,5 +1140,23 @@ namespace Node.Net
             }
             return result;
         }
-    }
+
+        public static IDictionary<string,string> GetLocalToWorldTransforms(this IDictionary idictionary,string type)
+        {
+            var items = idictionary.Collect(type);
+            var results = new Dictionary<string, string>();
+            foreach(var item in items)
+            {
+                if(item is IDictionary dictionary)
+                {
+                    var name = dictionary.GetName();
+                    if(name.Length > 0 && !results.ContainsKey(name))
+                    {
+                        results.Add(name, dictionary.GetLocalToWorld().ToString());
+                    }
+                }
+            }
+            return results;
+        }
+}
 }
