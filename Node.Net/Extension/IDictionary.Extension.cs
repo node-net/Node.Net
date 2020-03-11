@@ -1136,7 +1136,7 @@ namespace Node.Net
             }
             if (Abs(ots.Z) > 0.01)
             {
-                result["Spin"] = $"{Round(ots.X, 4)} deg";
+                result["Spin"] = $"{Round(ots.Z, 4)} deg";
             }
             return result;
         }
