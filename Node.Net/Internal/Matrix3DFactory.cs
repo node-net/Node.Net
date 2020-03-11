@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows.Media.Media3D;
 
@@ -68,7 +69,16 @@ namespace Node.Net.Internal
                 matrix3D.Translate(GetTranslation(dictionary));
                 return matrix3D;
             }
-            matrix3D = RotateXYZ(matrix3D, GetRotationsXYZ(dictionary));
+            if (dictionary.Contains("Orientation") ||
+                dictionary.Contains("Tilt") ||
+                dictionary.Contains("Spin"))
+            {
+                matrix3D = RotateOTS(matrix3D, GetRotationsOTS(dictionary));
+            }
+            else
+            {
+                matrix3D = RotateXYZ(matrix3D, GetRotationsXYZ(dictionary));
+            }
             matrix3D.Translate(GetTranslation(dictionary));
             if (!matrix3D.IsIdentity)
             {
@@ -102,6 +112,14 @@ namespace Node.Net.Internal
             }
         }
 
+        public static Vector3D GetRotationsOTS(IDictionary source)
+        {
+            var orientation = Internal.Angle.GetDegrees(source.Get<string>("Orientation"));
+            var tilt = Internal.Angle.GetDegrees(source.Get<string>("Tilt"));
+            var spin = Internal.Angle.GetDegrees(source.Get<string>("Spin"));
+            return new Vector3D(orientation, tilt, spin);
+        }
+
         public static Vector3D GetTranslation(IDictionary source)
         {
             return new Vector3D(
@@ -111,5 +129,6 @@ namespace Node.Net.Internal
         }
 
         public static Matrix3D RotateXYZ(Matrix3D matrix, Vector3D rotationsXYZ) => matrix.RotateXYZ(rotationsXYZ);
+        public static Matrix3D RotateOTS(Matrix3D matrix, Vector3D rotationsOTS) => matrix.RotateOTS(rotationsOTS);
     }
 }

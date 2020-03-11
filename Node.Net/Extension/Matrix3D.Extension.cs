@@ -433,7 +433,29 @@ namespace Node.Net
             return matrix;
         }
 
-        public static List<double> GetValues(this System.Windows.Media.Media3D.Matrix3D matrix, int decimals)
+        public static bool AlmostEqual(this System.Windows.Media.Media3D.Matrix3D a,
+            System.Windows.Media.Media3D.Matrix3D b,int decimals = 4)
+        {
+            if (Round(a.M11, decimals) != Round(b.M11, decimals)) return false;
+            if (Round(a.M12, decimals) != Round(b.M12, decimals)) return false;
+            if (Round(a.M13, decimals) != Round(b.M13, decimals)) return false;
+            if (Round(a.M14, decimals) != Round(b.M14, decimals)) return false;
+            if (Round(a.M21, decimals) != Round(b.M21, decimals)) return false;
+            if (Round(a.M22, decimals) != Round(b.M22, decimals)) return false;
+            if (Round(a.M23, decimals) != Round(b.M23, decimals)) return false;
+            if (Round(a.M24, decimals) != Round(b.M24, decimals)) return false;
+            if (Round(a.M31, decimals) != Round(b.M31, decimals)) return false;
+            if (Round(a.M32, decimals) != Round(b.M32, decimals)) return false;
+            if (Round(a.M33, decimals) != Round(b.M33, decimals)) return false;
+            if (Round(a.M34, decimals) != Round(b.M34, decimals)) return false;
+            if (Round(a.OffsetX, decimals) != Round(b.OffsetX, decimals)) return false;
+            if (Round(a.OffsetY, decimals) != Round(b.OffsetY, decimals)) return false;
+            if (Round(a.OffsetZ, decimals) != Round(b.OffsetZ, decimals)) return false;
+            if (Round(a.M44, decimals) != Round(b.M44, decimals)) return false;
+            return true;
+        }
+
+        public static List<double> GetValues(this System.Windows.Media.Media3D.Matrix3D matrix,int decimals)
         {
             var values = new List<double>();
             values.Add(Round(matrix.M11, decimals));
@@ -453,18 +475,6 @@ namespace Node.Net
             values.Add(Round(matrix.OffsetZ, decimals));
             values.Add(Round(matrix.M44, decimals));
             return values;
-        }
-
-        public static bool AlmostEqual(this System.Windows.Media.Media3D.Matrix3D matrixA, System.Windows.Media.Media3D.Matrix3D matrixB, int decimals = 4)
-        {
-            var valuesA = matrixA.GetValues(8);
-            var valuesB = matrixB.GetValues(8);
-            for(int i = 0; i < valuesA.Count; ++i)
-            {
-                if (Round(valuesA[i], decimals) != Round(valuesB[i], decimals)) return false;
-            }
-
-            return true;
         }
     }
 }

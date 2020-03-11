@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows.Media.Media3D;
 using static System.Math;
@@ -1124,8 +1125,8 @@ namespace Node.Net
                     result.Add(key, dictionary[key]);
                 }
             }
-            var localToWorld = (dictionary as IDictionary).GetLocalToWorld();
-            var ots = localToWorld.GetRotationsOTS();
+            var localToParent = (dictionary as IDictionary).GetLocalToParent();
+            var ots = localToParent.GetRotationsOTS();
             if(Abs(ots.X) > 0.01)
             {
                 result["Orientation"] = $"{Round(ots.X,4)} deg";
@@ -1136,10 +1137,35 @@ namespace Node.Net
             }
             if (Abs(ots.Z) > 0.01)
             {
-                result["Spin"] = $"{Round(ots.X, 4)} deg";
+                result["Spin"] = $"{Round(ots.Z, 4)} deg";
             }
             return result;
         }
+
+        public static Vector3D GetWorldRotationsOTS(this IDictionary dictionary)
+        {
+            return dictionary.GetLocalToWorld().GetRotationsOTS();
+        }
+
+        public static IDictionary<string,string> GetLocalToWorldTransforms(this IDictionary dictionary,string type)
+        {
+            var results = new Dictionary<string, string>();
+            var items = dictionary.Collect(type);
+            foreach(var item in items)
+            {
+                if(item is IDictionary idictionary)
+                {
+                    var name = idictionary.GetName();
+                    if(name.Length > 0 && !results.ContainsKey(name))
+                    {
+                        results.Add(name,
+                            String.Join(",",idictionary.GetLocalToWorld().GetValues(4)));
+                    }
+                }
+            }
+            return results;
+        }
+    }
 
         public static IDictionary<string,string> GetLocalToWorldTransforms(this IDictionary idictionary,string type)
         {
