@@ -25,5 +25,14 @@ namespace Node.Net
         {
             return Math.Atan2(Math.Pow((vector.X * vector.X) + (vector.Y * vector.Y), 0.5), vector.Z) * 180 / Math.PI;
         }
+
+        public static Vector3D ComputeRayPlaneIntersection(Vector3D rayVector, Vector3D rayPoint, Vector3D planeNormal, Vector3D planePoint)
+        {
+            var diff = rayPoint - planePoint;
+            var prod1 = Vector3D.DotProduct(diff, planeNormal);// diff.Dot(planeNormal);
+            var prod2 = Vector3D.DotProduct(rayVector, planeNormal);// rayVector.Dot(planeNormal);
+            var prod3 = prod1 / prod2;
+            return rayPoint - Vector3D.Multiply(prod3, rayVector);// rayVector * prod3;
+        }
     }
 }
