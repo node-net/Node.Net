@@ -244,5 +244,15 @@ namespace Node.Net.Test.Extension
             Assert.AreEqual(15.0, Round(d2c.GetAngleDegrees("Orientation"), 3), "d2c Orientation");
             //Assert.AreEqual(-60.0, Round(d2c.GetAngleDegrees("Tilt"), 3), "d2c Tilt");
         }
+
+        [Test]
+        public void SetRotationsOTS()
+        {
+            var d1 = new Dictionary<string, object> { };
+            d1.SetRotationsOTS(new Vector3D(45.0,124.0,0.0));
+            var m1 = d1.GetLocalToWorld();
+            Assert.AreEqual(45.0, Round(m1.GetOrientation(), 3), "Orientation");
+            Assert.AreEqual(124.0, Round(m1.GetTilt(), 3), "Tilt");
+        }
     }
 }
