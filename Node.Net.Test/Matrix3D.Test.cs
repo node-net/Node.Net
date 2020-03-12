@@ -119,6 +119,23 @@ namespace Node.Net
         }
 
         [Test]
+        [TestCase(0,0,0)]
+        [TestCase(45,0,0)]
+        [TestCase(135, 0, 0)]
+        [TestCase(45,15,0)]
+        public void RotateOTS(double orientation,double tilt,double spin)
+        {
+            var mA = new Matrix3D().RotateOTS(new Vector3D(orientation, tilt, spin));
+            var o_check = mA.GetOrientation();
+            var t_check = mA.GetTilt();
+            var s_check = mA.GetSpin();
+
+            Assert.AreEqual(orientation, Round(o_check, 4), "orientation");
+            Assert.AreEqual(tilt, Round(t_check, 4), "tilt");
+            Assert.AreEqual(spin, Round(s_check, 4), "spin");
+        }
+
+        [Test]
         public void GetValues()
         {
             var m1 = new Matrix3D().RotateOTS(new Vector3D(15, -60, 5));
@@ -192,7 +209,43 @@ namespace Node.Net
             Assert.AreEqual(0, Round(intersect45.X, 3), "intersect45.X");
             Assert.AreEqual(10.0, Round(intersect45.Y, 3), "intersect45.Y");
             Assert.AreEqual(0, Round(intersect45.Z, 3), "intersect45.Z");
+
+            var zDirectionVector = m45.GetZDirectionVector();
+            Assert.AreEqual(0, Round(zDirectionVector.X, 3), "zDirectionVector.X");
+            Assert.AreEqual(-0.707, Round(zDirectionVector.Y, 3), "zDirectionVector.Y");
+            Assert.AreEqual(0.707, Round(zDirectionVector.Z, 3), "zDirectionVector.Z");
+
+            var yDirectionVector = m45.GetYDirectionVector();
+            Assert.AreEqual(0, Round(yDirectionVector.X, 3), "yDirectionVector.X");
+            Assert.AreEqual(0.707, Round(yDirectionVector.Y, 3), "yDirectionVector.Y");
+            Assert.AreEqual(0.707, Round(yDirectionVector.Z, 3), "yDirectionVector.Z");
+
+            var xDirectionVector = m45.GetXDirectionVector();
+            Assert.AreEqual(1.0, Round(xDirectionVector.X, 3), "xDirectionVector.X");
+            Assert.AreEqual(0.0, Round(xDirectionVector.Y, 3), "xDirectionVector.Y");
+            Assert.AreEqual(0.0, Round(xDirectionVector.Z, 3), "xDirectionVector.Z");
         }
+
+        /*
+        [Test]
+        public void Align_ZAxis()
+        {
+            // 30 degree tilt
+            var m30 = new Matrix3D().RotateOTS(new Vector3D(0, 30, 0));
+            m30.Translate(new Vector3D(0, 0, 10));
+
+            var zDirectionVector = new Vector3D(0, -0.7069999, 0.7069999);
+            Assert.AreEqual(90.0, Round(zDirectionVector.GetOrientation(), 3), "z direction orientation");
+            var m45 = m30.AlignZDirectionVector(zDirectionVector);
+
+            Assert.AreEqual(45.0, Round(m45.GetTilt(), 3), "tilt");
+
+            zDirectionVector = new Vector3D(-0.7069999, 0.7069999, 0.7069999);
+            var mTest = m45.AlignZDirectionVector(zDirectionVector);
+            Assert.AreEqual(135.0, Round(mTest.GetOrientation(), 3), "Orientation");
+            Assert.AreEqual(11, Round(mTest.GetTilt(), 3), "Tilt");
+        }
+        */
 
         [Test]
         public void AlmostEqual2()
@@ -203,5 +256,7 @@ namespace Node.Net
             var m3 = new Matrix3D().RotateOTS(new Vector3D(15, 12, 0));
             Assert.False(m1.AlmostEqual(m3));
         }
+
+
     }
 }

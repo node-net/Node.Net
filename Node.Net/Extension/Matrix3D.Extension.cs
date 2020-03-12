@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Windows.Media.Media3D;
 using static System.Math;
 
@@ -303,6 +304,15 @@ namespace Node.Net
             return matrix;
         }
 
+        public static Matrix3D AlignZDirectionVector(this Matrix3D matrix, Vector3D newZDirectionVector)
+        {
+            var negativeZDirection = new Vector3D(newZDirectionVector.X * -1.0, newZDirectionVector.Y*-1.0, newZDirectionVector.Z * -1.0);
+            var orientation = negativeZDirection.GetOrientation();
+            var polarAngle = newZDirectionVector.GetPolarAngle();
+
+            return matrix.SetOrientation(orientation).SetTilt(polarAngle);
+        }
+
         public static IDictionary GetDictionary(this Matrix3D matrix)
         {
             var data = new Dictionary<string, dynamic>();
@@ -406,6 +416,16 @@ namespace Node.Net
             this System.Windows.Media.Media3D.Matrix3D matrix, double tilt)
         {
             var translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
+            /*
+            var orientation = matrix.GetOrientation();
+            var spin = matrix.GetSpin();
+
+            var newMatrix = new Matrix3D();
+            newMatrix = newMatrix.RotateOTS(new Vector3D(orientation, tilt,spin));
+            newMatrix.Translate(translation);
+            return newMatrix;*/
+            
+            
             // backoff translation
             matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-translation.X, -translation.Y, -translation.Z));
             var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
@@ -415,6 +435,7 @@ namespace Node.Net
             // add back translation
             matrix.Translate(translation);
             return matrix;
+            
         }
 
         public static System.Windows.Media.Media3D.Matrix3D SetSpin(
