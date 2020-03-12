@@ -97,6 +97,16 @@ namespace Node.Net.Test.Extension
 
             var i = Matrix3D.Parse("Identity");
             Assert.True(i.IsIdentity);
+
+            Assert.AreEqual(0, Round(localToParent.GetOrientation(), 3), "orientation");
+            Assert.AreEqual(0, Round(localToParent.GetTilt(), 3), "Tilt");
+            Assert.AreEqual(0, Round(localToParent.GetSpin(), 3), "Spin");
+
+            data["Orientation"] = "135.0 deg";
+            data["Tilt"] = "55 deg";
+            localToParent = data.GetLocalToParent();
+            Assert.AreEqual(135.0, Round(localToParent.GetOrientation(), 3), "orientation");
+            Assert.AreEqual(55.0, Round(localToParent.GetTilt(), 3), "tilt");
         }
 
         [Test]
