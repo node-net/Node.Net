@@ -1165,8 +1165,8 @@ namespace Node.Net
             }
             return results;
         }
-    }
-
+   // }
+    /*
         public static IDictionary<string,string> GetLocalToWorldTransforms(this IDictionary idictionary,string type)
         {
             var items = idictionary.Collect(type);
@@ -1183,6 +1183,6 @@ namespace Node.Net
                 }
             }
             return results;
-        }
-}
+        }*/
+    }
 }
