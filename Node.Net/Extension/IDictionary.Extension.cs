@@ -1115,21 +1115,21 @@ namespace Node.Net
             return baseName;
         }
 
-        public static IDictionary<string,object> ConvertRotationsXYZtoOTS(this IDictionary<string,object> dictionary)
+        public static IDictionary<string, object> ConvertRotationsXYZtoOTS(this IDictionary<string, object> dictionary)
         {
             var result = new Dictionary<string, object>();
-            foreach(string key in dictionary.Keys)
+            foreach (string key in dictionary.Keys)
             {
-                if(key != "RotationX" && key != "RotationY" && key != "RotationZ")
+                if (key != "RotationX" && key != "RotationY" && key != "RotationZ")
                 {
                     result.Add(key, dictionary[key]);
                 }
             }
             var localToParent = (dictionary as IDictionary).GetLocalToParent();
             var ots = localToParent.GetRotationsOTS();
-            if(Abs(ots.X) > 0.01)
+            if (Abs(ots.X) > 0.01)
             {
-                result["Orientation"] = $"{Round(ots.X,4)} deg";
+                result["Orientation"] = $"{Round(ots.X, 4)} deg";
             }
             if (Abs(ots.Y) > 0.01)
             {
@@ -1147,36 +1147,36 @@ namespace Node.Net
             return dictionary.GetLocalToWorld().GetRotationsOTS();
         }
 
-        public static IDictionary<string,string> GetLocalToWorldTransforms(this IDictionary dictionary,string type)
+        public static IDictionary<string, string> GetLocalToWorldTransforms(this IDictionary dictionary, string type)
         {
             var results = new Dictionary<string, string>();
             var items = dictionary.Collect(type);
-            foreach(var item in items)
+            foreach (var item in items)
             {
-                if(item is IDictionary idictionary)
+                if (item is IDictionary idictionary)
                 {
                     var name = idictionary.GetName();
-                    if(name.Length > 0 && !results.ContainsKey(name))
+                    if (name.Length > 0 && !results.ContainsKey(name))
                     {
                         results.Add(name,
-                            String.Join(",",idictionary.GetLocalToWorld().GetValues(4)));
+                            String.Join(",", idictionary.GetLocalToWorld().GetValues(4)));
                     }
                 }
             }
             return results;
         }
-   // }
-    /*
-        public static IDictionary<string,string> GetLocalToWorldTransforms(this IDictionary idictionary,string type)
+
+        /*
+        public static IDictionary<string, string> GetLocalToWorldTransforms(this IDictionary idictionary, string type)
         {
             var items = idictionary.Collect(type);
             var results = new Dictionary<string, string>();
-            foreach(var item in items)
+            foreach (var item in items)
             {
-                if(item is IDictionary dictionary)
+                if (item is IDictionary dictionary)
                 {
                     var name = dictionary.GetName();
-                    if(name.Length > 0 && !results.ContainsKey(name))
+                    if (name.Length > 0 && !results.ContainsKey(name))
                     {
                         results.Add(name, dictionary.GetLocalToWorld().ToString());
                     }
