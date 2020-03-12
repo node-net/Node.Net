@@ -195,7 +195,7 @@ namespace Node.Net
         }
 
         [Test]
-        public void AlmostEqual()
+        public void AlmostEqual2()
         {
             var m1 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
             var m2 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
