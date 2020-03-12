@@ -940,6 +940,13 @@ namespace Node.Net
             if (dictionary.Contains("RotationZ")) { dictionary.Remove("RotationZ"); }
         }
 
+        public static Vector3D GetRotationsOTS(this IDictionary dictionary)
+        {
+            return new Vector3D(dictionary.GetLocalToParent().GetOrientation(),
+                dictionary.GetLocalToParent().GetTilt(),
+                dictionary.GetLocalToParent().GetSpin());
+        }
+
         public static IDictionary GetAncestor(this IDictionary child, string key, string value)
         {
             if (child?.GetParent() is IDictionary parent)

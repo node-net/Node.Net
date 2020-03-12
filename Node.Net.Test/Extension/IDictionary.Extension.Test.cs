@@ -263,6 +263,16 @@ namespace Node.Net.Test.Extension
             var m1 = d1.GetLocalToWorld();
             Assert.AreEqual(45.0, Round(m1.GetOrientation(), 3), "Orientation");
             Assert.AreEqual(124.0, Round(m1.GetTilt(), 3), "Tilt");
+
+            var ots = d1.GetRotationsOTS();
+            Assert.AreEqual(45.0, Round(ots.X, 3), "ots.X");
+            Assert.AreEqual(124.0, Round(ots.Y, 3), "ots.Y");
+            Assert.AreEqual(0.0, Round(ots.Z, 3), "ots.Z");
+
+            d1.SetRotationsOTS(new Vector3D(60.0, 15, 0));
+            m1 = d1.GetLocalToWorld();
+            Assert.AreEqual(60.0, Round(m1.GetOrientation(), 3), "Orientation");
+            Assert.AreEqual(15.0, Round(m1.GetTilt(), 3), "Tilt");
         }
     }
 }
