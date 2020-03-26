@@ -46,9 +46,9 @@ namespace Node.Net.Internal
                 return new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read);
             }
 
-            foreach (var assembly in ResourceAssemblies)
+            foreach (Assembly? assembly in ResourceAssemblies)
             {
-                foreach (var manifestResourceName in assembly.GetManifestResourceNames())
+                foreach (string? manifestResourceName in assembly.GetManifestResourceNames())
                 {
                     if (manifestResourceName == name)
                     {
@@ -60,9 +60,9 @@ namespace Node.Net.Internal
                     }
                 }
             }
-            foreach (var assembly in GlobalResourceAssemblies)
+            foreach (Assembly? assembly in GlobalResourceAssemblies)
             {
-                foreach (var manifestResourceName in assembly.GetManifestResourceNames())
+                foreach (string? manifestResourceName in assembly.GetManifestResourceNames())
                 {
                     if (manifestResourceName == name)
                     {
@@ -77,13 +77,13 @@ namespace Node.Net.Internal
             if ((name.Contains("(") || (name.Contains("*") && name.Contains(".") && name.Contains(")")) || name.Contains("|")) && ignoreFilter != name)
             {
                 // open file dialog filter
-                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
-                var result = ofd.ShowDialog();
+                Microsoft.Win32.OpenFileDialog? ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
+                bool? result = ofd.ShowDialog();
                 if (result == true)
                 {
                     if (File.Exists(ofd.FileName))
                     {
-                        var stream = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                        FileStream? stream = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
                         stream.SetFileName(ofd.FileName);
                         return stream;
                     }
@@ -96,13 +96,13 @@ namespace Node.Net.Internal
             }
             if (name.Contains(":") && Uri.IsWellFormedUriString(name, UriKind.Absolute))
             {
-                var uri = new Uri(name);
+                Uri? uri = new Uri(name);
                 switch (uri.Scheme)
                 {
                     case "http":
                     case "https":
                         {
-                            using (var webClient = new WebClient())
+                            using (WebClient? webClient = new WebClient())
                             {
                                 return webClient.OpenRead(name);
                             }
@@ -115,7 +115,7 @@ namespace Node.Net.Internal
             }
             if (name.Contains("{"))
             {
-                var memory = new MemoryStream(Encoding.UTF8.GetBytes(name));
+                MemoryStream? memory = new MemoryStream(Encoding.UTF8.GetBytes(name));
                 return memory;
             }
             return new StackTrace().GetStream(name);

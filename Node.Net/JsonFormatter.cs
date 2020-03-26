@@ -37,7 +37,7 @@ namespace Node.Net
 
         public string ToJson(object graph)
         {
-            using var memory = new MemoryStream();
+            using MemoryStream? memory = new MemoryStream();
             _jsonWriter.Write(memory, graph);
             memory.Seek(0, SeekOrigin.Begin);
             return new StreamReader(memory).ReadToEnd();

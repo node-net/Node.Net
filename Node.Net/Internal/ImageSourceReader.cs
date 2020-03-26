@@ -29,7 +29,7 @@ namespace Node.Net.Internal
         {
             get
             {
-                var signatures = new List<string>(signatureReaders.Keys);
+                List<string>? signatures = new List<string>(signatureReaders.Keys);
                 return signatures.ToArray();
             }
         }
@@ -39,15 +39,15 @@ namespace Node.Net.Internal
 
         public object Read(Stream original_stream)
         {
-            using (var signatureReader = new Internal.SignatureReader(original_stream))
+            using (SignatureReader? signatureReader = new Internal.SignatureReader(original_stream))
             {
-                var stream = signatureReader.Stream;
-                var signature = signatureReader.Signature;
+                Stream? stream = signatureReader.Stream;
+                string? signature = signatureReader.Signature;
                 foreach (string signature_key in signatureReaders.Keys)
                 {
                     if (signature.IndexOf(signature_key) == 0)
                     {
-                        var instance = readers[signatureReaders[signature_key]](stream);
+                        object? instance = readers[signatureReaders[signature_key]](stream);
                         return instance;
                     }
                 }
@@ -57,13 +57,13 @@ namespace Node.Net.Internal
 
         public object ReadPng(Stream stream)
         {
-            var decoder = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            PngBitmapDecoder? decoder = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();
         }
 
         public object ReadTif(Stream stream)
         {
-            var decoder = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            TiffBitmapDecoder? decoder = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();
         }
 
@@ -74,13 +74,13 @@ namespace Node.Net.Internal
 
         public object ReadGif(Stream stream)
         {
-            var decoder = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            GifBitmapDecoder? decoder = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();
         }
 
         public object ReadBmp(Stream stream)
         {
-            var decoder = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            BmpBitmapDecoder? decoder = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
             return decoder.Frames[0].Clone();
         }
 
@@ -88,10 +88,10 @@ namespace Node.Net.Internal
         {
             //if (!object.ReferenceEquals(null, image))
             //{
-            var bitmapImage = new BitmapImage();
+            BitmapImage? bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
 
-            var memory = new System.IO.MemoryStream();
+            MemoryStream? memory = new System.IO.MemoryStream();
             image.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
             memory.Seek(0, SeekOrigin.Begin);
 

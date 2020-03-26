@@ -22,7 +22,7 @@ namespace Node.Net
                     return false;
                 }
 
-                var parts = value.Split('\\');
+                string[]? parts = value.Split('\\');
                 if (parts[parts.Length - 1].IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
                 {
                     return false;
@@ -44,10 +44,10 @@ namespace Node.Net
         {
             try
             {
-                var words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                string[]? words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 if (words.Length > 0)
                 {
-                    var word = words[0].Replace("'", "");
+                    string? word = words[0].Replace("'", "");
                     return Convert.ToDouble(word);
                 }
                 return 0.0;
@@ -64,10 +64,10 @@ namespace Node.Net
             {
                 return new FileStream(value, FileMode.Open, FileAccess.Read);
             }
-            var stackTrace = new StackTrace();
-            foreach (var assembly in stackTrace.GetAssemblies())
+            StackTrace? stackTrace = new StackTrace();
+            foreach (System.Reflection.Assembly? assembly in stackTrace.GetAssemblies())
             {
-                var stream = assembly.GetStream(value);
+                Stream? stream = assembly.GetStream(value);
                 if (stream != null) { return stream; }
             }
 

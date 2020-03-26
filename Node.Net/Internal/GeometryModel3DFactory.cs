@@ -11,7 +11,7 @@ namespace Node.Net.Internal
         {
             if (source != null)
             {
-                var sourceType = source.GetType();
+                Type? sourceType = source.GetType();
                 if (typeof(IDictionary).IsAssignableFrom(sourceType))
                 {
                     return CreateFromDictionary(source as IDictionary);
@@ -41,17 +41,17 @@ namespace Node.Net.Internal
 
             if (ParentFactory != null && source?.Contains("Type") == true)
             {
-                var type = source["Type"].ToString();
+                string? type = source["Type"].ToString();
                 if (type.Length > 0)
                 {
-                    var name = $"GeometryModel3D.{type}.xaml";
-                    var geometryModel3D = ParentFactory.Create<GeometryModel3D>(name);
+                    string? name = $"GeometryModel3D.{type}.xaml";
+                    GeometryModel3D? geometryModel3D = ParentFactory.Create<GeometryModel3D>(name);
                     if (geometryModel3D != null)
                     {
                         return geometryModel3D;
                     }
 
-                    var mesh = ParentFactory.Create<MeshGeometry3D>(source);
+                    MeshGeometry3D? mesh = ParentFactory.Create<MeshGeometry3D>(source);
                     if (mesh != null)
                     {
                         return CreateFromMeshGeometry3D(mesh);

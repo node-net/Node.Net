@@ -77,7 +77,7 @@
 
         public Response Respond(Request request)
         {
-            var parameters = request.GetParameterArray<T1, T2, T3>(_parameter_names);
+            object[]? parameters = request.GetParameterArray<T1, T2, T3>(_parameter_names);
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2]);
             return new Response(request.Id, null);
         }
@@ -101,7 +101,7 @@
 
         public Response Respond(Request request)
         {
-            var parameters = request.GetParameterArray<T1, T2, T3, T4>(_parameter_names);
+            object[]? parameters = request.GetParameterArray<T1, T2, T3, T4>(_parameter_names);
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3]);
             return new Response(request.Id, null);
         }
@@ -125,7 +125,7 @@
 
         public Response Respond(Request request)
         {
-            var parameters = request.GetParameterArray<T1, T2, T3, T4, T5>(_parameter_names);
+            object[]? parameters = request.GetParameterArray<T1, T2, T3, T4, T5>(_parameter_names);
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4]);
             return new Response(request.Id, null);
         }
@@ -149,7 +149,7 @@
 
         public Response Respond(Request request)
         {
-            var parameters = request.GetParameterArray<T1, T2, T3, T4, T5, T6>(_parameter_names);
+            object[]? parameters = request.GetParameterArray<T1, T2, T3, T4, T5, T6>(_parameter_names);
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4], (T6)parameters[4]);
             return new Response(request.Id, null);
         }

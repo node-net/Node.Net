@@ -13,18 +13,18 @@ namespace Node.Net
 
         public static Matrix3D GetWorldToLocal(ProjectionCamera camera)
         {
-            var tmp = GetLocalToWorld(camera);
+            Matrix3D tmp = GetLocalToWorld(camera);
             tmp.Invert();
             return tmp;
         }
 
         public static Matrix3D GetCameraMatrix3D(Point3D position, Vector3D lookDirection, Vector3D upDirection)
         {
-            var matrix = new Matrix3D();
-            var zAngle = Vector3D.AngleBetween(lookDirection, new Vector3D(0, 0, -1));
+            Matrix3D matrix = new Matrix3D();
+            double zAngle = Vector3D.AngleBetween(lookDirection, new Vector3D(0, 0, -1));
             if (zAngle != 0.0)
             {
-                var normal = Vector3D.CrossProduct(lookDirection, new Vector3D(0, 0, -1));
+                Vector3D normal = Vector3D.CrossProduct(lookDirection, new Vector3D(0, 0, -1));
                 matrix.Rotate(new Quaternion(normal, zAngle));
                 if (Round(matrix.Transform(new Vector3D(0, 0, -1)).Z, 4) != -1.0)
                 {
@@ -32,12 +32,12 @@ namespace Node.Net
                     matrix.Rotate(new Quaternion(normal, -zAngle));
                 }
             }
-            var localYAxis = matrix.Transform(new Vector3D(0, 1, 0));
-            var yAngle = Vector3D.AngleBetween(upDirection, localYAxis);
+            Vector3D localYAxis = matrix.Transform(new Vector3D(0, 1, 0));
+            double yAngle = Vector3D.AngleBetween(upDirection, localYAxis);
             {
                 if (Round(yAngle, 5) != 0.0)
                 {
-                    var normal = Vector3D.CrossProduct(upDirection, localYAxis);
+                    Vector3D normal = Vector3D.CrossProduct(upDirection, localYAxis);
                     matrix.Rotate(new Quaternion(normal, yAngle));
                     if (Round(matrix.Transform(localYAxis).Y, 4) != Round(localYAxis.Y, 4))
                     {
@@ -46,11 +46,11 @@ namespace Node.Net
                 }
             }
 
-            var localNegZAxis = matrix.Transform(new Vector3D(0, 0, -1));
+            Vector3D localNegZAxis = matrix.Transform(new Vector3D(0, 0, -1));
             zAngle = Vector3D.AngleBetween(lookDirection, localNegZAxis);
             if (Round(zAngle, 5) != 0.0)
             {
-                var normal = Vector3D.CrossProduct(lookDirection, localNegZAxis);
+                Vector3D normal = Vector3D.CrossProduct(lookDirection, localNegZAxis);
                 matrix.Rotate(new Quaternion(normal, zAngle));
                 if (Round(matrix.Transform(localNegZAxis).Z, 4) != Round(localNegZAxis.Z, 4))
                 {
@@ -69,8 +69,8 @@ namespace Node.Net
 
         public static void ZoomExtents(this ProjectionCamera camera, Rect3D bounds, double width, double height)
         {
-            var diagonal = new Vector3D(bounds.SizeX, bounds.SizeY, bounds.SizeZ);
-            var center = bounds.Location + (diagonal * 0.5);
+            Vector3D diagonal = new Vector3D(bounds.SizeX, bounds.SizeY, bounds.SizeZ);
+            Point3D center = bounds.Location + (diagonal * 0.5);
             double radius = diagonal.Length * 0.5;
 
             if (camera is PerspectiveCamera perspectiveCamera)
@@ -80,7 +80,7 @@ namespace Node.Net
 
                 double distv = radius / Math.Tan(0.5 * vfov * Math.PI / 180);
                 double dist = Math.Max(disth, distv);
-                var dir = perspectiveCamera.LookDirection;
+                Vector3D dir = perspectiveCamera.LookDirection;
                 dir.Normalize();
                 perspectiveCamera.LookAt(center, dir * dist);
             }
@@ -106,7 +106,7 @@ namespace Node.Net
             {
                 if (camera is PerspectiveCamera perspectiveCamera)
                 {
-                    var scaledLookDir = center - camera.Position;
+                    Vector3D scaledLookDir = center - camera.Position;
                     scaledLookDir *= factor;
                     camera.LookAt(center, scaledLookDir);
                 }

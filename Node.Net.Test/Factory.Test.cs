@@ -9,7 +9,7 @@ namespace Node.Net.Test
         [Test]
         public void Create()
         {
-            var factory = new Factory();
+            Factory factory = new Factory();
             Assert.NotNull(factory.Create<Matrix3D>());
             //Assert.NotNull(factory.Create(typeof(Matrix3D),null));
         }
@@ -17,12 +17,12 @@ namespace Node.Net.Test
         [Test]
         public void ClearCache()
         {
-            var factory = new Factory();
+            Factory factory = new Factory();
             factory.Cache = true;
             factory.ClearCache();
             if (factory.Cache) factory.Cache = false;
 
-            var matrix = factory.Create<Matrix3D>();
+            Matrix3D matrix = factory.Create<Matrix3D>();
             factory.ClearCache(matrix);
             factory.ClearCache();
         }
@@ -30,7 +30,7 @@ namespace Node.Net.Test
         [Test]
         public void Coverage()
         {
-            var factory = new Factory();
+            Factory factory = new Factory();
         }
     }
 }

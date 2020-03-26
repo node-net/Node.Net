@@ -8,13 +8,13 @@ namespace Node.Net.JsonRPC
         [Test]
         public static void StreamConstructor()
         {
-            var request = new Request("SayHello");
+            Request request = new Request("SayHello");
             request.Parameters.Add("name", "test");
 
-            var rs = request.ToStream();
+            System.IO.Stream rs = request.ToStream();
             Request request1 = new Request(rs);
 
-            var name = request1.Parameters["name"];
+            object name = request1.Parameters["name"];
             Assert.AreEqual("test", name);
         }
     }

@@ -16,7 +16,7 @@ namespace Node.Net
 
         public static object ReadFromBase64String(Func<Stream, object> readFunction, string base64)
         {
-            var bytes = Convert.FromBase64String(base64);
+            byte[]? bytes = Convert.FromBase64String(base64);
             if (bytes.Length > 0)
             {
                 int lastIndex = bytes.Length - 1;
@@ -26,7 +26,7 @@ namespace Node.Net
                 }
                 if (lastIndex != bytes.Length)
                 {
-                    var new_bytes = new List<byte>();
+                    List<byte>? new_bytes = new List<byte>();
                     for (int i = 0; i <= lastIndex; ++i)
                     {
                         new_bytes.Add(bytes[i]);
@@ -34,9 +34,9 @@ namespace Node.Net
                     bytes = new_bytes.ToArray();
                 }
             }
-            var mstream = new MemoryStream(bytes);
+            MemoryStream? mstream = new MemoryStream(bytes);
             mstream.Seek(0, SeekOrigin.Begin);
-            var result = readFunction(mstream);
+            object? result = readFunction(mstream);
             mstream.Close();
             mstream = null;
             return result;
@@ -44,7 +44,7 @@ namespace Node.Net
 
         public static object? Read(this IRead read, Assembly assembly, string name)
         {
-            foreach (var manifestResourceName in assembly.GetManifestResourceNames())
+            foreach (string? manifestResourceName in assembly.GetManifestResourceNames())
             {
                 if (manifestResourceName.Contains(name))
                 {
@@ -58,21 +58,21 @@ namespace Node.Net
         {
             if (filename.Contains("{"))
             {
-                var memory = new MemoryStream(Encoding.UTF8.GetBytes(filename));
+                MemoryStream? memory = new MemoryStream(Encoding.UTF8.GetBytes(filename));
                 return read.Read(memory);
             }
             if (filename.Contains("(") && filename.Contains("*") && filename.Contains(".") && filename.Contains(")") && filename.Contains("|"))
             {
                 // open file dialog filter
-                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = filename };
-                var result = ofd.ShowDialog();
+                Microsoft.Win32.OpenFileDialog? ofd = new Microsoft.Win32.OpenFileDialog { Filter = filename };
+                bool? result = ofd.ShowDialog();
                 if (result == true)
                 {
                     if (File.Exists(ofd.FileName))
                     {
-                        var stream = new FileStream(ofd.FileName, FileMode.Open);
+                        FileStream? stream = new FileStream(ofd.FileName, FileMode.Open);
                         //stream.SetFileName(ofd.FileName);
-                        var instance = read.Read(stream);
+                        object? instance = read.Read(stream);
                         stream.Close();
                         instance?.SetFileName(ofd.FileName);
                         return instance;
@@ -87,7 +87,7 @@ namespace Node.Net
             {
                 using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
                 {
-                    var item = read.Read(fs);
+                    object? item = read.Read(fs);
                     fs.Close();
                     SetPropertyValue(item, "FileName", filename);
                     item?.SetFileName(filename);
@@ -97,13 +97,13 @@ namespace Node.Net
             }
             else
             {
-                var stackTrace = new StackTrace();
-                foreach (var assembly in stackTrace.GetAssemblies())
+                StackTrace? stackTrace = new StackTrace();
+                foreach (Assembly? assembly in stackTrace.GetAssemblies())
                 {
-                    var stream = assembly.GetStream(filename);
+                    Stream? stream = assembly.GetStream(filename);
                     if (stream != null)
                     {
-                        var item = read.Read(stream);
+                        object? item = read.Read(stream);
                         SetPropertyValue(item, "FileName", filename);
                         item?.SetFileName(filename);
 
@@ -118,7 +118,7 @@ namespace Node.Net
         {
             if (item != null)
             {
-                var propertyInfo = item.GetType().GetProperty(propertyName);
+                PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
                 propertyInfo?.SetValue(item, propertyValue);
             }
         }

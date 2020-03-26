@@ -24,7 +24,7 @@ namespace Node.Net.Internal
                     WriteFunction(memory, source);
                     memory.Flush();
                     memory.Seek(0, SeekOrigin.Begin);
-                    var clone = ReadFunction(memory);
+                    object? clone = ReadFunction(memory);
                     if (clone != null && targetType.IsInstanceOfType(clone))
                     {
                         return clone;

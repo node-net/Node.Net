@@ -22,7 +22,7 @@ namespace Node.Net.JsonRPC
             {
                 try
                 {
-                    var method_responder = Methods[request.Method];
+                    IResponder? method_responder = Methods[request.Method];
                     return method_responder.Respond(request);
                 }
                 catch (Exception e)

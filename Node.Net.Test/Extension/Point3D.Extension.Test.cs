@@ -8,11 +8,11 @@ namespace Node.Net.Test.Extension
         [Test]
         public void ParsePoints()
         {
-            var points = Point3DExtension.ParsePoints("0,0,0 0,0,1");
+            System.Windows.Media.Media3D.Point3D[] points = Point3DExtension.ParsePoints("0,0,0 0,0,1");
             Assert.AreEqual(2, points.Length);
-            var points2D = points.Get2DPoints();
+            System.Windows.Point[] points2D = points.Get2DPoints();
             Assert.AreEqual(2, points2D.Length);
-            var tpoints = points.Transform(new System.Windows.Media.Media3D.Matrix3D());
+            System.Windows.Media.Media3D.Point3D[] tpoints = points.Transform(new System.Windows.Media.Media3D.Matrix3D());
             Assert.AreEqual(2, tpoints.Length);
         }
     }

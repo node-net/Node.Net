@@ -9,7 +9,7 @@ namespace Node.Net.Test.Extension
         [Test]
         public void Usage()
         {
-            var rect = new Rect3D();
+            Rect3D rect = new Rect3D();
             rect.GetCenter();
             rect.Scale(1.1);
         }

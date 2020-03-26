@@ -26,7 +26,7 @@ namespace Node.Net.Internal
 
             if (source != null && Resources.Contains(source.ToString()))
             {
-                var result = Resources[source.ToString()];
+                object? result = Resources[source.ToString()];
                 if (result != null && targetType.IsInstanceOfType(result))
                 {
                     return result;
@@ -34,11 +34,11 @@ namespace Node.Net.Internal
             }
             else
             {
-                var stream = CreateStream(source);
+                Stream? stream = CreateStream(source);
                 if (stream != null && source != null)
                 {
-                    var s = source.ToString();
-                    var result = CreateFromStream(targetType, stream, source);
+                    string? s = source.ToString();
+                    object? result = CreateFromStream(targetType, stream, source);
                     if (result != null)
                     {
                         if (source is string)
@@ -50,21 +50,21 @@ namespace Node.Net.Internal
                 }
             }
 
-            foreach (var _targetType in Keys)
+            foreach (Type? _targetType in Keys)
             {
-                var concreteType = this[_targetType];
+                Type? concreteType = this[_targetType];
                 if (_targetType.IsAssignableFrom(targetType))
                 {
                     return concreteType.Construct(source);
                 }
             }
-            var instance = targetType.Construct(source);
+            object? instance = targetType.Construct(source);
             return instance ?? ResourceFactory.Create(targetType, source) ?? CloneFactory.Create(targetType, source);
         }
 
         private Stream CreateStream(object source)
         {
-            var stream = source as Stream;
+            Stream? stream = source as Stream;
             if (stream == null && source != null && ParentFactory != null && !callingParent)
             {
                 callingParent = true;
@@ -89,12 +89,12 @@ namespace Node.Net.Internal
 
             if (ReadFunction != null)
             {
-                var instance = ReadFunction(stream);
+                object? instance = ReadFunction(stream);
                 stream.Close();
 
                 if (instance is IDictionary dictionary)
                 {
-                    var new_dictionary = dictionary.ConvertTypes(IDictionaryTypes, DefaultObjectType, TypeKey);
+                    IDictionary? new_dictionary = dictionary.ConvertTypes(IDictionaryTypes, DefaultObjectType, TypeKey);
                     new_dictionary.DeepUpdateParents();
                     if (source != null && (source is string))
                     {

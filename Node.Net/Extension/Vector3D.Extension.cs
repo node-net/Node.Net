@@ -8,7 +8,7 @@ namespace Node.Net
     {
         public static Vector3D GetPerpendicular(this Vector3D vector)
         {
-            var other = new Vector3D(0, 0, 1);
+            Vector3D other = new Vector3D(0, 0, 1);
             if (Vector3D.AngleBetween(vector, other) < 5)
             {
                 other = new Vector3D(0, 1, 0);
@@ -34,11 +34,11 @@ namespace Node.Net
         /// <returns></returns>
         public static double GetOrientation(this Vector3D vector)
         {
-            var polar = vector.GetPolarAngle();
+            double polar = vector.GetPolarAngle();
             if (System.Math.Round(polar, 3) == 0) return 0.0;
             if (System.Math.Round(polar, 3) == 180) return 0.0;
-            var azimuthal = vector.GetAzimuthalAngle();
-            var orientation = azimuthal - 90.0;
+            double azimuthal = vector.GetAzimuthalAngle();
+            double orientation = azimuthal - 90.0;
             if(orientation < -180.0) { orientation += 360.0; }
             return orientation;
         }
@@ -50,10 +50,10 @@ namespace Node.Net
 
         public static Vector3D ComputeRayPlaneIntersection(Vector3D rayVector, Vector3D rayPoint, Vector3D planeNormal, Vector3D planePoint)
         {
-            var diff = rayPoint - planePoint;
-            var prod1 = Vector3D.DotProduct(diff, planeNormal);// diff.Dot(planeNormal);
-            var prod2 = Vector3D.DotProduct(rayVector, planeNormal);// rayVector.Dot(planeNormal);
-            var prod3 = prod1 / prod2;
+            Vector3D diff = rayPoint - planePoint;
+            double prod1 = Vector3D.DotProduct(diff, planeNormal);// diff.Dot(planeNormal);
+            double prod2 = Vector3D.DotProduct(rayVector, planeNormal);// rayVector.Dot(planeNormal);
+            double prod3 = prod1 / prod2;
             return rayPoint - Vector3D.Multiply(prod3, rayVector);// rayVector * prod3;
         }
     }

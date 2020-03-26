@@ -8,8 +8,8 @@ namespace Node.Net
     {
         public static double GetMeters(string value)
         {
-            var unitsSB = new StringBuilder();
-            var numberSB = new StringBuilder();
+            StringBuilder? unitsSB = new StringBuilder();
+            StringBuilder? numberSB = new StringBuilder();
             foreach (char ch in value)
             {
                 if (unitsSB.Length < 1
@@ -28,7 +28,7 @@ namespace Node.Net
                 return 0.0;
             }
 
-            var double_value = Convert.ToDouble(numberSB.ToString());
+            double double_value = Convert.ToDouble(numberSB.ToString());
             return double_value * GetUnitsConversion(unitsSB.ToString().Trim());
         }
 

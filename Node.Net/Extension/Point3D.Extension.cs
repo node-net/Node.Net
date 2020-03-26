@@ -17,11 +17,11 @@ namespace Node.Net
         /// <returns></returns>
         public static Point3D[] ParsePoints(string value)
         {
-            var results = new List<Point3D>();
-            var words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            foreach (var word in words)
+            List<Point3D>? results = new List<Point3D>();
+            string[]? words = value.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (string? word in words)
             {
-                var svalues = word.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                string[]? svalues = word.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 if (svalues.Length == 2)
                 {
                     results.Add(new Point3D(Convert.ToSingle(svalues[0]), Convert.ToSingle(svalues[1]), 0.0));
@@ -41,8 +41,8 @@ namespace Node.Net
         /// <returns></returns>
         public static Point[] Get2DPoints(this Point3D[] points)
         {
-            var results = new List<Point>();
-            foreach (var point in points)
+            List<Point>? results = new List<Point>();
+            foreach (Point3D point in points)
             {
                 results.Add(new Point(point.X, point.Y));
             }
@@ -57,8 +57,8 @@ namespace Node.Net
         /// <returns></returns>
         public static Point3D[] Transform(this Point3D[] points, Matrix3D matrix)
         {
-            var result = new List<Point3D>();
-            foreach (var point in points)
+            List<Point3D>? result = new List<Point3D>();
+            foreach (Point3D point in points)
             {
                 result.Add(matrix.Transform(point));
             }
@@ -67,8 +67,8 @@ namespace Node.Net
 
         public static Point3D[] Transform(this IEnumerable<Point3D> points, Matrix3D matrix)
         {
-            var points2 = new List<Point3D>();
-            foreach (var p in points)
+            List<Point3D>? points2 = new List<Point3D>();
+            foreach (Point3D p in points)
             {
                 points2.Add(p);
             }

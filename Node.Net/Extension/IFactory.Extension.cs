@@ -6,7 +6,7 @@
 
         public static T Create<T>(this IFactory factory, object? source)
         {
-            var instance = factory.Create(typeof(T), source);
+            object? instance = factory.Create(typeof(T), source);
             if (instance != null && instance is T)
             {
                 return (T)instance;

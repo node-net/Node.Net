@@ -10,13 +10,13 @@ namespace Node.Net.JsonRPC
         [Test]
         public void Respond()
         {
-            var responder = GetTestResponder();
-            var response = responder.Respond(new Request("say_hello"));
+            Responder responder = GetTestResponder();
+            Response response = responder.Respond(new Request("say_hello"));
             Assert.AreEqual("hello", response.Result.ToString());
 
-            var stream = typeof(ResponderTest).Assembly.GetManifestResourceStream(
+            System.IO.Stream stream = typeof(ResponderTest).Assembly.GetManifestResourceStream(
                 "Node.Net.Test.JsonRPC.Responder.Test.Data.json");
-            var test_data = new Node.Net.Reader().Read<IDictionary>(stream);
+            IDictionary test_data = new Node.Net.Reader().Read<IDictionary>(stream);
             Assert.NotNull(test_data, nameof(test_data));
 
             foreach (string key in test_data.Keys)
@@ -29,11 +29,11 @@ namespace Node.Net.JsonRPC
                 {
                     try
                     {
-                        var request_data = (test_data[key] as IDictionary)?.ToJson();
-                        var response_text = responder.Respond(request_data);
+                        string request_data = (test_data[key] as IDictionary)?.ToJson();
+                        string response_text = responder.Respond(request_data);
                         if (test_data.Contains(key.Replace("_request", "_response")))
                         {
-                            var response_json = (test_data[key.Replace("_request", "_response")] as IDictionary)?.ToJson();
+                            string response_json = (test_data[key.Replace("_request", "_response")] as IDictionary)?.ToJson();
                             Assert.AreEqual(response_json, response_text, key);
                         }
                     }
@@ -81,7 +81,7 @@ namespace Node.Net.JsonRPC
         {
             if (!_properties.ContainsKey(name)) { _properties.Add(name, new Dictionary<string, string>()); }
 
-            foreach (var property in properties.Keys)
+            foreach (string property in properties.Keys)
             {
                 _properties[name][property] = properties[property];
             }
@@ -89,8 +89,8 @@ namespace Node.Net.JsonRPC
 
         public static IDictionary<string, string> GetProperties(string name, string[] property_names)
         {
-            var result = new Dictionary<string, string>();
-            foreach (var property_name in property_names)
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            foreach (string property_name in property_names)
             {
                 string value = string.Empty;
                 if (_properties.ContainsKey(name) && _properties[name].ContainsKey(property_name))

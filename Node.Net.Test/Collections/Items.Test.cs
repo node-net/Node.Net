@@ -12,23 +12,23 @@ namespace Node.Net.Collections
         [Test]
         public void JsonSerialization()
         {
-            var items = new Items<string>(new string[] { "red", "green", "blue" });
-            var items2 = items.Clone() as Items<string>;
+            Items<string> items = new Items<string>(new string[] { "red", "green", "blue" });
+            Items<string> items2 = items.Clone() as Items<string>;
             Assert.AreEqual(3, items2.Count, "items2.Count");
         }
 
         [Test]
         public void Usage_Search()
         {
-            var stream = typeof(ItemsTest)
+            System.IO.Stream stream = typeof(ItemsTest)
                 .Assembly
                 .GetManifestResourceStream(
                 "Node.Net.Test.Resources.States.json");
             Assert.NotNull(stream, nameof(stream));
 
-            var states = new Reader().Read<IDictionary>(stream);
+            IDictionary states = new Reader().Read<IDictionary>(stream);
 
-            var items = new Items<IDictionary>(states.Collect<IDictionary>());
+            Items<IDictionary> items = new Items<IDictionary>(states.Collect<IDictionary>());
             Assert.AreEqual("", items.Search);
             Assert.AreEqual(3205, items.Count, "items.Count");
 
@@ -46,15 +46,15 @@ namespace Node.Net.Collections
         [Test]
         public void Usage_Sort()
         {
-            var stream = typeof(ItemsTest)
+            System.IO.Stream stream = typeof(ItemsTest)
                 .Assembly
                 .GetManifestResourceStream(
                 "Node.Net.Test.Resources.States.json");
             Assert.NotNull(stream, nameof(stream));
 
-            var states = new Reader().Read<IDictionary>(stream);
+            IDictionary states = new Reader().Read<IDictionary>(stream);
 
-            var items = new Items<IDictionary>(states.Collect<IDictionary>())
+            Items<IDictionary> items = new Items<IDictionary>(states.Collect<IDictionary>())
             {
                 Search = "State",
                 SortFunction = SortByNameDescending
@@ -65,7 +65,7 @@ namespace Node.Net.Collections
 
         public static IEnumerable<IDictionary> SortByNameDescending(IEnumerable<IDictionary> source)
         {
-            var ordered = source.OrderByDescending(dictionary => dictionary.Get<string>("Name"));
+            IOrderedEnumerable<IDictionary> ordered = source.OrderByDescending(dictionary => dictionary.Get<string>("Name"));
             return ordered;
         }
     }

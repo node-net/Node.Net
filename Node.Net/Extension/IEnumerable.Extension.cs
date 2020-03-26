@@ -8,7 +8,7 @@ namespace Node.Net
     {
         public static int ComputeHashCode(this IEnumerable enumerable)
         {
-            var hashCode = enumerable.GetCount();
+            int hashCode = enumerable.GetCount();
             foreach (object? value in enumerable)
             {
                 if (value != null)
@@ -39,16 +39,16 @@ namespace Node.Net
 
         public static IEnumerable Simplify(this IEnumerable list)
         {
-            var count = GetCount(list);
+            int count = GetCount(list);
             if (count == 0)
             {
                 return list;
             }
 
-            var hasNull = false;
-            var allTypesConvertToDouble = true;
-            var types = new List<Type>();
-            foreach (var item in list)
+            bool hasNull = false;
+            bool allTypesConvertToDouble = true;
+            List<Type>? types = new List<Type>();
+            foreach (object? item in list)
             {
                 if (item == null)
                 {
@@ -71,7 +71,7 @@ namespace Node.Net
             {
                 if (types[0] == typeof(string))
                 {
-                    var strings = new List<string>();
+                    List<string>? strings = new List<string>();
                     foreach (string? value in list)
                     {
                         if (value != null)
@@ -83,7 +83,7 @@ namespace Node.Net
                 }
                 if (types[0] == typeof(double[]))
                 {
-                    var length = 0;
+                    int length = 0;
                     foreach (double[] dar in list)
                     {
                         if (length == 0)
@@ -98,7 +98,7 @@ namespace Node.Net
                     }
                     if (length > -1)
                     {
-                        var array = new double[count, length];
+                        double[,]? array = new double[count, length];
                         for (int i = 0; i < count; ++i)
                         {
                             for (int j = 0; j < length; ++j)
@@ -114,8 +114,8 @@ namespace Node.Net
             {
                 if (types[0] == typeof(double) || types[0] == typeof(int) || types[0] == typeof(float))
                 {
-                    var doubles = new List<double>();
-                    foreach (var value in list) { doubles.Add(Convert.ToDouble(value)); }
+                    List<double>? doubles = new List<double>();
+                    foreach (object? value in list) { doubles.Add(Convert.ToDouble(value)); }
                     return doubles.ToArray();
                 }
             }
@@ -127,8 +127,8 @@ namespace Node.Net
         {
             if (source != null)
             {
-                var i = 0;
-                foreach (var item in source)
+                int i = 0;
+                foreach (object? item in source)
                 {
                     if (i == index)
                     {
@@ -145,8 +145,8 @@ namespace Node.Net
         {
             if (source != null)
             {
-                var result = 0;
-                foreach (var item in source) { ++result; }
+                int result = 0;
+                foreach (object? item in source) { ++result; }
                 return result;
             }
             return 0;
@@ -191,12 +191,12 @@ namespace Node.Net
 
         public static IList<string> GetNames(this IEnumerable source)
         {
-            var names = new List<string>();
-            foreach (var item in source)
+            List<string>? names = new List<string>();
+            foreach (object? item in source)
             {
                 if (item != null)
                 {
-                    var name = item.GetName();
+                    string? name = item.GetName();
                     if (!names.Contains(name))
                     {
                         names.Add(name);
@@ -209,12 +209,12 @@ namespace Node.Net
 
         public static IList<string> GetFullNames(this IEnumerable source)
         {
-            var fullNames = new List<string>();
-            foreach (var item in source)
+            List<string>? fullNames = new List<string>();
+            foreach (object? item in source)
             {
                 if (item != null)
                 {
-                    var fullname = item.GetName();
+                    string? fullname = item.GetName();
                     if (!fullNames.Contains(fullname))
                     {
                         fullNames.Add(fullname);

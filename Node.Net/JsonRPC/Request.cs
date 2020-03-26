@@ -32,7 +32,7 @@ namespace Node.Net.JsonRPC
             Add("jsonrpc", "2.0");
             Add("method", _method);
             Add("id", 10000);
-            foreach (var key in parameters.Keys)
+            foreach (object? key in parameters.Keys)
             {
                 Parameters.Add(key.ToString(), parameters[key]);
             }
@@ -46,7 +46,7 @@ namespace Node.Net.JsonRPC
 
         public Request(Stream stream)
         {
-            var data = new Reader().Read(stream) as IDictionary;
+            IDictionary? data = new Reader().Read(stream) as IDictionary;
             SetData(data);
         }
 
@@ -70,7 +70,7 @@ namespace Node.Net.JsonRPC
                 this.Add("params", data["params"]);
                 if (data["params"] is IDictionary idictionary)
                 {
-                    foreach (var key in idictionary.Keys)
+                    foreach (object? key in idictionary.Keys)
                     {
                         Parameters.Add(key.ToString(), idictionary[key]);
                     }
@@ -80,7 +80,7 @@ namespace Node.Net.JsonRPC
                     if (data["params"] is IEnumerable ienumerable)
                     {
                         int i = 0;
-                        foreach (var p in ienumerable)
+                        foreach (object? p in ienumerable)
                         {
                             Parameters.Add(i.ToString(), p);
                             ++i;
@@ -96,9 +96,9 @@ namespace Node.Net.JsonRPC
 
         public byte[] GetBytes()
         {
-            using (var memory = new MemoryStream())
+            using (MemoryStream? memory = new MemoryStream())
             {
-                using (var writer = new StreamWriter(memory))
+                using (StreamWriter? writer = new StreamWriter(memory))
                 {
                     writer.WriteLine(ToJson());
                     writer.Close();

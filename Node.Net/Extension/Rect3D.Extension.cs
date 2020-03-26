@@ -12,7 +12,7 @@ namespace Node.Net
                 return source;
             }
 
-            var newSize = new Size3D(source.SizeX * factor, source.SizeY * factor, source.SizeZ * factor);
+            Size3D newSize = new Size3D(source.SizeX * factor, source.SizeY * factor, source.SizeZ * factor);
             return new Rect3D
             {
                 Size = newSize,
@@ -27,7 +27,7 @@ namespace Node.Net
 
         public static Point3D GetCenter(this Rect3D source)
         {
-            var diagonal = new Vector3D(source.SizeX, source.SizeY, source.SizeZ);
+            Vector3D diagonal = new Vector3D(source.SizeX, source.SizeY, source.SizeZ);
             return source.Location + (diagonal * 0.5);
         }
 

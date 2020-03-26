@@ -9,7 +9,7 @@ namespace Node.Net.Internal
         {
             if (source != null && Resources.Contains(source))
             {
-                var instance = Resources[source];
+                object? instance = Resources[source];
                 if (instance != null && targetType.IsInstanceOfType(instance))
                 {
                     return instance;

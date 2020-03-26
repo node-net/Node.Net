@@ -28,7 +28,7 @@ namespace Node.Net.Internal
 
         public string WriteToString(object value)
         {
-            var result = "";
+            string? result = "";
             MemoryStream memory = new MemoryStream();
             Write(memory, value);
             memory.Flush();
@@ -54,7 +54,7 @@ namespace Node.Net.Internal
         {
             if (Format == JSONFormat.Indented)
             {
-                var sb = new StringBuilder();
+                StringBuilder? sb = new StringBuilder();
                 while (sb.Length < IndentLevel * 2) { sb.Append(IndentString); }
                 return sb.ToString();
             }
@@ -123,12 +123,12 @@ namespace Node.Net.Internal
 
         private void WriteString(System.IO.TextWriter writer, object value)
         {
-            var svalue = value.ToString();
+            string? svalue = value.ToString();
             if (svalue != null)
             {
                 //var escaped_value = svalue;
                 // Escape '\' first
-                var escaped_value = svalue.Replace("\\", "\\u005c");
+                string? escaped_value = svalue.Replace("\\", "\\u005c");
                 // Escape '"'
                 escaped_value = escaped_value.Replace("\"", "\\u0022");
                 if (writingPrimitiveValue)
@@ -176,10 +176,10 @@ namespace Node.Net.Internal
 
         private void WriteDoubleArray2D(System.IO.TextWriter writer, object value)
         {
-            var array = value as double[,];
-            var length0 = array.GetLength(0);
-            var length1 = array.GetLength(1);
-            var equivalentList = new List<List<double>>();
+            double[,]? array = value as double[,];
+            int length0 = array.GetLength(0);
+            int length1 = array.GetLength(1);
+            List<List<double>>? equivalentList = new List<List<double>>();
             for (int i = 0; i < length0; ++i)
             {
                 equivalentList.Add(new List<double>());
@@ -196,11 +196,11 @@ namespace Node.Net.Internal
             WritingArray = true;
             writer.Write("[");
             PushIndent();
-            var enumerable = value as System.Collections.IEnumerable;
-            var writeCount = 0;
+            IEnumerable? enumerable = value as System.Collections.IEnumerable;
+            int writeCount = 0;
             foreach (object item in enumerable)
             {
-                var skip = false;
+                bool skip = false;
                 if (!(item is null) && IgnoreTypes.Contains(item.GetType()))
                 {
                     skip = true;
@@ -239,7 +239,7 @@ namespace Node.Net.Internal
         private void WriteIDictionary(System.IO.TextWriter writer, object value)
         {
             WritingArray = false;
-            var index = 0;
+            int index = 0;
             writer.Write("{");
             PushIndent();
 
@@ -247,13 +247,13 @@ namespace Node.Net.Internal
             {
                 //var dictionary = value as System.Collections.IDictionary;
 
-                var keys = new List<string>();
+                List<string>? keys = new List<string>();
                 foreach (string key in dictionary.Keys) { keys.Add(key); }
                 //foreach (object key in dictionary.Keys)
                 foreach (string key in keys)
                 {
-                    var item = dictionary[key];
-                    var skip = false;
+                    object? item = dictionary[key];
+                    bool skip = false;
                     if (!(item is null) && IgnoreTypes.Contains(item.GetType()))
                     {
                         skip = true;
@@ -273,7 +273,7 @@ namespace Node.Net.Internal
                         Write(writer, key);
                         writingPrimitiveValue = false;
 
-                        var tmp = dictionary[key];
+                        object? tmp = dictionary[key];
                         if (tmp?.GetType().IsPrimitive != false || (tmp is string))
                         {
                             writer.Write(":");
@@ -302,7 +302,7 @@ namespace Node.Net.Internal
 
         private void WriteISerializable(TextWriter writer, ISerializable serializable)
         {
-            var info = serializable.GetSerializationInfo();
+            SerializationInfo? info = serializable.GetSerializationInfo();
             WriteIDictionary(writer, info.GetPersistentData());
         }
     }

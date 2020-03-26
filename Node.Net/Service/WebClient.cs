@@ -8,7 +8,7 @@ namespace Node.Net.Service
 
         protected override System.Net.WebRequest GetWebRequest(Uri address)
         {
-            var request = base.GetWebRequest(address);
+            System.Net.WebRequest? request = base.GetWebRequest(address);
             request.Timeout = Timeout;
             return request;
         }

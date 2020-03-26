@@ -27,7 +27,7 @@ namespace Node.Net.Internal
             }
             if (ParentFactory != null)
             {
-                var dictionary = ParentFactory.Create<IDictionary>(source);
+                IDictionary? dictionary = ParentFactory.Create<IDictionary>(source);
                 if (dictionary != null)
                 {
                     return CreateFromDictionary(dictionary);
@@ -40,13 +40,13 @@ namespace Node.Net.Internal
 
         private bool Ignore(object source)
         {
-            var sourceType = source.GetType();
+            Type? sourceType = source.GetType();
             if (IgnoreTypes.Contains(sourceType))
             {
                 return true;
             }
 
-            foreach (var ignoreType in IgnoreTypes)
+            foreach (Type? ignoreType in IgnoreTypes)
             {
                 if (ignoreType.IsAssignableFrom(sourceType))
                 {
@@ -97,19 +97,19 @@ namespace Node.Net.Internal
             {
                 return Model3DCache[source];
             }
-            var model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
-            var primaryModel = GetPrimaryModel3D(source);
+            Model3DGroup? model3DGroup = new Model3DGroup { Transform = GetTransform3D(source) };
+            Model3D? primaryModel = GetPrimaryModel3D(source);
             if (primaryModel != null)
             {
                 model3DGroup.Children.Add(primaryModel);
             }
 
-            foreach (var key in source.Keys)
+            foreach (object? key in source.Keys)
             {
                 if (source[key] is IDictionary child_dictionary && !Ignore(child_dictionary))
                 {
                     //var child_model = Create(typeof(Model3D), child_dictionary) as Model3D;
-                    var child_model = CreateFromDictionary(child_dictionary);
+                    Model3D? child_model = CreateFromDictionary(child_dictionary);
                     if (child_model != null)
                     {
                         model3DGroup.Children.Add(child_model);
@@ -130,13 +130,13 @@ namespace Node.Net.Internal
 
         private Model3D GetPrimaryModel3D(IDictionary source)
         {
-            var model3D = GetUnscaledPrimaryModel3D(source);
+            Model3D? model3D = GetUnscaledPrimaryModel3D(source);
             if (model3D != null && ScalePrimaryModel)
             {
-                var scaleTransform = GetScalingTransform(source);
+                Transform3D? scaleTransform = GetScalingTransform(source);
                 if (scaleTransform != null)
                 {
-                    var scaledModel3D = new Model3DGroup { Transform = scaleTransform };
+                    Model3DGroup? scaledModel3D = new Model3DGroup { Transform = scaleTransform };
                     if (scaledModel3D != null)
                     {
                         scaledModel3D.Children.Add(model3D);
@@ -153,7 +153,7 @@ namespace Node.Net.Internal
         {
             if (PrimaryModel3DHelperFunction != null)
             {
-                var model = PrimaryModel3DHelperFunction(source);
+                Model3D? model = PrimaryModel3DHelperFunction(source);
                 if (model != null)
                 {
                     return model;
@@ -161,13 +161,13 @@ namespace Node.Net.Internal
             }
             if (ParentFactory != null)
             {
-                var type = source.Get<string>("Type");
+                string? type = source.Get<string>("Type");
                 if (type.Length > 0)
                 {
-                    var modelName = $"Model3D.{type}.xaml";
+                    string? modelName = $"Model3D.{type}.xaml";
                     if (namedCache.ContainsKey(modelName))
                     {
-                        var m3d = namedCache[modelName];
+                        Model3D? m3d = namedCache[modelName];
                         if (m3d != null)
                         {
                             return m3d;
@@ -175,7 +175,7 @@ namespace Node.Net.Internal
                     }
                     else
                     {
-                        var m3d = ParentFactory.Create<Model3D>(modelName);
+                        Model3D? m3d = ParentFactory.Create<Model3D>(modelName);
                         namedCache.Add(modelName, m3d);
                         if (m3d != null)
                         {
@@ -208,11 +208,11 @@ namespace Node.Net.Internal
                 return new MatrixTransform3D();
             }
 
-            var scaleX = 1.0;
-            var scaleY = 1.0;
-            var scaleZ = 1.0;
+            double scaleX = 1.0;
+            double scaleY = 1.0;
+            double scaleZ = 1.0;
 
-            var tmp = source.GetLengthMeters("Height");
+            double tmp = source.GetLengthMeters("Height");
             if (tmp != 0.0)
             {
                 scaleZ = tmp;
@@ -232,7 +232,7 @@ namespace Node.Net.Internal
 
             if (scaleX != 1.0 || scaleY != 1.0 || scaleZ != 1.0)
             {
-                var matrix3D = new Matrix3D();
+                Matrix3D matrix3D = new Matrix3D();
                 matrix3D.Scale(new Vector3D(scaleX, scaleY, scaleZ));
                 if (!matrix3D.IsIdentity)
                 {

@@ -14,7 +14,7 @@ namespace Node.Net.JsonRPC
 
         public Response Respond(Request request)
         {
-            var responseStream = _responder(request.ToStream());
+            Stream? responseStream = _responder(request.ToStream());
             return new Response(responseStream);
         }
 
@@ -62,18 +62,18 @@ namespace Node.Net.JsonRPC
         {
             try
             {
-                var request_dictionary = new Internal.JsonReader().Read(context.Request.InputStream) as IDictionary;
-                var request = new Request(request_dictionary);
+                IDictionary? request_dictionary = new Internal.JsonReader().Read(context.Request.InputStream) as IDictionary;
+                Request? request = new Request(request_dictionary);
                 try
                 {
-                    using (var sw = new StreamWriter(context.Response.OutputStream))
+                    using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
                     {
                         sw.Write(_responder(request.ToJson()));
                     }
                 }
                 catch (Exception e)
                 {
-                    using (var sw = new StreamWriter(context.Response.OutputStream))
+                    using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
                     {
                         sw.Write(new Response(new Error(-32000, e.ToString()), 0).ToJson());
                     }
@@ -81,7 +81,7 @@ namespace Node.Net.JsonRPC
             }
             catch (Exception e)
             {
-                using (var sw = new StreamWriter(context.Response.OutputStream))
+                using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
                 {
                     sw.Write(new Response(new Error(-32600, e.ToString()), 0).ToJson());
                 }

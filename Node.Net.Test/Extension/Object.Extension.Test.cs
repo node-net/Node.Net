@@ -15,7 +15,7 @@ namespace Node.Net.Test.Extension
         [Test]
         public void GetName_SetName()
         {
-            var dateTime = DateTime.Now;
+            DateTime dateTime = DateTime.Now;
             Assert.AreEqual("", dateTime.GetName());
             dateTime.SetName("Now");
             //Assert.AreEqual("Now", dateTime.GetName());
@@ -24,9 +24,9 @@ namespace Node.Net.Test.Extension
         [Test]
         public void GetParent_SetParent()
         {
-            var bar = new Dictionary<string, dynamic> { { "Name", "bar" } };
+            Dictionary<string, dynamic> bar = new Dictionary<string, dynamic> { { "Name", "bar" } };
             bar.SetParent(null);
-            var foo = new Dictionary<string, dynamic>
+            Dictionary<string, dynamic> foo = new Dictionary<string, dynamic>
             {
                 {"Name","foo" },
                 {"bar",bar }
@@ -35,7 +35,7 @@ namespace Node.Net.Test.Extension
             bar.SetParent(foo);
             Assert.AreSame(foo, bar.GetParent());
 
-            var widget = new Widget();
+            Widget widget = new Widget();
             Assert.IsNull(widget.GetParent());
             widget.SetParent(null);
             Assert.IsNull(widget.GetParent());

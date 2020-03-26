@@ -14,7 +14,7 @@ namespace Node.Net.Converters
                 return Visibility.Hidden;
             }
 
-            var bvalue = System.Convert.ToBoolean(value);
+            bool bvalue = System.Convert.ToBoolean(value);
             if (bvalue)
             {
                 return Visibility.Visible;

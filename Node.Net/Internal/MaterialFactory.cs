@@ -24,7 +24,7 @@ namespace Node.Net.Internal
             }
             if (ParentFactory != null)
             {
-                var brush = ParentFactory.Create<Brush>(source);
+                Brush? brush = ParentFactory.Create<Brush>(source);
                 if (brush != null)
                 {
                     return new DiffuseMaterial(brush);

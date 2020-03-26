@@ -12,35 +12,35 @@ namespace Node.Net.Test
         [TestCase("Object.Coverage.json")]
         public void Read(string name)
         {
-            var reader = new Reader();
-            var assembly = typeof(ReaderTest).Assembly;
-            var stream = assembly.FindManifestResourceStream(name);
+            Reader reader = new Reader();
+            System.Reflection.Assembly assembly = typeof(ReaderTest).Assembly;
+            Stream stream = assembly.FindManifestResourceStream(name);
             Assert.NotNull(stream, nameof(stream));
-            using var memory = new MemoryStream();
+            using MemoryStream memory = new MemoryStream();
             stream.CopyTo(memory);
             memory.Seek(0, SeekOrigin.Begin);
 
-            var memory2 = new MemoryStream();
+            MemoryStream memory2 = new MemoryStream();
             memory.CopyTo(memory2);
             memory.Seek(0, SeekOrigin.Begin);
 
-            var i = reader.Read<IDictionary>(memory);
+            IDictionary i = reader.Read<IDictionary>(memory);
             Assert.NotNull(i, nameof(i));
             Assert.True(i.Contains("string_symbol"), "i.Contains 'string_symbol'");
             Assert.AreEqual("0°", i["string_symbol"].ToString(), "i['string_symbol']");
 
             memory2.Seek(0, SeekOrigin.Begin);
-            var filename = Path.GetTempFileName();
-            using (var fs = new FileStream(filename, FileMode.Create))
+            string filename = Path.GetTempFileName();
+            using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
                 memory2.CopyTo(fs);
             }
-            var d = reader.Read(filename) as IDictionary;
+            IDictionary d = reader.Read(filename) as IDictionary;
             Assert.NotNull(d, nameof(d));
             Assert.True(d.Contains("string_symbol"), "d.Contains 'string_symbol'");
             Assert.AreEqual("0°", d["string_symbol"].ToString(), "d['string_symbol']");
 
-            using var memory3 = new MemoryStream();
+            using MemoryStream memory3 = new MemoryStream();
             d.Save(memory3);
         }
 
@@ -48,28 +48,28 @@ namespace Node.Net.Test
         public void PreserveBackslash()
         {
             // https://stackoverflow.com/questions/19176024/how-to-escape-special-characters-in-building-a-json-string
-            var data = new Dictionary<string, object>
+            Dictionary<string, object> data = new Dictionary<string, object>
             {
                 {"User",@"Domain\User" }
             };
 
-            var json = (data as IDictionary).ToJson();
+            string json = (data as IDictionary).ToJson();
             Assert.True(json.Contains(@"Domain\u005cUser"), "json contains 'Domain\u005cUser'");
 
-            using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            using (MemoryStream memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {
-                var d = new Reader().Read<IDictionary>(memory);
+                IDictionary d = new Reader().Read<IDictionary>(memory);
                 Assert.True(d.Contains("User"));
-                var user = d["User"].ToString();
+                string user = d["User"].ToString();
                 Assert.AreEqual(@"Domain\User", d["User"].ToString());
             }
 
             json = "{\"User\":\"Domain\\User\"}";
-            using (var memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            using (MemoryStream memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {
-                var d = new Reader().Read<IDictionary>(memory);
+                IDictionary d = new Reader().Read<IDictionary>(memory);
                 Assert.True(d.Contains("User"));
-                var user = d["User"].ToString();
+                string user = d["User"].ToString();
                 Assert.AreEqual(@"Domain\User", d["User"].ToString());
             }
         }
@@ -78,10 +78,10 @@ namespace Node.Net.Test
         public void PreserveBackslash2()
         {
             const string json = "{ \"path\" : \"C:\\\\tmp\" }";
-            var data = new Reader()
+            IDictionary data = new Reader()
                 .Read<IDictionary>(new MemoryStream(Encoding.UTF8.GetBytes(json)));
             Assert.True(data.Contains("path"), "data.Contains 'path'");
-            var path = data["path"].ToString();
+            string path = data["path"].ToString();
             Assert.True(path.Contains("\\"), "path contains \\");
             Assert.AreEqual("C:\\tmp", path);
         }

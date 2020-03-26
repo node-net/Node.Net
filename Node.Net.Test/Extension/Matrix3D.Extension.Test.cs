@@ -16,9 +16,9 @@ namespace Node.Net.Extension
         [TestCase(45, 30, 0)]
         public static void RotateOTS(double orientation, double tilt, double spin)
         {
-            var matrix = new Matrix3D();
+            Matrix3D matrix = new Matrix3D();
             matrix = matrix.RotateOTS(new Vector3D(orientation, tilt, spin));
-            var ots = matrix.GetRotationsOTS();
+            Vector3D ots = matrix.GetRotationsOTS();
             Assert.AreEqual(orientation, Round(ots.X, 2), "orientation");
             Assert.AreEqual(tilt, Round(ots.Y, 2), "tilt");
             Assert.AreEqual(spin, Round(ots.Z, 2), "spin");

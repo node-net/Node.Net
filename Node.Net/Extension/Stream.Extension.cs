@@ -8,7 +8,7 @@ namespace Node.Net
     {
         public static void CopyToFile(this Stream stream, string filename)
         {
-            using (var filestream = new FileStream(filename, FileMode.Create))
+            using (FileStream? filestream = new FileStream(filename, FileMode.Create))
             {
                 int ibyte = stream.ReadByte();
                 while (ibyte > -1)
@@ -21,15 +21,15 @@ namespace Node.Net
 
         public static string GetMD5String(this Stream stream)
         {
-            using var md5 = MD5.Create();
-            var hash = md5.ComputeHash(stream);
+            using MD5? md5 = MD5.Create();
+            byte[]? hash = md5.ComputeHash(stream);
             stream.Seek(0, SeekOrigin.Begin);
             return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
         public static string GetBase64String(this Stream stream)
         {
-            var memory = new MemoryStream();
+            MemoryStream? memory = new MemoryStream();
             stream.CopyTo(memory);
             return Convert.ToBase64String(memory.ToArray());
         }
