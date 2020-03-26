@@ -11,24 +11,24 @@ namespace Node.Net.Test
         [Test]
         public static void WriteJson()
         {
-            var data = new Dictionary<string, object>
+            Dictionary<string, object> data = new Dictionary<string, object>
             {
                 {"name","test" }
             };
 
-            var writer = new Writer { JsonFormat = JsonFormat.Compact };
-            using (var memory = new MemoryStream())
+            Writer writer = new Writer { JsonFormat = JsonFormat.Compact };
+            using (MemoryStream memory = new MemoryStream())
             {
                 writer.Write(memory, data);
-                var json = Encoding.UTF8.GetString(memory.ToArray());
+                string json = Encoding.UTF8.GetString(memory.ToArray());
                 Assert.AreEqual("{\"name\":\"test\"}", json);
             }
 
             writer = new Writer { JsonFormat = JsonFormat.Pretty };
-            using (var memory = new MemoryStream())
+            using (MemoryStream memory = new MemoryStream())
             {
                 writer.Write(memory, data);
-                var json = Encoding.UTF8.GetString(memory.ToArray());
+                string json = Encoding.UTF8.GetString(memory.ToArray());
                 Assert.AreEqual("{\r\n  \"name\":\"test\"\r\n}", json);
             }
         }
@@ -36,17 +36,17 @@ namespace Node.Net.Test
         [Test]
         public static void WriteISerializableJson()
         {
-            var widget = new Widget
+            Widget widget = new Widget
             {
                 Name = "abc",
                 Description = "test"
             };
 
-            using (var memory = new MemoryStream())
+            using (MemoryStream memory = new MemoryStream())
             {
                 new Writer().Write(memory, widget);
                 memory.Seek(0, SeekOrigin.Begin);
-                var json = new StreamReader(memory).ReadToEnd();
+                string json = new StreamReader(memory).ReadToEnd();
                 Assert.True(json.Contains("abc"));
                 Assert.True(json.Contains("test"));
             }

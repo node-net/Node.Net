@@ -17,14 +17,14 @@ namespace Node.Net
         /// <returns></returns>
         public static Stream? FindManifestResourceStream(this Assembly assembly, string name)
         {
-            foreach (var resourceName in assembly.GetManifestResourceNames())
+            foreach (string? resourceName in assembly.GetManifestResourceNames())
             {
                 if (resourceName == name)
                 {
                     return assembly.GetManifestResourceStream(resourceName);
                 }
             }
-            foreach (var resourceName in assembly.GetManifestResourceNames())
+            foreach (string? resourceName in assembly.GetManifestResourceNames())
             {
                 if (resourceName.Contains(name))
                 {
@@ -42,7 +42,7 @@ namespace Node.Net
         /// <returns></returns>
         public static Stream? GetStream(this Assembly assembly, string name)
         {
-            foreach (var resourceName in assembly.GetManifestResourceNames())
+            foreach (string? resourceName in assembly.GetManifestResourceNames())
             {
                 if (resourceName.Contains(name))
                 {
@@ -54,14 +54,14 @@ namespace Node.Net
 
         public static Dictionary<string, byte[]> GetManifestResourceData(this Assembly assembly, string prefix)
         {
-            var data = new Dictionary<string, byte[]>();
-            foreach (var resource_name in assembly.GetManifestResourceNames())
+            Dictionary<string, byte[]>? data = new Dictionary<string, byte[]>();
+            foreach (string? resource_name in assembly.GetManifestResourceNames())
             {
                 if (resource_name.Contains(prefix))
                 {
-                    var name = resource_name.Replace(prefix, string.Empty);
-                    using var memory = new MemoryStream();
-                    var stream = assembly.GetManifestResourceStream(resource_name);
+                    string? name = resource_name.Replace(prefix, string.Empty);
+                    using MemoryStream? memory = new MemoryStream();
+                    Stream? stream = assembly.GetManifestResourceStream(resource_name);
                     if (stream != null)
                     {
                         stream.CopyTo(memory);

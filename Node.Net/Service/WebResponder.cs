@@ -29,7 +29,7 @@ namespace Node.Net.Service
                     catch (Exception e)
                     {
                         context.Response.StatusCode = 500;
-                        var bytes = Encoding.UTF8.GetBytes(e.ToString());
+                        byte[]? bytes = Encoding.UTF8.GetBytes(e.ToString());
                         context.Response.OutputStream.Write(bytes, 0, bytes.Length);
                     }
                 }
@@ -46,11 +46,11 @@ namespace Node.Net.Service
 
         public static void RespondGET(HttpListenerContext context)
         {
-            var raw = context.Request.RawUrl;
+            string? raw = context.Request.RawUrl;
 
             if (raw.Length == 0 || raw == "/")
             {
-                using (var sw = new StreamWriter(context.Response.OutputStream))
+                using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
                 {
                     sw.WriteLine("<html>");
                     sw.WriteLine("<body>");
@@ -68,9 +68,9 @@ namespace Node.Net.Service
 
         public static void RespondPOST(HttpListenerContext context)
         {
-            var raw = context.Request.RawUrl;
-            var input = new StreamReader(context.Request.InputStream).ReadToEnd();
-            using (var sw = new StreamWriter(context.Response.OutputStream))
+            string? raw = context.Request.RawUrl;
+            string? input = new StreamReader(context.Request.InputStream).ReadToEnd();
+            using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
             {
                 sw.WriteLine("<html>");
                 sw.WriteLine("<body>");

@@ -48,15 +48,15 @@ namespace Node.Net
                 return;
             }
 
-            var values = new List<object>();
-            foreach (var value in dictionary.Values)
+            List<object>? values = new List<object>();
+            foreach (object? value in dictionary.Values)
             {
                 if (value != null)
                 {
                     values.Add(value);
                 }
             }
-            foreach (var value in values)
+            foreach (object? value in values)
             {
                 if (value is IDictionary child)
                 {
@@ -68,7 +68,7 @@ namespace Node.Net
 
         public static void DeepClean(this IDictionary dictionary)
         {
-            foreach (var value in dictionary.Values)
+            foreach (object? value in dictionary.Values)
             {
                 if (value is IDictionary child)
                 {
@@ -87,7 +87,7 @@ namespace Node.Net
         /// <returns></returns>
         public static double GetLengthMeters(this IDictionary dictionary, string name)
         {
-            var svalue = dictionary.Get<string>(name);
+            string? svalue = dictionary.Get<string>(name);
             return Length.GetMeters(svalue);
         }
 
@@ -99,7 +99,7 @@ namespace Node.Net
         /// <returns></returns>
         public static double GetAngleDegrees(this IDictionary dictionary, string name)
         {
-            var svalue = dictionary.Get<string>(name);
+            string? svalue = dictionary.Get<string>(name);
             return Internal.Angle.GetDegrees(svalue);
         }
 
@@ -122,13 +122,13 @@ namespace Node.Net
         /// <returns></returns>
         public static int ComputeHashCode(this IDictionary dictionary)
         {
-            var hashCode = dictionary.Count;
-            foreach (var key in dictionary.Keys)
+            int hashCode = dictionary.Count;
+            foreach (object? key in dictionary.Keys)
             {
                 if (key != null)
                 {
                     hashCode ^= key.GetHashCode();
-                    var value = dictionary[key];
+                    object? value = dictionary[key];
                     if (value != null)
                     {
                         if (value is IDictionary vdictionary)
@@ -159,7 +159,7 @@ namespace Node.Net
         /// <returns></returns>
         public static Stream GetStream(this IDictionary dictionary)
         {
-            var memory = new MemoryStream();
+            MemoryStream? memory = new MemoryStream();
             dictionary.Save(memory);
             memory.Flush();
             memory.Seek(0, SeekOrigin.Begin);
@@ -174,7 +174,7 @@ namespace Node.Net
         /// <returns></returns>
         public static IList<object> Collect(this IDictionary idictionary, string type)
         {
-            var results = new List<object>();
+            List<object>? results = new List<object>();
             _Collect(idictionary, type, results);
             return results;
         }
@@ -188,14 +188,14 @@ namespace Node.Net
         /// <returns></returns>
         public static IList<object> Collect(this IDictionary idictionary, Type type, string? search = null)
         {
-            var results = new List<object>();
+            List<object>? results = new List<object>();
             _Collect(idictionary, type, search, results);
             return results;
         }
 
         public static IList<T> Collect<T>(this IDictionary idictionary, string? search = null)
         {
-            var results = new List<T>();
+            List<T>? results = new List<T>();
             _Collect<T>(idictionary, search, results, MatchesSearch);
 
             return results;
@@ -203,7 +203,7 @@ namespace Node.Net
 
         public static IList<T> Collect<T>(this IDictionary dictionary, Func<IDictionary, string, bool> matchFunction, string? search = null)
         {
-            var results = new List<T>();
+            List<T>? results = new List<T>();
             _Collect<T>(dictionary, search, results, matchFunction);
 
             return results;
@@ -211,13 +211,13 @@ namespace Node.Net
 
         public static IList<T> Collect<T>(this IDictionary dictionary, KeyValuePair<string, string> kvp) where T : IDictionary
         {
-            var results = new List<T>();
-            var tmp = dictionary.Collect<T>();
-            foreach (var result in tmp)
+            List<T>? results = new List<T>();
+            IList<T>? tmp = dictionary.Collect<T>();
+            foreach (T result in tmp)
             {
                 if (result is IDictionary d && d.Contains(kvp.Key))
                 {
-                    var value = d[kvp.Key];
+                    object? value = d[kvp.Key];
                     if (value != null && value.ToString() == kvp.Value)
                     {
                         results.Add(result);
@@ -229,7 +229,7 @@ namespace Node.Net
 
         private static void _Collect<T>(this IDictionary idictionary, string? search, IList results, Func<IDictionary, string, bool> matchFunction)
         {
-            foreach (var item in idictionary.Values)
+            foreach (object? item in idictionary.Values)
             {
                 if (item != null && item is T && !results.Contains(item) && (
                         search == null || matchFunction(item as IDictionary, search)))
@@ -253,10 +253,10 @@ namespace Node.Net
             if (search.Contains(" "))
             {
                 // All parts must match
-                var matchesValue = false;
-                var matchesKey = false;
-                var words = search.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                foreach (var word in words)
+                bool matchesValue = false;
+                bool matchesKey = false;
+                string[]? words = search.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                foreach (string? word in words)
                 {
                     matchesValue = MatchesValue(idictionary, word);
                     matchesKey = idictionary.GetFullName().Contains(word);
@@ -279,24 +279,24 @@ namespace Node.Net
 
         private static bool MatchesValue(this IDictionary idictionary, string search)
         {
-            foreach (var key in idictionary.Keys)
+            foreach (object? key in idictionary.Keys)
             {
                 if (key != null)
                 {
-                    var value = idictionary[key];
+                    object? value = idictionary[key];
                     if (value is string svalue)
                     {
                         if (svalue.Contains(search)) return true;
                     }
                 }
             }
-            var mkey = ObjectExtension.GetName(idictionary);
+            string? mkey = ObjectExtension.GetName(idictionary);
             return mkey.Length > 0 && search.Length > 0 && mkey.Contains(search);
         }
 
         private static void _Collect(this IDictionary idictionary, Type type, string? search, IList results)
         {
-            foreach (var item in idictionary.Values)
+            foreach (object? item in idictionary.Values)
             {
                 if (item != null)
                 {
@@ -315,7 +315,7 @@ namespace Node.Net
 
         private static void _Collect(this IDictionary idictionary, string type, IList results)
         {
-            foreach (var item in idictionary.Values)
+            foreach (object? item in idictionary.Values)
             {
                 if (item != null)
                 {
@@ -348,7 +348,7 @@ namespace Node.Net
 
         public static IDictionary<string, int> CollectKeys(this IDictionary dictionary)
         {
-            var results = new Dictionary<string, int>();
+            Dictionary<string, int>? results = new Dictionary<string, int>();
             foreach (object? okey in dictionary.Keys)
             {
                 if (okey is string key)
@@ -368,8 +368,8 @@ namespace Node.Net
 
                             if (dictionary[key] is IDictionary subDictionary)
                             {
-                                var subKeys = subDictionary.CollectKeys();
-                                foreach (var subKey in subKeys.Keys)
+                                IDictionary<string, int>? subKeys = subDictionary.CollectKeys();
+                                foreach (string? subKey in subKeys.Keys)
                                 {
                                     if (!results.ContainsKey(key))
                                     {
@@ -390,7 +390,7 @@ namespace Node.Net
 
         public static IList<T> CollectValues<T>(this IDictionary dictionary, string key)
         {
-            var results = new List<T>();
+            List<T>? results = new List<T>();
             _CollectValues<T>(dictionary, key, results);
             return results;
         }
@@ -399,13 +399,13 @@ namespace Node.Net
         {
             if (dictionary.Contains(key))
             {
-                var value = dictionary.Get<T>(key);
+                T value = dictionary.Get<T>(key);
                 if (!results.Contains(value))
                 {
                     results.Add(value);
                 }
             }
-            foreach (var child_key in dictionary.Keys)
+            foreach (object? child_key in dictionary.Keys)
             {
                 if (child_key != null)
                 {
@@ -420,11 +420,11 @@ namespace Node.Net
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source)
         {
             dictionary.Clear();
-            foreach (var key in source.Keys)
+            foreach (object? key in source.Keys)
             {
                 if (key != null)
                 {
-                    var value = source[key];
+                    object? value = source[key];
                     if (value is IDictionary child_dictionary)
                     {
                         dictionary[key] = new Dictionary<object, dynamic>().Copy(child_dictionary);
@@ -441,13 +441,13 @@ namespace Node.Net
         public static IDictionary Copy(this IDictionary dictionary, IDictionary source, Func<object, bool> valueFilterFunction, Func<object, bool>? keyFilterFunction = null)
         {
             dictionary.Clear();
-            foreach (var key in source.Keys)
+            foreach (object? key in source.Keys)
             {
                 if (key != null)
                 {
                     if (keyFilterFunction == null || keyFilterFunction(key))
                     {
-                        var value = source[key];
+                        object? value = source[key];
                         if (value != null)
                         {
                             if (valueFilterFunction(value))
@@ -470,15 +470,15 @@ namespace Node.Net
 
         public static IDictionary Clone(this IDictionary source)
         {
-            var clone = Activator.CreateInstance(source.GetType()) as IDictionary;
+            IDictionary? clone = Activator.CreateInstance(source.GetType()) as IDictionary;
             clone.Copy(source);
             return clone;
         }
 
         public static T Find<T>(this IDictionary dictionary, string name, bool exact = false, bool deepUpdateParents = false)
         {
-            var items = dictionary.Collect<T>();
-            foreach (var item in items)
+            IList<T>? items = dictionary.Collect<T>();
+            foreach (T item in items)
             {
                 if (deepUpdateParents && item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
                 if (item.GetFullName() == name)
@@ -486,10 +486,10 @@ namespace Node.Net
                     return item;
                 }
             }
-            foreach (var item in items)
+            foreach (T item in items)
             {
 #if DEBUG
-                var _name = item.GetName();
+                string? _name = item.GetName();
 #endif
                 if (item.GetName() == name)
                 {
@@ -498,14 +498,14 @@ namespace Node.Net
             }
             if (!exact)
             {
-                foreach (var item in items)
+                foreach (T item in items)
                 {
                     if (item.GetName().Contains(name))
                     {
                         return item;
                     }
                 }
-                foreach (var item in items)
+                foreach (T item in items)
                 {
                     if (item.GetFullName().Contains(name))
                     {
@@ -529,7 +529,7 @@ namespace Node.Net
                 int nextIndex = name.IndexOf(',');
                 while (startIndex < name.Length)
                 {
-                    var subname = name.Substring(startIndex, nextIndex - startIndex);
+                    string? subname = name.Substring(startIndex, nextIndex - startIndex);
                     if (dictionary.Contains(subname))
                     {
                         return dictionary.Get<T>(subname);
@@ -548,10 +548,10 @@ namespace Node.Net
             }
             if (dictionary.Contains(name))
             {
-                var value = dictionary[name];
+                object? value = dictionary[name];
                 if (value != null)
                 {
-                    var templateType = typeof(T);
+                    Type? templateType = typeof(T);
                     if (value is T t)
                     {
                         return t;
@@ -571,29 +571,29 @@ namespace Node.Net
             // Search for matching name
             if (search)
             {
-                var items = dictionary.Collect<T>();
-                foreach (var item in items)
+                IList<T>? items = dictionary.Collect<T>();
+                foreach (T item in items)
                 {
                     if (item.GetFullName() == name)
                     {
                         return item;
                     }
                 }
-                foreach (var item in items)
+                foreach (T item in items)
                 {
                     if (item.GetName() == name)
                     {
                         return item;
                     }
                 }
-                foreach (var item in items)
+                foreach (T item in items)
                 {
                     if (item.GetName().Contains(name))
                     {
                         return item;
                     }
                 }
-                foreach (var item in items)
+                foreach (T item in items)
                 {
                     if (item.GetFullName().Contains(name))
                     {
@@ -631,11 +631,11 @@ namespace Node.Net
             {
                 if (key.Contains("/"))
                 {
-                    var parts = key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                    string[]? parts = key.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     if (parts.Length > 1)
                     {
-                        var child_key = parts[0];
-                        var child_subkey = String.Join("/", parts, 1, parts.Length - 1);
+                        string? child_key = parts[0];
+                        string? child_subkey = String.Join("/", parts, 1, parts.Length - 1);
                         IDictionary? child = null;
                         if (dictionary.Contains(child_key))
                         {
@@ -665,7 +665,7 @@ namespace Node.Net
                 {
                     if (okey is string key)
                     {
-                        var test_element = parent.Get<IDictionary>(key);
+                        IDictionary? test_element = parent.Get<IDictionary>(key);
                         if (test_element != null && object.ReferenceEquals(test_element, dictionary))
                         {
                             return key;
@@ -678,12 +678,12 @@ namespace Node.Net
 
         public static string GetFullName(this IDictionary dictionary)
         {
-            var key = GetName(dictionary);
+            string? key = GetName(dictionary);
             if (key != null)
             {
                 if (dictionary.GetParent() is IDictionary parent)
                 {
-                    var parent_full_key = GetFullName(parent);
+                    string? parent_full_key = GetFullName(parent);
                     if (parent_full_key.Length > 0)
                     {
                         return $"{parent_full_key}/{key}";
@@ -721,8 +721,8 @@ namespace Node.Net
                 throw new InvalidOperationException($"failed to create instance of type {source.GetType().FullName}");
             }
 
-            var typename = source.Get<string>(typeKey, "");
-            var targetType = defaultType;
+            string? typename = source.Get<string>(typeKey, "");
+            Type? targetType = defaultType;
             if (types.ContainsKey(typename))
             {
                 targetType = types[typename];
@@ -739,7 +739,7 @@ namespace Node.Net
                     throw new InvalidOperationException($"failed to create instance of type {targetType.FullName}");
                 }
             }
-            var keys = new List<string>();
+            List<string>? keys = new List<string>();
             foreach (string? key in source.Keys)
             {
                 if (key != null)
@@ -750,7 +750,7 @@ namespace Node.Net
             //foreach (string key in source.Keys)
             foreach (string key in keys)
             {
-                var value = source[key];
+                object? value = source[key];
                 if (value is IDictionary childDictionary)
                 {
                     copy[key] = ConvertTypes(childDictionary, types, defaultType, typeKey);
@@ -776,22 +776,22 @@ namespace Node.Net
 
             if (typeof(IDictionary).IsAssignableFrom(type))
             {
-                var data = serializationInfo.GetPersistentData();
-                var defaultConstructor = type.GetConstructor(Type.EmptyTypes);
+                IDictionary? data = serializationInfo.GetPersistentData();
+                ConstructorInfo? defaultConstructor = type.GetConstructor(Type.EmptyTypes);
                 if (defaultConstructor is null)
                 {
                     throw new InvalidOperationException($"no default constructor availabe for type {type.FullName}");
                 }
                 IDictionary newDictionary = (defaultConstructor.Invoke(Array.Empty<object>()) as IDictionary)!;
-                foreach (var key in data.Keys)
+                foreach (object? key in data.Keys)
                 {
                     newDictionary.Add(key, data[key]);
                 }
                 return newDictionary!;
             }
 
-            var streamingContext = new StreamingContext();
-            var paramTypes = new Type[] { typeof(SerializationInfo), typeof(StreamingContext) };
+            StreamingContext streamingContext = new StreamingContext();
+            Type[]? paramTypes = new Type[] { typeof(SerializationInfo), typeof(StreamingContext) };
             ConstructorInfo ci = type.GetConstructor(
                                     BindingFlags.Instance | BindingFlags.NonPublic,
                                     null, paramTypes, null);
@@ -800,13 +800,13 @@ namespace Node.Net
 
         public static T Convert<T>(this IDictionary value)
         {
-            var item = value.Convert(typeof(T));
+            object? item = value.Convert(typeof(T));
             return (T)item;
         }
 
         public static SerializationInfo GetSerializationInfo(this IDictionary dictionary, Type type)
         {
-            var info = new SerializationInfo(type, new FormatterConverter());
+            SerializationInfo? info = new SerializationInfo(type, new FormatterConverter());
             foreach (string? key in dictionary.Keys)
             {
                 if (key != null)
@@ -819,7 +819,7 @@ namespace Node.Net
 
         public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
-            var matrix3D = new Matrix3D();
+            Matrix3D matrix3D = new Matrix3D();
             if (dictionary != null)
             {
                 matrix3D = new Factory().Create<Matrix3D>(dictionary);
@@ -829,10 +829,10 @@ namespace Node.Net
 
         public static Matrix3D GetLocalToWorld(this IDictionary dictionary)
         {
-            var localToWorld = GetLocalToParent(dictionary);
+            Matrix3D localToWorld = GetLocalToParent(dictionary);
             if (dictionary != null)
             {
-                var parent = dictionary.GetParent();
+                object? parent = dictionary.GetParent();
                 if (parent != null)
                 {
                     localToWorld.Append(GetLocalToWorld(parent as IDictionary));
@@ -844,11 +844,10 @@ namespace Node.Net
 
         public static Matrix3D GetParentToWorld(this IDictionary dictionary)
         {
-            var parentToWorld = new Matrix3D();
+            Matrix3D parentToWorld = new Matrix3D();
             if (dictionary != null)
             {
-                var parent = dictionary.GetParent() as IDictionary;
-                if (parent != null)
+                if (dictionary.GetParent() is IDictionary parent)
                 {
                     return parent.GetLocalToWorld();
                 }
@@ -858,11 +857,10 @@ namespace Node.Net
 
         public static Matrix3D GetWorldToParent(this IDictionary dictionary)
         {
-            var worldToParent = new Matrix3D();
+            Matrix3D worldToParent = new Matrix3D();
             if (dictionary != null)
             {
-                var parent = dictionary.GetParent() as IDictionary;
-                if (parent != null)
+                if (dictionary.GetParent() is IDictionary parent)
                 {
                     return parent.GetWorldToLocal();
                 }
@@ -872,7 +870,7 @@ namespace Node.Net
 
         public static Matrix3D GetWorldToLocal(this IDictionary dictionary)
         {
-            var m = GetLocalToWorld(dictionary);
+            Matrix3D m = GetLocalToWorld(dictionary);
             m.Invert();
             return m;
         }
@@ -884,12 +882,12 @@ namespace Node.Net
 
         public static void SetWorldOrigin(this IDictionary dictionary, Point3D world_origin)
         {
-            var parent = dictionary.GetNearestAncestor<IDictionary>();
-            var local_origin = world_origin;
+            IDictionary? parent = dictionary.GetNearestAncestor<IDictionary>();
+            Point3D local_origin = world_origin;
             if (parent != null)
             {
-                var parent_world_origin = parent.GetWorldOrigin();
-                var delta = world_origin - parent_world_origin;
+                Point3D parent_world_origin = parent.GetWorldOrigin();
+                Vector3D delta = world_origin - parent_world_origin;
                 local_origin = new Point3D(delta.X, delta.Y, delta.Z);
             }
 
@@ -932,12 +930,38 @@ namespace Node.Net
 
         public static void SetRotationsOTS(this IDictionary dictionary, Vector3D ots)
         {
-            dictionary["Orientation"] = $"{ots.X} deg";
-            dictionary["Tilt"] = $"{ots.Y} deg";
-            dictionary["Spin"] = $"{ots.Z} deg";
+            double zero_tolerance = 0.001;
+            if (Abs(ots.X) > zero_tolerance)
+            {
+                dictionary["Orientation"] = $"{ots.X} deg";
+            }
+            else
+            {
+                if (dictionary.Contains("Orientation")) { dictionary.Remove("Orientation"); }
+            }
+            if(Abs(ots.Y) > zero_tolerance)
+            {
+                dictionary["Tilt"] = $"{ots.Y} deg";
+            }
+            else
+            {
+                if (dictionary.Contains("Tilt")) { dictionary.Remove("Tilt"); }
+            }
+
+            if (Abs(ots.Z) > zero_tolerance)
+            {
+                dictionary["Spin"] = $"{ots.Z} deg";
+            }
+            else
+            {
+                if (dictionary.Contains("Spin")) { dictionary.Remove("Spin"); }
+            }
             if (dictionary.Contains("RotationX")) { dictionary.Remove("RotationX"); }
             if (dictionary.Contains("RotationY")) { dictionary.Remove("RotationY"); }
             if (dictionary.Contains("RotationZ")) { dictionary.Remove("RotationZ"); }
+            if (dictionary.Contains("XDirection")) { dictionary.Remove("XDirection"); }
+            if (dictionary.Contains("YDirection")) { dictionary.Remove("YDirection"); }
+            if (dictionary.Contains("ZDirection")) { dictionary.Remove("ZDirection"); }
         }
 
         public static Vector3D GetRotationsOTS(this IDictionary dictionary)
@@ -982,7 +1006,7 @@ namespace Node.Net
                 IDictionary? ancestor = GetNearestAncestor<T>(child) as IDictionary;
                 if (ancestor != null)
                 {
-                    var further_ancestor = GetFurthestAncestor<T>(ancestor);
+                    T further_ancestor = GetFurthestAncestor<T>(ancestor);
                     if (!EqualityComparer<T>.Default.Equals(further_ancestor, default))
                     {
                         return further_ancestor;
@@ -1017,7 +1041,7 @@ namespace Node.Net
                 return 1;
             }
 
-            var countCompare = a.Count.CompareTo(b.Count);
+            int countCompare = a.Count.CompareTo(b.Count);
             if (countCompare != 0)
             {
                 return countCompare;
@@ -1025,14 +1049,14 @@ namespace Node.Net
 
             if (a.Count > 0)
             {
-                var aEnumerator = a.Keys.GetEnumerator();
-                var bEnumerator = b.Keys.GetEnumerator();
+                IEnumerator? aEnumerator = a.Keys.GetEnumerator();
+                IEnumerator? bEnumerator = b.Keys.GetEnumerator();
 
                 while (aEnumerator.MoveNext())
                 {
                     bEnumerator.MoveNext();
-                    var bKey = bEnumerator.Current as IComparable;
-                    var keyCompare = 0;
+                    IComparable? bKey = bEnumerator.Current as IComparable;
+                    int keyCompare = 0;
                     if (aEnumerator.Current is IComparable aKey)
                     {
                         keyCompare = aKey.CompareTo(bKey);
@@ -1041,8 +1065,8 @@ namespace Node.Net
                             return keyCompare;
                         }
 
-                        var bValue = b[bKey] as IComparable;
-                        var valueCompare = 0;
+                        IComparable? bValue = b[bKey] as IComparable;
+                        int valueCompare = 0;
                         if (a[aKey] is IComparable aValue)
                         {
                             valueCompare = aValue.CompareTo(bValue);
@@ -1059,14 +1083,14 @@ namespace Node.Net
 
         public static T GetCurrent<T>(this IDictionary dictionary) where T : IDictionary
         {
-            var metaData = Internal.MetaData.Default.GetMetaData(dictionary);
+            IDictionary? metaData = Internal.MetaData.Default.GetMetaData(dictionary);
             if (metaData.Contains("Currents") && Internal.MetaData.Default.GetMetaData(dictionary)["Currents"] is IDictionary currents && currents.Contains(typeof(T)))
             {
-                var current_name = currents[typeof(T)].ToString();
+                string? current_name = currents[typeof(T)].ToString();
                 return dictionary.Find<T>(current_name);
             }
 
-            var items = dictionary.Collect<T>();
+            IList<T>? items = dictionary.Collect<T>();
             if (items.Count > 0)
             {
                 return items[0];
@@ -1077,21 +1101,21 @@ namespace Node.Net
 
         public static void SetCurrent<T>(this IDictionary dictionary, string name) where T : IDictionary
         {
-            var metaData = Internal.MetaData.Default.GetMetaData(dictionary);
+            IDictionary? metaData = Internal.MetaData.Default.GetMetaData(dictionary);
             if (!metaData.Contains("Currents")) { metaData.Add("Currents", new Dictionary<Type, string>()); }
-            var currents = Internal.MetaData.Default.GetMetaData(dictionary)["Currents"] as IDictionary;
+            IDictionary? currents = Internal.MetaData.Default.GetMetaData(dictionary)["Currents"] as IDictionary;
             currents[typeof(T)] = name;
         }
 
         public static IList<string> CollectNames<T>(this IDictionary element)
         {
-            var items = element.Collect<T>();
-            var names = new List<string>();
+            IList<T>? items = element.Collect<T>();
+            List<string>? names = new List<string>();
             foreach (object child in items)
             {
                 if (child != null)
                 {
-                    var name = child.GetName();
+                    string? name = child.GetName();
                     if (name?.Length > 0 && !names.Contains(name))
                     {
                         names.Add(name);
@@ -1113,7 +1137,7 @@ namespace Node.Net
 
             for (int i = 1; i < 10000; ++i)
             {
-                var key = $"{baseName}{i}";
+                string? key = $"{baseName}{i}";
                 if (!dictionary.Contains(key))
                 {
                     return key;
@@ -1124,7 +1148,7 @@ namespace Node.Net
 
         public static IDictionary<string, object> ConvertRotationsXYZtoOTS(this IDictionary<string, object> dictionary)
         {
-            var result = new Dictionary<string, object>();
+            Dictionary<string, object>? result = new Dictionary<string, object>();
             foreach (string key in dictionary.Keys)
             {
                 if (key != "RotationX" && key != "RotationY" && key != "RotationZ")
@@ -1132,8 +1156,10 @@ namespace Node.Net
                     result.Add(key, dictionary[key]);
                 }
             }
-            var localToParent = (dictionary as IDictionary).GetLocalToParent();
-            var ots = localToParent.GetRotationsOTS();
+            Matrix3D localToParent = (dictionary as IDictionary).GetLocalToParent();
+            Vector3D ots = localToParent.GetRotationsOTS();
+            (result as IDictionary).SetRotationsOTS(ots);
+            /*
             if (Abs(ots.X) > 0.01)
             {
                 result["Orientation"] = $"{Round(ots.X, 4)} deg";
@@ -1146,6 +1172,7 @@ namespace Node.Net
             {
                 result["Spin"] = $"{Round(ots.Z, 4)} deg";
             }
+            */
             return result;
         }
 
@@ -1156,13 +1183,13 @@ namespace Node.Net
 
         public static IDictionary<string, string> GetLocalToWorldTransforms(this IDictionary dictionary, string type)
         {
-            var results = new Dictionary<string, string>();
-            var items = dictionary.Collect(type);
-            foreach (var item in items)
+            Dictionary<string, string>? results = new Dictionary<string, string>();
+            IList<object>? items = dictionary.Collect(type);
+            foreach (object? item in items)
             {
                 if (item is IDictionary idictionary)
                 {
-                    var name = idictionary.GetName();
+                    string? name = idictionary.GetName();
                     if (name.Length > 0 && !results.ContainsKey(name))
                     {
                         results.Add(name,

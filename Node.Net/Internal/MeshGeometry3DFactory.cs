@@ -28,14 +28,14 @@ namespace Node.Net.Internal
         {
             if (ParentFactory != null && source != null)
             {
-                var type = source.Get<string>("Type");
-                var name = $"MeshGeometry3D.{type}.xaml";
+                string? type = source.Get<string>("Type");
+                string? name = $"MeshGeometry3D.{type}.xaml";
                 if (cache.ContainsKey(name))
                 {
                     return cache[name];
                 }
 
-                var mesh = ParentFactory.Create<MeshGeometry3D>(name);
+                MeshGeometry3D? mesh = ParentFactory.Create<MeshGeometry3D>(name);
                 cache.Add(name, mesh);
                 return mesh;
             }

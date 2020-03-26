@@ -20,7 +20,7 @@ namespace Node.Net
             if ((char)reader.Peek() == value) { return; }
             while (true)
             {
-                var ichar = reader.Read();
+                int ichar = reader.Read();
                 if (ichar < 0) { return; }
                 else
                 {
@@ -38,7 +38,7 @@ namespace Node.Net
             foreach (char ch in values) { if ((char)reader.Peek() == ch) { return; } }
             while (true)
             {
-                var ichar = reader.Read();
+                int ichar = reader.Read();
                 if (ichar < 0) { return; }
                 else
                 {
@@ -64,8 +64,8 @@ namespace Node.Net
             const int iBackslash = '\\';
             int iPeek = reader.Peek();
             if ((char)iPeek == value) { return string.Empty; }
-            var done = false;
-            var builder = new StringBuilder();
+            bool done = false;
+            StringBuilder? builder = new StringBuilder();
             while (!done)
             {
                 int iChar = reader.Read();
@@ -106,8 +106,8 @@ namespace Node.Net
             const char backslash = '\\';
             int iPeek = reader.Peek();
             if ((char)iPeek == value) { return string.Empty; }
-            var done = false;
-            var builder = new StringBuilder();
+            bool done = false;
+            StringBuilder? builder = new StringBuilder();
             while (!done)
             {
                 int iChar = reader.Read();
@@ -166,12 +166,12 @@ namespace Node.Net
 
         public static string Seek(this TextReader reader, char[] values, bool ignoreEscaped = false)
         {
-            var done = false;
+            bool done = false;
             foreach (char ch in values) { if ((char)reader.Peek() == ch) { done = true; } }
-            var builder = new StringBuilder();
+            StringBuilder? builder = new StringBuilder();
             while (!done)
             {
-                var ichar = reader.Read();
+                int ichar = reader.Read();
                 if (ichar < 0) { done = true; }
                 else
                 {

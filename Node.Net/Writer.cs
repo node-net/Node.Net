@@ -16,7 +16,7 @@ namespace Node.Net
         {
             if (value != null && WriteFunctions != null)
             {
-                foreach (var type in WriteFunctions.Keys)
+                foreach (Type? type in WriteFunctions.Keys)
                 {
                     if (type.IsInstanceOfType(value))
                     {
@@ -35,7 +35,7 @@ namespace Node.Net
                 {
                     if (value is DependencyObject)
                     {
-                        var xmlWriter = XmlWriter.Create(stream, new XmlWriterSettings
+                        XmlWriter? xmlWriter = XmlWriter.Create(stream, new XmlWriterSettings
                         {
                             Indent = true
                         });
@@ -58,7 +58,7 @@ namespace Node.Net
 
         public void Write(string filename, object value)
         {
-            var filestream = new FileStream(filename, FileMode.Create);
+            FileStream? filestream = new FileStream(filename, FileMode.Create);
             Write(filestream, value);
             filestream.Flush();
             filestream.Close();

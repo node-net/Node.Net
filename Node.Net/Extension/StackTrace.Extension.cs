@@ -9,10 +9,10 @@ namespace Node.Net
     {
         public static Assembly[] GetAssemblies(this StackTrace stackTrace)
         {
-            var assemblies = new List<Assembly>();
+            List<Assembly>? assemblies = new List<Assembly>();
             for (int f = 1; f < stackTrace.FrameCount; ++f)
             {
-                var assembly = stackTrace.GetFrame(f).GetMethod().DeclaringType.Assembly;
+                Assembly? assembly = stackTrace.GetFrame(f).GetMethod().DeclaringType.Assembly;
                 if (!assemblies.Contains(assembly))
                 {
                     assemblies.Add(assembly);
@@ -23,9 +23,9 @@ namespace Node.Net
 
         public static Stream GetStream(this StackTrace stackTrace, string name)
         {
-            foreach (var assembly in stackTrace.GetAssemblies())
+            foreach (Assembly? assembly in stackTrace.GetAssemblies())
             {
-                foreach (var manifestResourceName in assembly.GetManifestResourceNames())
+                foreach (string? manifestResourceName in assembly.GetManifestResourceNames())
                 {
                     if (manifestResourceName.Contains(name))
                     {

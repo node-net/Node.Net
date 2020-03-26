@@ -43,7 +43,7 @@ namespace Node.Net.Internal
             {
                 return data[new WeakReference(item)];
             }
-            var metaData = new Dictionary<string, dynamic>();
+            Dictionary<string, dynamic>? metaData = new Dictionary<string, dynamic>();
             data.Add(new WeakReference(item), metaData);
             return metaData;
         }
@@ -72,7 +72,7 @@ namespace Node.Net.Internal
                 return null;
             }
 
-            var metaData = GetMetaData(item);
+            IDictionary? metaData = GetMetaData(item);
             if (metaData.Contains(name))
             {
                 return metaData[name];
@@ -90,7 +90,7 @@ namespace Node.Net.Internal
         /// <returns></returns>
         public T GetMetaData<T>(object item, string name)
         {
-            var instance = GetMetaData(item, name);
+            object? instance = GetMetaData(item, name);
             if (instance != null && (instance is T))
             {
                 return (T)instance;
@@ -107,7 +107,7 @@ namespace Node.Net.Internal
         {
             if (item != null)
             {
-                var wr = new WeakReference(item);
+                WeakReference? wr = new WeakReference(item);
                 data.Remove(wr);
             }
             Clean();
@@ -120,15 +120,15 @@ namespace Node.Net.Internal
         {
             try
             {
-                var deadKeys = new List<WeakReference>();
-                foreach (var wr in data.Keys)
+                List<WeakReference>? deadKeys = new List<WeakReference>();
+                foreach (WeakReference? wr in data.Keys)
                 {
                     if (!wr.IsAlive)
                     {
                         deadKeys.Add(wr);
                     }
                 }
-                foreach (var deadKey in deadKeys)
+                foreach (WeakReference? deadKey in deadKeys)
                 {
                     data.Remove(deadKey);
                 }

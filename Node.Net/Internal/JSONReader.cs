@@ -46,12 +46,12 @@ namespace Node.Net.Internal
                 try
                 {
                     ObjectCount = 0;
-                    var item = Read(reader);
+                    object? item = Read(reader);
                     return item;
                 }
                 catch (Exception e)
                 {
-                    var exception_info = $"JsonRead.Load raised an exception at stream position {stream.Position}";
+                    string? exception_info = $"JsonRead.Load raised an exception at stream position {stream.Position}";
                     throw new InvalidOperationException(exception_info, e);
                 }
             }
@@ -64,13 +64,13 @@ namespace Node.Net.Internal
             const char doubleQuote = '"';
             const char singleQuote = '\'';
             reader.EatWhiteSpace();
-            var ichar = reader.Peek();
+            int ichar = reader.Peek();
             if (ichar < 0)
             {
                 throw new InvalidDataException("end of stream reached");
             }
 
-            var c = (char)ichar;
+            char c = (char)ichar;
             // char type
             //  'n'  null
             //  '\d' number
@@ -109,7 +109,7 @@ namespace Node.Net.Internal
         private static object? ReadNull(System.IO.TextReader reader)
         {
             reader.EatWhiteSpace();
-            var ch = (char)reader.Peek();
+            char ch = (char)reader.Peek();
             if (ch == 'n')
             {
                 reader.Read(); reader.Read(); reader.Read(); reader.Read(); // read chars n,u,l,l
@@ -120,7 +120,7 @@ namespace Node.Net.Internal
         private static object ReadBool(System.IO.TextReader reader)
         {
             reader.EatWhiteSpace();
-            var ch = (char)reader.Peek();
+            char ch = (char)reader.Peek();
             if (ch == 't')
             {
                 reader.Read(); reader.Read(); reader.Read(); reader.Read(); // read chars t,r,u,e
@@ -134,10 +134,10 @@ namespace Node.Net.Internal
         {
             reader.EatWhiteSpace();
             char[] endchars = { '}', ']', ',', ' ' };
-            var nstr = reader.Seek(endchars);
+            string? nstr = reader.Seek(endchars);
             if (nstr.Contains("."))
             {
-                var value = Convert.ToDouble(nstr);
+                double value = Convert.ToDouble(nstr);
                 if (value <= Single.MaxValue)
                 {
                     return Convert.ToSingle(nstr);
@@ -147,7 +147,7 @@ namespace Node.Net.Internal
             }
             else
             {
-                var value = Convert.ToInt64(nstr);
+                long value = Convert.ToInt64(nstr);
                 if (value <= Int32.MaxValue)
                 {
                     return Convert.ToInt32(nstr);
@@ -174,12 +174,12 @@ namespace Node.Net.Internal
 
         private object ReadArray(System.IO.TextReader reader)
         {
-            var list = Activator.CreateInstance(DefaultArrayType) as IList;
+            IList? list = Activator.CreateInstance(DefaultArrayType) as IList;
             reader.FastSeek('[');
             reader.Read(); // consume the '['
             reader.EatWhiteSpace();
-            var done = false;
-            var ch = (char)reader.Peek();
+            bool done = false;
+            char ch = (char)reader.Peek();
             if (ch == ']')
             {
                 done = true;
@@ -260,7 +260,7 @@ namespace Node.Net.Internal
             reader.FastSeek(objectOpenCharacter);
             reader.Read(); // consume the '{'
             reader.EatWhiteSpace();
-            var done = false;
+            bool done = false;
             if ((char)(reader.Peek()) == objectCloseCharacter)// '}')
             {
                 done = true;
@@ -269,7 +269,7 @@ namespace Node.Net.Internal
             while (!done)
             {
                 reader.EatWhiteSpace();
-                var key = ReadString(reader) as string;
+                string? key = ReadString(reader) as string;
 
 #if DEBUG
                 if (key == "string_symbol")
@@ -281,7 +281,7 @@ namespace Node.Net.Internal
                 reader.Read(); //consume ':'
                 dictionary[key] = Read(reader);
                 reader.EatWhiteSpace();
-                var ch = (char)reader.Peek();
+                char ch = (char)reader.Peek();
                 if (ch == comma)
                 {
                     reader.Read(); // consume ','
@@ -296,14 +296,14 @@ namespace Node.Net.Internal
                 }
             }
 
-            var type = dictionary.Get<string>("Type", "");
+            string? type = dictionary.Get<string>("Type", "");
             if (type.Length > 0 && ConversionTypeNames.ContainsKey(type) && !ConversionTypeNames[type].IsInstanceOfType(dictionary))
             {
                 if (!(Activator.CreateInstance(ConversionTypeNames[type]) is IDictionary converted))
                 {
                     throw new InvalidOperationException($"Unable to create instance of {ConversionTypeNames[type].FullName}");
                 }
-                foreach (var key in dictionary.Keys)
+                foreach (object? key in dictionary.Keys)
                 {
                     if (!converted.Contains(key))
                     {

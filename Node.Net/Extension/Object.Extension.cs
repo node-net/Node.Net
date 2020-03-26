@@ -17,20 +17,20 @@ namespace Node.Net
         /// <returns></returns>
         public static string GetName(this object instance)
         {
-            var fullName = GetFullName(instance);
+            string? fullName = GetFullName(instance);
             if (fullName.Contains("/"))
             {
-                var parts = fullName.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                string[]? parts = fullName.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 return parts[parts.Length - 1];
             }
             if (fullName.Length == 0)
             {
-                var filename = instance.GetFileName();
+                string? filename = instance.GetFileName();
                 if (filename?.Length > 0)
                 {
                     try
                     {
-                        var fi = new FileInfo(filename);
+                        FileInfo? fi = new FileInfo(filename);
                         return fi.Name;
                     }
                     catch (Exception exception)
@@ -41,12 +41,12 @@ namespace Node.Net
             }
             if (fullName.Length == 0)
             {
-                var dictionary = instance as IDictionary;
+                IDictionary? dictionary = instance as IDictionary;
                 if (dictionary.GetParent() is IDictionary parent)
                 {
                     foreach (string key in parent.Keys)
                     {
-                        var test_element = parent.Get<IDictionary>(key);
+                        IDictionary? test_element = parent.Get<IDictionary>(key);
                         if (test_element != null && object.ReferenceEquals(test_element, dictionary))
                         {
                             return key;
@@ -74,7 +74,7 @@ namespace Node.Net
         /// <returns></returns>
         public static object GetParent(this object instance)
         {
-            var parent = Internal.MetaData.Default.GetMetaData<object>(instance, "Parent");
+            object? parent = Internal.MetaData.Default.GetMetaData<object>(instance, "Parent");
             if (instance.HasPropertyValue("Parent"))
             {
                 return instance.GetPropertyValue("Parent");
@@ -100,7 +100,7 @@ namespace Node.Net
             }
             else
             {
-                var metaData = Internal.MetaData.Default.GetMetaData(instance);
+                IDictionary? metaData = Internal.MetaData.Default.GetMetaData(instance);
                 if (metaData != null)
                 {
                     if (metaData.Contains("Parent"))
@@ -125,7 +125,7 @@ namespace Node.Net
         {
             if (item != null)
             {
-                var propertyInfo = item.GetType().GetProperty(propertyName);
+                System.Reflection.PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
                 if (propertyInfo != null)
                 {
                     return true;
@@ -145,7 +145,7 @@ namespace Node.Net
         {
             if (item != null)
             {
-                var propertyInfo = item.GetType().GetProperty(propertyName);
+                System.Reflection.PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
                 if (propertyInfo != null)
                 {
                     return propertyInfo.GetValue(item);
@@ -166,7 +166,7 @@ namespace Node.Net
         {
             if (item != null)
             {
-                var propertyInfo = item.GetType().GetProperty(propertyName);
+                System.Reflection.PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
                 if (propertyInfo != null)
                 {
                     return (T)propertyInfo.GetValue(item);
@@ -185,7 +185,7 @@ namespace Node.Net
         {
             if (item != null)
             {
-                var propertyInfo = item.GetType().GetProperty(propertyName);
+                System.Reflection.PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
                 propertyInfo?.SetValue(item, propertyValue);
             }
         }
@@ -202,7 +202,7 @@ namespace Node.Net
 
         public static string GetShortFileName(this object instance)
         {
-            var filename = instance.GetFileName();
+            string? filename = instance.GetFileName();
             if (filename.Length > 0)
             {
                 return new FileInfo(filename).Name;
@@ -227,7 +227,7 @@ namespace Node.Net
 
         public static string GetFullName(this object instance)
         {
-            var metaData = Internal.MetaData.Default.GetMetaData(instance);
+            IDictionary? metaData = Internal.MetaData.Default.GetMetaData(instance);
             if (metaData?.Contains("FullName") == true)
             {
                 return metaData["FullName"].ToString();
@@ -258,7 +258,7 @@ namespace Node.Net
 
         public static T Get<T>(this object[] items, int index)
         {
-            var item = items[index];
+            object? item = items[index];
             if (item != null)
             {
                 if (typeof(T).IsAssignableFrom(item.GetType())) return (T)item;
@@ -277,7 +277,7 @@ namespace Node.Net
             {
                 if (value is IDictionary dictionary)
                 {
-                    var result = new Dictionary<string, string>();
+                    Dictionary<string, string>? result = new Dictionary<string, string>();
                     foreach (string key in dictionary.Keys)
                     {
                         result.Add(key, dictionary[key].ToString());

@@ -102,7 +102,7 @@ namespace Node.Net.Internal
             StreamFactory.Refresh();
             if (source != null && Resources.Contains(source))
             {
-                var instance = Resources[source];
+                object? instance = Resources[source];
                 if (targetType.IsInstanceOfType(instance))
                 {
                     if (!InstanceCounts.ContainsKey(targetType))
@@ -118,11 +118,11 @@ namespace Node.Net.Internal
                 }
             }
 
-            foreach (var type in FactoryFunctions.Keys)
+            foreach (Type? type in FactoryFunctions.Keys)
             {
                 if (type.IsAssignableFrom(targetType))
                 {
-                    var instance = FactoryFunctions[type](targetType, source);
+                    object? instance = FactoryFunctions[type](targetType, source);
                     if (instance != null)
                     {
                         if (!InstanceCounts.ContainsKey(targetType))

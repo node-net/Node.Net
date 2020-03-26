@@ -13,7 +13,7 @@ namespace Node.Net.Internal
         {
             if (source != null && source is string)
             {
-                var color = Create(source.ToString());
+                Color? color = Create(source.ToString());
                 if (color.HasValue)
                 {
                     return color.Value;
@@ -34,12 +34,12 @@ namespace Node.Net.Internal
             {
                 if (property.Name == name)
                 {
-                    var color = (Color)property.GetValue(null, null);
+                    Color color = (Color)property.GetValue(null, null);
                     this[name] = color;
                     return color;
                 }
             }
-            var words = name.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            string[]? words = name.Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (words.Length == 3)
             {
                 return Color.FromRgb(Convert.ToByte(words[0]), Convert.ToByte(words[1]), Convert.ToByte(words[2]));

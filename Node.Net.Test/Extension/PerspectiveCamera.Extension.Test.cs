@@ -9,7 +9,7 @@ namespace Node.Net.Test.Extension
         [Test]
         public void IsVisible()
         {
-            var camera = new PerspectiveCamera
+            PerspectiveCamera camera = new PerspectiveCamera
             {
                 Position = new Point3D(0, 0, 100),
                 LookDirection = new Vector3D(0, 0, -1),
@@ -22,7 +22,7 @@ namespace Node.Net.Test.Extension
         [Test]
         public void GetVerticalFieldOfView()
         {
-            var camera = new PerspectiveCamera
+            PerspectiveCamera camera = new PerspectiveCamera
             {
                 Position = new Point3D(0, 0, 100),
                 LookDirection = new Vector3D(0, 0, -1),

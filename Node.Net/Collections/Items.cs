@@ -90,31 +90,31 @@ namespace Node.Net.Collections
 
         private void Update()
         {
-            var selectedItem = SelectedItem;
-            var newItems = new List<T>();
-            var removeItems = new List<T>();
-            foreach (var item in Source)
+            T selectedItem = SelectedItem;
+            List<T>? newItems = new List<T>();
+            List<T>? removeItems = new List<T>();
+            foreach (T item in Source)
             {
                 if (SearchFilter(item, Search))
                 {
                     newItems.Add(item);
                 }
             }
-            foreach (var existingItem in this)
+            foreach (T existingItem in this)
             {
                 if (!newItems.Contains(existingItem))
                 {
                     removeItems.Add(existingItem);
                 }
             }
-            foreach (var removeItem in removeItems) { this.Remove(removeItem); }
+            foreach (T removeItem in removeItems) { this.Remove(removeItem); }
 
             if (SortFunction != null)
             {
                 newItems = new List<T>(SortFunction(newItems));
                 Clear();
             }
-            foreach (var newItem in newItems)
+            foreach (T newItem in newItems)
             {
                 if (!this.Contains(newItem)) { this.Add(newItem); }
             }
@@ -132,7 +132,7 @@ namespace Node.Net.Collections
             int count = info.GetInt32("Count");
             for (int i = 0; i < count; ++i)
             {
-                var item = info.GetValue(i.ToString(), typeof(object));
+                object? item = info.GetValue(i.ToString(), typeof(object));
                 Add((T)item);
             }
             int selected_index = info.GetInt32("SelectedIndex");

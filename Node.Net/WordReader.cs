@@ -67,7 +67,7 @@ namespace Node.Net
 
         public string ReadWord()
         {
-            var word = "";
+            string? word = "";
             if (_words.Count > 0)
             {
                 word = _words[0];
@@ -75,11 +75,11 @@ namespace Node.Net
             }
             else
             {
-                var line = _sr.ReadLine();
+                string? line = _sr.ReadLine();
                 while (line != null && word.Length == 0)
                 {
-                    var wordsA = line.Split(Delimiters.ToArray());
-                    var wordsB = new System.Collections.Generic.List<string>();
+                    string[]? wordsA = line.Split(Delimiters.ToArray());
+                    List<string>? wordsB = new System.Collections.Generic.List<string>();
                     foreach (string w in wordsA)
                     {
                         if (w.Length > 0)
@@ -87,7 +87,7 @@ namespace Node.Net
                             wordsB.Add(w);
                         }
                     }
-                    var words = wordsB.ToArray();
+                    string[]? words = wordsB.ToArray();
 
                     if (words.Length > 0)
                     {

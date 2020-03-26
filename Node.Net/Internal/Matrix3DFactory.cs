@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows.Media.Media3D;
+using static System.Math;
 
 namespace Node.Net.Internal
 {
@@ -13,7 +14,7 @@ namespace Node.Net.Internal
         {
             if (source != null && source is IDictionary)
             {
-                var matrix = CreateFromIDictionary(source as IDictionary);
+                Matrix3D? matrix = CreateFromIDictionary(source as IDictionary);
                 if (matrix.HasValue)
                 {
                     return matrix.Value;
@@ -25,37 +26,50 @@ namespace Node.Net.Internal
 
         public static IDictionary GetDictionary(Matrix3D matrix)
         {
-            var data = new Dictionary<string, dynamic>();
-            var rotationsZXY = matrix.GetRotationsZXY();
-            var translation = matrix.GetTranslation();
+            Dictionary<string, dynamic>? data = new Dictionary<string, dynamic>();
+            //Vector3D rotationsZXY = matrix.GetRotationsZXY();
+            Point3D translation = matrix.GetTranslation();
             data["X"] = $"{translation.X} m";
             data["Y"] = $"{translation.Y} m";
             data["Z"] = $"{translation.Z} m";
-            data["RotationX"] = $"{rotationsZXY.X} deg";
-            data["RotationY"] = $"{rotationsZXY.Y} deg";
-            data["RotationZ"] = $"{rotationsZXY.Z} deg";
+            Vector3D ots = Matrix3DExtension.GetRotationsOTS(matrix);
+            if (Abs(ots.X) > 0.0001)
+            {
+                data["Orientation"] = $"{Round(ots.X, 4)} deg";
+            }
+            if (Abs(ots.Y) > 0.0001)
+            {
+                data["Tilt"] = $"{Round(ots.Y, 4)} deg";
+            }
+            if (Abs(ots.Z) > 0.0001)
+            {
+                data["Spin"] = $"{Round(ots.Z, 4)} deg";
+            }
+            //data["RotationX"] = $"{rotationsZXY.X} deg";
+            //data["RotationY"] = $"{rotationsZXY.Y} deg";
+            //data["RotationZ"] = $"{rotationsZXY.Z} deg";
             return data;
         }
 
         private static Matrix3D? CreateFromIDictionary(IDictionary dictionary)
         {
-            var log = new StringBuilder();
-            var matrix3D = new Matrix3D();
-            var xDirection = new Vector3D(1, 0, 0);
-            var yDirection = new Vector3D(0, 1, 0);
+            StringBuilder? log = new StringBuilder();
+            Matrix3D matrix3D = new Matrix3D();
+            Vector3D xDirection = new Vector3D(1, 0, 0);
+            Vector3D yDirection = new Vector3D(0, 1, 0);
             if (dictionary.Contains("XDirection"))
             {
                 try
                 {
                     if (dictionary.Contains("XDirection"))
                     {
-                        var xDirectionValue = dictionary.Get<string>("XDirection", "1,0,0");
+                        string? xDirectionValue = dictionary.Get<string>("XDirection", "1,0,0");
                         log.Append(" XDirection = ").AppendLine(xDirectionValue);
                         xDirection = Vector3D.Parse(xDirectionValue);
                     }
                     if (dictionary.Contains("YDirection"))
                     {
-                        var yDirectionValue = dictionary.Get<string>("YDirection", "0,1,0");
+                        string? yDirectionValue = dictionary.Get<string>("YDirection", "0,1,0");
                         log.Append(" YDirection = ").AppendLine(yDirectionValue);
                         yDirection = Vector3D.Parse(yDirectionValue);
                     }
@@ -97,10 +111,10 @@ namespace Node.Net.Internal
         {
             if (source.Contains("Orientation") || source.Contains("Tilt") || source.Contains("Spin"))
             {
-                var orientation = Internal.Angle.GetDegrees(source.Get<string>("Orientation"));
-                var tilt = Internal.Angle.GetDegrees(source.Get<string>("Tilt"));
-                var spin = Internal.Angle.GetDegrees(source.Get<string>("Spin"));
-                var matrix = new Matrix3D().RotateOTS(new Vector3D(orientation, tilt, spin));
+                double orientation = Internal.Angle.GetDegrees(source.Get<string>("Orientation"));
+                double tilt = Internal.Angle.GetDegrees(source.Get<string>("Tilt"));
+                double spin = Internal.Angle.GetDegrees(source.Get<string>("Spin"));
+                Matrix3D matrix = new Matrix3D().RotateOTS(new Vector3D(orientation, tilt, spin));
                 return matrix.GetRotationsXYZ();
             }
             else
@@ -114,9 +128,9 @@ namespace Node.Net.Internal
 
         public static Vector3D GetRotationsOTS(IDictionary source)
         {
-            var orientation = Internal.Angle.GetDegrees(source.Get<string>("Orientation"));
-            var tilt = Internal.Angle.GetDegrees(source.Get<string>("Tilt"));
-            var spin = Internal.Angle.GetDegrees(source.Get<string>("Spin"));
+            double orientation = Internal.Angle.GetDegrees(source.Get<string>("Orientation"));
+            double tilt = Internal.Angle.GetDegrees(source.Get<string>("Tilt"));
+            double spin = Internal.Angle.GetDegrees(source.Get<string>("Spin"));
             return new Vector3D(orientation, tilt, spin);
         }
 

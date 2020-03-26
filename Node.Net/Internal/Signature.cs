@@ -23,15 +23,15 @@ namespace Node.Net.Internal
             {
                 if (text.Length == 0 && bytes != null)
                 {
-                    var sb = new StringBuilder();
-                    var memory = new MemoryStream(bytes);
+                    StringBuilder? sb = new StringBuilder();
+                    MemoryStream? memory = new MemoryStream(bytes);
                     using (StreamReader sr = new StreamReader(memory))
                     {
-                        var all_text = sr.ReadToEnd();
+                        string? all_text = sr.ReadToEnd();
 
                         for (int i = 0; i < all_text.Length; ++i)
                         {
-                            var ch = all_text[i];
+                            char ch = all_text[i];
                             if (!Char.IsWhiteSpace(ch))
                             {
                                 sb.Append(ch);
@@ -49,11 +49,11 @@ namespace Node.Net.Internal
             get
             {
                 const int maxCount = 16;
-                var t = Text;
-                var i = 0;
-                foreach (var ch in Text)
+                string? t = Text;
+                int i = 0;
+                foreach (char ch in Text)
                 {
-                    var isControl = Char.IsControl(ch);
+                    bool isControl = Char.IsControl(ch);
                     if (isControl)
                     {
                         return false;
@@ -74,7 +74,7 @@ namespace Node.Net.Internal
         {
             get
             {
-                var hex = new StringBuilder(bytes.Length * 2);
+                StringBuilder? hex = new StringBuilder(bytes.Length * 2);
                 foreach (byte b in bytes)
                 {
                     hex.AppendFormat("{0:x2} ", b);

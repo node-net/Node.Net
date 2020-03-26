@@ -10,9 +10,9 @@ namespace Node.Net.JsonRPC
         public Response(byte[] data)
         {
             this.Add("jsonrpc", "2.0");
-            using (var memory = new MemoryStream(data))
+            using (MemoryStream? memory = new MemoryStream(data))
             {
-                var dictionary = new Reader().Read<IDictionary>(memory);
+                IDictionary? dictionary = new Reader().Read<IDictionary>(memory);
                 if (dictionary.Contains("id"))
                 {
                     this.Add("id", dictionary["id"]);
@@ -25,7 +25,7 @@ namespace Node.Net.JsonRPC
 
                 if (dictionary.Contains("error"))
                 {
-                    var error = new Error(dictionary["error"] as IDictionary);
+                    Error? error = new Error(dictionary["error"] as IDictionary);
                     this.Add("error", error);
                 }
             }
@@ -52,7 +52,7 @@ namespace Node.Net.JsonRPC
 
         public Response(Stream stream)
         {
-            var data = new Reader().Read<IDictionary>(stream);
+            IDictionary? data = new Reader().Read<IDictionary>(stream);
             if (data != null)
             {
                 SetData(data);
@@ -74,7 +74,7 @@ namespace Node.Net.JsonRPC
 
             if (data.Contains("error"))
             {
-                var error = new Error(data["error"] as IDictionary);
+                Error? error = new Error(data["error"] as IDictionary);
                 this.Add("error", error);
             }
         }
@@ -83,10 +83,10 @@ namespace Node.Net.JsonRPC
         {
             get
             {
-                var result = this.Get<object>("result");
+                object? result = this.Get<object>("result");
                 if (result != null && (result is string))
                 {
-                    var original = result.ToString();
+                    string? original = result.ToString();
                     return original.Replace(@"\u0022", @"""").Replace("u0022", @"""");
                 }
                 return result;
@@ -98,9 +98,9 @@ namespace Node.Net.JsonRPC
 
         public byte[] GetBytes()
         {
-            using (var memory = new MemoryStream())
+            using (MemoryStream? memory = new MemoryStream())
             {
-                using (var writer = new StreamWriter(memory))
+                using (StreamWriter? writer = new StreamWriter(memory))
                 {
                     writer.WriteLine(this.ToJson());
                     writer.Close();

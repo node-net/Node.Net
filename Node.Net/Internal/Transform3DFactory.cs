@@ -9,7 +9,7 @@ namespace Node.Net.Internal
         {
             if (ParentFactory != null)
             {
-                var matrix3D = ParentFactory.Create(typeof(Matrix3D), source);
+                object? matrix3D = ParentFactory.Create(typeof(Matrix3D), source);
                 if (matrix3D != null)
                 {
                     return new MatrixTransform3D { Matrix = (Matrix3D)matrix3D };

@@ -35,10 +35,10 @@ namespace Node.Net
 
         public object Create(Type targetType, object source)
         {
-            var result = factory.Create(targetType, source);
+            object? result = factory.Create(targetType, source);
             if (Logging)
             {
-                var sourceInfo = "null";
+                string? sourceInfo = "null";
                 if (source != null)
                 {
                     sourceInfo = source.ToString();
@@ -89,7 +89,7 @@ namespace Node.Net
             set
             {
                 factory.AbstractTypes.Clear();
-                foreach (var type in value.Keys)
+                foreach (Type? type in value.Keys)
                 {
                     factory.AbstractTypes[type] = value[type];
                 }

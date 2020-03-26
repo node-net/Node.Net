@@ -10,8 +10,8 @@ namespace Node.Net
     {
         public static SerializationInfo GetSerializationInfo(this ISerializable value)
         {
-            var serializationInfo = new SerializationInfo(value.GetType(), new FormatterConverter());
-            var streamingContext = new StreamingContext();
+            SerializationInfo? serializationInfo = new SerializationInfo(value.GetType(), new FormatterConverter());
+            StreamingContext streamingContext = new StreamingContext();
             MethodInfo mi = value.GetType().GetMethod("GetObjectData", new Type[] { typeof(SerializationInfo), typeof(StreamingContext) });
             mi.Invoke(value, new object[] { serializationInfo, streamingContext });
             return serializationInfo;
@@ -19,7 +19,7 @@ namespace Node.Net
 
         public static string ToJson(this ISerializable value)
         {
-            using var memory = new MemoryStream();
+            using MemoryStream? memory = new MemoryStream();
             new JsonFormatter().Serialize(memory, value);
             memory.Seek(0, SeekOrigin.Begin);
             return new StreamReader(memory).ReadToEnd();
@@ -27,8 +27,8 @@ namespace Node.Net
 
         public static ISerializable Clone(this ISerializable value)
         {
-            using var memory = new MemoryStream();
-            var formatter = new BinaryFormatter();
+            using MemoryStream? memory = new MemoryStream();
+            BinaryFormatter? formatter = new BinaryFormatter();
             formatter.Serialize(memory, value);
             memory.Seek(0, SeekOrigin.Begin);
             return (formatter.Deserialize(memory) as ISerializable)!;

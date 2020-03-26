@@ -16,7 +16,7 @@ namespace Node.Net
             Add("<", ReadXml);
             Add("[", ReadJSON);
             Add("{", ReadJSON);
-            foreach (var signature in new Internal.ImageSourceReader().Signatures)
+            foreach (string? signature in new Internal.ImageSourceReader().Signatures)
             {
                 Add(signature, ReadImageSource);
             }
@@ -30,15 +30,15 @@ namespace Node.Net
 
         public object Read(Stream stream)
         {
-            using (var signatureReader = new Internal.SignatureReader(stream))
+            using (Internal.SignatureReader? signatureReader = new Internal.SignatureReader(stream))
             {
-                var stream2 = signatureReader.Stream;
-                var signature = signatureReader.Signature;
+                Stream? stream2 = signatureReader.Stream;
+                string? signature = signatureReader.Signature;
                 foreach (string signature_key in Keys)
                 {
                     if (signature.IndexOf(signature_key) == 0)
                     {
-                        var item = this[signature_key](stream2);
+                        object? item = this[signature_key](stream2);
                         //stream.Close();
                         return item;
                     }
@@ -79,23 +79,23 @@ namespace Node.Net
 
         public object? ReadXml(Stream original_stream)
         {
-            using (var signatureReader = new Internal.SignatureReader(original_stream))
+            using (Internal.SignatureReader? signatureReader = new Internal.SignatureReader(original_stream))
             {
-                var filename = original_stream.GetFileName();
-                var stream = signatureReader.Stream;
-                var signature_string = signatureReader.Signature;
-                foreach (var marker in xaml_markers)
+                string? filename = original_stream.GetFileName();
+                Stream? stream = signatureReader.Stream;
+                string? signature_string = signatureReader.Signature;
+                foreach (string? marker in xaml_markers)
                 {
                     if (signature_string.Contains(marker))
                     {
-                        var item = System.Windows.Markup.XamlReader.Load(stream);
+                        object? item = System.Windows.Markup.XamlReader.Load(stream);
                         item.SetFileName(filename);
                         return item;
                     }
                 }
                 if (signature_string.IndexOf("<") == 0)
                 {
-                    var xdoc = new System.Xml.XmlDocument();
+                    System.Xml.XmlDocument? xdoc = new System.Xml.XmlDocument();
                     xdoc.Load(stream);
                     xdoc.SetFileName(filename);
                     return xdoc;
@@ -106,7 +106,7 @@ namespace Node.Net
 
         public object ReadJSON(Stream stream)
         {
-            var i = jsonReader.Read(stream);
+            object? i = jsonReader.Read(stream);
             if (i is IDictionary dictionary)
             {
                 dictionary.DeepUpdateParents();
@@ -141,9 +141,9 @@ namespace Node.Net
         {
             if (name.IsFileDialogFilter())
             {
-                var openFileDialogFilter = name;
-                var ofd = new Microsoft.Win32.OpenFileDialog { Filter = openFileDialogFilter };
-                var result = ofd.ShowDialog();
+                string? openFileDialogFilter = name;
+                Microsoft.Win32.OpenFileDialog? ofd = new Microsoft.Win32.OpenFileDialog { Filter = openFileDialogFilter };
+                bool? result = ofd.ShowDialog();
                 if (result == true)
                 {
                     try

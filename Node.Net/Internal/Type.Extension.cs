@@ -13,11 +13,11 @@ namespace Node.Net.Internal
 
         public static object Construct(this Type type, object[] parameters = null)
         {
-            var types = Type.EmptyTypes;
+            Type[]? types = Type.EmptyTypes;
             if (parameters != null)
             {
-                var typesList = new List<Type>();
-                foreach (var item in parameters)
+                List<Type>? typesList = new List<Type>();
+                foreach (object? item in parameters)
                 {
                     if (item != null)
                     {
@@ -29,7 +29,7 @@ namespace Node.Net.Internal
                     types = typesList.ToArray();
                 }
             }
-            var constructor = type.GetConstructor(types);
+            System.Reflection.ConstructorInfo? constructor = type.GetConstructor(types);
             if (constructor != null)
             {
                 if (parameters == null || parameters.Length == 0 || parameters[0] == null)

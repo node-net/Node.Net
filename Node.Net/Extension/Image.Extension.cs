@@ -8,10 +8,10 @@ namespace Node.Net
     {
         public static ImageSource GetImageSource(this System.Drawing.Image image)
         {
-            var bitmapImage = new BitmapImage();
+            BitmapImage? bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
 
-            var memory = new System.IO.MemoryStream();
+            MemoryStream? memory = new System.IO.MemoryStream();
             image.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
             memory.Seek(0, SeekOrigin.Begin);
 

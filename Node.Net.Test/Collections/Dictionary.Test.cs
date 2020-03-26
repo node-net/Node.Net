@@ -10,19 +10,19 @@ namespace Node.Net.Collections
         [Test]
         public void Clone()
         {
-            var timestamp = new DateTime(2019, 11, 14);
-            var data = new Dictionary
+            DateTime timestamp = new DateTime(2019, 11, 14);
+            Dictionary data = new Dictionary
             {
                 {"Name","test" },
                 {"Description","a test dictionary" },
                 {"Timestamp", timestamp }
             };
 
-            var data2 = (data as IDictionary).Clone();
-            var timestamp2 = (DateTime)data2["Timestamp"];
+            IDictionary data2 = (data as IDictionary).Clone();
+            DateTime timestamp2 = (DateTime)data2["Timestamp"];
             Assert.AreEqual(14, timestamp2.Day, "timestamp2.Day");
 
-            var jsonFormatter = new JsonFormatter();
+            JsonFormatter jsonFormatter = new JsonFormatter();
             Assert.AreEqual(jsonFormatter.GetMD5(data), jsonFormatter.GetMD5(data2), "json MD5");
 
             //Assert.AreEqual(data.ComputeHashCode(), data2.ComputeHashCode(), "hash code");
@@ -31,18 +31,18 @@ namespace Node.Net.Collections
 
         public void Collect()
         {
-            var states = Dictionary.Parse(Sample.Files.Repository.GetStream("Json/States.json"));
+            Dictionary states = Dictionary.Parse(Sample.Files.Repository.GetStream("Json/States.json"));
 
-            var dictionaries = states.Collect<IDictionary>();
+            System.Collections.Generic.IList<IDictionary> dictionaries = states.Collect<IDictionary>();
             Assert.AreEqual(3205, dictionaries.Count);
 
-            var list = states.Collect(typeof(IDictionary), "");
+            System.Collections.Generic.IList<object> list = states.Collect(typeof(IDictionary), "");
             Assert.AreEqual(3205, list.Count);
 
-            var counties = states.Collect("County");
+            System.Collections.Generic.IList<object> counties = states.Collect("County");
             Assert.AreEqual(3105, counties.Count, "counties.Count");
 
-            var dictionaries3 = states.Collect<IDictionary>(Include);
+            System.Collections.Generic.IList<IDictionary> dictionaries3 = states.Collect<IDictionary>(Include);
             Assert.AreEqual(3205, dictionaries3.Count, "dictionaries3.Count");
 
             states.DeepUpdateParents();

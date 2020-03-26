@@ -52,7 +52,7 @@ namespace Node.Net.Internal
 
         public static Signature GetSignature(Stream stream)
         {
-            using (var sr = new SignatureReader())
+            using (SignatureReader? sr = new SignatureReader())
             {
                 return sr.Read(stream) as Signature;
             }
@@ -64,7 +64,7 @@ namespace Node.Net.Internal
             if (!original_stream.CanSeek)
             {
                 memoryStream = new MemoryStream();
-                var iByte = original_stream.ReadByte();
+                int iByte = original_stream.ReadByte();
                 while (iByte > -1)
                 {
                     memoryStream.WriteByte((byte)iByte);
@@ -73,14 +73,14 @@ namespace Node.Net.Internal
                 memoryStream.Seek(0, SeekOrigin.Begin);
             }
 
-            var stream = original_stream;
+            Stream? stream = original_stream;
             if (memoryStream != null)
             {
                 stream = memoryStream;
             }
 
-            var bytes = new List<byte>();
-            var ibyte = stream.ReadByte();
+            List<byte>? bytes = new List<byte>();
+            int ibyte = stream.ReadByte();
             while (ibyte > -1)
             {
                 bytes.Add((byte)ibyte);

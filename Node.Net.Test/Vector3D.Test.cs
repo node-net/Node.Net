@@ -14,7 +14,7 @@ namespace Node.Net.Test
         [Test]
         public static void ComputeRayPlaneIntersection()
         {
-            var intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, 0, -1), new Vector3D(0, 0, 10), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
+            Vector3D intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, 0, -1), new Vector3D(0, 0, 10), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
             Assert.AreEqual(0, Round(intersection.X, 4), "intersection.X");
             Assert.AreEqual(0, Round(intersection.Y, 4), "intersection.Y");
             Assert.AreEqual(0, Round(intersection.Z, 4), "intersection.Z");

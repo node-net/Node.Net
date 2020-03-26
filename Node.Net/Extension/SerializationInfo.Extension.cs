@@ -8,7 +8,7 @@ namespace Node.Net
 	{
 		public static IDictionary GetPersistentData(this SerializationInfo info)
 		{
-			var data = new Dictionary<string, object>();
+            Dictionary<string, object>? data = new Dictionary<string, object>();
 			SerializationInfoEnumerator e = info.GetEnumerator();
 			while (e.MoveNext())
 			{

@@ -9,7 +9,7 @@ namespace Node.Net
         {
             try
             {
-                var local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
+                Point3D local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
                 // camera lookdirection is along -Z axis
                 if (local.Z >= 0.0)
                 {
@@ -17,8 +17,8 @@ namespace Node.Net
                 }
 
                 const double deg2rad = 0.01745329;
-                var distance = Abs(local.Z);
-                var frustrumHeight = 2.0 * distance * Tan(camera.FieldOfView * deg2rad * 0.5);
+                double distance = Abs(local.Z);
+                double frustrumHeight = 2.0 * distance * Tan(camera.FieldOfView * deg2rad * 0.5);
                 if (Abs(local.X) > frustrumHeight / 2.0)
                 {
                     return false;
@@ -38,7 +38,7 @@ namespace Node.Net
         {
             try
             {
-                var local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
+                Point3D local = ProjectionCameraExtension.GetWorldToLocal(camera).Transform(worldPoint);
                 // camera lookdirection is along -Z axis
                 if (local.Z >= 0.0)
                 {
@@ -46,10 +46,10 @@ namespace Node.Net
                 }
 
                 const double deg2rad = 0.01745329;
-                var distance = Abs(local.Z);
+                double distance = Abs(local.Z);
 
-                var horizontalFOV = camera.FieldOfView;
-                var verticalFOV = camera.FieldOfView;
+                double horizontalFOV = camera.FieldOfView;
+                double verticalFOV = camera.FieldOfView;
                 if (aspectRatio >= 1)
                 {
                     verticalFOV = horizontalFOV / aspectRatio;
@@ -58,8 +58,8 @@ namespace Node.Net
                 {
                     horizontalFOV = verticalFOV * aspectRatio;
                 }
-                var frustrumWidth = 2.0 * distance * Tan(horizontalFOV * deg2rad * 0.5);
-                var frustrumHeight = 2.0 * distance * Tan(verticalFOV * deg2rad * 0.5);
+                double frustrumWidth = 2.0 * distance * Tan(horizontalFOV * deg2rad * 0.5);
+                double frustrumHeight = 2.0 * distance * Tan(verticalFOV * deg2rad * 0.5);
                 if (Abs(local.X) > frustrumWidth / 2.0)
                 {
                     return false;

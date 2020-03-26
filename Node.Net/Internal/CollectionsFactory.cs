@@ -10,10 +10,10 @@ namespace Node.Net.Internal
         {
             if (source != null && source is string)
             {
-                var stream = StreamFactory.Create(source.ToString());
+                Stream? stream = StreamFactory.Create(source.ToString());
                 if (stream != null)
                 {
-                    var instance = Create(targetType, stream);
+                    object? instance = Create(targetType, stream);
                     if (instance is IDictionary idictionary)
                     {
                         idictionary.SetFileName(source.ToString());

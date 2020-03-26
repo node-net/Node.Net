@@ -80,14 +80,14 @@ namespace Node.Net
         {
             if (LogFunction != null)
             {
-                var stackTrace = new StackTrace();
-                var stackFrame = stackTrace.GetFrame(stackFrameIndex);
+                StackTrace? stackTrace = new StackTrace();
+                StackFrame? stackFrame = stackTrace.GetFrame(stackFrameIndex);
                 if (stackFrame != null)
                 {
-                    var method = stackFrame.GetMethod();
+                    System.Reflection.MethodBase? method = stackFrame.GetMethod();
                     if (method != null)
                     {
-                        var type = method.DeclaringType;
+                        Type? type = method.DeclaringType;
                         if (type != null)
                         {
                             LogFunction(type, level, message);

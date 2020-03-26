@@ -13,25 +13,25 @@ namespace Node.Net
         {
             matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), rotationsXYZ.Z));
 
-            var localY = matrix.Transform(new Vector3D(0, 1, 0));
+            Vector3D localY = matrix.Transform(new Vector3D(0, 1, 0));
             matrix.Rotate(new Quaternion(localY, rotationsXYZ.Y));
 
-            var localX = matrix.Transform(new Vector3D(1, 0, 0));
+            Vector3D localX = matrix.Transform(new Vector3D(1, 0, 0));
             matrix.Rotate(new Quaternion(localX, rotationsXYZ.X));
             return matrix;
         }
 
         public static Matrix3D RotateOTS(this Matrix3D matrix, Vector3D rotationsOTS)
         {
-            var orientation = rotationsOTS.X;
-            var tilt = rotationsOTS.Y;
-            var spin = rotationsOTS.Z;
+            double orientation = rotationsOTS.X;
+            double tilt = rotationsOTS.Y;
+            double spin = rotationsOTS.Z;
             matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), orientation));
 
-            var localX = matrix.Transform(new Vector3D(1, 0, 0));
+            Vector3D localX = matrix.Transform(new Vector3D(1, 0, 0));
             matrix.Rotate(new Quaternion(localX, tilt));
 
-            var localZ = matrix.Transform(new Vector3D(0, 0, 1));
+            Vector3D localZ = matrix.Transform(new Vector3D(0, 0, 1));
             matrix.Rotate(new Quaternion(localZ, spin));
             return matrix;
         }
@@ -73,8 +73,8 @@ namespace Node.Net
 
         public static Vector3D GetRotationsXYZ(this Matrix3D matrix)
         {
-            var rotationZ = GetRotationZ(matrix);
-            var rotationY = GetRotationY(matrix, rotationZ);
+            double rotationZ = GetRotationZ(matrix);
+            double rotationY = GetRotationY(matrix, rotationZ);
             return new Vector3D(GetRotationX(matrix, rotationZ, rotationY), rotationY, rotationZ);
         }
 
@@ -82,21 +82,21 @@ namespace Node.Net
         {
             matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), rotationsXYZ.Z));
 
-            var localX = matrix.Transform(new Vector3D(1, 0, 0));
+            Vector3D localX = matrix.Transform(new Vector3D(1, 0, 0));
             matrix.Rotate(new Quaternion(localX, rotationsXYZ.X));
 
-            var localY = matrix.Transform(new Vector3D(0, 1, 0));
+            Vector3D localY = matrix.Transform(new Vector3D(0, 1, 0));
             matrix.Rotate(new Quaternion(localY, rotationsXYZ.Y));
             return matrix;
         }
-
+        /*
         public static Vector3D GetRotationsZXY(this Matrix3D matrix)
         {
-            var rotationZ = GetRotationZ(matrix);
-            var rotationX = GetRotationXZ(matrix, rotationZ);
-            var rotationY = GetRotationYXZ(matrix, rotationX, rotationZ);
+            double rotationZ = GetRotationZ(matrix);
+            double rotationX = GetRotationXZ(matrix, rotationZ);
+            double rotationY = GetRotationYXZ(matrix, rotationX, rotationZ);
             return new Vector3D(rotationX, rotationY, rotationZ);
-        }
+        }*/
 
         public static Point3D GetTranslation(this Matrix3D matrix)
         {
@@ -105,13 +105,13 @@ namespace Node.Net
 
         public static double GetRotationZ(this Matrix3D matrix)
         {
-            var localX = matrix.Transform(new Vector3D(1, 0, 0));
-            var localZ = matrix.Transform(new Vector3D(0, 0, 1));
+            Vector3D localX = matrix.Transform(new Vector3D(1, 0, 0));
+            Vector3D localZ = matrix.Transform(new Vector3D(0, 0, 1));
 
             // rotation about the Z axis
             localX.Z = 0.0;
-            var angle = Vector3D.AngleBetween(localX, new Vector3D(1, 0, 0));
-            var rotationZ = localX.Y < 0.0 ? angle * -1.0 : angle;
+            double angle = Vector3D.AngleBetween(localX, new Vector3D(1, 0, 0));
+            double rotationZ = localX.Y < 0.0 ? angle * -1.0 : angle;
             if ((Abs(rotationZ) - 180.0) > 0.01 && Abs(localX.Y) < 0.0001)
             {
                 rotationZ = 0.0;
@@ -133,17 +133,17 @@ namespace Node.Net
         public static double GetRotationY(this Matrix3D matrix, double rotationZ)
         {
             // back off z rotation
-            var matrix2 = new Matrix3D();
+            Matrix3D matrix2 = new Matrix3D();
             matrix2.Append(matrix);
             matrix2 = matrix2.RotateXYZ(new Vector3D(0.0, 0.0, rotationZ * -1.0));
 
-            var localX = matrix2.Transform(new Vector3D(1, 0, 0));
-            var localY = matrix2.Transform(new Vector3D(0, 1, 0));
+            Vector3D localX = matrix2.Transform(new Vector3D(1, 0, 0));
+            Vector3D localY = matrix2.Transform(new Vector3D(0, 1, 0));
 
             // rotation about the Y axis
             localX.Y = 0.0;
-            var angle = Vector3D.AngleBetween(localX, new Vector3D(1, 0, 0));
-            var rotationY = localX.Z > 0 ? angle * -1.0 : angle;
+            double angle = Vector3D.AngleBetween(localX, new Vector3D(1, 0, 0));
+            double rotationY = localX.Z > 0 ? angle * -1.0 : angle;
             if (Abs(rotationY - 180.0) > 0.01 && Abs(localX.Z) < 0.0001)
             {
                 rotationY = 0.0;
@@ -160,17 +160,17 @@ namespace Node.Net
         public static double GetRotationXZ(this Matrix3D matrix, double rotationZ)
         {
             // back off z rotation
-            var matrix2 = new Matrix3D();
+            Matrix3D matrix2 = new Matrix3D();
             matrix2.Append(matrix);
             matrix2 = matrix2.RotateXYZ(new Vector3D(0.0, 0.0, rotationZ * -1.0));
 
-            var localX = matrix2.Transform(new Vector3D(1, 0, 0));
-            var localY = matrix2.Transform(new Vector3D(0, 1, 0));
+            Vector3D localX = matrix2.Transform(new Vector3D(1, 0, 0));
+            Vector3D localY = matrix2.Transform(new Vector3D(0, 1, 0));
 
             // rotation about the X axis
             localY.X = 0.0;
-            var angle = Vector3D.AngleBetween(localY, new Vector3D(0, 1, 0));
-            var rotationX = localX.Z > 0 ? angle * -1.0 : angle;
+            double angle = Vector3D.AngleBetween(localY, new Vector3D(0, 1, 0));
+            double rotationX = localX.Z > 0 ? angle * -1.0 : angle;
             if (Abs(rotationX - 180.0) > 0.01 && Abs(localY.Z) < 0.0001)
             {
                 rotationX = 0.0;
@@ -186,41 +186,42 @@ namespace Node.Net
 
         public static double GetRotationX(this Matrix3D matrix)
         {
-            var rotationZ = matrix.GetRotationZ();
-            var rotationY = matrix.GetRotationY(rotationZ);
+            double rotationZ = matrix.GetRotationZ();
+            double rotationY = matrix.GetRotationY(rotationZ);
             return GetRotationX(matrix, rotationZ, rotationY);
         }
 
         public static double GetRotationX(this Matrix3D matrix, double rotationZ, double rotationY)
         {
             // back off z rotation and y rotation
-            var matrix2 = new Matrix3D();
+            Matrix3D matrix2 = new Matrix3D();
             matrix2.Append(matrix);
             matrix2 = matrix2.RotateXYZ(new Vector3D(0.0, 0.0, rotationZ * -1.0));
-            var matrix3 = new Matrix3D();
+            Matrix3D matrix3 = new Matrix3D();
             matrix3.Append(matrix2);
             matrix3 = matrix3.RotateXYZ(new Vector3D(0.0, rotationY * -1.0, 0.0));
 
-            var localY = matrix3.Transform(new Vector3D(0, 1, 0));
+            Vector3D localY = matrix3.Transform(new Vector3D(0, 1, 0));
             localY.X = 0.0;
-            var angle = Vector3D.AngleBetween(localY, new Vector3D(0, 1, 0));
-            var rotationX = localY.Z < 0 ? angle * -1.0 : angle;
+            double angle = Vector3D.AngleBetween(localY, new Vector3D(0, 1, 0));
+            double rotationX = localY.Z < 0 ? angle * -1.0 : angle;
 
             // rotation about the X axis
             return rotationX;
         }
 
+        /*
         public static double GetRotationYXZ(this Matrix3D matrix, double rotationX, double rotationZ)
         {
             return 0.0;
-        }
+        }*/
 
         public static Matrix3D SetDirectionVectors(this Matrix3D matrix, Vector3D xDirection, Vector3D yDirection, Vector3D zDirection)
         {
             // zRotation
             xDirection.Z = 0;
             xDirection.Normalize();
-            var deltaZ = Abs(Vector3D.AngleBetween(new Vector3D(1, 0, 0), xDirection));
+            double deltaZ = Abs(Vector3D.AngleBetween(new Vector3D(1, 0, 0), xDirection));
             if (Abs(xDirection.Z - 1.0) < 0.001)
             {
                 deltaZ = 0.0;
@@ -235,11 +236,11 @@ namespace Node.Net
 
             // yRotation
             zDirection.Normalize();
-            var inverse = Matrix3D.Multiply(new Matrix3D(), matrix);
+            Matrix3D inverse = Matrix3D.Multiply(new Matrix3D(), matrix);
             inverse.Invert();
-            var zDir2 = inverse.Transform(zDirection);
-            var localY = matrix.Transform(new Vector3D(0, 1, 0));
-            var deltaY = Abs(Vector3D.AngleBetween(new Vector3D(0, 0, 1), zDir2));
+            Vector3D zDir2 = inverse.Transform(zDirection);
+            Vector3D localY = matrix.Transform(new Vector3D(0, 1, 0));
+            double deltaY = Abs(Vector3D.AngleBetween(new Vector3D(0, 0, 1), zDir2));
             if (zDir2.X < 0.0)
             {
                 deltaY *= -1.0;
@@ -257,9 +258,9 @@ namespace Node.Net
             yDirection.Normalize();
             inverse = Matrix3D.Multiply(new Matrix3D(), matrix);
             inverse.Invert();
-            var yDir2 = inverse.Transform(yDirection);
-            var localX = matrix.Transform(new Vector3D(1, 0, 0));
-            var deltaX = Abs(Vector3D.AngleBetween(new Vector3D(0, 1, 0), yDir2));
+            Vector3D yDir2 = inverse.Transform(yDirection);
+            Vector3D localX = matrix.Transform(new Vector3D(1, 0, 0));
+            double deltaX = Abs(Vector3D.AngleBetween(new Vector3D(0, 1, 0), yDir2));
             if (yDir2.Z < 0.0)
             {
                 deltaX *= -1.0;
@@ -273,31 +274,31 @@ namespace Node.Net
         {
             xDirection.Normalize();
             yDirection.Normalize();
-            var zDirection = Vector3D.CrossProduct(xDirection, yDirection);
+            Vector3D zDirection = Vector3D.CrossProduct(xDirection, yDirection);
 
             // Align X axes
-            var normal = Vector3D.CrossProduct(new Vector3D(1, 0, 0), xDirection);
+            Vector3D normal = Vector3D.CrossProduct(new Vector3D(1, 0, 0), xDirection);
             if (normal.Length > 0)
             {
-                var deltaX = Vector3D.AngleBetween(new Vector3D(1, 0, 0), xDirection);
+                double deltaX = Vector3D.AngleBetween(new Vector3D(1, 0, 0), xDirection);
                 matrix.Rotate(new Quaternion(normal, deltaX));
             }
 
             // Align Y axes
-            var localY = matrix.Transform(new Vector3D(0, 1, 0));
+            Vector3D localY = matrix.Transform(new Vector3D(0, 1, 0));
             normal = Vector3D.CrossProduct(localY, yDirection);
             if (normal.Length > 0)
             {
-                var deltaY = Vector3D.AngleBetween(localY, yDirection);
+                double deltaY = Vector3D.AngleBetween(localY, yDirection);
                 matrix.Rotate(new Quaternion(normal, deltaY));
             }
 
             // Align Z axes
-            var localZ = matrix.Transform(new Vector3D(0, 0, 1));
+            Vector3D localZ = matrix.Transform(new Vector3D(0, 0, 1));
             normal = Vector3D.CrossProduct(localZ, zDirection);
             if (normal.Length > 0)
             {
-                var deltaZ = Vector3D.AngleBetween(localZ, zDirection);
+                double deltaZ = Vector3D.AngleBetween(localZ, zDirection);
                 matrix.Rotate(new Quaternion(normal, deltaZ));
             }
 
@@ -306,40 +307,53 @@ namespace Node.Net
 
         public static Matrix3D AlignZDirectionVector(this Matrix3D matrix, Vector3D newZDirectionVector)
         {
-            var negativeZDirection = new Vector3D(newZDirectionVector.X * -1.0, newZDirectionVector.Y*-1.0, newZDirectionVector.Z * -1.0);
-            var orientation = negativeZDirection.GetOrientation();
-            var polarAngle = newZDirectionVector.GetPolarAngle();
+            Vector3D negativeZDirection = new Vector3D(newZDirectionVector.X * -1.0, newZDirectionVector.Y*-1.0, newZDirectionVector.Z * -1.0);
+            double orientation = negativeZDirection.GetOrientation();
+            double polarAngle = newZDirectionVector.GetPolarAngle();
 
             return matrix.SetOrientation(orientation).SetTilt(polarAngle);
         }
 
         public static IDictionary GetDictionary(this Matrix3D matrix)
         {
-            var data = new Dictionary<string, dynamic>();
-            var rotationsZXY = Matrix3DExtension.GetRotationsZXY(matrix);
-            var translation = Matrix3DExtension.GetTranslation(matrix);
+            Dictionary<string, dynamic>? data = new Dictionary<string, dynamic>();
+            //Vector3D rotationsZXY = Matrix3DExtension.GetRotationsZXY(matrix);
+            Point3D translation = Matrix3DExtension.GetTranslation(matrix);
             data["X"] = $"{translation.X} m";
             data["Y"] = $"{translation.Y} m";
             data["Z"] = $"{translation.Z} m";
-            data["RotationX"] = $"{rotationsZXY.X} deg";
-            data["RotationY"] = $"{rotationsZXY.Y} deg";
-            data["RotationZ"] = $"{rotationsZXY.Z} deg";
+            Vector3D ots = Matrix3DExtension.GetRotationsOTS(matrix);
+            if(Abs(ots.X) > 0.0001)
+            {
+                data["Orientation"] = $"{Round(ots.X, 4)} deg";
+            }
+            if (Abs(ots.Y) > 0.0001)
+            {
+                data["Tilt"] = $"{Round(ots.Y, 4)} deg";
+            }
+            if (Abs(ots.Z) > 0.0001)
+            {
+                data["Spin"] = $"{Round(ots.Z, 4)} deg";
+            }
+            //data["RotationX"] = $"{rotationsZXY.X} deg";
+            //data["RotationY"] = $"{rotationsZXY.Y} deg";
+            //data["RotationZ"] = $"{rotationsZXY.Z} deg";
             return data;
         }
 
         public static Rect3D Transform(this Matrix3D matrix, Rect3D bounds)
         {
-            var center = bounds.GetCenter();
-            var corner = new Point3D(
+            Point3D center = bounds.GetCenter();
+            Point3D corner = new Point3D(
                 bounds.Location.X + bounds.SizeX,
                 bounds.Location.Y + bounds.SizeY,
                 bounds.Location.Z + bounds.SizeZ);
 
-            var transformedCenter = matrix.Transform(center);
-            var transformedLocation = matrix.Transform(bounds.Location);
-            var transformedCorner = matrix.Transform(corner);
+            Point3D transformedCenter = matrix.Transform(center);
+            Point3D transformedLocation = matrix.Transform(bounds.Location);
+            Point3D transformedCorner = matrix.Transform(corner);
 
-            var transformedSize = new Size3D(
+            Size3D transformedSize = new Size3D(
                 Abs(transformedCenter.X - transformedLocation.X) * 2.0,
                 Abs(transformedCenter.Y - transformedLocation.Y) * 2.0,
                 Abs(transformedCenter.Z - transformedLocation.Z) * 2.0);
@@ -368,39 +382,55 @@ namespace Node.Net
 
         public static double GetOrientation(this System.Windows.Media.Media3D.Matrix3D matrix)
         {
-            var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            Vector3D localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            Vector3D zcross = Vector3D.CrossProduct(new Vector3D(1, 0, 0), localX);
+            double multiplier = 1.0;
+            if(zcross.Z < 0)
+            {
+                multiplier = -1.0;
+            }
             // rotation about the Z axis = angle between localX and parent X
-            return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, new System.Windows.Media.Media3D.Vector3D(1, 0, 0)) * multiplier;
         }
 
         public static double GetTilt(this System.Windows.Media.Media3D.Matrix3D matrix)
         {
             // get the rotation about the X` local axis
-            var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
-            var localY = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 1, 0));
+            Vector3D localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            Vector3D localY = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 1, 0));
 
-            var orientMatrix = new System.Windows.Media.Media3D.Matrix3D().SetOrientation(matrix.GetOrientation());
-            var orientedY = orientMatrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 1, 0));
+            Matrix3D orientMatrix = new System.Windows.Media.Media3D.Matrix3D().SetOrientation(matrix.GetOrientation());
+            Vector3D orientedY = orientMatrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 1, 0));
 
+            double multiplier = 1.0;
+            Vector3D xcross = Vector3D.CrossProduct(orientedY, localY);
+            double xangle = Vector3D.AngleBetween(localX, xcross);
+            if(xangle > 90.0) { multiplier = -1.0; }
+            //if(xcross.X < 0.0) { multiplier = -1.0; }
             // rotation about the X' axis = angle between localY and orientedY
-            var angle = System.Windows.Media.Media3D.Vector3D.AngleBetween(localY, orientedY);
+            double angle = System.Windows.Media.Media3D.Vector3D.AngleBetween(localY, orientedY) * multiplier;
             return angle;
         }
 
         public static double GetSpin(this System.Windows.Media.Media3D.Matrix3D matrix)
         {
             // get the rotatoin about the Z`` axis: angle between localX and tiltedX
-            var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
-            var tiltMatrix = new System.Windows.Media.Media3D.Matrix3D()
+            Vector3D localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            Matrix3D tiltMatrix = new System.Windows.Media.Media3D.Matrix3D()
                 .SetOrientation(matrix.GetOrientation())
                 .SetTilt(matrix.GetTilt());
-            var tiltedX = tiltMatrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
-            return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, tiltedX);
+            Vector3D tiltedX = tiltMatrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+
+            double multiplier = 1.0;
+            Vector3D zcross = Vector3D.CrossProduct(tiltedX, localX);
+            if(zcross.Z < 0) { multiplier = -1.0; }
+            
+            return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, tiltedX) *  multiplier;
         }
 
         public static System.Windows.Media.Media3D.Matrix3D SetOrientation(this System.Windows.Media.Media3D.Matrix3D matrix, double orientationDegrees)
         {
-            var translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
+            Vector3D translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
             // backoff translation
             matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-translation.X, -translation.Y, -translation.Z));
 
@@ -415,7 +445,7 @@ namespace Node.Net
         public static System.Windows.Media.Media3D.Matrix3D SetTilt(
             this System.Windows.Media.Media3D.Matrix3D matrix, double tilt)
         {
-            var translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
+            Vector3D translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
             /*
             var orientation = matrix.GetOrientation();
             var spin = matrix.GetSpin();
@@ -428,7 +458,7 @@ namespace Node.Net
             
             // backoff translation
             matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-translation.X, -translation.Y, -translation.Z));
-            var localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
+            Vector3D localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
             // backoff exiting tilt
             matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(localX, matrix.GetTilt() * -1.0));
             matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(localX, tilt));
@@ -441,11 +471,11 @@ namespace Node.Net
         public static System.Windows.Media.Media3D.Matrix3D SetSpin(
             this System.Windows.Media.Media3D.Matrix3D matrix, double spin)
         {
-            var translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
+            Vector3D translation = new System.Windows.Media.Media3D.Vector3D(matrix.OffsetX, matrix.OffsetY, matrix.OffsetZ);
             // backoff translation
             matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-translation.X, -translation.Y, -translation.Z));
 
-            var localZ = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 0, 1));
+            Vector3D localZ = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(0, 0, 1));
             // backoff existing spin
             matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(localZ, matrix.GetSpin() * -1.0));
             matrix.Rotate(new System.Windows.Media.Media3D.Quaternion(localZ, spin));
@@ -478,7 +508,7 @@ namespace Node.Net
 
         public static List<double> GetValues(this System.Windows.Media.Media3D.Matrix3D matrix,int decimals)
         {
-            var values = new List<double>();
+            List<double>? values = new List<double>();
             values.Add(Round(matrix.M11, decimals));
             values.Add(Round(matrix.M12, decimals));
             values.Add(Round(matrix.M13, decimals));

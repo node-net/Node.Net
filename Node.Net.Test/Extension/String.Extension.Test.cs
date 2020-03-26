@@ -9,7 +9,7 @@ namespace Node.Net.Test.Extension
         [Test]
         public void GetStream()
         {
-            var text = new StreamReader("test".GetStream()).ReadToEnd();
+            string text = new StreamReader("test".GetStream()).ReadToEnd();
             Assert.AreEqual("test", text);
 
             text = new StreamReader("Object.Coverage.json".GetStream()).ReadToEnd();

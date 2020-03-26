@@ -21,13 +21,13 @@ namespace Node.Net.Internal
             }
             if (ParentFactory != null)
             {
-                var color = ParentFactory.Create(typeof(Color), source);
+                object? color = ParentFactory.Create(typeof(Color), source);
                 if (color != null)
                 {
                     return Create(targetType, color);
                 }
 
-                var image = ParentFactory.Create(typeof(ImageSource), source);
+                object? image = ParentFactory.Create(typeof(ImageSource), source);
                 if (image != null)
                 {
                     return Create(targetType, image);

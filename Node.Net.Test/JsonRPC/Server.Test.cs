@@ -11,23 +11,23 @@ namespace Node.Net.JsonRPC
         [Test, Explicit]
         public void Default_Usage()
         {
-            var responder = ResponderTest.GetTestResponder();
-            using (var server = new Server(responder.Respond))
+            Responder responder = ResponderTest.GetTestResponder();
+            using (Server server = new Server(responder.Respond))
             {
-                var port = server.Port;
+                int port = server.Port;
                 server.Start();
 
-                var uri = server.Uri;
+                Uri uri = server.Uri;
                 Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
-                using (var client = new WebClient())
+                using (WebClient client = new WebClient())
                 {
-                    var request = new Request("say_hello");
-                    var json_response = client.UploadString(uri.ToString(), request.ToJson());
+                    Request request = new Request("say_hello");
+                    string json_response = client.UploadString(uri.ToString(), request.ToJson());
                     Assert.NotNull(json_response, nameof(json_response));
                     Assert.True(json_response.Contains("hello"));
                 }
-                var jsonRpcClient = new Client(server.Uri.ToString());
-                var response = jsonRpcClient.Respond(new Request("say_hello"));
+                Client jsonRpcClient = new Client(server.Uri.ToString());
+                Response response = jsonRpcClient.Respond(new Request("say_hello"));
                 Assert.NotNull(response, nameof(response));
                 Assert.AreEqual("hello", response.Result.ToString());
                 server.Stop();
@@ -36,8 +36,8 @@ namespace Node.Net.JsonRPC
 
         public static bool IsAdministrator()
         {
-            var identity = WindowsIdentity.GetCurrent();
-            var principal = new WindowsPrincipal(identity);
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
@@ -51,25 +51,25 @@ namespace Node.Net.JsonRPC
                 ServicePointManager.ServerCertificateValidationCallback = ((sender, certificate, chain, sslPolicyErrors) => true);
 #pragma warning restore RCS1163 // Unused parameter.
                 int port = Service.WebServer.GetNextAvailablePort(5000);
-                var listener = new HttpListener();
-                var uri = $"https://{Environment.MachineName}:{port}/";
+                HttpListener listener = new HttpListener();
+                string uri = $"https://{Environment.MachineName}:{port}/";
                 listener.Prefixes.Add(uri);
 
-                var responder = ResponderTest.GetTestResponder();
-                using (var server = new Server(listener, responder.Respond))
+                Responder responder = ResponderTest.GetTestResponder();
+                using (Server server = new Server(listener, responder.Respond))
                 {
                     //var port = server.Port;
                     server.Start();
                     Assert.AreEqual($"https://{Environment.MachineName}:{port}/", uri.ToString());
-                    using (var client = new WebClient())
+                    using (WebClient client = new WebClient())
                     {
-                        var request = new Request("say_hello");
-                        var json_response = client.UploadString(uri.ToString(), request.ToJson());
+                        Request request = new Request("say_hello");
+                        string json_response = client.UploadString(uri.ToString(), request.ToJson());
                         Assert.NotNull(json_response, nameof(json_response));
                         Assert.True(json_response.Contains("hello"));
                     }
-                    var jsonRpcClient = new Client(server.Uri.ToString());
-                    var response = jsonRpcClient.Respond(new Request("say_hello"));
+                    Client jsonRpcClient = new Client(server.Uri.ToString());
+                    Response response = jsonRpcClient.Respond(new Request("say_hello"));
                     Assert.NotNull(response, nameof(response));
                     Assert.AreEqual("hello", response.Result.ToString());
                     server.Stop();

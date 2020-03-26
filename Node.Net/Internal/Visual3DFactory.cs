@@ -19,7 +19,7 @@ namespace Node.Net.Internal
 
             if (ParentFactory != null)
             {
-                var model3D = ParentFactory.Create<Model3D>(source);
+                Model3D? model3D = ParentFactory.Create<Model3D>(source);
                 if (model3D != null)
                 {
                     return new ModelVisual3D { Content = model3D };

@@ -9,17 +9,17 @@ namespace Node.Net.Service
         [Test, Explicit]
         public void Default_Usage()
         {
-            using (var server = new WebServer(Protocol.HTTP, 5000))
+            using (WebServer server = new WebServer(Protocol.HTTP, 5000))
             {
-                var port = server.Port;
+                int port = server.Port;
                 server.Start();
                 Assert.NotNull(server.Listener, "server.Listener");
 
-                var uri = server.Uri;
+                System.Uri uri = server.Uri;
                 Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
-                using (var client = new WebClient())
+                using (WebClient client = new WebClient())
                 {
-                    var response = client.DownloadString(uri.ToString());
+                    string response = client.DownloadString(uri.ToString());
                     Assert.True(response.Contains("html"));
 
                     response = client.UploadString(uri.ToString(), "please post");
@@ -32,12 +32,12 @@ namespace Node.Net.Service
         //[Test, Explicit]
         public void Run_30_seconds()
         {
-            using (var server = new WebServer(Protocol.HTTP, 5000))
+            using (WebServer server = new WebServer(Protocol.HTTP, 5000))
             {
-                var port = server.Port;
+                int port = server.Port;
                 server.Start();
 
-                var uri = server.Uri;
+                System.Uri uri = server.Uri;
                 Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
 
                 Thread.Sleep(30000);

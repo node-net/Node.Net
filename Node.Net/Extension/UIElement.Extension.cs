@@ -8,12 +8,12 @@ namespace Node.Net
 	{
 		public static ImageSource GetImageSource(this UIElement element, int pixelWidth, int pixelHeight, double dpiX, double dpiY)
 		{
-			var desiredSize = new Size(pixelWidth, pixelHeight);
+			Size desiredSize = new Size(pixelWidth, pixelHeight);
 			element.Measure(new Size(pixelWidth, pixelHeight));
 			element.Arrange(new Rect(new Point(0, 0), desiredSize));
 			element.UpdateLayout();
 
-			var bitmap = new RenderTargetBitmap(pixelWidth, pixelHeight, dpiX, dpiY, PixelFormats.Default);
+			RenderTargetBitmap? bitmap = new RenderTargetBitmap(pixelWidth, pixelHeight, dpiX, dpiY, PixelFormats.Default);
 			bitmap.Render(element);
 			return bitmap;
 		}

@@ -8,7 +8,7 @@ namespace Node.Net.Test
         [Test]
         public void Usage()
         {
-            var command = new DelegateCommand(TestCommand);
+            DelegateCommand command = new DelegateCommand(TestCommand);
             command.Execute(null);
             Assert.True(command.CanExecute(null));
 

@@ -3,7 +3,7 @@ require 'raykit'
 CLEAN.include('**/obj')
 
 task :integrate do
-	PROJECT.info
+	#PROJECT.info
     SECRETS['NUGET_KEY'] = ENV['NUGET_KEY']
     package="#{PROJECT.name}/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
     target='tmp.txt'
