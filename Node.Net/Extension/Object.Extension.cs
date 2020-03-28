@@ -72,7 +72,7 @@ namespace Node.Net
         /// </summary>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public static object GetParent(this object instance)
+        public static object? GetParent(this object instance)
         {
             object? parent = Internal.MetaData.Default.GetMetaData<object>(instance, "Parent");
             if (instance.HasPropertyValue("Parent"))

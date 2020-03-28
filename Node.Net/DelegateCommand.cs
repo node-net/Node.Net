@@ -24,6 +24,16 @@ namespace Node.Net
         /// CanExecuteChanged
         /// </summary>
         public event EventHandler? CanExecuteChanged;
+        public bool ExecuteEnabled
+        {
+            get { return _canExecute; }
+            set
+            {
+                _canExecute = value;
+                if(CanExecuteChanged != null) { CanExecuteChanged(this, new EventArgs()); }
+            }
+        }
+        private bool _canExecute = true;
 
         /// <summary>
         /// Constructor
@@ -32,7 +42,7 @@ namespace Node.Net
         public DelegateCommand(Action<object> executeMethod)
         {
             this.executeMethod = executeMethod;
-            this.canExecuteMethod = null;
+            this.canExecuteMethod = DefaultCanExecute;
         }
 
         public DelegateCommand(Action<object> executeMethod, Func<object, bool> canExecuteMethod)

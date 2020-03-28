@@ -472,7 +472,7 @@ namespace Node.Net
         {
             IDictionary? clone = Activator.CreateInstance(source.GetType()) as IDictionary;
             clone.Copy(source);
-            return clone;
+            return clone!;
         }
 
         public static T Find<T>(this IDictionary dictionary, string name, bool exact = false, bool deepUpdateParents = false)

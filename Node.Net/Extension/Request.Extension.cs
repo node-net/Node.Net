@@ -4,9 +4,9 @@ namespace Node.Net
 {
     public static class RequestExtension
     {
-        public static object[] GetParameterArray(this JsonRPC.Request request)
+        public static object?[] GetParameterArray(this JsonRPC.Request request)
         {
-            List<object>? results = new List<object>();
+            List<object?> results = new List<object?>();
             if (request.Parameters != null)
             {
                 foreach (string? key in request.Parameters.Keys)
@@ -17,7 +17,7 @@ namespace Node.Net
             return results.ToArray();
         }
 
-        public static object[] GetParameterArray(this JsonRPC.Request request, string[] names)
+        public static object?[] GetParameterArray(this JsonRPC.Request request, string[] names)
         {
             if (names is null)
             {
@@ -48,40 +48,40 @@ namespace Node.Net
             return results.ToArray();
         }
 
-        public static object[] GetParameterArray<T1>(this JsonRPC.Request request, string[] names)
+        public static object?[] GetParameterArray<T1>(this JsonRPC.Request request, string[] names)
         {
             object[]? parameters = request.GetParameterArray(names);
-            return new object[] { parameters.Get<T1>(0) };
+            return new object?[] { parameters.Get<T1>(0) };
         }
 
-        public static object[] GetParameterArray<T1, T2>(this JsonRPC.Request request, string[] names)
+        public static object?[] GetParameterArray<T1, T2>(this JsonRPC.Request request, string[] names)
         {
             object[]? parameters = request.GetParameterArray(names);
-            return new object[] { parameters.Get<T1>(0), parameters.Get<T2>(1) };
+            return new object?[] { parameters.Get<T1>(0), parameters.Get<T2>(1) };
         }
 
-        public static object[] GetParameterArray<T1, T2, T3>(this JsonRPC.Request request, string[] names)
+        public static object?[] GetParameterArray<T1, T2, T3>(this JsonRPC.Request request, string[] names)
         {
             object[]? parameters = request.GetParameterArray(names);
-            return new object[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2) };
+            return new object?[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2) };
         }
 
-        public static object[] GetParameterArray<T1, T2, T3, T4>(this JsonRPC.Request request, string[] names)
+        public static object?[] GetParameterArray<T1, T2, T3, T4>(this JsonRPC.Request request, string[] names)
         {
             object[]? parameters = request.GetParameterArray(names);
-            return new object[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2), parameters.Get<T4>(3) };
+            return new object?[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2), parameters.Get<T4>(3) };
         }
 
-        public static object[] GetParameterArray<T1, T2, T3, T4, T5>(this JsonRPC.Request request, string[] names)
+        public static object?[] GetParameterArray<T1, T2, T3, T4, T5>(this JsonRPC.Request request, string[] names)
         {
             object[]? parameters = request.GetParameterArray(names);
-            return new object[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2), parameters.Get<T4>(3), parameters.Get<T5>(4) };
+            return new object?[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2), parameters.Get<T4>(3), parameters.Get<T5>(4) };
         }
 
-        public static object[] GetParameterArray<T1, T2, T3, T4, T5, T6>(this JsonRPC.Request request, string[] names)
+        public static object?[] GetParameterArray<T1, T2, T3, T4, T5, T6>(this JsonRPC.Request request, string[] names)
         {
             object[]? parameters = request.GetParameterArray(names);
-            return new object[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2), parameters.Get<T4>(3), parameters.Get<T5>(4), parameters.Get<T6>(5) };
+            return new object?[] { parameters.Get<T1>(0), parameters.Get<T2>(1), parameters.Get<T3>(2), parameters.Get<T4>(3), parameters.Get<T5>(4), parameters.Get<T6>(5) };
         }
     }
 }
