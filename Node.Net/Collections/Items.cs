@@ -133,7 +133,10 @@ namespace Node.Net.Collections
             for (int i = 0; i < count; ++i)
             {
                 object? item = info.GetValue(i.ToString(), typeof(object));
-                Add((T)item);
+                if (item != null)
+                {
+                    Add((T)item);
+                }
             }
             int selected_index = info.GetInt32("SelectedIndex");
             if (selected_index != -1)

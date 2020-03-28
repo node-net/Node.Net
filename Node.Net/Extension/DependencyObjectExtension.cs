@@ -5,13 +5,13 @@ namespace Node.Net
 {
     public static class DependencyObjectExtension
     {
-        public static T FindChild<T>(this DependencyObject parent, string childName)
+        public static T? FindChild<T>(this DependencyObject parent, string childName)
             where T : DependencyObject
         {
             // Confirm parent and childName are valid.
             if (parent == null) return null;
 
-            T foundChild = null;
+            T? foundChild = null;
 
             int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
             for (int i = 0; i < childrenCount; i++)
