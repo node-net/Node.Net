@@ -29,6 +29,7 @@ namespace Node.Net.Collections
             //Assert.True(data.Equals(data2), "equals");
         }
 
+        /*
         public void Collect()
         {
             Dictionary states = Dictionary.Parse(Sample.Files.Repository.GetStream("Json/States.json"));
@@ -46,26 +47,26 @@ namespace Node.Net.Collections
             Assert.AreEqual(3205, dictionaries3.Count, "dictionaries3.Count");
 
             states.DeepUpdateParents();
-        }
+        }*/
 
         private bool Include(object item)
         {
             return true;
         }
 
-        [Test]
-        public void Collect1() => Collect();
+        //[Test]
+        //public void Collect1() => Collect();
 
-        [Test]
-        public void Collect2() => Collect();
+        //[Test]
+        //public void Collect2() => Collect();
 
-        [Test]
-        public void Collect3() => Collect();
+        //[Test]
+        //public void Collect3() => Collect();
 
-        [Test]
-        public void Collect4() => Collect();
+        //[Test]
+        //public void Collect4() => Collect();
 
-        [Test]
-        public void Collect5() => Collect();
+        //[Test]
+        //public void Collect5() => Collect();
     }
 }
