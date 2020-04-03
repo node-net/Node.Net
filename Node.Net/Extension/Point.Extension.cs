@@ -305,8 +305,7 @@ namespace Node.Net
                     }
                 }
                 Point[]? offsetPoints = offsetPointList.ToArray();
-                offsetPoints = offsetPoints.Close();
-                return offsetPoints;
+                return offsetPoints.Close();
             }
             return offsetPointList.ToArray();
         }

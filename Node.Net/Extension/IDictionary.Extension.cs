@@ -489,7 +489,9 @@ namespace Node.Net
             foreach (T item in items)
             {
 #if DEBUG
+#pragma warning disable CS8604 // Possible null reference argument.
                 string? _name = item.GetName();
+#pragma warning restore CS8604 // Possible null reference argument.
 #endif
                 if (item.GetName() == name)
                 {
@@ -795,7 +797,7 @@ namespace Node.Net
             ConstructorInfo ci = type.GetConstructor(
                                     BindingFlags.Instance | BindingFlags.NonPublic,
                                     null, paramTypes, null);
-            return ci.Invoke(new object[] { serializationInfo, streamingContext });
+            return ci?.Invoke(new object[] { serializationInfo, streamingContext });
         }
 
         public static T Convert<T>(this IDictionary value)
@@ -930,7 +932,7 @@ namespace Node.Net
 
         public static void SetRotationsOTS(this IDictionary dictionary, Vector3D ots)
         {
-            double zero_tolerance = 0.001;
+            const double zero_tolerance = 0.001;
             if (Abs(ots.X) > zero_tolerance)
             {
                 dictionary["Orientation"] = $"{ots.X} deg";
@@ -971,11 +973,11 @@ namespace Node.Net
                 dictionary.GetLocalToParent().GetSpin());
         }
 
-        public static IDictionary GetAncestor(this IDictionary child, string key, string value)
+        public static IDictionary? GetAncestor(this IDictionary child, string key, string value)
         {
             if (child?.GetParent() is IDictionary parent)
             {
-                if (parent.Contains(key) && parent[key].ToString() == value)
+                if (parent.Contains(key) && parent[key]!.ToString() == value)
                 {
                     return parent;
                 }
@@ -1086,8 +1088,8 @@ namespace Node.Net
             IDictionary? metaData = Internal.MetaData.Default.GetMetaData(dictionary);
             if (metaData.Contains("Currents") && Internal.MetaData.Default.GetMetaData(dictionary)["Currents"] is IDictionary currents && currents.Contains(typeof(T)))
             {
-                string? current_name = currents[typeof(T)].ToString();
-                return dictionary.Find<T>(current_name);
+                string? current_name = currents[typeof(T)]?.ToString();
+                return dictionary.Find<T>(current_name!);
             }
 
             IList<T>? items = dictionary.Collect<T>();

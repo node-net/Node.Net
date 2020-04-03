@@ -32,7 +32,7 @@ namespace Node.Net.Internal
             data["X"] = $"{translation.X} m";
             data["Y"] = $"{translation.Y} m";
             data["Z"] = $"{translation.Z} m";
-            Vector3D ots = Matrix3DExtension.GetRotationsOTS(matrix);
+            Vector3D ots = matrix.GetRotationsOTS();
             if (Abs(ots.X) > 0.0001)
             {
                 data["Orientation"] = $"{Round(ots.X, 4)} deg";

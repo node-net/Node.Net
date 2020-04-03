@@ -424,7 +424,7 @@ namespace Node.Net
             double multiplier = 1.0;
             Vector3D zcross = Vector3D.CrossProduct(tiltedX, localX);
             if(zcross.Z < 0) { multiplier = -1.0; }
-            
+
             return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, tiltedX) *  multiplier;
         }
 
@@ -454,8 +454,7 @@ namespace Node.Net
             newMatrix = newMatrix.RotateOTS(new Vector3D(orientation, tilt,spin));
             newMatrix.Translate(translation);
             return newMatrix;*/
-            
-            
+
             // backoff translation
             matrix.Translate(new System.Windows.Media.Media3D.Vector3D(-translation.X, -translation.Y, -translation.Z));
             Vector3D localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
@@ -465,7 +464,6 @@ namespace Node.Net
             // add back translation
             matrix.Translate(translation);
             return matrix;
-            
         }
 
         public static System.Windows.Media.Media3D.Matrix3D SetSpin(
