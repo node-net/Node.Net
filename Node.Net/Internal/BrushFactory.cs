@@ -33,7 +33,9 @@ namespace Node.Net.Internal
                     return Create(targetType, image);
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public IFactory ParentFactory { get; set; }
@@ -44,7 +46,9 @@ namespace Node.Net.Internal
             {
                 return new ImageBrush { ImageSource = source, TileMode = TileMode.Tile };
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
     }
 }

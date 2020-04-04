@@ -47,14 +47,16 @@ namespace Node.Net.Internal
             }
         }
 
-        private MemoryStream memoryStream = null;
+        private MemoryStream? memoryStream = null;
         public MemoryStream MemoryStream { get { return memoryStream; } }
 
         public static Signature GetSignature(Stream stream)
         {
             using (SignatureReader? sr = new SignatureReader())
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return sr.Read(stream) as Signature;
+#pragma warning restore CS8603 // Possible null reference return.
             }
         }
 

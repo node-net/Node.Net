@@ -1,10 +1,6 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Windows.Automation.Peers;
 using System.Windows.Media.Media3D;
-using NUnit.Framework;
 using static System.Math;
 
 namespace Node.Net.Test

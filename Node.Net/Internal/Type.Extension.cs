@@ -11,7 +11,7 @@ namespace Node.Net.Internal
             return Construct(type, parameters);
         }
 
-        public static object Construct(this Type type, object[] parameters = null)
+        public static object Construct(this Type type, object[]? parameters = null)
         {
             Type[]? types = Type.EmptyTypes;
             if (parameters != null)
@@ -41,7 +41,9 @@ namespace Node.Net.Internal
                     return constructor.Invoke(parameters);
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
     }
 }

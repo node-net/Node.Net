@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using static System.Math;
 
@@ -267,7 +266,7 @@ namespace Node.Net.Test.Extension
         public void SetRotationsOTS()
         {
             Dictionary<string, object> d1 = new Dictionary<string, object> { };
-            d1.SetRotationsOTS(new Vector3D(45.0,124.0,0.0));
+            d1.SetRotationsOTS(new Vector3D(45.0, 124.0, 0.0));
             Matrix3D m1 = d1.GetLocalToWorld();
             Assert.AreEqual(45.0, Round(m1.GetOrientation(), 3), "Orientation");
             Assert.AreEqual(124.0, Round(m1.GetTilt(), 3), "Tilt");

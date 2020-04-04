@@ -44,12 +44,16 @@ namespace Node.Net
                 IDictionary? dictionary = instance as IDictionary;
                 if (dictionary.GetParent() is IDictionary parent)
                 {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                     foreach (string key in parent.Keys)
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                     {
                         IDictionary? test_element = parent.Get<IDictionary>(key);
                         if (test_element != null && object.ReferenceEquals(test_element, dictionary))
                         {
+#pragma warning disable CS8603 // Possible null reference return.
                             return key;
+#pragma warning restore CS8603 // Possible null reference return.
                         }
                     }
                 }
@@ -141,14 +145,16 @@ namespace Node.Net
         /// <param name="propertyName"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static object GetPropertyValue(this object item, string propertyName, object defaultValue = null)
+        public static object GetPropertyValue(this object item, string propertyName, object? defaultValue = null)
         {
             if (item != null)
             {
                 System.Reflection.PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
                 if (propertyInfo != null)
                 {
+#pragma warning disable CS8603 // Possible null reference return.
                     return propertyInfo.GetValue(item);
+#pragma warning restore CS8603 // Possible null reference return.
                 }
             }
             return defaultValue;
@@ -169,7 +175,9 @@ namespace Node.Net
                 System.Reflection.PropertyInfo? propertyInfo = item.GetType().GetProperty(propertyName);
                 if (propertyInfo != null)
                 {
+#pragma warning disable CS8603 // Possible null reference return.
                     return (T)propertyInfo.GetValue(item);
+#pragma warning restore CS8603 // Possible null reference return.
                 }
             }
             return defaultValue;
@@ -230,7 +238,9 @@ namespace Node.Net
             IDictionary? metaData = Internal.MetaData.Default.GetMetaData(instance);
             if (metaData?.Contains("FullName") == true)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return metaData["FullName"].ToString();
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             return string.Empty;
@@ -268,7 +278,9 @@ namespace Node.Net
                 if (typeof(T) == typeof(double)) return (T)(object)System.Convert.ToDouble(item);
                 if (typeof(T) == typeof(IDictionary<string, string>)) return Convert<T>(item);
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return default;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public static T Convert<T>(object value)
@@ -278,9 +290,11 @@ namespace Node.Net
                 if (value is IDictionary dictionary)
                 {
                     Dictionary<string, string>? result = new Dictionary<string, string>();
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                     foreach (string key in dictionary.Keys)
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                     {
-                        result.Add(key, dictionary[key].ToString());
+                        result.Add(key, dictionary[key]?.ToString());
                     }
                     return (T)(object)result;
                 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.Windows.Media.Media3D;
 using static System.Math;
 
@@ -307,7 +305,7 @@ namespace Node.Net
 
         public static Matrix3D AlignZDirectionVector(this Matrix3D matrix, Vector3D newZDirectionVector)
         {
-            Vector3D negativeZDirection = new Vector3D(newZDirectionVector.X * -1.0, newZDirectionVector.Y*-1.0, newZDirectionVector.Z * -1.0);
+            Vector3D negativeZDirection = new Vector3D(newZDirectionVector.X * -1.0, newZDirectionVector.Y * -1.0, newZDirectionVector.Z * -1.0);
             double orientation = negativeZDirection.GetOrientation();
             double polarAngle = newZDirectionVector.GetPolarAngle();
 
@@ -323,7 +321,7 @@ namespace Node.Net
             data["Y"] = $"{translation.Y} m";
             data["Z"] = $"{translation.Z} m";
             Vector3D ots = Matrix3DExtension.GetRotationsOTS(matrix);
-            if(Abs(ots.X) > 0.0001)
+            if (Abs(ots.X) > 0.0001)
             {
                 data["Orientation"] = $"{Round(ots.X, 4)} deg";
             }
@@ -385,7 +383,7 @@ namespace Node.Net
             Vector3D localX = matrix.Transform(new System.Windows.Media.Media3D.Vector3D(1, 0, 0));
             Vector3D zcross = Vector3D.CrossProduct(new Vector3D(1, 0, 0), localX);
             double multiplier = 1.0;
-            if(zcross.Z < 0)
+            if (zcross.Z < 0)
             {
                 multiplier = -1.0;
             }
@@ -405,7 +403,7 @@ namespace Node.Net
             double multiplier = 1.0;
             Vector3D xcross = Vector3D.CrossProduct(orientedY, localY);
             double xangle = Vector3D.AngleBetween(localX, xcross);
-            if(xangle > 90.0) { multiplier = -1.0; }
+            if (xangle > 90.0) { multiplier = -1.0; }
             //if(xcross.X < 0.0) { multiplier = -1.0; }
             // rotation about the X' axis = angle between localY and orientedY
             double angle = System.Windows.Media.Media3D.Vector3D.AngleBetween(localY, orientedY) * multiplier;
@@ -423,9 +421,9 @@ namespace Node.Net
 
             double multiplier = 1.0;
             Vector3D zcross = Vector3D.CrossProduct(tiltedX, localX);
-            if(zcross.Z < 0) { multiplier = -1.0; }
+            if (zcross.Z < 0) { multiplier = -1.0; }
 
-            return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, tiltedX) *  multiplier;
+            return System.Windows.Media.Media3D.Vector3D.AngleBetween(localX, tiltedX) * multiplier;
         }
 
         public static System.Windows.Media.Media3D.Matrix3D SetOrientation(this System.Windows.Media.Media3D.Matrix3D matrix, double orientationDegrees)
@@ -483,7 +481,7 @@ namespace Node.Net
         }
 
         public static bool AlmostEqual(this System.Windows.Media.Media3D.Matrix3D a,
-            System.Windows.Media.Media3D.Matrix3D b,int decimals = 4)
+            System.Windows.Media.Media3D.Matrix3D b, int decimals = 4)
         {
             if (Round(a.M11, decimals) != Round(b.M11, decimals)) return false;
             if (Round(a.M12, decimals) != Round(b.M12, decimals)) return false;
@@ -504,7 +502,7 @@ namespace Node.Net
             return true;
         }
 
-        public static List<double> GetValues(this System.Windows.Media.Media3D.Matrix3D matrix,int decimals)
+        public static List<double> GetValues(this System.Windows.Media.Media3D.Matrix3D matrix, int decimals)
         {
             List<double>? values = new List<double>();
             values.Add(Round(matrix.M11, decimals));

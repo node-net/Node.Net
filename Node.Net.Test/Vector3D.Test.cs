@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using NUnit.Framework;
 using System.Windows.Media.Media3D;
-using NUnit.Framework;
 using static System.Math;
 
 namespace Node.Net.Test
@@ -37,36 +33,36 @@ namespace Node.Net.Test
         }
 
         [Test]
-        [TestCase(0, 0, 1, 0,"positive Z axis")]    
-        [TestCase(0, 0, -1, 0, "negative Z axis")]         
-        [TestCase(1,0,0,0, "positive X axis")]          
+        [TestCase(0, 0, 1, 0, "positive Z axis")]
+        [TestCase(0, 0, -1, 0, "negative Z axis")]
+        [TestCase(1, 0, 0, 0, "positive X axis")]
         [TestCase(-1, 0, 0, 180, "negative X axis")]
         [TestCase(0, 1, 0, 90, "positive Y axis")]
         [TestCase(0, -1, 0, -90, "negative Y axis")]
-        [TestCase(1,1,0,45,"1,1 in XY plane")]
+        [TestCase(1, 1, 0, 45, "1,1 in XY plane")]
         [TestCase(-1, 1, 0, 135, "-1,1 in XY plane")]
         [TestCase(1, -1, 0, -45.0, "1,-1 in XY plane")]
         [TestCase(-1, -1, 0, -135.0, "-1,-1 in XY plane")]
-        public static void GetAzimuthalAngle(double x, double y, double z, double expected_angle,string name)
+        public static void GetAzimuthalAngle(double x, double y, double z, double expected_angle, string name)
         {
-            Assert.AreEqual(expected_angle, Round(new Vector3D(x, y, z).GetAzimuthalAngle(), 3),name);
+            Assert.AreEqual(expected_angle, Round(new Vector3D(x, y, z).GetAzimuthalAngle(), 3), name);
         }
 
         [Test]
-        [TestCase(0,0,1,0,"positive Z axis")]
-        [TestCase(0, 0, -1, 180,"negative Z axis")]
+        [TestCase(0, 0, 1, 0, "positive Z axis")]
+        [TestCase(0, 0, -1, 180, "negative Z axis")]
         [TestCase(1, 0, 0, 90, "positive X axis")]
         [TestCase(-1, 0, 0, 90, "negative X axis")]
         [TestCase(0, 1, 0, 90, "positive Y axis")]
         [TestCase(0, -1, 0, 90, "negative Y axis")]
-        [TestCase(1,0,1,45.0,"1,1 in the XZ plane")]
-        public static void GetPolarAngle(double x, double y, double z, double expected_angle,string name)
+        [TestCase(1, 0, 1, 45.0, "1,1 in the XZ plane")]
+        public static void GetPolarAngle(double x, double y, double z, double expected_angle, string name)
         {
-            Assert.AreEqual(expected_angle, Round(new Vector3D(x, y, z).GetPolarAngle(), 3),name);
+            Assert.AreEqual(expected_angle, Round(new Vector3D(x, y, z).GetPolarAngle(), 3), name);
         }
 
         [Test]
-        [TestCase(0,0,-1,0, "positive Z axis")]
+        [TestCase(0, 0, -1, 0, "positive Z axis")]
         [TestCase(0, 0, -1, 0, "negative Z axis")]
         [TestCase(1, 0, 0, -90, "positive X axis")]
         [TestCase(-1, 0, 0, 90, "negative X axis")]
@@ -76,11 +72,11 @@ namespace Node.Net.Test
         [TestCase(-1, 1, 0, 45, "-1,1 in XY plane")]
         [TestCase(1, -1, 0, -135.0, "1,-1 in XY plane")]
         [TestCase(-1, -1, 0, 135.0, "-1,-1 in XY plane")]
-        public static void GetOrientation(double x, double y, double z, double expected_orientation,string name)
+        public static void GetOrientation(double x, double y, double z, double expected_orientation, string name)
         {
-            Assert.AreEqual(expected_orientation, Round(new Vector3D(x, y, z).GetOrientation(), 3),name);
+            Assert.AreEqual(expected_orientation, Round(new Vector3D(x, y, z).GetOrientation(), 3), name);
         }
 
-        
+
     }
 }

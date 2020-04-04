@@ -1,9 +1,6 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Text;
 using System.Windows.Media.Media3D;
-using NUnit.Framework;
 using static System.Math;
 
 namespace Node.Net
@@ -74,17 +71,17 @@ namespace Node.Net
         [Test]
         public void Rotate()
         {
-            Matrix3D m1 = new Matrix3D().RotateOTS(new Vector3D(15,0,0));
+            Matrix3D m1 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
             Vector3D xvec1 = m1.Transform(new Vector3D(1, 0, 0));
             Assert.AreEqual(0.966, Round(xvec1.X, 3), "xvec1.X");
             Assert.AreEqual(0.259, Round(xvec1.Y, 3), "xvec1.Y");
             Assert.AreEqual(0.000, Round(xvec1.Z, 3), "xvec1.Z");
             Vector3D ots1 = m1.GetRotationsOTS();
-            Assert.AreEqual(15.0, Round(ots1.X,3), "ots1.X");
+            Assert.AreEqual(15.0, Round(ots1.X, 3), "ots1.X");
             Assert.AreEqual(0.0, Round(ots1.Y, 3), "ots1.Y");
             Assert.AreEqual(0.0, Round(ots1.Z, 3), "ots1.Z");
 
-            Matrix3D m2 = new Matrix3D().RotateOTS(new Vector3D(15, -60,0));
+            Matrix3D m2 = new Matrix3D().RotateOTS(new Vector3D(15, -60, 0));
             Vector3D zvec2 = m2.Transform(new Vector3D(0, 0, 1));
             Assert.AreEqual(-0.224, Round(zvec2.X, 3), "zvec2.X");
             Assert.AreEqual(0.837, Round(zvec2.Y, 3), "zvec2.Y");
@@ -119,14 +116,14 @@ namespace Node.Net
         }
 
         [Test]
-        [TestCase(0,0,0)]
-        [TestCase(45,0,0)]
+        [TestCase(0, 0, 0)]
+        [TestCase(45, 0, 0)]
         [TestCase(135, 0, 0)]
         [TestCase(135, 55, 0)]
-        [TestCase(45,15,0)]
+        [TestCase(45, 15, 0)]
         [TestCase(45, -15, 0)]
         [TestCase(-45, 15, 0)]
-        public void RotateOTS(double orientation,double tilt,double spin)
+        public void RotateOTS(double orientation, double tilt, double spin)
         {
             Matrix3D mA = new Matrix3D().RotateOTS(new Vector3D(orientation, tilt, spin));
             double o_check = mA.GetOrientation();
@@ -143,7 +140,7 @@ namespace Node.Net
         [TestCase(45, 0, 0)]
         [TestCase(45, 30, 0)]
         [TestCase(45, -30, 0)]
-        public void RotateOTS_With_Offset(double orientation,double tilt,double spin)
+        public void RotateOTS_With_Offset(double orientation, double tilt, double spin)
         {
             Matrix3D mA = new Matrix3D();
             mA.Translate(new Vector3D(10, 20, 30));
@@ -184,7 +181,7 @@ namespace Node.Net
         [Test]
         public void Tilt()
         {
-            Matrix3D m0 = new Matrix3D().RotateOTS(new Vector3D(0, 0,0));
+            Matrix3D m0 = new Matrix3D().RotateOTS(new Vector3D(0, 0, 0));
             Vector3D mz0 = m0.Transform(new Vector3D(0, 0, -1));
             Assert.AreEqual(-1, Round(mz0.Z, 4), "mz0.Z");
 

@@ -13,7 +13,7 @@ namespace Node.Net.Internal
         public static List<Assembly> GlobalResourceAssemblies { get; } = new List<Assembly>();
         public List<Assembly> ResourceAssemblies { get; set; } = new List<Assembly>();
         public bool ExactMatch { get; set; } = false;
-        private string ignoreFilter;
+        private string? ignoreFilter;
 
         public void Refresh()
         {
@@ -34,7 +34,9 @@ namespace Node.Net.Internal
                 }
                 return Create(targetType, Create(typeof(Stream), source));
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public IFactory ParentFactory { get; set; }
@@ -52,11 +54,15 @@ namespace Node.Net.Internal
                 {
                     if (manifestResourceName == name)
                     {
+#pragma warning disable CS8603 // Possible null reference return.
                         return assembly.GetManifestResourceStream(manifestResourceName);
+#pragma warning restore CS8603 // Possible null reference return.
                     }
                     if (!ExactMatch && manifestResourceName.Contains(name))
                     {
+#pragma warning disable CS8603 // Possible null reference return.
                         return assembly.GetManifestResourceStream(manifestResourceName);
+#pragma warning restore CS8603 // Possible null reference return.
                     }
                 }
             }
@@ -66,11 +72,15 @@ namespace Node.Net.Internal
                 {
                     if (manifestResourceName == name)
                     {
+#pragma warning disable CS8603 // Possible null reference return.
                         return assembly.GetManifestResourceStream(manifestResourceName);
+#pragma warning restore CS8603 // Possible null reference return.
                     }
                     if (!ExactMatch && manifestResourceName.Contains(name))
                     {
+#pragma warning disable CS8603 // Possible null reference return.
                         return assembly.GetManifestResourceStream(manifestResourceName);
+#pragma warning restore CS8603 // Possible null reference return.
                     }
                 }
             }

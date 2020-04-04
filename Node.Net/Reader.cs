@@ -47,14 +47,18 @@ namespace Node.Net
             }
         }
 
+#pragma warning disable CS8603 // Possible null reference return.
         public object Read(string filename) => IReadExtension.Read(this, filename);
+#pragma warning restore CS8603 // Possible null reference return.
 
         private T Convert<T>(object instance)
         {
             if (instance == null)
             {
 #pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
+#pragma warning disable CS8603 // Possible null reference return.
                 return default;
+#pragma warning restore CS8603 // Possible null reference return.
 #pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
             }
 
@@ -63,7 +67,9 @@ namespace Node.Net
                 return t;
             }
 #pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
+#pragma warning disable CS8603 // Possible null reference return.
             return default;
+#pragma warning restore CS8603 // Possible null reference return.
 #pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
         }
 

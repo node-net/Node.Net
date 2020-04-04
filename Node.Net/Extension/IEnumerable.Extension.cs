@@ -84,7 +84,9 @@ namespace Node.Net
                 if (types[0] == typeof(double[]))
                 {
                     int length = 0;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                     foreach (double[] dar in list)
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                     {
                         if (length == 0)
                         {
@@ -103,7 +105,9 @@ namespace Node.Net
                         {
                             for (int j = 0; j < length; ++j)
                             {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                                 array[i, j] = ((double[])GetAt(list, i))[j];
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                             }
                         }
                         return array;

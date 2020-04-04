@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows.Media.Media3D;
 using static System.Math;
@@ -515,7 +514,9 @@ namespace Node.Net
                     }
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return default;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default, bool search = false)
@@ -735,7 +736,9 @@ namespace Node.Net
             }
             if (source.GetType() != targetType)
             {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 copy = Activator.CreateInstance(targetType) as IDictionary;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 if (copy == null)
                 {
                     throw new InvalidOperationException($"failed to create instance of type {targetType.FullName}");
@@ -794,10 +797,14 @@ namespace Node.Net
 
             StreamingContext streamingContext = new StreamingContext();
             Type[]? paramTypes = new Type[] { typeof(SerializationInfo), typeof(StreamingContext) };
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             ConstructorInfo ci = type.GetConstructor(
                                     BindingFlags.Instance | BindingFlags.NonPublic,
                                     null, paramTypes, null);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8603 // Possible null reference return.
             return ci?.Invoke(new object[] { serializationInfo, streamingContext });
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public static T Convert<T>(this IDictionary value)
@@ -941,7 +948,7 @@ namespace Node.Net
             {
                 if (dictionary.Contains("Orientation")) { dictionary.Remove("Orientation"); }
             }
-            if(Abs(ots.Y) > zero_tolerance)
+            if (Abs(ots.Y) > zero_tolerance)
             {
                 dictionary["Tilt"] = $"{ots.Y} deg";
             }
@@ -998,7 +1005,9 @@ namespace Node.Net
                 }
                 return GetNearestAncestor<T>(parent);
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return default;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public static T GetFurthestAncestor<T>(this IDictionary child)
@@ -1018,10 +1027,14 @@ namespace Node.Net
                 {
                     ancestor = (IDictionary)(T)child;
                 }
+#pragma warning disable CS8603 // Possible null reference return.
                 return (T)ancestor;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 #pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
+#pragma warning disable CS8603 // Possible null reference return.
             return default;
+#pragma warning restore CS8603 // Possible null reference return.
 #pragma warning restore CS8653 // A default expression introduces a null value for a type parameter.
         }
 
@@ -1098,7 +1111,9 @@ namespace Node.Net
                 return items[0];
             }
 
+#pragma warning disable CS8603 // Possible null reference return.
             return default;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public static void SetCurrent<T>(this IDictionary dictionary, string name) where T : IDictionary
@@ -1106,14 +1121,18 @@ namespace Node.Net
             IDictionary? metaData = Internal.MetaData.Default.GetMetaData(dictionary);
             if (!metaData.Contains("Currents")) { metaData.Add("Currents", new Dictionary<Type, string>()); }
             IDictionary? currents = Internal.MetaData.Default.GetMetaData(dictionary)["Currents"] as IDictionary;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             currents[typeof(T)] = name;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         public static IList<string> CollectNames<T>(this IDictionary element)
         {
             IList<T>? items = element.Collect<T>();
             List<string>? names = new List<string>();
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             foreach (object child in items)
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             {
                 if (child != null)
                 {

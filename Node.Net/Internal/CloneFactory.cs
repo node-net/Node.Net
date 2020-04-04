@@ -14,7 +14,9 @@ namespace Node.Net.Internal
         {
             if (source == null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             if (targetType.IsInstanceOfType(source))
@@ -31,7 +33,9 @@ namespace Node.Net.Internal
                     }
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         private static void Write(Stream stream, object value)
