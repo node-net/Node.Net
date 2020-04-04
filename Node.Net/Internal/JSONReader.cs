@@ -41,21 +41,19 @@ namespace Node.Net.Internal
 
         public object Read(Stream stream)
         {
-            using (System.IO.TextReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true))
+            using System.IO.TextReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            try
             {
-                try
-                {
-                    ObjectCount = 0;
-                    object? item = Read(reader);
+                ObjectCount = 0;
+                object? item = Read(reader);
 #pragma warning disable CS8603 // Possible null reference return.
-                    return item;
+                return item;
 #pragma warning restore CS8603 // Possible null reference return.
-                }
-                catch (Exception e)
-                {
-                    string? exception_info = $"JsonRead.Load raised an exception at stream position {stream.Position}";
-                    throw new InvalidOperationException(exception_info, e);
-                }
+            }
+            catch (Exception e)
+            {
+                string? exception_info = $"JsonRead.Load raised an exception at stream position {stream.Position}";
+                throw new InvalidOperationException(exception_info, e);
             }
         }
 
@@ -198,7 +196,7 @@ namespace Node.Net.Internal
             while (!done)
             {
                 reader.EatWhiteSpace();
-                list.Add(Read(reader));
+                list?.Add(Read(reader));
                 reader.EatWhiteSpace();
                 ch = (char)reader.Peek();
                 if (ch == ',')
@@ -278,13 +276,13 @@ namespace Node.Net.Internal
             {
                 reader.EatWhiteSpace();
                 string? key = ReadString(reader) as string;
-
+                /*
 #if DEBUG
                 if (key == "string_symbol")
                 {
                     int x = 0;
                 }
-#endif
+#endif*/
                 reader.EatWhiteSpace();
                 reader.Read(); //consume ':'
                 dictionary[key] = Read(reader);

@@ -36,7 +36,9 @@ namespace Node.Net.Internal
             {
                 if (property.Name == name)
                 {
+#pragma warning disable CS8605 // Unboxing a possibly null value.
                     Color color = (Color)property.GetValue(null, null);
+#pragma warning restore CS8605 // Unboxing a possibly null value.
                     this[name] = color;
                     return color;
                 }

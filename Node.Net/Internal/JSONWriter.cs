@@ -199,7 +199,9 @@ namespace Node.Net.Internal
             IEnumerable? enumerable = value as System.Collections.IEnumerable;
             int writeCount = 0;
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (object item in enumerable)
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             {
                 bool skip = false;

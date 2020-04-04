@@ -34,7 +34,9 @@
         public Response Respond(Request request)
         {
             _action.Invoke(request.GetParameterArray<T>(_parameter_names));
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             return new Response(request.Id, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         private readonly System.Action<T> _action;
