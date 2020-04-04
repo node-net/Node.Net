@@ -24,6 +24,9 @@ namespace Node.Net.Collections
 			Assert.AreSame(yard, mailbox.Parent, "mailbox.Parent");
 			var stake1 = yard.Descendants.FirstOrDefault(e => e.Name == "stake1");
 			Assert.NotNull(stake1, nameof(stake1));
+
+			var json = yard.Json;
+			Assert.AreEqual(66, json.Length);
 		}
 
 		public static Spatial Yard

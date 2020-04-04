@@ -31,5 +31,12 @@ namespace Node.Net
             memory.Seek(0, SeekOrigin.Begin);
             return memory.GetMD5String();
         }
+
+        public static void Save(this IFormatter formatter,string filename,object graph)
+        {
+            using var fs = new FileStream(filename, FileMode.Create);
+            formatter.Serialize(fs, graph);
+            fs.Close();
+        }
     }
 }

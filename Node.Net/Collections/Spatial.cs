@@ -21,5 +21,7 @@ namespace Node.Net.Collections
                 return this.Collect<Spatial>();
             }
         }
+
+        
     }
 }
