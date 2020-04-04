@@ -48,7 +48,9 @@ namespace Node.Net
         }
 
 #pragma warning disable CS8603 // Possible null reference return.
+
         public object Read(string filename) => IReadExtension.Read(this, filename);
+
 #pragma warning restore CS8603 // Possible null reference return.
 
         private T Convert<T>(object instance)
@@ -141,7 +143,7 @@ namespace Node.Net
             set { jsonReader.ConversionTypeNames = value; }
         }
 
-        private Internal.JsonReader jsonReader = new Internal.JsonReader();
+        private Internal.JsonReader? jsonReader = new Internal.JsonReader();
 
         public object? Open(string name)
         {

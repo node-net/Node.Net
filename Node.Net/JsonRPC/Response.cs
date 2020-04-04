@@ -87,7 +87,9 @@ namespace Node.Net.JsonRPC
                 if (result != null && (result is string))
                 {
                     string? original = result.ToString();
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     return original.Replace(@"\u0022", @"""").Replace("u0022", @"""");
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 }
 #pragma warning disable CS8603 // Possible null reference return.
                 return result;
