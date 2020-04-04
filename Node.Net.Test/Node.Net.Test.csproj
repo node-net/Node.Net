@@ -14,12 +14,14 @@
 
   <ItemGroup>
     <None Remove="JsonRPC\Responder.Test.Data.json" />
+    <None Remove="Resources\Node.Net.png" />
     <None Remove="Resources\Object.Coverage.json" />
     <None Remove="Resources\States.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="JsonRPC\Responder.Test.Data.json" />
+    <EmbeddedResource Include="Resources\Node.Net.png" />
     <EmbeddedResource Include="Resources\Object.Coverage.json" />
     <EmbeddedResource Include="Resources\States.json" />
   </ItemGroup>
