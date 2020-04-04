@@ -15,17 +15,23 @@ namespace Node.Net.JsonRPC
                 IDictionary? dictionary = new Reader().Read<IDictionary>(memory);
                 if (dictionary.Contains("id"))
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     this.Add("id", dictionary["id"]);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
 
                 if (dictionary.Contains("result"))
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     this.Add("result", dictionary["result"]);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
 
                 if (dictionary.Contains("error"))
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     Error? error = new Error(dictionary["error"] as IDictionary);
+#pragma warning restore CS8604 // Possible null reference argument.
                     this.Add("error", error);
                 }
             }
@@ -64,17 +70,23 @@ namespace Node.Net.JsonRPC
             this.Add("jsonrpc", "2.0");
             if (data.Contains("id"))
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 this.Add("id", data["id"]);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
 
             if (data.Contains("result"))
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 this.Add("result", data["result"]);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
 
             if (data.Contains("error"))
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 Error? error = new Error(data["error"] as IDictionary);
+#pragma warning restore CS8604 // Possible null reference argument.
                 this.Add("error", error);
             }
         }

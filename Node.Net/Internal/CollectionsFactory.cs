@@ -10,13 +10,17 @@ namespace Node.Net.Internal
         {
             if (source != null && source is string)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 Stream? stream = StreamFactory.Create(source.ToString());
+#pragma warning restore CS8604 // Possible null reference argument.
                 if (stream != null)
                 {
                     object? instance = Create(targetType, stream);
                     if (instance is IDictionary idictionary)
                     {
+#pragma warning disable CS8604 // Possible null reference argument.
                         idictionary.SetFileName(source.ToString());
+#pragma warning restore CS8604 // Possible null reference argument.
                     }
 
                     return instance;

@@ -39,7 +39,9 @@ namespace Node.Net
             {
                 for (int i = 0; i < names.Length; ++i)
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     if (request.Parameters.ContainsKey(i.ToString()))
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                     {
                         results.Add(request.Parameters[i.ToString()]);
                     }

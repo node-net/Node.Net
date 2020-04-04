@@ -42,13 +42,17 @@ namespace Node.Net
             if (fullName.Length == 0)
             {
                 IDictionary? dictionary = instance as IDictionary;
+#pragma warning disable CS8604 // Possible null reference argument.
                 if (dictionary.GetParent() is IDictionary parent)
+#pragma warning restore CS8604 // Possible null reference argument.
                 {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                     foreach (string key in parent.Keys)
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                     {
+#pragma warning disable CS8604 // Possible null reference argument.
                         IDictionary? test_element = parent.Get<IDictionary>(key);
+#pragma warning restore CS8604 // Possible null reference argument.
                         if (test_element != null && object.ReferenceEquals(test_element, dictionary))
                         {
 #pragma warning disable CS8603 // Possible null reference return.
@@ -157,7 +161,9 @@ namespace Node.Net
 #pragma warning restore CS8603 // Possible null reference return.
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return defaultValue;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         /// <summary>
@@ -239,7 +245,9 @@ namespace Node.Net
             if (metaData?.Contains("FullName") == true)
             {
 #pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 return metaData["FullName"].ToString();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 #pragma warning restore CS8603 // Possible null reference return.
             }
 
@@ -294,7 +302,35 @@ namespace Node.Net
                     foreach (string key in dictionary.Keys)
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                     {
+
+/* Unmerged change from project 'Node.Net (net46)'
+Before:
                         result.Add(key, dictionary[key]?.ToString());
+                    }
+After:
+#pragma warning disable CS8604 // Possible null reference argument.
+                        result.Add(key, dictionary[key]?.ToString());
+#pragma warning restore CS8604 // Possible null reference argument.
+                    }
+*/
+
+/* Unmerged change from project 'Node.Net (net48)'
+Before:
+                        result.Add(key, dictionary[key]?.ToString());
+                    }
+After:
+#pragma warning disable CS8604 // Possible null reference argument.
+                        result.Add(key, dictionary[key]?.ToString());
+#pragma warning restore CS8604 // Possible null reference argument.
+                    }
+*/
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
+                        result.Add(key, dictionary[key]?.ToString());
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8604 // Possible null reference argument.
                     }
                     return (T)(object)result;
                 }

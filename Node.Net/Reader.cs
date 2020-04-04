@@ -114,7 +114,9 @@ namespace Node.Net
 
         public object ReadJSON(Stream stream)
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             object? i = jsonReader.Read(stream);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (i is IDictionary dictionary)
             {
                 dictionary.DeepUpdateParents();
@@ -127,20 +129,32 @@ namespace Node.Net
 
         public Type DefaultDocumentType
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             get { return jsonReader.DefaultDocumentType; }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             set { jsonReader.DefaultDocumentType = value; }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         public Type DefaultObjectType
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             get { return jsonReader.DefaultObjectType; }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             set { jsonReader.DefaultObjectType = value; }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         public Dictionary<string, Type> ConversionTypeNames
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             get { return jsonReader.ConversionTypeNames; }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             set { jsonReader.ConversionTypeNames = value; }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         private Internal.JsonReader? jsonReader = new Internal.JsonReader();

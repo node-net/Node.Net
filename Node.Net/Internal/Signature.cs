@@ -14,7 +14,7 @@ namespace Node.Net.Internal
             bytes = bytesSignature;
         }
 
-        private readonly byte[] bytes = new byte[0];// null;
+        private readonly byte[] bytes = Array.Empty<byte>();// null;
         private string text = "";
 
         public string Text

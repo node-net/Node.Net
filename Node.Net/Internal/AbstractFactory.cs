@@ -36,7 +36,9 @@ namespace Node.Net.Internal
             }
             else
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 Stream? stream = CreateStream(source);
+#pragma warning restore CS8604 // Possible null reference argument.
                 if (stream != null && source != null)
                 {
                     string? s = source.ToString();
@@ -57,11 +59,19 @@ namespace Node.Net.Internal
                 Type? concreteType = this[_targetType];
                 if (_targetType.IsAssignableFrom(targetType))
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     return concreteType.Construct(source);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
             }
+#pragma warning disable CS8604 // Possible null reference argument.
             object? instance = targetType.Construct(source);
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
             return instance ?? ResourceFactory.Create(targetType, source) ?? CloneFactory.Create(targetType, source);
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         private Stream CreateStream(object source)
@@ -111,7 +121,9 @@ namespace Node.Net.Internal
                         }
                         else
                         {
+#pragma warning disable CS8604 // Possible null reference argument.
                             new_dictionary.SetFileName(source.ToString());
+#pragma warning restore CS8604 // Possible null reference argument.
                         }
                     }
                     instance = new_dictionary;

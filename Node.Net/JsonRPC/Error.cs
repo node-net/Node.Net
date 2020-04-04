@@ -19,17 +19,23 @@ namespace Node.Net.JsonRPC
         {
             if (data.Contains("code"))
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 this.Add("code", data["code"]);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
 
             if (data.Contains("message"))
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 this.Add("message", data["message"]);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
 
             if (data.Contains("data"))
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 this.Add("data", data["data"]);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
         }
 

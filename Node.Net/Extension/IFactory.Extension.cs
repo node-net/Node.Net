@@ -6,7 +6,9 @@
 
         public static T Create<T>(this IFactory factory, object? source)
         {
+#pragma warning disable CS8604 // Possible null reference argument.
             object? instance = factory.Create(typeof(T), source);
+#pragma warning restore CS8604 // Possible null reference argument.
             if (instance != null && instance is T)
             {
                 return (T)instance;

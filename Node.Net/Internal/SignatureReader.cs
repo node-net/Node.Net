@@ -48,7 +48,9 @@ namespace Node.Net.Internal
         }
 
         private MemoryStream? memoryStream = null;
+#pragma warning disable CS8603 // Possible null reference return.
         public MemoryStream MemoryStream { get { return memoryStream; } }
+#pragma warning restore CS8603 // Possible null reference return.
 
         public static Signature GetSignature(Stream stream)
         {

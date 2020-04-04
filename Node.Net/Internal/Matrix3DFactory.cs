@@ -13,7 +13,9 @@ namespace Node.Net.Internal
         {
             if (source != null && source is IDictionary)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 Matrix3D? matrix = CreateFromIDictionary(source as IDictionary);
+#pragma warning restore CS8604 // Possible null reference argument.
                 if (matrix.HasValue)
                 {
                     return matrix.Value;

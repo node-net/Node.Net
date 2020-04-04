@@ -29,7 +29,9 @@ namespace Node.Net.Internal
         /// <returns></returns>
         public bool HasMetaData(object item)
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             return data.ContainsKey(new WeakReference(item));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         public IDictionary GetMetaData(object item)
@@ -39,7 +41,9 @@ namespace Node.Net.Internal
                 return new Dictionary<string, object>();
             }
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             if (data.ContainsKey(new WeakReference(item)))
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             {
                 return data[new WeakReference(item)];
             }
@@ -116,7 +120,9 @@ namespace Node.Net.Internal
             if (item != null)
             {
                 WeakReference? wr = new WeakReference(item);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 data.Remove(wr);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
             Clean();
         }
@@ -129,7 +135,9 @@ namespace Node.Net.Internal
             try
             {
                 List<WeakReference>? deadKeys = new List<WeakReference>();
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 foreach (WeakReference? wr in data.Keys)
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 {
                     if (!wr.IsAlive)
                     {

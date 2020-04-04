@@ -63,7 +63,9 @@ namespace Node.Net.JsonRPC
             try
             {
                 IDictionary? request_dictionary = new Internal.JsonReader().Read(context.Request.InputStream) as IDictionary;
+#pragma warning disable CS8604 // Possible null reference argument.
                 Request? request = new Request(request_dictionary);
+#pragma warning restore CS8604 // Possible null reference argument.
                 try
                 {
                     using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))

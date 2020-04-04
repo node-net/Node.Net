@@ -231,7 +231,9 @@ namespace Node.Net
             foreach (object? item in idictionary.Values)
             {
                 if (item != null && item is T && !results.Contains(item) && (
+#pragma warning disable CS8604 // Possible null reference argument.
                         search == null || matchFunction(item as IDictionary, search)))
+#pragma warning restore CS8604 // Possible null reference argument.
                 {
                     results.Add(item);
                 }
@@ -299,7 +301,9 @@ namespace Node.Net
             {
                 if (item != null)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (type.IsInstanceOfType(item) && !results.Contains(item) && (search == null || MatchesSearch(item as IDictionary, search)))
+#pragma warning restore CS8604 // Possible null reference argument.
                     //if(item.GetType().IsInstanceOfType(type) && !results.Contains(item))
                     {
                         results.Add(item);
@@ -470,7 +474,9 @@ namespace Node.Net
         public static IDictionary Clone(this IDictionary source)
         {
             IDictionary? clone = Activator.CreateInstance(source.GetType()) as IDictionary;
+#pragma warning disable CS8604 // Possible null reference argument.
             clone.Copy(source);
+#pragma warning restore CS8604 // Possible null reference argument.
             return clone!;
         }
 
@@ -479,8 +485,12 @@ namespace Node.Net
             IList<T>? items = dictionary.Collect<T>();
             foreach (T item in items)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 if (deepUpdateParents && item.GetParent() != dictionary) { dictionary.DeepUpdateParents(); }
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
                 if (item.GetFullName() == name)
+#pragma warning restore CS8604 // Possible null reference argument.
                 {
                     return item;
                 }
@@ -492,7 +502,9 @@ namespace Node.Net
                 string? _name = item.GetName();
 #pragma warning restore CS8604 // Possible null reference argument.
 #endif
+#pragma warning disable CS8604 // Possible null reference argument.
                 if (item.GetName() == name)
+#pragma warning restore CS8604 // Possible null reference argument.
                 {
                     return item;
                 }
@@ -501,14 +513,18 @@ namespace Node.Net
             {
                 foreach (T item in items)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (item.GetName().Contains(name))
+#pragma warning restore CS8604 // Possible null reference argument.
                     {
                         return item;
                     }
                 }
                 foreach (T item in items)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (item.GetFullName().Contains(name))
+#pragma warning restore CS8604 // Possible null reference argument.
                     {
                         return item;
                     }
@@ -577,28 +593,36 @@ namespace Node.Net
                 IList<T>? items = dictionary.Collect<T>();
                 foreach (T item in items)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (item.GetFullName() == name)
+#pragma warning restore CS8604 // Possible null reference argument.
                     {
                         return item;
                     }
                 }
                 foreach (T item in items)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (item.GetName() == name)
+#pragma warning restore CS8604 // Possible null reference argument.
                     {
                         return item;
                     }
                 }
                 foreach (T item in items)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (item.GetName().Contains(name))
+#pragma warning restore CS8604 // Possible null reference argument.
                     {
                         return item;
                     }
                 }
                 foreach (T item in items)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (item.GetFullName().Contains(name))
+#pragma warning restore CS8604 // Possible null reference argument.
                     {
                         return item;
                     }
@@ -607,7 +631,9 @@ namespace Node.Net
 
             return typeof(T) == typeof(string) && EqualityComparer<T>.Default.Equals(
                 defaultValue,
+#pragma warning disable CS8604 // Possible null reference argument.
                 default)
+#pragma warning restore CS8604 // Possible null reference argument.
                 ? (T)(object)string.Empty
                 : defaultValue;
         }
@@ -790,7 +816,11 @@ namespace Node.Net
                 IDictionary newDictionary = (defaultConstructor.Invoke(Array.Empty<object>()) as IDictionary)!;
                 foreach (object? key in data.Keys)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
                     newDictionary.Add(key, data[key]);
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
                 return newDictionary!;
             }
@@ -844,7 +874,9 @@ namespace Node.Net
                 object? parent = dictionary.GetParent();
                 if (parent != null)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     localToWorld.Append(GetLocalToWorld(parent as IDictionary));
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
             }
 
@@ -999,7 +1031,9 @@ namespace Node.Net
             {
                 if (parent is T ancestor && !EqualityComparer<T>.Default.Equals(
                     ancestor,
+#pragma warning disable CS8604 // Possible null reference argument.
                     default))
+#pragma warning restore CS8604 // Possible null reference argument.
                 {
                     return ancestor;
                 }
@@ -1018,7 +1052,9 @@ namespace Node.Net
                 if (ancestor != null)
                 {
                     T further_ancestor = GetFurthestAncestor<T>(ancestor);
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (!EqualityComparer<T>.Default.Equals(further_ancestor, default))
+#pragma warning restore CS8604 // Possible null reference argument.
                     {
                         return further_ancestor;
                     }
@@ -1080,7 +1116,9 @@ namespace Node.Net
                             return keyCompare;
                         }
 
+#pragma warning disable CS8604 // Possible null reference argument.
                         IComparable? bValue = b[bKey] as IComparable;
+#pragma warning restore CS8604 // Possible null reference argument.
                         int valueCompare = 0;
                         if (a[aKey] is IComparable aValue)
                         {
@@ -1147,7 +1185,9 @@ namespace Node.Net
         }
 
         public static IList<T> Collect<T>(this IDictionary dictionary, Func<object, bool> filter)
+#pragma warning disable CS8604 // Possible null reference argument.
             => new List<T>(dictionary.Collect<T>().Where(x => filter(x)));
+#pragma warning restore CS8604 // Possible null reference argument.
 
         public static string GetUniqueKey(this IDictionary dictionary, string baseName)
         {
@@ -1177,7 +1217,9 @@ namespace Node.Net
                     result.Add(key, dictionary[key]);
                 }
             }
+#pragma warning disable CS8604 // Possible null reference argument.
             Matrix3D localToParent = (dictionary as IDictionary).GetLocalToParent();
+#pragma warning restore CS8604 // Possible null reference argument.
             Vector3D ots = localToParent.GetRotationsOTS();
             (result as IDictionary).SetRotationsOTS(ots);
             /*

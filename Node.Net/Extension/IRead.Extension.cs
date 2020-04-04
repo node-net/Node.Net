@@ -48,7 +48,9 @@ namespace Node.Net
             {
                 if (manifestResourceName.Contains(name))
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     return read.Read(assembly.GetManifestResourceStream(manifestResourceName));
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
             }
             return null;

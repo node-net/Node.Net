@@ -103,7 +103,9 @@ namespace Node.Net.Internal
             }
             else if (value is ISerializable)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 WriteISerializable(writer, value as ISerializable);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
             else
             {
@@ -148,11 +150,15 @@ namespace Node.Net.Internal
             {
                 if (writingPrimitiveValue)
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     writer.Write(value.ToString().ToLower());
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 }
                 else
                 {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                     writer.Write($"{GetIndent()}{value.ToString().ToLower()}");
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 }
             }
             else
@@ -177,7 +183,9 @@ namespace Node.Net.Internal
         private void WriteDoubleArray2D(System.IO.TextWriter writer, object value)
         {
             double[,]? array = value as double[,];
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             int length0 = array.GetLength(0);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             int length1 = array.GetLength(1);
             List<List<double>>? equivalentList = new List<List<double>>();
             for (int i = 0; i < length0; ++i)
@@ -221,7 +229,9 @@ namespace Node.Net.Internal
                         }
                         else { writer.Write(","); }
                     }
+#pragma warning disable CS8604 // Possible null reference argument.
                     Write(writer, item);
+#pragma warning restore CS8604 // Possible null reference argument.
                     ++writeCount;
                 }
             }
@@ -253,7 +263,9 @@ namespace Node.Net.Internal
 
                 List<string>? keys = new List<string>();
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8604 // Possible null reference argument.
                 foreach (string key in dictionary.Keys) { keys.Add(key); }
+#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 //foreach (object key in dictionary.Keys)
                 foreach (string key in keys)
@@ -284,13 +296,17 @@ namespace Node.Net.Internal
                         {
                             writer.Write(":");
                             writingPrimitiveValue = true;
+#pragma warning disable CS8604 // Possible null reference argument.
                             Write(writer, dictionary[key]);
+#pragma warning restore CS8604 // Possible null reference argument.
                             writingPrimitiveValue = false;
                         }
                         else
                         {
                             writer.Write($": ");
+#pragma warning disable CS8604 // Possible null reference argument.
                             Write(writer, dictionary[key]);
+#pragma warning restore CS8604 // Possible null reference argument.
                         }
 
                         ++index;

@@ -24,13 +24,17 @@ namespace Node.Net.Internal
         {
             if (targetType == typeof(Stream) && source != null && source is string)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 return Create(source.ToString());
+#pragma warning restore CS8604 // Possible null reference argument.
             }
             if (typeof(IStreamSignature).IsAssignableFrom(targetType) && source != null)
             {
                 if (source is Stream)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     return Internal.SignatureReader.GetSignature(source as Stream);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
                 return Create(targetType, Create(typeof(Stream), source));
             }

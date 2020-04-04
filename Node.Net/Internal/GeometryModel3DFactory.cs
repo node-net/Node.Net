@@ -14,12 +14,16 @@ namespace Node.Net.Internal
                 Type? sourceType = source.GetType();
                 if (typeof(IDictionary).IsAssignableFrom(sourceType))
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     return CreateFromDictionary(source as IDictionary);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
 
                 if (typeof(MeshGeometry3D).IsAssignableFrom(sourceType))
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     return CreateFromMeshGeometry3D(source as MeshGeometry3D);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
 
                 if (ParentFactory != null)
@@ -45,8 +49,12 @@ namespace Node.Net.Internal
 
             if (ParentFactory != null && source?.Contains("Type") == true)
             {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 string? type = source["Type"].ToString();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 if (type.Length > 0)
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 {
                     string? name = $"GeometryModel3D.{type}.xaml";
                     GeometryModel3D? geometryModel3D = ParentFactory.Create<GeometryModel3D>(name);
