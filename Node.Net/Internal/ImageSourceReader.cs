@@ -39,20 +39,18 @@ namespace Node.Net.Internal
 
         public object Read(Stream original_stream)
         {
-            using (SignatureReader? signatureReader = new Internal.SignatureReader(original_stream))
+            using SignatureReader? signatureReader = new Internal.SignatureReader(original_stream);
+            Stream? stream = signatureReader.Stream;
+            string? signature = signatureReader.Signature;
+            foreach (string signature_key in signatureReaders.Keys)
             {
-                Stream? stream = signatureReader.Stream;
-                string? signature = signatureReader.Signature;
-                foreach (string signature_key in signatureReaders.Keys)
+                if (signature.IndexOf(signature_key) == 0)
                 {
-                    if (signature.IndexOf(signature_key) == 0)
-                    {
-                        object? instance = readers[signatureReaders[signature_key]](stream);
-                        return instance;
-                    }
+                    object? instance = readers[signatureReaders[signature_key]](stream);
+                    return instance;
                 }
-                throw new System.InvalidOperationException($"unrecognized signature '{signature}'");
             }
+            throw new System.InvalidOperationException($"unrecognized signature '{signature}'");
         }
 
         public object ReadPng(Stream stream)

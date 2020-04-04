@@ -21,18 +21,16 @@ namespace Node.Net.Internal
 
             if (targetType.IsInstanceOfType(source))
             {
-                using (MemoryStream memory = new MemoryStream())
-                {
-                    WriteFunction(memory, source);
-                    memory.Flush();
-                    memory.Seek(0, SeekOrigin.Begin);
-                    object? clone = ReadFunction(memory);
-                    if (clone != null && targetType.IsInstanceOfType(clone))
-                    {
-                        return clone;
-                    }
-                }
-            }
+				using MemoryStream memory = new MemoryStream();
+				WriteFunction(memory, source);
+				memory.Flush();
+				memory.Seek(0, SeekOrigin.Begin);
+				object? clone = ReadFunction(memory);
+				if (clone != null && targetType.IsInstanceOfType(clone))
+				{
+					return clone;
+				}
+			}
 #pragma warning disable CS8603 // Possible null reference return.
             return null;
 #pragma warning restore CS8603 // Possible null reference return.

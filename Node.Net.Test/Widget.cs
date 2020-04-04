@@ -3,7 +3,7 @@ using System.Security.Permissions;
 
 namespace Node.Net.Test
 {
-    class Widget : ISerializable
+    internal class Widget : ISerializable
     {
         public Widget() { }
 

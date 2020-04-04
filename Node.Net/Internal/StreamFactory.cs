@@ -116,11 +116,9 @@ namespace Node.Net.Internal
                     case "http":
                     case "https":
                         {
-                            using (WebClient? webClient = new WebClient())
-                            {
-                                return webClient.OpenRead(name);
-                            }
-                        }
+							using WebClient? webClient = new WebClient();
+							return webClient.OpenRead(name);
+						}
                     case "file":
                         {
                             return new FileStream(uri.LocalPath, FileMode.Open);

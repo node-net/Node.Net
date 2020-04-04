@@ -54,13 +54,11 @@ namespace Node.Net.Internal
 
         public static Signature GetSignature(Stream stream)
         {
-            using (SignatureReader? sr = new SignatureReader())
-            {
+			using SignatureReader? sr = new SignatureReader();
 #pragma warning disable CS8603 // Possible null reference return.
-                return sr.Read(stream) as Signature;
+			return sr.Read(stream) as Signature;
 #pragma warning restore CS8603 // Possible null reference return.
-            }
-        }
+		}
 
         private object Read(Stream original_stream)
         {

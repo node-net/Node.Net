@@ -35,8 +35,8 @@ namespace Node.Net.Internal
         public Func<IDictionary>? CreateDefaultObject { get; set; } = null;
         public Dictionary<string, Type> ConversionTypeNames { get; set; } = new Dictionary<string, Type>();
         public int ObjectCount { get; set; }
-        public Type DefaultObjectType { get; set; } = typeof(Collections.Dictionary);// typeof(Dictionary<string, dynamic>);
-        public Type DefaultDocumentType { get; set; } = typeof(Collections.Dictionary);//typeof(Dictionary<string, dynamic>);
+        public Type DefaultObjectType { get; set; } = typeof(Collections.Spatial);// typeof(Dictionary<string, dynamic>);
+        public Type DefaultDocumentType { get; set; } = typeof(Collections.Spatial);//typeof(Dictionary<string, dynamic>);
         public Type? DefaultArrayType { get; set; } = typeof(Collections.List);// typeof(List<dynamic>);
 
         public object Read(Stream stream)

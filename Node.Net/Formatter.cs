@@ -1,5 +1,6 @@
 ﻿using Node.Net.Internal;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
@@ -40,23 +41,29 @@ namespace Node.Net
 
         public virtual object? Deserialize(Stream serializationStream)
         {
-            using (SignatureReader? signatureReader = new Internal.SignatureReader(serializationStream))
+            using SignatureReader? signatureReader = new Internal.SignatureReader(serializationStream);
+            Stream? stream = signatureReader.Stream;
+            string? signature = signatureReader.Signature;
+            foreach (string signature_key in SignatureReaders.Keys)
             {
-                Stream? stream = signatureReader.Stream;
-                string? signature = signatureReader.Signature;
-                foreach (string signature_key in SignatureReaders.Keys)
+                if (signature.IndexOf(signature_key) == 0)
                 {
-                    if (signature.IndexOf(signature_key) == 0)
-                    {
-                        object? instance = Readers[SignatureReaders[signature_key]](stream);
-                        return instance;
-                    }
+                    object? instance = Readers[SignatureReaders[signature_key]](stream);
+                    return instance;
                 }
-                throw new System.InvalidOperationException($"unrecognized signature '{signature}'");
             }
+            throw new System.InvalidOperationException($"unrecognized signature '{signature}'");
         }
 
-        private object? DeserializeJson(Stream stream) => _jsonFormatter.Deserialize(stream);
+        private object? DeserializeJson(Stream stream)
+        {
+            var item = _jsonFormatter.Deserialize(stream);
+            if(item is IDictionary dictionary)
+            {
+                dictionary.DeepUpdateParents();
+            }
+            return item;
+        }
         private object? DeserializeImage(Stream stream) => _imageReader.Read(stream);
 
         public virtual void Serialize(Stream serializationStream, object graph)

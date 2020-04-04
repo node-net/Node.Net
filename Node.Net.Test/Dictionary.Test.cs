@@ -6,7 +6,7 @@ using static System.Math;
 namespace Node.Net.Test
 {
     [TestFixture]
-    class DictionaryTest
+    internal class DictionaryTest
     {
         [Test]
         public void RotateOTS()

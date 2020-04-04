@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Node.Net
 {
 	[TestFixture]
-	class FormatterTest
+	internal class FormatterTest
 	{
 		[Test]
 		[TestCase("States.json",typeof(IDictionary))]
