@@ -11,7 +11,9 @@ namespace Node.Net.Internal
         {
             if (source != null && source is IDictionary)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 return CreateFromDictionary(source as IDictionary);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
             if (ParentFactory != null && source != null)
             {

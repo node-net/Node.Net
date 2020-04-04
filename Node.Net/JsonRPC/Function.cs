@@ -9,7 +9,9 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8604 // Possible null reference argument.
             return new Response(request.Id, _function());
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         private readonly System.Func<T> _function;
@@ -31,9 +33,13 @@
         public Response Respond(Request request)
         {
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
+#pragma warning disable CS8604 // Possible null reference argument.
             object[]? parameters = request.GetParameterArray<T1>(_parameter_names);
+#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
+#pragma warning disable CS8604 // Possible null reference argument.
             return new Response(request.Id, _function((T1)parameters[0]));
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         private readonly System.Func<T1, T2> _function;
@@ -56,9 +62,13 @@
         public Response Respond(Request request)
         {
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
+#pragma warning disable CS8604 // Possible null reference argument.
             object[]? parameters = request.GetParameterArray<T1, T2>(_parameter_names);
+#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
+#pragma warning disable CS8604 // Possible null reference argument.
             return new Response(request.Id, _function((T1)parameters[0], (T2)parameters[1]));
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         private readonly System.Func<T1, T2, T3> _function;
@@ -81,13 +91,17 @@
         public Response Respond(Request request)
         {
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
+#pragma warning disable CS8604 // Possible null reference argument.
             object[]? parameters = request.GetParameterArray<T1, T2, T3>(_parameter_names);
+#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             //var parameters = request.GetParameterArray(_parameter_names);
+#pragma warning disable CS8604 // Possible null reference argument.
             return new Response(request.Id, _function(
                 parameters.Get<T1>(0),
                 parameters.Get<T2>(1),
                 parameters.Get<T3>(2)));
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         private readonly System.Func<T1, T2, T3, T4> _function;
@@ -110,9 +124,13 @@
         public Response Respond(Request request)
         {
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
+#pragma warning disable CS8604 // Possible null reference argument.
             object[]? parameters = request.GetParameterArray<T1, T2, T3, T4>(_parameter_names);
+#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
+#pragma warning disable CS8604 // Possible null reference argument.
             return new Response(request.Id, _function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3]));
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         private readonly System.Func<T1, T2, T3, T4, T5> _function;

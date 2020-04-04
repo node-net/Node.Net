@@ -174,7 +174,9 @@ namespace Node.Net.Internal
 
         private object ReadArray(System.IO.TextReader reader)
         {
+#pragma warning disable CS8604 // Possible null reference argument.
             IList? list = Activator.CreateInstance(DefaultArrayType) as IList;
+#pragma warning restore CS8604 // Possible null reference argument.
             reader.FastSeek('[');
             reader.Read(); // consume the '['
             reader.EatWhiteSpace();
@@ -212,7 +214,9 @@ namespace Node.Net.Internal
                     done = true;
                 }
             }
+#pragma warning disable CS8604 // Possible null reference argument.
             return list.Simplify();
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         private object ReadObject(System.IO.TextReader reader)
@@ -285,7 +289,9 @@ namespace Node.Net.Internal
 #endif*/
                 reader.EatWhiteSpace();
                 reader.Read(); //consume ':'
+#pragma warning disable CS8604 // Possible null reference argument.
                 dictionary[key] = Read(reader);
+#pragma warning restore CS8604 // Possible null reference argument.
                 reader.EatWhiteSpace();
                 char ch = (char)reader.Peek();
                 if (ch == comma)
@@ -311,9 +317,15 @@ namespace Node.Net.Internal
                 }
                 foreach (object? key in dictionary.Keys)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     if (!converted.Contains(key))
+#pragma warning restore CS8604 // Possible null reference argument.
                     {
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
                         converted.Add(key, dictionary[key]);
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8604 // Possible null reference argument.
                     }
                 }
                 return converted;

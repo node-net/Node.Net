@@ -16,18 +16,24 @@ namespace Node.Net.Internal
 
                 if (source is ImageSource)
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     return CreateFromImageSource(source as ImageSource);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
             }
             if (ParentFactory != null)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 object? color = ParentFactory.Create(typeof(Color), source);
+#pragma warning restore CS8604 // Possible null reference argument.
                 if (color != null)
                 {
                     return Create(targetType, color);
                 }
 
+#pragma warning disable CS8604 // Possible null reference argument.
                 object? image = ParentFactory.Create(typeof(ImageSource), source);
+#pragma warning restore CS8604 // Possible null reference argument.
                 if (image != null)
                 {
                     return Create(targetType, image);

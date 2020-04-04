@@ -12,7 +12,13 @@ namespace Node.Net
             List<Assembly>? assemblies = new List<Assembly>();
             for (int f = 1; f < stackTrace.FrameCount; ++f)
             {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 Assembly? assembly = stackTrace.GetFrame(f).GetMethod().DeclaringType.Assembly;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 if (!assemblies.Contains(assembly))
                 {
                     assemblies.Add(assembly);

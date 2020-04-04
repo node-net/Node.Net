@@ -13,7 +13,9 @@ namespace Node.Net.Internal
         {
             if (source != null && source is string)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 Color? color = Create(source.ToString());
+#pragma warning restore CS8604 // Possible null reference argument.
                 if (color.HasValue)
                 {
                     return color.Value;

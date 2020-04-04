@@ -34,7 +34,13 @@ namespace Node.Net.JsonRPC
             Add("id", 10000);
             foreach (object? key in parameters.Keys)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 Parameters.Add(key.ToString(), parameters[key]);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8604 // Possible null reference argument.
             }
             Add("params", Parameters);
         }
@@ -47,7 +53,9 @@ namespace Node.Net.JsonRPC
         public Request(Stream stream)
         {
             IDictionary? data = new Reader().Read(stream) as IDictionary;
+#pragma warning disable CS8604 // Possible null reference argument.
             SetData(data);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         private void SetData(IDictionary data)
@@ -62,17 +70,27 @@ namespace Node.Net.JsonRPC
 
             if (data.Contains("method"))
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 this.Add("method", data["method"]);
+#pragma warning restore CS8604 // Possible null reference argument.
             }
 
             if (data.Contains("params"))
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 this.Add("params", data["params"]);
+#pragma warning restore CS8604 // Possible null reference argument.
                 if (data["params"] is IDictionary idictionary)
                 {
                     foreach (object? key in idictionary.Keys)
                     {
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                         Parameters.Add(key.ToString(), idictionary[key]);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8604 // Possible null reference argument.
                     }
                 }
                 else
@@ -82,7 +100,9 @@ namespace Node.Net.JsonRPC
                         int i = 0;
                         foreach (object? p in ienumerable)
                         {
+#pragma warning disable CS8604 // Possible null reference argument.
                             Parameters.Add(i.ToString(), p);
+#pragma warning restore CS8604 // Possible null reference argument.
                             ++i;
                         }
                     }

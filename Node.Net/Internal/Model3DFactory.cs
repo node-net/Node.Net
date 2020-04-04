@@ -108,7 +108,9 @@ namespace Node.Net.Internal
 
             foreach (object? key in source.Keys)
             {
+#pragma warning disable CS8604 // Possible null reference argument.
                 if (source[key] is IDictionary child_dictionary && !Ignore(child_dictionary))
+#pragma warning restore CS8604 // Possible null reference argument.
                 {
                     //var child_model = Create(typeof(Model3D), child_dictionary) as Model3D;
                     Model3D? child_model = CreateFromDictionary(child_dictionary);

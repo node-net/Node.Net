@@ -22,13 +22,17 @@ namespace Node.Net
                     {
                         if (value is IDictionary)
                         {
+#pragma warning disable CS8604 // Possible null reference argument.
                             hashCode ^= (value as IDictionary).ComputeHashCode();
+#pragma warning restore CS8604 // Possible null reference argument.
                         }
                         else
                         {
                             if (value is IEnumerable)
                             {
+#pragma warning disable CS8604 // Possible null reference argument.
                                 hashCode ^= (value as IEnumerable).ComputeHashCode();
+#pragma warning restore CS8604 // Possible null reference argument.
                             }
                         }
                     }
@@ -90,10 +94,14 @@ namespace Node.Net
                     {
                         if (length == 0)
                         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                             length = dar.Length;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                         }
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                         if (length != dar.Length)
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                         {
                             length = -1;
                         }
@@ -106,7 +114,9 @@ namespace Node.Net
                             for (int j = 0; j < length; ++j)
                             {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                                 array[i, j] = ((double[])GetAt(list, i))[j];
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                             }
                         }

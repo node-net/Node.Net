@@ -122,7 +122,9 @@ namespace Node.Net.Internal
             {
                 if (type.IsAssignableFrom(targetType))
                 {
+#pragma warning disable CS8604 // Possible null reference argument.
                     object? instance = FactoryFunctions[type](targetType, source);
+#pragma warning restore CS8604 // Possible null reference argument.
                     if (instance != null)
                     {
                         if (!InstanceCounts.ContainsKey(targetType))
