@@ -2,7 +2,7 @@
 require 'dotkit'
 
 desc 'publish nuget packages'
-task :publish => [:publish_local,:publish_to_nuget,:delete_from_nuget]
+task :publish => [:publish_local,:publish_to_nuget]
 
 task :integrate => [:publish]
 
