@@ -36,7 +36,8 @@ namespace Node.Net.Collections
 
         #endregion Construction
 
-        public string ToJson { get { return (this as IDictionary).ToJson(); } set { } }
+        public string Json { get { return (this as IDictionary).ToJson(); } }
+        //public string ToJson { get { return (this as IDictionary).ToJson(); } set { } }
 
         #region Serialization
 
@@ -51,6 +52,8 @@ namespace Node.Net.Collections
         }
 
         #endregion Serialization
+
+        public void Save(string filename) => new Formatter().Save(filename,this);
 
         public object? Parent
         {
