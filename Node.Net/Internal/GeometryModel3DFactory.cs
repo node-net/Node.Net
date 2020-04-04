@@ -27,7 +27,9 @@ namespace Node.Net.Internal
                     return Create(targetType, ParentFactory.Create<IDictionary>(source));
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public IFactory ParentFactory { get; set; }
@@ -36,7 +38,9 @@ namespace Node.Net.Internal
         {
             if (source == null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             if (ParentFactory != null && source?.Contains("Type") == true)
@@ -59,14 +63,18 @@ namespace Node.Net.Internal
                 }
             }
 
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         private static GeometryModel3D CreateFromMeshGeometry3D(MeshGeometry3D mesh)
         {
             if (mesh == null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             return new GeometryModel3D

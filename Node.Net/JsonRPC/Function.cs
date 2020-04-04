@@ -30,12 +30,14 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1>(_parameter_names);
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             return new Response(request.Id, _function((T1)parameters[0]));
         }
 
         private readonly System.Func<T1, T2> _function;
-        private readonly string[] _parameter_names = null;
+        private readonly string[]? _parameter_names = null;
     }
 
     public sealed class Function<T1, T2, T3> : IResponder
@@ -53,12 +55,14 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1, T2>(_parameter_names);
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             return new Response(request.Id, _function((T1)parameters[0], (T2)parameters[1]));
         }
 
         private readonly System.Func<T1, T2, T3> _function;
-        private readonly string[] _parameter_names = null;
+        private readonly string[]? _parameter_names = null;
     }
 
     public sealed class Function<T1, T2, T3, T4> : IResponder
@@ -76,7 +80,9 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1, T2, T3>(_parameter_names);
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             //var parameters = request.GetParameterArray(_parameter_names);
             return new Response(request.Id, _function(
                 parameters.Get<T1>(0),
@@ -85,7 +91,7 @@
         }
 
         private readonly System.Func<T1, T2, T3, T4> _function;
-        private readonly string[] _parameter_names = null;
+        private readonly string[]? _parameter_names = null;
     }
 
     public sealed class Function<T1, T2, T3, T4, T5> : IResponder
@@ -103,11 +109,13 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1, T2, T3, T4>(_parameter_names);
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             return new Response(request.Id, _function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3]));
         }
 
         private readonly System.Func<T1, T2, T3, T4, T5> _function;
-        private readonly string[] _parameter_names = null;
+        private readonly string[]? _parameter_names = null;
     }
 }

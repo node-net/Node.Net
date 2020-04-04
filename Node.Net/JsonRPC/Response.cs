@@ -89,7 +89,9 @@ namespace Node.Net.JsonRPC
                     string? original = result.ToString();
                     return original.Replace(@"\u0022", @"""").Replace("u0022", @"""");
                 }
+#pragma warning disable CS8603 // Possible null reference return.
                 return result;
+#pragma warning restore CS8603 // Possible null reference return.
             }
         }
 

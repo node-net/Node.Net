@@ -30,7 +30,7 @@ namespace Node.Net
             set
             {
                 _canExecute = value;
-                if(CanExecuteChanged != null) { CanExecuteChanged(this, EventArgs.Empty); }
+                if (CanExecuteChanged != null) { CanExecuteChanged(this, EventArgs.Empty); }
             }
         }
         private bool _canExecute = true;

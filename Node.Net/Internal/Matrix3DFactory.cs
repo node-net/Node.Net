@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows.Media.Media3D;
 using static System.Math;
@@ -21,7 +20,9 @@ namespace Node.Net.Internal
                 }
             }
 
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public static IDictionary GetDictionary(Matrix3D matrix)

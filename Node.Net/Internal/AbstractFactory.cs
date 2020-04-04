@@ -21,7 +21,9 @@ namespace Node.Net.Internal
         {
             if (targetType == null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             if (source != null && Resources.Contains(source.ToString()))
@@ -74,7 +76,9 @@ namespace Node.Net.Internal
                 }
                 finally { callingParent = false; }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return stream;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
@@ -84,7 +88,9 @@ namespace Node.Net.Internal
         {
             if (stream == null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             if (ReadFunction != null)
@@ -119,11 +125,15 @@ namespace Node.Net.Internal
 
                     if (ParentFactory != null)
                     {
+#pragma warning disable CS8603 // Possible null reference return.
                         return ParentFactory.Create(target_type, instance);
+#pragma warning restore CS8603 // Possible null reference return.
                     }
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
     }
 }

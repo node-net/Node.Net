@@ -29,11 +29,15 @@ namespace Node.Net
                 {
                     if (manifestResourceName.Contains(name))
                     {
+#pragma warning disable CS8603 // Possible null reference return.
                         return assembly.GetManifestResourceStream(manifestResourceName);
+#pragma warning restore CS8603 // Possible null reference return.
                     }
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
     }
 }

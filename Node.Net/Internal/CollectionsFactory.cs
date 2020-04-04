@@ -24,13 +24,19 @@ namespace Node.Net.Internal
             }
             if (targetType == typeof(IDictionary) && source is Stream s)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return JSONReader.Read(s) as IDictionary;
+#pragma warning restore CS8603 // Possible null reference return.
             }
             if (targetType == typeof(IList) && source is Stream s2)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return JSONReader.Read(s2) as IList;
+#pragma warning restore CS8603 // Possible null reference return.
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public StreamFactory StreamFactory { get; set; } = new StreamFactory();

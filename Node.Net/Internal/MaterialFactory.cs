@@ -10,12 +10,16 @@ namespace Node.Net.Internal
         {
             if (targetType == null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             if (!typeof(Material).IsAssignableFrom(targetType))
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             if (source != null && source is Brush)
@@ -30,7 +34,9 @@ namespace Node.Net.Internal
                     return new DiffuseMaterial(brush);
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public IFactory ParentFactory { get; set; }

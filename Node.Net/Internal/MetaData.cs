@@ -69,16 +69,22 @@ namespace Node.Net.Internal
         {
             if (item == null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             IDictionary? metaData = GetMetaData(item);
             if (metaData.Contains(name))
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return metaData[name];
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         /// <summary>
@@ -100,7 +106,9 @@ namespace Node.Net.Internal
                 return (T)(object)"";
             }
 
+#pragma warning disable CS8603 // Possible null reference return.
             return default;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public void ClearMetaData(object item)
@@ -136,7 +144,7 @@ namespace Node.Net.Internal
             catch { }
         }
 
-        private readonly Dictionary<WeakReference, IDictionary> data = null;
+        private readonly Dictionary<WeakReference, IDictionary>? data = null;
     }
 
     internal class WeakReferenceComparer : IEqualityComparer<WeakReference>

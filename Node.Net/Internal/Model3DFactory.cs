@@ -90,7 +90,9 @@ namespace Node.Net.Internal
         {
             if (source == null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
             if (cache && Model3DCache.ContainsKey(source))
@@ -125,7 +127,9 @@ namespace Node.Net.Internal
 
                 return model3DGroup;
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         private Model3D GetPrimaryModel3D(IDictionary source)
@@ -144,7 +148,9 @@ namespace Node.Net.Internal
                     }
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return model3D;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         private readonly Dictionary<string, Model3D> namedCache = new Dictionary<string, Model3D>();
@@ -189,16 +195,22 @@ namespace Node.Net.Internal
                     return geometry3D;
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         private Transform3D GetTransform3D(object source)
         {
             if (ParentFactory != null)
             {
+#pragma warning disable CS8603 // Possible null reference return.
                 return ParentFactory.Create(typeof(Transform3D), source) as Transform3D;
+#pragma warning restore CS8603 // Possible null reference return.
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public static Transform3D GetScalingTransform(IDictionary source)
@@ -239,7 +251,9 @@ namespace Node.Net.Internal
                     return new MatrixTransform3D { Matrix = matrix3D };
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
     }
 }

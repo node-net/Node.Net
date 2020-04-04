@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Authentication.ExtendedProtection;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
@@ -39,7 +38,7 @@ namespace Node.Net
             if (System.Math.Round(polar, 3) == 180) return 0.0;
             double azimuthal = vector.GetAzimuthalAngle();
             double orientation = azimuthal - 90.0;
-            if(orientation < -180.0) { orientation += 360.0; }
+            if (orientation < -180.0) { orientation += 360.0; }
             return orientation;
         }
 

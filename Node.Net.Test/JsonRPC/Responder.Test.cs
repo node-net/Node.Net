@@ -21,7 +21,7 @@ namespace Node.Net.JsonRPC
 
             foreach (string key in test_data.Keys)
             {
-                if (key.Contains("get_properties"))
+                if (key.Contains("set_properties_request"))
                 {
                     int x = 0;
                 }

@@ -15,7 +15,9 @@ namespace Node.Net.Internal
                     return instance;
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         public ResourceDictionary Resources { get; set; } = new ResourceDictionary();

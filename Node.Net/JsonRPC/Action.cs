@@ -10,7 +10,9 @@
         public Response Respond(Request request)
         {
             _action();
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             return new Response(request.Id, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         private readonly System.Action _action;
@@ -77,7 +79,9 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1, T2, T3>(_parameter_names);
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2]);
             return new Response(request.Id, null);
         }
@@ -101,7 +105,9 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1, T2, T3, T4>(_parameter_names);
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3]);
             return new Response(request.Id, null);
         }
@@ -125,7 +131,9 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1, T2, T3, T4, T5>(_parameter_names);
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4]);
             return new Response(request.Id, null);
         }
@@ -149,7 +157,9 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1, T2, T3, T4, T5, T6>(_parameter_names);
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4], (T6)parameters[4]);
             return new Response(request.Id, null);
         }

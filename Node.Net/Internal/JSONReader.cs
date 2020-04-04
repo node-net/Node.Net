@@ -24,10 +24,10 @@ namespace Node.Net.Internal
             if (disposing)
             {
                 DefaultArrayType = null;
-                DefaultObjectType = null;
-                DefaultDocumentType = null;
+                //DefaultObjectType = null;
+                //DefaultDocumentType = null;
                 CreateDefaultObject = null;
-                ConversionTypeNames = null;
+                //ConversionTypeNames = null;
                 ObjectCount = 0;
             }
         }
@@ -47,7 +47,9 @@ namespace Node.Net.Internal
                 {
                     ObjectCount = 0;
                     object? item = Read(reader);
+#pragma warning disable CS8603 // Possible null reference return.
                     return item;
+#pragma warning restore CS8603 // Possible null reference return.
                 }
                 catch (Exception e)
                 {
@@ -220,7 +222,9 @@ namespace Node.Net.Internal
             const char objectOpenCharacter = '{';
             const char objectCloseCharacter = '}';
             const char comma = ',';
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             IDictionary dictionary = null;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             if (ObjectCount == 0)
             {
                 if (DefaultDocumentType == null)
@@ -228,7 +232,9 @@ namespace Node.Net.Internal
                     throw new InvalidOperationException("DefaultDocumentType is null");
                 }
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 dictionary = Activator.CreateInstance(DefaultDocumentType) as IDictionary;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 if (dictionary == null)
                 {
                     throw new InvalidOperationException($"Unable to create instance of {DefaultDocumentType.FullName}");
@@ -248,7 +254,9 @@ namespace Node.Net.Internal
                         throw new InvalidOperationException("DefaultObjectType is null");
                     }
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                     dictionary = Activator.CreateInstance(DefaultObjectType) as IDictionary;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                     if (dictionary == null)
                     {
                         throw new InvalidOperationException($"Unable to create isntance of {DefaultObjectType.FullName}");

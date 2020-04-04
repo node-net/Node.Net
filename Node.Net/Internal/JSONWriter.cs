@@ -198,7 +198,9 @@ namespace Node.Net.Internal
             PushIndent();
             IEnumerable? enumerable = value as System.Collections.IEnumerable;
             int writeCount = 0;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             foreach (object item in enumerable)
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             {
                 bool skip = false;
                 if (!(item is null) && IgnoreTypes.Contains(item.GetType()))
@@ -248,7 +250,9 @@ namespace Node.Net.Internal
                 //var dictionary = value as System.Collections.IDictionary;
 
                 List<string>? keys = new List<string>();
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 foreach (string key in dictionary.Keys) { keys.Add(key); }
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 //foreach (object key in dictionary.Keys)
                 foreach (string key in keys)
                 {
