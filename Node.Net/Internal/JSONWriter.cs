@@ -20,11 +20,9 @@ namespace Node.Net.Internal
 
         public void Write(Stream stream, object value)
         {
-            using (StreamWriter writer = new StreamWriter(stream, Encoding.Default, 1024, true))
-            {
-                Write(writer, value);
-            }
-        }
+			using StreamWriter writer = new StreamWriter(stream, Encoding.Default, 1024, true);
+			Write(writer, value);
+		}
 
         public string WriteToString(object value)
         {

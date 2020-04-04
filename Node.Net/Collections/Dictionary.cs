@@ -19,6 +19,21 @@ namespace Node.Net.Collections
         {
         }
 
+        public Dictionary(Stream stream)
+        {
+            var formatter = new Formatter();
+            var instance = formatter.Deserialize(stream);
+            if(instance is IDictionary<string,object> dictionary)
+            {
+                foreach(string key in dictionary.Keys)
+                {
+                    var child = dictionary[key];
+                    Add(key, child);
+                    child.SetParent(this);
+                }
+            }
+        }
+
         #endregion Construction
 
         public string ToJson { get { return (this as IDictionary).ToJson(); } set { } }
@@ -51,6 +66,8 @@ namespace Node.Net.Collections
         }
 
         private object? _parent;
+
+        
 
         #region PropertyChanged
 

@@ -12,27 +12,25 @@ namespace Node.Net.JsonRPC
         public void Default_Usage()
         {
             Responder responder = ResponderTest.GetTestResponder();
-            using (Server server = new Server(responder.Respond))
-            {
-                int port = server.Port;
-                server.Start();
+			using Server server = new Server(responder.Respond);
+			int port = server.Port;
+			server.Start();
 
-                Uri uri = server.Uri;
-                Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
-                using (WebClient client = new WebClient())
-                {
-                    Request request = new Request("say_hello");
-                    string json_response = client.UploadString(uri.ToString(), request.ToJson());
-                    Assert.NotNull(json_response, nameof(json_response));
-                    Assert.True(json_response.Contains("hello"));
-                }
-                Client jsonRpcClient = new Client(server.Uri.ToString());
-                Response response = jsonRpcClient.Respond(new Request("say_hello"));
-                Assert.NotNull(response, nameof(response));
-                Assert.AreEqual("hello", response.Result.ToString());
-                server.Stop();
-            }
-        }
+			Uri uri = server.Uri;
+			Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
+			using (WebClient client = new WebClient())
+			{
+				Request request = new Request("say_hello");
+				string json_response = client.UploadString(uri.ToString(), request.ToJson());
+				Assert.NotNull(json_response, nameof(json_response));
+				Assert.True(json_response.Contains("hello"));
+			}
+			Client jsonRpcClient = new Client(server.Uri.ToString());
+			Response response = jsonRpcClient.Respond(new Request("say_hello"));
+			Assert.NotNull(response, nameof(response));
+			Assert.AreEqual("hello", response.Result.ToString());
+			server.Stop();
+		}
 
         public static bool IsAdministrator()
         {
@@ -56,25 +54,23 @@ namespace Node.Net.JsonRPC
                 listener.Prefixes.Add(uri);
 
                 Responder responder = ResponderTest.GetTestResponder();
-                using (Server server = new Server(listener, responder.Respond))
-                {
-                    //var port = server.Port;
-                    server.Start();
-                    Assert.AreEqual($"https://{Environment.MachineName}:{port}/", uri.ToString());
-                    using (WebClient client = new WebClient())
-                    {
-                        Request request = new Request("say_hello");
-                        string json_response = client.UploadString(uri.ToString(), request.ToJson());
-                        Assert.NotNull(json_response, nameof(json_response));
-                        Assert.True(json_response.Contains("hello"));
-                    }
-                    Client jsonRpcClient = new Client(server.Uri.ToString());
-                    Response response = jsonRpcClient.Respond(new Request("say_hello"));
-                    Assert.NotNull(response, nameof(response));
-                    Assert.AreEqual("hello", response.Result.ToString());
-                    server.Stop();
-                }
-            }
+				using Server server = new Server(listener, responder.Respond);
+				//var port = server.Port;
+				server.Start();
+				Assert.AreEqual($"https://{Environment.MachineName}:{port}/", uri.ToString());
+				using (WebClient client = new WebClient())
+				{
+					Request request = new Request("say_hello");
+					string json_response = client.UploadString(uri.ToString(), request.ToJson());
+					Assert.NotNull(json_response, nameof(json_response));
+					Assert.True(json_response.Contains("hello"));
+				}
+				Client jsonRpcClient = new Client(server.Uri.ToString());
+				Response response = jsonRpcClient.Respond(new Request("say_hello"));
+				Assert.NotNull(response, nameof(response));
+				Assert.AreEqual("hello", response.Result.ToString());
+				server.Stop();
+			}
         }
     }
 }

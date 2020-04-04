@@ -16,10 +16,8 @@ namespace Node.Net
 
         public static string Respond(this JsonRPC.IResponder responder, string request)
         {
-            using (MemoryStream? memory = new MemoryStream(Encoding.UTF8.GetBytes(request)))
-            {
-                return new StreamReader(responder.Respond(memory)).ReadToEnd().Trim();
-            }
-        }
+			using MemoryStream? memory = new MemoryStream(Encoding.UTF8.GetBytes(request));
+			return new StreamReader(responder.Respond(memory)).ReadToEnd().Trim();
+		}
     }
 }

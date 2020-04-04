@@ -5,7 +5,7 @@ using static System.Math;
 namespace Node.Net.Test
 {
     [TestFixture]
-    static class Vector3DExtensionTest
+    internal static class Vector3DExtensionTest
     {
         [Test]
         public static void ComputeRayPlaneIntersection()

@@ -116,15 +116,11 @@ namespace Node.Net.JsonRPC
 
         public byte[] GetBytes()
         {
-            using (MemoryStream? memory = new MemoryStream())
-            {
-                using (StreamWriter? writer = new StreamWriter(memory))
-                {
-                    writer.WriteLine(ToJson());
-                    writer.Close();
-                    return memory.ToArray();
-                }
-            }
+            using MemoryStream? memory = new MemoryStream();
+            using StreamWriter? writer = new StreamWriter(memory);
+            writer.WriteLine(ToJson());
+            writer.Close();
+            return memory.ToArray();
         }
 
         public string ToJson()

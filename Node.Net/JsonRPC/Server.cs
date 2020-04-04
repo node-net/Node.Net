@@ -68,26 +68,20 @@ namespace Node.Net.JsonRPC
 #pragma warning restore CS8604 // Possible null reference argument.
                 try
                 {
-                    using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
-                    {
-                        sw.Write(_responder(request.ToJson()));
-                    }
-                }
+					using StreamWriter? sw = new StreamWriter(context.Response.OutputStream);
+					sw.Write(_responder(request.ToJson()));
+				}
                 catch (Exception e)
                 {
-                    using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
-                    {
-                        sw.Write(new Response(new Error(-32000, e.ToString()), 0).ToJson());
-                    }
-                }
+					using StreamWriter? sw = new StreamWriter(context.Response.OutputStream);
+					sw.Write(new Response(new Error(-32000, e.ToString()), 0).ToJson());
+				}
             }
             catch (Exception e)
             {
-                using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
-                {
-                    sw.Write(new Response(new Error(-32600, e.ToString()), 0).ToJson());
-                }
-            }
+				using StreamWriter? sw = new StreamWriter(context.Response.OutputStream);
+				sw.Write(new Response(new Error(-32600, e.ToString()), 0).ToJson());
+			}
         }
 
         private readonly Service.WebServer _webServer;

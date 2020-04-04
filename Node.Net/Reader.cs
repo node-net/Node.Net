@@ -30,21 +30,19 @@ namespace Node.Net
 
         public object Read(Stream stream)
         {
-            using (Internal.SignatureReader? signatureReader = new Internal.SignatureReader(stream))
+            using Internal.SignatureReader? signatureReader = new Internal.SignatureReader(stream);
+            Stream? stream2 = signatureReader.Stream;
+            string? signature = signatureReader.Signature;
+            foreach (string signature_key in Keys)
             {
-                Stream? stream2 = signatureReader.Stream;
-                string? signature = signatureReader.Signature;
-                foreach (string signature_key in Keys)
+                if (signature.IndexOf(signature_key) == 0)
                 {
-                    if (signature.IndexOf(signature_key) == 0)
-                    {
-                        object? item = this[signature_key](stream2);
-                        //stream.Close();
-                        return item;
-                    }
+                    object? item = this[signature_key](stream2);
+                    //stream.Close();
+                    return item;
                 }
-                throw new UnrecognizedSignatureException($"unrecognized signature '{signature.Substring(0, 24)}'");
             }
+            throw new UnrecognizedSignatureException($"unrecognized signature '{signature.Substring(0, 24)}'");
         }
 
 #pragma warning disable CS8603 // Possible null reference return.

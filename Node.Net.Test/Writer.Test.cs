@@ -42,14 +42,12 @@ namespace Node.Net.Test
                 Description = "test"
             };
 
-            using (MemoryStream memory = new MemoryStream())
-            {
-                new Writer().Write(memory, widget);
-                memory.Seek(0, SeekOrigin.Begin);
-                string json = new StreamReader(memory).ReadToEnd();
-                Assert.True(json.Contains("abc"));
-                Assert.True(json.Contains("test"));
-            }
+            using MemoryStream memory = new MemoryStream();
+            new Writer().Write(memory, widget);
+            memory.Seek(0, SeekOrigin.Begin);
+            string json = new StreamReader(memory).ReadToEnd();
+            Assert.True(json.Contains("abc"));
+            Assert.True(json.Contains("test"));
         }
     }
 }

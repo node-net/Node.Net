@@ -8,16 +8,14 @@ namespace Node.Net
     {
         public static void CopyToFile(this Stream stream, string filename)
         {
-            using (FileStream? filestream = new FileStream(filename, FileMode.Create))
-            {
-                int ibyte = stream.ReadByte();
-                while (ibyte > -1)
-                {
-                    filestream.WriteByte((byte)ibyte);
-                    ibyte = stream.ReadByte();
-                }
-            }
-        }
+			using FileStream? filestream = new FileStream(filename, FileMode.Create);
+			int ibyte = stream.ReadByte();
+			while (ibyte > -1)
+			{
+				filestream.WriteByte((byte)ibyte);
+				ibyte = stream.ReadByte();
+			}
+		}
 
         public static string GetMD5String(this Stream stream)
         {

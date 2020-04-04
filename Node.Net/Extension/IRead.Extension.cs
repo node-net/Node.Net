@@ -87,15 +87,13 @@ namespace Node.Net
             }
             if (File.Exists(filename))
             {
-                using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                {
-                    object? item = read.Read(fs);
-                    fs.Close();
-                    SetPropertyValue(item, "FileName", filename);
-                    item?.SetFileName(filename);
+                using FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                object? item = read.Read(fs);
+                fs.Close();
+                SetPropertyValue(item, "FileName", filename);
+                item?.SetFileName(filename);
 
-                    return item;
-                }
+                return item;
             }
             else
             {

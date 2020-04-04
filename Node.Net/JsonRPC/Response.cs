@@ -10,32 +10,30 @@ namespace Node.Net.JsonRPC
         public Response(byte[] data)
         {
             this.Add("jsonrpc", "2.0");
-            using (MemoryStream? memory = new MemoryStream(data))
-            {
-                IDictionary? dictionary = new Reader().Read<IDictionary>(memory);
-                if (dictionary.Contains("id"))
-                {
+			using MemoryStream? memory = new MemoryStream(data);
+			IDictionary? dictionary = new Reader().Read<IDictionary>(memory);
+			if (dictionary.Contains("id"))
+			{
 #pragma warning disable CS8604 // Possible null reference argument.
-                    this.Add("id", dictionary["id"]);
+				this.Add("id", dictionary["id"]);
 #pragma warning restore CS8604 // Possible null reference argument.
-                }
+			}
 
-                if (dictionary.Contains("result"))
-                {
+			if (dictionary.Contains("result"))
+			{
 #pragma warning disable CS8604 // Possible null reference argument.
-                    this.Add("result", dictionary["result"]);
+				this.Add("result", dictionary["result"]);
 #pragma warning restore CS8604 // Possible null reference argument.
-                }
+			}
 
-                if (dictionary.Contains("error"))
-                {
+			if (dictionary.Contains("error"))
+			{
 #pragma warning disable CS8604 // Possible null reference argument.
-                    Error? error = new Error(dictionary["error"] as IDictionary);
+				Error? error = new Error(dictionary["error"] as IDictionary);
 #pragma warning restore CS8604 // Possible null reference argument.
-                    this.Add("error", error);
-                }
-            }
-        }
+				this.Add("error", error);
+			}
+		}
 
         public Response(IDictionary data)
         {
@@ -114,16 +112,12 @@ namespace Node.Net.JsonRPC
 
         public byte[] GetBytes()
         {
-            using (MemoryStream? memory = new MemoryStream())
-            {
-                using (StreamWriter? writer = new StreamWriter(memory))
-                {
-                    writer.WriteLine(this.ToJson());
-                    writer.Close();
-                    return memory.ToArray();
-                }
-            }
-        }
+			using MemoryStream? memory = new MemoryStream();
+			using StreamWriter? writer = new StreamWriter(memory);
+			writer.WriteLine(this.ToJson());
+			writer.Close();
+			return memory.ToArray();
+		}
 
         public string ToJson()
         {
