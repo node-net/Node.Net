@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net46;net48;net5.0-windows</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net46;net48</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <Version>1.4.0</Version>
+    <Version>1.4.1</Version>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <PackageProjectUrl>https://github.com/node-net/Node.Net</PackageProjectUrl>
