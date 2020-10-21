@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
@@ -73,6 +74,32 @@ namespace Node.Net
                 points2.Add(p);
             }
             return Node.Net.Point3DExtension.Transform(points2.ToArray(), matrix);
+        }
+
+        /// <summary>
+        /// Get the length of a Point3D[]
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public static double GetLength(this IEnumerable<Point3D> points)
+        {
+            if (points.Count() < 2)
+            {
+                return 0.0;
+            }
+
+            double length = 0.0;
+            for (int i = 1; i < points.Count(); ++i)
+            {
+                if (points.GetAt(i) is Point3D a)
+                {
+                    if (points.GetAt(i - 1) is Point3D b)
+                    {
+                        length += Point3D.Subtract(a, b).Length;
+                    }
+                }
+            }
+            return length;
         }
     }
 }
