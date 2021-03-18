@@ -21,7 +21,7 @@ namespace Node.Net
 
         public static FileInfo GetLogFileInfo(this MethodInfo method, string extension = ".md")
         {
-            return new FileInfo(method.GetLogDirectory().FullName + Path.DirectorySeparatorChar + extension);
+            return new FileInfo(method.GetLogDirectory().FullName + Path.DirectorySeparatorChar + $"{method.DeclaringType.FullName}.{method.Name}{extension}");
         }
     }
 }
