@@ -6,6 +6,6 @@ task :publish => [:publish_local,:publish_to_nuget]
 
 task :integrate => [:publish]
 
-task :default => [:integrate] do
+task :default => [:test,:integrate] do
     PROJECT.summary
 end
