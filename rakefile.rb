@@ -1,4 +1,3 @@
-#NAME="Node.Net"
 require 'dotkit'
 
 desc 'publish nuget packages'
