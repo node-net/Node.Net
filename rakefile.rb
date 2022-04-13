@@ -14,7 +14,8 @@ end
 
 task :test => [:build] do
   start_task :test
-  run("dotnet test #{PROJECT.name}.sln --configuration Release")
+  #run("dotnet test #{PROJECT.name}.sln --configuration Release")
+  run("dotnet test Node.Net.Test/Node.Net.Test.csproj -c Release")
 end
 
 task :tag => [:test] do
