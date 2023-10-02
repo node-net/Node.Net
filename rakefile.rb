@@ -41,7 +41,7 @@ task :publish => [:tag] do
   if ENV["CI_SERVER"].nil?
     nuget = PROJECT.get_dev_dir("nuget")
     package = "#{PROJECT.name}/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
-    if(!File.exists?("#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg"))
+    if(!File.exist?("#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg"))
         FileUtils.cp(package, "#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
     end
     if (SECRETS.has_key?("nuget_api_key"))
@@ -54,7 +54,7 @@ task :publish => [:tag] do
   end
 end
 
-task :default => [:publish] do
+task :default => [:integrate,:publish,:push] do
   if (!PROJECT.read_only?)
     run("git pull")
   end
