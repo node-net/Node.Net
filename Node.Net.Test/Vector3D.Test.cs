@@ -11,25 +11,25 @@ namespace Node.Net.Test
         public static void ComputeRayPlaneIntersection()
         {
             Vector3D intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, 0, -1), new Vector3D(0, 0, 10), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
-            Assert.AreEqual(0, Round(intersection.X, 4), "intersection.X");
-            Assert.AreEqual(0, Round(intersection.Y, 4), "intersection.Y");
-            Assert.AreEqual(0, Round(intersection.Z, 4), "intersection.Z");
+            Assert.That(Round(intersection.X, 4),Is.EqualTo(0), "intersection.X");
+            Assert.That(Round(intersection.Y, 4), Is.EqualTo(0), "intersection.Y");
+            Assert.That(Round(intersection.Z, 4), Is.EqualTo(0), "intersection.Z");
 
             intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, 0, -1), new Vector3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
-            Assert.AreEqual(0, Round(intersection.X, 4), "intersection.X");
-            Assert.AreEqual(0, Round(intersection.Y, 4), "intersection.Y");
-            Assert.AreEqual(0, Round(intersection.Z, 4), "intersection.Z");
+            Assert.That(Round(intersection.X, 4), Is.EqualTo(0), "intersection.X");
+            Assert.That(Round(intersection.Y, 4), Is.EqualTo(0), "intersection.Y");
+            Assert.That(Round(intersection.Z, 4), Is.EqualTo(0), "intersection.Z");
 
             intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, 0.5, -1), new Vector3D(0, 0, 10), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
-            Assert.AreEqual(0, Round(intersection.X, 4), "intersection.X");
-            Assert.AreEqual(5.0, Round(intersection.Y, 4), "intersection.Y");
-            Assert.AreEqual(0, Round(intersection.Z, 4), "intersection.Z");
+            Assert.That(Round(intersection.X, 4), Is.EqualTo(0), "intersection.X");
+            Assert.That(Round(intersection.Y, 4),Is.EqualTo(5.0), "intersection.Y");
+            Assert.That(Round(intersection.Z, 4), Is.EqualTo(0), "intersection.Z");
 
             // ray facing away from plane
             intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, -0.5, 1), new Vector3D(0, 0, 10), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
-            Assert.AreEqual(0, Round(intersection.X, 4), "intersection.X");
-            Assert.AreEqual(5.0, Round(intersection.Y, 4), "intersection.Y");
-            Assert.AreEqual(0, Round(intersection.Z, 4), "intersection.Z");
+            Assert.That(Round(intersection.X, 4), Is.EqualTo(0), "intersection.X");
+            Assert.That(Round(intersection.Y, 4), Is.EqualTo(5.0), "intersection.Y");
+            Assert.That(Round(intersection.Z, 4), Is.EqualTo(0), "intersection.Z");
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Node.Net.Test
         [TestCase(-1, -1, 0, -135.0, "-1,-1 in XY plane")]
         public static void GetAzimuthalAngle(double x, double y, double z, double expected_angle, string name)
         {
-            Assert.AreEqual(expected_angle, Round(new Vector3D(x, y, z).GetAzimuthalAngle(), 3), name);
+            Assert.That( Round(new Vector3D(x, y, z).GetAzimuthalAngle(), 3),Is.EqualTo(expected_angle), name);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Node.Net.Test
         [TestCase(1, 0, 1, 45.0, "1,1 in the XZ plane")]
         public static void GetPolarAngle(double x, double y, double z, double expected_angle, string name)
         {
-            Assert.AreEqual(expected_angle, Round(new Vector3D(x, y, z).GetPolarAngle(), 3), name);
+            Assert.That(Round(new Vector3D(x, y, z).GetPolarAngle(), 3), Is.EqualTo(expected_angle), name);
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Node.Net.Test
         [TestCase(-1, -1, 0, 135.0, "-1,-1 in XY plane")]
         public static void GetOrientation(double x, double y, double z, double expected_orientation, string name)
         {
-            Assert.AreEqual(expected_orientation, Round(new Vector3D(x, y, z).GetOrientation(), 3), name);
+            Assert.That(Round(new Vector3D(x, y, z).GetOrientation(), 3), Is.EqualTo(expected_orientation), name);
         }
 
 

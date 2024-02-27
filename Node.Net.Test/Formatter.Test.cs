@@ -16,10 +16,8 @@ namespace Node.Net
 		public void Deserialize_Type(string name,Type expected_type)
 		{
 			var stream = typeof(FormatterTest).Assembly.FindManifestResourceStream(name);
-			Assert.NotNull(stream, name);
 			var instance = new Formatter().Deserialize(stream);
-			Assert.NotNull(instance, "instance was null for " + name);
-			Assert.True(expected_type.IsAssignableFrom(instance.GetType()), "instance type " +
+			Assert.That(expected_type.IsAssignableFrom(instance.GetType()),Is.True, "instance type " +
 				expected_type.FullName + "was not assignable from " + instance.GetType().FullName);
 		}
 	}

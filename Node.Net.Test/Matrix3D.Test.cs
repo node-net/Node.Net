@@ -12,30 +12,30 @@ namespace Node.Net
         public void Identity()
         {
             Matrix3D matrix = new Matrix3D();
-            Assert.True(matrix.IsIdentity);
-            Assert.AreEqual(1.0, matrix.M11, "M11");
-            Assert.AreEqual(0.0, matrix.M12, "M12");
-            Assert.AreEqual(0.0, matrix.M13, "M13");
-            Assert.AreEqual(0.0, matrix.M14, "M14");
-            Assert.AreEqual(0.0, matrix.M21, "M21");
-            Assert.AreEqual(1.0, matrix.M22, "M22");
-            Assert.AreEqual(0.0, matrix.M23, "M23");
-            Assert.AreEqual(0.0, matrix.M24, "M24");
-            Assert.AreEqual(0.0, matrix.M31, "M31");
-            Assert.AreEqual(0.0, matrix.M32, "M32");
-            Assert.AreEqual(1.0, matrix.M33, "M33");
-            Assert.AreEqual(0.0, matrix.M34, "M34");
-            Assert.AreEqual(0.0, matrix.OffsetX, "OffsetX");
-            Assert.AreEqual(0.0, matrix.OffsetY, "OffsetY");
-            Assert.AreEqual(0.0, matrix.OffsetZ, "OffsetZ");
-            Assert.AreEqual(1.0, matrix.M44, "M44");
-            Assert.AreEqual(1.0, matrix.Determinant, "Determinant");
+            Assert.That(matrix.IsIdentity,Is.True);
+            Assert.That(matrix.M11,Is.EqualTo(1.0), "M11");
+            Assert.That(matrix.M12,Is.EqualTo(0.0), "M12");
+            Assert.That(matrix.M13, Is.EqualTo(0.0), "M13");
+            Assert.That(matrix.M14, Is.EqualTo(0.0), "M14");
+            Assert.That(matrix.M21, Is.EqualTo(0.0), "M21");
+            Assert.That(matrix.M22, Is.EqualTo(1.0), "M22");
+            Assert.That(matrix.M23, Is.EqualTo(0.0), "M23");
+            Assert.That(matrix.M24, Is.EqualTo(0.0), "M24");
+            Assert.That(matrix.M31, Is.EqualTo(0.0), "M31");
+            Assert.That(matrix.M32, Is.EqualTo(0.0), "M32");
+            Assert.That(matrix.M33, Is.EqualTo(1.0), "M33");
+            Assert.That(matrix.M34, Is.EqualTo(0.0), "M34");
+            Assert.That(matrix.OffsetX, Is.EqualTo(0.0), "OffsetX");
+            Assert.That(matrix.OffsetY, Is.EqualTo(0.0), "OffsetY");
+            Assert.That(matrix.OffsetZ, Is.EqualTo(0.0), "OffsetZ");
+            Assert.That(matrix.M44, Is.EqualTo(1.0), "M44");
+            Assert.That(matrix.Determinant, Is.EqualTo(1.0), "Determinant");
         }
 
         [Test]
         public void Determinant()
         {
-            Assert.AreEqual(1, new Matrix3D().Determinant, "Identity Matrix Determinant");
+            Assert.That(new Matrix3D().Determinant,Is.EqualTo(1), "Identity Matrix Determinant");
         }
 
         [Test]
@@ -43,29 +43,29 @@ namespace Node.Net
         {
             Matrix3D matrix = new Matrix3D();
             matrix.Translate(new Vector3D(10, 20, 30));
-            Assert.False(matrix.IsIdentity);
-            Assert.AreEqual(1.0, matrix.M11, "M11");
-            Assert.AreEqual(0.0, matrix.M12, "M12");
-            Assert.AreEqual(0.0, matrix.M13, "M13");
-            Assert.AreEqual(0.0, matrix.M14, "M14");
-            Assert.AreEqual(0.0, matrix.M21, "M21");
-            Assert.AreEqual(1.0, matrix.M22, "M22");
-            Assert.AreEqual(0.0, matrix.M23, "M23");
-            Assert.AreEqual(0.0, matrix.M24, "M24");
-            Assert.AreEqual(0.0, matrix.M31, "M31");
-            Assert.AreEqual(0.0, matrix.M32, "M32");
-            Assert.AreEqual(1.0, matrix.M33, "M33");
-            Assert.AreEqual(0.0, matrix.M34, "M34");
-            Assert.AreEqual(10.0, matrix.OffsetX, "OffsetX");
-            Assert.AreEqual(20.0, matrix.OffsetY, "OffsetY");
-            Assert.AreEqual(30.0, matrix.OffsetZ, "OffsetZ");
-            Assert.AreEqual(1.0, matrix.M44, "M44");
-            Assert.AreEqual(1.0, matrix.Determinant, "Determinant");
+            Assert.That(matrix.IsIdentity,Is.False);
+            Assert.That(matrix.M11, Is.EqualTo(1.0), "M11");
+            Assert.That(matrix.M12, Is.EqualTo(0.0), "M12");
+            Assert.That(matrix.M13, Is.EqualTo(0.0), "M13");
+            Assert.That(matrix.M14, Is.EqualTo(0.0), "M14");
+            Assert.That(matrix.M21, Is.EqualTo(0.0), "M21");
+            Assert.That(matrix.M22, Is.EqualTo(1.0), "M22");
+            Assert.That(matrix.M23, Is.EqualTo(0.0), "M23");
+            Assert.That(matrix.M24, Is.EqualTo(0.0), "M24");
+            Assert.That(matrix.M31, Is.EqualTo(0.0), "M31");
+            Assert.That(matrix.M32, Is.EqualTo(0.0), "M32");
+            Assert.That(matrix.M33, Is.EqualTo(1.0), "M33");
+            Assert.That(matrix.M34, Is.EqualTo(0.0), "M34");
+            Assert.That(matrix.OffsetX, Is.EqualTo(10.0), "OffsetX");
+            Assert.That(matrix.OffsetY, Is.EqualTo(20.0), "OffsetY");
+            Assert.That(matrix.OffsetZ, Is.EqualTo(30.0), "OffsetZ");
+            Assert.That(matrix.M44, Is.EqualTo(1.0), "M44");
+            Assert.That(matrix.Determinant, Is.EqualTo(1.0), "Determinant");
 
             Point3D position = matrix.Transform(new Point3D(0, 0, 0));
-            Assert.AreEqual(10, position.X, "position.X");
-            Assert.AreEqual(20, position.Y, "position.Y");
-            Assert.AreEqual(30, position.Z, "position.Z");
+            Assert.That(position.X, Is.EqualTo(10), "position.X");
+            Assert.That(position.Y, Is.EqualTo(20), "position.Y");
+            Assert.That(position.Z, Is.EqualTo(30), "position.Z");
         }
 
         [Test]
@@ -73,46 +73,46 @@ namespace Node.Net
         {
             Matrix3D m1 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
             Vector3D xvec1 = m1.Transform(new Vector3D(1, 0, 0));
-            Assert.AreEqual(0.966, Round(xvec1.X, 3), "xvec1.X");
-            Assert.AreEqual(0.259, Round(xvec1.Y, 3), "xvec1.Y");
-            Assert.AreEqual(0.000, Round(xvec1.Z, 3), "xvec1.Z");
+            Assert.That(Round(xvec1.X, 3), Is.EqualTo(0.966), "xvec1.X");
+            Assert.That(Round(xvec1.Y, 3), Is.EqualTo(0.259), "xvec1.Y");
+            Assert.That(Round(xvec1.Z, 3), Is.EqualTo(0.000), "xvec1.Z");
             Vector3D ots1 = m1.GetRotationsOTS();
-            Assert.AreEqual(15.0, Round(ots1.X, 3), "ots1.X");
-            Assert.AreEqual(0.0, Round(ots1.Y, 3), "ots1.Y");
-            Assert.AreEqual(0.0, Round(ots1.Z, 3), "ots1.Z");
+            Assert.That(Round(ots1.X, 3), Is.EqualTo(15.0), "ots1.X");
+            Assert.That(Round(ots1.Y, 3), Is.EqualTo(0.0), "ots1.Y");
+            Assert.That(Round(ots1.Z, 3), Is.EqualTo(0.0), "ots1.Z");
 
             Matrix3D m2 = new Matrix3D().RotateOTS(new Vector3D(15, -60, 0));
             Vector3D zvec2 = m2.Transform(new Vector3D(0, 0, 1));
-            Assert.AreEqual(-0.224, Round(zvec2.X, 3), "zvec2.X");
-            Assert.AreEqual(0.837, Round(zvec2.Y, 3), "zvec2.Y");
-            Assert.AreEqual(0.500, Round(zvec2.Z, 3), "zvec2.Z");
+            Assert.That(Round(zvec2.X, 3), Is.EqualTo(-0.224), "zvec2.X");
+            Assert.That(Round(zvec2.Y, 3), Is.EqualTo(0.837), "zvec2.Y");
+            Assert.That(Round(zvec2.Z, 3), Is.EqualTo(0.500), "zvec2.Z");
             Vector3D yvec2 = m2.Transform(new Vector3D(0, 1, 0));
-            Assert.AreEqual(-0.129, Round(yvec2.X, 3), "yvec2.X");
-            Assert.AreEqual(0.483, Round(yvec2.Y, 3), "yvec2.Y");
-            Assert.AreEqual(-0.866, Round(yvec2.Z, 3), "yvec2.Z");
+            Assert.That(Round(yvec2.X, 3), Is.EqualTo(-0.129), "yvec2.X");
+            Assert.That(Round(yvec2.Y, 3), Is.EqualTo(0.483), "yvec2.Y");
+            Assert.That(Round(yvec2.Z, 3), Is.EqualTo(-0.866), "yvec2.Z");
             Vector3D ots2 = m2.GetRotationsOTS();
-            Assert.AreEqual(15.0, Round(ots2.X, 3), "ots2.X");
-            Assert.AreEqual(-60.0, Round(ots2.Y, 3), "ots2.Y");
-            Assert.AreEqual(0.0, Round(ots2.Z, 3), "ots2.Z");
+            Assert.That(Round(ots2.X, 3), Is.EqualTo(15.0), "ots2.X");
+            Assert.That(Round(ots2.Y, 3), Is.EqualTo(-60.0), "ots2.Y");
+            Assert.That(Round(ots2.Z, 3), Is.EqualTo(0.0), "ots2.Z");
 
             Matrix3D m3 = new Matrix3D().RotateOTS(new Vector3D(15, -60, 5));
             Vector3D zvec3 = m3.Transform(new Vector3D(0, 0, 1));
-            Assert.AreEqual(-0.224, Round(zvec3.X, 3), "zvec3.X");
-            Assert.AreEqual(0.837, Round(zvec3.Y, 3), "zvec3.Y");
-            Assert.AreEqual(0.500, Round(zvec3.Z, 3), "zvec3.Z");
+            Assert.That(Round(zvec3.X, 3), Is.EqualTo(-0.224), "zvec3.X");
+            Assert.That(Round(zvec3.Y, 3), Is.EqualTo(0.837), "zvec3.Y");
+            Assert.That(Round(zvec3.Z, 3), Is.EqualTo(0.500), "zvec3.Z");
             Vector3D yvec3 = m3.Transform(new Vector3D(0, 1, 0));
-            Assert.AreEqual(-0.213, Round(yvec3.X, 3), "yvec3.X");
-            Assert.AreEqual(0.459, Round(yvec3.Y, 3), "yvec3.Y");
-            Assert.AreEqual(-0.863, Round(yvec3.Z, 3), "yvec3.Z");
+            Assert.That(Round(yvec3.X, 3), Is.EqualTo(-0.213), "yvec3.X");
+            Assert.That(Round(yvec3.Y, 3), Is.EqualTo(0.459), "yvec3.Y");
+            Assert.That(Round(yvec3.Z, 3), Is.EqualTo(-0.863), "yvec3.Z");
             Vector3D ots3 = m3.GetRotationsOTS();
-            Assert.AreEqual(18.016, Round(ots3.X, 3), "ots3.X");
-            Assert.AreEqual(-59.868, Round(ots3.Y, 3), "ots3.Y");
-            Assert.AreEqual(-4.359, Round(ots3.Z, 3), "ots3.Z");
+            Assert.That(Round(ots3.X, 3), Is.EqualTo(18.016), "ots3.X");
+            Assert.That(Round(ots3.Y, 3), Is.EqualTo(-59.868), "ots3.Y");
+            Assert.That(Round(ots3.Z, 3), Is.EqualTo(-4.359), "ots3.Z");
 
             Matrix3D m4 = new Matrix3D().RotateOTS(new Vector3D(15, -60, 5));
-            Assert.AreEqual(m3, m4, "m3 is not equal to m4");
+            Assert.That(m4, Is.EqualTo(m3), "m3 is not equal to m4");
             string m4s = m4.ToString();
-            Assert.AreEqual(192, m4s.Length);
+            Assert.That(m4s.Length,Is.EqualTo(192));
         }
 
         [Test]
@@ -130,9 +130,9 @@ namespace Node.Net
             double t_check = mA.GetTilt();
             double s_check = mA.GetSpin();
 
-            Assert.AreEqual(orientation, Round(o_check, 4), "orientation");
-            Assert.AreEqual(tilt, Round(t_check, 4), "tilt");
-            Assert.AreEqual(spin, Round(s_check, 4), "spin");
+            Assert.That(Round(o_check, 4), Is.EqualTo(orientation), "orientation");
+            Assert.That(Round(t_check, 4), Is.EqualTo(tilt), "tilt");
+            Assert.That(Round(s_check, 4), Is.EqualTo(spin), "spin");
         }
 
         [Test]
@@ -150,9 +150,9 @@ namespace Node.Net
             double t_check = mA.GetTilt();
             double s_check = mA.GetSpin();
 
-            Assert.AreEqual(orientation, Round(o_check, 4), "orientation");
-            Assert.AreEqual(tilt, Round(t_check, 4), "tilt");
-            Assert.AreEqual(spin, Round(s_check, 4), "spin");
+            Assert.That(Round(o_check, 4), Is.EqualTo(orientation), "orientation");
+            Assert.That(Round(t_check, 4), Is.EqualTo(tilt), "tilt");
+            Assert.That(Round(s_check, 4), Is.EqualTo(spin), "spin");
         }
 
         [Test]
@@ -163,7 +163,7 @@ namespace Node.Net
 
             List<double> m1values = m1.GetValues(4);
             List<double> m2values = m2.GetValues(4);
-            Assert.AreEqual(m1values, m2values);
+            Assert.That(m1values, Is.EqualTo(m2values));
         }
 
         [Test]
@@ -172,10 +172,10 @@ namespace Node.Net
             Matrix3D m1 = new Matrix3D().RotateOTS(new Vector3D(15, -60, 5));
             Matrix3D m2 = new Matrix3D().RotateOTS(new Vector3D(15, -60, 5));
 
-            Assert.True(m1.AlmostEqual(m2));
+            Assert.That(m1.AlmostEqual(m2),Is.True);
 
             Matrix3D m3 = new Matrix3D().RotateOTS(new Vector3D(15, -60, 6));
-            Assert.False(m1.AlmostEqual(m3));
+            Assert.That(m1.AlmostEqual(m3), Is.False);
         }
 
         [Test]
@@ -183,17 +183,17 @@ namespace Node.Net
         {
             Matrix3D m0 = new Matrix3D().RotateOTS(new Vector3D(0, 0, 0));
             Vector3D mz0 = m0.Transform(new Vector3D(0, 0, -1));
-            Assert.AreEqual(-1, Round(mz0.Z, 4), "mz0.Z");
+            Assert.That(Round(mz0.Z, 4), Is.EqualTo(-1), "mz0.Z");
 
             Matrix3D m30 = new Matrix3D().RotateOTS(new Vector3D(0, 30, 0));
             Vector3D mz30 = m30.Transform(new Vector3D(0, 0, -1));
-            Assert.AreEqual(0, Round(mz30.X, 3), "mz30.X");
-            Assert.AreEqual(0.5, Round(mz30.Y, 3), "mz30.Y");
-            Assert.AreEqual(-0.866, Round(mz30.Z, 3), "mz30.Z");
+            Assert.That(Round(mz30.X, 3), Is.EqualTo(0), "mz30.X");
+            Assert.That(Round(mz30.Y, 3), Is.EqualTo(0.5), "mz30.Y");
+            Assert.That(Round(mz30.Z, 3), Is.EqualTo(-0.866), "mz30.Z");
             Vector3D z30 = m30.Transform(new Vector3D(0, 0, 1));
-            Assert.AreEqual(0, Round(z30.X, 3), "z30.X");
-            Assert.AreEqual(-0.5, Round(z30.Y, 3), "z30.Y");
-            Assert.AreEqual(0.866, Round(z30.Z, 3), "z30.Z");
+            Assert.That(Round(z30.X, 3), Is.EqualTo(0), "z30.X");
+            Assert.That(Round(z30.Y, 3), Is.EqualTo(-0.5), "z30.Y");
+            Assert.That(Round(z30.Z, 3), Is.EqualTo(0.866), "z30.Z");
             //Assert.AreEqual(0, Round(z30.GetTheta(),3), "z30 theta");
             //Assert.AreEqual(30, Round(z30.GetPhi(), 3), "z30 Phi");
         }
@@ -206,44 +206,44 @@ namespace Node.Net
             m30.Translate(new Vector3D(0, 0, 10));
 
             Vector3D mzdir30 = m30.Transform(new Vector3D(0, 0, -1));
-            Assert.AreEqual(0, Round(mzdir30.X, 3), "mzdir30.X");
-            Assert.AreEqual(0.5, Round(mzdir30.Y, 3), "mzdir30.Y");
-            Assert.AreEqual(-0.866, Round(mzdir30.Z, 3), "mzdir30.Z");
+            Assert.That(Round(mzdir30.X, 3), Is.EqualTo(0), "mzdir30.X");
+            Assert.That(Round(mzdir30.Y, 3), Is.EqualTo(0.5), "mzdir30.Y");
+            Assert.That(Round(mzdir30.Z, 3), Is.EqualTo(-0.866), "mzdir30.Z");
 
             Vector3D intersect30 = Vector3DExtension.ComputeRayPlaneIntersection(mzdir30, new Vector3D(0, 0, 10),
                 new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
-            Assert.AreEqual(0, Round(intersect30.X, 3), "intersect30.X");
-            Assert.AreEqual(5.774, Round(intersect30.Y, 3), "intersect30.Y");
-            Assert.AreEqual(0, Round(intersect30.Z, 3), "intersect30.Z");
+            Assert.That(Round(intersect30.X, 3), Is.EqualTo(0), "intersect30.X");
+            Assert.That(Round(intersect30.Y, 3), Is.EqualTo(5.774), "intersect30.Y");
+            Assert.That(Round(intersect30.Z, 3), Is.EqualTo(0), "intersect30.Z");
 
             // 45 degree tilt
             Matrix3D m45 = new Matrix3D().RotateOTS(new Vector3D(0, 45, 0));
             m45.Translate(new Vector3D(0, 0, 10));
             Vector3D mzdir45 = m45.Transform(new Vector3D(0, 0, -1));
-            Assert.AreEqual(0, Round(mzdir45.X, 3), "mzdir45.X");
-            Assert.AreEqual(0.707, Round(mzdir45.Y, 3), "mzdir45.Y");
-            Assert.AreEqual(-0.707, Round(mzdir45.Z, 3), "mzdir45.Z");
+            Assert.That(Round(mzdir45.X, 3), Is.EqualTo(0), "mzdir45.X");
+            Assert.That(Round(mzdir45.Y, 3), Is.EqualTo(0.707), "mzdir45.Y");
+            Assert.That(Round(mzdir45.Z, 3), Is.EqualTo(-0.707), "mzdir45.Z");
 
             Vector3D intersect45 = Vector3DExtension.ComputeRayPlaneIntersection(mzdir45, new Vector3D(0, 0, 10),
                 new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
-            Assert.AreEqual(0, Round(intersect45.X, 3), "intersect45.X");
-            Assert.AreEqual(10.0, Round(intersect45.Y, 3), "intersect45.Y");
-            Assert.AreEqual(0, Round(intersect45.Z, 3), "intersect45.Z");
+            Assert.That(Round(intersect45.X, 3), Is.EqualTo(0), "intersect45.X");
+            Assert.That(Round(intersect45.Y, 3), Is.EqualTo(10.0), "intersect45.Y");
+            Assert.That(Round(intersect45.Z, 3), Is.EqualTo(0), "intersect45.Z");
 
             Vector3D zDirectionVector = m45.GetZDirectionVector();
-            Assert.AreEqual(0, Round(zDirectionVector.X, 3), "zDirectionVector.X");
-            Assert.AreEqual(-0.707, Round(zDirectionVector.Y, 3), "zDirectionVector.Y");
-            Assert.AreEqual(0.707, Round(zDirectionVector.Z, 3), "zDirectionVector.Z");
+            Assert.That(Round(zDirectionVector.X, 3), Is.EqualTo(0), "zDirectionVector.X");
+            Assert.That(Round(zDirectionVector.Y, 3), Is.EqualTo(-0.707), "zDirectionVector.Y");
+            Assert.That(Round(zDirectionVector.Z, 3), Is.EqualTo(0.707), "zDirectionVector.Z");
 
             Vector3D yDirectionVector = m45.GetYDirectionVector();
-            Assert.AreEqual(0, Round(yDirectionVector.X, 3), "yDirectionVector.X");
-            Assert.AreEqual(0.707, Round(yDirectionVector.Y, 3), "yDirectionVector.Y");
-            Assert.AreEqual(0.707, Round(yDirectionVector.Z, 3), "yDirectionVector.Z");
+            Assert.That(Round(yDirectionVector.X, 3), Is.EqualTo(0), "yDirectionVector.X");
+            Assert.That(Round(yDirectionVector.Y, 3), Is.EqualTo(0.707), "yDirectionVector.Y");
+            Assert.That(Round(yDirectionVector.Z, 3), Is.EqualTo(0.707), "yDirectionVector.Z");
 
             Vector3D xDirectionVector = m45.GetXDirectionVector();
-            Assert.AreEqual(1.0, Round(xDirectionVector.X, 3), "xDirectionVector.X");
-            Assert.AreEqual(0.0, Round(xDirectionVector.Y, 3), "xDirectionVector.Y");
-            Assert.AreEqual(0.0, Round(xDirectionVector.Z, 3), "xDirectionVector.Z");
+            Assert.That(Round(xDirectionVector.X, 3), Is.EqualTo(1.0), "xDirectionVector.X");
+            Assert.That(Round(xDirectionVector.Y, 3), Is.EqualTo(0.0), "xDirectionVector.Y");
+            Assert.That(Round(xDirectionVector.Z, 3), Is.EqualTo(0.0), "xDirectionVector.Z");
         }
 
         /*
@@ -272,9 +272,9 @@ namespace Node.Net
         {
             Matrix3D m1 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
             Matrix3D m2 = new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
-            Assert.True(m1.AlmostEqual(m2));
+            Assert.That(m1.AlmostEqual(m2),Is.True);
             Matrix3D m3 = new Matrix3D().RotateOTS(new Vector3D(15, 12, 0));
-            Assert.False(m1.AlmostEqual(m3));
+            Assert.That(m1.AlmostEqual(m3), Is.False);
         }
 
 

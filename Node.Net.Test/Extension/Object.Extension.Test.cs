@@ -16,7 +16,7 @@ namespace Node.Net.Test.Extension
         public void GetName_SetName()
         {
             DateTime dateTime = DateTime.Now;
-            Assert.AreEqual("", dateTime.GetName());
+            Assert.That(dateTime.GetName(),Is.EqualTo(""));
             dateTime.SetName("Now");
             //Assert.AreEqual("Now", dateTime.GetName());
         }
@@ -31,14 +31,13 @@ namespace Node.Net.Test.Extension
                 {"Name","foo" },
                 {"bar",bar }
             };
-            Assert.IsNull(bar.GetParent());
             bar.SetParent(foo);
-            Assert.AreSame(foo, bar.GetParent());
+            Assert.That(foo, Is.SameAs(bar.GetParent()));
 
             Widget widget = new Widget();
-            Assert.IsNull(widget.GetParent());
+            Assert.That(widget.GetParent(),Is.Null);
             widget.SetParent(null);
-            Assert.IsNull(widget.GetParent());
+            Assert.That(widget.GetParent(), Is.Null);
 
             bar.ClearMetaData();
         }

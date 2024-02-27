@@ -9,11 +9,11 @@ namespace Node.Net.Test.Extension
         public void ParsePoints()
         {
             System.Windows.Media.Media3D.Point3D[] points = Point3DExtension.ParsePoints("0,0,0 0,0,1");
-            Assert.AreEqual(2, points.Length);
+            Assert.That(points.Length, Is.EqualTo(2));
             System.Windows.Point[] points2D = points.Get2DPoints();
-            Assert.AreEqual(2, points2D.Length);
+            Assert.That(points2D.Length, Is.EqualTo(2));
             System.Windows.Media.Media3D.Point3D[] tpoints = points.Transform(new System.Windows.Media.Media3D.Matrix3D());
-            Assert.AreEqual(2, tpoints.Length);
+            Assert.That(tpoints.Length, Is.EqualTo(2));
         }
     }
 }

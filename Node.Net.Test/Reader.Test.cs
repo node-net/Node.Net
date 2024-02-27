@@ -15,7 +15,6 @@ namespace Node.Net.Test
             Reader reader = new Reader();
             System.Reflection.Assembly assembly = typeof(ReaderTest).Assembly;
             Stream stream = assembly.FindManifestResourceStream(name);
-            Assert.NotNull(stream, nameof(stream));
             using MemoryStream memory = new MemoryStream();
             stream.CopyTo(memory);
             memory.Seek(0, SeekOrigin.Begin);
@@ -25,9 +24,8 @@ namespace Node.Net.Test
             memory.Seek(0, SeekOrigin.Begin);
 
             IDictionary i = reader.Read<IDictionary>(memory);
-            Assert.NotNull(i, nameof(i));
-            Assert.True(i.Contains("string_symbol"), "i.Contains 'string_symbol'");
-            Assert.AreEqual("0°", i["string_symbol"].ToString(), "i['string_symbol']");
+            Assert.That(i.Contains("string_symbol"),Is.True, "i.Contains 'string_symbol'");
+            Assert.That(i["string_symbol"].ToString(), Is.EqualTo("0°"), "i['string_symbol']");
 
             memory2.Seek(0, SeekOrigin.Begin);
             string filename = Path.GetTempFileName();
@@ -36,9 +34,8 @@ namespace Node.Net.Test
                 memory2.CopyTo(fs);
             }
             IDictionary d = reader.Read(filename) as IDictionary;
-            Assert.NotNull(d, nameof(d));
-            Assert.True(d.Contains("string_symbol"), "d.Contains 'string_symbol'");
-            Assert.AreEqual("0°", d["string_symbol"].ToString(), "d['string_symbol']");
+            Assert.That(d.Contains("string_symbol"),Is.True, "d.Contains 'string_symbol'");
+            Assert.That(d["string_symbol"].ToString(), Is.EqualTo("0°"), "d['string_symbol']");
 
             using MemoryStream memory3 = new MemoryStream();
             d.Save(memory3);
@@ -54,23 +51,23 @@ namespace Node.Net.Test
             };
 
             string json = (data as IDictionary).ToJson();
-            Assert.True(json.Contains(@"Domain\u005cUser"), "json contains 'Domain\u005cUser'");
+            Assert.That(json.Contains(@"Domain\u005cUser"),Is.True, "json contains 'Domain\u005cUser'");
 
             using (MemoryStream memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {
                 IDictionary d = new Reader().Read<IDictionary>(memory);
-                Assert.True(d.Contains("User"));
+                Assert.That(d.Contains("User"),Is.True);
                 string user = d["User"].ToString();
-                Assert.AreEqual(@"Domain\User", d["User"].ToString());
+                Assert.That( d["User"].ToString(),Is.EqualTo(@"Domain\User"));
             }
 
             json = "{\"User\":\"Domain\\User\"}";
             using (MemoryStream memory = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {
                 IDictionary d = new Reader().Read<IDictionary>(memory);
-                Assert.True(d.Contains("User"));
+                Assert.That(d.Contains("User"),Is.True);
                 string user = d["User"].ToString();
-                Assert.AreEqual(@"Domain\User", d["User"].ToString());
+                Assert.That( d["User"].ToString(),Is.EqualTo(@"Domain\User"));
             }
         }
 
@@ -80,10 +77,10 @@ namespace Node.Net.Test
             const string json = "{ \"path\" : \"C:\\\\tmp\" }";
             IDictionary data = new Reader()
                 .Read<IDictionary>(new MemoryStream(Encoding.UTF8.GetBytes(json)));
-            Assert.True(data.Contains("path"), "data.Contains 'path'");
+            Assert.That(data.Contains("path"), Is.True, "data.Contains 'path'");
             string path = data["path"].ToString();
-            Assert.True(path.Contains("\\"), "path contains \\");
-            Assert.AreEqual("C:\\tmp", path);
+            Assert.That(path.Contains("\\"),Is.True, "path contains \\");
+            Assert.That(path, Is.EqualTo("C:\\tmp"));
         }
     }
 }

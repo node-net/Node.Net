@@ -9,24 +9,24 @@ namespace Node.Net.Test
         [Test]
         public void GetLength()
         {
-            Assert.AreEqual(15.0, new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) }.GetLength());
+            Assert.That(new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) }.GetLength(),Is.EqualTo(15.0));
         }
 
         [Test]
         public void Close()
         {
             Point[] points = new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) };
-            Assert.False(points.IsClosed());
+            Assert.That(points.IsClosed(),Is.False);
             Point[] points2 = points.Close();
-            Assert.True(points2.IsClosed());
+            Assert.That(points2.IsClosed(), Is.True);
             Point[] points3 = points2.Close();
-            Assert.AreEqual(5, points3.Length);
+            Assert.That(points3.Length, Is.EqualTo(5));
         }
 
         [Test]
         public void GetArea()
         {
-            Assert.AreEqual(25.0, new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) }.GetArea());
+            Assert.That(new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) }.GetArea(), Is.EqualTo(25.0));
         }
 
         [Test]
@@ -34,9 +34,9 @@ namespace Node.Net.Test
         {
             Point[] points = new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) };
             Point a = points.GetPointAtDistance(3.0);
-            Assert.AreEqual(3.0, a.Y);
+            Assert.That(a.Y, Is.EqualTo(3.0));
             a = points.GetPointAtDistance(33.0);
-            Assert.AreEqual(5, a.X);
+            Assert.That(a.X, Is.EqualTo(5));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Node.Net.Test
         {
             Point[] points = new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) };
             Point[] offset = points.Offset(2.0);
-            Assert.AreEqual(6, offset.Length);
+            Assert.That(offset.Length, Is.EqualTo(6));
         }
 
         [Test]
@@ -52,35 +52,35 @@ namespace Node.Net.Test
         {
             Point[] points = new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) };
             Point[] offset = points.OffsetWithArcs(2.0);
-            Assert.AreEqual(42, offset.Length);
+            Assert.That(offset.Length, Is.EqualTo(42));
         }
 
         [Test]
         public void GetA()
         {
-            Assert.AreEqual(-1, new Point(0, 0).GetA(new Point(1, 1)));
+            Assert.That(new Point(0, 0).GetA(new Point(1, 1)), Is.EqualTo(-1));
         }
 
         [Test]
         public void GetC()
         {
-            Assert.AreEqual(0, new Point(0, 0).GetC(new Point(1, 1)));
+            Assert.That(new Point(0, 0).GetC(new Point(1, 1)), Is.EqualTo(0));
         }
 
         [Test]
         public void GetSlope()
         {
-            Assert.AreEqual(1, new Point(0, 0).GetSlope(new Point(1, 1)));
+            Assert.That(new Point(0, 0).GetSlope(new Point(1, 1)), Is.EqualTo(1));
         }
 
         [Test]
         public void ParsePoints()
         {
             Point[] points = PointExtension.ParsePoints("0,0 1,0");
-            Assert.AreEqual(2, points.Length);
+            Assert.That(points.Length, Is.EqualTo(2));
 
             points = PointExtension.ParsePoints("0,0,0 1,0,0");
-            Assert.AreEqual(2, points.Length);
+            Assert.That(points.Length, Is.EqualTo(2));
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Node.Net.Test
         {
             Point[] points = new Point[] { new Point(3, 4) };
             string str = points.GetString();
-            Assert.AreEqual("3,4", str);
+            Assert.That(str, Is.EqualTo("3,4"));
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Node.Net.Test
         {
             Point[] points = new Point[] { new Point(0, 0), new Point(0, 5), new Point(5, 5), new Point(5, 0) };
             Point centroid = points.GetCentroid();
-            Assert.AreEqual(2.5, centroid.X);
+            Assert.That(centroid.X, Is.EqualTo(2.5));
         }
 
 

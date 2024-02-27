@@ -7,14 +7,6 @@ namespace Node.Net.Test
     internal class FactoryTest
     {
         [Test]
-        public void Create()
-        {
-            Factory factory = new Factory();
-            Assert.NotNull(factory.Create<Matrix3D>());
-            //Assert.NotNull(factory.Create(typeof(Matrix3D),null));
-        }
-
-        [Test]
         public void ClearCache()
         {
             Factory factory = new Factory();

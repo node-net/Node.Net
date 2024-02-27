@@ -15,8 +15,8 @@ namespace Node.Net.Test.Extension
                 LookDirection = new Vector3D(0, 0, -1),
                 UpDirection = new Vector3D(0, 1, 0)
             };
-            Assert.True(camera.IsVisible(new Point3D(0, 0, 0)));
-            Assert.True(camera.IsVisible(new Point3D(0, 0, 0), .8));
+            Assert.That(camera.IsVisible(new Point3D(0, 0, 0)), Is.True);
+            Assert.That(camera.IsVisible(new Point3D(0, 0, 0), .8), Is.True);
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace Node.Net.Test.Extension
                 LookDirection = new Vector3D(0, 0, -1),
                 UpDirection = new Vector3D(0, 1, 0)
             };
-            Assert.AreEqual(45.0, camera.GetVerticalFieldOfView(100, 100));
+            Assert.That(camera.GetVerticalFieldOfView(100, 100),Is.EqualTo(45.0));
         }
     }
 }

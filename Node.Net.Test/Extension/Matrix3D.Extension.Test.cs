@@ -16,9 +16,9 @@ namespace Node.Net.Extension
             Matrix3D matrix = new Matrix3D();
             matrix = matrix.RotateOTS(new Vector3D(orientation, tilt, spin));
             Vector3D ots = matrix.GetRotationsOTS();
-            Assert.AreEqual(orientation, Round(ots.X, 2), "orientation");
-            Assert.AreEqual(tilt, Round(ots.Y, 2), "tilt");
-            Assert.AreEqual(spin, Round(ots.Z, 2), "spin");
+            Assert.That(Round(ots.X, 2),Is.EqualTo(orientation), "orientation");
+            Assert.That(Round(ots.Y, 2),Is.EqualTo(tilt), "tilt");
+            Assert.That(Round(ots.Z, 2), Is.EqualTo(spin), "spin");
         }
     }
 }

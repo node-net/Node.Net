@@ -12,30 +12,30 @@ namespace Node.Net.Test
         public void RotateOTS()
         {
             Dictionary<string, object> element = new Dictionary<string, object>();
-            Assert.AreEqual(0.0, Round(element.GetLocalToWorld().GetOrientation(), 4), "orientation");
-            Assert.AreEqual(0.0, Round(element.GetLocalToWorld().GetTilt(), 3), "tilt");
-            Assert.AreEqual(0.0, Round(element.GetLocalToWorld().GetSpin(), 3), "spin");
+            Assert.That(Round(element.GetLocalToWorld().GetOrientation(), 4),Is.EqualTo(0.0), "orientation");
+            Assert.That(Round(element.GetLocalToWorld().GetTilt(), 3),Is.EqualTo(0.0), "tilt");
+            Assert.That(Round(element.GetLocalToWorld().GetSpin(), 3),Is.EqualTo(0.0), "spin");
 
             element.SetRotationsOTS(new Vector3D(55, 15, 0));
-            Assert.AreEqual(55.0, Round(element.GetLocalToWorld().GetOrientation(), 4), "orientation");
-            Assert.AreEqual(15.0, Round(element.GetLocalToWorld().GetTilt(), 3), "tilt");
-            Assert.AreEqual(0.0, Round(element.GetLocalToWorld().GetSpin(), 3), "spin");
+            Assert.That(Round(element.GetLocalToWorld().GetOrientation(), 4), Is.EqualTo(55.0),"orientation");
+            Assert.That(Round(element.GetLocalToWorld().GetTilt(), 3), Is.EqualTo(15.0), "tilt");
+            Assert.That(Round(element.GetLocalToWorld().GetSpin(), 3), Is.EqualTo(0.0), "spin");
 
             Dictionary<string, object> group = new Dictionary<string, object>();
             group.Add("child", element);
             element.SetParent(group);
 
             element.SetRotationsOTS(new Vector3D(85.0, 32.0, 0));
-            Assert.AreEqual(85.0, Round(element.GetLocalToWorld().GetOrientation(), 4), "orientation");
-            Assert.AreEqual(32.0, Round(element.GetLocalToWorld().GetTilt(), 3), "tilt");
-            Assert.AreEqual(0.0, Round(element.GetLocalToWorld().GetSpin(), 3), "spin");
+            Assert.That(Round(element.GetLocalToWorld().GetOrientation(), 4), Is.EqualTo(85.0), "orientation");
+            Assert.That(Round(element.GetLocalToWorld().GetTilt(), 3), Is.EqualTo(32.0), "tilt");
+            Assert.That(Round(element.GetLocalToWorld().GetSpin(), 3), Is.EqualTo(0.0), "spin");
 
             element["XDirection"] = "1,0,0";
             element["YDirection"] = "0,0.573462,0.819232";
             element.SetRotationsOTS(new Vector3D(15.0, 23, 0));
-            Assert.AreEqual(15.0, Round(element.GetLocalToWorld().GetOrientation(), 4), "orientation");
-            Assert.AreEqual(23.0, Round(element.GetLocalToWorld().GetTilt(), 3), "tilt");
-            Assert.AreEqual(0.0, Round(element.GetLocalToWorld().GetSpin(), 3), "spin");
+            Assert.That(Round(element.GetLocalToWorld().GetOrientation(), 4), Is.EqualTo(15.0), "orientation");
+            Assert.That(Round(element.GetLocalToWorld().GetTilt(), 3), Is.EqualTo(23.0), "tilt");
+            Assert.That(Round(element.GetLocalToWorld().GetSpin(), 3), Is.EqualTo(0.0), "spin");
         }
     }
 }

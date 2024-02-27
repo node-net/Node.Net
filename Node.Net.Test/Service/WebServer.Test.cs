@@ -12,17 +12,17 @@ namespace Node.Net.Service
 			using WebServer server = new WebServer(Protocol.HTTP, 5000);
 			int port = server.Port;
 			server.Start();
-			Assert.NotNull(server.Listener, "server.Listener");
+			Assert.That(server.Listener,Is.Not.Null, "server.Listener");
 
 			System.Uri uri = server.Uri;
-			Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
+			Assert.That(uri.ToString(),Is.EqualTo($"http://localhost:{port}/"));
 			using (WebClient client = new WebClient())
 			{
 				string response = client.DownloadString(uri.ToString());
-				Assert.True(response.Contains("html"));
+				Assert.That(response.Contains("html"),Is.True);
 
 				response = client.UploadString(uri.ToString(), "please post");
-				Assert.True(response.Contains("thanks"));
+				Assert.That(response.Contains("thanks"), Is.True);
 			}
 			server.Stop();
 		}
@@ -35,7 +35,7 @@ namespace Node.Net.Service
 			server.Start();
 
 			System.Uri uri = server.Uri;
-			Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
+			Assert.That( uri.ToString(),Is.EqualTo($"http://localhost:{port}/"));
 
 			Thread.Sleep(30000);
 			server.Stop();

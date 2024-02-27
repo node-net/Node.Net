@@ -21,7 +21,7 @@ namespace Node.Net.Test
             {
                 writer.Write(memory, data);
                 string json = Encoding.UTF8.GetString(memory.ToArray());
-                Assert.AreEqual("{\"name\":\"test\"}", json);
+                Assert.That( json,Is.EqualTo("{\"name\":\"test\"}"));
             }
 
             writer = new Writer { JsonFormat = JsonFormat.Pretty };
@@ -29,7 +29,7 @@ namespace Node.Net.Test
             {
                 writer.Write(memory, data);
                 string json = Encoding.UTF8.GetString(memory.ToArray());
-                Assert.AreEqual("{\r\n  \"name\":\"test\"\r\n}", json);
+                Assert.That( json,Is.EqualTo("{\r\n  \"name\":\"test\"\r\n}"));
             }
         }
 
@@ -46,8 +46,8 @@ namespace Node.Net.Test
             new Writer().Write(memory, widget);
             memory.Seek(0, SeekOrigin.Begin);
             string json = new StreamReader(memory).ReadToEnd();
-            Assert.True(json.Contains("abc"));
-            Assert.True(json.Contains("test"));
+            Assert.That(json.Contains("abc"),Is.True);
+            Assert.That(json.Contains("test"), Is.True);
         }
     }
 }

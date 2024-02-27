@@ -12,12 +12,12 @@ namespace Node.Net.JsonRPC
         {
             Responder responder = GetTestResponder();
             Response response = responder.Respond(new Request("say_hello"));
-            Assert.AreEqual("hello", response.Result.ToString());
+            Assert.That(response.Result.ToString(), Is.EqualTo("hello"));
 
             System.IO.Stream stream = typeof(ResponderTest).Assembly.GetManifestResourceStream(
                 "Node.Net.Test.JsonRPC.Responder.Test.Data.json");
             IDictionary test_data = new Node.Net.Reader().Read<IDictionary>(stream);
-            Assert.NotNull(test_data, nameof(test_data));
+
 
             foreach (string key in test_data.Keys)
             {
@@ -35,7 +35,7 @@ namespace Node.Net.JsonRPC
                         if (test_data.Contains(key.Replace("_request", "_response")))
                         {
                             string response_json = (test_data[key.Replace("_request", "_response")] as IDictionary)?.ToJson();
-                            Assert.AreEqual(response_json, response_text, key);
+                            Assert.That(response_json, Is.EqualTo(response_text), key);
                         }
                     }
                     catch (System.Exception e)

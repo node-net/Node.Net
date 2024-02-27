@@ -16,7 +16,7 @@ namespace Node.Net.Collections
 
 			var stream = typeof(FormatterTest).Assembly.FindManifestResourceStream("States.json");
 			var states = new Element(stream);
-			Assert.AreEqual(50, states.Count, "states.Count");
+			Assert.That(states.Count, Is.EqualTo(50), "states.Count");
 		}
 
 		[Test]
@@ -24,12 +24,12 @@ namespace Node.Net.Collections
 		{
 			var stream = typeof(FormatterTest).Assembly.FindManifestResourceStream("States.json");
 			var states = new Element(stream);
-			Assert.AreEqual(50, states.Count, "states.Count");
+			Assert.That(states.Count, Is.EqualTo(50), "states.Count");
 
 			foreach(var state_name in states.Keys)
 			{
 				var state = states[state_name] as Element;
-				Assert.AreSame(states, state.Parent);
+				Assert.That(states, Is.SameAs(state.Parent));
 			}
 		}
 	}

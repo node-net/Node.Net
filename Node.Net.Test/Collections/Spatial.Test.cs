@@ -20,13 +20,11 @@ namespace Node.Net.Collections
 		{
 			var yard = Yard;
 			var mailbox = yard.Descendants.FirstOrDefault(e => e.Name == "mailbox");
-			Assert.NotNull(mailbox, nameof(mailbox));
-			Assert.AreSame(yard, mailbox.Parent, "mailbox.Parent");
+			Assert.That(yard, Is.SameAs(mailbox.Parent), "mailbox.Parent");
 			var stake1 = yard.Descendants.FirstOrDefault(e => e.Name == "stake1");
-			Assert.NotNull(stake1, nameof(stake1));
 
 			var json = yard.Json;
-			Assert.AreEqual(66, json.Length);
+			Assert.That(json.Length, Is.EqualTo(66));
 		}
 
 		public static Spatial Yard

@@ -9,9 +9,9 @@ namespace Node.Net.Test
         public void FindManifestResourceStream()
         {
             System.Reflection.Assembly assembly = typeof(AssemblyExtensionTest).Assembly;
-            Assert.IsNull(assembly.FindManifestResourceStream("?"));
-            Assert.NotNull(assembly.FindManifestResourceStream("Object.Coverage.json"));
-            Assert.NotNull(assembly.FindManifestResourceStream("Node.Net.Test.Resources.Object.Coverage.json"));
+            Assert.That(assembly.FindManifestResourceStream("?"),Is.Null);
+            Assert.That(assembly.FindManifestResourceStream("Object.Coverage.json"),Is.Not.Null);
+            Assert.That(assembly.FindManifestResourceStream("Node.Net.Test.Resources.Object.Coverage.json"),Is.Not.Null);
         }
     }
 }

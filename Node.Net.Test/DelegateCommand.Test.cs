@@ -10,10 +10,10 @@ namespace Node.Net.Test
         {
             DelegateCommand command = new DelegateCommand(TestCommand);
             command.Execute(null);
-            Assert.True(command.CanExecute(null));
+            Assert.That(command.CanExecute(null), Is.True);
 
             command = new DelegateCommand(TestCommand, TestCanExecute);
-            Assert.True(command.CanExecute(null));
+            Assert.That(command.CanExecute(null), Is.True);
             command.Execute(null);
 
             command = new DelegateCommand(null);

@@ -17,18 +17,16 @@ namespace Node.Net.JsonRPC
 			server.Start();
 
 			Uri uri = server.Uri;
-			Assert.AreEqual($"http://localhost:{port}/", uri.ToString());
+			Assert.That(uri.ToString(), Is.EqualTo($"http://localhost:{port}/"));
 			using (WebClient client = new WebClient())
 			{
 				Request request = new Request("say_hello");
 				string json_response = client.UploadString(uri.ToString(), request.ToJson());
-				Assert.NotNull(json_response, nameof(json_response));
-				Assert.True(json_response.Contains("hello"));
+				Assert.That(json_response.Contains("hello"),Is.True);
 			}
 			Client jsonRpcClient = new Client(server.Uri.ToString());
 			Response response = jsonRpcClient.Respond(new Request("say_hello"));
-			Assert.NotNull(response, nameof(response));
-			Assert.AreEqual("hello", response.Result.ToString());
+			Assert.That(response.Result.ToString(), Is.EqualTo("hello"));
 			server.Stop();
 		}
 
@@ -57,18 +55,16 @@ namespace Node.Net.JsonRPC
 				using Server server = new Server(listener, responder.Respond);
 				//var port = server.Port;
 				server.Start();
-				Assert.AreEqual($"https://{Environment.MachineName}:{port}/", uri.ToString());
+				Assert.That(uri.ToString(), Is.EqualTo($"https://{Environment.MachineName}:{port}/"));
 				using (WebClient client = new WebClient())
 				{
 					Request request = new Request("say_hello");
 					string json_response = client.UploadString(uri.ToString(), request.ToJson());
-					Assert.NotNull(json_response, nameof(json_response));
-					Assert.True(json_response.Contains("hello"));
+					Assert.That(json_response.Contains("hello"),Is.True);
 				}
 				Client jsonRpcClient = new Client(server.Uri.ToString());
 				Response response = jsonRpcClient.Respond(new Request("say_hello"));
-				Assert.NotNull(response, nameof(response));
-				Assert.AreEqual("hello", response.Result.ToString());
+				Assert.That(response.Result.ToString(), Is.EqualTo("hello"));
 				server.Stop();
 			}
         }

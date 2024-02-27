@@ -13,13 +13,13 @@ namespace Node.Net.Test.Extension
         public void GetRotations()
         {
             Vector3D rotations = new Dictionary<string, string>().GetRotations();
-            Assert.AreEqual(0, rotations.Z, "rotations.Z");
+            Assert.That(rotations.Z,Is.EqualTo(0), "rotations.Z");
 
             rotations = new Dictionary<string, string>
             {
                 { "Orientation","-180 deg" }
             }.GetRotations();
-            Assert.AreEqual(-180.0, rotations.Z, "rotations.Z");
+            Assert.That(rotations.Z, Is.EqualTo(-180.0), "rotations.Z");
         }
 
         [Test]
@@ -27,10 +27,7 @@ namespace Node.Net.Test.Extension
         {
             System.Reflection.Assembly assembly = typeof(IDictionaryExtensionTest).Assembly;
             IDictionary data = new Reader().Read<IDictionary>(assembly.FindManifestResourceStream("Object.Coverage.json"));
-            Assert.NotNull(data, nameof(data));
-            //data.DeepUpdateParents();
             IDictionary a = data.Find<IDictionary>("objectA");
-            Assert.NotNull(a, nameof(a));
         }
 
         private bool Filter(object v)
@@ -43,7 +40,6 @@ namespace Node.Net.Test.Extension
         {
             System.Reflection.Assembly assembly = typeof(IDictionaryExtensionTest).Assembly;
             IDictionary data = new Reader().Read<IDictionary>(assembly.FindManifestResourceStream("Object.Coverage.json"));
-            Assert.NotNull(data, nameof(data));
             data.Collect(typeof(IDictionary));
             data.Collect<IDictionary>(Filter);
             data.Collect<IDictionary>("");
@@ -56,7 +52,6 @@ namespace Node.Net.Test.Extension
         {
             System.Reflection.Assembly assembly = typeof(IDictionaryExtensionTest).Assembly;
             IDictionary data = new Reader().Read<IDictionary>(assembly.FindManifestResourceStream("Object.Coverage.json"));
-            Assert.NotNull(data, nameof(data));
             data.DeepUpdateParents();
             IDictionaryExtension.DeepUpdateParents(null);
             data.ComputeHashCode();
@@ -69,7 +64,7 @@ namespace Node.Net.Test.Extension
             {
                 {"X" ,"2 m" }
             };
-            Assert.AreEqual(2.0, data.GetLengthMeters("X"));
+            Assert.That(data.GetLengthMeters("X"),Is.EqualTo(2.0));
         }
 
         [Test]
@@ -82,37 +77,37 @@ namespace Node.Net.Test.Extension
             };
 
             Matrix3D localToParent = data.GetLocalToParent();
-            Assert.AreNotSame(localToParent, data.GetLocalToParent());
+            Assert.That(localToParent, Is.Not.SameAs(data.GetLocalToParent()));
             Matrix3D localToWorld = data.GetLocalToWorld();
-            Assert.AreNotSame(localToWorld, data.GetLocalToWorld());
+            Assert.That(localToWorld, Is.Not.SameAs(data.GetLocalToWorld()));
             Point3D origin = localToParent.Transform(new System.Windows.Media.Media3D.Point3D(0, 0, 0));
-            Assert.AreEqual(10, origin.X);
-            Assert.AreEqual(1, origin.Y);
+            Assert.That(origin.X,Is.EqualTo(10));
+            Assert.That(origin.Y,Is.EqualTo(1));
 
             string mstring = localToParent.ToString();
-            Assert.AreEqual(32, mstring.Length);
+            Assert.That(mstring.Length,Is.EqualTo(32));
 
             Matrix3D m = Matrix3D.Parse(mstring);
             Point3D origin2 = m.Transform(new System.Windows.Media.Media3D.Point3D(0, 0, 0));
-            Assert.AreEqual(10, origin2.X);
-            Assert.AreEqual(1, origin2.Y);
+            Assert.That(origin2.X, Is.EqualTo(10));
+            Assert.That(origin2.Y, Is.EqualTo(1));
 
             Matrix3D i = Matrix3D.Parse("Identity");
-            Assert.True(i.IsIdentity);
+            Assert.That(i.IsIdentity,Is.True);
 
-            Assert.AreEqual(0, Round(localToParent.GetOrientation(), 3), "orientation");
-            Assert.AreEqual(0, Round(localToParent.GetTilt(), 3), "Tilt");
-            Assert.AreEqual(0, Round(localToParent.GetSpin(), 3), "Spin");
+            Assert.That(Round(localToParent.GetOrientation(), 3), Is.EqualTo(0), "orientation");
+            Assert.That(Round(localToParent.GetTilt(), 3), Is.EqualTo(0), "Tilt");
+            Assert.That(Round(localToParent.GetSpin(), 3), Is.EqualTo(0), "Spin");
 
             data["Orientation"] = "135.0 deg";
             data["Tilt"] = "55 deg";
             localToParent = data.GetLocalToParent();
-            Assert.AreEqual(135.0, Round(localToParent.GetOrientation(), 3), "orientation");
-            Assert.AreEqual(55.0, Round(localToParent.GetTilt(), 3), "tilt");
+            Assert.That(Round(localToParent.GetOrientation(), 3), Is.EqualTo(135.0), "orientation");
+            Assert.That(Round(localToParent.GetTilt(), 3), Is.EqualTo(55.0), "tilt");
 
             localToWorld = data.GetLocalToWorld();
-            Assert.AreEqual(135.0, Round(localToWorld.GetOrientation(), 3), "orientation");
-            Assert.AreEqual(55.0, Round(localToWorld.GetTilt(), 3), "tilt");
+            Assert.That(Round(localToWorld.GetOrientation(), 3), Is.EqualTo(135.0), "orientation");
+            Assert.That(Round(localToWorld.GetTilt(), 3), Is.EqualTo(55.0), "tilt");
         }
 
         [Test]
@@ -123,18 +118,18 @@ namespace Node.Net.Test.Extension
                 {"Name","test" }
             };
 
-            Assert.AreEqual("test", data.Get<string>("Name"), "Name");
-            Assert.AreEqual("test", data.Get<string>("Name,Description"), "Name,Description");
-            Assert.AreEqual("test", data.Get<string>("Description,Name"), "Description,Name");
+            Assert.That(data.Get<string>("Name"),Is.EqualTo("test"), "Name");
+            Assert.That(data.Get<string>("Name,Description"), Is.EqualTo("test"), "Name,Description");
+            Assert.That(data.Get<string>("Description,Name"), Is.EqualTo("test"), "Description,Name");
 
             Dictionary<string, object> data2 = new Dictionary<string, object>
             {
                 {"Description","example" }
             };
 
-            Assert.AreEqual("example", data2.Get<string>("Description"), "Description");
-            Assert.AreEqual("example", data2.Get<string>("Name,Description"), "Name,Description");
-            Assert.AreEqual("example", data2.Get<string>("Description,Name"), "Description,Name");
+            Assert.That(data2.Get<string>("Description"), Is.EqualTo("example"), "Description");
+            Assert.That(data2.Get<string>("Name,Description"), Is.EqualTo("example"), "Name,Description");
+            Assert.That(data2.Get<string>("Description,Name"), Is.EqualTo("example"), "Description,Name");
         }
 
         [Test]
@@ -145,8 +140,8 @@ namespace Node.Net.Test.Extension
 
             Matrix3D localToWorld = data.GetLocalToWorld();
             Point3D point = localToWorld.Transform(new Point3D(1, 0, 0));
-            Assert.AreEqual(0.71, Round(point.X, 2), "point.X");
-            Assert.AreEqual(0.71, Round(point.Y, 2), "point.Y");
+            Assert.That(Round(point.X, 2), Is.EqualTo(0.71), "point.X");
+            Assert.That(Round(point.Y, 2), Is.EqualTo(0.71), "point.Y");
         }
 
         [Test]
@@ -157,14 +152,14 @@ namespace Node.Net.Test.Extension
 
             Matrix3D localToWorld = data.GetLocalToWorld();
             Point3D point = localToWorld.Transform(new Point3D(1, 0, 0));
-            Assert.AreEqual(0.71, Round(point.X, 2), "point.X");
-            Assert.AreEqual(0.71, Round(point.Y, 2), "point.Y");
+            Assert.That(Round(point.X, 2), Is.EqualTo(0.71), "point.X");
+            Assert.That(Round(point.Y, 2), Is.EqualTo(0.71), "point.Y");
 
             data.SetRotationsOTS(new Vector3D(45, 30, 0));
             localToWorld = data.GetLocalToWorld();
             point = localToWorld.Transform(new Point3D(1, 0, 0));
-            Assert.AreEqual(0.71, Round(point.X, 2), "point.X");
-            Assert.AreEqual(0.71, Round(point.Y, 2), "point.Y");
+            Assert.That(Round(point.X, 2), Is.EqualTo(0.71), "point.X");
+            Assert.That(Round(point.Y, 2), Is.EqualTo(0.71), "point.Y");
         }
 
         [Test]
@@ -176,13 +171,13 @@ namespace Node.Net.Test.Extension
             };
             Matrix3D m1 = d1.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
             Vector3D xvec1 = m1.Transform(new Vector3D(1, 0, 0));
-            Assert.AreEqual(0.966, Round(xvec1.X, 3), "xvec1.X");
-            Assert.AreEqual(0.259, Round(xvec1.Y, 3), "xvec1.Y");
-            Assert.AreEqual(0.000, Round(xvec1.Z, 3), "xvec1.Z");
+            Assert.That(Round(xvec1.X, 3), Is.EqualTo(0.966), "xvec1.X");
+            Assert.That(Round(xvec1.Y, 3), Is.EqualTo(0.259), "xvec1.Y");
+            Assert.That(Round(xvec1.Z, 3), Is.EqualTo(0.000), "xvec1.Z");
             Vector3D rotXYZ1 = m1.GetRotationsXYZ();
-            Assert.AreEqual(0.0, Round(rotXYZ1.X, 3), "rotXYZ1.X");
-            Assert.AreEqual(0.0, Round(rotXYZ1.Y, 3), "rotXYZ1.Y");
-            Assert.AreEqual(15.0, Round(rotXYZ1.Z, 3), "rotXYZ1.Z");
+            Assert.That(Round(rotXYZ1.X, 3), Is.EqualTo(0.0), "rotXYZ1.X");
+            Assert.That(Round(rotXYZ1.Y, 3), Is.EqualTo(0.0), "rotXYZ1.Y");
+            Assert.That(Round(rotXYZ1.Z, 3), Is.EqualTo(15.0), "rotXYZ1.Z");
 
             Dictionary<string, object> d2 = new Dictionary<string, object>
             {
@@ -191,17 +186,17 @@ namespace Node.Net.Test.Extension
             };
             Matrix3D m2 = d2.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, -60, 0));
             Vector3D zvec2 = m2.Transform(new Vector3D(0, 0, 1));
-            Assert.AreEqual(-0.224, Round(zvec2.X, 3), "zvec2.X");
-            Assert.AreEqual(0.837, Round(zvec2.Y, 3), "zvec2.Y");
-            Assert.AreEqual(0.500, Round(zvec2.Z, 3), "zvec2.Z");
+            Assert.That(Round(zvec2.X, 3),Is.EqualTo(-0.224), "zvec2.X");
+            Assert.That(Round(zvec2.Y, 3), Is.EqualTo(0.837), "zvec2.Y");
+            Assert.That(Round(zvec2.Z, 3), Is.EqualTo(0.500), "zvec2.Z");
             Vector3D yvec2 = m2.Transform(new Vector3D(0, 1, 0));
-            Assert.AreEqual(-0.129, Round(yvec2.X, 3), "yvec2.X");
-            Assert.AreEqual(0.483, Round(yvec2.Y, 3), "yvec2.Y");
-            Assert.AreEqual(-0.866, Round(yvec2.Z, 3), "yvec2.Z");
+            Assert.That(Round(yvec2.X, 3),Is.EqualTo(-0.129), "yvec2.X");
+            Assert.That(Round(yvec2.Y, 3), Is.EqualTo(0.483), "yvec2.Y");
+            Assert.That(Round(yvec2.Z, 3), Is.EqualTo(-0.866),"yvec2.Z");
             Vector3D rotXYZ2 = m2.GetRotationsXYZ();
-            Assert.AreEqual(-60, Round(rotXYZ2.X, 3), "rotXYZ2.X");
-            Assert.AreEqual(0.0, Round(rotXYZ2.Y, 3), "rotXYZ2.Y");
-            Assert.AreEqual(15.0, Round(rotXYZ2.Z, 3), "rotXYZ2.Z");
+            Assert.That(Round(rotXYZ2.X, 3), Is.EqualTo(-60), "rotXYZ2.X");
+            Assert.That(Round(rotXYZ2.Y, 3), Is.EqualTo(0.0), "rotXYZ2.Y");
+            Assert.That(Round(rotXYZ2.Z, 3), Is.EqualTo(15.0), "rotXYZ2.Z");
 
             Dictionary<string, object> d3 = new Dictionary<string, object>
             {
@@ -232,14 +227,14 @@ namespace Node.Net.Test.Extension
             };
             Matrix3D m1 = d1.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
             Vector3D xvec1 = m1.Transform(new Vector3D(1, 0, 0));
-            Assert.AreEqual(0.966, Round(xvec1.X, 3), "xvec1.X");
-            Assert.AreEqual(0.259, Round(xvec1.Y, 3), "xvec1.Y");
-            Assert.AreEqual(0.000, Round(xvec1.Z, 3), "xvec1.Z");
+            Assert.That(Round(xvec1.X, 3), Is.EqualTo(0.966), "xvec1.X");
+            Assert.That(Round(xvec1.Y, 3), Is.EqualTo(0.259), "xvec1.Y");
+            Assert.That(Round(xvec1.Z, 3), Is.EqualTo(0.000), "xvec1.Z");
 
             IDictionary d1c = d1.ConvertRotationsXYZtoOTS() as IDictionary;
             //Assert.AreEqual(d1.Count, d1c.Count);
-            Assert.False(d1c.Contains("XDirection"), "d1c.Contains(\"XDirection\"");
-            Assert.AreEqual(15.0, Round(d1c.GetAngleDegrees("Orientation"), 3), "d1c Orientation");
+            Assert.That(d1c.Contains("XDirection"), Is.False,"d1c.Contains(\"XDirection\"");
+            Assert.That(Round(d1c.GetAngleDegrees("Orientation"), 3), Is.EqualTo(15.0), "d1c Orientation");
 
             Dictionary<string, object> d2 = new Dictionary<string, object>
             {
@@ -248,17 +243,17 @@ namespace Node.Net.Test.Extension
             };
             Matrix3D m2 = d2.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, -60, 0));
             Vector3D zvec2 = m2.Transform(new Vector3D(0, 0, 1));
-            Assert.AreEqual(-0.224, Round(zvec2.X, 3), "zvec2.X");
-            Assert.AreEqual(0.837, Round(zvec2.Y, 3), "zvec2.Y");
-            Assert.AreEqual(0.500, Round(zvec2.Z, 3), "zvec2.Z");
+            Assert.That(Round(zvec2.X, 3),Is.EqualTo(-0.224), "zvec2.X");
+            Assert.That(Round(zvec2.Y, 3), Is.EqualTo(0.837), "zvec2.Y");
+            Assert.That(Round(zvec2.Z, 3), Is.EqualTo(0.500), "zvec2.Z");
             Vector3D yvec2 = m2.Transform(new Vector3D(0, 1, 0));
-            Assert.AreEqual(-0.129, Round(yvec2.X, 3), "yvec2.X");
-            Assert.AreEqual(0.483, Round(yvec2.Y, 3), "yvec2.Y");
-            Assert.AreEqual(-0.866, Round(yvec2.Z, 3), "yvec2.Z");
+            Assert.That(Round(yvec2.X, 3), Is.EqualTo(-0.129), "yvec2.X");
+            Assert.That(Round(yvec2.Y, 3), Is.EqualTo(0.483), "yvec2.Y");
+            Assert.That(Round(yvec2.Z, 3), Is.EqualTo(-0.866), "yvec2.Z");
 
             IDictionary d2c = d2.ConvertRotationsXYZtoOTS() as IDictionary;
-            Assert.AreEqual(d2.Count, d2c.Count);
-            Assert.AreEqual(15.0, Round(d2c.GetAngleDegrees("Orientation"), 3), "d2c Orientation");
+            Assert.That(d2.Count, Is.EqualTo(d2c.Count));
+            Assert.That(Round(d2c.GetAngleDegrees("Orientation"), 3), Is.EqualTo(15.0), "d2c Orientation");
             //Assert.AreEqual(-60.0, Round(d2c.GetAngleDegrees("Tilt"), 3), "d2c Tilt");
         }
 
@@ -268,18 +263,18 @@ namespace Node.Net.Test.Extension
             Dictionary<string, object> d1 = new Dictionary<string, object> { };
             d1.SetRotationsOTS(new Vector3D(45.0, 124.0, 0.0));
             Matrix3D m1 = d1.GetLocalToWorld();
-            Assert.AreEqual(45.0, Round(m1.GetOrientation(), 3), "Orientation");
-            Assert.AreEqual(124.0, Round(m1.GetTilt(), 3), "Tilt");
+            Assert.That(Round(m1.GetOrientation(), 3), Is.EqualTo(45.0), "Orientation");
+            Assert.That(Round(m1.GetTilt(), 3), Is.EqualTo(124.0), "Tilt");
 
             Vector3D ots = d1.GetRotationsOTS();
-            Assert.AreEqual(45.0, Round(ots.X, 3), "ots.X");
-            Assert.AreEqual(124.0, Round(ots.Y, 3), "ots.Y");
-            Assert.AreEqual(0.0, Round(ots.Z, 3), "ots.Z");
+            Assert.That(Round(ots.X, 3), Is.EqualTo(45.0), "ots.X");
+            Assert.That(Round(ots.Y, 3), Is.EqualTo(124.0), "ots.Y");
+            Assert.That(Round(ots.Z, 3), Is.EqualTo(0.0), "ots.Z");
 
             d1.SetRotationsOTS(new Vector3D(60.0, 15, 0));
             m1 = d1.GetLocalToWorld();
-            Assert.AreEqual(60.0, Round(m1.GetOrientation(), 3), "Orientation");
-            Assert.AreEqual(15.0, Round(m1.GetTilt(), 3), "Tilt");
+            Assert.That(Round(m1.GetOrientation(), 3), Is.EqualTo(60.0), "Orientation");
+            Assert.That(Round(m1.GetTilt(), 3), Is.EqualTo(15.0), "Tilt");
         }
     }
 }

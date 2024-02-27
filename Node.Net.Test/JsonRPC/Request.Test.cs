@@ -15,7 +15,7 @@ namespace Node.Net.JsonRPC
             Request request1 = new Request(rs);
 
             object name = request1.Parameters["name"];
-            Assert.AreEqual("test", name);
+            Assert.That(name, Is.EqualTo("test"));
         }
     }
 }
