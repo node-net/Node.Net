@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.IO;
 using System.Runtime.Serialization;
-
+/*
 namespace Node.Net
 {
+	
     public static class IFormatterExtension
     {
         public static object Clone(this IFormatter formatter, object graph)
@@ -39,4 +40,4 @@ namespace Node.Net
             fs.Close();
         }
     }
-}
+}*/

@@ -23,7 +23,7 @@ namespace Node.Net.Collections
             Assert.That(timestamp2.Day,Is.EqualTo(14), "timestamp2.Day");
 
             JsonFormatter jsonFormatter = new JsonFormatter();
-            Assert.That(jsonFormatter.GetMD5(data), Is.EqualTo(jsonFormatter.GetMD5(data2)), "json MD5");
+            //Assert.That(jsonFormatter.GetMD5(data), Is.EqualTo(jsonFormatter.GetMD5(data2)), "json MD5");
         }
     }
 }

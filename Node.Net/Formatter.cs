@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace Node.Net
 {
-    public class Formatter : IFormatter
+    public class Formatter //: IFormatter
     {
         public Formatter()
         {
@@ -71,6 +71,7 @@ namespace Node.Net
             _jsonFormatter.Serialize(serializationStream, graph);
         }
 
+		/*
         public object Clone(object graph)
         {
             return IFormatterExtension.Clone(this, graph);
@@ -79,10 +80,10 @@ namespace Node.Net
         public T Clone<T>(object graph)
         {
             return IFormatterExtension.Clone<T>(this, graph);
-        }
+        }*/
 
         private readonly JsonFormatter _jsonFormatter = new JsonFormatter();
-        private readonly BinaryFormatter _binaryFormatter = new BinaryFormatter();
+        //private readonly BinaryFormatter _binaryFormatter = new BinaryFormatter();
         private readonly ImageSourceReader _imageReader = new ImageSourceReader();
 
         public SerializationBinder? Binder { get; set; }

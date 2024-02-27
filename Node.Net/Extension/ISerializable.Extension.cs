@@ -28,14 +28,16 @@ namespace Node.Net
             memory.Seek(0, SeekOrigin.Begin);
             return new StreamReader(memory).ReadToEnd();
         }
-
+		/*
         public static ISerializable Clone(this ISerializable value)
         {
-            using MemoryStream? memory = new MemoryStream();
-            BinaryFormatter? formatter = new BinaryFormatter();
-            formatter.Serialize(memory, value);
-            memory.Seek(0, SeekOrigin.Begin);
-            return (formatter.Deserialize(memory) as ISerializable)!;
-        }
+			string json = value.ToJson();
+			using MemoryStream stream = new MemoryStream();
+			using StreamWriter writer = new StreamWriter(stream);
+			writer.Write(json);
+			writer.Flush();
+			stream.Seek(0, SeekOrigin.Begin);
+			return new JsonFormatter().Deserialize(stream) as ISerializable;
+        }*/
     }
 }

@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net46;net48;net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net46;net48;net6.0-windows;net8.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <Version>1.4.10</Version>
-    <LangVersion>8.0</LangVersion>
+    <Version>1.4.11</Version>
+    <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <PackageProjectUrl>https://github.com/node-net/Node.Net</PackageProjectUrl>
     <PackageLicense>LICENSE.txt</PackageLicense>

@@ -53,7 +53,7 @@ namespace Node.Net.Collections
 
         #endregion Serialization
 
-        public void Save(string filename) => new Formatter().Save(filename,this);
+        //public void Save(string filename) => new Formatter().Save(filename,this);
 
         public object? Parent
         {
