@@ -36,5 +36,10 @@ namespace Node.Net
         {
             return dir.GetAncestors().Where(di => di.GetFiles(search_pattern).Length > 0).FirstOrDefault();
         }
+
+        public static DirectoryInfo FindAncestorWith(this DirectoryInfo dir, string search_pattern)
+        {
+            return dir.GetAncestors().Where(di => di.GetDirectories(search_pattern).Length > 0 || di.GetFiles(search_pattern).Length > 0).FirstOrDefault();
+        }
     }
 }
