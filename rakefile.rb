@@ -1,4 +1,4 @@
-VERSION = "1.4.11"
+VERSION = "1.4.12"
 require "raykit"
 
 task :env do
