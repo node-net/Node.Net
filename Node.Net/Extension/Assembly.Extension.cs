@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -71,5 +72,25 @@ namespace Node.Net
             }
             return data;
         }
-    }
+
+		public static string GetFolderPath(this Assembly assembly, Environment.SpecialFolder specialFolder)
+		{
+			return System.IO.Path.Combine(Environment.GetFolderPath(specialFolder), assembly.GetRelativeDataDirectory());
+		}
+		public static string GetRelativeDataDirectory(this Assembly assembly)
+		{
+			string company = string.Empty;
+			if (assembly.GetCustomAttribute<AssemblyCompanyAttribute>() is AssemblyCompanyAttribute companyAttribute)
+			{
+				company = companyAttribute.Company;
+			}
+			string assemblyName = assembly.GetName().Name ?? "Unknown";
+			if (company == assemblyName && company.Contains("."))
+			{
+				company = company.Substring(0, company.IndexOf('.'));
+			}
+			string version = assembly.GetName().Version?.ToString() ?? "Unknown";
+			return System.IO.Path.Combine(company, assemblyName, version);
+		}
+	}
 }
