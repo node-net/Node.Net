@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFrameworks>net46;net48;net6.0-windows;net8.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <Version>1.4.14</Version>
+    <Version>1.4.15</Version>
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <PackageProjectUrl>https://github.com/node-net/Node.Net</PackageProjectUrl>
