@@ -18,7 +18,8 @@
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -57,4 +58,14 @@
   <ItemGroup>
     <Resource Include="Node.Net.256.png" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-windows'">
+    <DefineConstants>IS_WINDOWS</DefineConstants>
+  </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net48'">
+        <DefineConstants>IS_FRAMEWORK</DefineConstants>
+    </PropertyGroup>
+
+
 </Project>

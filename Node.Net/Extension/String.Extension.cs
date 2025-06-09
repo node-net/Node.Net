@@ -73,5 +73,43 @@ namespace Node.Net
 
             return new MemoryStream(Encoding.UTF8.GetBytes(value));
         }
-    }
+
+#if IS_FRAMEWORK
+#else
+		/// <summary>
+		/// Formats a JSON string with proper indentation for better readability.
+		/// </summary>
+		/// <param name="json">The JSON string to format.</param>
+		/// <returns>A formatted JSON string with proper indentation.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when json is null.</exception>
+		/// <exception cref="ArgumentException">Thrown when json is not valid JSON.</exception>
+		public static string ToPrettyJson(this string json)
+		{
+			if (json is null)
+			{
+				throw new ArgumentNullException(nameof(json));
+			}
+
+			try
+			{
+				// First parse the JSON to validate it
+				using var document = System.Text.Json.JsonDocument.Parse(json);
+
+				// Create options for pretty printing
+				var options = new System.Text.Json.JsonSerializerOptions
+				{
+					WriteIndented = true
+				};
+
+				// Serialize back to string with indentation
+				return System.Text.Json.JsonSerializer.Serialize(document, options);
+			}
+			catch (System.Text.Json.JsonException ex)
+			{
+				throw new ArgumentException("Invalid JSON string", nameof(json), ex);
+			}
+		}
+#endif
+
+	}
 }
