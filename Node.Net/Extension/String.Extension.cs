@@ -2,7 +2,10 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+
+
 
 namespace Node.Net
 {
@@ -108,6 +111,44 @@ namespace Node.Net
 			{
 				throw new ArgumentException("Invalid JSON string", nameof(json), ex);
 			}
+		}
+
+		public static bool TryFindJsonValue(this string json,string key, out string value)
+		{
+			using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(json);
+			return TryFindProperty(doc.RootElement, key, out value);
+		}
+		public static bool TryFindProperty(System.Text.Json.JsonElement element, string propertyName, out string value)
+		{
+			value = null;
+
+			if (element.ValueKind == System.Text.Json.JsonValueKind.Object)
+			{
+				foreach (var prop in element.EnumerateObject())
+				{
+					if (prop.NameEquals(propertyName))
+					{
+						value = prop.Value.GetString();
+						return true;
+					}
+
+					if (prop.Value.ValueKind == System.Text.Json.JsonValueKind.Object || prop.Value.ValueKind == System.Text.Json.JsonValueKind.Array)
+					{
+						if (TryFindProperty(prop.Value, propertyName, out value))
+							return true;
+					}
+				}
+			}
+			else if (element.ValueKind == System.Text.Json.JsonValueKind.Array)
+			{
+				foreach (var item in element.EnumerateArray())
+				{
+					if (TryFindProperty(item, propertyName, out value))
+						return true;
+				}
+			}
+
+			return false;
 		}
 #endif
 

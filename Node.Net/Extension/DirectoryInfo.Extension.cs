@@ -29,17 +29,29 @@ namespace Node.Net
 
         public static DirectoryInfo FindAncestorWithDirectory(this DirectoryInfo dir, string search_pattern)
         {
-            return dir.GetAncestors().Where(di => di.GetDirectories(search_pattern).Length > 0).FirstOrDefault();
-        }
+			if (dir.GetAncestors().Where(di => di.GetDirectories(search_pattern).Length > 0).FirstOrDefault() is DirectoryInfo di)
+			{
+				return di;
+			}
+			throw new DirectoryNotFoundException($"Could not find a directory matching '{search_pattern}' in the ancestor directories of '{dir.FullName}'.");
+		}
 
         public static DirectoryInfo FindAncestorWithFile(this DirectoryInfo dir, string search_pattern)
         {
-            return dir.GetAncestors().Where(di => di.GetFiles(search_pattern).Length > 0).FirstOrDefault();
-        }
+            if(dir.GetAncestors().Where(di => di.GetFiles(search_pattern).Length > 0).FirstOrDefault() is DirectoryInfo di)
+			{
+				return di;
+			}
+			throw new FileNotFoundException($"Could not find a file matching '{search_pattern}' in the ancestor directories of '{dir.FullName}'.");
+		}
 
         public static DirectoryInfo FindAncestorWith(this DirectoryInfo dir, string search_pattern)
         {
-            return dir.GetAncestors().Where(di => di.GetDirectories(search_pattern).Length > 0 || di.GetFiles(search_pattern).Length > 0).FirstOrDefault();
-        }
+            if(dir.GetAncestors().Where(di => di.GetDirectories(search_pattern).Length > 0 || di.GetFiles(search_pattern).Length > 0).FirstOrDefault() is DirectoryInfo di)
+			{
+				return di;
+			}
+			throw new DirectoryNotFoundException($"Could not find a directory or file matching '{search_pattern}' in the ancestor directories of '{dir.FullName}'.");
+		}
     }
 }
