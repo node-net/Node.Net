@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace Node.Net
 {
@@ -91,6 +92,45 @@ namespace Node.Net
 			}
 			string version = assembly.GetName().Version?.ToString() ?? "Unknown";
 			return System.IO.Path.Combine(company, assemblyName, version);
+		}
+
+		/// <summary>
+		/// Gets the project directory information for the specified assembly by looking for a .gitignore file in the directory hierarchy.
+		/// </summary>
+		/// <param name="assembly">The assembly to find the project directory for.</param>
+		/// <returns>A DirectoryInfo object representing the project directory.</returns>
+		/// <exception cref="System.IO.DirectoryNotFoundException">Thrown when the project directory cannot be found.</exception>
+		public static System.IO.DirectoryInfo GetProjectDirectoryInfo(this Assembly assembly)
+		{
+			if (new System.IO.FileInfo(assembly.Location).Directory is System.IO.DirectoryInfo di)
+			{
+				if (di.Exists && di.FindAncestorWithFile(".gitignore") is System.IO.DirectoryInfo projectDir)
+				{
+					return projectDir;
+				}
+			}
+			throw new System.IO.DirectoryNotFoundException($"Could not find the project directory for Assembly {assembly.GetName().Name}. Ensure the assembly is part of a project with a .gitignore file.");
+		}
+
+		/// <summary>
+		/// Gets the text content of a manifest resource from the specified assembly.
+		/// </summary>
+		/// <param name="assembly">The assembly containing the manifest resource.</param>
+		/// <param name="resourceName">The name of the manifest resource to retrieve.</param>
+		/// <returns>The text content of the manifest resource.</returns>
+		/// <exception cref="ArgumentNullException">Thrown when assembly or resourceName is null.</exception>
+		/// <exception cref="ArgumentException">Thrown when the resource is not found in the assembly.</exception>
+		public static string GetManifestResourceText(this Assembly assembly, string resourceName)
+		{
+			if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+			if (string.IsNullOrEmpty(resourceName)) throw new ArgumentNullException(nameof(resourceName));
+			var resourceStream = assembly.GetManifestResourceStream(resourceName);
+			if (resourceStream == null)
+			{
+				throw new ArgumentException($"Resource '{resourceName}' not found in assembly '{assembly.GetName().Name}'.");
+			}
+			using var reader = new System.IO.StreamReader(resourceStream, Encoding.UTF8);
+			return reader.ReadToEnd();
 		}
 	}
 }
