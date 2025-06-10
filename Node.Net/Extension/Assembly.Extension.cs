@@ -132,5 +132,35 @@ namespace Node.Net
 			using var reader = new System.IO.StreamReader(resourceStream, Encoding.UTF8);
 			return reader.ReadToEnd();
 		}
+
+		public static byte[] GetManifestResourceBytes(this Assembly assembly, string resourceName)
+		{
+			if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+			if (string.IsNullOrEmpty(resourceName)) throw new ArgumentNullException(nameof(resourceName));
+			// Search for exact match first, then partial matches
+			if(assembly.GetManifestResourceStream(resourceName) is Stream exactMatchStream)
+			{
+				using var memoryStream = new MemoryStream();
+				exactMatchStream.CopyTo(memoryStream);
+				return memoryStream.ToArray();
+			}
+
+			// If no exact match, search for partial matches
+			foreach (string? resource in assembly.GetManifestResourceNames())
+			{
+				if (resource.Contains(resourceName))
+				{
+					var resourceStream = assembly.GetManifestResourceStream(resource);
+					if (resourceStream != null)
+					{
+						using var memoryStream = new MemoryStream();
+						resourceStream.CopyTo(memoryStream);
+						return memoryStream.ToArray();
+					}
+				}
+			}
+
+			throw new ArgumentException($"Resource '{resourceName}' not found in assembly '{assembly.GetName().Name}'.");
+		}
 	}
 }
