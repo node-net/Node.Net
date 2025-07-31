@@ -28,8 +28,16 @@ namespace Node.Net
                 return 0.0;
             }
 
-            double double_value = Convert.ToDouble(numberSB.ToString());
-            return double_value * GetUnitsConversion(unitsSB.ToString().Trim());
+            // try to convert, handling the fail scenario
+            try
+            {
+                double double_value = Convert.ToDouble(numberSB.ToString());
+                return double_value * GetUnitsConversion(unitsSB.ToString().Trim());
+            }
+            catch
+            {
+                return 0.0;
+            }
         }
 
         private static readonly Dictionary<string, double> unitsConversionFactors = new Dictionary<string, double>();

@@ -62,9 +62,11 @@ namespace Node.Net.Test.Extension
         {
             Dictionary<string, object> data = new Dictionary<string, object>
             {
-                {"X" ,"2 m" }
+                {"X" ,"2 m" },
+                {"Offset","-nan(ind) ft" }
             };
             Assert.That(data.GetLengthMeters("X"),Is.EqualTo(2.0));
+            Assert.That(data.GetLengthMeters("Offset"), Is.EqualTo(0.0), "Offset"); 
         }
 
         [Test]
@@ -276,5 +278,6 @@ namespace Node.Net.Test.Extension
             Assert.That(Round(m1.GetOrientation(), 3), Is.EqualTo(60.0), "Orientation");
             Assert.That(Round(m1.GetTilt(), 3), Is.EqualTo(15.0), "Tilt");
         }
+
     }
 }
