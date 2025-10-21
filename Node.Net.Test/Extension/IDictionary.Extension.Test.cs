@@ -279,5 +279,24 @@ namespace Node.Net.Test.Extension
             Assert.That(Round(m1.GetTilt(), 3), Is.EqualTo(15.0), "Tilt");
         }
 
+
+        [Test]
+        public void ToJson()
+        {
+            double verySmallNumber = 1e-45;
+            Dictionary<string, object> data = new Dictionary<string, object>
+            {
+                {"Name","test" },
+                {"Z", verySmallNumber }
+            };
+
+            string json = IDictionaryExtension.ToJson(data);
+
+            // Load the json back to a dictionary
+            IDictionary data2 = new Reader().Read<IDictionary>(json);
+
+            string json2 = IDictionaryExtension.ToJson(data2);
+            Assert.That(json2, Is.EqualTo(json), "json2");
+        }
     }
 }

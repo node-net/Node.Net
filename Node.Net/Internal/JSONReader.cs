@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -134,27 +135,32 @@ namespace Node.Net.Internal
         {
             reader.EatWhiteSpace();
             char[] endchars = { '}', ']', ',', ' ' };
-            string? nstr = reader.Seek(endchars);
-            if (nstr.Contains("."))
-            {
-                double value = Convert.ToDouble(nstr);
-                if (value <= Single.MaxValue)
-                {
-                    return Convert.ToSingle(nstr);
-                }
+            string? raw = reader.Seek(endchars);
+            if (raw == null) throw new InvalidDataException("expected number but got null");
 
-                return value;
-            }
-            else
-            {
-                long value = Convert.ToInt64(nstr);
-                if (value <= Int32.MaxValue)
-                {
-                    return Convert.ToInt32(nstr);
-                }
+            string token = raw.Trim(); // remove CR/LF and surrounding whitespace
 
-                return value;
+            // Try parse as integer first (preserve integer types if possible)
+            if (long.TryParse(token, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out long longVal))
+            {
+                if (longVal <= Int32.MaxValue && longVal >= Int32.MinValue)
+                    return (int)longVal;
+                return longVal;
             }
+
+            // Otherwise attempt floating parsing (handles exponent, decimal, +/-)
+            if (double.TryParse(token, NumberStyles.Float | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out double dbl))
+            {
+                // If within float range and precisely representable as float, return float
+                if (!double.IsInfinity(dbl) && Math.Abs(dbl) <= Single.MaxValue)
+                {
+                    float fl = (float)dbl;
+                    return fl;
+                }
+                return dbl;
+            }
+
+            throw new InvalidDataException($"Invalid numeric token '{raw}'");
         }
 
         private static object ReadString(System.IO.TextReader reader)
