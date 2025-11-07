@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Multi-target list: keep both windows and non-windows TFMs -->
-    <TargetFrameworks>net46;net48;net6.0-windows;net8.0;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>net48;net8.0;net8.0-windows</TargetFrameworks>
 
     <!-- Common properties -->
     <OutputType>Library</OutputType>
