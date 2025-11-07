@@ -6,7 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+#if IS_WINDOWS
 using System.Windows.Media.Media3D;
+#endif
 using static System.Math;
 
 namespace Node.Net
@@ -856,6 +858,7 @@ namespace Node.Net
             return info;
         }
 
+#if IS_WINDOWS
         public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             Matrix3D matrix3D = new Matrix3D();
@@ -1005,12 +1008,14 @@ namespace Node.Net
             if (dictionary.Contains("ZDirection")) { dictionary.Remove("ZDirection"); }
         }
 
+#if IS_WINDOWS
         public static Vector3D GetRotationsOTS(this IDictionary dictionary)
         {
             return new Vector3D(dictionary.GetLocalToParent().GetOrientation(),
                 dictionary.GetLocalToParent().GetTilt(),
                 dictionary.GetLocalToParent().GetSpin());
         }
+#endif
 
         public static IDictionary? GetAncestor(this IDictionary child, string key, string value)
         {
@@ -1262,6 +1267,7 @@ namespace Node.Net
             }
             return results;
         }
+#endif
 
         /*
         public static IDictionary<string, string> GetLocalToWorldTransforms(this IDictionary idictionary, string type)

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if IS_WINDOWS
+using NUnit.Framework;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Test.Extension
@@ -15,3 +16,4 @@ namespace Node.Net.Test.Extension
         }
     }
 }
+#endif

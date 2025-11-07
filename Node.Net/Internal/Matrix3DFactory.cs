@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if IS_WINDOWS
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -149,3 +150,4 @@ namespace Node.Net.Internal
         public static Matrix3D RotateOTS(Matrix3D matrix, Vector3D rotationsOTS) => matrix.RotateOTS(rotationsOTS);
     }
 }
+#endif

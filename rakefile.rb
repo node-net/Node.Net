@@ -1,24 +1,57 @@
 VERSION = "1.4.20"
 require "raykit"
 
+# Detect platform for cross-platform builds
+def is_windows?
+  RbConfig::CONFIG["host_os"] =~ /mswin|mingw|cygwin/
+end
+
+def compatible_targets
+  if is_windows?
+    # On Windows, build all targets
+    ""
+  else
+    # On Mac/Linux, only build non-Windows targets
+    "/p:TargetFrameworks=net8.0"
+  end
+end
+
 task :env do
   start_task :env
   show_value "PROJECT.name", "#{PROJECT.version}"
   show_value "PROJECT.version", "#{PROJECT.version}"
+  show_value "Platform", is_windows? ? "Windows" : "Non-Windows"
 end
 
 task :build => [:env] do
   start_task :build
   try "rufo ."
   Raykit::Version::set_version_in_glob("**/*.csproj", VERSION)
-  run("nuget restore #{PROJECT.name}.sln")
-  run("dotnet build #{PROJECT.name}.sln --configuration Release")
+
+  targets = compatible_targets
+  if targets.empty?
+    # Build all targets (Windows)
+    run("dotnet restore #{PROJECT.name}.sln")
+    run("dotnet build #{PROJECT.name}.sln --configuration Release")
+  else
+    # Build only compatible targets (Mac/Linux)
+    run("dotnet restore Node.Net/Node.Net.csproj #{targets}")
+    run("dotnet build Node.Net/Node.Net.csproj --configuration Release #{targets}")
+    run("dotnet restore Node.Net.Test/Node.Net.Test.csproj #{targets}")
+    run("dotnet build Node.Net.Test/Node.Net.Test.csproj --configuration Release #{targets}")
+  end
 end
 
 task :test => [:build] do
   start_task :test
-  #run("dotnet test #{PROJECT.name}.sln --configuration Release")
-  run("dotnet test Node.Net.Test/Node.Net.Test.csproj -c Release")
+  targets = compatible_targets
+  if targets.empty?
+    # Test all targets (Windows)
+    run("dotnet test Node.Net.Test/Node.Net.Test.csproj -c Release")
+  else
+    # Test only compatible targets (Mac/Linux)
+    run("dotnet test Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}")
+  end
 end
 
 task :tag => [:test] do

@@ -22,6 +22,11 @@
     <DefineConstants>IS_WINDOWS</DefineConstants>
   </PropertyGroup>
 
+  <!-- Define IS_WINDOWS for all Windows targets (legacy frameworks are Windows-only) -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net48'">
+    <DefineConstants>IS_WINDOWS;IS_FRAMEWORK</DefineConstants>
+  </PropertyGroup>
+
   <!-- Package references for non-net46 targets -->
   <ItemGroup Condition=" '$(TargetFramework)' != 'net46' ">
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
@@ -69,8 +74,4 @@
     <Resource Include="Node.Net.256.png" />
   </ItemGroup>
 
-  <!-- Define legacy framework constant -->
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net48'">
-    <DefineConstants>IS_FRAMEWORK</DefineConstants>
-  </PropertyGroup>
 </Project>

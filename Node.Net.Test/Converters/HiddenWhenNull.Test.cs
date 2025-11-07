@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if IS_WINDOWS
+using NUnit.Framework;
 using System;
 
 namespace Node.Net.Test.Converters
@@ -16,3 +17,4 @@ namespace Node.Net.Test.Converters
         }
     }
 }
+#endif

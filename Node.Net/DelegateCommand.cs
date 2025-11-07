@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if IS_WINDOWS
+using System;
 using System.Windows.Input;
 
 namespace Node.Net
@@ -72,3 +73,4 @@ namespace Node.Net
         }
     }
 }
+#endif

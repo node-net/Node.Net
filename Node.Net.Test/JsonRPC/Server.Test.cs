@@ -1,7 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Net;
+#if IS_WINDOWS
 using System.Security.Principal;
+#endif
 
 namespace Node.Net.JsonRPC
 {
@@ -30,12 +32,19 @@ namespace Node.Net.JsonRPC
 			server.Stop();
 		}
 
+#if IS_WINDOWS
         public static bool IsAdministrator()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
             WindowsPrincipal principal = new WindowsPrincipal(identity);
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
+#else
+        public static bool IsAdministrator()
+        {
+            return false; // Not applicable on non-Windows platforms
+        }
+#endif
 
         // https://stackoverflow.com/questions/11403333/httplistener-with-https-support
         //[Test]

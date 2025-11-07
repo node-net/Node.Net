@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if IS_WINDOWS
+using NUnit.Framework;
 
 namespace Node.Net.Test.Extension
 {
@@ -17,3 +18,4 @@ namespace Node.Net.Test.Extension
         }
     }
 }
+#endif

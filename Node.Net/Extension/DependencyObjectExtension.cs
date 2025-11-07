@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿#if IS_WINDOWS
+using System.Windows;
 using System.Windows.Media;
 
 namespace Node.Net
@@ -48,3 +49,4 @@ namespace Node.Net
         }
     }
 }
+#endif

@@ -24,7 +24,9 @@ namespace Node.Net.Collections
 			var stake1 = yard.Descendants.FirstOrDefault(e => e.Name == "stake1");
 
 			var json = yard.Json;
-			Assert.That(json.Length, Is.EqualTo(66));
+			// Normalize line endings for cross-platform compatibility
+			json = json.Replace("\r\n", "\n").Replace("\r", "\n");
+			Assert.That(json.Length, Is.EqualTo(61));
 		}
 
 		public static Spatial Yard
