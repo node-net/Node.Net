@@ -65,6 +65,7 @@ namespace Node.Net
             }
             if (filename.Contains("(") && filename.Contains("*") && filename.Contains(".") && filename.Contains(")") && filename.Contains("|"))
             {
+#if IS_WINDOWS
                 // open file dialog filter
                 Microsoft.Win32.OpenFileDialog? ofd = new Microsoft.Win32.OpenFileDialog { Filter = filename };
                 bool? result = ofd.ShowDialog();
@@ -84,6 +85,9 @@ namespace Node.Net
                 {
                     return null;
                 }
+#else
+                return null;
+#endif
             }
             if (File.Exists(filename))
             {

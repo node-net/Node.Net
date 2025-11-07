@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#if IS_WINDOWS
+using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -21,3 +22,4 @@ namespace Node.Net
         }
     }
 }
+#endif

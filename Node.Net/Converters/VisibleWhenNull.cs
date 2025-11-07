@@ -1,24 +1,7 @@
-﻿using System;
-using System.
-/* Unmerged change from project 'Node.Net (net48)'
-Before:
-using System.Runtime.CompilerServices;
-After:
+﻿#if IS_WINDOWS
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
-*/
-Globalization;
-using System.
-/* Unmerged change from project 'Node.Net (net48)'
-Before:
-using System.Security.Permissions;
-
-using System.Linq;
-After:
-using System.Security.Permissions;
-*/
-Windows;
+using System.Windows;
 using System.Windows.Data;
 
 namespace Node.Net.Converters
@@ -57,3 +40,4 @@ namespace Node.Net.Converters
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if IS_WINDOWS
+using System;
 using System.Windows.Media.Media3D;
 using static System.Math;
 
@@ -133,3 +134,4 @@ namespace Node.Net
         }
     }
 }
+#endif

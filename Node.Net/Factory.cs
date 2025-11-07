@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+#if IS_WINDOWS
 using System.Windows;
 using System.Windows.Media.Media3D;
+#endif
 
 namespace Node.Net
 {
@@ -49,6 +51,7 @@ namespace Node.Net
             return result;
         }
 
+#if IS_WINDOWS
         public ResourceDictionary Resources
         {
             get { return factory.Resources; }
@@ -65,6 +68,7 @@ namespace Node.Net
         {
             get { return factory.Model3DIgnoreTypes; }
         }
+#endif
 
         public Dictionary<Type, Func<Type, object, object>> FactoryFunctions
         {
@@ -108,6 +112,7 @@ namespace Node.Net
             set { factory.ReadFunction = value; }
         }
 
+#if IS_WINDOWS
         public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction
         {
             get { return factory.PrimaryModel3DHelperFunction; }
@@ -135,11 +140,14 @@ namespace Node.Net
         {
             factory.ClearCache(model);
         }
+#endif
 
         public bool Logging { get; set; } = false;
         public List<string> Log { get; } = new List<string>();
 
+#if IS_WINDOWS
         public static Transform3D GetScalingTransform(IDictionary source) => Internal.Model3DFactory.GetScalingTransform(source);
+#endif
 
         private readonly Internal.Factory factory = new Internal.Factory();
     }

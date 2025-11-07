@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿#if IS_WINDOWS
+using System.Windows.Controls;
 
 namespace Node.Net.Test.Resources
 {
@@ -13,3 +14,4 @@ namespace Node.Net.Test.Resources
         }
     }
 }
+#endif

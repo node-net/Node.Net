@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if IS_WINDOWS
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -32,3 +33,4 @@ namespace Node.Net.View
 		}
 	}
 }
+#endif

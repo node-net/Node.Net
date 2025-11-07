@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if IS_WINDOWS
+using System;
 using System.Windows;
 
 namespace Node.Net.Internal
@@ -23,3 +24,4 @@ namespace Node.Net.Internal
         public ResourceDictionary Resources { get; set; } = new ResourceDictionary();
     }
 }
+#endif

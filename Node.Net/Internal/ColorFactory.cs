@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if IS_WINDOWS
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Media;
@@ -58,3 +59,4 @@ namespace Node.Net.Internal
         }
     }
 }
+#endif

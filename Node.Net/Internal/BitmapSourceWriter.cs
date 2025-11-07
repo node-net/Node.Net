@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if IS_WINDOWS
+using System;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -23,3 +24,4 @@ namespace Node.Net.Internal
         public BitmapEncoder BitmapEncoder { get; set; } = new JpegBitmapEncoder();
     }
 }
+#endif

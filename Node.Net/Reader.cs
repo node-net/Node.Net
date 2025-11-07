@@ -16,10 +16,12 @@ namespace Node.Net
             Add("<", ReadXml);
             Add("[", ReadJSON);
             Add("{", ReadJSON);
+#if IS_WINDOWS
             foreach (string? signature in new Internal.ImageSourceReader().Signatures)
             {
                 Add(signature, ReadImageSource);
             }
+#endif
         }
 
         ~Reader()
@@ -90,6 +92,7 @@ namespace Node.Net
                 string? filename = original_stream.GetFileName();
                 Stream? stream = signatureReader.Stream;
                 string? signature_string = signatureReader.Signature;
+#if IS_WINDOWS
                 foreach (string? marker in xaml_markers)
                 {
                     if (signature_string.Contains(marker))
@@ -99,6 +102,7 @@ namespace Node.Net
                         return item;
                     }
                 }
+#endif
                 if (signature_string.IndexOf("<") == 0)
                 {
                     System.Xml.XmlDocument? xdoc = new System.Xml.XmlDocument();
@@ -123,7 +127,9 @@ namespace Node.Net
             return i;
         }
 
+#if IS_WINDOWS
         public static object ReadImageSource(Stream stream) => new Internal.ImageSourceReader().Read(stream);
+#endif
 
         public Type DefaultDocumentType
         {
@@ -159,6 +165,7 @@ namespace Node.Net
 
         public object? Open(string name)
         {
+#if IS_WINDOWS
             if (name.IsFileDialogFilter())
             {
                 string? openFileDialogFilter = name;
@@ -177,6 +184,7 @@ namespace Node.Net
                 }
             }
             else
+#endif
             {
                 if (name.IsValidFileName())
                 {

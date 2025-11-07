@@ -29,7 +29,9 @@ namespace Node.Net.Test
             {
                 writer.Write(memory, data);
                 string json = Encoding.UTF8.GetString(memory.ToArray());
-                Assert.That( json,Is.EqualTo("{\r\n  \"name\":\"test\"\r\n}"));
+                // Normalize line endings for cross-platform compatibility
+                json = json.Replace("\r\n", "\n").Replace("\r", "\n");
+                Assert.That(json, Is.EqualTo("{\n  \"name\":\"test\"\n}"));
             }
         }
 

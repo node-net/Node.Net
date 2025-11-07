@@ -90,6 +90,7 @@ namespace Node.Net.Internal
             }
             if ((name.Contains("(") || (name.Contains("*") && name.Contains(".") && name.Contains(")")) || name.Contains("|")) && ignoreFilter != name)
             {
+#if IS_WINDOWS
                 // open file dialog filter
                 Microsoft.Win32.OpenFileDialog? ofd = new Microsoft.Win32.OpenFileDialog { Filter = name };
                 bool? result = ofd.ShowDialog();
@@ -107,6 +108,9 @@ namespace Node.Net.Internal
                     // cancelled
                     ignoreFilter = name;
                 }
+#else
+                return null;
+#endif
             }
             if (name.Contains(":") && Uri.IsWellFormedUriString(name, UriKind.Absolute))
             {

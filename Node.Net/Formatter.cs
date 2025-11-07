@@ -6,7 +6,9 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+#if IS_WINDOWS
 using System.Windows.Media;
+#endif
 
 namespace Node.Net
 {
@@ -19,6 +21,7 @@ namespace Node.Net
             SurrogateSelector = null;
 
             Readers.Add("json", DeserializeJson);
+#if IS_WINDOWS
             Readers.Add("png", DeserializeImage);
             Readers.Add("tif", DeserializeImage);
             Readers.Add("jpg", DeserializeImage);
@@ -32,6 +35,7 @@ namespace Node.Net
             SignatureReaders.Add("49 49 2A 00", "tif");                 // .tif
             SignatureReaders.Add("4D 4D 00 2A", "tif");                 // .tif
             SignatureReaders.Add("89 50 4E 47 0D 0A 1A 0A", "png");     // .png
+#endif
             SignatureReaders.Add("{", "json");
             SignatureReaders.Add("[", "json");
         }
@@ -64,7 +68,9 @@ namespace Node.Net
             }
             return item;
         }
+#if IS_WINDOWS
         private object? DeserializeImage(Stream stream) => _imageReader.Read(stream);
+#endif
 
         public virtual void Serialize(Stream serializationStream, object graph)
         {
@@ -84,7 +90,9 @@ namespace Node.Net
 
         private readonly JsonFormatter _jsonFormatter = new JsonFormatter();
         //private readonly BinaryFormatter _binaryFormatter = new BinaryFormatter();
+#if IS_WINDOWS
         private readonly ImageSourceReader _imageReader = new ImageSourceReader();
+#endif
 
         public SerializationBinder? Binder { get; set; }
 

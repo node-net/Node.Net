@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if IS_WINDOWS
+using System;
 using System.Collections;
 using System.IO;
 using System.Windows.Markup;
@@ -49,3 +50,4 @@ namespace Node.Net.Internal
         }
     }
 }
+#endif

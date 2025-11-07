@@ -1,9 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
+    <TargetFrameworks>net8.0;net8.0-windows</TargetFrameworks>
     <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- Enable WPF only for windows TFMs -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+    <UseWPF>true</UseWPF>
+    <DefineConstants>IS_WINDOWS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

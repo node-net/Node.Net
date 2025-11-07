@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if IS_WINDOWS
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -22,3 +23,4 @@ namespace Node.Net
 		}
 	}
 }
+#endif
