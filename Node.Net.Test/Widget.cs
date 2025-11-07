@@ -1,5 +1,7 @@
 ﻿using System.Runtime.Serialization;
+#if NETFRAMEWORK
 using System.Security.Permissions;
+#endif
 
 namespace Node.Net.Test
 {
@@ -13,7 +15,9 @@ namespace Node.Net.Test
             Description = info.GetString("Description");
         }
 
+#if NETFRAMEWORK
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+#endif
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Name", Name);

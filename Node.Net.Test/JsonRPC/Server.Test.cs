@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 #if IS_WINDOWS
 using System.Security.Principal;
 #endif
@@ -10,20 +12,22 @@ namespace Node.Net.JsonRPC
     [TestFixture]
     internal class ServerTest
     {
-        [Test, Explicit]
-        public void Default_Usage()
-        {
-            Responder responder = ResponderTest.GetTestResponder();
+		[Test, Explicit]
+		public void Default_Usage()
+		{
+			Responder responder = ResponderTest.GetTestResponder();
 			using Server server = new Server(responder.Respond);
 			int port = server.Port;
 			server.Start();
 
 			Uri uri = server.Uri;
 			Assert.That(uri.ToString(), Is.EqualTo($"http://localhost:{port}/"));
-			using (WebClient client = new WebClient())
+			using (HttpClient client = new HttpClient())
 			{
 				Request request = new Request("say_hello");
-				string json_response = client.UploadString(uri.ToString(), request.ToJson());
+				var content = new StringContent(request.ToJson(), Encoding.UTF8, "application/json");
+				var httpResponse = client.PostAsync(uri.ToString(), content).Result;
+				string json_response = httpResponse.Content.ReadAsStringAsync().Result;
 				Assert.That(json_response.Contains("hello"),Is.True);
 			}
 			Client jsonRpcClient = new Client(server.Uri.ToString());
@@ -60,15 +64,17 @@ namespace Node.Net.JsonRPC
                 string uri = $"https://{Environment.MachineName}:{port}/";
                 listener.Prefixes.Add(uri);
 
-                Responder responder = ResponderTest.GetTestResponder();
+				Responder responder = ResponderTest.GetTestResponder();
 				using Server server = new Server(listener, responder.Respond);
 				//var port = server.Port;
 				server.Start();
 				Assert.That(uri.ToString(), Is.EqualTo($"https://{Environment.MachineName}:{port}/"));
-				using (WebClient client = new WebClient())
+				using (HttpClient client = new HttpClient())
 				{
 					Request request = new Request("say_hello");
-					string json_response = client.UploadString(uri.ToString(), request.ToJson());
+					var content = new StringContent(request.ToJson(), Encoding.UTF8, "application/json");
+					var httpResponse = client.PostAsync(uri.ToString(), content).Result;
+					string json_response = httpResponse.Content.ReadAsStringAsync().Result;
 					Assert.That(json_response.Contains("hello"),Is.True);
 				}
 				Client jsonRpcClient = new Client(server.Uri.ToString());
