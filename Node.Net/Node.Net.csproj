@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <!-- Legacy framework references -->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net48' ">
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
