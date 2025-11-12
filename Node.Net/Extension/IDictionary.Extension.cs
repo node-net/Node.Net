@@ -969,6 +969,20 @@ namespace Node.Net
             return GetLocalToParent(dictionary).GetRotationsXYZ();
         }
 
+        public static Vector3D GetLocalRotationsXYZ(this IDictionary dictionary, IDictionary parent, Vector3D worldRotationsXYZ)
+        {
+            var rotationZ = 0.0;
+            const double rotationY = 0.0;
+            const double rotationX = 0.0;
+            var rotation_z = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), worldRotationsXYZ.Z));
+            var targetWorldXAxis = rotation_z.Transform(new Vector3D(1, 0, 0));
+            var localToWorld = parent.GetLocalToWorld();
+            var currentWorldXAxis = localToWorld.Transform(new Vector3D(1, 0, 0));
+            var delta_z = Vector3D.AngleBetween(targetWorldXAxis, currentWorldXAxis);
+            rotationZ = delta_z;
+            return new Vector3D(rotationX, rotationY, rotationZ);
+        }
+
         public static void SetRotations(this IDictionary dictionary, Vector3D rotations)
         {
             dictionary["RotationX"] = $"{rotations.X} deg";

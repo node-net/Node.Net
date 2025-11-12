@@ -173,6 +173,44 @@ namespace System.Windows.Media.Media3D
             // Windows Point3D doesn't implement IFormattable, only ToString()
             return string.Format("({0},{1},{2})", _x, _y, _z);
         }
+
+        /// <summary>
+        /// Parses a string representation of a Point3D (e.g., "1,0,0").
+        /// </summary>
+        public static Point3D Parse(string value)
+        {
+            // Windows Point3D.Parse throws ArgumentException for null
+            if (value == null)
+            {
+                throw new ArgumentException("Value cannot be null.", nameof(value));
+            }
+
+            if (value.Length == 0)
+            {
+                throw new FormatException($"Invalid Point3D format. Expected 'x,y,z' but got '{value}'.");
+            }
+
+            string trimmedValue = value.Trim();
+            if (trimmedValue.Length == 0)
+            {
+                throw new FormatException($"Invalid Point3D format. Expected 'x,y,z' but got '{value}'.");
+            }
+
+            string[] parts = trimmedValue.Split(',');
+            if (parts.Length != 3)
+            {
+                throw new FormatException($"Invalid Point3D format. Expected 'x,y,z' but got '{value}'.");
+            }
+
+            if (double.TryParse(parts[0].Trim(), out double x) &&
+                double.TryParse(parts[1].Trim(), out double y) &&
+                double.TryParse(parts[2].Trim(), out double z))
+            {
+                return new Point3D(x, y, z);
+            }
+
+            throw new FormatException($"Invalid Point3D format. Could not parse '{value}'.");
+        }
     }
 }
 #endif

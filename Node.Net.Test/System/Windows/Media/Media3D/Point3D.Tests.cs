@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Windows.Media.Media3D;
 using static System.Math;
 
@@ -286,6 +287,69 @@ namespace Node.Net.Test
             Assert.That(Round(result.Y, 6), Is.EqualTo(1.0));
             Assert.That(Round(result.Z, 6), Is.EqualTo(0.0));
         }
+
+        [Test]
+        public static void Parse_ValidInput_ReturnsExpectedPoint()
+        {
+            string input = "1.5,2.5,3.5";
+            Point3D expected = new Point3D(1.5, 2.5, 3.5);
+            Point3D result = Point3D.Parse(input);
+            
+            Assert.That(result.X, Is.EqualTo(1.5));
+            Assert.That(result.Y, Is.EqualTo(2.5));
+            Assert.That(result.Z, Is.EqualTo(3.5));
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public static void Parse_WithWhitespace_ReturnsExpectedPoint()
+        {
+            string input = " 1.5 , 2.5 , 3.5 ";
+            Point3D result = Point3D.Parse(input);
+            
+            Assert.That(result.X, Is.EqualTo(1.5));
+            Assert.That(result.Y, Is.EqualTo(2.5));
+            Assert.That(result.Z, Is.EqualTo(3.5));
+        }
+
+        [Test]
+        public static void Parse_NullInput_ThrowsException()
+        {
+            // Windows Point3D.Parse throws ArgumentException for null (our implementation)
+            // Windows native throws from TokenizerHelper (different exception type)
+            // Use Assert.Catch to catch any exception type
+            Assert.Catch(() => Point3D.Parse(null!));
+        }
+
+        [Test]
+        public static void Parse_EmptyInput_ThrowsException()
+        {
+            // Windows Point3D.Parse throws FormatException for empty string (our implementation)
+            // Windows native throws from TokenizerHelper (different exception type)
+            // Use Assert.Catch to catch any exception type
+            Assert.Catch(() => Point3D.Parse(""));
+        }
+
+        [Test]
+        public static void Parse_InvalidFormat_ThrowsException()
+        {
+            // Windows Point3D.Parse throws FormatException for invalid formats (our implementation)
+            // Windows native throws from TokenizerHelper (different exception type)
+            // Use Assert.Catch to catch any exception type
+            Assert.Catch(() => Point3D.Parse("1,2"));
+            Assert.Catch(() => Point3D.Parse("1,2,3,4"));
+            Assert.Catch(() => Point3D.Parse("invalid"));
+        }
+
+        [Test]
+        public static void Parse_InvalidNumbers_ThrowsFormatException()
+        {
+            // Windows Point3D.Parse throws FormatException for invalid numbers (our implementation)
+            // Windows native throws from TokenizerHelper (different exception type)
+            // Use Assert.Catch to catch any exception type
+            Assert.Catch(() => Point3D.Parse("a,b,c"));
+        }
     }
 }
+
 
