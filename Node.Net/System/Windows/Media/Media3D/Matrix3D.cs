@@ -6,7 +6,7 @@ namespace System.Windows.Media.Media3D
     /// <summary>
     /// Represents a 4x4 matrix that is used for transformations in 3-D space.
     /// </summary>
-    public struct Matrix3D : IFormattable
+    public struct Matrix3D
     {
         private double _m11;
         private double _m12;
@@ -448,13 +448,14 @@ namespace System.Windows.Media.Media3D
         {
             // Normalize the quaternion
             Quaternion q = quaternion;
-            double length = q.Length;
-            if (length > 0)
+            double lengthSquared = q.X * q.X + q.Y * q.Y + q.Z * q.Z + q.W * q.W;
+            if (lengthSquared > 0)
             {
+                double length = Math.Sqrt(lengthSquared);
                 q = new Quaternion(q.X / length, q.Y / length, q.Z / length, q.W / length);
             }
 
-            // Convert quaternion to rotation matrix
+            // Use quaternion directly (Windows WPF convention)
             double x = q.X;
             double y = q.Y;
             double z = q.Z;
@@ -470,6 +471,7 @@ namespace System.Windows.Media.Media3D
             double wy = w * y;
             double wz = w * z;
 
+            // Standard quaternion to rotation matrix conversion
             Matrix3D rotationMatrix = new Matrix3D(
                 1 - 2 * (yy + zz), 2 * (xy - wz), 2 * (xz + wy), 0,
                 2 * (xy + wz), 1 - 2 * (xx + zz), 2 * (yz - wx), 0,
@@ -477,7 +479,7 @@ namespace System.Windows.Media.Media3D
                 0, 0, 0, 1
             );
 
-            Prepend(rotationMatrix);
+            Append(rotationMatrix);
         }
 
         /// <summary>
@@ -607,29 +609,12 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public override string ToString()
         {
-            return ToString(null, null);
-        }
-
-        /// <summary>
-        /// Creates a string representation of this Matrix3D structure.
-        /// </summary>
-        public string ToString(string? format, IFormatProvider? formatProvider)
-        {
-            if (string.IsNullOrEmpty(format))
-            {
-                format = "G";
-            }
-            formatProvider ??= System.Globalization.CultureInfo.CurrentCulture;
-            return string.Format(formatProvider,
-                "{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}",
-                _m11.ToString(format, formatProvider), _m12.ToString(format, formatProvider),
-                _m13.ToString(format, formatProvider), _m14.ToString(format, formatProvider),
-                _m21.ToString(format, formatProvider), _m22.ToString(format, formatProvider),
-                _m23.ToString(format, formatProvider), _m24.ToString(format, formatProvider),
-                _m31.ToString(format, formatProvider), _m32.ToString(format, formatProvider),
-                _m33.ToString(format, formatProvider), _m34.ToString(format, formatProvider),
-                _offsetX.ToString(format, formatProvider), _offsetY.ToString(format, formatProvider),
-                _offsetZ.ToString(format, formatProvider), _m44.ToString(format, formatProvider));
+            // Windows Matrix3D doesn't implement IFormattable, only ToString()
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15}",
+                _m11, _m12, _m13, _m14,
+                _m21, _m22, _m23, _m24,
+                _m31, _m32, _m33, _m34,
+                _offsetX, _offsetY, _offsetZ, _m44);
         }
     }
 }

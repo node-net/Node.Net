@@ -1,5 +1,4 @@
-﻿#if IS_WINDOWS
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Windows;
 
 namespace Node.Net.Test
@@ -103,4 +102,3 @@ namespace Node.Net.Test
 
     }
 }
-#endif

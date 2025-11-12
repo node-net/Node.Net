@@ -6,7 +6,7 @@ namespace System.Windows.Media.Media3D
     /// <summary>
     /// Represents a displacement in 3-D space.
     /// </summary>
-    public struct Vector3D : IFormattable
+    public struct Vector3D
     {
         private double _x;
         private double _y;
@@ -68,13 +68,19 @@ namespace System.Windows.Media.Media3D
         public void Normalize()
         {
             double length = Length;
+            // Windows Vector3D sets components to NaN when normalizing zero vector, doesn't throw
             if (length == 0)
             {
-                throw new InvalidOperationException("Cannot normalize a zero vector.");
+                _x = double.NaN;
+                _y = double.NaN;
+                _z = double.NaN;
             }
-            _x /= length;
-            _y /= length;
-            _z /= length;
+            else
+            {
+                _x /= length;
+                _y /= length;
+                _z /= length;
+            }
         }
 
         /// <summary>
@@ -124,10 +130,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public static Vector3D Divide(Vector3D vector, double scalar)
         {
-            if (scalar == 0)
-            {
-                throw new DivideByZeroException("Cannot divide by zero.");
-            }
+            // Windows Vector3D returns Infinity/NaN on divide by zero, doesn't throw
             return new Vector3D(vector._x / scalar, vector._y / scalar, vector._z / scalar);
         }
 
@@ -159,9 +162,10 @@ namespace System.Windows.Media.Media3D
             double length1 = vector1.Length;
             double length2 = vector2.Length;
             
+            // Windows Vector3D returns NaN when one vector is zero
             if (length1 == 0 || length2 == 0)
             {
-                return 0.0;
+                return double.NaN;
             }
             
             double dotProduct = DotProduct(vector1, vector2) / (length1 * length2);
@@ -259,20 +263,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public override string ToString()
         {
-            return ToString(null, null);
-        }
-
-        /// <summary>
-        /// Creates a string representation of this Vector3D structure.
-        /// </summary>
-        public string ToString(string? format, IFormatProvider? formatProvider)
-        {
-            if (string.IsNullOrEmpty(format))
-            {
-                format = "G";
-            }
-            formatProvider ??= System.Globalization.CultureInfo.CurrentCulture;
-            return string.Format(formatProvider, "({0},{1},{2})", _x.ToString(format, formatProvider), _y.ToString(format, formatProvider), _z.ToString(format, formatProvider));
+            // Windows Vector3D doesn't implement IFormattable, only ToString()
+            return string.Format("({0},{1},{2})", _x, _y, _z);
         }
     }
 }

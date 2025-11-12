@@ -1,5 +1,4 @@
-﻿#if IS_WINDOWS
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 using static System.Math;
@@ -340,6 +339,7 @@ namespace Node.Net
             return data;
         }
 
+#if IS_WINDOWS
         public static Rect3D Transform(this Matrix3D matrix, Rect3D bounds)
         {
             Point3D center = bounds.GetCenter();
@@ -363,6 +363,7 @@ namespace Node.Net
                 transformedCenter.Z - (transformedSize.Z / 2.0));
             return new Rect3D(transformedLocation, transformedSize);
         }
+#endif
 
         public static Vector3D GetXDirectionVector(this Matrix3D matrix)
         {
@@ -526,4 +527,3 @@ namespace Node.Net
         }
     }
 }
-#endif

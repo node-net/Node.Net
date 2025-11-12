@@ -6,7 +6,7 @@ namespace System.Windows.Media.Media3D
     /// <summary>
     /// Represents an x-, y-, and z-coordinate point in 3-D space.
     /// </summary>
-    public struct Point3D : IFormattable
+    public struct Point3D
     {
         private double _x;
         private double _y;
@@ -50,17 +50,6 @@ namespace System.Windows.Media.Media3D
             _x = x;
             _y = y;
             _z = z;
-        }
-
-        /// <summary>
-        /// Offsets the Point3D structure by the specified Vector3D structure.
-        /// </summary>
-        /// <param name="offsetVector">The Vector3D structure that offsets this Point3D structure.</param>
-        public void Offset(Vector3D offsetVector)
-        {
-            _x += offsetVector.X;
-            _y += offsetVector.Y;
-            _z += offsetVector.Z;
         }
 
         /// <summary>
@@ -181,23 +170,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public override string ToString()
         {
-            return ToString(null, null);
-        }
-
-        /// <summary>
-        /// Creates a string representation of this Point3D structure.
-        /// </summary>
-        public string ToString(string? format, IFormatProvider? formatProvider)
-        {
-            if (string.IsNullOrEmpty(format))
-            {
-                format = "G";
-            }
-            formatProvider ??= System.Globalization.CultureInfo.CurrentCulture;
-            return string.Format(formatProvider, "({0},{1},{2})", 
-                _x.ToString(format, formatProvider), 
-                _y.ToString(format, formatProvider), 
-                _z.ToString(format, formatProvider));
+            // Windows Point3D doesn't implement IFormattable, only ToString()
+            return string.Format("({0},{1},{2})", _x, _y, _z);
         }
     }
 }

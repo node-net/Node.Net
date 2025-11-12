@@ -111,17 +111,12 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void Divide_ByZero_ThrowsException()
+        public static void Divide_ByZero_ReturnsInfinityOrNaN()
         {
             Vector3D vector = new Vector3D(1.0, 2.0, 3.0);
-#if IS_WINDOWS
             // Windows Vector3D doesn't throw on divide by zero, it returns a vector with Infinity/NaN
             Vector3D result = Vector3D.Divide(vector, 0.0);
             Assert.That(double.IsInfinity(result.X) || double.IsNaN(result.X), Is.True);
-#else
-            // Our custom implementation throws DivideByZeroException
-            Assert.Throws<global::System.DivideByZeroException>(() => Vector3D.Divide(vector, 0.0));
-#endif
         }
 
         [Test]
@@ -191,18 +186,13 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void AngleBetween_ZeroVector_ReturnsZero()
+        public static void AngleBetween_ZeroVector_ReturnsNaN()
         {
             Vector3D v1 = new Vector3D(1.0, 0.0, 0.0);
             Vector3D v2 = new Vector3D(0.0, 0.0, 0.0);
             double angle = Vector3D.AngleBetween(v1, v2);
-#if IS_WINDOWS
             // Windows Vector3D returns NaN when one vector is zero
             Assert.That(double.IsNaN(angle), Is.True);
-#else
-            // Our custom implementation returns 0.0 for zero vectors
-            Assert.That(angle, Is.EqualTo(0.0));
-#endif
         }
 
         [Test]
@@ -214,17 +204,12 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void Normalize_ZeroVector_ThrowsException()
+        public static void Normalize_ZeroVector_SetsToNaN()
         {
             Vector3D vector = new Vector3D(0.0, 0.0, 0.0);
-#if IS_WINDOWS
             // Windows Vector3D doesn't throw on normalize of zero vector, it sets components to NaN
             vector.Normalize();
             Assert.That(double.IsNaN(vector.X) || double.IsNaN(vector.Y) || double.IsNaN(vector.Z), Is.True);
-#else
-            // Our custom implementation throws InvalidOperationException
-            Assert.Throws<global::System.InvalidOperationException>(() => vector.Normalize());
-#endif
         }
 
         [Test]
@@ -372,30 +357,12 @@ namespace Node.Net.Test
         [Test]
         public static void ToString_ReturnsFormattedString()
         {
-            Vector3D vector = new Vector3D(1.0, 2.0, 3.0);
-            string result = vector.ToString();
-            Assert.That(result, Does.Contain("1"));
-            Assert.That(result, Does.Contain("2"));
-            Assert.That(result, Does.Contain("3"));
-        }
-
-        [Test]
-        public static void ToString_WithFormat_ReturnsFormattedString()
-        {
             Vector3D vector = new Vector3D(1.5, 2.5, 3.5);
-#if !IS_WINDOWS
-            // Our custom implementation supports IFormattable
-            string result = vector.ToString("F2", null);
-            Assert.That(result, Does.Contain("1.50"));
-            Assert.That(result, Does.Contain("2.50"));
-            Assert.That(result, Does.Contain("3.50"));
-#else
             // Windows Vector3D only supports ToString() without parameters
             string result = vector.ToString();
             Assert.That(result, Does.Contain("1.5"));
             Assert.That(result, Does.Contain("2.5"));
             Assert.That(result, Does.Contain("3.5"));
-#endif
         }
     }
 }
