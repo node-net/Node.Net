@@ -449,6 +449,11 @@ namespace System.Windows.Media.Media3D
             // Normalize the quaternion
             Quaternion q = quaternion;
             double lengthSquared = q.X * q.X + q.Y * q.Y + q.Z * q.Z + q.W * q.W;
+            // If quaternion is zero or invalid, return early (no rotation)
+            if (lengthSquared == 0)
+            {
+                return;
+            }
             if (lengthSquared > 0)
             {
                 double length = Math.Sqrt(lengthSquared);

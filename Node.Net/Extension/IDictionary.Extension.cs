@@ -6,9 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-#if IS_WINDOWS
 using System.Windows.Media.Media3D;
-#endif
 using static System.Math;
 
 namespace Node.Net
@@ -858,13 +856,20 @@ namespace Node.Net
             return info;
         }
 
-#if IS_WINDOWS
         public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             Matrix3D matrix3D = new Matrix3D();
+            matrix3D.SetIdentity(); // Ensure identity matrix (struct default constructor may not be called)
             if (dictionary != null)
             {
-                matrix3D = new Factory().Create<Matrix3D>(dictionary);
+                Matrix3D created = new Factory().Create<Matrix3D>(dictionary);
+                // Check if created matrix is non-zero and non-identity
+                // If factory returned null, Create<T> returns default(Matrix3D) which is zero matrix
+                // Only use created matrix if it's not identity and not zero
+                if (!created.IsIdentity && (created.M11 != 0.0 || created.M22 != 0.0 || created.M33 != 0.0 || created.M44 != 0.0))
+                {
+                    matrix3D = created;
+                }
             }
             return matrix3D;
         }
@@ -889,6 +894,7 @@ namespace Node.Net
         public static Matrix3D GetParentToWorld(this IDictionary dictionary)
         {
             Matrix3D parentToWorld = new Matrix3D();
+            parentToWorld.SetIdentity(); // Ensure identity matrix
             if (dictionary != null)
             {
                 if (dictionary.GetParent() is IDictionary parent)
@@ -902,6 +908,7 @@ namespace Node.Net
         public static Matrix3D GetWorldToParent(this IDictionary dictionary)
         {
             Matrix3D worldToParent = new Matrix3D();
+            worldToParent.SetIdentity(); // Ensure identity matrix
             if (dictionary != null)
             {
                 if (dictionary.GetParent() is IDictionary parent)
@@ -1008,14 +1015,12 @@ namespace Node.Net
             if (dictionary.Contains("ZDirection")) { dictionary.Remove("ZDirection"); }
         }
 
-#if IS_WINDOWS
         public static Vector3D GetRotationsOTS(this IDictionary dictionary)
         {
             return new Vector3D(dictionary.GetLocalToParent().GetOrientation(),
                 dictionary.GetLocalToParent().GetTilt(),
                 dictionary.GetLocalToParent().GetSpin());
         }
-#endif
 
         public static IDictionary? GetAncestor(this IDictionary child, string key, string value)
         {
@@ -1267,7 +1272,6 @@ namespace Node.Net
             }
             return results;
         }
-#endif
 
         /*
         public static IDictionary<string, string> GetLocalToWorldTransforms(this IDictionary idictionary, string type)

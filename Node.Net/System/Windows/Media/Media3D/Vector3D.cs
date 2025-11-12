@@ -266,6 +266,32 @@ namespace System.Windows.Media.Media3D
             // Windows Vector3D doesn't implement IFormattable, only ToString()
             return string.Format("({0},{1},{2})", _x, _y, _z);
         }
+
+        /// <summary>
+        /// Parses a string representation of a Vector3D (e.g., "1,0,0").
+        /// </summary>
+        public static Vector3D Parse(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(value));
+            }
+
+            string[] parts = value.Split(',');
+            if (parts.Length != 3)
+            {
+                throw new FormatException($"Invalid Vector3D format. Expected 'x,y,z' but got '{value}'.");
+            }
+
+            if (double.TryParse(parts[0].Trim(), out double x) &&
+                double.TryParse(parts[1].Trim(), out double y) &&
+                double.TryParse(parts[2].Trim(), out double z))
+            {
+                return new Vector3D(x, y, z);
+            }
+
+            throw new FormatException($"Invalid Vector3D format. Could not parse '{value}'.");
+        }
     }
 }
 #endif

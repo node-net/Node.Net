@@ -168,6 +168,17 @@ namespace Node.Net.Test
         }
 
         [Test]
+        public static void AngleBetween_IdenticalVectors_ReturnsZero()
+        {
+            Vector3D v1 = new Vector3D(1.0, 0.0, 0.0);
+            Vector3D v2 = new Vector3D(1.0, 0.0, 0.0);
+            double angle = Vector3D.AngleBetween(v1, v2);
+            // AngleBetween with identical vectors should return 0.0, not NaN
+            Assert.That(Round(angle, 4), Is.EqualTo(0.0));
+            Assert.That(double.IsNaN(angle), Is.False);
+        }
+
+        [Test]
         public static void AngleBetween_PerpendicularVectors_ReturnsNinety()
         {
             Vector3D v1 = new Vector3D(1.0, 0.0, 0.0);

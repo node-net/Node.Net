@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Windows.Media.Media3D;
 using static System.Math;
+using Node.Net;
 
 namespace Node.Net.Test
 {
@@ -388,6 +389,77 @@ namespace Node.Net.Test
             string result = matrix.ToString();
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Length, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public static void Transform_IdentityMatrix_ReturnsSameVector()
+        {
+            Matrix3D identity = new Matrix3D();
+            Vector3D input = new Vector3D(1.0, 0.0, 0.0);
+            Vector3D result = identity.Transform(input);
+            
+            // Identity matrix should transform vector to itself
+            Assert.That(Round(result.X, 4), Is.EqualTo(1.0));
+            Assert.That(Round(result.Y, 4), Is.EqualTo(0.0));
+            Assert.That(Round(result.Z, 4), Is.EqualTo(0.0));
+        }
+
+        [Test]
+        public static void GetOrientation_IdentityMatrix_ReturnsZero()
+        {
+            Matrix3D identity = new Matrix3D();
+            double orientation = identity.GetOrientation();
+            
+            // Identity matrix should have zero orientation
+            Assert.That(Round(orientation, 4), Is.EqualTo(0.0));
+            Assert.That(double.IsNaN(orientation), Is.False);
+        }
+
+        [Test]
+        public static void GetTilt_IdentityMatrix_ReturnsZero()
+        {
+            Matrix3D identity = new Matrix3D();
+            double tilt = identity.GetTilt();
+            
+            // Identity matrix should have zero tilt
+            Assert.That(Round(tilt, 4), Is.EqualTo(0.0));
+            Assert.That(double.IsNaN(tilt), Is.False);
+        }
+
+        [Test]
+        public static void GetSpin_IdentityMatrix_ReturnsZero()
+        {
+            Matrix3D identity = new Matrix3D();
+            double spin = identity.GetSpin();
+            
+            // Identity matrix should have zero spin
+            Assert.That(Round(spin, 4), Is.EqualTo(0.0));
+            Assert.That(double.IsNaN(spin), Is.False);
+        }
+
+        [Test]
+        public static void RotateXYZ_ZeroRotations_LeavesMatrixAsIdentity()
+        {
+            Matrix3D identity = new Matrix3D();
+            Vector3D zeroRotations = new Vector3D(0.0, 0.0, 0.0);
+            Matrix3D result = identity.RotateXYZ(zeroRotations);
+            
+            // Rotating by zero should leave matrix as identity
+            Assert.That(result.IsIdentity, Is.True);
+            Assert.That(result.GetOrientation(), Is.EqualTo(0.0));
+            Assert.That(result.GetTilt(), Is.EqualTo(0.0));
+            Assert.That(result.GetSpin(), Is.EqualTo(0.0));
+        }
+
+        [Test]
+        public static void Translate_ZeroVector_LeavesMatrixAsIdentity()
+        {
+            Matrix3D identity = new Matrix3D();
+            Vector3D zeroTranslation = new Vector3D(0.0, 0.0, 0.0);
+            identity.Translate(zeroTranslation);
+            
+            // Translating by zero should leave matrix as identity
+            Assert.That(identity.IsIdentity, Is.True);
         }
     }
 }

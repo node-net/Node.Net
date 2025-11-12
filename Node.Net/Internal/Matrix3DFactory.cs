@@ -1,5 +1,4 @@
-﻿#if IS_WINDOWS
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -59,6 +58,7 @@ namespace Node.Net.Internal
         {
             StringBuilder? log = new StringBuilder();
             Matrix3D matrix3D = new Matrix3D();
+            matrix3D.SetIdentity(); // Ensure identity matrix (struct default constructor may not initialize)
             Vector3D xDirection = new Vector3D(1, 0, 0);
             Vector3D yDirection = new Vector3D(0, 1, 0);
             if (dictionary.Contains("XDirection"))
@@ -150,4 +150,3 @@ namespace Node.Net.Internal
         public static Matrix3D RotateOTS(Matrix3D matrix, Vector3D rotationsOTS) => matrix.RotateOTS(rotationsOTS);
     }
 }
-#endif

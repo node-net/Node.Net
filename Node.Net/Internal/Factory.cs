@@ -6,8 +6,8 @@ using System.Reflection;
 #if IS_WINDOWS
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 #endif
+using System.Windows.Media.Media3D;
 
 namespace Node.Net.Internal
 {
@@ -38,6 +38,7 @@ namespace Node.Net.Internal
                 {typeof(Visual3D), new Visual3DFactory {ParentFactory = this }.Create },
                 {typeof(object), AbstractFactory.Create }
 #else
+                {typeof(Matrix3D), new Matrix3DFactory().Create },
                 {typeof(object), CollectionsFactory.Create }
 #endif
             };

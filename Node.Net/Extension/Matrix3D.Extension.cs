@@ -9,6 +9,12 @@ namespace Node.Net
     {
         public static Matrix3D RotateXYZ(this Matrix3D matrix, Vector3D rotationsXYZ)
         {
+            // Early return if all rotations are zero (no rotation needed)
+            if (rotationsXYZ.X == 0.0 && rotationsXYZ.Y == 0.0 && rotationsXYZ.Z == 0.0)
+            {
+                return matrix;
+            }
+            
             matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), rotationsXYZ.Z));
 
             Vector3D localY = matrix.Transform(new Vector3D(0, 1, 0));
@@ -21,6 +27,12 @@ namespace Node.Net
 
         public static Matrix3D RotateOTS(this Matrix3D matrix, Vector3D rotationsOTS)
         {
+            // Early return if all rotations are zero (no rotation needed)
+            if (rotationsOTS.X == 0.0 && rotationsOTS.Y == 0.0 && rotationsOTS.Z == 0.0)
+            {
+                return matrix;
+            }
+            
             double orientation = rotationsOTS.X;
             double tilt = rotationsOTS.Y;
             double spin = rotationsOTS.Z;
