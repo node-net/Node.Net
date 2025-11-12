@@ -339,7 +339,6 @@ namespace Node.Net
             return data;
         }
 
-#if IS_WINDOWS
         public static Rect3D Transform(this Matrix3D matrix, Rect3D bounds)
         {
             Point3D center = bounds.GetCenter();
@@ -363,7 +362,6 @@ namespace Node.Net
                 transformedCenter.Z - (transformedSize.Z / 2.0));
             return new Rect3D(transformedLocation, transformedSize);
         }
-#endif
 
         public static Vector3D GetXDirectionVector(this Matrix3D matrix)
         {

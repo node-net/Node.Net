@@ -1,5 +1,4 @@
-﻿#if IS_WINDOWS
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
@@ -48,4 +47,3 @@ namespace Node.Net
         }
     }
 }
-#endif
