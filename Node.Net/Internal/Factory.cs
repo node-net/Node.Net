@@ -193,23 +193,40 @@ namespace Node.Net.Internal
 
             return false;
         }
+#endif
 
+#if IS_WINDOWS
         public bool Cache
         {
             get { return Model3DFactory.Cache; }
             set { Model3DFactory.Cache = value; }
         }
+#else
+        private bool _cache = false;
+        public bool Cache
+        {
+            get { return _cache; }
+            set { _cache = value; }
+        }
+#endif
 
         public void ClearCache()
         {
+#if IS_WINDOWS
             Model3DFactory.ClearCache();
+#else
+            // No-op for non-Windows platforms (no Model3DCache to clear)
+#endif
         }
 
         public void ClearCache(object model)
         {
+#if IS_WINDOWS
             Model3DFactory.ClearCache(model);
-        }
+#else
+            // No-op for non-Windows platforms (no Model3DCache to clear)
 #endif
+        }
 
         public bool Logging { get; set; } = false;
         public Action<string> LogFunction { get; set; }

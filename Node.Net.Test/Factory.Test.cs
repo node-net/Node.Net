@@ -1,6 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Reflection;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Test
@@ -13,33 +11,19 @@ namespace Node.Net.Test
         {
             Factory factory = new Factory();
             
-            // Cache and ClearCache are Windows-specific, so check if they exist
-            PropertyInfo cacheProperty = typeof(Factory).GetProperty("Cache");
-            MethodInfo clearCacheMethod = typeof(Factory).GetMethod("ClearCache", Type.EmptyTypes);
-            MethodInfo clearCacheWithParamMethod = typeof(Factory).GetMethod("ClearCache", new Type[] { typeof(object) });
-            
-            if (cacheProperty != null && clearCacheMethod != null)
+            // Cache and ClearCache are now available on all platforms
+            factory.Cache = true;
+            factory.ClearCache();
+            if (factory.Cache)
             {
-                cacheProperty.SetValue(factory, true);
-                clearCacheMethod.Invoke(factory, null);
-                if ((bool)cacheProperty.GetValue(factory)!)
-                {
-                    cacheProperty.SetValue(factory, false);
-                }
+                factory.Cache = false;
+            }
 
-                Matrix3D matrix = factory.Create<Matrix3D>();
-                if (clearCacheWithParamMethod != null)
-                {
-                    clearCacheWithParamMethod.Invoke(factory, new object[] { matrix });
-                }
-                clearCacheMethod.Invoke(factory, null);
-            }
-            else
-            {
-                // On non-Windows platforms, just verify factory can be created and used
-                Matrix3D matrix = factory.Create<Matrix3D>();
-                Assert.That(matrix, Is.Not.Null);
-            }
+            Matrix3D matrix = factory.Create<Matrix3D>();
+            factory.ClearCache(matrix);
+            factory.ClearCache();
+            
+            Assert.That(matrix, Is.Not.Null);
         }
 
         [Test]

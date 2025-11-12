@@ -124,6 +124,7 @@ namespace Node.Net
             get { return factory.ScalePrimaryModel3D; }
             set { factory.ScalePrimaryModel3D = value; }
         }
+#endif
 
         public bool Cache
         {
@@ -140,7 +141,6 @@ namespace Node.Net
         {
             factory.ClearCache(model);
         }
-#endif
 
         public bool Logging { get; set; } = false;
         public List<string> Log { get; } = new List<string>();
