@@ -1,4 +1,4 @@
-VERSION = "2.0.4"
+VERSION = "2.0.5"
 require "raykit"
 
 # Detect platform for cross-platform builds
