@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using System.Windows.Media.Media3D;
 using static System.Math;
@@ -374,6 +375,54 @@ namespace Node.Net.Test
             Assert.That(result, Does.Contain("1.5"));
             Assert.That(result, Does.Contain("2.5"));
             Assert.That(result, Does.Contain("3.5"));
+        }
+
+        [Test]
+        public static void Parse_WithoutParentheses_ParsesCorrectly()
+        {
+            // Arrange - Format without parentheses (supported format)
+            string value = "1.0000002742460514,4.982079117255012E-06,0";
+
+            // Act
+            Vector3D result = Vector3D.Parse(value);
+
+            // Assert
+            Assert.That(result.X, Is.EqualTo(1.0000002742460514).Within(0.000000000000001));
+            Assert.That(result.Y, Is.EqualTo(4.982079117255012E-06).Within(0.000000000000001));
+            Assert.That(result.Z, Is.EqualTo(0.0));
+        }
+
+        [Test]
+        public static void Parse_WithParentheses_ParsesCorrectly()
+        {
+            // Arrange - Format with parentheses (now supported by Vector3D.Parse)
+            string value = "(1.0000002742460514,4.982079117255012E-06,0)";
+
+            // Act
+            Vector3D result = Vector3D.Parse(value);
+
+            // Assert
+            // Vector3D.Parse now strips parentheses and parses correctly
+            Assert.That(result.X, Is.EqualTo(1.0000002742460514).Within(0.000000000000001));
+            Assert.That(result.Y, Is.EqualTo(4.982079117255012E-06).Within(0.000000000000001));
+            Assert.That(result.Z, Is.EqualTo(0.0));
+        }
+
+        [Test]
+        public static void Parse_WithParentheses_ExactRochambeauFormat_ParsesCorrectly()
+        {
+            // Arrange - Exact format from rochambeau file conversion error
+            string value = "(1.0000002742460514,4.982079117255012E-06,0)";
+
+            // Act
+            Vector3D result = Vector3D.Parse(value);
+
+            // Assert
+            // This is the exact format that previously caused Matrix3DFactory.CreateFromIDictionary to fail
+            // Now it should parse correctly
+            Assert.That(result.X, Is.EqualTo(1.0000002742460514).Within(0.000000000000001));
+            Assert.That(result.Y, Is.EqualTo(4.982079117255012E-06).Within(0.000000000000001));
+            Assert.That(result.Z, Is.EqualTo(0.0));
         }
     }
 }

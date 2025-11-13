@@ -268,7 +268,8 @@ namespace System.Windows.Media.Media3D
         }
 
         /// <summary>
-        /// Parses a string representation of a Vector3D (e.g., "1,0,0").
+        /// Parses a string representation of a Vector3D (e.g., "1,0,0" or "(1,0,0)").
+        /// Supports both formats with and without parentheses.
         /// </summary>
         public static Vector3D Parse(string value)
         {
@@ -277,10 +278,17 @@ namespace System.Windows.Media.Media3D
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(value));
             }
 
-            string[] parts = value.Split(',');
+            // Strip parentheses if present to support both "x,y,z" and "(x,y,z)" formats
+            string trimmedValue = value.Trim();
+            if (trimmedValue.StartsWith("(") && trimmedValue.EndsWith(")"))
+            {
+                trimmedValue = trimmedValue.Substring(1, trimmedValue.Length - 2).Trim();
+            }
+
+            string[] parts = trimmedValue.Split(',');
             if (parts.Length != 3)
             {
-                throw new FormatException($"Invalid Vector3D format. Expected 'x,y,z' but got '{value}'.");
+                throw new FormatException($"Invalid Vector3D format. Expected 'x,y,z' or '(x,y,z)' but got '{value}'.");
             }
 
             if (double.TryParse(parts[0].Trim(), out double x) &&
