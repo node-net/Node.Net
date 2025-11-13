@@ -1,10 +1,11 @@
-#if IS_WINDOWS
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
 using NUnit.Framework;
+#if IS_WINDOWS
+using System.Windows.Media.Media3D;
 using Node.Net;
+#endif
 
 namespace Node.Net.Test
 {
@@ -26,7 +27,7 @@ namespace Node.Net.Test
     /// </summary>
     [TestFixture]
     internal class Matrix3DFactoryTests
-{
+    {
         /// <summary>
         /// Test case that reproduces the Matrix3DFactory.CreateFromIDictionary error
         /// when processing a dictionary with XDirection containing a very small Y component.
@@ -39,6 +40,7 @@ namespace Node.Net.Test
         [Test]
         public async Task CreateFromIDictionary_HandlesSmallYComponentInXDirection()
         {
+#if IS_WINDOWS
             // Arrange - Create a dictionary with the problematic XDirection value
             // This matches the exact format produced by Vector3D.ToString() in the codebase
             var dictionary = new Dictionary<string, object>
@@ -103,6 +105,11 @@ namespace Node.Net.Test
                 // Mark as known issue
                 // throw;
             }
+#else
+            // This test requires Windows-specific Matrix3D functionality
+            await Task.CompletedTask;
+            Assert.Ignore("This test requires Windows-specific Matrix3D functionality");
+#endif
         }
 
         /// <summary>
@@ -118,6 +125,7 @@ namespace Node.Net.Test
             string yDirection, 
             string zDirection)
         {
+#if IS_WINDOWS
             // Arrange
             var dictionary = new Dictionary<string, object>
             {
@@ -155,6 +163,11 @@ namespace Node.Net.Test
                 // Document but don't fail
                 // throw;
             }
+#else
+            // This test requires Windows-specific Matrix3D functionality
+            await Task.CompletedTask;
+            Assert.Ignore("This test requires Windows-specific Matrix3D functionality");
+#endif
         }
 
         /// <summary>
@@ -164,6 +177,7 @@ namespace Node.Net.Test
         [Test]
         public async Task CreateFromIDictionary_ReproducesRochambeauFileError()
         {
+#if IS_WINDOWS
             // Arrange - Exact values from the error message
             var dictionary = new Dictionary<string, object>
             {
@@ -240,6 +254,11 @@ EXPECTED FIX: Strip parentheses before parsing.
                 // Document but don't fail
                 // throw;
             }
-        }
-}
+#else
+            // This test requires Windows-specific Matrix3D functionality
+            await Task.CompletedTask;
+            Assert.Ignore("This test requires Windows-specific Matrix3D functionality");
 #endif
+        }
+    }
+}
