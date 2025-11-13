@@ -268,7 +268,8 @@ namespace System.Windows.Media.Media3D
         }
 
         /// <summary>
-        /// Strips parentheses from a Vector3D string representation to support both "x,y,z" and "(x,y,z)" formats.
+        /// Validates and strips parentheses from a Vector3D string representation.
+        /// Only strips if parentheses are properly matched and there's no extra content.
         /// </summary>
         private static string StripParentheses(string value)
         {
@@ -278,9 +279,43 @@ namespace System.Windows.Media.Media3D
             }
 
             string trimmedValue = value.Trim();
-            if (trimmedValue.StartsWith("(") && trimmedValue.EndsWith(")"))
+            
+            // Check if it starts with opening parenthesis
+            bool startsWithParen = trimmedValue.StartsWith("(");
+            bool endsWithParen = trimmedValue.EndsWith(")");
+            
+            // If both parentheses are present, validate they're properly matched
+            if (startsWithParen && endsWithParen)
             {
-                return trimmedValue.Substring(1, trimmedValue.Length - 2).Trim();
+                // Check that there's no extra content before opening or after closing parenthesis
+                // The format should be exactly "(x,y,z)" with no extra characters
+                int firstParenIndex = trimmedValue.IndexOf('(');
+                int lastParenIndex = trimmedValue.LastIndexOf(')');
+                
+                // Ensure the opening parenthesis is at the start and closing is at the end
+                if (firstParenIndex == 0 && lastParenIndex == trimmedValue.Length - 1)
+                {
+                    // Check there are no other parentheses in between (mismatched)
+                    int openCount = 0;
+                    for (int i = 0; i < trimmedValue.Length; i++)
+                    {
+                        if (trimmedValue[i] == '(') openCount++;
+                        if (trimmedValue[i] == ')') openCount--;
+                        if (openCount < 0) break; // Closing before opening
+                    }
+                    
+                    // Only strip if parentheses are properly balanced
+                    if (openCount == 0)
+                    {
+                        return trimmedValue.Substring(1, trimmedValue.Length - 2).Trim();
+                    }
+                }
+            }
+            
+            // If only one parenthesis is present, or they're mismatched, reject
+            if (startsWithParen || endsWithParen)
+            {
+                throw new FormatException($"Invalid Vector3D format. Expected 'x,y,z' or '(x,y,z)' but got '{value}'.");
             }
 
             return trimmedValue;
@@ -298,6 +333,7 @@ namespace System.Windows.Media.Media3D
             }
 
             // Strip parentheses if present to support both "x,y,z" and "(x,y,z)" formats
+            // This will throw FormatException if parentheses are invalid
             string trimmedValue = StripParentheses(value);
 
             string[] parts = trimmedValue.Split(',');

@@ -441,7 +441,13 @@ namespace Node.Net.Test
 
             // Act & Assert
             FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+#if IS_WINDOWS
+            // On Windows, system Vector3D.Parse throws with different message
+            Assert.That(ex.Message, Does.Contain("not in a correct format").Or.Contains("Invalid Vector3D format"));
+#else
+            // On non-Windows, custom Vector3D.Parse throws with specific message
             Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+#endif
         }
 
         [Test]
@@ -452,7 +458,14 @@ namespace Node.Net.Test
 
             // Act & Assert
             FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+#if IS_WINDOWS
+            // On Windows, system Vector3D.Parse may parse successfully (no opening paren to cause error)
+            // or throw with different message
+            Assert.That(ex.Message, Does.Contain("not in a correct format").Or.Contains("Invalid Vector3D format"));
+#else
+            // On non-Windows, custom Vector3D.Parse throws with specific message
             Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+#endif
         }
 
         [Test]
@@ -463,7 +476,13 @@ namespace Node.Net.Test
 
             // Act & Assert
             FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+#if IS_WINDOWS
+            // On Windows, system Vector3D.Parse throws with different message
+            Assert.That(ex.Message, Does.Contain("not in a correct format").Or.Contains("Invalid Vector3D format"));
+#else
+            // On non-Windows, custom Vector3D.Parse throws with specific message
             Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+#endif
         }
 
         [Test]
@@ -474,7 +493,13 @@ namespace Node.Net.Test
 
             // Act & Assert
             FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+#if IS_WINDOWS
+            // On Windows, system Vector3D.Parse throws with different message
+            Assert.That(ex.Message, Does.Contain("not in a correct format").Or.Contains("Invalid Vector3D format"));
+#else
+            // On non-Windows, custom Vector3D.Parse throws with specific message
             Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+#endif
         }
 
         [Test]
@@ -485,7 +510,13 @@ namespace Node.Net.Test
 
             // Act & Assert
             FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+#if IS_WINDOWS
+            // On Windows, system Vector3D.Parse throws with different message
+            Assert.That(ex.Message, Does.Contain("not in a correct format").Or.Contains("Invalid Vector3D format"));
+#else
+            // On non-Windows, custom Vector3D.Parse throws with specific message
             Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+#endif
         }
 
         [Test]
@@ -496,7 +527,13 @@ namespace Node.Net.Test
 
             // Act & Assert
             FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+#if IS_WINDOWS
+            // On Windows, system Vector3D.Parse throws with different message
+            Assert.That(ex.Message, Does.Contain("not in a correct format").Or.Contains("Invalid Vector3D format"));
+#else
+            // On non-Windows, custom Vector3D.Parse throws with specific message
             Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+#endif
         }
     }
 }
