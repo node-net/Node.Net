@@ -87,12 +87,22 @@ namespace Node.Net.Internal
                     if (dictionary.Contains("XDirection"))
                     {
                         string? xDirectionValue = dictionary.Get<string>("XDirection", "1,0,0");
+                        // if the xRirectionValue contains parentheses, remove them
+                        if (xDirectionValue.Contains("(") && xDirectionValue.Contains(")"))
+                        {
+                            xDirectionValue = xDirectionValue.Replace("(", "").Replace(")", "");
+                        }
                         log.Append(" XDirection = ").AppendLine(xDirectionValue);
                         xDirection = Vector3D.Parse(StripParentheses(xDirectionValue));
                     }
                     if (dictionary.Contains("YDirection"))
                     {
                         string? yDirectionValue = dictionary.Get<string>("YDirection", "0,1,0");
+                        // if the yDirectionValue contains parentheses, remove them
+                        if (yDirectionValue.Contains("(") && yDirectionValue.Contains(")"))
+                        {
+                            yDirectionValue = yDirectionValue.Replace("(", "").Replace(")", "");
+                        }
                         log.Append(" YDirection = ").AppendLine(yDirectionValue);
                         yDirection = Vector3D.Parse(StripParentheses(yDirectionValue));
                     }
