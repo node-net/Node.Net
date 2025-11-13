@@ -1,8 +1,8 @@
-#if !IS_WINDOWS
 using System;
 
 namespace System.Windows.Media.Media3D
 {
+#if !IS_WINDOWS
     /// <summary>
     /// Represents a displacement in 3-D space.
     /// </summary>
@@ -268,6 +268,25 @@ namespace System.Windows.Media.Media3D
         }
 
         /// <summary>
+        /// Strips parentheses from a Vector3D string representation to support both "x,y,z" and "(x,y,z)" formats.
+        /// </summary>
+        private static string StripParentheses(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+
+            string trimmedValue = value.Trim();
+            if (trimmedValue.StartsWith("(") && trimmedValue.EndsWith(")"))
+            {
+                return trimmedValue.Substring(1, trimmedValue.Length - 2).Trim();
+            }
+
+            return trimmedValue;
+        }
+
+        /// <summary>
         /// Parses a string representation of a Vector3D (e.g., "1,0,0" or "(1,0,0)").
         /// Supports both formats with and without parentheses.
         /// </summary>
@@ -279,11 +298,7 @@ namespace System.Windows.Media.Media3D
             }
 
             // Strip parentheses if present to support both "x,y,z" and "(x,y,z)" formats
-            string trimmedValue = value.Trim();
-            if (trimmedValue.StartsWith("(") && trimmedValue.EndsWith(")"))
-            {
-                trimmedValue = trimmedValue.Substring(1, trimmedValue.Length - 2).Trim();
-            }
+            string trimmedValue = StripParentheses(value);
 
             string[] parts = trimmedValue.Split(',');
             if (parts.Length != 3)
@@ -301,6 +316,6 @@ namespace System.Windows.Media.Media3D
             throw new FormatException($"Invalid Vector3D format. Could not parse '{value}'.");
         }
     }
-}
 #endif
+}
 

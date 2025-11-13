@@ -393,36 +393,44 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void Parse_WithParentheses_ParsesCorrectly()
+        public static void Parse_WithParentheses_ThrowsFormatException()
         {
-            // Arrange - Format with parentheses (now supported by Vector3D.Parse)
+            // Arrange - Format with parentheses (not supported by system Vector3D.Parse on Windows)
             string value = "(1.0000002742460514,4.982079117255012E-06,0)";
 
-            // Act
+            // Act & Assert
+#if IS_WINDOWS
+            // On Windows, the system Vector3D.Parse does not support parentheses
+            // It expects the format "1.0,0.0,0.0" (without parentheses)
+            Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+#else
+            // On non-Windows, the custom Vector3D.Parse supports parentheses by stripping them
             Vector3D result = Vector3D.Parse(value);
-
-            // Assert
-            // Vector3D.Parse now strips parentheses and parses correctly
             Assert.That(result.X, Is.EqualTo(1.0000002742460514).Within(0.000000000000001));
             Assert.That(result.Y, Is.EqualTo(4.982079117255012E-06).Within(0.000000000000001));
             Assert.That(result.Z, Is.EqualTo(0.0));
+#endif
         }
 
         [Test]
-        public static void Parse_WithParentheses_ExactRochambeauFormat_ParsesCorrectly()
+        public static void Parse_WithParentheses_ExactRochambeauFormat_ThrowsFormatException()
         {
             // Arrange - Exact format from rochambeau file conversion error
             string value = "(1.0000002742460514,4.982079117255012E-06,0)";
 
-            // Act
+            // Act & Assert
+#if IS_WINDOWS
+            // This is the exact format that causes Matrix3DFactory.CreateFromIDictionary to fail
+            // On Windows, Vector3D.Parse does not support parentheses format
+            // Matrix3DFactory strips parentheses before calling Parse, so it works there
+            Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+#else
+            // On non-Windows, the custom Vector3D.Parse supports parentheses by stripping them
             Vector3D result = Vector3D.Parse(value);
-
-            // Assert
-            // This is the exact format that previously caused Matrix3DFactory.CreateFromIDictionary to fail
-            // Now it should parse correctly
             Assert.That(result.X, Is.EqualTo(1.0000002742460514).Within(0.000000000000001));
             Assert.That(result.Y, Is.EqualTo(4.982079117255012E-06).Within(0.000000000000001));
             Assert.That(result.Z, Is.EqualTo(0.0));
+#endif
         }
     }
 }
