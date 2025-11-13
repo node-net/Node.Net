@@ -424,6 +424,72 @@ namespace Node.Net.Test
             Assert.That(result.Y, Is.EqualTo(4.982079117255012E-06).Within(0.000000000000001));
             Assert.That(result.Z, Is.EqualTo(0.0));
         }
+
+        [Test]
+        public static void Parse_WithParentheses_OnlyOpeningParenthesis_Fails()
+        {
+            // Arrange - Only opening parenthesis (invalid format)
+            string value = "(1.0,2.0,3.0";
+
+            // Act & Assert
+            FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+            Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+        }
+
+        [Test]
+        public static void Parse_WithParentheses_OnlyClosingParenthesis_Fails()
+        {
+            // Arrange - Only closing parenthesis (invalid format)
+            string value = "1.0,2.0,3.0)";
+
+            // Act & Assert
+            FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+            Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+        }
+
+        [Test]
+        public static void Parse_WithParentheses_MismatchedParentheses_Fails()
+        {
+            // Arrange - Mismatched parentheses (invalid format)
+            string value = "(1.0,2.0,3.0))";
+
+            // Act & Assert
+            FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+            Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+        }
+
+        [Test]
+        public static void Parse_WithParentheses_ReversedParentheses_Fails()
+        {
+            // Arrange - Reversed parentheses (invalid format)
+            string value = ")1.0,2.0,3.0(";
+
+            // Act & Assert
+            FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+            Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+        }
+
+        [Test]
+        public static void Parse_WithParentheses_ExtraContentAfterParentheses_Fails()
+        {
+            // Arrange - Extra content after closing parenthesis (invalid format)
+            string value = "(1.0,2.0,3.0)extra";
+
+            // Act & Assert
+            FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+            Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+        }
+
+        [Test]
+        public static void Parse_WithParentheses_ExtraContentBeforeParentheses_Fails()
+        {
+            // Arrange - Extra content before opening parenthesis (invalid format)
+            string value = "extra(1.0,2.0,3.0)";
+
+            // Act & Assert
+            FormatException ex = Assert.Throws<FormatException>(() => Vector3D.Parse(value));
+            Assert.That(ex.Message, Does.Contain("Invalid Vector3D format"));
+        }
     }
 }
 
