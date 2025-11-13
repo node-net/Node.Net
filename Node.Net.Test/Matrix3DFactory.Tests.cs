@@ -44,14 +44,13 @@ namespace Node.Net.Test
             {
                 // The problematic XDirection with a very small Y component
                 ["XDirection"] = "(1.0000002742460514,4.982079117255012E-06,0)",
-                
+
                 // YDirection is typically also present in real scenarios
                 // Using a reasonable YDirection that would be orthogonal to XDirection
                 ["YDirection"] = "(-4.982079117255012E-06,1.0000002742460514,0)",
-                
+
                 // ZDirection may also be present
                 ["ZDirection"] = "(0,0,1)",
-                
                 // Additional properties that may be present in real dictionaries
                 ["Type"] = "Fixture",
                 ["FullName"] = "TestFixture"
@@ -65,12 +64,13 @@ namespace Node.Net.Test
                 // Use the same path as the codebase: GetLocalToParent() extension method
                 // which internally calls Factory.Create<Matrix3D>() -> Node.Net.Matrix3DFactory.CreateFromIDictionary()
                 var matrix3D = dictionary.GetLocalToParent();
-                
+
                 // If we get here, the test passes (Node.Net has fixed the issue)
                 var _ = matrix3D.M11; // Access property to verify matrix was created
             }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") || 
-                                                         (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
+            catch (InvalidOperationException ex) when (
+                ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
+                (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
             {
                 // This is the expected failure mode that needs to be fixed by Node.Net
                 // Document the failure for Node.Net developers
@@ -86,7 +86,7 @@ namespace Node.Net.Test
                 Console.WriteLine("ISSUE: Vector3D.Parse() does not support format with parentheses.");
                 Console.WriteLine("EXPECTED: Node.Net should strip parentheses before calling Vector3D.Parse()");
                 Console.WriteLine("This test will pass once Node.Net fixes Matrix3DFactory.CreateFromIDictionary");
-                
+
                 // Mark as known issue - test documents the bug but doesn't fail the suite
                 // Uncomment the throw below once Node.Net is ready to fix this
                 // throw;
@@ -113,8 +113,8 @@ namespace Node.Net.Test
         [TestCase("(1.0,1e-10,0.0)", "(-1e-10,1.0,0.0)", "(0.0,0.0,1.0)")]
         [TestCase("(0.9999999999,0.0000000001,0.0)", "(-0.0000000001,0.9999999999,0.0)", "(0.0,0.0,1.0)")]
         public async Task CreateFromIDictionary_HandlesVariousDirectionVectorFormats(
-            string xDirection, 
-            string yDirection, 
+            string xDirection,
+            string yDirection,
             string zDirection)
         {
             // Arrange
@@ -133,8 +133,9 @@ namespace Node.Net.Test
                 // Test passes if no exception thrown - Matrix3D was created successfully
                 var _ = matrix3D.M11; // Access property to verify matrix was created
             }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") || 
-                                                         (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
+            catch (InvalidOperationException ex) when (
+                ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
+                (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
             {
                 // Known issue: Vector3D.Parse doesn't support parentheses format
                 Console.WriteLine($"KNOWN ISSUE - XDirection={xDirection}, YDirection={yDirection}, ZDirection={zDirection}");
@@ -183,12 +184,13 @@ namespace Node.Net.Test
                 // Test passes if no exception thrown - Matrix3D was created successfully
                 var _ = matrix3D.M11; // Access property to verify matrix was created
             }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") || 
-                                                         (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
+            catch (InvalidOperationException ex) when (
+                ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
+                (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
             {
                 // Document the exact failure for Node.Net developers
                 var innerEx = ex.InnerException;
-                var innerExceptionText = innerEx != null 
+                var innerExceptionText = innerEx != null
                     ? $"\nInner Exception: {innerEx.GetType().Name}\nInner Error Message: {innerEx.Message}"
                     : "";
                 var errorDetails = $@"
