@@ -6,7 +6,7 @@
 
     <!-- Common properties -->
     <OutputType>Library</OutputType>
-    <Version>2.0.8</Version>
+    <Version>2.0.9</Version>
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <PackageProjectUrl>https://github.com/node-net/Node.Net</PackageProjectUrl>
