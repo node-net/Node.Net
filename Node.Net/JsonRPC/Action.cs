@@ -101,7 +101,9 @@
         }
 
         private readonly System.Action<T1, T2, T3> _action;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type - intentionally nullable
         private readonly string[] _parameter_names = null;
+#pragma warning restore CS8625
     }
 
     public sealed class Action<T1, T2, T3, T4> : IResponder
