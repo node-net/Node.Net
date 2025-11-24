@@ -2,7 +2,9 @@
 
   <PropertyGroup>
     <!-- Multi-target list: keep both windows and non-windows TFMs -->
-    <TargetFrameworks>net48;net8.0;net8.0-windows</TargetFrameworks>
+    <!-- On Windows, build all targets; on other platforms, exclude Windows-only targets -->
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net48;net8.0;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">net8.0</TargetFrameworks>
 
     <!-- Common properties -->
     <OutputType>Library</OutputType>
