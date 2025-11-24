@@ -10,7 +10,9 @@ namespace Node.Net
     {
         public static SerializationInfo GetSerializationInfo(this ISerializable value)
         {
+#pragma warning disable SYSLIB0050 // Formatter-based serialization is obsolete
             SerializationInfo? serializationInfo = new SerializationInfo(value.GetType(), new FormatterConverter());
+#pragma warning restore SYSLIB0050
             StreamingContext streamingContext = new StreamingContext();
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             MethodInfo mi = value.GetType().GetMethod("GetObjectData", new Type[] { typeof(SerializationInfo), typeof(StreamingContext) });

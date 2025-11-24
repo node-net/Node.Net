@@ -48,7 +48,7 @@ namespace Node.Net.Service
         {
             string? raw = context.Request.RawUrl;
 
-            if (raw.Length == 0 || raw == "/")
+            if (raw == null || raw.Length == 0 || raw == "/")
             {
                 using (StreamWriter? sw = new StreamWriter(context.Response.OutputStream))
                 {

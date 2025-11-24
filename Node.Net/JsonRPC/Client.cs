@@ -30,8 +30,10 @@ namespace Node.Net.JsonRPC
 
         public Response Respond(Request request)
         {
+#pragma warning disable SYSLIB0014 // WebClient is obsolete, but using custom wrapper for backward compatibility
 			using WebClient? webClient = new WebClient();
 			return new Response(webClient.UploadData(_url, request.GetBytes()));
+#pragma warning restore SYSLIB0014
 		}
     }
 }

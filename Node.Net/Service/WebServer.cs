@@ -111,7 +111,10 @@ namespace Node.Net.Service
                 {
                     try
                     {
-                        ThreadPool.QueueUserWorkItem(WorkItemCallback, Listener.GetContext());
+                        var context = Listener.GetContext();
+#pragma warning disable CS8622 // Nullability of reference types in type of parameter 'context' doesn't match the target delegate
+                        ThreadPool.QueueUserWorkItem(WorkItemCallback, context);
+#pragma warning restore CS8622
                     }
                     catch { }
                 }

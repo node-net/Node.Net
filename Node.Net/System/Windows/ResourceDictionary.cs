@@ -230,8 +230,12 @@ namespace System.Windows
         }
 
         // IDictionary implementation
-        void IDictionary.Add(object key, object value)
+        void IDictionary.Add(object key, object? value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
             Add(key, value);
         }
 

@@ -5,7 +5,7 @@ namespace Node.Net
 {
     public sealed class WordReader : IDisposable
     {
-        private List<char> _delimiters;
+        private List<char>? _delimiters;
 
         public List<char> Delimiters
         {

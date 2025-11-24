@@ -157,7 +157,7 @@ namespace Node.Net.Internal
 
     internal class WeakReferenceComparer : IEqualityComparer<WeakReference>
     {
-        public bool Equals(WeakReference x, WeakReference y)
+        public bool Equals(WeakReference? x, WeakReference? y)
         {
             if (x is null)
             {

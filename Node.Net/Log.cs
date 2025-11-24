@@ -42,7 +42,7 @@ namespace Node.Net
         /// <summary>
         /// The LogFunction to be used by the Log class
         /// </summary>
-        public static Action<Type, LogLevel, string> LogFunction { get; set; }
+        public static Action<Type, LogLevel, string>? LogFunction { get; set; }
 
         public static int StackFrameIndex { get; set; } = 2;
 

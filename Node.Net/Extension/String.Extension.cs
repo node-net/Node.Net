@@ -113,24 +113,24 @@ namespace Node.Net
 			}
 		}
 
-		public static bool TryFindJsonValue(this string json,string key, out string value)
-		{
-			using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(json);
-			return TryFindProperty(doc.RootElement, key, out value);
-		}
-		public static bool TryFindProperty(System.Text.Json.JsonElement element, string propertyName, out string value)
-		{
-			value = null;
+	public static bool TryFindJsonValue(this string json,string key, out string? value)
+	{
+		using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(json);
+		return TryFindProperty(doc.RootElement, key, out value);
+	}
+	public static bool TryFindProperty(System.Text.Json.JsonElement element, string propertyName, out string? value)
+	{
+		value = null;
 
-			if (element.ValueKind == System.Text.Json.JsonValueKind.Object)
+		if (element.ValueKind == System.Text.Json.JsonValueKind.Object)
+		{
+			foreach (var prop in element.EnumerateObject())
 			{
-				foreach (var prop in element.EnumerateObject())
+				if (prop.NameEquals(propertyName))
 				{
-					if (prop.NameEquals(propertyName))
-					{
-						value = prop.Value.GetString();
-						return true;
-					}
+					value = prop.Value.GetString();
+					return value != null;
+				}
 
 					if (prop.Value.ValueKind == System.Text.Json.JsonValueKind.Object || prop.Value.ValueKind == System.Text.Json.JsonValueKind.Array)
 					{

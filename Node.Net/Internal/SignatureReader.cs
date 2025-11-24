@@ -12,10 +12,10 @@ namespace Node.Net.Internal
 
         public SignatureReader(Stream original_stream)
         {
-            Signature = (Read(original_stream) as Signature)?.ToString();
+            Signature = (Read(original_stream) as Signature)?.ToString() ?? string.Empty;
             if (!original_stream.CanSeek)
             {
-                Stream = MemoryStream;
+                Stream = MemoryStream ?? original_stream;
             }
             else
             {
@@ -23,8 +23,8 @@ namespace Node.Net.Internal
             }
         }
 
-        public string Signature { get; set; }
-        public Stream Stream { get; set; }
+        public string Signature { get; set; } = string.Empty;
+        public Stream Stream { get; set; } = null!;
         public int MinimumBytes = 1024;
 
         public void Dispose()

@@ -182,11 +182,15 @@ namespace Node.Net
                 if (propertyInfo != null)
                 {
 #pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CS8601 // Possible null reference assignment.
                     return (T)propertyInfo.GetValue(item);
+#pragma warning restore CS8601
 #pragma warning restore CS8603 // Possible null reference return.
                 }
             }
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             return defaultValue;
+#pragma warning restore CS8600
         }
 
         /// <summary>

@@ -539,7 +539,9 @@ namespace Node.Net
         {
             if (name == null)
             {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 return defaultValue;
+#pragma warning restore CS8600
             }
 
             if (name.IndexOf(',') > -1)
@@ -845,7 +847,9 @@ namespace Node.Net
 
         public static SerializationInfo GetSerializationInfo(this IDictionary dictionary, Type type)
         {
+#pragma warning disable SYSLIB0050 // Formatter-based serialization is obsolete
             SerializationInfo? info = new SerializationInfo(type, new FormatterConverter());
+#pragma warning restore SYSLIB0050
             foreach (string? key in dictionary.Keys)
             {
                 if (key != null)

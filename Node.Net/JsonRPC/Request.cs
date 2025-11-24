@@ -65,7 +65,7 @@ namespace Node.Net.JsonRPC
 
             if (data.Contains("id"))
             {
-                this["id"] = data["id"];
+                this["id"] = data["id"] ?? 0;
             }
 
             if (data.Contains("method"))

@@ -98,7 +98,9 @@ namespace Node.Net
 
         public StreamingContext Context { get; set; }
 
+#pragma warning disable SYSLIB0050 // Formatter-based serialization is obsolete
         public ISurrogateSelector? SurrogateSelector { get; set; }
+#pragma warning restore SYSLIB0050
 
         public string ToJson(object graph) => _jsonFormatter.ToJson(graph);
     }

@@ -11,7 +11,7 @@ namespace Node.Net
         public static DirectoryInfo GetLogDirectory(this MethodInfo method)
         {
             var assemblyDir = new FileInfo(method.DeclaringType!.Assembly.Location).Directory;
-            if (assemblyDir.FindAncestorWithDirectory(".git") is DirectoryInfo projectDir)
+            if (assemblyDir?.FindAncestorWithDirectory(".git") is DirectoryInfo projectDir)
             {
                 return new DirectoryInfo(projectDir.FullName + Path.DirectorySeparatorChar + "log");
             }
@@ -21,7 +21,7 @@ namespace Node.Net
 
         public static FileInfo GetLogFileInfo(this MethodInfo method, string extension = ".md")
         {
-            return new FileInfo(method.GetLogDirectory().FullName + Path.DirectorySeparatorChar + $"{method.DeclaringType.FullName}.{method.Name}{extension}");
+            return new FileInfo(method.GetLogDirectory().FullName + Path.DirectorySeparatorChar + $"{method.DeclaringType?.FullName}.{method.Name}{extension}");
         }
     }
 }

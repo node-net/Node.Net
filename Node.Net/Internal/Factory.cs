@@ -229,7 +229,7 @@ namespace Node.Net.Internal
         }
 
         public bool Logging { get; set; } = false;
-        public Action<string> LogFunction { get; set; }
+        public Action<string>? LogFunction { get; set; }
 
         private StreamFactory StreamFactory { get; } = new StreamFactory();
 #if IS_WINDOWS

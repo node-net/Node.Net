@@ -43,7 +43,7 @@ namespace Node.Net.Internal
 #pragma warning restore CS8603 // Possible null reference return.
         }
 
-        public IFactory ParentFactory { get; set; }
+        public IFactory? ParentFactory { get; set; }
 
         public Stream Create(string name)
         {
@@ -109,7 +109,9 @@ namespace Node.Net.Internal
                     ignoreFilter = name;
                 }
 #else
+#pragma warning disable CS8603 // Possible null reference return.
                 return null;
+#pragma warning restore CS8603
 #endif
             }
             if (name.Contains(":") && Uri.IsWellFormedUriString(name, UriKind.Absolute))
@@ -120,8 +122,10 @@ namespace Node.Net.Internal
                     case "http":
                     case "https":
                         {
+#pragma warning disable SYSLIB0014 // WebClient is obsolete, but using custom wrapper for backward compatibility
 							using WebClient? webClient = new WebClient();
 							return webClient.OpenRead(name);
+#pragma warning restore SYSLIB0014
 						}
                     case "file":
                         {
