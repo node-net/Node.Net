@@ -535,7 +535,9 @@ namespace Node.Net
 #pragma warning restore CS8603 // Possible null reference return.
         }
 
+#pragma warning disable CS8601 // Possible null reference assignment - defaultValue parameter can be null for reference types
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default, bool search = false)
+#pragma warning restore CS8601
         {
             if (name == null)
             {
@@ -1092,7 +1094,9 @@ namespace Node.Net
                     ancestor = (IDictionary)(T)child;
                 }
 #pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 return (T)ancestor;
+#pragma warning restore CS8600
 #pragma warning restore CS8603 // Possible null reference return.
             }
 #pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
