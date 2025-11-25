@@ -41,5 +41,17 @@ namespace Node.Net.Test.Extension
 
             bar.ClearMetaData();
         }
+
+        [Test]
+        public void GetName_From_Dictionary()
+        {
+            Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>
+            {
+                {"Name", "foo" }
+            };
+            Assert.That(dict.GetName(), Is.EqualTo("foo"));
+            var obj = dict;
+            Assert.That(obj.GetName(), Is.EqualTo("foo"));
+        }
     }
 }
