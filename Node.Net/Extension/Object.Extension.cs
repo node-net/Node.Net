@@ -42,6 +42,26 @@ namespace Node.Net
             if (fullName.Length == 0)
             {
                 IDictionary? dictionary = instance as IDictionary;
+                if(dictionary != null)
+                {
+                    if (dictionary.Contains("Name"))
+                    {
+                        var nameValue = dictionary["Name"];
+                        if (nameValue != null)
+                        {
+                            // Handle dynamic types properly - check for string first, then convert
+                            if (nameValue is string str && !string.IsNullOrEmpty(str))
+                            {
+                                return str;
+                            }
+                            var nameStr = nameValue.ToString();
+                            if (!string.IsNullOrEmpty(nameStr))
+                            {
+                                return nameStr;
+                            }
+                        }
+                    }
+                }
 #pragma warning disable CS8604 // Possible null reference argument.
                 if (dictionary.GetParent() is IDictionary parent)
 #pragma warning restore CS8604 // Possible null reference argument.
