@@ -13,7 +13,7 @@ namespace Node.Net.Test
         public void Read(string name)
         {
             Reader reader = new Reader();
-            System.Reflection.Assembly assembly = typeof(ReaderTest).Assembly;
+            global::System.Reflection.Assembly assembly = typeof(ReaderTest).Assembly;
             Stream stream = assembly.FindManifestResourceStream(name);
             using MemoryStream memory = new MemoryStream();
             stream.CopyTo(memory);

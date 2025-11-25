@@ -6,9 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-#if IS_WINDOWS
 using System.Windows.Media.Media3D;
-#endif
 using static System.Math;
 
 namespace Node.Net
@@ -537,11 +535,15 @@ namespace Node.Net
 #pragma warning restore CS8603 // Possible null reference return.
         }
 
+#pragma warning disable CS8601 // Possible null reference assignment - defaultValue parameter can be null for reference types
         public static T Get<T>(this IDictionary dictionary, string name, T defaultValue = default, bool search = false)
+#pragma warning restore CS8601
         {
             if (name == null)
             {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 return defaultValue;
+#pragma warning restore CS8600
             }
 
             if (name.IndexOf(',') > -1)
@@ -847,7 +849,9 @@ namespace Node.Net
 
         public static SerializationInfo GetSerializationInfo(this IDictionary dictionary, Type type)
         {
+#pragma warning disable SYSLIB0050 // Formatter-based serialization is obsolete
             SerializationInfo? info = new SerializationInfo(type, new FormatterConverter());
+#pragma warning restore SYSLIB0050
             foreach (string? key in dictionary.Keys)
             {
                 if (key != null)
@@ -858,13 +862,20 @@ namespace Node.Net
             return info;
         }
 
-#if IS_WINDOWS
         public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             Matrix3D matrix3D = new Matrix3D();
+            matrix3D.SetIdentity(); // Ensure identity matrix (struct default constructor may not be called)
             if (dictionary != null)
             {
-                matrix3D = new Factory().Create<Matrix3D>(dictionary);
+                Matrix3D created = new Factory().Create<Matrix3D>(dictionary);
+                // Check if created matrix is non-zero and non-identity
+                // If factory returned null, Create<T> returns default(Matrix3D) which is zero matrix
+                // Only use created matrix if it's not identity and not zero
+                if (!created.IsIdentity && (created.M11 != 0.0 || created.M22 != 0.0 || created.M33 != 0.0 || created.M44 != 0.0))
+                {
+                    matrix3D = created;
+                }
             }
             return matrix3D;
         }
@@ -889,6 +900,7 @@ namespace Node.Net
         public static Matrix3D GetParentToWorld(this IDictionary dictionary)
         {
             Matrix3D parentToWorld = new Matrix3D();
+            parentToWorld.SetIdentity(); // Ensure identity matrix
             if (dictionary != null)
             {
                 if (dictionary.GetParent() is IDictionary parent)
@@ -902,6 +914,7 @@ namespace Node.Net
         public static Matrix3D GetWorldToParent(this IDictionary dictionary)
         {
             Matrix3D worldToParent = new Matrix3D();
+            worldToParent.SetIdentity(); // Ensure identity matrix
             if (dictionary != null)
             {
                 if (dictionary.GetParent() is IDictionary parent)
@@ -962,6 +975,20 @@ namespace Node.Net
             return GetLocalToParent(dictionary).GetRotationsXYZ();
         }
 
+        public static Vector3D GetLocalRotationsXYZ(this IDictionary dictionary, IDictionary parent, Vector3D worldRotationsXYZ)
+        {
+            var rotationZ = 0.0;
+            const double rotationY = 0.0;
+            const double rotationX = 0.0;
+            var rotation_z = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), worldRotationsXYZ.Z));
+            var targetWorldXAxis = rotation_z.Transform(new Vector3D(1, 0, 0));
+            var localToWorld = parent.GetLocalToWorld();
+            var currentWorldXAxis = localToWorld.Transform(new Vector3D(1, 0, 0));
+            var delta_z = Vector3D.AngleBetween(targetWorldXAxis, currentWorldXAxis);
+            rotationZ = delta_z;
+            return new Vector3D(rotationX, rotationY, rotationZ);
+        }
+
         public static void SetRotations(this IDictionary dictionary, Vector3D rotations)
         {
             dictionary["RotationX"] = $"{rotations.X} deg";
@@ -1008,14 +1035,12 @@ namespace Node.Net
             if (dictionary.Contains("ZDirection")) { dictionary.Remove("ZDirection"); }
         }
 
-#if IS_WINDOWS
         public static Vector3D GetRotationsOTS(this IDictionary dictionary)
         {
             return new Vector3D(dictionary.GetLocalToParent().GetOrientation(),
                 dictionary.GetLocalToParent().GetTilt(),
                 dictionary.GetLocalToParent().GetSpin());
         }
-#endif
 
         public static IDictionary? GetAncestor(this IDictionary child, string key, string value)
         {
@@ -1069,7 +1094,9 @@ namespace Node.Net
                     ancestor = (IDictionary)(T)child;
                 }
 #pragma warning disable CS8603 // Possible null reference return.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 return (T)ancestor;
+#pragma warning restore CS8600
 #pragma warning restore CS8603 // Possible null reference return.
             }
 #pragma warning disable CS8653 // A default expression introduces a null value for a type parameter.
@@ -1267,7 +1294,6 @@ namespace Node.Net
             }
             return results;
         }
-#endif
 
         /*
         public static IDictionary<string, string> GetLocalToWorldTransforms(this IDictionary idictionary, string type)

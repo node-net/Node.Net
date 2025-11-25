@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 namespace Node.Net.Collections
 {
@@ -145,7 +144,7 @@ namespace Node.Net.Collections
             }
         }
 
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        [Obsolete("Formatter-based serialization is obsolete. Use modern serialization methods instead.")]
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Count", Count);

@@ -1,11 +1,38 @@
-﻿#if IS_WINDOWS
-using System;
+﻿using System;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net
 {
     public static class Vector3DExtension
     {
+        /// <summary>
+        /// Strips parentheses from a Vector3D string representation to support both "x,y,z" and "(x,y,z)" formats.
+        /// </summary>
+        private static string StripParentheses(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+
+            string trimmedValue = value.Trim();
+            if (trimmedValue.StartsWith("(") && trimmedValue.EndsWith(")"))
+            {
+                return trimmedValue.Substring(1, trimmedValue.Length - 2).Trim();
+            }
+
+            return trimmedValue;
+        }
+
+        /// <summary>
+        /// Parses a Vector3D string, supporting both "x,y,z" and "(x,y,z)" formats.
+        /// This is a wrapper around Vector3D.Parse that strips parentheses before parsing.
+        /// </summary>
+        public static Vector3D ParseWithParentheses(string value)
+        {
+            return Vector3D.Parse(StripParentheses(value));
+        }
+
         public static Vector3D GetPerpendicular(this Vector3D vector)
         {
             Vector3D other = new Vector3D(0, 0, 1);
@@ -58,4 +85,3 @@ namespace Node.Net
         }
     }
 }
-#endif

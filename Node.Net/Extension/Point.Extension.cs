@@ -1,5 +1,4 @@
-﻿#if IS_WINDOWS
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -163,6 +162,7 @@ namespace Node.Net
 
         public static Point[] Scale(this Point[] points, double scale)
         {
+#if IS_WINDOWS
             ScaleTransform? scaleTransform = new ScaleTransform(scale, scale);
             List<Point>? result = new List<Point>();
             foreach (Point point in points)
@@ -170,6 +170,16 @@ namespace Node.Net
                 result.Add(scaleTransform.Transform(point));
             }
             return result.ToArray();
+#else
+            // For non-Windows, use Matrix multiplication
+            System.Windows.Media.Matrix scaleMatrix = new System.Windows.Media.Matrix(scale, 0, 0, scale, 0, 0);
+            List<Point>? result = new List<Point>();
+            foreach (Point point in points)
+            {
+                result.Add(Point.Multiply(point, scaleMatrix));
+            }
+            return result.ToArray();
+#endif
         }
 
         public static Point GetDimensions(this Point[] points)
@@ -642,4 +652,3 @@ namespace Node.Net
         }
     }
 }
-#endif

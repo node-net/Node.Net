@@ -10,6 +10,6 @@ public static class TypeExtensions
 {
 	public static string GetFolderPath(this Type type, Environment.SpecialFolder specialFolder)
 	{
-		return System.IO.Path.Combine(type.Assembly.GetFolderPath(specialFolder), type.FullName);
+		return System.IO.Path.Combine(type.Assembly.GetFolderPath(specialFolder), type.FullName ?? type.Name);
 	}
 }

@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Text;
 
 namespace Node.Net.Collections
@@ -41,11 +40,12 @@ namespace Node.Net.Collections
 
         #region Serialization
 
+        [Obsolete("Formatter-based serialization is obsolete. Use modern serialization methods instead.")]
         protected Dictionary(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        [Obsolete("Formatter-based serialization is obsolete. Use modern serialization methods instead.")]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

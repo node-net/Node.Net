@@ -33,14 +33,18 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8620 // Argument of type 'object?[]' cannot be used for parameter 'parameters' of type 'object[]'
             _action.Invoke(request.GetParameterArray<T>(_parameter_names));
+#pragma warning restore CS8620
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             return new Response(request.Id, null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625
         }
 
         private readonly System.Action<T> _action;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type - intentionally nullable
         private readonly string[] _parameter_names = null;
+#pragma warning restore CS8625
     }
 
     public sealed class Action<T1, T2> : IResponder
@@ -58,12 +62,18 @@
 
         public Response Respond(Request request)
         {
+#pragma warning disable CS8620 // Argument of type 'object?[]' cannot be used for parameter 'parameters' of type 'object[]'
             _action.Invoke(request.GetParameterArray<T1, T2>(_parameter_names));
+#pragma warning restore CS8620
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             return new Response(request.Id, null);
+#pragma warning restore CS8625
         }
 
         private readonly System.Action<T1, T2> _action;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type - intentionally nullable
         private readonly string[] _parameter_names = null;
+#pragma warning restore CS8625
     }
 
     public sealed class Action<T1, T2, T3> : IResponder
@@ -85,11 +95,15 @@
             object[]? parameters = request.GetParameterArray<T1, T2, T3>(_parameter_names);
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2]);
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             return new Response(request.Id, null);
+#pragma warning restore CS8625
         }
 
         private readonly System.Action<T1, T2, T3> _action;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type - intentionally nullable
         private readonly string[] _parameter_names = null;
+#pragma warning restore CS8625
     }
 
     public sealed class Action<T1, T2, T3, T4> : IResponder
@@ -111,11 +125,15 @@
             object[]? parameters = request.GetParameterArray<T1, T2, T3, T4>(_parameter_names);
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3]);
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             return new Response(request.Id, null);
+#pragma warning restore CS8625
         }
 
         private readonly System.Action<T1, T2, T3, T4> _action;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type - intentionally nullable
         private readonly string[] _parameter_names = null;
+#pragma warning restore CS8625
     }
 
     public sealed class Action<T1, T2, T3, T4, T5> : IResponder
@@ -137,11 +155,15 @@
             object[]? parameters = request.GetParameterArray<T1, T2, T3, T4, T5>(_parameter_names);
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
             _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4]);
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             return new Response(request.Id, null);
+#pragma warning restore CS8625
         }
 
         private readonly System.Action<T1, T2, T3, T4, T5> _action;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type - intentionally nullable
         private readonly string[] _parameter_names = null;
+#pragma warning restore CS8625
     }
 
     public sealed class Action<T1, T2, T3, T4, T5, T6> : IResponder
@@ -162,11 +184,15 @@
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             object[]? parameters = request.GetParameterArray<T1, T2, T3, T4, T5, T6>(_parameter_names);
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
-            _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4], (T6)parameters[4]);
+            _action((T1)parameters[0], (T2)parameters[1], (T3)parameters[2], (T4)parameters[3], (T5)parameters[4], (T6)parameters[5]);
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             return new Response(request.Id, null);
+#pragma warning restore CS8625
         }
 
         private readonly System.Action<T1, T2, T3, T4, T5, T6> _action;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type - intentionally nullable
         private readonly string[] _parameter_names = null;
+#pragma warning restore CS8625
     }
 }

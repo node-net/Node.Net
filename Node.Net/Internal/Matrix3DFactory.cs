@@ -1,5 +1,4 @@
-﻿#if IS_WINDOWS
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -55,10 +54,30 @@ namespace Node.Net.Internal
             return data;
         }
 
+        /// <summary>
+        /// Strips parentheses from a Vector3D string representation to support both "x,y,z" and "(x,y,z)" formats.
+        /// </summary>
+        private static string StripParentheses(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+
+            string trimmedValue = value.Trim();
+            if (trimmedValue.StartsWith("(") && trimmedValue.EndsWith(")"))
+            {
+                return trimmedValue.Substring(1, trimmedValue.Length - 2).Trim();
+            }
+
+            return trimmedValue;
+        }
+
         private static Matrix3D? CreateFromIDictionary(IDictionary dictionary)
         {
             StringBuilder? log = new StringBuilder();
             Matrix3D matrix3D = new Matrix3D();
+            matrix3D.SetIdentity(); // Ensure identity matrix (struct default constructor may not initialize)
             Vector3D xDirection = new Vector3D(1, 0, 0);
             Vector3D yDirection = new Vector3D(0, 1, 0);
             if (dictionary.Contains("XDirection"))
@@ -68,14 +87,24 @@ namespace Node.Net.Internal
                     if (dictionary.Contains("XDirection"))
                     {
                         string? xDirectionValue = dictionary.Get<string>("XDirection", "1,0,0");
+                        // if the xRirectionValue contains parentheses, remove them
+                        if (xDirectionValue.Contains("(") && xDirectionValue.Contains(")"))
+                        {
+                            xDirectionValue = xDirectionValue.Replace("(", "").Replace(")", "");
+                        }
                         log.Append(" XDirection = ").AppendLine(xDirectionValue);
-                        xDirection = Vector3D.Parse(xDirectionValue);
+                        xDirection = Vector3D.Parse(StripParentheses(xDirectionValue));
                     }
                     if (dictionary.Contains("YDirection"))
                     {
                         string? yDirectionValue = dictionary.Get<string>("YDirection", "0,1,0");
+                        // if the yDirectionValue contains parentheses, remove them
+                        if (yDirectionValue.Contains("(") && yDirectionValue.Contains(")"))
+                        {
+                            yDirectionValue = yDirectionValue.Replace("(", "").Replace(")", "");
+                        }
                         log.Append(" YDirection = ").AppendLine(yDirectionValue);
-                        yDirection = Vector3D.Parse(yDirectionValue);
+                        yDirection = Vector3D.Parse(StripParentheses(yDirectionValue));
                     }
                 }
                 catch (Exception e)
@@ -150,4 +179,3 @@ namespace Node.Net.Internal
         public static Matrix3D RotateOTS(Matrix3D matrix, Vector3D rotationsOTS) => matrix.RotateOTS(rotationsOTS);
     }
 }
-#endif

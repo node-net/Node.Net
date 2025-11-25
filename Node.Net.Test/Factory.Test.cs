@@ -1,5 +1,4 @@
-﻿#if IS_WINDOWS
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Windows.Media.Media3D;
 
 namespace Node.Net.Test
@@ -27,4 +26,3 @@ namespace Node.Net.Test
         }
     }
 }
-#endif

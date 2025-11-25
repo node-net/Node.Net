@@ -1,4 +1,4 @@
-VERSION = "2.0.0"
+VERSION = "2.0.9"
 require "raykit"
 
 # Detect platform for cross-platform builds
@@ -62,7 +62,7 @@ task :tag => [:test] do
     else
       puts "git tag #{PROJECT.version} does not exist"
       if (!PROJECT.read_only?)
-        run("git integrate")
+        run("git add .")
         run("git tag #{PROJECT.version} -m\"#{PROJECT.version}\"")
         run("git push --tags")
       end

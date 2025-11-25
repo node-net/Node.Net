@@ -1,9 +1,8 @@
-﻿#if IS_WINDOWS
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media.Media3D;
+using System.Windows;
 
 namespace Node.Net
 {
@@ -41,12 +40,12 @@ namespace Node.Net
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        public static Point[] Get2DPoints(this Point3D[] points)
+        public static System.Windows.Point[] Get2DPoints(this Point3D[] points)
         {
-            List<Point>? results = new List<Point>();
+            List<System.Windows.Point>? results = new List<System.Windows.Point>();
             foreach (Point3D point in points)
             {
-                results.Add(new Point(point.X, point.Y));
+                results.Add(new System.Windows.Point(point.X, point.Y));
             }
             return results.ToArray();
         }
@@ -104,4 +103,3 @@ namespace Node.Net
         }
     }
 }
-#endif

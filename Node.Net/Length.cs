@@ -8,6 +8,10 @@ namespace Node.Net
     {
         public static double GetMeters(string value)
         {
+            if (value == null)
+            {
+                return 0.0;
+            }
             StringBuilder? unitsSB = new StringBuilder();
             StringBuilder? numberSB = new StringBuilder();
             foreach (char ch in value)

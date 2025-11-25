@@ -13,7 +13,7 @@ namespace Node.Net
     {
         public Reader()
         {
-            Add("<", ReadXml);
+            Add("<", stream => ReadXml(stream) ?? new object());
             Add("[", ReadJSON);
             Add("{", ReadJSON);
 #if IS_WINDOWS
