@@ -8,6 +8,10 @@
     A reusable Razor component that displays application information including:
     - Application Name
     - Company Name
+    - Application Data Directory
+    - Target Framework
+    - Executing Assembly Filename
+    - Version
     
     The component uses the IApplication service to retrieve application metadata.
     If metadata is missing, appropriate fallback text is displayed.
@@ -26,6 +30,26 @@
             @* Company Name *@
             <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
                 <div><strong>Company:</strong> @CompanyName</div>
+            </FluentStack>
+            
+            @* Application Data Directory *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Data Directory:</strong> @DataDirectory</div>
+            </FluentStack>
+            
+            @* Target Framework *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Target Framework:</strong> @TargetFramework</div>
+            </FluentStack>
+            
+            @* Executing Assembly Filename *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Executing Assembly:</strong> @ExecutingAssemblyFilename</div>
+            </FluentStack>
+            
+            @* Version *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Version:</strong> @Version</div>
             </FluentStack>
         </FluentStack>
     </FluentStack>
@@ -64,6 +88,82 @@
             {
                 var company = _application.GetCompany();
                 return string.IsNullOrEmpty(company) ? "Not available" : company;
+            }
+            catch
+            {
+                return "Not available";
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets the application data directory path, with fallback to "Not available" if not available
+    /// </summary>
+    private string DataDirectory
+    {
+        get
+        {
+            try
+            {
+                var directory = _application.GetApplicationDataDirectory();
+                return directory?.FullName ?? "Not available";
+            }
+            catch
+            {
+                return "Not available";
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets the target framework moniker, with fallback to "unknown" if not available
+    /// </summary>
+    private string TargetFramework
+    {
+        get
+        {
+            try
+            {
+                var framework = _application.GetTargetFramework();
+                return string.IsNullOrEmpty(framework) ? "unknown" : framework;
+            }
+            catch
+            {
+                return "unknown";
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets the executing assembly filename, with fallback to "Not available" if not available
+    /// </summary>
+    private string ExecutingAssemblyFilename
+    {
+        get
+        {
+            try
+            {
+                var filename = _application.GetExecutingAssemblyFilename();
+                return string.IsNullOrEmpty(filename) ? "Not available" : filename;
+            }
+            catch
+            {
+                return "Not available";
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets the application version, with fallback to "Not available" if not available
+    /// </summary>
+    private string Version
+    {
+        get
+        {
+            try
+            {
+                var version = _application.GetVersion();
+                return string.IsNullOrEmpty(version) ? "Not available" : version;
             }
             catch
             {

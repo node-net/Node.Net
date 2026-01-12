@@ -280,4 +280,179 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var averageMs = stopwatch.ElapsedMilliseconds / 100.0;
         Assert.That(averageMs, Is.LessThan(10), $"GetApplicationDataDirectory() average time {averageMs}ms exceeds 10ms threshold");
     }
+
+    [Test]
+    public void GetTargetFramework_ReturnsValidFramework()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        
+        // Act
+        var framework = app.GetTargetFramework();
+        
+        // Assert
+        Assert.That(framework, Is.Not.Null);
+        Assert.That(framework, Is.Not.Empty);
+        // Should be a valid TFM format (e.g., net8.0, net8.0-windows, net48, or unknown)
+        Assert.That(framework, Does.Match(@"^(net\d+(\.\d+)?(-windows)?|unknown)$"), 
+            $"Target framework should be a valid TFM or 'unknown', but was: {framework}");
+    }
+
+    [Test]
+    public void GetTargetFramework_IsIdempotent()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        
+        // Act
+        var framework1 = app.GetTargetFramework();
+        var framework2 = app.GetTargetFramework();
+        
+        // Assert
+        Assert.That(framework1, Is.EqualTo(framework2), "Multiple calls should return the same framework");
+    }
+
+    [Test]
+    public void GetTargetFramework_Performance()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        var stopwatch = new Stopwatch();
+        var iterations = 100;
+        
+        // Act
+        stopwatch.Start();
+        for (int i = 0; i < iterations; i++)
+        {
+            _ = app.GetTargetFramework();
+        }
+        stopwatch.Stop();
+        var elapsed = stopwatch.ElapsedMilliseconds;
+        
+        // Assert
+        var averageMs = elapsed / (double)iterations;
+        Assert.That(averageMs, Is.LessThan(10), 
+            $"GetTargetFramework should be fast (average {averageMs:F2}ms per call)");
+    }
+
+    [Test]
+    public void GetExecutingAssemblyFilename_ReturnsValidPath()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        
+        // Act
+        var filename = app.GetExecutingAssemblyFilename();
+        
+        // Assert
+        Assert.That(filename, Is.Not.Null);
+        // Should be either empty string (if location not available) or a valid file path
+        if (!string.IsNullOrEmpty(filename))
+        {
+            Assert.That(filename, Does.Contain(".dll").Or.Contain(".exe"), 
+                "Assembly filename should contain .dll or .exe extension");
+        }
+    }
+
+    [Test]
+    public void GetExecutingAssemblyFilename_IsIdempotent()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        
+        // Act
+        var filename1 = app.GetExecutingAssemblyFilename();
+        var filename2 = app.GetExecutingAssemblyFilename();
+        
+        // Assert
+        Assert.That(filename1, Is.EqualTo(filename2), "Multiple calls should return the same filename");
+    }
+
+    [Test]
+    public void GetExecutingAssemblyFilename_Performance()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        var stopwatch = new Stopwatch();
+        var iterations = 1000;
+        
+        // Act
+        stopwatch.Start();
+        for (int i = 0; i < iterations; i++)
+        {
+            _ = app.GetExecutingAssemblyFilename();
+        }
+        stopwatch.Stop();
+        var elapsed = stopwatch.ElapsedMilliseconds;
+        
+        // Assert
+        var averageMs = elapsed / (double)iterations;
+        Assert.That(averageMs, Is.LessThan(10), 
+            $"GetExecutingAssemblyFilename should be fast (average {averageMs:F2}ms per call)");
+    }
+
+    [Test]
+    public void GetVersion_ReturnsValidVersion()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        
+        // Act
+        var version = app.GetVersion();
+        
+        // Assert
+        Assert.That(version, Is.Not.Null);
+        // Should be either empty string (if version not available) or a valid version string
+        // We just verify it's a string - version format can vary (e.g., "1.2.3", "1.2.3.4", "1.2.3-beta", etc.)
+        // The important thing is that it doesn't throw and returns a non-null string
+        if (string.IsNullOrEmpty(version))
+        {
+            // If version is empty, that's acceptable (assembly may not have version info)
+            Assert.Pass("Version is empty, which is acceptable if assembly doesn't have version metadata");
+        }
+        else
+        {
+            // If version is not empty, verify it contains at least one digit (basic sanity check)
+            Assert.That(version, Does.Contain("0").Or.Contain("1").Or.Contain("2").Or.Contain("3").Or.Contain("4")
+                .Or.Contain("5").Or.Contain("6").Or.Contain("7").Or.Contain("8").Or.Contain("9"),
+                $"Version should contain at least one digit, but was: {version}");
+        }
+    }
+
+    [Test]
+    public void GetVersion_IsIdempotent()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        
+        // Act
+        var version1 = app.GetVersion();
+        var version2 = app.GetVersion();
+        
+        // Assert
+        Assert.That(version1, Is.EqualTo(version2), "Multiple calls should return the same version");
+    }
+
+    [Test]
+    public void GetVersion_Performance()
+    {
+        // Arrange
+        var app = new ApplicationService();
+        var stopwatch = new Stopwatch();
+        var iterations = 1000;
+        
+        // Act
+        stopwatch.Start();
+        for (int i = 0; i < iterations; i++)
+        {
+            _ = app.GetVersion();
+        }
+        stopwatch.Stop();
+        var elapsed = stopwatch.ElapsedMilliseconds;
+        
+        // Assert
+        var averageMs = elapsed / (double)iterations;
+        Assert.That(averageMs, Is.LessThan(10), 
+            $"GetVersion should be fast (average {averageMs:F2}ms per call)");
+    }
 }

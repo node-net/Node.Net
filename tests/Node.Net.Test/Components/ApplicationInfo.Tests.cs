@@ -60,6 +60,78 @@ internal class ApplicationInfoTests : TestHarness
     }
 
     [Test]
+    public void Render_DisplaysDataDirectory()
+    {
+        // Arrange
+        using var ctx = new Bunit.TestContext();
+        
+        // Add required services for Fluent UI components
+        ctx.Services.AddFluentUIComponents();
+        
+        // Render the component
+        var cut = ctx.RenderComponent<ApplicationInfo>();
+        
+        // Assert
+        Assert.That(cut, Is.Not.Null);
+        Assert.That(cut.Markup, Is.Not.Empty);
+        Assert.That(cut.Markup, Does.Contain("Data Directory:"), "Component should display data directory label");
+    }
+
+    [Test]
+    public void Render_DisplaysTargetFramework()
+    {
+        // Arrange
+        using var ctx = new Bunit.TestContext();
+        
+        // Add required services for Fluent UI components
+        ctx.Services.AddFluentUIComponents();
+        
+        // Render the component
+        var cut = ctx.RenderComponent<ApplicationInfo>();
+        
+        // Assert
+        Assert.That(cut, Is.Not.Null);
+        Assert.That(cut.Markup, Is.Not.Empty);
+        Assert.That(cut.Markup, Does.Contain("Target Framework:"), "Component should display target framework label");
+    }
+
+    [Test]
+    public void Render_DisplaysExecutingAssemblyFilename()
+    {
+        // Arrange
+        using var ctx = new Bunit.TestContext();
+        
+        // Add required services for Fluent UI components
+        ctx.Services.AddFluentUIComponents();
+        
+        // Render the component
+        var cut = ctx.RenderComponent<ApplicationInfo>();
+        
+        // Assert
+        Assert.That(cut, Is.Not.Null);
+        Assert.That(cut.Markup, Is.Not.Empty);
+        Assert.That(cut.Markup, Does.Contain("Executing Assembly:"), "Component should display executing assembly filename label");
+    }
+
+    [Test]
+    public void Render_DisplaysVersion()
+    {
+        // Arrange
+        using var ctx = new Bunit.TestContext();
+        
+        // Add required services for Fluent UI components
+        ctx.Services.AddFluentUIComponents();
+        
+        // Render the component
+        var cut = ctx.RenderComponent<ApplicationInfo>();
+        
+        // Assert
+        Assert.That(cut, Is.Not.Null);
+        Assert.That(cut.Markup, Is.Not.Empty);
+        Assert.That(cut.Markup, Does.Contain("Version:"), "Component should display version label");
+    }
+
+    [Test]
     public void Render_DisplaysFallbackWhenMetadataMissing()
     {
         // Arrange

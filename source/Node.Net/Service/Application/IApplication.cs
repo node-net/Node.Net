@@ -26,4 +26,22 @@ public interface IApplication
     /// <exception cref="DirectoryNotFoundException">Thrown when the directory cannot be created due to invalid path</exception>
     /// <exception cref="UnauthorizedAccessException">Thrown when access to create the directory is denied</exception>
     DirectoryInfo GetApplicationDataDirectory();
+    
+    /// <summary>
+    /// Gets the target framework moniker (TFM) for the application
+    /// </summary>
+    /// <returns>The target framework moniker (e.g., "net8.0", "net8.0-windows", "net48"), or "unknown" if not available</returns>
+    string GetTargetFramework();
+    
+    /// <summary>
+    /// Gets the full filename (path) of the executing assembly
+    /// </summary>
+    /// <returns>The full path to the executing assembly file, or empty string if not available</returns>
+    string GetExecutingAssemblyFilename();
+    
+    /// <summary>
+    /// Gets the version of the application
+    /// </summary>
+    /// <returns>The version string from assembly metadata, or empty string if not available</returns>
+    string GetVersion();
 }

@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Versioning;
+using System.Text.RegularExpressions;
 
 namespace Node.Net.Service.Application;
 
@@ -87,5 +89,150 @@ public class Application : IApplication
         {
             throw new UnauthorizedAccessException($"Cannot create application data directory at '{appDataPath}': Access denied.", ex);
         }
+    }
+
+    /// <summary>
+    /// Gets the target framework moniker (TFM) for the application.
+    /// </summary>
+    /// <returns>The target framework moniker (e.g., "net8.0", "net8.0-windows", "net48"), or "unknown" if not available.</returns>
+    public string GetTargetFramework()
+    {
+        try
+        {
+            var assembly = _assembly;
+            
+            // Method 1: Try to extract from assembly location path (most reliable)
+            // Assemblies are typically in: bin/Debug/{TargetFramework}/ or bin/Release/{TargetFramework}/
+            var assemblyLocation = assembly.Location;
+            if (!string.IsNullOrEmpty(assemblyLocation))
+            {
+                var assemblyDir = Path.GetDirectoryName(assemblyLocation);
+                if (!string.IsNullOrEmpty(assemblyDir))
+                {
+                    var dirName = Path.GetFileName(assemblyDir);
+                    // Check if directory name looks like a TFM (e.g., "net8.0", "net8.0-windows", "net48")
+                    if (dirName != null && dirName.StartsWith("net", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return dirName;
+                    }
+                    
+                    // Check parent directory
+                    var parentDir = Path.GetDirectoryName(assemblyDir);
+                    if (!string.IsNullOrEmpty(parentDir))
+                    {
+                        var parentDirName = Path.GetFileName(parentDir);
+                        if (parentDirName != null && parentDirName.StartsWith("net", StringComparison.OrdinalIgnoreCase))
+                        {
+                            return parentDirName;
+                        }
+                    }
+                }
+            }
+            
+            // Method 2: Use TargetFrameworkAttribute
+            var targetFrameworkAttribute = assembly.GetCustomAttribute<TargetFrameworkAttribute>();
+            if (targetFrameworkAttribute != null && !string.IsNullOrEmpty(targetFrameworkAttribute.FrameworkName))
+            {
+                var frameworkName = targetFrameworkAttribute.FrameworkName;
+                
+                if (frameworkName.Contains(".NETCoreApp"))
+                {
+                    // Extract version and determine TFM
+                    var versionMatch = Regex.Match(frameworkName, @"Version=v(\d+)\.(\d+)");
+                    if (versionMatch.Success)
+                    {
+                        var major = int.Parse(versionMatch.Groups[1].Value);
+                        var minor = int.Parse(versionMatch.Groups[2].Value);
+                        
+                        // For .NET 8.0+, check if we have Windows-specific features
+                        if (major >= 8)
+                        {
+                            // Check if we're running on net8.0-windows by looking for Windows-specific types
+                            try
+                            {
+                                var windowsBaseType = Type.GetType("System.Windows.Application, WindowsBase, PresentationFramework");
+                                if (windowsBaseType != null)
+                                {
+                                    return $"net{major}.{minor}-windows";
+                                }
+                            }
+                            catch
+                            {
+                                // Ignore - not a Windows-specific framework
+                            }
+                            
+                            return $"net{major}.{minor}";
+                        }
+                        
+                        return $"net{major}.{minor}";
+                    }
+                }
+                else if (frameworkName.Contains(".NETFramework"))
+                {
+                    // Extract version for .NET Framework
+                    var versionMatch = Regex.Match(frameworkName, @"Version=v(\d+)\.(\d+)");
+                    if (versionMatch.Success)
+                    {
+                        var major = int.Parse(versionMatch.Groups[1].Value);
+                        var minor = int.Parse(versionMatch.Groups[2].Value);
+                        return $"net{major}{minor}";
+                    }
+                }
+            }
+        }
+        catch
+        {
+            // If we can't determine the framework, return "unknown"
+        }
+        
+        return "unknown";
+    }
+
+    /// <summary>
+    /// Gets the full filename (path) of the executing assembly.
+    /// </summary>
+    /// <returns>The full path to the executing assembly file, or empty string if not available.</returns>
+    public string GetExecutingAssemblyFilename()
+    {
+        try
+        {
+            var assemblyLocation = _assembly.Location;
+            return string.IsNullOrEmpty(assemblyLocation) ? string.Empty : assemblyLocation;
+        }
+        catch
+        {
+            // If we can't get the location, return empty string
+            return string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Gets the version of the application.
+    /// </summary>
+    /// <returns>The version string from assembly metadata, or empty string if not available.</returns>
+    public string GetVersion()
+    {
+        try
+        {
+            // First, try AssemblyInformationalVersionAttribute (most user-friendly, e.g., "1.2.3-beta")
+            var informationalVersionAttribute = _assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (informationalVersionAttribute != null && !string.IsNullOrEmpty(informationalVersionAttribute.InformationalVersion))
+            {
+                return informationalVersionAttribute.InformationalVersion;
+            }
+
+            // Fall back to AssemblyVersion (e.g., "1.2.3.4")
+            var version = _assembly.GetName().Version;
+            if (version != null)
+            {
+                return version.ToString();
+            }
+        }
+        catch
+        {
+            // If we can't get the version, return empty string
+        }
+
+        return string.Empty;
     }
 }
