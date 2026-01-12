@@ -1,5 +1,6 @@
+extern alias NodeNet;
 using NUnit.Framework;
-using System.Windows.Media.Media3D;
+using NodeNet::System.Windows.Media.Media3D;
 using static System.Math;
 
 namespace Node.Net.Test

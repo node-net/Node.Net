@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
-using System.Windows.Media.Media3D;
+﻿extern alias NodeNet;
+using NUnit.Framework;
+using NodeNet::System.Windows.Media.Media3D;
+using NodeNet::Node.Net; // Extension methods are in Node.Net namespace
 
 namespace Node.Net.Test.Extension
 {

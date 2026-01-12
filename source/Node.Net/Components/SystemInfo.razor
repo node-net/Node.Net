@@ -2,7 +2,7 @@
 @using System.Runtime.InteropServices
 @using System.Linq
 @using Microsoft.FluentUI.AspNetCore.Components
-@using Icons = Microsoft.FluentUI.AspNetCore.Components.Icons
+@using FluentIcons = Microsoft.FluentUI.AspNetCore.Components.Icons
 @using Node.Net.Service.User
 
 @* 
@@ -28,7 +28,7 @@
             <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
                 @if (string.IsNullOrEmpty(EffectiveProfilePictureUrl) || _imageError)
                 {
-                    <FluentIcon Value="@(new Icons.Regular.Size24.PersonCircle())" Size="@IconSize.Size24" />
+                    <FluentIcon Value="@(new FluentIcons.Regular.Size24.PersonCircle())" Size="@Microsoft.FluentUI.AspNetCore.Components.IconSize.Size24" />
                 }
                 else
                 {

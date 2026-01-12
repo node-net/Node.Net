@@ -1,8 +1,8 @@
 using System;
 
+#if !IS_WINDOWS
 namespace System.Windows.Media.Media3D
 {
-#if !IS_WINDOWS
     /// <summary>
     /// Represents a displacement in 3-D space.
     /// </summary>
@@ -352,6 +352,6 @@ namespace System.Windows.Media.Media3D
             throw new FormatException($"Invalid Vector3D format. Could not parse '{value}'.");
         }
     }
-#endif
 }
+#endif
 

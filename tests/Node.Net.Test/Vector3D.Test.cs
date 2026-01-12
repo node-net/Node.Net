@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
-using System.Windows.Media.Media3D;
+﻿extern alias NodeNet;
+using NUnit.Framework;
 using static System.Math;
+using NodeNetVector3D = NodeNet::System.Windows.Media.Media3D.Vector3D;
+using NodeNet::Node.Net; // Extension methods are in Node.Net namespace, not Node.Net.Extension
 
 namespace Node.Net.Test
 {
@@ -10,23 +12,23 @@ namespace Node.Net.Test
         [Test]
         public static void ComputeRayPlaneIntersection()
         {
-            Vector3D intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, 0, -1), new Vector3D(0, 0, 10), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
+            NodeNetVector3D intersection = NodeNet::Node.Net.Vector3DExtension.ComputeRayPlaneIntersection(new NodeNetVector3D(0, 0, -1), new NodeNetVector3D(0, 0, 10), new NodeNetVector3D(0, 0, 1), new NodeNetVector3D(0, 0, 0));
             Assert.That(Round(intersection.X, 4),Is.EqualTo(0), "intersection.X");
             Assert.That(Round(intersection.Y, 4), Is.EqualTo(0), "intersection.Y");
             Assert.That(Round(intersection.Z, 4), Is.EqualTo(0), "intersection.Z");
 
-            intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, 0, -1), new Vector3D(0, 0, 0), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
+            intersection = NodeNet::Node.Net.Vector3DExtension.ComputeRayPlaneIntersection(new NodeNetVector3D(0, 0, -1), new NodeNetVector3D(0, 0, 0), new NodeNetVector3D(0, 0, 1), new NodeNetVector3D(0, 0, 0));
             Assert.That(Round(intersection.X, 4), Is.EqualTo(0), "intersection.X");
             Assert.That(Round(intersection.Y, 4), Is.EqualTo(0), "intersection.Y");
             Assert.That(Round(intersection.Z, 4), Is.EqualTo(0), "intersection.Z");
 
-            intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, 0.5, -1), new Vector3D(0, 0, 10), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
+            intersection = NodeNet::Node.Net.Vector3DExtension.ComputeRayPlaneIntersection(new NodeNetVector3D(0, 0.5, -1), new NodeNetVector3D(0, 0, 10), new NodeNetVector3D(0, 0, 1), new NodeNetVector3D(0, 0, 0));
             Assert.That(Round(intersection.X, 4), Is.EqualTo(0), "intersection.X");
             Assert.That(Round(intersection.Y, 4),Is.EqualTo(5.0), "intersection.Y");
             Assert.That(Round(intersection.Z, 4), Is.EqualTo(0), "intersection.Z");
 
             // ray facing away from plane
-            intersection = Vector3DExtension.ComputeRayPlaneIntersection(new Vector3D(0, -0.5, 1), new Vector3D(0, 0, 10), new Vector3D(0, 0, 1), new Vector3D(0, 0, 0));
+            intersection = NodeNet::Node.Net.Vector3DExtension.ComputeRayPlaneIntersection(new NodeNetVector3D(0, -0.5, 1), new NodeNetVector3D(0, 0, 10), new NodeNetVector3D(0, 0, 1), new NodeNetVector3D(0, 0, 0));
             Assert.That(Round(intersection.X, 4), Is.EqualTo(0), "intersection.X");
             Assert.That(Round(intersection.Y, 4), Is.EqualTo(5.0), "intersection.Y");
             Assert.That(Round(intersection.Z, 4), Is.EqualTo(0), "intersection.Z");
@@ -45,7 +47,7 @@ namespace Node.Net.Test
         [TestCase(-1, -1, 0, -135.0, "-1,-1 in XY plane")]
         public static void GetAzimuthalAngle(double x, double y, double z, double expected_angle, string name)
         {
-            Assert.That( Round(new Vector3D(x, y, z).GetAzimuthalAngle(), 3),Is.EqualTo(expected_angle), name);
+            Assert.That( Round(new NodeNetVector3D(x, y, z).GetAzimuthalAngle(), 3),Is.EqualTo(expected_angle), name);
         }
 
         [Test]
@@ -58,7 +60,7 @@ namespace Node.Net.Test
         [TestCase(1, 0, 1, 45.0, "1,1 in the XZ plane")]
         public static void GetPolarAngle(double x, double y, double z, double expected_angle, string name)
         {
-            Assert.That(Round(new Vector3D(x, y, z).GetPolarAngle(), 3), Is.EqualTo(expected_angle), name);
+            Assert.That(Round(new NodeNetVector3D(x, y, z).GetPolarAngle(), 3), Is.EqualTo(expected_angle), name);
         }
 
         [Test]
@@ -74,7 +76,7 @@ namespace Node.Net.Test
         [TestCase(-1, -1, 0, 135.0, "-1,-1 in XY plane")]
         public static void GetOrientation(double x, double y, double z, double expected_orientation, string name)
         {
-            Assert.That(Round(new Vector3D(x, y, z).GetOrientation(), 3), Is.EqualTo(expected_orientation), name);
+            Assert.That(Round(new NodeNetVector3D(x, y, z).GetOrientation(), 3), Is.EqualTo(expected_orientation), name);
         }
 
 

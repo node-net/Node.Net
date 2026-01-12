@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿extern alias NodeNet;
+using NUnit.Framework;
+using NodeNet::Node.Net;
+using NodeNet::Node.Net.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +14,7 @@ namespace Node.Net.Collections
         [Test]
         public void JsonSerialization()
         {
-            Items<string> items = new Items<string>(new string[] { "red", "green", "blue" });
+            NodeNet::Node.Net.Collections.Items<string> items = new NodeNet::Node.Net.Collections.Items<string>(new string[] { "red", "green", "blue" });
             //Items<string> items2 = items.Clone() as Items<string>;
             //Assert.That(items2.Count, Is.EqualTo(3), "items2.Count");
         }
@@ -26,7 +29,7 @@ namespace Node.Net.Collections
 
             IDictionary states = new Reader().Read<IDictionary>(stream);
 
-            Items<IDictionary> items = new Items<IDictionary>(states.Collect<IDictionary>());
+            NodeNet::Node.Net.Collections.Items<IDictionary> items = new NodeNet::Node.Net.Collections.Items<IDictionary>(states.Collect<IDictionary>());
             Assert.That(items.Search,Is.EqualTo(""));
             Assert.That(items.Count, Is.EqualTo(3205), "items.Count");
 
@@ -51,7 +54,7 @@ namespace Node.Net.Collections
 
             IDictionary states = new Reader().Read<IDictionary>(stream);
 
-            Items<IDictionary> items = new Items<IDictionary>(states.Collect<IDictionary>())
+            NodeNet::Node.Net.Collections.Items<IDictionary> items = new NodeNet::Node.Net.Collections.Items<IDictionary>(states.Collect<IDictionary>())
             {
                 Search = "State",
                 SortFunction = SortByNameDescending

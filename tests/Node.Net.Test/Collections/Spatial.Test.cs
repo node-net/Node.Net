@@ -1,8 +1,11 @@
-﻿using System;
+﻿extern alias NodeNet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using NodeNet::Node.Net.Collections;
+using NodeNet::Node.Net;
 
 namespace Node.Net.Collections
 {

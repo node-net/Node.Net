@@ -1,9 +1,12 @@
 ﻿#if IS_WINDOWS
+extern alias NodeNet;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using NUnit.Framework;
+using NodeNet::Node.Net.Collections;
+using NodeNet::Node.Net; // For extension methods
 
 namespace Node.Net.Collections
 {

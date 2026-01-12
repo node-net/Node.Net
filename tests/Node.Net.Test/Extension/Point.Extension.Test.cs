@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
-using System.Windows;
+﻿extern alias NodeNet;
+using NUnit.Framework;
+using NodeNet::System.Windows; // Point type from Node.Net
+using NodeNet::Node.Net; // Extension methods are in Node.Net namespace
 
 namespace Node.Net.Test
 {
@@ -76,10 +78,10 @@ namespace Node.Net.Test
         [Test]
         public void ParsePoints()
         {
-            Point[] points = PointExtension.ParsePoints("0,0 1,0");
+            Point[] points = NodeNet::Node.Net.PointExtension.ParsePoints("0,0 1,0");
             Assert.That(points.Length, Is.EqualTo(2));
 
-            points = PointExtension.ParsePoints("0,0,0 1,0,0");
+            points = NodeNet::Node.Net.PointExtension.ParsePoints("0,0,0 1,0,0");
             Assert.That(points.Length, Is.EqualTo(2));
         }
 

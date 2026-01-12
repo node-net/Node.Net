@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,17 +42,115 @@ public class TestHarness
 	}
 
 	/// <summary>
+	/// Gets the target framework moniker (TFM) for the current executing assembly.
+	/// </summary>
+	/// <returns>The target framework moniker (e.g., "net8.0", "net8.0-windows", "net48"), or "unknown" if not available.</returns>
+	private string GetTargetFramework()
+	{
+		try
+		{
+			var assembly = Assembly.GetExecutingAssembly();
+			
+			// Method 1: Try to extract from assembly location path (most reliable for test assemblies)
+			// Test assemblies are typically in: bin/Debug/{TargetFramework}/ or bin/Release/{TargetFramework}/
+			var assemblyLocation = assembly.Location;
+			if (!string.IsNullOrEmpty(assemblyLocation))
+			{
+				var assemblyDir = Path.GetDirectoryName(assemblyLocation);
+				if (!string.IsNullOrEmpty(assemblyDir))
+				{
+					var dirName = Path.GetFileName(assemblyDir);
+					// Check if directory name looks like a TFM (e.g., "net8.0", "net8.0-windows", "net48")
+					if (dirName.StartsWith("net", StringComparison.OrdinalIgnoreCase))
+					{
+						return dirName;
+					}
+					
+					// Check parent directory
+					var parentDir = Path.GetDirectoryName(assemblyDir);
+					if (!string.IsNullOrEmpty(parentDir))
+					{
+						var parentDirName = Path.GetFileName(parentDir);
+						if (parentDirName.StartsWith("net", StringComparison.OrdinalIgnoreCase))
+						{
+							return parentDirName;
+						}
+					}
+				}
+			}
+			
+			// Method 2: Use TargetFrameworkAttribute
+			var targetFrameworkAttribute = assembly.GetCustomAttribute<TargetFrameworkAttribute>();
+			if (targetFrameworkAttribute != null && !string.IsNullOrEmpty(targetFrameworkAttribute.FrameworkName))
+			{
+				var frameworkName = targetFrameworkAttribute.FrameworkName;
+				
+				if (frameworkName.Contains(".NETCoreApp"))
+				{
+					// Extract version and determine TFM
+					var versionMatch = System.Text.RegularExpressions.Regex.Match(frameworkName, @"Version=v(\d+)\.(\d+)");
+					if (versionMatch.Success)
+					{
+						var major = int.Parse(versionMatch.Groups[1].Value);
+						var minor = int.Parse(versionMatch.Groups[2].Value);
+						
+						// For .NET 8.0+, check if we have Windows-specific features
+						if (major >= 8)
+						{
+							// Check if we're running on net8.0-windows by looking for Windows-specific types
+							try
+							{
+								var windowsBaseType = Type.GetType("System.Windows.Application, WindowsBase, PresentationFramework");
+								if (windowsBaseType != null)
+								{
+									return $"net{major}.{minor}-windows";
+								}
+							}
+							catch
+							{
+								// Ignore - not a Windows-specific framework
+							}
+							
+							return $"net{major}.{minor}";
+						}
+						
+						return $"net{major}.{minor}";
+					}
+				}
+				else if (frameworkName.Contains(".NETFramework"))
+				{
+					// Extract version for .NET Framework
+					var versionMatch = System.Text.RegularExpressions.Regex.Match(frameworkName, @"Version=v(\d+)\.(\d+)");
+					if (versionMatch.Success)
+					{
+						var major = int.Parse(versionMatch.Groups[1].Value);
+						var minor = int.Parse(versionMatch.Groups[2].Value);
+						return $"net{major}{minor}";
+					}
+				}
+			}
+		}
+		catch
+		{
+			// If we can't determine the framework, return "unknown"
+		}
+		
+		return "unknown";
+	}
+
+	/// <summary>
 	/// Retrieves a <see cref="DirectoryInfo"/> object representing the artifacts directory for the current target type
 	/// within the project.
 	/// </summary>
-	/// <remarks>The artifacts directory is located under the "artifacts/test" subdirectory of the project
+	/// <remarks>The artifacts directory is located under the "artifacts/test/{TargetFramework}" subdirectory of the project
 	/// directory, with a folder named after the fully qualified name of the target type. If the directory does not already
 	/// exist, it will be created.</remarks>
 	/// <returns>A <see cref="DirectoryInfo"/> object representing the artifacts directory.</returns>
 	public DirectoryInfo GetArtifactsDirectoryInfo()
 	{
 		var projectDirectory = GetProjectDirectoryInfo();
-		var artifactsPath = Path.Combine(projectDirectory.FullName, "artifacts", "test", TargetType!.FullName!);
+		var targetFramework = GetTargetFramework();
+		var artifactsPath = Path.Combine(projectDirectory.FullName, "artifacts", "test", targetFramework, TargetType!.FullName!);
 		if (!Directory.Exists(artifactsPath))
 		{
 			Directory.CreateDirectory(artifactsPath);
