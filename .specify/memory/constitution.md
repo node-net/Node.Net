@@ -1,50 +1,112 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+Version: 1.0.0 (initial creation)
+Ratified: 2025-01-12
+Last Amended: 2025-01-12
+
+Principles Created:
+- I. Library-First Design
+- II. Multi-Targeting Support
+- III. Test-First Development (NON-NEGOTIABLE)
+- IV. API Stability & Versioning
+- V. Cross-Platform Compatibility
+
+Templates Status:
+✅ plan-template.md - Constitution Check section will reference these principles
+✅ spec-template.md - No direct constitution references
+✅ tasks-template.md - No direct constitution references
+✅ checklist-template.md - No direct constitution references
+
+Follow-up: None
+-->
+
+# Node.Net Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Library-First Design
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Every feature must be designed as a reusable library component. The library must be self-contained, independently testable, and well-documented. Each component must have a clear, single purpose. No organizational-only or utility-only components without clear value proposition. All public APIs must be designed for consumption by external developers.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Multi-Targeting Support
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+The library MUST support multiple .NET target frameworks (net48, net8.0, net8.0-windows) with appropriate conditional compilation. Windows-specific features must be wrapped in `#if IS_WINDOWS` directives. All non-Windows targets must build and function correctly without Windows dependencies. Platform-specific code must be clearly documented and tested on appropriate platforms.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Test-First Development (NON-NEGOTIABLE)
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Test-Driven Development (TDD) is mandatory for all new features and bug fixes. The cycle is strictly enforced: Write tests → Get approval → Verify tests fail → Implement feature → Verify tests pass → Refactor. All public APIs must have corresponding unit tests. Integration tests are required for cross-component interactions and serialization/deserialization workflows.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. API Stability & Versioning
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Public APIs must follow semantic versioning (MAJOR.MINOR.PATCH). Breaking changes require MAJOR version increment and migration documentation. New features increment MINOR version. Bug fixes and non-breaking changes increment PATCH version. All public types, methods, and properties must be documented with XML comments. Deprecated APIs must be marked with `[Obsolete]` attributes and removed only in MAJOR versions.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Cross-Platform Compatibility
+
+The library must function correctly on Windows, Linux, and macOS where applicable. Platform-specific code must be isolated and clearly marked. All platform-agnostic features must work identically across platforms. Platform-specific features must gracefully degrade or provide clear error messages when unavailable.
+
+## Technical Standards
+
+### Code Quality
+
+- **Nullable Reference Types**: Enabled (`<Nullable>enable</Nullable>`) - all code must handle nullability correctly
+- **Language Version**: Latest C# language features are encouraged but must maintain compatibility with target frameworks
+- **Code Style**: Follow .NET coding conventions and use consistent formatting
+- **Documentation**: All public APIs require XML documentation comments
+
+### Testing Requirements
+
+- **Framework**: NUnit for all test projects
+- **Coverage**: All public APIs must have unit tests
+- **Integration Tests**: Required for serialization/deserialization, factory patterns, and cross-component interactions
+- **Test Organization**: Tests mirror source structure in `Node.Net.Test` project
+
+### Build & Packaging
+
+- **NuGet Package**: Automatically generated on build (`GeneratePackageOnBuild=true`)
+- **Package Metadata**: Must include version, license, icon, authors, and project URL
+- **Multi-Targeting**: Build scripts must handle conditional compilation for Windows vs non-Windows targets
+- **Version Management**: Version numbers must be updated in `.csproj` file
+
+## Development Workflow
+
+### Feature Development
+
+1. Create feature branch using `/speckit.specify` command
+2. Write specification following spec-template.md
+3. Create implementation plan using `/speckit.plan`
+4. Generate tasks using `/speckit.tasks`
+5. Implement following TDD cycle
+6. Ensure all tests pass on all target frameworks
+7. Update documentation and XML comments
+8. Submit for review
+
+### Code Review Requirements
+
+- All PRs must verify constitution compliance
+- Tests must pass on all target frameworks
+- Breaking changes must be documented and justified
+- New dependencies must be approved and documented
+- Platform-specific code must be reviewed for cross-platform impact
+
+### Quality Gates
+
+- All tests must pass before merge
+- Code must build successfully on all target frameworks
+- No breaking changes without MAJOR version increment
+- XML documentation must be complete for public APIs
+- NuGet package must build and validate successfully
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices and guidelines. Amendments to this constitution require:
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+1. Documentation of the proposed change
+2. Justification for the amendment
+3. Impact analysis on existing code and practices
+4. Approval from project maintainers
+5. Version increment following semantic versioning
+6. Update to `LAST_AMENDED_DATE`
+
+All PRs and code reviews must verify compliance with these principles. Complexity must be justified. When in doubt, prefer simplicity and clarity over clever solutions.
+
+**Version**: 1.0.0 | **Ratified**: 2025-01-12 | **Last Amended**: 2025-01-12
