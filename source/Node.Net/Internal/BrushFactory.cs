@@ -45,7 +45,7 @@ namespace Node.Net.Internal
 #pragma warning restore CS8603 // Possible null reference return.
         }
 
-        public IFactory ParentFactory { get; set; }
+        public IFactory? ParentFactory { get; set; }
 
         private static Brush CreateFromImageSource(ImageSource source)
         {

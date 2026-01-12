@@ -27,7 +27,14 @@
   <!-- Define IS_WINDOWS for all Windows targets (legacy frameworks are Windows-only) -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net48'">
     <DefineConstants>IS_WINDOWS;IS_FRAMEWORK</DefineConstants>
+    <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
+  
+  <!-- Exclude Razor components from net48 build (Razor components require .NET 6+) -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <Content Remove="Components\*.razor" />
+    <None Include="Components\*.razor" />
+  </ItemGroup>
 
   <!-- Package references for non-net46 targets -->
   <ItemGroup Condition=" '$(TargetFramework)' != 'net46' ">

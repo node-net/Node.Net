@@ -70,7 +70,7 @@ namespace Node.Net
         }
 #endif
 
-        public Dictionary<Type, Func<Type, object, object>> FactoryFunctions
+        public Dictionary<Type, Func<Type, object, object?>> FactoryFunctions
         {
             get { return factory.FactoryFunctions; }
         }
@@ -113,7 +113,7 @@ namespace Node.Net
         }
 
 #if IS_WINDOWS
-        public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction
+        public Func<IDictionary, Model3D>? PrimaryModel3DHelperFunction
         {
             get { return factory.PrimaryModel3DHelperFunction; }
             set { factory.PrimaryModel3DHelperFunction = value; }

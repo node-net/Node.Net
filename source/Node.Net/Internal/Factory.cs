@@ -22,7 +22,7 @@ namespace Node.Net.Internal
             AbstractFactory.ParentFactory = this;
 #endif
             CollectionsFactory.StreamFactory = StreamFactory;
-            FactoryFunctions = new Dictionary<Type, Func<Type, object, object>>
+            FactoryFunctions = new Dictionary<Type, Func<Type, object, object?>>
             {
                 {typeof(Stream), StreamFactory.Create },
                 {typeof(IStreamSignature),StreamFactory.Create },
@@ -66,7 +66,7 @@ namespace Node.Net.Internal
         }
 #endif
 
-        public Dictionary<Type, Func<Type, object, object>> FactoryFunctions { get; }
+        public Dictionary<Type, Func<Type, object, object?>> FactoryFunctions { get; }
 
         public List<Assembly> ManifestResourceAssemblies
         {
@@ -107,7 +107,7 @@ namespace Node.Net.Internal
 #endif
 
 #if IS_WINDOWS
-        public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction
+        public Func<IDictionary, Model3D>? PrimaryModel3DHelperFunction
         {
             get { return Model3DFactory.PrimaryModel3DHelperFunction; }
             set { Model3DFactory.PrimaryModel3DHelperFunction = value; }

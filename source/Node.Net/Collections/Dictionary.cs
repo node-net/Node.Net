@@ -46,10 +46,12 @@ namespace Node.Net.Collections
         }
 
         [Obsolete("Formatter-based serialization is obsolete. Use modern serialization methods instead.")]
+#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
         }
+#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
 
         #endregion Serialization
 

@@ -280,7 +280,7 @@ public class OsUserProfileService
             try
             {
                 dsclPicturePath = TryReadDsclPicturePath(userName, result, diagnosticInfo);
-                if (!string.IsNullOrEmpty(dsclPicturePath) && File.Exists(dsclPicturePath) && IsImageFile(dsclPicturePath))
+                if (!string.IsNullOrEmpty(dsclPicturePath) && File.Exists(dsclPicturePath) && dsclPicturePath != null && IsImageFile(dsclPicturePath))
                 {
                     diagnosticInfo.AppendLine($"✅ Using picture from dscl Picture attribute: {dsclPicturePath}");
                     return dsclPicturePath;
@@ -289,7 +289,7 @@ public class OsUserProfileService
                 {
                     diagnosticInfo.AppendLine($"⚠️ Picture path from dscl doesn't exist or isn't an image: {dsclPicturePath}");
                     diagnosticInfo.AppendLine($"   File exists: {File.Exists(dsclPicturePath)}");
-                    if (File.Exists(dsclPicturePath))
+                    if (dsclPicturePath != null && File.Exists(dsclPicturePath))
                     {
                         diagnosticInfo.AppendLine($"   Is image: {IsImageFile(dsclPicturePath)}");
                     }
@@ -325,14 +325,12 @@ end if";
                 var osascriptProcess = new System.Diagnostics.ProcessStartInfo
                 {
                     FileName = "/usr/bin/osascript",
+                    Arguments = $"-e \"{appleScript.Replace("\"", "\\\"")}\"",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
-                
-                osascriptProcess.ArgumentList.Add("-e");
-                osascriptProcess.ArgumentList.Add(appleScript);
 
                 using var osascriptProc = System.Diagnostics.Process.Start(osascriptProcess);
                 if (osascriptProc != null)
@@ -359,7 +357,7 @@ end if";
                     }
                     
                     diagnosticInfo.AppendLine($"   Checking for TIFF file at: {tempTiffFile}");
-                    if (File.Exists(tempTiffFile) && IsImageFile(tempTiffFile))
+                    if (!string.IsNullOrEmpty(tempTiffFile) && File.Exists(tempTiffFile) && tempTiffFile != null && IsImageFile(tempTiffFile))
                     {
                         // Convert TIFF to PNG using sips
                         try
@@ -625,7 +623,7 @@ end if";
             result.AttemptedPaths.Add($"dscl command: /usr/bin/dscl . -read /Users/{EscapeDsclArg(userName)} JPEGPhoto");
             
             var output = RunDsclCommand($". -read /Users/{EscapeDsclArg(userName)} JPEGPhoto", diagnosticInfo);
-            if (string.IsNullOrWhiteSpace(output) || output.Contains("No such key", StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrWhiteSpace(output) || output.IndexOf("No such key", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 diagnosticInfo.AppendLine("   ⚠️ JPEGPhoto not found in directory record");
                 return null;
@@ -646,7 +644,7 @@ end if";
             using var ms = new MemoryStream();
             foreach (Match m in matches)
             {
-                var hex = m.Value[2..]; // strip 0x
+                var hex = m.Value.Substring(2); // strip 0x
                 // dscl may emit 1..8 hex digits; left-pad to even length for byte parsing
                 if (hex.Length % 2 == 1) hex = "0" + hex;
                 if (hex.Length < 8) hex = hex.PadLeft(8, '0'); // treat as 32-bit word
@@ -696,14 +694,14 @@ end if";
             result.AttemptedPaths.Add($"dscl command: /usr/bin/dscl . -read /Users/{EscapeDsclArg(userName)} Picture");
             
             var output = RunDsclCommand($". -read /Users/{EscapeDsclArg(userName)} Picture", diagnosticInfo);
-            if (string.IsNullOrWhiteSpace(output) || output.Contains("No such key", StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrWhiteSpace(output) || output.IndexOf("No such key", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 diagnosticInfo.AppendLine("   ⚠️ Picture attribute not found in directory record");
                 return null;
             }
 
             // Find "Picture:" line and return rest
-            var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            var lines = output.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < lines.Length; i++)
             {
                 var trimmed = lines[i].Trim();

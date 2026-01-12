@@ -57,8 +57,8 @@ namespace Node.Net.Internal
             return false;
         }
 
-        public IFactory ParentFactory { get; set; }
-        public Func<IDictionary, Model3D> PrimaryModel3DHelperFunction { get; set; }
+        public IFactory? ParentFactory { get; set; }
+        public Func<IDictionary, Model3D>? PrimaryModel3DHelperFunction { get; set; }
         public bool ScalePrimaryModel { get; set; } = true;
         private bool cache = true;
 

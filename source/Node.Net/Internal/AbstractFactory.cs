@@ -9,7 +9,7 @@ namespace Node.Net.Internal
 {
     internal sealed class AbstractFactory : Dictionary<Type, Type>, IFactory
     {
-        public IFactory ParentFactory { get; set; }
+        public IFactory? ParentFactory { get; set; }
         public Func<Stream, object> ReadFunction { get; set; } = new Internal.JsonReader().Read;
         public Dictionary<string, Type> IDictionaryTypes { get; set; } = new Dictionary<string, Type>();
         public Type DefaultObjectType { get; set; } = typeof(Dictionary<string, dynamic>);

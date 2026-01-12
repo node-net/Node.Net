@@ -52,24 +52,24 @@ namespace Node.Net
             this.canExecuteMethod = canExecuteMethod;
         }
 
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object? parameter)
         {
             if (canExecuteMethod == null)
             {
                 return true;
             }
 
-            return this.canExecuteMethod(parameter);
+            return this.canExecuteMethod(parameter!);
         }
 
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
             if (executeMethod == null)
             {
                 return;
             }
 
-            this.executeMethod(parameter);
+            this.executeMethod(parameter!);
         }
     }
 }
