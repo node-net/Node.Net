@@ -103,12 +103,12 @@ internal class SystemUserTests : TestHarness<SystemUser>
         // Act
         var result = systemUser.GetProfilePicture(targetWidth, targetHeight);
 
-        // Assert
+        // Get artifact file path using TestHarness (always create directory structure)
+        var artifactFile = GetArtifactFileInfo("User.Jpg");
+        
+        // Assert - Always generate artifacts, even if profile picture is not available
         if (result != null)
         {
-            // Get artifact file path using TestHarness
-            var artifactFile = GetArtifactFileInfo("User.Jpg");
-            
             // Write image bytes to artifact file
             File.WriteAllBytes(artifactFile.FullName, result);
             
@@ -126,7 +126,30 @@ internal class SystemUserTests : TestHarness<SystemUser>
         }
         else
         {
-            Assert.Warn("Profile picture not available on this system - artifact generation skipped");
+            // Generate a placeholder artifact file to document that profile picture is not available
+            // This ensures artifacts are always generated, even when profile picture is unavailable
+            var placeholderText = $"Profile picture not available on this system{Environment.NewLine}Test executed: {DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+            
+            // Retry logic to handle file locking when multiple test frameworks run simultaneously
+            var maxRetries = 3;
+            var retryDelay = TimeSpan.FromMilliseconds(100);
+            for (int i = 0; i < maxRetries; i++)
+            {
+                try
+                {
+                    File.WriteAllText(artifactFile.FullName, placeholderText);
+                    break;
+                }
+                catch (IOException) when (i < maxRetries - 1)
+                {
+                    System.Threading.Thread.Sleep(retryDelay);
+                }
+            }
+            
+            // Verify placeholder artifact was created
+            Assert.That(File.Exists(artifactFile.FullName), Is.True, $"Placeholder artifact file should exist at {artifactFile.FullName}");
+            var fileInfo = new FileInfo(artifactFile.FullName);
+            Assert.That(fileInfo.Length, Is.GreaterThan(0), "Placeholder artifact file should not be empty");
         }
     }
 

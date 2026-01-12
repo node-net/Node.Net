@@ -47,6 +47,10 @@
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.13.2" />
   </ItemGroup>
 
+  <!-- Windows Runtime support for .NET 8.0+ (for WinRT APIs like UserInformation) -->
+  <!-- Note: WinRT APIs are available through the Windows SDK included with .NET 8.0+ -->
+  <!-- No explicit package reference needed for net8.0-windows target -->
+
   <!-- Legacy framework references -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net48' ">
     <Reference Include="PresentationCore" />

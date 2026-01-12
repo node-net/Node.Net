@@ -4,6 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+#if !IS_FRAMEWORK && IS_WINDOWS
+using System.Threading.Tasks;
+#endif
 
 namespace Node.Net.Service.User;
 
@@ -164,15 +167,39 @@ public class OsUserProfileService
 
     /// <summary>
     /// Gets the Windows user profile picture path
+    /// Uses WinRT API (Windows.System.UserProfile.UserInformation) for .NET 8.0+, falls back to file system for .NET Framework 4.8
     /// </summary>
     private string? GetWindowsProfilePicturePath(OsUserProfileResult result, System.Text.StringBuilder diagnosticInfo)
     {
         try
         {
+            diagnosticInfo.AppendLine("=== Windows Profile Picture Search ===");
+            
+#if !IS_FRAMEWORK
+            // Try WinRT API first (available on .NET 8.0+)
+            diagnosticInfo.AppendLine("Method 1: Attempting WinRT API (Windows.System.UserProfile.UserInformation)...");
+            try
+            {
+                var winrtPath = TryGetWindowsProfilePictureViaWinRT(result, diagnosticInfo);
+                if (!string.IsNullOrEmpty(winrtPath) && File.Exists(winrtPath))
+                {
+                    diagnosticInfo.AppendLine($"✅ Successfully retrieved profile picture via WinRT API: {winrtPath}");
+                    return winrtPath;
+                }
+            }
+            catch (Exception ex)
+            {
+                diagnosticInfo.AppendLine($"   ⚠️ WinRT API failed: {ex.Message}");
+                diagnosticInfo.AppendLine($"   Type: {ex.GetType().Name}");
+            }
+            
+            diagnosticInfo.AppendLine();
+            diagnosticInfo.AppendLine("Method 2: Falling back to file system search...");
+#endif
+            
+            // Fallback to file system approach (works for .NET Framework 4.8 and as fallback for .NET 8.0+)
             var userName = Environment.UserName;
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            
-            diagnosticInfo.AppendLine("=== Windows Profile Picture Search ===");
             
             // Try multiple common locations for Windows profile pictures
             var possiblePaths = new[]
@@ -231,6 +258,189 @@ public class OsUserProfileService
             return null;
         }
     }
+
+#if !IS_FRAMEWORK
+    /// <summary>
+    /// Attempts to retrieve Windows profile picture using WinRT API (Windows.System.UserProfile.UserInformation)
+    /// This is the recommended approach for Windows 10/11 as it works for both local and Microsoft accounts.
+    /// Uses reflection to avoid requiring explicit WinRT package references.
+    /// </summary>
+    private string? TryGetWindowsProfilePictureViaWinRT(OsUserProfileResult result, System.Text.StringBuilder diagnosticInfo)
+    {
+        try
+        {
+            // Use reflection to access WinRT APIs to avoid requiring explicit package references
+            var userInformationType = Type.GetType("Windows.System.UserProfile.UserInformation, Windows, ContentType=WindowsRuntime");
+            if (userInformationType == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ WinRT UserInformation type not available (Windows Runtime not accessible)");
+                diagnosticInfo.AppendLine("   Note: WinRT APIs require Windows SDK or Microsoft.WindowsAppSDK package");
+                return null;
+            }
+
+            // Check if account picture is available
+            var isAvailableProperty = userInformationType.GetProperty("IsAccountPictureAvailable");
+            if (isAvailableProperty == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ IsAccountPictureAvailable property not found");
+                return null;
+            }
+
+            var isAvailable = (bool)(isAvailableProperty.GetValue(null) ?? false);
+            if (!isAvailable)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ Account picture is not available (IsAccountPictureAvailable = false)");
+                return null;
+            }
+
+            diagnosticInfo.AppendLine("   ✅ Account picture is available");
+
+            // Get AccountPictureKind enum
+            var accountPictureKindType = Type.GetType("Windows.System.UserProfile.AccountPictureKind, Windows, ContentType=WindowsRuntime");
+            if (accountPictureKindType == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ AccountPictureKind type not found");
+                return null;
+            }
+
+            var largeImageValue = Enum.Parse(accountPictureKindType, "LargeImage");
+
+            // Call GetAccountPicture (async method)
+            var getAccountPictureMethod = userInformationType.GetMethod("GetAccountPicture", new[] { accountPictureKindType });
+            if (getAccountPictureMethod == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ GetAccountPicture method not found");
+                return null;
+            }
+
+            var task = getAccountPictureMethod.Invoke(null, new[] { largeImageValue });
+            if (task == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ GetAccountPicture returned null");
+                return null;
+            }
+
+            // Get result from Task<StorageFile>
+            var taskType = task.GetType();
+            var getAwaiterMethod = taskType.GetMethod("GetAwaiter");
+            if (getAwaiterMethod == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ Task.GetAwaiter method not found");
+                return null;
+            }
+
+            var awaiter = getAwaiterMethod.Invoke(task, null);
+            if (awaiter == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ GetAwaiter returned null");
+                return null;
+            }
+
+            var getResultMethod = awaiter.GetType().GetMethod("GetResult");
+            if (getResultMethod == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ GetResult method not found");
+                return null;
+            }
+
+            var storageFile = getResultMethod.Invoke(awaiter, null);
+            if (storageFile == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ GetAccountPicture returned null StorageFile");
+                return null;
+            }
+
+            var storageFileType = storageFile.GetType();
+
+            // Try to get file path first
+            var pathProperty = storageFileType.GetProperty("Path");
+            if (pathProperty != null)
+            {
+                var filePath = pathProperty.GetValue(storageFile) as string;
+                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+                {
+                    diagnosticInfo.AppendLine($"   ✅ Retrieved profile picture via WinRT: {filePath}");
+                    result.FoundPaths.Add(filePath);
+                    return filePath;
+                }
+            }
+
+            // Read file content if path not available
+            diagnosticInfo.AppendLine("   Reading file content from WinRT StorageFile...");
+            var openReadAsyncMethod = storageFileType.GetMethod("OpenReadAsync");
+            if (openReadAsyncMethod == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ OpenReadAsync method not found");
+                return null;
+            }
+
+            var readTask = openReadAsyncMethod.Invoke(storageFile, null);
+            if (readTask == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ OpenReadAsync returned null");
+                return null;
+            }
+
+            var readTaskType = readTask.GetType();
+            var readAwaiter = readTaskType.GetMethod("GetAwaiter")?.Invoke(readTask, null);
+            if (readAwaiter == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ Read task GetAwaiter returned null");
+                return null;
+            }
+
+            var readResult = readAwaiter.GetType().GetMethod("GetResult")?.Invoke(readAwaiter, null);
+            if (readResult == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ Read stream is null");
+                return null;
+            }
+
+            // Convert IRandomAccessStream to .NET Stream
+            var streamExtensionsType = Type.GetType("System.IO.WindowsRuntimeStreamExtensions, System.Runtime.WindowsRuntime");
+            if (streamExtensionsType == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ WindowsRuntimeStreamExtensions type not found");
+                return null;
+            }
+
+            var asStreamForReadMethod = streamExtensionsType.GetMethod("AsStreamForRead", new[] { readResult.GetType() });
+            if (asStreamForReadMethod == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ AsStreamForRead method not found");
+                return null;
+            }
+
+            var netStream = asStreamForReadMethod.Invoke(null, new[] { readResult }) as Stream;
+            if (netStream == null)
+            {
+                diagnosticInfo.AppendLine("   ⚠️ Failed to convert to .NET Stream");
+                return null;
+            }
+
+            using (netStream)
+            {
+                using var ms = new MemoryStream();
+                netStream.CopyTo(ms);
+                var imageBytes = ms.ToArray();
+
+                // Write to temp file
+                var tempFile = Path.Combine(Path.GetTempPath(), $"user_picture_{Environment.UserName}_{Guid.NewGuid()}.jpg");
+                File.WriteAllBytes(tempFile, imageBytes);
+                
+                diagnosticInfo.AppendLine($"   ✅ Retrieved profile picture via WinRT (saved to temp): {tempFile} ({imageBytes.Length} bytes)");
+                result.FoundPaths.Add(tempFile);
+                return tempFile;
+            }
+        }
+        catch (Exception ex)
+        {
+            diagnosticInfo.AppendLine($"   ❌ WinRT API exception: {ex.GetType().Name}: {ex.Message}");
+            diagnosticInfo.AppendLine($"   Stack trace: {ex.StackTrace}");
+            return null;
+        }
+    }
+#endif
 
     /// <summary>
     /// Gets the macOS user profile picture path
