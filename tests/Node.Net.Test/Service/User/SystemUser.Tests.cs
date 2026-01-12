@@ -104,13 +104,13 @@ internal class SystemUserTests : TestHarness<SystemUser>
 
         // Act
         var result = systemUser.GetProfilePicture(targetWidth, targetHeight);
-
-        // Get artifact file path using TestHarness (always create directory structure)
-        var artifactFile = GetArtifactFileInfo("user.jpeg");
         
-        // Assert - Always generate artifacts, even if profile picture is not available
+        // Assert - Generate appropriate artifact based on availability
         if (result != null)
         {
+            // Profile picture is available - generate valid JPEG file
+            var artifactFile = GetArtifactFileInfo("user.jpeg");
+            
             // Write image bytes to artifact file
             File.WriteAllBytes(artifactFile.FullName, result);
             
@@ -191,8 +191,8 @@ internal class SystemUserTests : TestHarness<SystemUser>
         }
         else
         {
-            // Generate a placeholder artifact file to document that profile picture is not available
-            // This ensures artifacts are always generated, even when profile picture is unavailable
+            // Profile picture is not available - generate text file documenting unavailability
+            var artifactFile = GetArtifactFileInfo("user.txt");
             var placeholderText = $"Profile picture not available on this system{Environment.NewLine}Test executed: {DateTime.Now:yyyy-MM-dd HH:mm:ss}";
             
             // Retry logic to handle file locking when multiple test frameworks run simultaneously
@@ -215,6 +215,11 @@ internal class SystemUserTests : TestHarness<SystemUser>
             Assert.That(File.Exists(artifactFile.FullName), Is.True, $"Placeholder artifact file should exist at {artifactFile.FullName}");
             var fileInfo = new FileInfo(artifactFile.FullName);
             Assert.That(fileInfo.Length, Is.GreaterThan(0), "Placeholder artifact file should not be empty");
+            
+            // Verify it's a text file (not a JPEG)
+            var fileBytes = File.ReadAllBytes(artifactFile.FullName);
+            // Text files should not start with JPEG SOI marker
+            Assert.That(!(fileBytes.Length >= 2 && fileBytes[0] == 0xFF && fileBytes[1] == 0xD8), Is.True, "Placeholder file should not be a JPEG");
         }
     }
 
