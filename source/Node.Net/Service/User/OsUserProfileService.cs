@@ -294,7 +294,7 @@ public class OsUserProfileService
             // Get the account picture (get large image for best quality)
             // Note: In some SDK versions, GetAccountPicture may return IStorageFile directly
             // Try async first, fall back to direct if needed
-            IStorageFile storageFileInterface = null;
+            IStorageFile? storageFileInterface = null;
             try
             {
                 // Try as async operation

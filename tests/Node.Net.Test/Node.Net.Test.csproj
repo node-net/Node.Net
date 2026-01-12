@@ -40,6 +40,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="bunit" Version="1.35.3" />
+    <PackageReference Include="Microsoft.Playwright" Version="1.48.0" />
   </ItemGroup>
 
   <ItemGroup>
