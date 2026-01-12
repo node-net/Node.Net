@@ -269,12 +269,20 @@ public class OsUserProfileService
     {
         try
         {
-            // Use reflection to access WinRT APIs to avoid requiring explicit package references
-            var userInformationType = Type.GetType("Windows.System.UserProfile.UserInformation, Windows, ContentType=WindowsRuntime");
+            // Use reflection to access WinRT APIs (works without explicit package references)
+            // Try multiple type name formats for better compatibility
+            var userInformationType = Type.GetType("Windows.System.UserProfile.UserInformation, Windows, ContentType=WindowsRuntime") 
+                ?? Type.GetType("Windows.System.UserProfile.UserInformation, Windows.System.UserProfile")
+                ?? Type.GetType("Windows.System.UserProfile.UserInformation");
+            
             if (userInformationType == null)
             {
                 diagnosticInfo.AppendLine("   ⚠️ WinRT UserInformation type not available (Windows Runtime not accessible)");
-                diagnosticInfo.AppendLine("   Note: WinRT APIs require Windows SDK or Microsoft.WindowsAppSDK package");
+                diagnosticInfo.AppendLine("   Note: WinRT APIs require Windows 10/11 and proper runtime support");
+                diagnosticInfo.AppendLine("   Attempted type names:");
+                diagnosticInfo.AppendLine("     - Windows.System.UserProfile.UserInformation, Windows, ContentType=WindowsRuntime");
+                diagnosticInfo.AppendLine("     - Windows.System.UserProfile.UserInformation, Windows.System.UserProfile");
+                diagnosticInfo.AppendLine("     - Windows.System.UserProfile.UserInformation");
                 return null;
             }
 
