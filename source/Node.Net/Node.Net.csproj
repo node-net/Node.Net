@@ -48,8 +48,8 @@
   </ItemGroup>
 
   <!-- Windows Runtime support for .NET 8.0+ (for WinRT APIs like UserInformation) -->
-  <!-- Note: WinRT APIs are available through the Windows SDK included with .NET 8.0+ -->
-  <!-- No explicit package reference needed for net8.0-windows target -->
+  <!-- WinRT APIs are accessed via reflection to avoid requiring explicit package references -->
+  <!-- If WinRT APIs are needed, add: <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.26100.1" /> -->
 
   <!-- Legacy framework references -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net48' ">
