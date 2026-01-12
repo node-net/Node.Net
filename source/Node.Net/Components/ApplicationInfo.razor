@@ -1,0 +1,74 @@
+@namespace Node.Net.Components
+@using Microsoft.FluentUI.AspNetCore.Components
+@using Node.Net.Service.Application
+
+@* 
+    ApplicationInfo Component
+    
+    A reusable Razor component that displays application information including:
+    - Application Name
+    - Company Name
+    
+    The component uses the IApplication service to retrieve application metadata.
+    If metadata is missing, appropriate fallback text is displayed.
+*@
+
+<FluentCard Style="padding: 1rem;">
+    <FluentStack Orientation="Orientation.Vertical" Gap="1rem">
+        <h3>Application Information</h3>
+        
+        <FluentStack Orientation="Orientation.Horizontal" Wrap="true" Gap="1.5rem">
+            @* Application Name *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Application:</strong> @ApplicationName</div>
+            </FluentStack>
+            
+            @* Company Name *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Company:</strong> @CompanyName</div>
+            </FluentStack>
+        </FluentStack>
+    </FluentStack>
+</FluentCard>
+
+@code {
+    private readonly IApplication _application = new Application();
+
+    /// <summary>
+    /// Gets the application name, with fallback to "Unknown" if not available
+    /// </summary>
+    private string ApplicationName
+    {
+        get
+        {
+            try
+            {
+                var name = _application.GetName();
+                return string.IsNullOrEmpty(name) ? "Unknown" : name;
+            }
+            catch
+            {
+                return "Unknown";
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets the company name, with fallback to "Not available" if not available
+    /// </summary>
+    private string CompanyName
+    {
+        get
+        {
+            try
+            {
+                var company = _application.GetCompany();
+                return string.IsNullOrEmpty(company) ? "Not available" : company;
+            }
+            catch
+            {
+                return "Not available";
+            }
+        }
+    }
+}
