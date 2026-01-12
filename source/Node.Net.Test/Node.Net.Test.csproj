@@ -43,6 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\source\Node.Net.csproj" />
+    <ProjectReference Include="..\Node.Net\Node.Net.csproj" />
   </ItemGroup>
 </Project>

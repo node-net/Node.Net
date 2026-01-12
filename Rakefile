@@ -35,10 +35,10 @@ task :build => [:env] do
     run("dotnet build #{PROJECT.name}.sln --configuration Release")
   else
     # Build only compatible targets (Mac/Linux)
-    run("dotnet restore source/Node.Net.csproj #{targets}")
-    run("dotnet build source/Node.Net.csproj --configuration Release #{targets}")
-    run("dotnet restore tests/Node.Net.Test.csproj #{targets}")
-    run("dotnet build tests/Node.Net.Test.csproj --configuration Release #{targets}")
+    run("dotnet restore source/Node.Net/Node.Net.csproj #{targets}")
+    run("dotnet build source/Node.Net/Node.Net.csproj --configuration Release #{targets}")
+    run("dotnet restore source/Node.Net.Test/Node.Net.Test.csproj #{targets}")
+    run("dotnet build source/Node.Net.Test/Node.Net.Test.csproj --configuration Release #{targets}")
   end
 end
 
@@ -47,10 +47,10 @@ task :test => [:build] do
   targets = compatible_targets
   if targets.empty?
     # Test all targets (Windows)
-    run("dotnet test tests/Node.Net.Test.csproj -c Release")
+    run("dotnet test source/Node.Net.Test/Node.Net.Test.csproj -c Release")
   else
     # Test only compatible targets (Mac/Linux)
-    run("dotnet test tests/Node.Net.Test.csproj -c Release #{targets}")
+    run("dotnet test source/Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}")
   end
 end
 
@@ -82,7 +82,7 @@ task :publish => [:tag] do
   start_task :publish
   if ENV["CI_SERVER"].nil?
     nuget = PROJECT.get_dev_dir("nuget")
-    package = "source/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
+    package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
     if (!File.exist?("#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg"))
       FileUtils.cp(package, "#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
     end
