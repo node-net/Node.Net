@@ -31,7 +31,15 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Verify compliance with Node.Net Constitution principles:
+
+- **I. Library-First Design**: Feature is designed as reusable library component with clear purpose
+- **II. Multi-Targeting Support**: Plan addresses net48, net8.0, and net8.0-windows targets appropriately
+- **III. Test-First Development**: Test strategy defined before implementation
+- **IV. API Stability & Versioning**: Public API changes documented with version impact
+- **V. Cross-Platform Compatibility**: Platform-specific code identified and isolated
+
+**Status**: [ ] All principles satisfied | [ ] Violations documented below
 
 ## Project Structure
 

@@ -62,7 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Node.Net.256.png">
+    <None Include="Node.Net.256.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
