@@ -72,6 +72,12 @@ task :tag => [:test] do
   end
 end
 
+desc "run the examples/AspNet.Host project"
+task :run => [:test] do
+  start_task :run
+  sh "dotnet run --project examples/AspNet.Host/AspNet.Host.csproj"
+end
+
 task :publish => [:tag] do
   start_task :publish
   if ENV["CI_SERVER"].nil?
