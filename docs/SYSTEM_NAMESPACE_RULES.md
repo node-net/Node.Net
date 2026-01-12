@@ -1,0 +1,271 @@
+# System Namespace Files and Conditional Compilation Rules
+
+## Overview
+
+The `source/Node.Net/System` directory contains implementations of `System.Windows.*` types that are **only available on Windows** when targeting Windows-specific frameworks. These files provide cross-platform compatibility by implementing these types for non-Windows targets (`net8.0` and `net8.0-wasm`).
+
+## Key Principles
+
+### 1. Conditional Compilation
+
+**All files in `source/Node.Net/System` must be wrapped in `#if !IS_WINDOWS`:**
+
+```csharp
+#if !IS_WINDOWS
+using System;
+
+namespace System.Windows
+{
+    public struct Point
+    {
+        // Implementation...
+    }
+}
+#endif
+```
+
+**Why?**
+- When targeting `net8.0-windows` or `net48`, these types are **already provided by the framework** (WPF/PresentationCore)
+- When targeting `net8.0` or `net8.0-wasm` (non-Windows), these types are **not available** and must be provided by Node.Net
+- The `IS_WINDOWS` constant is defined for Windows targets (`net8.0-windows`, `net48`)
+
+### 2. Target Framework Behavior
+
+| Target Framework | `IS_WINDOWS` Defined? | System.Windows Types Source |
+|------------------|----------------------|----------------------------|
+| `net8.0` | ❌ No | **Node.Net provides** (`source/Node.Net/System`) |
+| `net8.0-wasm` | ❌ No | **Node.Net provides** (`source/Node.Net/System`) |
+| `net8.0-windows` | ✅ Yes | **Framework provides** (WPF/PresentationCore) |
+| `net48` | ✅ Yes | **Framework provides** (WPF/PresentationCore) |
+
+### 3. Namespace Structure
+
+Files in `source/Node.Net/System` mirror the Windows namespace structure:
+
+```
+source/Node.Net/System/
+├── Windows/
+│   ├── Point.cs                    → namespace System.Windows
+│   ├── Vector.cs                   → namespace System.Windows
+│   ├── ResourceDictionary.cs       → namespace System.Windows
+│   └── Media/
+│       ├── Color.cs                → namespace System.Windows.Media
+│       ├── Brushes.cs              → namespace System.Windows.Media
+│       └── Media3D/
+│           ├── Matrix3D.cs         → namespace System.Windows.Media.Media3D
+│           ├── Vector3D.cs         → namespace System.Windows.Media.Media3D
+│           └── ...
+```
+
+**Important:** These files define types in the **`System.` namespace**, not `Node.Net.System`. This allows code to use the same types regardless of target framework.
+
+## Implementation Requirements
+
+### File Structure
+
+Every file in `source/Node.Net/System` must follow this pattern:
+
+```csharp
+#if !IS_WINDOWS
+using System;
+// ... other using statements ...
+
+namespace System.Windows.Media.Media3D  // Match Windows namespace exactly
+{
+    /// <summary>
+    /// Documentation matching Windows API
+    /// </summary>
+    public struct Vector3D
+    {
+        // Implementation matching Windows API exactly
+    }
+}
+#endif
+```
+
+### API Compatibility
+
+- **Must match Windows API exactly** - same properties, methods, operators, and behavior
+- **No additional features** - these are compatibility shims, not extensions
+- **Same behavior** - including edge cases (e.g., `Vector.Normalize()` on zero vector sets to NaN, not throws)
+
+## Using System Types in Tests
+
+### The Problem
+
+When writing tests, you may encounter type ambiguity:
+- On `net8.0-windows`: Types come from WPF/PresentationCore
+- On `net8.0`: Types come from Node.Net's `source/Node.Net/System` files
+- Both are in the same namespace (`System.Windows.*`)
+
+### The Solution: Extern Alias
+
+Use `extern alias NodeNet` to explicitly reference Node.Net's types:
+
+```csharp
+extern alias NodeNet;
+using NUnit.Framework;
+using NodeNet::System.Windows.Media.Media3D;  // Explicitly use Node.Net's types
+
+namespace Node.Net.Test
+{
+    [TestFixture]
+    internal class Matrix3DTests
+    {
+        [Test]
+        public void Test()
+        {
+            // This Matrix3D comes from Node.Net (via extern alias)
+            Matrix3D matrix = new Matrix3D();
+            // ...
+        }
+    }
+}
+```
+
+### Extension Methods
+
+Extension methods in `Node.Net` namespace work with both:
+- Framework-provided types (on Windows)
+- Node.Net-provided types (on non-Windows)
+
+```csharp
+extern alias NodeNet;
+using NodeNet::Node.Net;  // Extension methods are in Node.Net namespace
+
+// Extension methods work regardless of where Matrix3D comes from
+Matrix3D matrix = new Matrix3D();
+matrix = matrix.RotateOTS(new Vector3D(45, 30, 0));  // Extension method
+```
+
+## Current Implementation Status
+
+### ✅ Fully Implemented
+
+- `System.Windows.Point` - 2D point structure
+- `System.Windows.Vector` - 2D vector structure
+- `System.Windows.ResourceDictionary` - Resource dictionary
+- `System.Windows.Media.Matrix` - 2D transformation matrix
+- `System.Windows.Media.Color` - Color structure
+- `System.Windows.Media.Brushes` - Brush collection
+- `System.Windows.Media.Media3D.Vector3D` - 3D vector structure
+- `System.Windows.Media.Media3D.Point3D` - 3D point structure
+- `System.Windows.Media.Media3D.Matrix3D` - 3D transformation matrix
+- `System.Windows.Media.Media3D.Quaternion` - Rotation quaternion
+- `System.Windows.Media.Media3D.Rect3D` - 3D rectangle
+- `System.Windows.Media.Media3D.Size3D` - 3D size
+- `System.Windows.Media.Media3D.MeshGeometry3D` - 3D mesh geometry
+- `System.Windows.Media.Media3D.Material` and derived types
+- `System.Windows.Media.Imaging.BitmapSource` and related types
+
+### 📝 Implementation Pattern
+
+When adding new types to `source/Node.Net/System`:
+
+1. **Place file in matching directory structure:**
+   ```
+   source/Node.Net/System/Windows/Media/Media3D/NewType.cs
+   ```
+
+2. **Wrap entire file in `#if !IS_WINDOWS`:**
+   ```csharp
+   #if !IS_WINDOWS
+   // ... implementation ...
+   #endif
+   ```
+
+3. **Use exact Windows namespace:**
+   ```csharp
+   namespace System.Windows.Media.Media3D
+   ```
+
+4. **Match Windows API exactly:**
+   - Same properties, methods, operators
+   - Same behavior (including edge cases)
+   - Same XML documentation
+
+5. **Create tests:**
+   ```
+   tests/Node.Net.Test/System/Windows/Media/Media3D/NewType.Tests.cs
+   ```
+
+6. **Use extern alias in tests:**
+   ```csharp
+   extern alias NodeNet;
+   using NodeNet::System.Windows.Media.Media3D;
+   ```
+
+## Common Pitfalls
+
+### ❌ Don't: Remove `#if !IS_WINDOWS`
+
+```csharp
+// WRONG - This will cause conflicts on Windows targets
+namespace System.Windows
+{
+    public struct Point { }
+}
+```
+
+### ❌ Don't: Use `Node.Net.System` namespace
+
+```csharp
+// WRONG - Breaks compatibility
+namespace Node.Net.System.Windows
+{
+    public struct Point { }
+}
+```
+
+### ❌ Don't: Add features not in Windows API
+
+```csharp
+// WRONG - Adds IFormattable which Windows Point doesn't have
+public struct Point : IFormattable
+{
+    public string ToString(string format, IFormatProvider provider) { }
+}
+```
+
+### ✅ Do: Match Windows API exactly
+
+```csharp
+#if !IS_WINDOWS
+namespace System.Windows
+{
+    // Matches Windows API exactly - no IFormattable, only ToString()
+    public struct Point
+    {
+        public override string ToString() { }
+    }
+}
+#endif
+```
+
+## Build Configuration
+
+The conditional compilation is controlled by MSBuild properties in `source/Node.Net/Node.Net.csproj`:
+
+```xml
+<!-- Windows targets define IS_WINDOWS -->
+<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+  <DefineConstants>IS_WINDOWS</DefineConstants>
+</PropertyGroup>
+
+<PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
+  <DefineConstants>IS_WINDOWS;IS_FRAMEWORK</DefineConstants>
+</PropertyGroup>
+```
+
+## Related Documentation
+
+- [SCAN_SYSTEM_WINDOWS_TYPES.md](./SCAN_SYSTEM_WINDOWS_TYPES.md) - Detailed scan of types that may need implementation
+- [PLAN_FIX_MATRIX3D_ROTATION.md](./PLAN_FIX_MATRIX3D_ROTATION.md) - Matrix3D rotation implementation details
+
+## Summary
+
+- **Purpose:** Provide `System.Windows.*` types for non-Windows targets
+- **Compilation:** Only compiled when `!IS_WINDOWS` (i.e., `net8.0`, `net8.0-wasm`)
+- **Namespace:** Must match Windows exactly (`System.Windows.*`)
+- **API:** Must match Windows API exactly
+- **Tests:** Use `extern alias NodeNet` to reference Node.Net's types explicitly

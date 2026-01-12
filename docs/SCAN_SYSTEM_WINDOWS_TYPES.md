@@ -223,3 +223,6 @@ All implementations should follow the same pattern as Point/Vector/Point3D/Vecto
 - Create comprehensive tests in `Node.Net.Test/System/Windows/...`
 - Remove conditional compilation from extension methods that use these types
 
+## Related Documentation
+
+For detailed information about System namespace rules, conditional compilation, and how to use these types in tests, see **[SYSTEM_NAMESPACE_RULES.md](./SYSTEM_NAMESPACE_RULES.md)**.

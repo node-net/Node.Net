@@ -1,10 +1,11 @@
+extern alias NodeNet;
 using NUnit.Framework;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Node.Net.Diagnostic.Generic;
-using Node.Net.Service.User;
+using NodeNet::Node.Net.Diagnostic.Generic;
+using NodeNet::Node.Net.Service.User;
 
 namespace Node.Net.Service.User;
 

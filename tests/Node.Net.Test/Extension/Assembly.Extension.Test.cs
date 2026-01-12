@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿extern alias NodeNet;
+using NUnit.Framework;
+using NodeNet::Node.Net; // Extension methods are in Node.Net namespace
 
 namespace Node.Net.Test
 {

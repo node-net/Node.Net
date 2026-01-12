@@ -1,8 +1,9 @@
+extern alias NodeNet;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Node.Net;
+using NodeNet::Node.Net;
 
 namespace Node.Net.Test
 {

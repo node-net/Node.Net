@@ -1,7 +1,8 @@
+extern alias NodeNet;
 using System;
 using NUnit.Framework;
-using System.Windows;
-using System.Windows.Media.Media3D;
+using NodeNet::System.Windows; // For Point type
+using NodeNet::System.Windows.Media.Media3D;
 
 namespace Node.Net.Test
 {

@@ -1,5 +1,6 @@
+extern alias NodeNet;
 using NUnit.Framework;
-using System.Windows;
+using NodeNet::System.Windows;
 using static System.Math;
 
 namespace Node.Net.Test

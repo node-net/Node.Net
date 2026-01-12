@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿extern alias NodeNet;
+using NUnit.Framework;
+using NodeNet::Node.Net.JsonRPC;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -59,7 +61,7 @@ namespace Node.Net.JsonRPC
 #pragma warning disable RCS1163 // Unused parameter.
                 ServicePointManager.ServerCertificateValidationCallback = ((sender, certificate, chain, sslPolicyErrors) => true);
 #pragma warning restore RCS1163 // Unused parameter.
-                int port = Service.WebServer.GetNextAvailablePort(5000);
+                int port = NodeNet::Node.Net.Service.WebServer.GetNextAvailablePort(5000);
                 HttpListener listener = new HttpListener();
                 string uri = $"https://{Environment.MachineName}:{port}/";
                 listener.Prefixes.Add(uri);

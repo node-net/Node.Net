@@ -1,3 +1,4 @@
+#if !IS_WINDOWS
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,6 @@ using System.Collections.ObjectModel;
 
 namespace System.Windows
 {
-#if !IS_WINDOWS
     /// <summary>
     /// Provides a dictionary that contains resources used by components and other elements of a WPF application.
     /// </summary>
@@ -249,6 +249,6 @@ namespace System.Windows
             Remove(key);
         }
     }
-#endif
 }
+#endif
 

@@ -1,8 +1,8 @@
 using System.Windows.Media;
 
+#if !IS_WINDOWS
 namespace System.Windows.Media.Media3D
 {
-#if !IS_WINDOWS
     /// <summary>
     /// Allows the application of a Brush to a 3-D model with specular lighting calculations.
     /// </summary>
@@ -56,6 +56,6 @@ namespace System.Windows.Media.Media3D
             _specularPower = specularPower;
         }
     }
-#endif
 }
+#endif
 

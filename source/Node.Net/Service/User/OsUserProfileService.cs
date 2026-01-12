@@ -6,6 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 #if !IS_FRAMEWORK && IS_WINDOWS
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.System.UserProfile;
+using System.Runtime.InteropServices.WindowsRuntime;
 #endif
 
 namespace Node.Net.Service.User;
@@ -269,25 +272,10 @@ public class OsUserProfileService
     {
         try
         {
-            // Use reflection to access WinRT APIs (works without explicit package references)
-            // Try multiple type name formats for better compatibility
-            var userInformationType = Type.GetType("Windows.System.UserProfile.UserInformation, Windows, ContentType=WindowsRuntime") 
-                ?? Type.GetType("Windows.System.UserProfile.UserInformation, Windows.System.UserProfile")
-                ?? Type.GetType("Windows.System.UserProfile.UserInformation");
-            
-            if (userInformationType == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ WinRT UserInformation type not available (Windows Runtime not accessible)");
-                diagnosticInfo.AppendLine("   Note: WinRT APIs require Windows 10/11 and proper runtime support");
-                diagnosticInfo.AppendLine("   Attempted type names:");
-                diagnosticInfo.AppendLine("     - Windows.System.UserProfile.UserInformation, Windows, ContentType=WindowsRuntime");
-                diagnosticInfo.AppendLine("     - Windows.System.UserProfile.UserInformation, Windows.System.UserProfile");
-                diagnosticInfo.AppendLine("     - Windows.System.UserProfile.UserInformation");
-                return null;
-            }
-
-            // Check if account picture is available
-            var isAvailableProperty = userInformationType.GetProperty("IsAccountPictureAvailable");
+#if !IS_FRAMEWORK && IS_WINDOWS
+            // Use direct WinRT API access (canonical production-grade approach)
+            // Check if account picture is available (this is a static property)
+            var isAvailableProperty = typeof(UserInformation).GetProperty("IsAccountPictureAvailable", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
             if (isAvailableProperty == null)
             {
                 diagnosticInfo.AppendLine("   ⚠️ IsAccountPictureAvailable property not found");
@@ -303,130 +291,63 @@ public class OsUserProfileService
 
             diagnosticInfo.AppendLine("   ✅ Account picture is available");
 
-            // Get AccountPictureKind enum
-            var accountPictureKindType = Type.GetType("Windows.System.UserProfile.AccountPictureKind, Windows, ContentType=WindowsRuntime");
-            if (accountPictureKindType == null)
+            // Get the account picture (get large image for best quality)
+            // Note: In some SDK versions, GetAccountPicture may return IStorageFile directly
+            // Try async first, fall back to direct if needed
+            IStorageFile storageFileInterface = null;
+            try
             {
-                diagnosticInfo.AppendLine("   ⚠️ AccountPictureKind type not found");
-                return null;
+                // Try as async operation
+                var asyncOp = UserInformation.GetAccountPicture(AccountPictureKind.LargeImage);
+                if (asyncOp is Windows.Foundation.IAsyncOperation<IStorageFile> asyncOperation)
+                {
+                    storageFileInterface = asyncOperation.AsTask().GetAwaiter().GetResult();
+                }
+                else
+                {
+                    // Direct return
+                    storageFileInterface = asyncOp as IStorageFile;
+                }
             }
-
-            var largeImageValue = Enum.Parse(accountPictureKindType, "LargeImage");
-
-            // Call GetAccountPicture (async method)
-            var getAccountPictureMethod = userInformationType.GetMethod("GetAccountPicture", new[] { accountPictureKindType });
-            if (getAccountPictureMethod == null)
+            catch
             {
-                diagnosticInfo.AppendLine("   ⚠️ GetAccountPicture method not found");
-                return null;
+                // Fallback: try direct call
+                storageFileInterface = UserInformation.GetAccountPicture(AccountPictureKind.LargeImage) as IStorageFile;
             }
-
-            var task = getAccountPictureMethod.Invoke(null, new[] { largeImageValue });
-            if (task == null)
+            
+            if (storageFileInterface == null)
             {
                 diagnosticInfo.AppendLine("   ⚠️ GetAccountPicture returned null");
                 return null;
             }
-
-            // Get result from Task<StorageFile>
-            var taskType = task.GetType();
-            var getAwaiterMethod = taskType.GetMethod("GetAwaiter");
-            if (getAwaiterMethod == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ Task.GetAwaiter method not found");
-                return null;
-            }
-
-            var awaiter = getAwaiterMethod.Invoke(task, null);
-            if (awaiter == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ GetAwaiter returned null");
-                return null;
-            }
-
-            var getResultMethod = awaiter.GetType().GetMethod("GetResult");
-            if (getResultMethod == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ GetResult method not found");
-                return null;
-            }
-
-            var storageFile = getResultMethod.Invoke(awaiter, null);
+            
+            var storageFile = storageFileInterface as StorageFile;
             if (storageFile == null)
             {
                 diagnosticInfo.AppendLine("   ⚠️ GetAccountPicture returned null StorageFile");
                 return null;
             }
 
-            var storageFileType = storageFile.GetType();
-
-            // Try to get file path first
-            var pathProperty = storageFileType.GetProperty("Path");
-            if (pathProperty != null)
+            // Try to get file path first (may be available for some account types)
+            var filePath = storageFile.Path;
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                var filePath = pathProperty.GetValue(storageFile) as string;
-                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-                {
-                    diagnosticInfo.AppendLine($"   ✅ Retrieved profile picture via WinRT: {filePath}");
-                    result.FoundPaths.Add(filePath);
-                    return filePath;
-                }
+                diagnosticInfo.AppendLine($"   ✅ Retrieved profile picture via WinRT: {filePath}");
+                result.FoundPaths.Add(filePath);
+                return filePath;
             }
 
-            // Read file content if path not available
+            // Read file content from StorageFile (works for all account types including AAD/domain)
             diagnosticInfo.AppendLine("   Reading file content from WinRT StorageFile...");
-            var openReadAsyncMethod = storageFileType.GetMethod("OpenReadAsync");
-            if (openReadAsyncMethod == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ OpenReadAsync method not found");
-                return null;
-            }
-
-            var readTask = openReadAsyncMethod.Invoke(storageFile, null);
-            if (readTask == null)
+            var streamAsyncOperation = storageFile.OpenReadAsync();
+            var stream = streamAsyncOperation.AsTask().GetAwaiter().GetResult();
+            if (stream == null)
             {
                 diagnosticInfo.AppendLine("   ⚠️ OpenReadAsync returned null");
                 return null;
             }
 
-            var readTaskType = readTask.GetType();
-            var readAwaiter = readTaskType.GetMethod("GetAwaiter")?.Invoke(readTask, null);
-            if (readAwaiter == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ Read task GetAwaiter returned null");
-                return null;
-            }
-
-            var readResult = readAwaiter.GetType().GetMethod("GetResult")?.Invoke(readAwaiter, null);
-            if (readResult == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ Read stream is null");
-                return null;
-            }
-
-            // Convert IRandomAccessStream to .NET Stream
-            var streamExtensionsType = Type.GetType("System.IO.WindowsRuntimeStreamExtensions, System.Runtime.WindowsRuntime");
-            if (streamExtensionsType == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ WindowsRuntimeStreamExtensions type not found");
-                return null;
-            }
-
-            var asStreamForReadMethod = streamExtensionsType.GetMethod("AsStreamForRead", new[] { readResult.GetType() });
-            if (asStreamForReadMethod == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ AsStreamForRead method not found");
-                return null;
-            }
-
-            var netStream = asStreamForReadMethod.Invoke(null, new[] { readResult }) as Stream;
-            if (netStream == null)
-            {
-                diagnosticInfo.AppendLine("   ⚠️ Failed to convert to .NET Stream");
-                return null;
-            }
-
-            using (netStream)
+            using (var netStream = stream.AsStreamForRead())
             {
                 using var ms = new MemoryStream();
                 netStream.CopyTo(ms);
@@ -440,11 +361,19 @@ public class OsUserProfileService
                 result.FoundPaths.Add(tempFile);
                 return tempFile;
             }
+#else
+            // Fallback for .NET Framework - WinRT APIs not available
+            diagnosticInfo.AppendLine("   ⚠️ WinRT APIs not available on .NET Framework");
+            return null;
+#endif
         }
         catch (Exception ex)
         {
             diagnosticInfo.AppendLine($"   ❌ WinRT API exception: {ex.GetType().Name}: {ex.Message}");
-            diagnosticInfo.AppendLine($"   Stack trace: {ex.StackTrace}");
+            if (ex.InnerException != null)
+            {
+                diagnosticInfo.AppendLine($"   Inner exception: {ex.InnerException.GetType().Name}: {ex.InnerException.Message}");
+            }
             return null;
         }
     }

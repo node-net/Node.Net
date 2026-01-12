@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 
+#if !IS_WINDOWS
 namespace System.Windows.Media.Media3D
 {
-#if !IS_WINDOWS
     /// <summary>
     /// Represents a 3-D mesh geometry.
     /// </summary>
@@ -117,6 +117,6 @@ namespace System.Windows.Media.Media3D
     public class PointCollection : Collection<Point>
     {
     }
-#endif
 }
+#endif
 
