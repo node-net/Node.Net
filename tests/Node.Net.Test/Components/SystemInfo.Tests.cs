@@ -38,17 +38,17 @@ internal class SystemInfoTests : TestHarness
         Assert.That(cut.Markup, Is.Not.Empty);
         
         // Generate image from rendered HTML
-        var artifactFile = GetArtifactFileInfo("SystemInfo.png");
+        var artifactFile = GetArtifactFileInfo("SystemInfo.jpeg");
         await GenerateComponentImage(cut.Markup, artifactFile.FullName);
         
-        // Verify artifact was created (either PNG image or TXT placeholder)
-        var pngExists = File.Exists(artifactFile.FullName);
+        // Verify artifact was created (either JPEG image or TXT placeholder)
+        var jpegExists = File.Exists(artifactFile.FullName);
         var txtFile = GetArtifactFileInfo("SystemInfo.txt");
         var txtExists = File.Exists(txtFile.FullName);
         
-        Assert.That(pngExists || txtExists, Is.True, $"Artifact should be created at {artifactFile.FullName} or {txtFile.FullName}");
+        Assert.That(jpegExists || txtExists, Is.True, $"Artifact should be created at {artifactFile.FullName} or {txtFile.FullName}");
         
-        if (pngExists)
+        if (jpegExists)
         {
             Assert.That(new FileInfo(artifactFile.FullName).Length, Is.GreaterThan(0), "Image file should not be empty");
         }
@@ -100,11 +100,13 @@ internal class SystemInfoTests : TestHarness
             // Wait for content to render
             await page.WaitForTimeoutAsync(500);
             
-            // Take screenshot
+            // Take screenshot as JPEG
             await page.ScreenshotAsync(new PageScreenshotOptions
             {
                 Path = outputPath,
-                FullPage = true
+                FullPage = true,
+                Type = ScreenshotType.Jpeg,
+                Quality = 90
             });
         }
         catch (PlaywrightException ex) when (ex.Message.Contains("Executable doesn't exist"))
@@ -115,7 +117,7 @@ pwsh -Command ""playwright install chromium""
 
 Original HTML:
 {html}";
-            var txtPath = outputPath.Replace(".png", ".txt");
+            var txtPath = outputPath.Replace(".jpeg", ".txt");
             await File.WriteAllTextAsync(txtPath, placeholderText);
             Assert.Warn("Playwright browsers not installed. Install with: playwright install chromium");
         }
