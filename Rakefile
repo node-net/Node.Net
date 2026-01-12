@@ -37,8 +37,8 @@ task :build => [:env] do
     # Build only compatible targets (Mac/Linux)
     run("dotnet restore source/Node.Net/Node.Net.csproj #{targets}")
     run("dotnet build source/Node.Net/Node.Net.csproj --configuration Release #{targets}")
-    run("dotnet restore source/Node.Net.Test/Node.Net.Test.csproj #{targets}")
-    run("dotnet build source/Node.Net.Test/Node.Net.Test.csproj --configuration Release #{targets}")
+    run("dotnet restore tests/Node.Net.Test/Node.Net.Test.csproj #{targets}")
+    run("dotnet build tests/Node.Net.Test/Node.Net.Test.csproj --configuration Release #{targets}")
   end
 end
 
@@ -47,10 +47,10 @@ task :test => [:build] do
   targets = compatible_targets
   if targets.empty?
     # Test all targets (Windows)
-    run("dotnet test source/Node.Net.Test/Node.Net.Test.csproj -c Release")
+    run("dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release")
   else
     # Test only compatible targets (Mac/Linux)
-    run("dotnet test source/Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}")
+    run("dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}")
   end
 end
 
@@ -72,10 +72,10 @@ task :tag => [:test] do
   end
 end
 
-desc "run the examples/AspNet.Host project"
+desc "run the examples/Node.Net.AspNet.Host project"
 task :run => [:test] do
   start_task :run
-  sh "dotnet run --project examples/AspNet.Host/AspNet.Host.csproj"
+  sh "dotnet run --project examples/Node.Net.AspNet.Host/Node.Net.AspNet.Host.csproj"
 end
 
 task :publish => [:tag] do

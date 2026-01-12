@@ -1,4 +1,4 @@
-using AspNet.Host.Components;
+using Node.Net.AspNet.Host.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
