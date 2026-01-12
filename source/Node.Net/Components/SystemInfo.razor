@@ -1,0 +1,112 @@
+@namespace Node.Net.Components
+@using System.Runtime.InteropServices
+@using System.Linq
+@using Microsoft.FluentUI.AspNetCore.Components
+@using Icons = Microsoft.FluentUI.AspNetCore.Components.Icons
+@using Node.Net.Service.User
+
+@* 
+    SystemInfo Component
+    
+    A reusable Razor component that displays system information including:
+    - User Name
+    - Machine Name
+    - Operating System
+    - Domain
+    
+    The component optionally displays a profile picture, with fallback to a default icon.
+    
+    @param ProfilePictureUrl Optional URL or path to user profile picture
+*@
+
+<FluentCard Style="padding: 1rem;">
+    <FluentStack Orientation="Orientation.Vertical" Gap="1rem">
+        <h3>System Information</h3>
+        
+        <FluentStack Orientation="Orientation.Horizontal" Wrap="true" Gap="1.5rem">
+            @* Profile Picture Section *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                @if (string.IsNullOrEmpty(EffectiveProfilePictureUrl) || _imageError)
+                {
+                    <FluentIcon Value="@(new Icons.Regular.Size24.PersonCircle())" Size="@IconSize.Size24" />
+                }
+                else
+                {
+                    <img src="@EffectiveProfilePictureUrl" 
+                         alt="Profile Picture" 
+                         style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;"
+                         @onerror="OnImageError" />
+                }
+            </FluentStack>
+            
+            @* System Information Fields *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>User Name:</strong> @UserName</div>
+            </FluentStack>
+            
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Machine:</strong> @MachineName</div>
+            </FluentStack>
+            
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>OS:</strong> @OperatingSystem</div>
+            </FluentStack>
+            
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Domain:</strong> @Domain</div>
+            </FluentStack>
+        </FluentStack>
+    </FluentStack>
+</FluentCard>
+
+@code {
+    /// <summary>
+    /// Optional URL or path to user profile picture.
+    /// If not provided, the component will attempt to automatically detect the OS user profile picture
+    /// (Windows, macOS, or Linux) using the OsUserProfileService.
+    /// If detection fails or image fails to load, a default person icon will be displayed.
+    /// </summary>
+    [Parameter]
+    public string? ProfilePictureUrl { get; set; }
+    
+    private bool _imageError = false;
+    
+    private void OnImageError()
+    {
+        _imageError = true;
+    }
+    
+    private readonly OsUserProfileService _profileService = new();
+    
+    /// <summary>
+    /// Gets the profile picture URL, automatically detecting OS user profile picture if not explicitly provided.
+    /// Note: Automatic detection only works in Blazor Server, not in Blazor WebAssembly due to browser security restrictions.
+    /// </summary>
+    private string? EffectiveProfilePictureUrl
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(ProfilePictureUrl))
+            {
+                return ProfilePictureUrl;
+            }
+            
+            // Get profile picture (use simple method for production, diagnostics available via GetUserProfilePictureWithDiagnostics if needed)
+            return _profileService.GetUserProfilePicture();
+        }
+    }
+    
+    private string UserName => string.IsNullOrEmpty(Environment.UserName) 
+        ? "Not available" 
+        : Environment.UserName;
+    
+    private string MachineName => string.IsNullOrEmpty(Environment.MachineName) 
+        ? "Not available" 
+        : Environment.MachineName;
+    
+    private string OperatingSystem => RuntimeInformation.OSDescription;
+    
+    private string Domain => string.IsNullOrEmpty(Environment.UserDomainName) 
+        ? "Not available" 
+        : Environment.UserDomainName;
+}

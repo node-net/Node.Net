@@ -1,0 +1,29 @@
+# Node.Net Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2026-01-12
+
+## Active Technologies
+
+- C# (.NET SDK, Latest language version) + Microsoft.FluentUI.AspNetCore.Components 4.13.2, Microsoft.FluentUI.AspNetCore.Components.Icons 4.13.2 (001-systeminfo-component)
+
+## Project Structure
+
+```text
+src/
+tests/
+```
+
+## Commands
+
+# Add commands for C# (.NET SDK, Latest language version)
+
+## Code Style
+
+C# (.NET SDK, Latest language version): Follow standard conventions
+
+## Recent Changes
+
+- 001-systeminfo-component: Added C# (.NET SDK, Latest language version) + Microsoft.FluentUI.AspNetCore.Components 4.13.2, Microsoft.FluentUI.AspNetCore.Components.Icons 4.13.2
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->
