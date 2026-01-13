@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Node.Net.Service.User;
 
@@ -45,17 +46,42 @@ public class SystemUser : ISystemUser
                 if (imageBytes != null && imageBytes.Length > 0)
                 {
                     // Resize image to specified dimensions
-                    return ResizeImage(imageBytes, width, height);
+                    var resized = ResizeImage(imageBytes, width, height);
+                    if (resized != null && resized.Length > 0)
+                    {
+                        return resized;
+                    }
                 }
             }
 
             // If profile picture is not available, return anonymous profile picture
-            return GenerateAnonymousProfilePicture(width, height);
+            var anonymous = GenerateAnonymousProfilePicture(width, height);
+            if (anonymous != null && anonymous.Length > 0)
+            {
+                return anonymous;
+            }
+            
+            // Ultimate fallback: minimal JPEG
+            return GenerateMinimalJpeg(width, height);
         }
         catch
         {
-            // On failure, return anonymous profile picture as fallback
-            return GenerateAnonymousProfilePicture(width, height);
+            // On failure, try to return anonymous profile picture as fallback
+            try
+            {
+                var anonymous = GenerateAnonymousProfilePicture(width, height);
+                if (anonymous != null && anonymous.Length > 0)
+                {
+                    return anonymous;
+                }
+            }
+            catch
+            {
+                // If anonymous generation also fails, continue to minimal JPEG
+            }
+            
+            // Ultimate fallback: minimal JPEG (always succeeds)
+            return GenerateMinimalJpeg(width, height);
         }
     }
 
@@ -130,6 +156,18 @@ public class SystemUser : ISystemUser
             return null;
         }
 
+        // On macOS, System.Drawing.Common is not available in .NET 8.0
+        // Return original bytes if they're already JPEG, otherwise return null to trigger fallback
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            // Check if it's already a JPEG (starts with FF D8)
+            if (imageBytes.Length >= 2 && imageBytes[0] == 0xFF && imageBytes[1] == 0xD8)
+            {
+                return imageBytes; // Return original JPEG without resizing
+            }
+            return null; // Not a JPEG, trigger fallback to anonymous picture
+        }
+
         try
         {
 #pragma warning disable CA1416 // System.Drawing.Common is cross-platform, analyzer warning is false positive
@@ -174,6 +212,10 @@ public class SystemUser : ISystemUser
         try
         {
 #pragma warning disable CA1416 // System.Drawing.Common is cross-platform, analyzer warning is false positive
+            // Ensure minimum dimensions
+            width = Math.Max(1, width);
+            height = Math.Max(1, height);
+            
             using var bitmap = new Bitmap(width, height);
             using var graphics = Graphics.FromImage(bitmap);
 
@@ -229,9 +271,11 @@ public class SystemUser : ISystemUser
             return memoryStream.ToArray();
 #pragma warning restore CA1416
         }
-        catch
+        catch (Exception ex)
         {
             // If generation fails, return a minimal valid JPEG (1x1 pixel)
+            // Log the exception for debugging but don't fail
+            System.Diagnostics.Debug.WriteLine($"Failed to generate anonymous profile picture: {ex.Message}");
             return GenerateMinimalJpeg(width, height);
         }
     }
@@ -270,7 +314,8 @@ public class SystemUser : ISystemUser
         }
         catch
         {
-            // Ultimate fallback: return a minimal JPEG header (this should never happen)
+            // Ultimate fallback: return a minimal valid JPEG (SOI + EOI markers)
+            // This is a valid but empty JPEG that will display as a single pixel
             return new byte[] { 0xFF, 0xD8, 0xFF, 0xD9 };
         }
     }

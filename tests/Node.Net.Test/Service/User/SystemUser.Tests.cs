@@ -75,6 +75,12 @@ internal class SystemUserTests : TestHarness<SystemUser>
     [Test]
     public void GetProfilePicture_MaintainsAspectRatio()
     {
+        // Skip on macOS where System.Drawing.Common is not available in .NET 8.0
+        if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
+        {
+            Assert.Ignore("System.Drawing.Common is not available on macOS in .NET 8.0");
+        }
+        
         // Arrange
         var systemUser = new SystemUser();
         int targetWidth = 256;
@@ -204,19 +210,23 @@ internal class SystemUserTests : TestHarness<SystemUser>
             Assert.That(endsWithEOI, Is.True, "JPEG file should end with EOI marker (0xFF 0xD9)");
             
             // Additional validation: Try to load as System.Drawing.Image to ensure it's a valid image
-            try
+            // Skip on macOS where System.Drawing.Common is not available in .NET 8.0
+            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
             {
-                using var imageStream = new MemoryStream(fileBytes);
+                try
+                {
+                    using var imageStream = new MemoryStream(fileBytes);
 #pragma warning disable CA1416 // System.Drawing.Common is cross-platform, analyzer warning is false positive
-                using var image = System.Drawing.Image.FromStream(imageStream);
-                Assert.That(image.Width, Is.GreaterThan(0), "JPEG image should have valid width");
-                Assert.That(image.Height, Is.GreaterThan(0), "JPEG image should have valid height");
-                Assert.That(image.RawFormat, Is.EqualTo(System.Drawing.Imaging.ImageFormat.Jpeg), "Image format should be JPEG");
+                    using var image = System.Drawing.Image.FromStream(imageStream);
+                    Assert.That(image.Width, Is.GreaterThan(0), "JPEG image should have valid width");
+                    Assert.That(image.Height, Is.GreaterThan(0), "JPEG image should have valid height");
+                    Assert.That(image.RawFormat, Is.EqualTo(System.Drawing.Imaging.ImageFormat.Jpeg), "Image format should be JPEG");
 #pragma warning restore CA1416
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"JPEG file failed to load as System.Drawing.Image: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($"JPEG file failed to load as System.Drawing.Image: {ex.Message}");
+                }
             }
         }
     }
