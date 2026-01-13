@@ -1,5 +1,6 @@
-VERSION = "2.0.10"
+VERSION = "2.0.11"
 require "raykit"
+require "makit"
 
 # Detect platform for cross-platform builds
 def is_windows?
