@@ -2,15 +2,9 @@ VERSION = "2.0.11"
 require "raykit"
 require "makit"
 
-task :default => [:integrate, :publish, :pull_incoming, :sync] do
-  #if (!PROJECT.read_only?)
-  #  run("git pull")
-  # end
-  puts "completed in #{PROJECT.elapsed}"
-end
+task :default => [:integrate, :publish, :pull_incoming, :sync] 
 
 task :build do
-  start_task :build
   try "rufo ."
   #Raykit::Version::set_version_in_glob("**/*.csproj", VERSION)
   Makit::Version::set_version_in_files("**/*.csproj", VERSION)
@@ -22,15 +16,14 @@ task :build do
     sh "dotnet build #{PROJECT.name}.sln --configuration Release"
   else
     # Build only compatible targets (Mac/Linux)
-    run("dotnet restore source/Node.Net/Node.Net.csproj #{targets}")
-    run("dotnet build source/Node.Net/Node.Net.csproj --configuration Release #{targets}")
-    run("dotnet restore tests/Node.Net.Test/Node.Net.Test.csproj #{targets}")
-    run("dotnet build tests/Node.Net.Test/Node.Net.Test.csproj --configuration Release #{targets}")
+    sh "dotnet restore source/Node.Net/Node.Net.csproj #{targets}"
+    sh "dotnet build source/Node.Net/Node.Net.csproj --configuration Release #{targets}"
+    sh "dotnet restore tests/Node.Net.Test/Node.Net.Test.csproj #{targets}"
+    sh "dotnet build tests/Node.Net.Test/Node.Net.Test.csproj --configuration Release #{targets}"
   end
 end
 
 task :test => [:build] do
-  start_task :test
   targets = compatible_targets
   if targets.empty?
     # Test all targets (Windows)
