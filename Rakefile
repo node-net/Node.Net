@@ -2,6 +2,13 @@ VERSION = "2.0.11"
 require "raykit"
 require "makit"
 
+task :default => [:integrate, :publish, :pull_incoming, :sync] do
+  #if (!PROJECT.read_only?)
+  #  run("git pull")
+  # end
+  puts "completed in #{PROJECT.elapsed}"
+end
+
 task :build do
   start_task :build
   try "rufo ."
@@ -74,9 +81,6 @@ task :publish => [:tag] do
     puts "CI_SERVER, skipping publish command"
   end
 end
-
-
-
 
 # Detect platform for cross-platform builds
 def is_windows?
