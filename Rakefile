@@ -18,8 +18,8 @@ task :build do
   targets = compatible_targets
   if targets.empty?
     # Build all targets (Windows)
-    run("dotnet restore #{PROJECT.name}.sln")
-    run("dotnet build #{PROJECT.name}.sln --configuration Release")
+    sh "dotnet restore #{PROJECT.name}.sln"
+    sh "dotnet build #{PROJECT.name}.sln --configuration Release"
   else
     # Build only compatible targets (Mac/Linux)
     run("dotnet restore source/Node.Net/Node.Net.csproj #{targets}")
