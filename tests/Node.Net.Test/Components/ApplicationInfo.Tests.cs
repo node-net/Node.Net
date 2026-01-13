@@ -29,6 +29,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -49,6 +51,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -67,6 +71,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -85,6 +91,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -103,6 +111,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -121,6 +131,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -139,6 +151,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -160,6 +174,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -171,19 +187,24 @@ internal class ApplicationInfoTests : TestHarness
         // Verify component uses IApplication service
         // The component should display values from Application service
         var application = new NodeNet::Node.Net.Service.Application.Application();
-        var expectedName = application.GetName();
-        var expectedCompany = application.GetCompany();
+        var appInfo = application.GetApplicationInfo();
         
         // Component should display these values (or fallback if empty)
-        if (!string.IsNullOrEmpty(expectedName))
+        if (!string.IsNullOrEmpty(appInfo.Name))
         {
-            Assert.That(cut.Markup, Does.Contain(expectedName), "Component should display application name from service");
+            Assert.That(cut.Markup, Does.Contain(appInfo.Name), "Component should display application name from service");
         }
         
-        if (!string.IsNullOrEmpty(expectedCompany))
+        if (!string.IsNullOrEmpty(appInfo.Company))
         {
-            Assert.That(cut.Markup, Does.Contain(expectedCompany), "Component should display company name from service");
+            Assert.That(cut.Markup, Does.Contain(appInfo.Company), "Component should display company name from service");
         }
+        
+        // Verify new properties are displayed
+        Assert.That(cut.Markup, Does.Contain("User:"), "Component should display user label");
+        Assert.That(cut.Markup, Does.Contain("Domain:"), "Component should display domain label");
+        Assert.That(cut.Markup, Does.Contain("Operating System:"), "Component should display operating system label");
+        Assert.That(cut.Markup, Does.Contain("Machine:"), "Component should display machine label");
     }
 
     [Test]
@@ -194,6 +215,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -229,6 +252,8 @@ internal class ApplicationInfoTests : TestHarness
         // Arrange
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
+        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
+            new NodeNet::Node.Net.Service.Application.Application());
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         
         // Act

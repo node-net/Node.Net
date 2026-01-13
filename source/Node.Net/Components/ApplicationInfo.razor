@@ -1,6 +1,7 @@
 @namespace Node.Net.Components
 @using Microsoft.FluentUI.AspNetCore.Components
 @using Node.Net.Service.Application
+@inject IApplication ApplicationService
 
 @* 
     ApplicationInfo Component
@@ -13,7 +14,7 @@
     - Executing Assembly Filename
     - Version
     
-    The component uses the IApplication service to retrieve application metadata.
+    The component retrieves this information from the IApplication service.
     If metadata is missing, appropriate fallback text is displayed.
 *@
 
@@ -24,151 +25,73 @@
         <FluentStack Orientation="Orientation.Horizontal" Wrap="true" Gap="1.5rem">
             @* Application Name *@
             <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
-                <div><strong>Application:</strong> @ApplicationName</div>
+                <div><strong>Application:</strong> @(_applicationInfo?.Name ?? "Not available")</div>
             </FluentStack>
             
             @* Company Name *@
             <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
-                <div><strong>Company:</strong> @CompanyName</div>
+                <div><strong>Company:</strong> @(_applicationInfo?.Company ?? "Not available")</div>
             </FluentStack>
             
             @* Application Data Directory *@
             <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
-                <div><strong>Data Directory:</strong> @DataDirectory</div>
+                <div><strong>Data Directory:</strong> @((_applicationInfo?.DataDirectory == string.Empty || _applicationInfo?.DataDirectory == null) ? "Not available" : _applicationInfo.DataDirectory)</div>
             </FluentStack>
             
             @* Target Framework *@
             <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
-                <div><strong>Target Framework:</strong> @TargetFramework</div>
+                <div><strong>Target Framework:</strong> @((_applicationInfo?.TargetFramework == "unknown" || _applicationInfo?.TargetFramework == null) ? "Not available" : _applicationInfo.TargetFramework)</div>
             </FluentStack>
             
             @* Executing Assembly Filename *@
             <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
-                <div><strong>Executing Assembly:</strong> @ExecutingAssemblyFilename</div>
+                <div><strong>Executing Assembly:</strong> @((_applicationInfo?.ExecutingAssemblyFilename == string.Empty || _applicationInfo?.ExecutingAssemblyFilename == null) ? "Not available" : _applicationInfo.ExecutingAssemblyFilename)</div>
             </FluentStack>
             
             @* Version *@
             <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
-                <div><strong>Version:</strong> @Version</div>
+                <div><strong>Version:</strong> @((_applicationInfo?.Version == string.Empty || _applicationInfo?.Version == null) ? "Not available" : _applicationInfo.Version)</div>
+            </FluentStack>
+            
+            @* User *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>User:</strong> @((_applicationInfo?.User == string.Empty || _applicationInfo?.User == null) ? "Not available" : _applicationInfo.User)</div>
+            </FluentStack>
+            
+            @* Domain *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Domain:</strong> @((_applicationInfo?.Domain == string.Empty || _applicationInfo?.Domain == null) ? "Not available" : _applicationInfo.Domain)</div>
+            </FluentStack>
+            
+            @* Operating System *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Operating System:</strong> @((_applicationInfo?.OperatingSystem == string.Empty || _applicationInfo?.OperatingSystem == null) ? "Not available" : _applicationInfo.OperatingSystem)</div>
+            </FluentStack>
+            
+            @* Machine *@
+            <FluentStack Orientation="Orientation.Vertical" Gap="0.5rem">
+                <div><strong>Machine:</strong> @((_applicationInfo?.Machine == string.Empty || _applicationInfo?.Machine == null) ? "Not available" : _applicationInfo.Machine)</div>
             </FluentStack>
         </FluentStack>
     </FluentStack>
 </FluentCard>
 
 @code {
-    private readonly IApplication _application = new Application();
+    private Node.Net.Service.Application.ApplicationInfo? _applicationInfo;
 
-    /// <summary>
-    /// Gets the application name, with fallback to "Unknown" if not available
-    /// </summary>
-    private string ApplicationName
+    protected override void OnInitialized()
     {
-        get
+        try
         {
-            try
-            {
-                var name = _application.GetName();
-                return string.IsNullOrEmpty(name) ? "Unknown" : name;
-            }
-            catch
-            {
-                return "Unknown";
-            }
+            _applicationInfo = ApplicationService.GetApplicationInfo();
         }
-    }
-
-    /// <summary>
-    /// Gets the company name, with fallback to "Not available" if not available
-    /// </summary>
-    private string CompanyName
-    {
-        get
+        catch (Exception ex)
         {
-            try
-            {
-                var company = _application.GetCompany();
-                return string.IsNullOrEmpty(company) ? "Not available" : company;
-            }
-            catch
-            {
-                return "Not available";
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets the application data directory path, with fallback to "Not available" if not available
-    /// </summary>
-    private string DataDirectory
-    {
-        get
-        {
-            try
-            {
-                var directory = _application.GetApplicationDataDirectory();
-                return directory?.FullName ?? "Not available";
-            }
-            catch
-            {
-                return "Not available";
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets the target framework moniker, with fallback to "unknown" if not available
-    /// </summary>
-    private string TargetFramework
-    {
-        get
-        {
-            try
-            {
-                var framework = _application.GetTargetFramework();
-                return string.IsNullOrEmpty(framework) ? "unknown" : framework;
-            }
-            catch
-            {
-                return "unknown";
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets the executing assembly filename, with fallback to "Not available" if not available
-    /// </summary>
-    private string ExecutingAssemblyFilename
-    {
-        get
-        {
-            try
-            {
-                var filename = _application.GetExecutingAssemblyFilename();
-                return string.IsNullOrEmpty(filename) ? "Not available" : filename;
-            }
-            catch
-            {
-                return "Not available";
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets the application version, with fallback to "Not available" if not available
-    /// </summary>
-    private string Version
-    {
-        get
-        {
-            try
-            {
-                var version = _application.GetVersion();
-                return string.IsNullOrEmpty(version) ? "Not available" : version;
-            }
-            catch
-            {
-                return "Not available";
-            }
+            Console.Error.WriteLine($"Error retrieving application info: {ex.Message}");
+            // Create fallback ApplicationInfo with "Not available" values
+            _applicationInfo = new Node.Net.Service.Application.ApplicationInfo(
+                "Not available", "Not available", "Not available", "Not available", "Not available", "Not available",
+                "Not available", "Not available", "Not available", "Not available");
         }
     }
 }
