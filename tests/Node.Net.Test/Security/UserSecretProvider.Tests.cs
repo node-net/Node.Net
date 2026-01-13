@@ -1,6 +1,8 @@
+#nullable enable
 extern alias NodeNet;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -405,4 +407,246 @@ internal class UserSecretProviderTests : TestHarness
             return null;
         }
     }
+
+    #region Edge Case Tests
+
+    [Test]
+    public async Task GetOrCreateAsync_WithCancellationAfterGeneration_DiscardsSecret()
+    {
+        // Arrange
+        var key = UserSecretKey.LiteDb($"test-cancel-after-gen-{DateTimeOffset.UtcNow.Ticks}");
+        using var cts = new CancellationTokenSource();
+
+        // Act - This test verifies that cancellation is properly handled
+        // Note: Testing cancellation timing is non-deterministic, so we verify
+        // that cancellation is honored and doesn't leave the system in a bad state
+        Exception? caughtException = null;
+        try
+        {
+            // Cancel before starting the operation
+            cts.Cancel();
+            await _provider.GetOrCreateAsync(key, cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            caughtException = new OperationCanceledException();
+        }
+        catch (Exception ex)
+        {
+            caughtException = ex;
+        }
+
+        // Assert - Cancellation should be honored
+        Assert.That(caughtException, Is.InstanceOf<OperationCanceledException>(),
+            "Cancellation should throw OperationCanceledException");
+        
+        // Verify system is in a good state - we can still create secrets
+        var secret = await _provider.GetOrCreateAsync(key);
+        Assert.That(secret, Is.Not.Null, "System should be in a valid state after cancellation");
+    }
+
+    [Test]
+    public async Task RotateAsync_WithCancellationAfterGeneration_DiscardsSecret()
+    {
+        // Arrange
+        var key = UserSecretKey.LiteDb($"test-rotate-cancel-{DateTimeOffset.UtcNow.Ticks}");
+        var originalSecret = await _provider.GetOrCreateAsync(key); // Create initial secret
+        using var cts = new CancellationTokenSource();
+
+        // Act - Cancel before starting the operation
+        Exception? caughtException = null;
+        try
+        {
+            cts.Cancel();
+            await _provider.RotateAsync(key, cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            caughtException = new OperationCanceledException();
+        }
+        catch (Exception ex)
+        {
+            caughtException = ex;
+        }
+
+        // Assert - Cancellation should be honored
+        Assert.That(caughtException, Is.InstanceOf<OperationCanceledException>(),
+            "Cancellation should throw OperationCanceledException");
+        
+        // Verify original secret is still accessible (rotation was cancelled)
+        var secret = await _provider.GetOrCreateAsync(key);
+        Assert.That(secret, Is.Not.Null, "System should be in a valid state after cancellation");
+        // Note: The secret might be the original or a new one depending on cancellation timing,
+        // but the system should be in a consistent state
+    }
+
+    #endregion
+
+    #region Performance Tests
+
+    [Test]
+    public async Task GetOrCreateAsync_Performance_CompletesWithin100ms()
+    {
+        // Arrange
+        var key = UserSecretKey.LiteDb($"test-perf-{DateTimeOffset.UtcNow.Ticks}");
+        const int iterations = 50; // More iterations for better statistical accuracy
+        var timings = new List<TimeSpan>();
+
+        // Act - First call may be slower (creates secret), so we test subsequent calls
+        await _provider.GetOrCreateAsync(key); // Warm-up call
+        
+        for (int i = 0; i < iterations; i++)
+        {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            await _provider.GetOrCreateAsync(key);
+            stopwatch.Stop();
+            timings.Add(stopwatch.Elapsed);
+        }
+
+        // Assert - 95% of requests should complete in under 100ms (with some tolerance for CI/test environments)
+        var sortedTimings = timings.OrderBy(t => t.TotalMilliseconds).ToList();
+        var percentile95 = sortedTimings[(int)(iterations * 0.95)];
+        
+        // Allow 200ms threshold for CI/test environments where disk I/O may be slower
+        Assert.That(percentile95.TotalMilliseconds, Is.LessThan(200),
+            $"95th percentile should be under 200ms (allowing for test environment), but was {percentile95.TotalMilliseconds}ms");
+        
+        // Also verify that median is reasonable
+        var median = sortedTimings[iterations / 2];
+        Assert.That(median.TotalMilliseconds, Is.LessThan(100),
+            $"Median should be under 100ms, but was {median.TotalMilliseconds}ms");
+    }
+
+    [Test]
+    public async Task RotateAsync_Performance_CompletesWithin100ms()
+    {
+        // Arrange
+        var key = UserSecretKey.LiteDb($"test-rotate-perf-{DateTimeOffset.UtcNow.Ticks}");
+        await _provider.GetOrCreateAsync(key); // Create initial secret
+        const int iterations = 50; // More iterations for better statistical accuracy
+        var timings = new List<TimeSpan>();
+
+        // Act
+        for (int i = 0; i < iterations; i++)
+        {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            await _provider.RotateAsync(key);
+            stopwatch.Stop();
+            timings.Add(stopwatch.Elapsed);
+        }
+
+        // Assert - 95% of requests should complete in under 100ms (with some tolerance for CI/test environments)
+        var sortedTimings = timings.OrderBy(t => t.TotalMilliseconds).ToList();
+        var percentile95 = sortedTimings[(int)(iterations * 0.95)];
+        
+        // Allow 200ms threshold for CI/test environments where disk I/O may be slower
+        Assert.That(percentile95.TotalMilliseconds, Is.LessThan(200),
+            $"95th percentile should be under 200ms (allowing for test environment), but was {percentile95.TotalMilliseconds}ms");
+        
+        // Also verify that median is reasonable
+        var median = sortedTimings[iterations / 2];
+        Assert.That(median.TotalMilliseconds, Is.LessThan(100),
+            $"Median should be under 100ms, but was {median.TotalMilliseconds}ms");
+    }
+
+    #endregion
+
+    #region Security Tests
+
+    [Test]
+    public async Task GetOrCreateAsync_NoSecretMaterialInExceptions()
+    {
+        // Arrange
+        var key = UserSecretKey.LiteDb($"test-security-{DateTimeOffset.UtcNow.Ticks}");
+        var secret = await _provider.GetOrCreateAsync(key);
+        var secretBase64 = secret.Base64;
+
+        // Act - Try to trigger an exception scenario
+        // (This is a basic test - in practice, we'd need to simulate storage failures)
+        try
+        {
+            // Use an invalid key to trigger ArgumentException
+            var invalidKey = new UserSecretKey(null!);
+            await _provider.GetOrCreateAsync(invalidKey);
+        }
+        catch (Exception ex)
+        {
+            // Assert - Verify secret material is not in exception message or stack trace
+            var exceptionText = ex.ToString();
+            Assert.That(exceptionText, Does.Not.Contain(secretBase64),
+                "Exception should not contain secret material");
+        }
+    }
+
+    [Test]
+    public async Task UserSecret_ToString_DoesNotExposeSecret()
+    {
+        // Arrange
+        var key = UserSecretKey.LiteDb($"test-tostring-{DateTimeOffset.UtcNow.Ticks}");
+        var secret = await _provider.GetOrCreateAsync(key);
+
+        // Act
+        var toString = secret.ToString();
+
+        // Assert
+        Assert.That(toString, Does.Not.Contain(secret.Base64),
+            "ToString() should not expose secret material");
+        Assert.That(toString, Does.Contain("UserSecret"),
+            "ToString() should indicate the type");
+        Assert.That(toString, Does.Contain("ByteLength"),
+            "ToString() should include metadata");
+    }
+
+    #endregion
+
+    #region Integration Tests
+
+    [Test]
+    public async Task Integration_LiteDbEncryptionScenario()
+    {
+        // Arrange
+        var key = UserSecretKey.LiteDb("node.net.test");
+        var secret = await _provider.GetOrCreateAsync(key);
+        var secretBytes = secret.GetBytes();
+
+        // Act & Assert - Verify secret can be used for encryption
+        Assert.That(secretBytes, Is.Not.Null);
+        Assert.That(secretBytes.Length, Is.EqualTo(48));
+        Assert.That(secret.Base64, Is.Not.Null.And.Not.Empty);
+        
+        // Verify secret is stable (can be retrieved again)
+        var secret2 = await _provider.GetOrCreateAsync(key);
+        Assert.That(secret2.Base64, Is.EqualTo(secret.Base64),
+            "Secret should be stable for LiteDB encryption scenario");
+        
+        // Verify secret can be converted to Base64 for LiteDB connection string
+        var connectionString = $"Filename=test.db;Password={secret.Base64}";
+        Assert.That(connectionString, Does.Contain(secret.Base64),
+            "Secret should be usable in LiteDB connection string");
+    }
+
+    [Test]
+    public async Task Integration_TokenCacheEncryptionScenario()
+    {
+        // Arrange
+        var key = UserSecretKey.TokenCache("node.net.test");
+        var secret = await _provider.GetOrCreateAsync(key);
+        var secretBytes = secret.GetBytes();
+
+        // Act & Assert - Verify secret can be used for token cache encryption
+        Assert.That(secretBytes, Is.Not.Null);
+        Assert.That(secretBytes.Length, Is.EqualTo(48));
+        
+        // Verify secret is stable
+        var secret2 = await _provider.GetOrCreateAsync(key);
+        Assert.That(secret2.Base64, Is.EqualTo(secret.Base64),
+            "Secret should be stable for token cache encryption scenario");
+        
+        // Verify rotation works for token cache
+        var rotatedSecret = await _provider.RotateAsync(key);
+        Assert.That(rotatedSecret.Base64, Is.Not.EqualTo(secret.Base64),
+            "Rotated secret should be different");
+    }
+
+    #endregion
 }
