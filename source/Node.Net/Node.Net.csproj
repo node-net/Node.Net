@@ -43,6 +43,11 @@
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
   </ItemGroup>
 
+  <!-- ValueTask support for .NET Framework 4.8 -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+  </ItemGroup>
+
   <!-- Fluent UI Blazor components (excluded from net48 as Fluent UI requires .NET 6+) -->
   <ItemGroup Condition=" '$(TargetFramework)' != 'net48' ">
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.2" />
@@ -72,6 +77,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
