@@ -27,10 +27,16 @@ public class TestHarness
 		TargetType = targetType ?? throw new ArgumentNullException(nameof(targetType));
 	}
 
+	public TestHarness(string name)
+	{
+		Name = name ?? throw new ArgumentNullException(nameof(name));
+	}
+
 	/// <summary>
 	/// Gets the type of protobuf message that this test harness is configured for.
 	/// </summary>
-	public Type TargetType { get; }
+	public Type? TargetType { get; }
+	public string? Name { get; }
 
 	/// <summary>
 	/// Gets the project directory information for the current assembly.
