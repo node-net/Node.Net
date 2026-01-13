@@ -2,7 +2,7 @@ VERSION = "2.0.11"
 require "raykit"
 require "makit"
 
-task :default => [:integrate, :publish, :pull_incoming, :sync] 
+task :default => [:integrate, :tag, :publish, :pull_incoming, :sync]
 
 task :build do
   try "rufo ."
@@ -27,39 +27,19 @@ task :test => [:build] do
   targets = compatible_targets
   if targets.empty?
     # Test all targets (Windows)
-    run("dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release")
+    sh "dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release"
   else
     # Test only compatible targets (Mac/Linux)
-    run("dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}")
-  end
-end
-
-task :tag => [:test] do
-  start_task :tag
-  if ENV["CI_SERVER"].nil?
-    if GIT_DIRECTORY.has_tag PROJECT.version
-      puts "git tag #{PROJECT.version} already exists"
-    else
-      puts "git tag #{PROJECT.version} does not exist"
-      if (!PROJECT.read_only?)
-        run("git add .")
-        run("git tag #{PROJECT.version} -m\"#{PROJECT.version}\"")
-        run("git push --tags")
-      end
-    end
-  else
-    puts "CI_SERVER, skipping tag command"
+    sh "dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}"
   end
 end
 
 desc "run the examples/Node.Net.AspNet.Host project"
 task :run => [:test] do
-  start_task :run
   sh "dotnet run --project examples/Node.Net.AspNet.Host/Node.Net.AspNet.Host.csproj"
 end
 
 task :publish => [:tag] do
-  start_task :publish
   if ENV["CI_SERVER"].nil?
     nuget = PROJECT.get_dev_dir("nuget")
     package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
@@ -90,3 +70,21 @@ def compatible_targets
     "/p:TargetFrameworks=net8.0"
   end
 end
+
+#task :tag => [:test] do
+#  start_task :tag
+#  if ENV["CI_SERVER"].nil?
+#    if GIT_DIRECTORY.has_tag PROJECT.version
+#      puts "git tag #{PROJECT.version} already exists"
+#    else
+#      puts "git tag #{PROJECT.version} does not exist"
+#      if (!PROJECT.read_only?)
+#        run("git add .")
+#        run("git tag #{PROJECT.version} -m\"#{PROJECT.version}\"")
+#        run("git push --tags")
+#      end
+#    end
+#  else
+#    puts "CI_SERVER, skipping tag command"
+#  end
+#end
