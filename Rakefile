@@ -12,7 +12,8 @@ end
 task :build do
   start_task :build
   try "rufo ."
-  Raykit::Version::set_version_in_glob("**/*.csproj", VERSION)
+  #Raykit::Version::set_version_in_glob("**/*.csproj", VERSION)
+  Makit::Version::set_version_in_files("**/*.csproj", VERSION)
 
   targets = compatible_targets
   if targets.empty?
