@@ -156,7 +156,8 @@ public class TestHarness
 	{
 		var projectDirectory = GetProjectDirectoryInfo();
 		var targetFramework = GetTargetFramework();
-		var artifactsPath = Path.Combine(projectDirectory.FullName, "artifacts", "test", targetFramework, TargetType!.FullName!);
+		var directoryName = TargetType?.FullName ?? Name ?? throw new InvalidOperationException("Either TargetType or Name must be set.");
+		var artifactsPath = Path.Combine(projectDirectory.FullName, "artifacts", "test", targetFramework, directoryName);
 		if (!Directory.Exists(artifactsPath))
 		{
 			Directory.CreateDirectory(artifactsPath);
