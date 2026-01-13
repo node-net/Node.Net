@@ -2,29 +2,7 @@ VERSION = "2.0.11"
 require "raykit"
 require "makit"
 
-# Detect platform for cross-platform builds
-def is_windows?
-  RbConfig::CONFIG["host_os"] =~ /mswin|mingw|cygwin/
-end
-
-def compatible_targets
-  if is_windows?
-    # On Windows, build all targets
-    ""
-  else
-    # On Mac/Linux, only build non-Windows targets
-    "/p:TargetFrameworks=net8.0"
-  end
-end
-
-task :env do
-  start_task :env
-  show_value "PROJECT.name", "#{PROJECT.version}"
-  show_value "PROJECT.version", "#{PROJECT.version}"
-  show_value "Platform", is_windows? ? "Windows" : "Non-Windows"
-end
-
-task :build => [:env] do
+task :build do
   start_task :build
   try "rufo ."
   Raykit::Version::set_version_in_glob("**/*.csproj", VERSION)
@@ -97,9 +75,20 @@ task :publish => [:tag] do
   end
 end
 
-task :default => [:integrate, :publish, :push] do
-  if (!PROJECT.read_only?)
-    run("git pull")
+
+
+
+# Detect platform for cross-platform builds
+def is_windows?
+  RbConfig::CONFIG["host_os"] =~ /mswin|mingw|cygwin/
+end
+
+def compatible_targets
+  if is_windows?
+    # On Windows, build all targets
+    ""
+  else
+    # On Mac/Linux, only build non-Windows targets
+    "/p:TargetFrameworks=net8.0"
   end
-  puts "completed in #{PROJECT.elapsed}"
 end
