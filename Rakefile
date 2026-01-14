@@ -79,16 +79,6 @@ task :run => [:test] do
 end
 
 task :publish => [:tag] do
-  start_task :publish
-  # display ENV["RAYKIT_SECRETS_PATH"] if defined
-  puts "RAYKIT_SECRETS_PATH: #{ENV["RAYKIT_SECRETS_PATH"]}" if ENV.has_key?("RAYKIT_SECRETS_PATH")
-  # if RAYKIT_SECRETS_PATH is defined, display the contents
-  if ENV.has_key?("RAYKIT_SECRETS_PATH")
-    puts "Contents of #{ENV["RAYKIT_SECRETS_PATH"]}:"
-    File.read(ENV["RAYKIT_SECRETS_PATH"]).each_line do |line|
-      puts line
-    end
-  end
   if ENV["CI_SERVER"].nil?
     nuget = PROJECT.get_dev_dir("nuget")
     package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
