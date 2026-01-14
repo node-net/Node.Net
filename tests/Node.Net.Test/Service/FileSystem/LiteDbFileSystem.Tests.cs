@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Text;
+using LiteDB;
 using NodeNet::Node.Net.Diagnostic;
 using NodeNet::Node.Net.Service.FileSystem;
 using NodeNet::Node.Net.Service.FileSystem.FileSystem;
@@ -644,11 +645,11 @@ internal class LiteDbFileSystemTests : TestHarness
         fileSystem.Dispose();
 
         // Act & Assert - Operations should fail after disposal
-        // LiteDB throws LiteException when database is disposed
-        Assert.Throws<LiteDB.LiteException>(() => fileSystem.Exists(path));
-        Assert.Throws<LiteDB.LiteException>(() => fileSystem.ReadAllBytes(path));
-        Assert.Throws<LiteDB.LiteException>(() => fileSystem.WriteAllBytes(path, data));
-        Assert.Throws<LiteDB.LiteException>(() => fileSystem.Delete(path));
+        // LiteDB throws ObjectDisposedException when database is disposed
+        Assert.Throws<ObjectDisposedException>(() => fileSystem.Exists(path));
+        Assert.Throws<ObjectDisposedException>(() => fileSystem.ReadAllBytes(path));
+        Assert.Throws<ObjectDisposedException>(() => fileSystem.WriteAllBytes(path, data));
+        Assert.Throws<ObjectDisposedException>(() => fileSystem.Delete(path));
     }
 
     #endregion
