@@ -24,7 +24,9 @@ public static class UserSecretProviderFactory
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            return new MacOS.UserSecretProvider();
+            // macOS Keychain integration not yet implemented - use fallback provider
+            // TODO: Switch to MacOS.UserSecretProvider() once Keychain integration is complete
+            return new Fallback.UserSecretProvider();
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {

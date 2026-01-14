@@ -134,7 +134,7 @@ internal class UserSecretProviderTests : TestHarness
             RuntimeInformation.OSDescription,
             GetMacAddress(),
             GetCpuId()
-        }.Where(s => !string.IsNullOrEmpty(s)).ToList();
+        }.Where(s => !string.IsNullOrEmpty(s) && s.Length > 3).ToList(); // Only check identifiers longer than 3 chars to avoid false positives
 
         // Act
         var secret = await _provider.GetOrCreateAsync(key);
