@@ -27,10 +27,16 @@ public class TestHarness
 		TargetType = targetType ?? throw new ArgumentNullException(nameof(targetType));
 	}
 
+	public TestHarness(string name)
+	{
+		Name = name ?? throw new ArgumentNullException(nameof(name));
+	}
+
 	/// <summary>
 	/// Gets the type of protobuf message that this test harness is configured for.
 	/// </summary>
-	public Type TargetType { get; }
+	public Type? TargetType { get; }
+	public string? Name { get; }
 
 	/// <summary>
 	/// Gets the project directory information for the current assembly.
@@ -150,7 +156,8 @@ public class TestHarness
 	{
 		var projectDirectory = GetProjectDirectoryInfo();
 		var targetFramework = GetTargetFramework();
-		var artifactsPath = Path.Combine(projectDirectory.FullName, "artifacts", "test", targetFramework, TargetType!.FullName!);
+		var directoryName = TargetType?.FullName ?? Name ?? throw new InvalidOperationException("Either TargetType or Name must be set.");
+		var artifactsPath = Path.Combine(projectDirectory.FullName, "artifacts", "test", targetFramework, directoryName);
 		if (!Directory.Exists(artifactsPath))
 		{
 			Directory.CreateDirectory(artifactsPath);

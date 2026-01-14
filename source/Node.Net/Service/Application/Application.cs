@@ -8,26 +8,58 @@ namespace Node.Net.Service.Application;
 
 /// <summary>
 /// Concrete implementation of IApplication that uses reflection to read executing assembly metadata
+/// and determine appropriate data directory location.
 /// </summary>
 public class Application : IApplication
 {
     private readonly Assembly _assembly;
     private string? _cachedName;
     private string? _cachedCompany;
+    private string? _cachedTargetFramework;
+    private string? _cachedExecutingAssemblyFilename;
+    private string? _cachedVersion;
 
     /// <summary>
     /// Initializes a new instance of the Application class
     /// </summary>
     public Application()
     {
-        _assembly = Assembly.GetExecutingAssembly();
+        _assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
     }
 
     /// <summary>
-    /// Gets the application name derived from the executing assembly's metadata
+    /// Gets all application information in a single call.
     /// </summary>
-    /// <returns>The application name using this precedence: (1) AssemblyTitleAttribute.Title if present, (2) Assembly.GetName().Name if present, (3) "Unknown" if assembly name is null. Never returns null.</returns>
-    public string GetName()
+    /// <returns>An <see cref="ApplicationInfo"/> instance containing all application metadata.</returns>
+    public ApplicationInfo GetApplicationInfo()
+    {
+        // Use cached values or compute them
+        string name = GetNameInternal();
+        string company = GetCompanyInternal();
+        string dataDirectory = GetDataDirectoryInternal(name, company);
+        string targetFramework = GetTargetFrameworkInternal();
+        string executingAssemblyFilename = GetExecutingAssemblyFilenameInternal();
+        string version = GetVersionInternal();
+        string user = GetUserInternal();
+        string domain = GetDomainInternal();
+        string operatingSystem = GetOperatingSystemInternal();
+        string machine = GetMachineInternal();
+
+        return new ApplicationInfo(
+            name,
+            company,
+            dataDirectory,
+            targetFramework,
+            executingAssemblyFilename,
+            version,
+            user,
+            domain,
+            operatingSystem,
+            machine
+        );
+    }
+
+    private string GetNameInternal()
     {
         if (_cachedName != null)
         {
@@ -46,11 +78,7 @@ public class Application : IApplication
         return _cachedName;
     }
 
-    /// <summary>
-    /// Gets the company name from the executing assembly's metadata
-    /// </summary>
-    /// <returns>The company name from AssemblyCompany attribute if present, otherwise empty string. Empty string is a valid return value indicating no company metadata.</returns>
-    public string GetCompany()
+    private string GetCompanyInternal()
     {
         if (_cachedCompany != null)
         {
@@ -62,47 +90,50 @@ public class Application : IApplication
         return _cachedCompany;
     }
 
-    /// <summary>
-    /// Gets the application data directory
-    /// </summary>
-    /// <returns>A DirectoryInfo object pointing to the application's data directory. The directory is created if it does not exist.</returns>
-    /// <exception cref="DirectoryNotFoundException">Thrown when the directory cannot be created due to invalid path</exception>
-    /// <exception cref="UnauthorizedAccessException">Thrown when access to create the directory is denied</exception>
-    public DirectoryInfo GetApplicationDataDirectory()
+    private string GetDataDirectoryInternal(string appName, string companyName)
     {
         var appDataBase = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        var company = GetCompany();
-        var appName = GetName();
-        
-        var appDataPath = Path.Combine(appDataBase, company, appName);
-        
+
+        // Ensure company and appName are valid for pathing
+        var safeCompanyName = string.IsNullOrEmpty(companyName) ? "UnknownCompany" : SanitizePathPart(companyName);
+        var safeAppName = string.IsNullOrEmpty(appName) ? "UnknownApplication" : SanitizePathPart(appName);
+
+        var appDataPath = Path.Combine(appDataBase, safeCompanyName, safeAppName);
+
         try
         {
             Directory.CreateDirectory(appDataPath);
-            return new DirectoryInfo(appDataPath);
-        }
-        catch (DirectoryNotFoundException ex)
-        {
-            throw new DirectoryNotFoundException($"Cannot create application data directory at '{appDataPath}': Invalid path.", ex);
+            return appDataPath;
         }
         catch (UnauthorizedAccessException ex)
         {
-            throw new UnauthorizedAccessException($"Cannot create application data directory at '{appDataPath}': Access denied.", ex);
+            Console.Error.WriteLine($"Failed to create application data directory due to permissions: {appDataPath}. Error: {ex.Message}");
+            return string.Empty; // Return empty string as per clarification
+        }
+        catch (DirectoryNotFoundException ex)
+        {
+            Console.Error.WriteLine($"Failed to create application data directory due to invalid path: {appDataPath}. Error: {ex.Message}");
+            return string.Empty; // Return empty string as per clarification
+        }
+        catch (IOException ex)
+        {
+            Console.Error.WriteLine($"An I/O error occurred while creating application data directory: {appDataPath}. Error: {ex.Message}");
+            return string.Empty; // Return empty string as per clarification
         }
     }
 
-    /// <summary>
-    /// Gets the target framework moniker (TFM) for the application.
-    /// </summary>
-    /// <returns>The target framework moniker (e.g., "net8.0", "net8.0-windows", "net48"), or "unknown" if not available.</returns>
-    public string GetTargetFramework()
+    private string GetTargetFrameworkInternal()
     {
+        if (_cachedTargetFramework != null)
+        {
+            return _cachedTargetFramework;
+        }
+
         try
         {
             var assembly = _assembly;
-            
+
             // Method 1: Try to extract from assembly location path (most reliable)
-            // Assemblies are typically in: bin/Debug/{TargetFramework}/ or bin/Release/{TargetFramework}/
             var assemblyLocation = assembly.Location;
             if (!string.IsNullOrEmpty(assemblyLocation))
             {
@@ -110,12 +141,12 @@ public class Application : IApplication
                 if (!string.IsNullOrEmpty(assemblyDir))
                 {
                     var dirName = Path.GetFileName(assemblyDir);
-                    // Check if directory name looks like a TFM (e.g., "net8.0", "net8.0-windows", "net48")
                     if (dirName != null && dirName.StartsWith("net", StringComparison.OrdinalIgnoreCase))
                     {
-                        return dirName;
+                        _cachedTargetFramework = dirName;
+                        return _cachedTargetFramework;
                     }
-                    
+
                     // Check parent directory
                     var parentDir = Path.GetDirectoryName(assemblyDir);
                     if (!string.IsNullOrEmpty(parentDir))
@@ -123,116 +154,179 @@ public class Application : IApplication
                         var parentDirName = Path.GetFileName(parentDir);
                         if (parentDirName != null && parentDirName.StartsWith("net", StringComparison.OrdinalIgnoreCase))
                         {
-                            return parentDirName;
+                            _cachedTargetFramework = parentDirName;
+                            return _cachedTargetFramework;
                         }
                     }
                 }
             }
-            
+
             // Method 2: Use TargetFrameworkAttribute
             var targetFrameworkAttribute = assembly.GetCustomAttribute<TargetFrameworkAttribute>();
             if (targetFrameworkAttribute != null && !string.IsNullOrEmpty(targetFrameworkAttribute.FrameworkName))
             {
                 var frameworkName = targetFrameworkAttribute.FrameworkName;
-                
+
                 if (frameworkName.Contains(".NETCoreApp"))
                 {
-                    // Extract version and determine TFM
                     var versionMatch = Regex.Match(frameworkName, @"Version=v(\d+)\.(\d+)");
                     if (versionMatch.Success)
                     {
                         var major = int.Parse(versionMatch.Groups[1].Value);
                         var minor = int.Parse(versionMatch.Groups[2].Value);
-                        
-                        // For .NET 8.0+, check if we have Windows-specific features
+
                         if (major >= 8)
                         {
-                            // Check if we're running on net8.0-windows by looking for Windows-specific types
                             try
                             {
                                 var windowsBaseType = Type.GetType("System.Windows.Application, WindowsBase, PresentationFramework");
                                 if (windowsBaseType != null)
                                 {
-                                    return $"net{major}.{minor}-windows";
+                                    _cachedTargetFramework = $"net{major}.{minor}-windows";
+                                    return _cachedTargetFramework;
                                 }
                             }
-                            catch
-                            {
-                                // Ignore - not a Windows-specific framework
-                            }
-                            
-                            return $"net{major}.{minor}";
+                            catch { /* Ignore */ }
+                            _cachedTargetFramework = $"net{major}.{minor}";
+                            return _cachedTargetFramework;
                         }
-                        
-                        return $"net{major}.{minor}";
+                        _cachedTargetFramework = $"net{major}.{minor}";
+                        return _cachedTargetFramework;
                     }
                 }
                 else if (frameworkName.Contains(".NETFramework"))
                 {
-                    // Extract version for .NET Framework
                     var versionMatch = Regex.Match(frameworkName, @"Version=v(\d+)\.(\d+)");
                     if (versionMatch.Success)
                     {
                         var major = int.Parse(versionMatch.Groups[1].Value);
                         var minor = int.Parse(versionMatch.Groups[2].Value);
-                        return $"net{major}{minor}";
+                        _cachedTargetFramework = $"net{major}{minor}";
+                        return _cachedTargetFramework;
                     }
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // If we can't determine the framework, return "unknown"
+            Console.Error.WriteLine($"Error determining target framework: {ex.Message}");
         }
-        
-        return "unknown";
+        _cachedTargetFramework = "unknown";
+        return _cachedTargetFramework;
     }
 
-    /// <summary>
-    /// Gets the full filename (path) of the executing assembly.
-    /// </summary>
-    /// <returns>The full path to the executing assembly file, or empty string if not available.</returns>
-    public string GetExecutingAssemblyFilename()
+    private string GetExecutingAssemblyFilenameInternal()
+    {
+        if (_cachedExecutingAssemblyFilename != null)
+        {
+            return _cachedExecutingAssemblyFilename;
+        }
+
+        try
+        {
+            _cachedExecutingAssemblyFilename = _assembly.Location;
+            if (string.IsNullOrEmpty(_cachedExecutingAssemblyFilename))
+            {
+                _cachedExecutingAssemblyFilename = string.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error getting executing assembly filename: {ex.Message}");
+            _cachedExecutingAssemblyFilename = string.Empty;
+        }
+        return _cachedExecutingAssemblyFilename;
+    }
+
+    private string GetVersionInternal()
+    {
+        if (_cachedVersion != null)
+        {
+            return _cachedVersion;
+        }
+
+        try
+        {
+            var informationalVersionAttribute = _assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (informationalVersionAttribute != null && !string.IsNullOrEmpty(informationalVersionAttribute.InformationalVersion))
+            {
+                _cachedVersion = informationalVersionAttribute.InformationalVersion;
+                return _cachedVersion;
+            }
+
+            var version = _assembly.GetName().Version;
+            if (version != null)
+            {
+                _cachedVersion = version.ToString();
+                return _cachedVersion;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error getting assembly version: {ex.Message}");
+        }
+        _cachedVersion = string.Empty;
+        return _cachedVersion;
+    }
+
+    private string GetUserInternal()
     {
         try
         {
-            var assemblyLocation = _assembly.Location;
-            return string.IsNullOrEmpty(assemblyLocation) ? string.Empty : assemblyLocation;
+            return Environment.UserName;
         }
         catch
         {
-            // If we can't get the location, return empty string
             return string.Empty;
         }
     }
 
-    /// <summary>
-    /// Gets the version of the application.
-    /// </summary>
-    /// <returns>The version string from assembly metadata, or empty string if not available.</returns>
-    public string GetVersion()
+    private string GetDomainInternal()
     {
         try
         {
-            // First, try AssemblyInformationalVersionAttribute (most user-friendly, e.g., "1.2.3-beta")
-            var informationalVersionAttribute = _assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-            if (informationalVersionAttribute != null && !string.IsNullOrEmpty(informationalVersionAttribute.InformationalVersion))
-            {
-                return informationalVersionAttribute.InformationalVersion;
-            }
-
-            // Fall back to AssemblyVersion (e.g., "1.2.3.4")
-            var version = _assembly.GetName().Version;
-            if (version != null)
-            {
-                return version.ToString();
-            }
+            return Environment.UserDomainName;
         }
         catch
         {
-            // If we can't get the version, return empty string
+            return string.Empty;
         }
+    }
 
-        return string.Empty;
+    private string GetOperatingSystemInternal()
+    {
+        try
+        {
+            return Environment.OSVersion.ToString();
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
+
+    private string GetMachineInternal()
+    {
+        try
+        {
+            return Environment.MachineName;
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
+
+    private static string SanitizePathPart(string part)
+    {
+        foreach (char c in Path.GetInvalidFileNameChars())
+        {
+            part = part.Replace(c, '_');
+        }
+        foreach (char c in Path.GetInvalidPathChars())
+        {
+            part = part.Replace(c, '_');
+        }
+        return part;
     }
 }
