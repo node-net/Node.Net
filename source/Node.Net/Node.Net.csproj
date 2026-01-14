@@ -54,6 +54,13 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
 
+  <!-- Microsoft.Extensions.Logging (for automatic log capture) -->
+  <!-- Versions must match FluentUI requirements: Logging >= 8.0.1, Abstractions >= 8.0.3 -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
+  </ItemGroup>
+
   <!-- Fluent UI Blazor components (excluded from net48 as Fluent UI requires .NET 6+) -->
   <ItemGroup Condition=" '$(TargetFramework)' != 'net48' ">
     <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.2" />
