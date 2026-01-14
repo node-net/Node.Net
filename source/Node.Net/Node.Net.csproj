@@ -41,6 +41,12 @@
   <!-- Package references for non-net46 targets -->
   <ItemGroup Condition=" '$(TargetFramework)' != 'net46' ">
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
+    <PackageReference Include="LiteDB" Version="5.0.17" />
+  </ItemGroup>
+
+  <!-- LiteDB package reference for .NET Framework 4.8 -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <PackageReference Include="LiteDB" Version="5.0.17" />
   </ItemGroup>
 
   <!-- ValueTask support for .NET Framework 4.8 -->
