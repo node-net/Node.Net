@@ -103,6 +103,15 @@
     <Page Remove="View\**" />
   </ItemGroup>
 
+  <!-- Include JavaScript modules for Razor components -->
+  <!-- .razor.js files are automatically included as content files by the Razor SDK -->
+  <!-- But we need to ensure they're included in the build output -->
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net48' ">
+    <Content Include="Components\*.razor.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>
     <None Include="Node.Net.256.png">
       <Pack>True</Pack>

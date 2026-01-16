@@ -1,18 +1,30 @@
 // JavaScript module for Maps component Leaflet integration
 // This module assumes Leaflet is loaded globally as window.L
 
+// Store map instances by element ID
+const mapInstances = {};
+
 export function initializeMap(elementId, latitude, longitude, zoomLevel, mapType) {
     // Get the map element
     const mapElement = document.getElementById(elementId);
     if (!mapElement) {
-        console.error(`Map element with id '${elementId}' not found`);
+        console.error(`[Maps.razor.js] Map element with id '${elementId}' not found`);
         return null;
     }
 
-    // Check if Leaflet is available
+    // Check if Leaflet is available - wait a bit if it's still loading
     if (typeof window.L === 'undefined') {
-        console.error('Leaflet library (window.L) is not loaded. Please ensure Leaflet CSS and JS are included in your application.');
+        console.error('[Maps.razor.js] Leaflet library (window.L) is not loaded. Please ensure Leaflet CSS and JS are included in your application.');
+        console.error('[Maps.razor.js] Make sure Leaflet script is loaded before the Blazor framework script.');
         return null;
+    }
+    
+    console.log(`[Maps.razor.js] Initializing map for element '${elementId}' at [${latitude}, ${longitude}] with zoom ${zoomLevel} and type '${mapType}'`);
+
+    // Remove existing map if it exists
+    if (mapInstances[elementId]) {
+        mapInstances[elementId].remove();
+        delete mapInstances[elementId];
     }
 
     // Initialize Leaflet map
@@ -41,28 +53,38 @@ export function initializeMap(elementId, latitude, longitude, zoomLevel, mapType
         maxZoom: 19
     }).addTo(map);
 
-    return map;
+    // Store map instance
+    mapInstances[elementId] = map;
+
+    // Return a reference object that can be serialized
+    return { elementId: elementId };
 }
 
-export function updateMapCenter(mapInstance, latitude, longitude) {
-    if (mapInstance && typeof mapInstance.setView === 'function') {
-        mapInstance.setView([latitude, longitude], mapInstance.getZoom());
+export function updateMapCenter(mapRef, latitude, longitude) {
+    if (!mapRef || !mapRef.elementId) return;
+    const map = mapInstances[mapRef.elementId];
+    if (map && typeof map.setView === 'function') {
+        map.setView([latitude, longitude], map.getZoom());
     }
 }
 
-export function updateZoomLevel(mapInstance, zoomLevel) {
-    if (mapInstance && typeof mapInstance.setZoom === 'function') {
-        mapInstance.setZoom(zoomLevel);
+export function updateZoomLevel(mapRef, zoomLevel) {
+    if (!mapRef || !mapRef.elementId) return;
+    const map = mapInstances[mapRef.elementId];
+    if (map && typeof map.setZoom === 'function') {
+        map.setZoom(zoomLevel);
     }
 }
 
-export function updateMapType(mapInstance, mapType) {
-    if (!mapInstance) return;
+export function updateMapType(mapRef, mapType) {
+    if (!mapRef || !mapRef.elementId) return;
+    const map = mapInstances[mapRef.elementId];
+    if (!map) return;
 
     // Remove existing tile layers
-    mapInstance.eachLayer((layer) => {
+    map.eachLayer((layer) => {
         if (layer instanceof window.L.TileLayer) {
-            mapInstance.removeLayer(layer);
+            map.removeLayer(layer);
         }
     });
 
@@ -85,5 +107,14 @@ export function updateMapType(mapInstance, mapType) {
     window.L.tileLayer(tileUrl, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
-    }).addTo(mapInstance);
+    }).addTo(map);
+}
+
+export function disposeMap(mapRef) {
+    if (!mapRef || !mapRef.elementId) return;
+    const map = mapInstances[mapRef.elementId];
+    if (map) {
+        map.remove();
+        delete mapInstances[mapRef.elementId];
+    }
 }

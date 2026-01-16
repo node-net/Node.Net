@@ -101,24 +101,32 @@
                     _lastLongitude = normalizedLon;
                     _lastZoomLevel = ZoomLevel;
                     _lastMapType = MapType;
+                    
+                    // Force UI update
+                    StateHasChanged();
                 }
                 else
                 {
                     _hasError = true;
                     _isLoading = false;
+                    StateHasChanged();
                 }
             }
             catch (JSException ex)
             {
                 _hasError = true;
                 _isLoading = false;
-                Console.WriteLine($"Error initializing map: {ex.Message}");
+                // Log to console for debugging
+                await JSRuntime.InvokeVoidAsync("console.error", $"Error initializing map: {ex.Message}");
+                StateHasChanged();
             }
             catch (Exception ex)
             {
                 _hasError = true;
                 _isLoading = false;
-                Console.WriteLine($"Error initializing map: {ex.Message}");
+                // Log to console for debugging
+                await JSRuntime.InvokeVoidAsync("console.error", $"Error initializing map: {ex.Message}");
+                StateHasChanged();
             }
         }
         else
@@ -238,9 +246,26 @@
 
     public async ValueTask DisposeAsync()
     {
+        if (_jsModule != null && _mapInstance != null)
+        {
+            try
+            {
+                await _jsModule.InvokeVoidAsync("disposeMap", _mapInstance);
+            }
+            catch
+            {
+                // Ignore disposal errors
+            }
+        }
+        
         if (_jsModule != null)
         {
             await _jsModule.DisposeAsync();
+        }
+        
+        if (_mapInstance != null)
+        {
+            await _mapInstance.DisposeAsync();
         }
     }
 }

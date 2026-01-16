@@ -14,7 +14,11 @@
 
 <body>
     <Routes />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Load Leaflet BEFORE Blazor framework to ensure it's available when components initialize -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+            crossorigin=""
+            onload="console.log('Leaflet loaded'); window.leafletLoaded = true;"></script>
     <script src="_framework/blazor.web.js"></script>
 </body>
 
