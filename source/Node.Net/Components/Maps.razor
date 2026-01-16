@@ -20,11 +20,15 @@
 <div style="width: 100%; height: 100%;" id="@_mapElementId">
     @if (_isLoading)
     {
-        <div style="padding: 1rem; text-align: center;">Loading map...</div>
+        <div style="padding: 1rem; text-align: center;">Loading map... (Element ID: @_mapElementId)</div>
     }
     @if (_hasError)
     {
-        <div style="padding: 1rem; text-align: center; color: red;">Error loading map. Please ensure Leaflet library is loaded.</div>
+        <div style="padding: 1rem; text-align: center; color: red;">
+            Error loading map. Please ensure Leaflet library is loaded.
+            <br />
+            <small>Check browser console for details.</small>
+        </div>
     }
 </div>
 
@@ -77,14 +81,22 @@
         {
             try
             {
+                // Log that we're starting initialization
+                await JSRuntime.InvokeVoidAsync("console.log", $"[Maps Component] Starting initialization for element: {_mapElementId}");
+                
                 // Wait for Leaflet to be available
+                await JSRuntime.InvokeVoidAsync("console.log", "[Maps Component] Checking for Leaflet library...");
                 var leafletReady = false;
                 for (int i = 0; i < 50; i++) // Try for up to 5 seconds
                 {
                     try
                     {
                         leafletReady = await JSRuntime.InvokeAsync<bool>("eval", "typeof window.L !== 'undefined'");
-                        if (leafletReady) break;
+                        if (leafletReady)
+                        {
+                            await JSRuntime.InvokeVoidAsync("console.log", "[Maps Component] Leaflet library found!");
+                            break;
+                        }
                     }
                     catch
                     {
@@ -97,15 +109,17 @@
                 {
                     _hasError = true;
                     _isLoading = false;
-                    await JSRuntime.InvokeVoidAsync("console.error", "Leaflet library not loaded after 5 seconds. Please ensure Leaflet script is included before Blazor framework.");
+                    await JSRuntime.InvokeVoidAsync("console.error", "[Maps Component] Leaflet library not loaded after 5 seconds. Please ensure Leaflet script is included before Blazor framework.");
                     StateHasChanged();
                     return;
                 }
 
                 // Import the JavaScript module
                 // For Blazor library components, the .razor.js file is automatically included
-                // The Razor SDK places it at Components/Maps.razor.js (root level)
+                // Based on static web assets, it's at Components/Maps.razor.js (root level)
                 // Try multiple possible paths
+                await JSRuntime.InvokeVoidAsync("console.log", "[Maps Component] Attempting to import JavaScript module...");
+                
                 var modulePaths = new[]
                 {
                     "./Components/Maps.razor.js",
@@ -117,21 +131,33 @@
 
                 IJSObjectReference? module = null;
                 string? lastError = null;
+                bool anyAttempted = false;
 
                 foreach (var path in modulePaths)
                 {
+                    anyAttempted = true;
                     try
                     {
-                        await JSRuntime.InvokeVoidAsync("console.log", $"Attempting to import module from: {path}");
+                        await JSRuntime.InvokeVoidAsync("console.log", $"[Maps Component] Trying to import from: {path}");
                         module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", path);
-                        await JSRuntime.InvokeVoidAsync("console.log", $"Successfully imported module from: {path}");
+                        await JSRuntime.InvokeVoidAsync("console.log", $"[Maps Component] ✓ Successfully imported module from: {path}");
                         break;
                     }
                     catch (JSException ex)
                     {
                         lastError = ex.Message;
-                        await JSRuntime.InvokeVoidAsync("console.warn", $"Failed to import from {path}: {ex.Message}");
+                        await JSRuntime.InvokeVoidAsync("console.error", $"[Maps Component] ✗ Failed to import from {path}: {ex.Message}");
                     }
+                    catch (Exception ex)
+                    {
+                        lastError = ex.Message;
+                        await JSRuntime.InvokeVoidAsync("console.error", $"[Maps Component] ✗ Exception importing from {path}: {ex.Message}");
+                    }
+                }
+                
+                if (!anyAttempted)
+                {
+                    await JSRuntime.InvokeVoidAsync("console.error", "[Maps Component] No import paths were attempted!");
                 }
 
                 if (module == null)
