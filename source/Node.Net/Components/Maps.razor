@@ -77,11 +77,75 @@
         {
             try
             {
+                // Wait for Leaflet to be available
+                var leafletReady = false;
+                for (int i = 0; i < 50; i++) // Try for up to 5 seconds
+                {
+                    try
+                    {
+                        leafletReady = await JSRuntime.InvokeAsync<bool>("eval", "typeof window.L !== 'undefined'");
+                        if (leafletReady) break;
+                    }
+                    catch
+                    {
+                        // Ignore errors during check
+                    }
+                    await Task.Delay(100);
+                }
+
+                if (!leafletReady)
+                {
+                    _hasError = true;
+                    _isLoading = false;
+                    await JSRuntime.InvokeVoidAsync("console.error", "Leaflet library not loaded after 5 seconds. Please ensure Leaflet script is included before Blazor framework.");
+                    StateHasChanged();
+                    return;
+                }
+
                 // Import the JavaScript module
                 // For Blazor library components, the .razor.js file is automatically included
-                // The path is relative to the component's location in the library
-                _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>(
-                    "import", "./_content/Node.Net/Components/Maps.razor.js");
+                // The Razor SDK places it at Components/Maps.razor.js (root level)
+                // Try multiple possible paths
+                var modulePaths = new[]
+                {
+                    "./Components/Maps.razor.js",
+                    "Components/Maps.razor.js",
+                    "/Components/Maps.razor.js",
+                    "./_content/Node.Net/Components/Maps.razor.js",
+                    "_content/Node.Net/Components/Maps.razor.js"
+                };
+
+                IJSObjectReference? module = null;
+                string? lastError = null;
+
+                foreach (var path in modulePaths)
+                {
+                    try
+                    {
+                        await JSRuntime.InvokeVoidAsync("console.log", $"Attempting to import module from: {path}");
+                        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", path);
+                        await JSRuntime.InvokeVoidAsync("console.log", $"Successfully imported module from: {path}");
+                        break;
+                    }
+                    catch (JSException ex)
+                    {
+                        lastError = ex.Message;
+                        await JSRuntime.InvokeVoidAsync("console.warn", $"Failed to import from {path}: {ex.Message}");
+                    }
+                }
+
+                if (module == null)
+                {
+                    _hasError = true;
+                    _isLoading = false;
+                    await JSRuntime.InvokeVoidAsync("console.error", $"Failed to import Maps.razor.js module from all attempted paths.");
+                    await JSRuntime.InvokeVoidAsync("console.error", $"Last error: {lastError}");
+                    await JSRuntime.InvokeVoidAsync("console.error", "Please check the browser Network tab to see if the file is being requested and if it returns 404.");
+                    StateHasChanged();
+                    return;
+                }
+
+                _jsModule = module;
 
                 // Normalize coordinates
                 var (normalizedLat, normalizedLon) = NormalizeCoordinates(Latitude, Longitude);
@@ -109,6 +173,7 @@
                 {
                     _hasError = true;
                     _isLoading = false;
+                    await JSRuntime.InvokeVoidAsync("console.error", "Map initialization returned null. Check browser console for JavaScript errors.");
                     StateHasChanged();
                 }
             }
@@ -117,7 +182,8 @@
                 _hasError = true;
                 _isLoading = false;
                 // Log to console for debugging
-                await JSRuntime.InvokeVoidAsync("console.error", $"Error initializing map: {ex.Message}");
+                await JSRuntime.InvokeVoidAsync("console.error", $"JSException initializing map: {ex.Message}");
+                await JSRuntime.InvokeVoidAsync("console.error", $"Stack trace: {ex.StackTrace}");
                 StateHasChanged();
             }
             catch (Exception ex)
@@ -125,7 +191,8 @@
                 _hasError = true;
                 _isLoading = false;
                 // Log to console for debugging
-                await JSRuntime.InvokeVoidAsync("console.error", $"Error initializing map: {ex.Message}");
+                await JSRuntime.InvokeVoidAsync("console.error", $"Exception initializing map: {ex.Message}");
+                await JSRuntime.InvokeVoidAsync("console.error", $"Stack trace: {ex.StackTrace}");
                 StateHasChanged();
             }
         }

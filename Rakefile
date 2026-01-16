@@ -39,7 +39,7 @@ task :run => [:test] do
   sh "dotnet run --project examples/Node.Net.AspNet.Host/Node.Net.AspNet.Host.csproj"
 end
 
-task :publish => [:build,:tag] do
+task :publish => [:build, :tag] do
   if ENV["CI_SERVER"].nil?
     nuget = PROJECT.get_dev_dir("nuget")
     package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
