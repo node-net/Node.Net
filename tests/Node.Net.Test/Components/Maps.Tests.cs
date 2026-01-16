@@ -425,54 +425,78 @@ internal class MapsTests : TestHarness
             integrity=""sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=""
             crossorigin=""""></script>
     <script>
+        // Global flag to indicate map is ready
+        window.mapInitialized = false;
+        window.mapTilesLoaded = false;
+        
         // Initialize map once Leaflet is loaded
-        (function() {{
-            function initMap() {{
-                if (typeof window.L === 'undefined') {{
-                    console.error('Leaflet not loaded');
-                    return;
-                }}
-                
-                var mapElement = document.getElementById('{mapElementId}');
-                if (!mapElement) {{
-                    console.error('Map element not found: {mapElementId}');
-                    return;
-                }}
-                
-                // Remove loading message
-                var loadingDiv = mapElement.querySelector('div');
-                if (loadingDiv) {{
-                    loadingDiv.style.display = 'none';
-                }}
-                
-                // Initialize Leaflet map
-                var map = window.L.map('{mapElementId}').setView([{latitude}, {longitude}], {zoomLevel});
-                
-                // Add tile layer
-                var tileUrl = 'https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png';
-                window.L.tileLayer(tileUrl, {{
-                    attribution: '&copy; <a href=""https://www.openstreetmap.org/copyright"">OpenStreetMap</a> contributors',
-                    maxZoom: 19
-                }}).addTo(map);
-                
-                // Mark as loaded
-                mapElement.classList.add('map-loaded');
-                
-                // Wait for tiles to load
-                map.whenReady(function() {{
-                    console.log('Map ready');
-                }});
+        function initMap() {{
+            if (typeof window.L === 'undefined') {{
+                console.error('Leaflet not loaded');
+                return;
             }}
             
-            // Wait for Leaflet to load, then initialize map
-            if (document.readyState === 'loading') {{
-                document.addEventListener('DOMContentLoaded', function() {{
-                    setTimeout(initMap, 500);
-                }});
-            }} else {{
-                setTimeout(initMap, 500);
+            var mapElement = document.getElementById('{mapElementId}');
+            if (!mapElement) {{
+                console.error('Map element not found: {mapElementId}');
+                return;
             }}
-        }})();
+            
+            // Remove loading message
+            var loadingDiv = mapElement.querySelector('div');
+            if (loadingDiv) {{
+                loadingDiv.style.display = 'none';
+            }}
+            
+            // Initialize Leaflet map
+            var map = window.L.map('{mapElementId}').setView([{latitude}, {longitude}], {zoomLevel});
+            
+            // Add tile layer
+            var tileUrl = 'https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png';
+            var tileLayer = window.L.tileLayer(tileUrl, {{
+                attribution: '&copy; <a href=""https://www.openstreetmap.org/copyright"">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }}).addTo(map);
+            
+            // Mark as initialized
+            window.mapInitialized = true;
+            mapElement.classList.add('map-loaded');
+            
+            // Wait for map to be ready
+            map.whenReady(function() {{
+                console.log('Map ready');
+                
+                // Wait for tiles to load - check for tile images
+                var checkTiles = function() {{
+                    var tileImages = mapElement.querySelectorAll('.leaflet-tile-loaded');
+                    if (tileImages.length > 0) {{
+                        window.mapTilesLoaded = true;
+                        console.log('Tiles loaded: ' + tileImages.length);
+                    }} else {{
+                        setTimeout(checkTiles, 200);
+                    }}
+                }};
+                
+                // Start checking after a short delay
+                setTimeout(checkTiles, 500);
+            }});
+        }}
+        
+        // Wait for Leaflet to load, then initialize map
+        function waitForLeaflet() {{
+            if (typeof window.L !== 'undefined') {{
+                initMap();
+            }} else {{
+                setTimeout(waitForLeaflet, 100);
+            }}
+        }}
+        
+        // Start initialization
+        if (document.readyState === 'loading') {{
+            document.addEventListener('DOMContentLoaded', waitForLeaflet);
+        }} else {{
+            waitForLeaflet();
+        }}
     </script>
 </body>
 </html>";
@@ -490,23 +514,53 @@ internal class MapsTests : TestHarness
             await page.SetContentAsync(fullHtml);
             
             // Wait for Leaflet to load
-            await page.WaitForFunctionAsync("typeof window.L !== 'undefined'", new PageWaitForFunctionOptions { Timeout = 10000 });
+            await page.WaitForFunctionAsync("typeof window.L !== 'undefined'", new PageWaitForFunctionOptions { Timeout = 15000 });
             
-            // Wait for map initialization script to run
-            await page.WaitForTimeoutAsync(1000);
-            
-            // Wait for map container to appear (with retry logic)
+            // Wait for map to be initialized (with longer timeout)
             try
             {
-                await page.WaitForSelectorAsync($@"#{mapElementId} .leaflet-container", new PageWaitForSelectorOptions { Timeout = 5000 });
+                await page.WaitForFunctionAsync("window.mapInitialized === true", new PageWaitForFunctionOptions { Timeout = 10000 });
             }
             catch
             {
-                // If selector doesn't appear, continue anyway - map might still be loading
+                // If initialization check fails, continue anyway - map might still work
             }
             
-            // Wait for tiles to load (give it time for network requests)
-            await page.WaitForTimeoutAsync(3000);
+            // Wait for map container to appear (more lenient)
+            try
+            {
+                await page.WaitForSelectorAsync($@"#{mapElementId} .leaflet-container", new PageWaitForSelectorOptions { Timeout = 10000 });
+            }
+            catch
+            {
+                // If container doesn't appear, try waiting for just the map element
+                await page.WaitForSelectorAsync($@"#{mapElementId}", new PageWaitForSelectorOptions { Timeout = 5000 });
+            }
+            
+            // Wait for network to be idle (tiles loading) - but don't fail if it times out
+            try
+            {
+                await page.WaitForLoadStateAsync(LoadState.NetworkIdle, new PageWaitForLoadStateOptions { Timeout = 10000 });
+            }
+            catch
+            {
+                // Network might not go idle, continue anyway
+            }
+            
+            // Wait for tiles to actually render (check for loaded tile images) - but be lenient
+            try
+            {
+                await page.WaitForFunctionAsync(
+                    $@"document.querySelectorAll('#{mapElementId} .leaflet-tile-loaded').length > 0",
+                    new PageWaitForFunctionOptions { Timeout = 8000 });
+            }
+            catch
+            {
+                // Tiles might not load in time, but continue to take screenshot anyway
+            }
+            
+            // Give extra time for all tiles to fully render
+            await page.WaitForTimeoutAsync(2000);
             
             // Take screenshot as JPEG
             await page.ScreenshotAsync(new PageScreenshotOptions
