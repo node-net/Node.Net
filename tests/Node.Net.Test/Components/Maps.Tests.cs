@@ -409,9 +409,17 @@ internal class MapsTests : TestHarness
         }}
         div[id^='map-'] {{
             width: 100%;
+            min-height: 400px;
             height: 400px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            background-color: #f0f0f0;
+        }}
+        /* Ensure Leaflet container is visible */
+        .leaflet-container {{
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 400px !important;
         }}
         /* Hide loading message once map is initialized */
         .map-loaded ~ div {{
@@ -431,72 +439,98 @@ internal class MapsTests : TestHarness
         
         // Initialize map once Leaflet is loaded
         function initMap() {{
-            if (typeof window.L === 'undefined') {{
-                console.error('Leaflet not loaded');
-                return;
-            }}
-            
-            var mapElement = document.getElementById('{mapElementId}');
-            if (!mapElement) {{
-                console.error('Map element not found: {mapElementId}');
-                return;
-            }}
-            
-            // Remove loading message
-            var loadingDiv = mapElement.querySelector('div');
-            if (loadingDiv) {{
-                loadingDiv.style.display = 'none';
-            }}
-            
-            // Initialize Leaflet map
-            var map = window.L.map('{mapElementId}').setView([{latitude}, {longitude}], {zoomLevel});
-            
-            // Add tile layer
-            var tileUrl = 'https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png';
-            var tileLayer = window.L.tileLayer(tileUrl, {{
-                attribution: '&copy; <a href=""https://www.openstreetmap.org/copyright"">OpenStreetMap</a> contributors',
-                maxZoom: 19
-            }}).addTo(map);
-            
-            // Mark as initialized
-            window.mapInitialized = true;
-            mapElement.classList.add('map-loaded');
-            
-            // Wait for map to be ready
-            map.whenReady(function() {{
-                console.log('Map ready');
+            try {{
+                if (typeof window.L === 'undefined') {{
+                    console.error('Leaflet not loaded');
+                    return;
+                }}
                 
-                // Wait for tiles to load - check for tile images
-                var checkTiles = function() {{
-                    var tileImages = mapElement.querySelectorAll('.leaflet-tile-loaded');
-                    if (tileImages.length > 0) {{
-                        window.mapTilesLoaded = true;
-                        console.log('Tiles loaded: ' + tileImages.length);
-                    }} else {{
-                        setTimeout(checkTiles, 200);
-                    }}
-                }};
+                var mapElement = document.getElementById('{mapElementId}');
+                if (!mapElement) {{
+                    console.error('Map element not found: {mapElementId}');
+                    return;
+                }}
                 
-                // Start checking after a short delay
-                setTimeout(checkTiles, 500);
-            }});
+                // Remove loading message
+                var loadingDiv = mapElement.querySelector('div');
+                if (loadingDiv && loadingDiv.textContent.includes('Loading')) {{
+                    loadingDiv.style.display = 'none';
+                }}
+                
+                // Ensure element has dimensions
+                if (mapElement.offsetHeight === 0) {{
+                    mapElement.style.height = '400px';
+                }}
+                if (mapElement.offsetWidth === 0) {{
+                    mapElement.style.width = '100%';
+                }}
+                
+                // Clear any existing content (but preserve the element itself)
+                var loadingDiv = mapElement.querySelector('div');
+                if (loadingDiv) {{
+                    loadingDiv.remove();
+                }}
+                
+                // Initialize Leaflet map
+                var map = window.L.map('{mapElementId}', {{
+                    center: [{latitude}, {longitude}],
+                    zoom: {zoomLevel}
+                }});
+                
+                // Add tile layer with error handling
+                var tileUrl = 'https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png';
+                var tileLayer = window.L.tileLayer(tileUrl, {{
+                    attribution: '&copy; <a href=""https://www.openstreetmap.org/copyright"">OpenStreetMap</a> contributors',
+                    maxZoom: 19,
+                    errorTileUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5UaWxlIGVycm9yPC90ZXh0Pjwvc3ZnPg=='
+                }}).addTo(map);
+                
+                // Store map instance globally for debugging
+                window.testMap = map;
+                
+                // Mark as initialized
+                window.mapInitialized = true;
+                mapElement.classList.add('map-loaded');
+                
+                // Wait for map to be ready
+                map.whenReady(function() {{
+                    console.log('Map ready');
+                    
+                    // Wait for tiles to load - check for tile images
+                    var checkTiles = function() {{
+                        var tileImages = mapElement.querySelectorAll('.leaflet-tile-loaded');
+                        if (tileImages.length > 0) {{
+                            window.mapTilesLoaded = true;
+                            console.log('Tiles loaded: ' + tileImages.length);
+                        }} else {{
+                            // Continue checking for up to 5 seconds
+                            if (Date.now() - startTime < 5000) {{
+                                setTimeout(checkTiles, 200);
+                            }}
+                        }}
+                    }};
+                    
+                    var startTime = Date.now();
+                    // Start checking after a short delay
+                    setTimeout(checkTiles, 500);
+                }});
+            }} catch (error) {{
+                console.error('Error initializing map:', error);
+            }}
         }}
         
         // Wait for Leaflet to load, then initialize map
         function waitForLeaflet() {{
             if (typeof window.L !== 'undefined') {{
-                initMap();
+                // Leaflet is loaded, initialize map immediately
+                setTimeout(initMap, 100);
             }} else {{
-                setTimeout(waitForLeaflet, 100);
+                setTimeout(waitForLeaflet, 50);
             }}
         }}
         
-        // Start initialization
-        if (document.readyState === 'loading') {{
-            document.addEventListener('DOMContentLoaded', waitForLeaflet);
-        }} else {{
-            waitForLeaflet();
-        }}
+        // Start initialization as soon as script runs
+        waitForLeaflet();
     </script>
 </body>
 </html>";
