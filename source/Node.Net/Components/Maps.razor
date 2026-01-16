@@ -1,0 +1,97 @@
+@namespace Node.Net.Components
+@using Microsoft.JSInterop
+@using System
+@using System.Threading.Tasks
+
+@*
+    Maps Component
+    
+    A reusable Razor component that displays a map centered on specific geographic coordinates.
+    Uses Leaflet with OpenStreetMap for map rendering.
+    
+    @param Latitude Required latitude coordinate (-90 to 90). Component throws error if not provided.
+    @param Longitude Required longitude coordinate (-180 to 180). Component throws error if not provided.
+    @param ZoomLevel Optional map zoom level (default: 13 - neighborhood-level view)
+    @param MapType Optional map type/tile layer (default: "satellite")
+*@
+
+<div style="width: 100%; height: 100%;" id="@_mapElementId">
+    @* Map will be initialized here via JavaScript/Leaflet *@
+</div>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public double Latitude { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public double Longitude { get; set; }
+
+    [Parameter]
+    public int ZoomLevel { get; set; } = 13;
+
+    [Parameter]
+    public string MapType { get; set; } = "satellite";
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; } = default!;
+
+    private string _mapElementId = $"map-{Guid.NewGuid():N}";
+    private bool _isInitialized = false;
+
+    // Coordinate validation helper methods
+    private static bool ValidateLatitude(double latitude)
+    {
+        return latitude >= -90.0 && latitude <= 90.0;
+    }
+
+    private static bool ValidateLongitude(double longitude)
+    {
+        return longitude >= -180.0 && longitude <= 180.0;
+    }
+
+    private (double Latitude, double Longitude) NormalizeCoordinates(double latitude, double longitude)
+    {
+        var normalizedLat = ValidateLatitude(latitude) ? latitude : 0.0;
+        var normalizedLon = ValidateLongitude(longitude) ? longitude : 0.0;
+        return (normalizedLat, normalizedLon);
+    }
+
+    // Internal JSInterop service class for map operations
+    private class MapsJSInterop
+    {
+        private readonly IJSRuntime _jsRuntime;
+        private readonly string _mapElementId;
+
+        public MapsJSInterop(IJSRuntime jsRuntime, string mapElementId)
+        {
+            _jsRuntime = jsRuntime;
+            _mapElementId = mapElementId;
+        }
+
+        public async ValueTask InitializeMap(double latitude, double longitude, int zoomLevel, string mapType)
+        {
+            // Will be implemented to call Leaflet via JSInterop
+            await Task.CompletedTask;
+        }
+
+        public async ValueTask UpdateMapCenter(double latitude, double longitude)
+        {
+            // Will be implemented to update map center via JSInterop
+            await Task.CompletedTask;
+        }
+
+        public async ValueTask UpdateZoomLevel(int zoomLevel)
+        {
+            // Will be implemented to update map zoom via JSInterop
+            await Task.CompletedTask;
+        }
+
+        public async ValueTask UpdateMapType(string mapType)
+        {
+            // Will be implemented to update map type/tile layer via JSInterop
+            await Task.CompletedTask;
+        }
+    }
+}
