@@ -381,6 +381,15 @@ internal class MapsTests : TestHarness
 
     private async Task GenerateComponentImage(string html, string outputPath)
     {
+        // Extract map element ID from HTML (format: id="map-xxxxx")
+        var mapIdMatch = System.Text.RegularExpressions.Regex.Match(html, @"id=""(map-[^""]+)""");
+        var mapElementId = mapIdMatch.Success ? mapIdMatch.Groups[1].Value : "map-test";
+        
+        // Extract coordinates from test (using default San Francisco coordinates from test)
+        var latitude = 37.7749;
+        var longitude = -122.4194;
+        var zoomLevel = 13;
+        
         // Create a complete HTML document with the component markup
         // Include Leaflet CSS for proper map rendering
         var fullHtml = $@"
@@ -388,7 +397,9 @@ internal class MapsTests : TestHarness
 <html>
 <head>
     <meta charset=""utf-8"">
-    <link rel=""stylesheet"" href=""https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"" />
+    <link rel=""stylesheet"" href=""https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"" 
+          integrity=""sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="" 
+          crossorigin="""" />
     <style>
         body {{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -402,11 +413,67 @@ internal class MapsTests : TestHarness
             border: 1px solid #ccc;
             border-radius: 4px;
         }}
+        /* Hide loading message once map is initialized */
+        .map-loaded ~ div {{
+            display: none;
+        }}
     </style>
 </head>
 <body>
     {html}
-    <script src=""https://unpkg.com/leaflet@1.9.4/dist/leaflet.js""></script>
+    <script src=""https://unpkg.com/leaflet@1.9.4/dist/leaflet.js""
+            integrity=""sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=""
+            crossorigin=""""></script>
+    <script>
+        // Initialize map once Leaflet is loaded
+        (function() {{
+            function initMap() {{
+                if (typeof window.L === 'undefined') {{
+                    console.error('Leaflet not loaded');
+                    return;
+                }}
+                
+                var mapElement = document.getElementById('{mapElementId}');
+                if (!mapElement) {{
+                    console.error('Map element not found: {mapElementId}');
+                    return;
+                }}
+                
+                // Remove loading message
+                var loadingDiv = mapElement.querySelector('div');
+                if (loadingDiv) {{
+                    loadingDiv.style.display = 'none';
+                }}
+                
+                // Initialize Leaflet map
+                var map = window.L.map('{mapElementId}').setView([{latitude}, {longitude}], {zoomLevel});
+                
+                // Add tile layer
+                var tileUrl = 'https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png';
+                window.L.tileLayer(tileUrl, {{
+                    attribution: '&copy; <a href=""https://www.openstreetmap.org/copyright"">OpenStreetMap</a> contributors',
+                    maxZoom: 19
+                }}).addTo(map);
+                
+                // Mark as loaded
+                mapElement.classList.add('map-loaded');
+                
+                // Wait for tiles to load
+                map.whenReady(function() {{
+                    console.log('Map ready');
+                }});
+            }}
+            
+            // Wait for Leaflet to load, then initialize map
+            if (document.readyState === 'loading') {{
+                document.addEventListener('DOMContentLoaded', function() {{
+                    setTimeout(initMap, 500);
+                }});
+            }} else {{
+                setTimeout(initMap, 500);
+            }}
+        }})();
+    </script>
 </body>
 </html>";
 
@@ -422,8 +489,24 @@ internal class MapsTests : TestHarness
             var page = await browser.NewPageAsync();
             await page.SetContentAsync(fullHtml);
             
-            // Wait for Leaflet to load and map to initialize
-            await page.WaitForTimeoutAsync(2000);
+            // Wait for Leaflet to load
+            await page.WaitForFunctionAsync("typeof window.L !== 'undefined'", new PageWaitForFunctionOptions { Timeout = 10000 });
+            
+            // Wait for map initialization script to run
+            await page.WaitForTimeoutAsync(1000);
+            
+            // Wait for map container to appear (with retry logic)
+            try
+            {
+                await page.WaitForSelectorAsync($@"#{mapElementId} .leaflet-container", new PageWaitForSelectorOptions { Timeout = 5000 });
+            }
+            catch
+            {
+                // If selector doesn't appear, continue anyway - map might still be loading
+            }
+            
+            // Wait for tiles to load (give it time for network requests)
+            await page.WaitForTimeoutAsync(3000);
             
             // Take screenshot as JPEG
             await page.ScreenshotAsync(new PageScreenshotOptions
