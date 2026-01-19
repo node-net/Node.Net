@@ -68,7 +68,7 @@
     private bool _isLoading = true;
     private bool _hasError = false;
     private IJSObjectReference? _jsModule;
-    private IJSObjectReference? _mapInstance;
+    private MapReference? _mapInstance;
     private MapsJSInterop? _jsInterop;
     private double _lastLatitude;
     private double _lastLongitude;
@@ -79,40 +79,99 @@
     {
         if (firstRender)
         {
-            try
+            await InitializeMapAsync();
+        }
+        else
+        {
+            // Handle parameter changes after initial render
+            if (_isInitialized && _jsInterop != null && _mapInstance != null)
             {
-                // Log that we're starting initialization
-                await JSRuntime.InvokeVoidAsync("console.log", $"[Maps Component] Starting initialization for element: {_mapElementId}");
-                
-                // Wait for Leaflet to be available
-                await JSRuntime.InvokeVoidAsync("console.log", "[Maps Component] Checking for Leaflet library...");
-                var leafletReady = false;
-                for (int i = 0; i < 50; i++) // Try for up to 5 seconds
+                var (normalizedLat, normalizedLon) = NormalizeCoordinates(Latitude, Longitude);
+
+                // Update map center if coordinates changed
+                if (Math.Abs(normalizedLat - _lastLatitude) > 0.0001 || Math.Abs(normalizedLon - _lastLongitude) > 0.0001)
                 {
-                    try
-                    {
-                        leafletReady = await JSRuntime.InvokeAsync<bool>("eval", "typeof window.L !== 'undefined'");
-                        if (leafletReady)
-                        {
-                            await JSRuntime.InvokeVoidAsync("console.log", "[Maps Component] Leaflet library found!");
-                            break;
-                        }
-                    }
-                    catch
-                    {
-                        // Ignore errors during check
-                    }
-                    await Task.Delay(100);
+                    await _jsInterop.UpdateMapCenter(_mapInstance, normalizedLat, normalizedLon);
+                    _lastLatitude = normalizedLat;
+                    _lastLongitude = normalizedLon;
                 }
 
-                if (!leafletReady)
+                // Update zoom level if changed
+                if (ZoomLevel != _lastZoomLevel)
                 {
-                    _hasError = true;
-                    _isLoading = false;
-                    await JSRuntime.InvokeVoidAsync("console.error", "[Maps Component] Leaflet library not loaded after 5 seconds. Please ensure Leaflet script is included before Blazor framework.");
-                    StateHasChanged();
-                    return;
+                    await _jsInterop.UpdateZoomLevel(_mapInstance, ZoomLevel);
+                    _lastZoomLevel = ZoomLevel;
                 }
+
+                // Update map type if changed
+                if (MapType != _lastMapType)
+                {
+                    await _jsInterop.UpdateMapType(_mapInstance, MapType);
+                    _lastMapType = MapType;
+                }
+            }
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task InitializeMapAsync()
+    {
+        try
+        {
+            // Log that we're starting initialization
+            try
+            {
+                await JSRuntime.InvokeVoidAsync("console.log", $"[Maps Component] Starting initialization for element: {_mapElementId}");
+            }
+            catch (Exception ex)
+            {
+                // If console.log fails, at least we know JSInterop isn't working
+                System.Diagnostics.Debug.WriteLine($"[Maps Component] Failed to log to console: {ex.Message}");
+            }
+            
+            // Wait for Leaflet to be available
+            try
+            {
+                await JSRuntime.InvokeVoidAsync("console.log", "[Maps Component] Checking for Leaflet library...");
+            }
+            catch { }
+            
+            var leafletReady = false;
+            for (int i = 0; i < 50; i++) // Try for up to 5 seconds
+            {
+                try
+                {
+                    leafletReady = await JSRuntime.InvokeAsync<bool>("eval", "typeof window.L !== 'undefined'");
+                    if (leafletReady)
+                    {
+                        try
+                        {
+                            await JSRuntime.InvokeVoidAsync("console.log", "[Maps Component] Leaflet library found!");
+                        }
+                        catch { }
+                        break;
+                    }
+                }
+                catch
+                {
+                    // Ignore errors during check
+                }
+                await Task.Delay(100);
+            }
+
+            if (!leafletReady)
+            {
+                _hasError = true;
+                _isLoading = false;
+                try
+                {
+                    await JSRuntime.InvokeVoidAsync("console.error", "[Maps Component] Leaflet library not loaded after 5 seconds. Please ensure Leaflet script is included before Blazor framework.");
+                }
+                catch { }
+                StateHasChanged();
+                return;
+            }
 
                 // Import the JavaScript module
                 // For Blazor library components, the .razor.js file is automatically included
@@ -160,101 +219,91 @@
                     await JSRuntime.InvokeVoidAsync("console.error", "[Maps Component] No import paths were attempted!");
                 }
 
-                if (module == null)
+            if (module == null)
+            {
+                _hasError = true;
+                _isLoading = false;
+                try
                 {
-                    _hasError = true;
-                    _isLoading = false;
-                    await JSRuntime.InvokeVoidAsync("console.error", $"Failed to import Maps.razor.js module from all attempted paths.");
-                    await JSRuntime.InvokeVoidAsync("console.error", $"Last error: {lastError}");
-                    await JSRuntime.InvokeVoidAsync("console.error", "Please check the browser Network tab to see if the file is being requested and if it returns 404.");
-                    StateHasChanged();
-                    return;
+                    await JSRuntime.InvokeVoidAsync("console.error", $"[Maps Component] Failed to import Maps.razor.js module from all attempted paths.");
+                    await JSRuntime.InvokeVoidAsync("console.error", $"[Maps Component] Last error: {lastError}");
+                    await JSRuntime.InvokeVoidAsync("console.error", "[Maps Component] Please check the browser Network tab to see if the file is being requested and if it returns 404.");
                 }
+                catch { }
+                StateHasChanged();
+                return;
+            }
 
-                _jsModule = module;
+            _jsModule = module;
 
-                // Normalize coordinates
-                var (normalizedLat, normalizedLon) = NormalizeCoordinates(Latitude, Longitude);
+            // Normalize coordinates
+            var (normalizedLat, normalizedLon) = NormalizeCoordinates(Latitude, Longitude);
 
-                // Initialize JSInterop service
-                _jsInterop = new MapsJSInterop(_jsModule, _mapElementId);
+            // Initialize JSInterop service
+            _jsInterop = new MapsJSInterop(_jsModule, _mapElementId);
 
-                // Initialize map
-                _mapInstance = await _jsInterop.InitializeMap(normalizedLat, normalizedLon, ZoomLevel, MapType);
+            // Initialize map
+            _mapInstance = await _jsInterop.InitializeMap(normalizedLat, normalizedLon, ZoomLevel, MapType);
+            
+            if (_mapInstance != null)
+            {
+                _isInitialized = true;
+                _isLoading = false;
+                _hasError = false;
+                _lastLatitude = normalizedLat;
+                _lastLongitude = normalizedLon;
+                _lastZoomLevel = ZoomLevel;
+                _lastMapType = MapType;
                 
-                if (_mapInstance != null)
+                try
                 {
-                    _isInitialized = true;
-                    _isLoading = false;
-                    _hasError = false;
-                    _lastLatitude = normalizedLat;
-                    _lastLongitude = normalizedLon;
-                    _lastZoomLevel = ZoomLevel;
-                    _lastMapType = MapType;
-                    
-                    // Force UI update
-                    StateHasChanged();
+                    await JSRuntime.InvokeVoidAsync("console.log", "[Maps Component] Map initialized successfully!");
                 }
-                else
-                {
-                    _hasError = true;
-                    _isLoading = false;
-                    await JSRuntime.InvokeVoidAsync("console.error", "Map initialization returned null. Check browser console for JavaScript errors.");
-                    StateHasChanged();
-                }
-            }
-            catch (JSException ex)
-            {
-                _hasError = true;
-                _isLoading = false;
-                // Log to console for debugging
-                await JSRuntime.InvokeVoidAsync("console.error", $"JSException initializing map: {ex.Message}");
-                await JSRuntime.InvokeVoidAsync("console.error", $"Stack trace: {ex.StackTrace}");
+                catch { }
+                
+                // Force UI update
                 StateHasChanged();
             }
-            catch (Exception ex)
+            else
             {
                 _hasError = true;
                 _isLoading = false;
-                // Log to console for debugging
-                await JSRuntime.InvokeVoidAsync("console.error", $"Exception initializing map: {ex.Message}");
-                await JSRuntime.InvokeVoidAsync("console.error", $"Stack trace: {ex.StackTrace}");
+                try
+                {
+                    await JSRuntime.InvokeVoidAsync("console.error", "[Maps Component] Map initialization returned null. Check browser console for JavaScript errors.");
+                }
+                catch { }
                 StateHasChanged();
             }
         }
-        else
+        catch (JSException ex)
         {
-            // Handle parameter changes
-            if (_isInitialized && _jsInterop != null && _mapInstance != null)
+            _hasError = true;
+            _isLoading = false;
+            // Log to console for debugging
+            try
             {
-                var (normalizedLat, normalizedLon) = NormalizeCoordinates(Latitude, Longitude);
-
-                // Update map center if coordinates changed
-                if (Math.Abs(normalizedLat - _lastLatitude) > 0.0001 || Math.Abs(normalizedLon - _lastLongitude) > 0.0001)
-                {
-                    await _jsInterop.UpdateMapCenter(_mapInstance, normalizedLat, normalizedLon);
-                    _lastLatitude = normalizedLat;
-                    _lastLongitude = normalizedLon;
-                }
-
-                // Update zoom level if changed
-                if (ZoomLevel != _lastZoomLevel)
-                {
-                    await _jsInterop.UpdateZoomLevel(_mapInstance, ZoomLevel);
-                    _lastZoomLevel = ZoomLevel;
-                }
-
-                // Update map type if changed
-                if (MapType != _lastMapType)
-                {
-                    await _jsInterop.UpdateMapType(_mapInstance, MapType);
-                    _lastMapType = MapType;
-                }
+                await JSRuntime.InvokeVoidAsync("console.error", $"[Maps Component] JSException: {ex.Message}");
             }
+            catch { }
+            System.Diagnostics.Debug.WriteLine($"[Maps Component] JSException: {ex.Message}");
+            StateHasChanged();
         }
-
-        await base.OnAfterRenderAsync(firstRender);
+        catch (Exception ex)
+        {
+            _hasError = true;
+            _isLoading = false;
+            // Log to console for debugging
+            try
+            {
+                await JSRuntime.InvokeVoidAsync("console.error", $"[Maps Component] Exception: {ex.Message}");
+            }
+            catch { }
+            System.Diagnostics.Debug.WriteLine($"[Maps Component] Exception: {ex.Message}");
+            StateHasChanged();
+        }
     }
+
 
     // Coordinate validation helper methods
     private static bool ValidateLatitude(double latitude)
@@ -274,6 +323,12 @@
         return (normalizedLat, normalizedLon);
     }
 
+    // Serializable reference to the map instance
+    private class MapReference
+    {
+        public string ElementId { get; set; } = string.Empty;
+    }
+
     // Internal JSInterop service class for map operations
     private class MapsJSInterop
     {
@@ -286,11 +341,11 @@
             _mapElementId = mapElementId;
         }
 
-        public async ValueTask<IJSObjectReference?> InitializeMap(double latitude, double longitude, int zoomLevel, string mapType)
+        public async ValueTask<MapReference?> InitializeMap(double latitude, double longitude, int zoomLevel, string mapType)
         {
             try
             {
-                var result = await _jsModule.InvokeAsync<IJSObjectReference>(
+                var result = await _jsModule.InvokeAsync<MapReference>(
                     "initializeMap", _mapElementId, latitude, longitude, zoomLevel, mapType);
                 return result;
             }
@@ -300,7 +355,7 @@
             }
         }
 
-        public async ValueTask UpdateMapCenter(IJSObjectReference mapInstance, double latitude, double longitude)
+        public async ValueTask UpdateMapCenter(MapReference mapInstance, double latitude, double longitude)
         {
             try
             {
@@ -312,7 +367,7 @@
             }
         }
 
-        public async ValueTask UpdateZoomLevel(IJSObjectReference mapInstance, int zoomLevel)
+        public async ValueTask UpdateZoomLevel(MapReference mapInstance, int zoomLevel)
         {
             try
             {
@@ -324,7 +379,7 @@
             }
         }
 
-        public async ValueTask UpdateMapType(IJSObjectReference mapInstance, string mapType)
+        public async ValueTask UpdateMapType(MapReference mapInstance, string mapType)
         {
             try
             {
@@ -354,11 +409,6 @@
         if (_jsModule != null)
         {
             await _jsModule.DisposeAsync();
-        }
-        
-        if (_mapInstance != null)
-        {
-            await _mapInstance.DisposeAsync();
         }
     }
 }
