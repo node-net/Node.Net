@@ -1,4 +1,4 @@
-#if !IS_FRAMEWORK
+#if !IS_FRAMEWORK && !NETSTANDARD2_0
 using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace Node.Net.Components.Icons;

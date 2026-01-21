@@ -17,7 +17,8 @@ The latest release of Node.Net is [available on NuGet](https://www.nuget.org/pac
 
 Node.Net supports multiple target frameworks:
 - **Windows:** `net48`, `net8.0-windows` (uses framework-provided WPF types)
-- **Cross-Platform:** `net8.0`, `net8.0-wasm` (provides `System.Windows.*` type implementations)
+- **Cross-Platform:** `net8.0`, `net8.0-wasm`, `netstandard2.0` (provides `System.Windows.*` type implementations)
+- **.NET Standard 2.0:** `netstandard2.0` (compatible with .NET Framework 4.6.1+, .NET Core 2.0+, and other platforms)
 
 For detailed information about how `System.Windows.*` types are conditionally compiled and used across different target frameworks, see [docs/SYSTEM_NAMESPACE_RULES.md](docs/SYSTEM_NAMESPACE_RULES.md).
 

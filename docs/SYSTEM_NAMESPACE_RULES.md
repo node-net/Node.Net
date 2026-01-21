@@ -26,7 +26,7 @@ namespace System.Windows
 
 **Why?**
 - When targeting `net8.0-windows` or `net48`, these types are **already provided by the framework** (WPF/PresentationCore)
-- When targeting `net8.0` or `net8.0-wasm` (non-Windows), these types are **not available** and must be provided by Node.Net
+- When targeting `net8.0`, `net8.0-wasm`, or `netstandard2.0` (non-Windows or cross-platform), these types are **not available** and must be provided by Node.Net
 - The `IS_WINDOWS` constant is defined for Windows targets (`net8.0-windows`, `net48`)
 
 ### 2. Target Framework Behavior
@@ -35,6 +35,7 @@ namespace System.Windows
 |------------------|----------------------|----------------------------|
 | `net8.0` | ❌ No | **Node.Net provides** (`source/Node.Net/System`) |
 | `net8.0-wasm` | ❌ No | **Node.Net provides** (`source/Node.Net/System`) |
+| `netstandard2.0` | ❌ No | **Node.Net provides** (`source/Node.Net/System`) |
 | `net8.0-windows` | ✅ Yes | **Framework provides** (WPF/PresentationCore) |
 | `net48` | ✅ Yes | **Framework provides** (WPF/PresentationCore) |
 
@@ -265,7 +266,7 @@ The conditional compilation is controlled by MSBuild properties in `source/Node.
 ## Summary
 
 - **Purpose:** Provide `System.Windows.*` types for non-Windows targets
-- **Compilation:** Only compiled when `!IS_WINDOWS` (i.e., `net8.0`, `net8.0-wasm`)
+- **Compilation:** Only compiled when `!IS_WINDOWS` (i.e., `net8.0`, `net8.0-wasm`, `netstandard2.0`)
 - **Namespace:** Must match Windows exactly (`System.Windows.*`)
 - **API:** Must match Windows API exactly
 - **Tests:** Use `extern alias NodeNet` to reference Node.Net's types explicitly
