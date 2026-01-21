@@ -53,7 +53,7 @@ task :publish => [:build, :tag] do
     puts "nuget_api_key SECRET not available"
   end
   #else
-  puts "CI_SERVER, skipping publish command"
+  #puts "CI_SERVER, skipping publish command"
   #end
 end
 
