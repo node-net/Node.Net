@@ -3,7 +3,7 @@ require "raykit"
 require "makit"
 require_relative "scripts/ruby/makit/nuget_ext"
 
-task :default => [:setup,:build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
+task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
 
 task :build do
   try "rufo ."
@@ -59,10 +59,11 @@ end
 
 task :setup do
   # secrets management
-  Makit::Secrets.has_key?("https://gitlab.com/gems-rb/makit.git-test-api-key")
+
   if (SECRETS.has_key?("nuget_api_key"))
-    Makit::Secrets.set("https://gitlab.com/gems-rb/makit.git-test-api-key", "1234567890")
+    Makit::Secrets.set("nuget_api_key", SECRETS["nuget_api_key"])
   end
+  Makit::Secrets.has_key?("nuget_api_key")
 end
 
 # Detect platform for cross-platform builds
