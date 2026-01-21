@@ -107,14 +107,16 @@
   <!-- .razor.js files are automatically included as static web assets by the Razor SDK -->
   <!-- But we need to ensure they're accessible at _content/Node.Net/Components/*.razor.js -->
   <!-- The Razor SDK places them at Components/*.razor.js, so we need to map them correctly -->
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net48' ">
+  <!-- Only include for Blazor-compatible frameworks (net8.0, net8.0-windows) -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows' ">
     <Content Include="Components\*.razor.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   
   <!-- Ensure static web assets are configured correctly -->
-  <PropertyGroup Condition=" '$(TargetFramework)' != 'net48' ">
+  <!-- Only configure for Blazor-compatible frameworks (net8.0, net8.0-windows) -->
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows' ">
     <StaticWebAssetBasePath>_content/Node.Net</StaticWebAssetBasePath>
   </PropertyGroup>
 
