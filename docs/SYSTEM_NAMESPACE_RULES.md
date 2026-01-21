@@ -92,21 +92,25 @@ namespace System.Windows.Media.Media3D  // Match Windows namespace exactly
 
 ## Using System Types in Tests
 
-### The Problem
+### Transparent Type Access
 
-When writing tests, you may encounter type ambiguity:
-- On `net8.0-windows`: Types come from WPF/PresentationCore
-- On `net8.0`: Types come from Node.Net's `source/Node.Net/System` files
-- Both are in the same namespace (`System.Windows.*`)
+Tests can now use `System.Windows.*` types with **standard namespace syntax** - no special prefixes or aliases required. The test project uses global usings to make these types available transparently.
 
-### The Solution: Extern Alias
+### The Solution: Global Usings
 
-Use `extern alias NodeNet` to explicitly reference Node.Net's types:
+The test project (`tests/Node.Net.Test/Node.Net.Test.csproj`) includes `GlobalUsings.cs` with:
 
 ```csharp
-extern alias NodeNet;
+global using System.Windows;
+global using System.Windows.Media;
+global using System.Windows.Media.Imaging;
+global using System.Windows.Media.Media3D;
+```
+
+This allows tests to use standard namespace syntax:
+
+```csharp
 using NUnit.Framework;
-using NodeNet::System.Windows.Media.Media3D;  // Explicitly use Node.Net's types
 
 namespace Node.Net.Test
 {
@@ -116,13 +120,18 @@ namespace Node.Net.Test
         [Test]
         public void Test()
         {
-            // This Matrix3D comes from Node.Net (via extern alias)
+            // Matrix3D is available via global usings - works on all target frameworks
             Matrix3D matrix = new Matrix3D();
             // ...
         }
     }
 }
 ```
+
+**How it works:**
+- On `net8.0-windows`: Types resolve to WPF/PresentationCore (framework-provided)
+- On `net8.0`: Types resolve to Node.Net's `source/Node.Net/System` files (custom implementation)
+- Both use the same namespace (`System.Windows.*`), so code is identical
 
 ### Extension Methods
 
@@ -131,13 +140,15 @@ Extension methods in `Node.Net` namespace work with both:
 - Node.Net-provided types (on non-Windows)
 
 ```csharp
-extern alias NodeNet;
-using NodeNet::Node.Net;  // Extension methods are in Node.Net namespace
+using NUnit.Framework;
+using Node.Net;  // Extension methods are in Node.Net namespace
 
 // Extension methods work regardless of where Matrix3D comes from
 Matrix3D matrix = new Matrix3D();
 matrix = matrix.RotateOTS(new Vector3D(45, 30, 0));  // Extension method
 ```
+
+**Note:** The test project no longer uses `extern alias NodeNet`. All types are accessed using standard namespace references.
 
 ## Current Implementation Status
 
@@ -190,10 +201,24 @@ When adding new types to `source/Node.Net/System`:
    tests/Node.Net.Test/System/Windows/Media/Media3D/NewType.Tests.cs
    ```
 
-6. **Use extern alias in tests:**
+6. **Use standard namespace syntax in tests:**
    ```csharp
-   extern alias NodeNet;
-   using NodeNet::System.Windows.Media.Media3D;
+   using NUnit.Framework;
+   // System.Windows.Media.Media3D types are available via global usings
+   
+   namespace Node.Net.Test
+   {
+       [TestFixture]
+       internal class NewTypeTests
+       {
+           [Test]
+           public void Test()
+           {
+               NewType value = new NewType();  // Standard namespace syntax
+               // ...
+           }
+       }
+   }
    ```
 
 ## Common Pitfalls
@@ -269,4 +294,4 @@ The conditional compilation is controlled by MSBuild properties in `source/Node.
 - **Compilation:** Only compiled when `!IS_WINDOWS` (i.e., `net8.0`, `net8.0-wasm`, `netstandard2.0`)
 - **Namespace:** Must match Windows exactly (`System.Windows.*`)
 - **API:** Must match Windows API exactly
-- **Tests:** Use `extern alias NodeNet` to reference Node.Net's types explicitly
+- **Tests:** Use standard namespace syntax - `System.Windows.*` types are available via global usings in the test project
