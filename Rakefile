@@ -41,9 +41,16 @@ task :run => [:test] do
 end
 
 task :publish => [:build, :tag] do
-  #if ENV["CI_SERVER"].nil?
   nuget = PROJECT.get_dev_dir("nuget")
   package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
+
+  if (Makit::Secrets.has_key?("nuget_api_key"))
+    Makit::NuGetExt::publish(package, Makit::Secrets["nuget_api_key"], "https://api.nuget.org/v3/index.json")
+  else
+    puts "nuget_api_key SECRET not available"
+  end
+  #if ENV["CI_SERVER"].nil?
+
   if (!File.exist?("#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg"))
     FileUtils.cp(package, "#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
   end
