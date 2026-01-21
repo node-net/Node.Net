@@ -72,11 +72,12 @@ end
 
 task :setup do
   # secrets management
-
   if (SECRETS.has_key?("nuget_api_key"))
     Makit::Secrets.set("nuget_api_key", SECRETS["nuget_api_key"])
   end
-  Makit::Secrets.has_key?("nuget_api_key")
+
+  sh "dotnet new razorclasslib -n Node.Net.Components -o source/Node.Net.Components" unless Dir.exist?("source/Node.Net.Components")
+  sh "dotnet new TUnit -n Node.Net.Components.Test -o tests/Node.Net.Components.Test" unless Dir.exist?("tests/Node.Net.Components.Test")
 end
 
 # Detect platform for cross-platform builds
