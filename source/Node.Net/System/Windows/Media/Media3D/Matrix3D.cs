@@ -604,9 +604,34 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public override int GetHashCode()
         {
+#if NETSTANDARD2_0
+            // Calculate hash1 for first 8 matrix values
+            int hash1 = _m11.GetHashCode();
+            hash1 = (hash1 * 397) ^ _m12.GetHashCode();
+            hash1 = (hash1 * 397) ^ _m13.GetHashCode();
+            hash1 = (hash1 * 397) ^ _m14.GetHashCode();
+            hash1 = (hash1 * 397) ^ _m21.GetHashCode();
+            hash1 = (hash1 * 397) ^ _m22.GetHashCode();
+            hash1 = (hash1 * 397) ^ _m23.GetHashCode();
+            hash1 = (hash1 * 397) ^ _m24.GetHashCode();
+            
+            // Calculate hash2 for remaining 8 matrix values
+            int hash2 = _m31.GetHashCode();
+            hash2 = (hash2 * 397) ^ _m32.GetHashCode();
+            hash2 = (hash2 * 397) ^ _m33.GetHashCode();
+            hash2 = (hash2 * 397) ^ _m34.GetHashCode();
+            hash2 = (hash2 * 397) ^ _offsetX.GetHashCode();
+            hash2 = (hash2 * 397) ^ _offsetY.GetHashCode();
+            hash2 = (hash2 * 397) ^ _offsetZ.GetHashCode();
+            hash2 = (hash2 * 397) ^ _m44.GetHashCode();
+            
+            // Combine hash1 and hash2
+            return (hash1 * 397) ^ hash2;
+#else
             int hash1 = HashCode.Combine(_m11, _m12, _m13, _m14, _m21, _m22, _m23, _m24);
             int hash2 = HashCode.Combine(_m31, _m32, _m33, _m34, _offsetX, _offsetY, _offsetZ, _m44);
             return HashCode.Combine(hash1, hash2);
+#endif
         }
 
         /// <summary>

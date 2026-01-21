@@ -158,7 +158,11 @@ namespace System.Windows
         /// </summary>
         public override int GetHashCode()
         {
+#if NETSTANDARD2_0
+            return ((_x.GetHashCode() * 397) ^ _y.GetHashCode());
+#else
             return HashCode.Combine(_x, _y);
+#endif
         }
 
         /// <summary>

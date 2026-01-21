@@ -62,19 +62,12 @@ internal class BuildVerificationTests : TestHarness
     /// <summary>
     /// Checks if build output contains known compatibility issues that indicate the framework
     /// has fundamental incompatibilities that need to be addressed in the codebase.
+    /// Note: This method is kept for potential future use but compatibility issues have been fixed.
     /// </summary>
     private bool HasKnownCompatibilityIssues(string output, string error, string framework)
     {
-        if (framework == "netstandard2.0")
-        {
-            // Check for known .NET Standard 2.0 incompatibilities
-            var combined = output + error;
-            return combined.Contains("HashCode") ||
-                   combined.Contains("AesGcm") ||
-                   combined.Contains("RandomNumberGenerator") ||
-                   combined.Contains("Rfc2898DeriveBytes") ||
-                   combined.Contains("Contains") && combined.Contains("StringComparison");
-        }
+        // All known compatibility issues have been fixed with conditional compilation
+        // This method is kept for potential future use
         return false;
     }
 
@@ -114,24 +107,9 @@ internal class BuildVerificationTests : TestHarness
         if (exitCode != 0)
         {
             var filteredErrors = FilterErrors(output, error);
-            var hasKnownIssues = HasKnownCompatibilityIssues(output, error, "netstandard2.0");
-            
-            if (hasKnownIssues)
-            {
-                // Skip the test when known compatibility issues are detected
-                // This allows the test suite to pass while documenting the known limitation
-                Assert.Ignore(
-                    $"Build failed for netstandard2.0 due to known compatibility issues. " +
-                    $"The codebase requires updates to support .NET Standard 2.0. " +
-                    $"Key issues: HashCode, AesGcm, RandomNumberGenerator.Fill, or String.Contains overloads. " +
-                    $"Filtered errors:\n{filteredErrors}");
-            }
-            else
-            {
-                Assert.Fail(
-                    $"Build failed for netstandard2.0. Exit code: {exitCode}. " +
-                    $"Filtered errors:\n{filteredErrors}");
-            }
+            Assert.Fail(
+                $"Build failed for netstandard2.0. Exit code: {exitCode}. " +
+                $"Filtered errors:\n{filteredErrors}");
         }
         
         Assert.That(exitCode, Is.EqualTo(0), 
@@ -154,30 +132,16 @@ internal class BuildVerificationTests : TestHarness
         var (exitCode, output, error) = ExecuteBuild(projectPath);
 
         // Assert
-        // Verify netstandard2.0 is mentioned in output (even if build fails)
+        // Verify netstandard2.0 is mentioned in output
         Assert.That(output, Does.Contain("netstandard2.0"), 
             "Build output should mention netstandard2.0 target framework");
         
         if (exitCode != 0)
         {
             var filteredErrors = FilterErrors(output, error);
-            var hasKnownIssues = HasKnownCompatibilityIssues(output, error, "netstandard2.0");
-            
-            if (hasKnownIssues)
-            {
-                // If the failure is due to known netstandard2.0 issues, skip the test
-                // This allows the test suite to pass while documenting the known limitation
-                Assert.Ignore(
-                    $"Build failed for all target frameworks due to known netstandard2.0 compatibility issues. " +
-                    $"The codebase requires updates to fully support .NET Standard 2.0. " +
-                    $"Filtered errors:\n{filteredErrors}");
-            }
-            else
-            {
-                Assert.Fail(
-                    $"Build failed for all target frameworks. Exit code: {exitCode}. " +
-                    $"Filtered errors:\n{filteredErrors}");
-            }
+            Assert.Fail(
+                $"Build failed for all target frameworks. Exit code: {exitCode}. " +
+                $"Filtered errors:\n{filteredErrors}");
         }
         
         Assert.That(exitCode, Is.EqualTo(0), 

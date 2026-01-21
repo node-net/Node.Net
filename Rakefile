@@ -70,21 +70,3 @@ def compatible_targets
     "/p:TargetFrameworks=net8.0"
   end
 end
-
-#task :tag => [:test] do
-#  start_task :tag
-#  if ENV["CI_SERVER"].nil?
-#    if GIT_DIRECTORY.has_tag PROJECT.version
-#      puts "git tag #{PROJECT.version} already exists"
-#    else
-#      puts "git tag #{PROJECT.version} does not exist"
-#      if (!PROJECT.read_only?)
-#        run("git add .")
-#        run("git tag #{PROJECT.version} -m\"#{PROJECT.version}\"")
-#        run("git push --tags")
-#      end
-#    end
-#  else
-#    puts "CI_SERVER, skipping tag command"
-#  end
-#end
