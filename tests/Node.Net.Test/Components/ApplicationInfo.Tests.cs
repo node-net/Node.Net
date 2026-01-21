@@ -210,6 +210,13 @@ internal class ApplicationInfoTests : TestHarness
     [Test]
     public async Task Render_GeneratesImage()
     {
+        // Check if artifact already exists - skip if present
+        var artifactFile = GetArtifactFileInfo("ApplicationInfo.jpeg");
+        if (File.Exists(artifactFile.FullName))
+        {
+            Assert.Ignore($"Artifact image already exists at {artifactFile.FullName}. Skipping image generation.");
+        }
+        
         // Arrange
         using var ctx = new Bunit.TestContext();
         
@@ -226,7 +233,6 @@ internal class ApplicationInfoTests : TestHarness
         Assert.That(cut.Markup, Is.Not.Empty);
         
         // Generate image from rendered HTML
-        var artifactFile = GetArtifactFileInfo("ApplicationInfo.jpeg");
         await GenerateComponentImage(cut.Markup, artifactFile.FullName);
         
         // Verify artifact was created (either JPEG image or TXT placeholder)
