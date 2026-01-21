@@ -15,6 +15,7 @@ task :build do
     # Build all targets (Windows)
     sh "dotnet restore #{PROJECT.name}.sln"
     sh "dotnet build #{PROJECT.name}.sln --configuration Release"
+    sh "dotnet pack source/Node.Net/Node.Net.csproj -c Release -o artifacts/nupkg"
   else
     # Build only compatible targets (Mac/Linux)
     sh "dotnet restore source/Node.Net/Node.Net.csproj #{targets}"
@@ -41,28 +42,32 @@ task :run => [:test] do
 end
 
 task :publish => [:build, :tag] do
-  sh "dotnet pack source/Node.Net/Node.Net.csproj -c Release -o artifacts/nupkg"
-  nuget = PROJECT.get_dev_dir("nuget")
-  package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
+  if (Makit::Environment.is_windows?)
+    sh "dotnet pack source/Node.Net/Node.Net.csproj -c Release -o artifacts/nupkg"
+    nuget = PROJECT.get_dev_dir("nuget")
+    package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
 
-  if (Makit::Secrets.has_key?("nuget_api_key"))
-    Makit::NuGetExt::publish(package, Makit::Secrets::get_key("nuget_api_key"), "https://api.nuget.org/v3/index.json")
-  else
-    puts "nuget_api_key SECRET not available"
-  end
-  #if ENV["CI_SERVER"].nil?
+    if (Makit::Secrets.has_key?("nuget_api_key"))
+      Makit::NuGetExt::publish(package, Makit::Secrets::get_key("nuget_api_key"), "https://api.nuget.org/v3/index.json")
+    else
+      puts "nuget_api_key SECRET not available"
+    end
+    #if ENV["CI_SERVER"].nil?
 
-  if (!File.exist?("#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg"))
-    FileUtils.cp(package, "#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
-  end
-  if (SECRETS.has_key?("nuget_api_key"))
-    Makit::NuGetExt::publish(package, SECRETS["nuget_api_key"], "https://api.nuget.org/v3/index.json")
+    if (!File.exist?("#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg"))
+      FileUtils.cp(package, "#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
+    end
+    if (SECRETS.has_key?("nuget_api_key"))
+      Makit::NuGetExt::publish(package, SECRETS["nuget_api_key"], "https://api.nuget.org/v3/index.json")
+    else
+      puts "nuget_api_key SECRET not available"
+    end
+    #else
+    #puts "CI_SERVER, skipping publish command"
+    #end
   else
-    puts "nuget_api_key SECRET not available"
+    puts "not windows, skipping publish command"
   end
-  #else
-  #puts "CI_SERVER, skipping publish command"
-  #end
 end
 
 task :setup do
