@@ -1,12 +1,10 @@
 ﻿#if IS_WINDOWS
-extern alias NodeNet;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using NodeNet::System.Windows.Media.Imaging;
 using NUnit.Framework;
-using NodeNet::Node.Net;
+using Node.Net;
 
 namespace Node.Net
 {

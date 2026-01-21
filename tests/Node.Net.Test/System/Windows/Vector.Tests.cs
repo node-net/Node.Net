@@ -1,6 +1,4 @@
-extern alias NodeNet;
 using NUnit.Framework;
-using Vector = NodeNet::System.Windows.Vector; // Explicitly use Node.Net's Vector
 using static System.Math;
 
 namespace Node.Net.Test

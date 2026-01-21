@@ -1,13 +1,12 @@
 #nullable enable
-extern alias NodeNet;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using LiteDB;
-using NodeNet::Node.Net.Diagnostic;
-using NodeNet::Node.Net.Service.Logging;
+using Node.Net.Diagnostic;
+using Node.Net.Service.Logging;
 
 namespace Node.Net.Test.Service.Logging;
 

@@ -1,10 +1,9 @@
 #if !IS_FRAMEWORK
-extern alias NodeNet;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
 using NUnit.Framework;
-using NodeNet::Node.Net.Components;
+using Node.Net.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace Node.Net.Test.Components;

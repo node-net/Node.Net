@@ -1,9 +1,8 @@
-﻿extern alias NodeNet;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
-using NodeNet::Node.Net.JsonRPC;
-using NodeNet::Node.Net;
+using Node.Net.JsonRPC;
+using Node.Net;
 
 namespace Node.Net.JsonRPC
 {
@@ -55,12 +54,12 @@ namespace Node.Net.JsonRPC
             {
                 Methods = new Dictionary<string, IResponder>
                 {
-                    {"say_hello", new NodeNet::Node.Net.JsonRPC.Function<string>(SayHello) },
-                    {"action3",new NodeNet::Node.Net.JsonRPC.Action<string,string,string>(Action3) },
-                    {"bad_action",new NodeNet::Node.Net.JsonRPC.Action(BadAction) },
-                    { "add_multiply",new NodeNet::Node.Net.JsonRPC.Function<int,int,int,int>(AddMultiply,"a","b","c") },
-                    {"set_properties",new NodeNet::Node.Net.JsonRPC.Action<string,IDictionary<string,string>>(SetProperties) },
-                    {"get_properties",new NodeNet::Node.Net.JsonRPC.Function<string,string[],IDictionary<string,string>>(GetProperties) }
+                    {"say_hello", new Node.Net.JsonRPC.Function<string>(SayHello) },
+                    {"action3",new Node.Net.JsonRPC.Action<string,string,string>(Action3) },
+                    {"bad_action",new Node.Net.JsonRPC.Action(BadAction) },
+                    { "add_multiply",new Node.Net.JsonRPC.Function<int,int,int,int>(AddMultiply,"a","b","c") },
+                    {"set_properties",new Node.Net.JsonRPC.Action<string,IDictionary<string,string>>(SetProperties) },
+                    {"get_properties",new Node.Net.JsonRPC.Function<string,string[],IDictionary<string,string>>(GetProperties) }
                 }
             };
         }

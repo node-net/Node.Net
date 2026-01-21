@@ -1,5 +1,4 @@
 #if !IS_FRAMEWORK
-extern alias NodeNet;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,8 +6,8 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using NodeNet::Node.Net.Components;
-using NodeNet::Node.Net.Diagnostic;
+using Node.Net.Components;
+using Node.Net.Diagnostic;
 using Microsoft.Playwright;
 using Microsoft.FluentUI.AspNetCore.Components;
 

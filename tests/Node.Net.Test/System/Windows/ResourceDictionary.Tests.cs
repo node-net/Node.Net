@@ -1,10 +1,7 @@
-extern alias NodeNet;
 using System;
 using System.Collections;
 using System.Linq;
 using NUnit.Framework;
-using NodeNet::System.Windows;
-using System.Windows;
 
 namespace Node.Net.Test
 {

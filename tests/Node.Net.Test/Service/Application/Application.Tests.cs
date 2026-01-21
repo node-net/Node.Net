@@ -1,12 +1,11 @@
-extern alias NodeNet;
 using NUnit.Framework;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
-using NodeNet::Node.Net.Diagnostic.Generic;
-using NodeNet::Node.Net.Service.Application;
-using ApplicationService = NodeNet::Node.Net.Service.Application.Application;
+using Node.Net.Diagnostic.Generic;
+using Node.Net.Service.Application;
+using ApplicationService = Node.Net.Service.Application.Application;
 
 namespace Node.Net.Test.Service.Application;
 

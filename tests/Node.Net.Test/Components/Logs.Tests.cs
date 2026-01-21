@@ -1,5 +1,4 @@
 #if !IS_FRAMEWORK
-extern alias NodeNet;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -8,9 +7,9 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NodeNet::Node.Net.Components;
-using NodeNet::Node.Net.Diagnostic;
-using NodeNet::Node.Net.Service.Logging;
+using Node.Net.Components;
+using Node.Net.Diagnostic;
+using Node.Net.Service.Logging;
 using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace Node.Net.Test.Components;

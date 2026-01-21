@@ -1,12 +1,12 @@
 #nullable enable
-extern alias NodeNet;
 using NUnit.Framework;
 using System;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using NodeNet::Node.Net.Diagnostic;
-using NodeNet::Node.Net.Service.Logging;
+using MELogLevel = Microsoft.Extensions.Logging.LogLevel;
+using Node.Net.Diagnostic;
+using Node.Net.Service.Logging;
 
 namespace Node.Net.Test.Service.Logging;
 
@@ -192,11 +192,11 @@ internal class LogServiceIntegrationTests : TestHarness
         var logger = _loggerProvider!.CreateLogger("TestCategory");
 
         // Act & Assert
-        Assert.That(logger.IsEnabled(LogLevel.Trace), Is.True);
-        Assert.That(logger.IsEnabled(LogLevel.Debug), Is.True);
-        Assert.That(logger.IsEnabled(LogLevel.Information), Is.True);
-        Assert.That(logger.IsEnabled(LogLevel.Warning), Is.True);
-        Assert.That(logger.IsEnabled(LogLevel.Error), Is.True);
-        Assert.That(logger.IsEnabled(LogLevel.Critical), Is.True);
+        Assert.That(logger.IsEnabled(MELogLevel.Trace), Is.True);
+        Assert.That(logger.IsEnabled(MELogLevel.Debug), Is.True);
+        Assert.That(logger.IsEnabled(MELogLevel.Information), Is.True);
+        Assert.That(logger.IsEnabled(MELogLevel.Warning), Is.True);
+        Assert.That(logger.IsEnabled(MELogLevel.Error), Is.True);
+        Assert.That(logger.IsEnabled(MELogLevel.Critical), Is.True);
     }
 }

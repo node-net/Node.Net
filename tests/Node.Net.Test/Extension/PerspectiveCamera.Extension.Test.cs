@@ -1,8 +1,7 @@
 ﻿#if IS_WINDOWS
-extern alias NodeNet;
 using NUnit.Framework;
 using System.Windows.Media.Media3D; // Use framework types for net8.0-windows
-using NodeNet::Node.Net; // For extension methods
+using Node.Net; // For extension methods
 
 namespace Node.Net.Test.Extension
 {
@@ -19,7 +18,7 @@ namespace Node.Net.Test.Extension
                 UpDirection = new Vector3D(0, 1, 0)
             };
             // Use reflection to access conditionally compiled extension methods
-            var assembly = typeof(NodeNet::Node.Net.Factory).Assembly;
+            var assembly = typeof(Factory).Assembly;
             var extensionType = assembly.GetType("Node.Net.PerspectiveCameraExtension");
             if (extensionType == null)
             {
@@ -40,7 +39,7 @@ namespace Node.Net.Test.Extension
                 LookDirection = new Vector3D(0, 0, -1),
                 UpDirection = new Vector3D(0, 1, 0)
             };
-            var assembly = typeof(NodeNet::Node.Net.Factory).Assembly;
+            var assembly = typeof(Factory).Assembly;
             var extensionType = assembly.GetType("Node.Net.PerspectiveCameraExtension");
             if (extensionType == null)
             {

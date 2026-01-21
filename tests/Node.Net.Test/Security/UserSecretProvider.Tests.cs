@@ -1,5 +1,4 @@
 #nullable enable
-extern alias NodeNet;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,8 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using NodeNet::Node.Net.Diagnostic;
-using NodeNet::Node.Net.Security;
+using Node.Net.Diagnostic;
+using Node.Net.Security;
 
 namespace Node.Net.Test.Security;
 

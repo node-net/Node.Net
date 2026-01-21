@@ -1,8 +1,7 @@
-extern alias NodeNet;
 using NUnit.Framework;
 using System;
-using NodeNet::Node.Net.Diagnostic;
-using NodeNet::Node.Net.Service.Application;
+using Node.Net.Diagnostic;
+using Node.Net.Service.Application;
 
 namespace Node.Net.Test.Service.Application;
 

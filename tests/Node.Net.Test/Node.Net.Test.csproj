@@ -45,8 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\Node.Net\Node.Net.csproj">
-      <Aliases>NodeNet</Aliases>
-    </ProjectReference>
+    <ProjectReference Include="..\..\source\Node.Net\Node.Net.csproj" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
-extern alias NodeNet;
 using NUnit.Framework;
 using System;
-using NodeNet::Node.Net.Service.Logging;
+using Node.Net.Service.Logging;
 
 namespace Node.Net.Service.Logging;
 
