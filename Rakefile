@@ -3,7 +3,7 @@ require "raykit"
 require "makit"
 require_relative "scripts/ruby/makit/nuget_ext"
 
-task :default => [:integrate, :tag, :publish, :pull_incoming, :sync]
+task :default => [:build,:test,:integrate, :tag, :publish, :pull_incoming, :sync]
 
 task :build do
   try "rufo ."
