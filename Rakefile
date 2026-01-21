@@ -1,6 +1,7 @@
 VERSION = "2.0.11"
 require "raykit"
 require "makit"
+require_relative "scripts/ruby/makit/nuget_ext"
 
 task :default => [:integrate, :tag, :publish, :pull_incoming, :sync]
 
@@ -47,12 +48,20 @@ task :publish => [:build, :tag] do
       FileUtils.cp(package, "#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
     end
     if (SECRETS.has_key?("nuget_api_key"))
-      run("dotnet nuget push #{package} --skip-duplicate --api-key #{SECRETS["nuget_api_key"]} --source https://api.nuget.org/v3/index.json")
+      Makit::NuGetExt::publish(package, SECRETS["nuget_api_key"], "https://api.nuget.org/v3/index.json")
     else
       puts "nuget_api_key SECRET not available"
     end
   else
     puts "CI_SERVER, skipping publish command"
+  end
+end
+
+task :setup do
+  # secrets management
+  Makit::Secrets.has_key?("https://gitlab.com/gems-rb/makit.git-test-api-key")
+  if (SECRETS.has_key?("nuget_api_key"))
+    Makit::Secrets.set("https://gitlab.com/gems-rb/makit.git-test-api-key", "1234567890")
   end
 end
 
