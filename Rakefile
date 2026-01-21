@@ -72,8 +72,11 @@ end
 
 task :setup do
   # secrets management
-  if (SECRETS.has_key?("nuget_api_key"))
-    Makit::Secrets.set("nuget_api_key", SECRETS["nuget_api_key"])
+  #if (SECRETS.has_key?("nuget_api_key"))
+  #  Makit::Secrets.set("nuget_api_key", SECRETS["nuget_api_key"])
+  if (!Makit::Secrets.has_key?("nuget_api_key"))
+    puts "nuget_api_key SECRET not available"
+    Makit::Secrets.set("nuget_api_key") # prompt for the key
   end
 
   sh "dotnet new razorclasslib -n Node.Net.Components -o source/Node.Net.Components" unless Dir.exist?("source/Node.Net.Components")
