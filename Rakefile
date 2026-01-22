@@ -6,7 +6,7 @@ require "makit"
 task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
 
 task :build do
-  try "rufo ."
+  puts `rufo .`
   #Raykit::Version::set_version_in_glob("**/*.csproj", VERSION)
   Makit::Version::set_version_in_files("**/*.csproj", VERSION)
 
@@ -61,7 +61,7 @@ task :publish => [:build, :tag] do
     #  Makit::NuGet::publish(package, SECRETS["nuget_api_key"], "https://api.nuget.org/v3/index.json")
     #else
     #  puts "nuget_api_key SECRET not available"
-   # end
+    # end
     #else
     #puts "CI_SERVER, skipping publish command"
     #end
