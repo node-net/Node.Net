@@ -49,7 +49,7 @@ task :publish => [:build, :tag] do
     package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
 
     if (Makit::Secrets.has_key?("nuget_api_key"))
-      Makit::NuGet::publish(package, Makit::Secrets::get_key("nuget_api_key"), "https://api.nuget.org/v3/index.json")
+      Makit::NuGet::publish(package, Makit::Secrets.get("nuget_api_key"), "https://api.nuget.org/v3/index.json")
     else
       puts "nuget_api_key SECRET not available"
     end
@@ -132,7 +132,7 @@ task :actions_status do
     puts "Querying GitHub Actions status for #{owner}/#{repo} (branch: #{branch})..."
 
     if (Makit::Secrets.has_key?("github_token"))
-      token = Makit::Secrets::get_key("github_token")
+      token = Makit::Secrets.get("github_token")
       result = Makit::GitHubActions::workflow_status(owner, repo, branch: branch, token: token)
     else
       puts "github_token SECRET not available"

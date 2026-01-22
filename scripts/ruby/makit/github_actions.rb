@@ -28,7 +28,7 @@ module Makit
 
       request = Net::HTTP::Get.new(uri)
       request["Accept"] = "application/vnd.github.v3+json"
-      request["Authorization"] = "token #{token}"
+      request["Authorization"] = "Bearer #{token}"
       request["User-Agent"] = "Node.Net-Rake-Task"
 
       response = http.request(request)
