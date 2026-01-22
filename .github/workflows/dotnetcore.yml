@@ -1,6 +1,14 @@
 name: .NET Core
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -8,14 +16,39 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
+    
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.200
+        dotnet-version: 8.0.122
+    
+    - name: Restore dependencies
+      run: dotnet restore Node.Net.sln
+    
     - name: Build with dotnet
-      run: dotnet build --configuration Release
+      run: dotnet build Node.Net.sln --configuration Release --no-restore
+    
     - name: Package with dotnet
-      run: dotnet pack Node.Net.sln -c Release
-    - name: Run Unit Test
-      run: dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release
+      run: dotnet pack source/Node.Net/Node.Net.csproj -c Release --no-restore -o artifacts/nupkg
+    
+    - name: Run Unit Tests
+      run: |
+        dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release --no-restore
+        dotnet test tests/Node.Net.Components.Test/Node.Net.Components.Test.csproj -c Release --no-restore
+    
+    - name: Publish to NuGet
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+      run: |
+        $package = Get-ChildItem -Path "artifacts/nupkg/*.nupkg" | Select-Object -First 1
+        if ($package) {
+          dotnet nuget push $package.FullName `
+            --skip-duplicate `
+            --api-key $env:NUGET_API_KEY `
+            --source https://api.nuget.org/v3/index.json
+        } else {
+          Write-Host "No package found to publish"
+          exit 1
+        }
+      env:
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
