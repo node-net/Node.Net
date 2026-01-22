@@ -1,19 +1,19 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
 using Node.Net;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal class LogTest
     {
         [Test]
-        public void Usage()
+        public async Task Usage()
         {
             Log.Info("info");
             Log.Debug("debug");
             Log.Error("error");
             Log.Fatal("fatal");
             Log.Warn("warn");
+            await Task.CompletedTask;
         }
     }
 }

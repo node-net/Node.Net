@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Node.Net; // Extension methods are in Node.Net namespace
 
 namespace Node.Net.Test.Extension
@@ -10,20 +10,20 @@ namespace Node.Net.Test.Extension
         public object Parent { get; set; }
     }
 
-    [TestFixture, Category("Object.Extension")]
     public class ObjectExtensionTest
     {
         [Test]
-        public void GetName_SetName()
+        public async Task GetName_SetName()
         {
             DateTime dateTime = DateTime.Now;
-            Assert.That(dateTime.GetName(),Is.EqualTo(""));
+            await Assert.That(dateTime.GetName()).IsEqualTo("");
             dateTime.SetName("Now");
             //Assert.AreEqual("Now", dateTime.GetName());
+            await Task.CompletedTask;
         }
 
         [Test]
-        public void GetParent_SetParent()
+        public async Task GetParent_SetParent()
         {
             Dictionary<string, dynamic> bar = new Dictionary<string, dynamic> { { "Name", "bar" } };
             bar.SetParent(null);
@@ -33,26 +33,26 @@ namespace Node.Net.Test.Extension
                 {"bar",bar }
             };
             bar.SetParent(foo);
-            Assert.That(foo, Is.SameAs(bar.GetParent()));
+            await Assert.That(ReferenceEquals(foo, bar.GetParent())).IsTrue();
 
             Widget widget = new Widget();
-            Assert.That(widget.GetParent(),Is.Null);
+            await Assert.That(widget.GetParent()).IsNull();
             widget.SetParent(null);
-            Assert.That(widget.GetParent(), Is.Null);
+            await Assert.That(widget.GetParent()).IsNull();
 
             bar.ClearMetaData();
         }
 
         [Test]
-        public void GetName_From_Dictionary()
+        public async Task GetName_From_Dictionary()
         {
             Dictionary<string, dynamic> dict = new Dictionary<string, dynamic>
             {
                 {"Name", "foo" }
             };
-            Assert.That(dict.GetName(), Is.EqualTo("foo"));
+            await Assert.That(dict.GetName()).IsEqualTo("foo");
             var obj = dict;
-            Assert.That(obj.GetName(), Is.EqualTo("foo"));
+            await Assert.That(obj.GetName()).IsEqualTo("foo");
         }
     }
 }

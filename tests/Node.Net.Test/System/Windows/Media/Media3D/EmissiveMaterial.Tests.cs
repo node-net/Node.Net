@@ -1,24 +1,23 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
-    internal static class EmissiveMaterialTests
+    internal class EmissiveMaterialTests
     {
         [Test]
-        public static void EmissiveMaterial_Constructor_Default_InitializesCorrectly()
+        public async Task EmissiveMaterial_Constructor_Default_InitializesCorrectly()
         {
             // Arrange & Act
             EmissiveMaterial material = new EmissiveMaterial();
 
             // Assert
-            Assert.That(material, Is.Not.Null);
-            Assert.That(material.Brush, Is.Null);
+            await Assert.That(material).IsNotNull();
+            await Assert.That(material.Brush).IsNull();
         }
 
         [Test]
-        public static void EmissiveMaterial_Constructor_WithBrush_InitializesCorrectly()
+        public async Task EmissiveMaterial_Constructor_WithBrush_InitializesCorrectly()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.Yellow);
@@ -27,12 +26,12 @@ namespace Node.Net.Test
             EmissiveMaterial material = new EmissiveMaterial(brush);
 
             // Assert
-            Assert.That(material, Is.Not.Null);
-            Assert.That(material.Brush, Is.EqualTo(brush));
+            await Assert.That(material).IsNotNull();
+            await Assert.That(material.Brush).IsEqualTo(brush);
         }
 
         [Test]
-        public static void EmissiveMaterial_Brush_CanBeSet()
+        public async Task EmissiveMaterial_Brush_CanBeSet()
         {
             // Arrange
             EmissiveMaterial material = new EmissiveMaterial();
@@ -42,11 +41,11 @@ namespace Node.Net.Test
             material.Brush = brush;
 
             // Assert
-            Assert.That(material.Brush, Is.EqualTo(brush));
+            await Assert.That(material.Brush).IsEqualTo(brush);
         }
 
         [Test]
-        public static void EmissiveMaterial_Brush_CanBeSetToNull()
+        public async Task EmissiveMaterial_Brush_CanBeSetToNull()
         {
             // Arrange
             EmissiveMaterial material = new EmissiveMaterial(new SolidColorBrush(Colors.Yellow));
@@ -55,11 +54,11 @@ namespace Node.Net.Test
             material.Brush = null;
 
             // Assert
-            Assert.That(material.Brush, Is.Null);
+            await Assert.That(material.Brush).IsNull();
         }
 
         [Test]
-        public static void EmissiveMaterial_Brush_CanBeChanged()
+        public async Task EmissiveMaterial_Brush_CanBeChanged()
         {
             // Arrange
             EmissiveMaterial material = new EmissiveMaterial(new SolidColorBrush(Colors.Yellow));
@@ -69,8 +68,8 @@ namespace Node.Net.Test
             material.Brush = newBrush;
 
             // Assert
-            Assert.That(material.Brush, Is.EqualTo(newBrush));
-            Assert.That(material.Brush, Is.Not.EqualTo(new SolidColorBrush(Colors.Yellow)));
+            await Assert.That(material.Brush).IsEqualTo(newBrush);
+            await Assert.That(material.Brush).IsNotEqualTo(new SolidColorBrush(Colors.Yellow));
         }
     }
 }

@@ -2,33 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using System.Threading.Tasks;
 using Node.Net.Collections;
 using Node.Net;
 
 namespace Node.Net.Collections
 {
-	[TestFixture]
 	internal class SpatialTest
 	{
 		[Test]
-		public void Construction()
+		public async Task Construction()
 		{
 			var empty = new Spatial();
+			await Task.CompletedTask;
 		}
 
 		[Test]
-		public void Usage()
+		public async Task Usage()
 		{
 			var yard = Yard;
 			var mailbox = yard.Descendants.FirstOrDefault(e => e.Name == "mailbox");
-			Assert.That(yard, Is.SameAs(mailbox.Parent), "mailbox.Parent");
+			await Assert.That(ReferenceEquals(yard, mailbox.Parent)).IsTrue();
 			var stake1 = yard.Descendants.FirstOrDefault(e => e.Name == "stake1");
 
 			var json = yard.Json;
 			// Normalize line endings for cross-platform compatibility
 			json = json.Replace("\r\n", "\n").Replace("\r", "\n");
-			Assert.That(json.Length, Is.EqualTo(61));
+			await Assert.That(json.Length).IsEqualTo(61);
 		}
 
 		public static Spatial Yard

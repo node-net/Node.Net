@@ -2,37 +2,36 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-using NUnit.Framework;
 using Node.Net.Collections;
 using Node.Net; // For extension methods
 
 namespace Node.Net.Collections
 {
-	[TestFixture]
 	internal class ElementTest
 	{
 		[Test]
-		public void Construction()
+		public async Task Construction()
 		{
 			var empty = new Element();
 
 			var stream = typeof(FormatterTest).Assembly.FindManifestResourceStream("States.json");
 			var states = new Element(stream);
-			Assert.That(states.Count, Is.EqualTo(50), "states.Count");
+			await Assert.That(states.Count).IsEqualTo(50);
 		}
 
 		[Test]
-		public void Parent()
+		public async Task Parent()
 		{
 			var stream = typeof(FormatterTest).Assembly.FindManifestResourceStream("States.json");
 			var states = new Element(stream);
-			Assert.That(states.Count, Is.EqualTo(50), "states.Count");
+			await Assert.That(states.Count).IsEqualTo(50);
 
 			foreach(var state_name in states.Keys)
 			{
 				var state = states[state_name] as Element;
-				Assert.That(states, Is.SameAs(state.Parent));
+				await Assert.That(ReferenceEquals(states, state.Parent)).IsTrue();
 			}
 		}
 	}

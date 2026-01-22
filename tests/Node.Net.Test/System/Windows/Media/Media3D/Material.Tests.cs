@@ -1,11 +1,10 @@
 using System;
-using NUnit.Framework;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
-    internal static class MaterialTests
+    internal class MaterialTests
     {
         private static bool CanCreateTestMaterial()
         {
@@ -32,11 +31,11 @@ namespace Node.Net.Test
 #endif
 
         [Test]
-        public static void Material_CanBeInstantiated()
+        public async Task Material_CanBeInstantiated()
         {
             if (!CanCreateTestMaterial())
             {
-                Assert.Pass("TestMaterial only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -45,33 +44,34 @@ namespace Node.Net.Test
             Material material = new TestMaterial();
 
             // Assert
-            Assert.That(material, Is.Not.Null);
-            Assert.That(material, Is.InstanceOf<Material>());
+            await Assert.That(material).IsNotNull();
+            await Assert.That(material is Material).IsTrue();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void Material_IsAssignableFrom_DiffuseMaterial()
+        public async Task Material_IsAssignableFrom_DiffuseMaterial()
         {
             // Arrange
             DiffuseMaterial diffuseMaterial = new DiffuseMaterial();
 
             // Act & Assert
-            Assert.That(diffuseMaterial, Is.InstanceOf<Material>());
+            await Assert.That(diffuseMaterial is Material).IsTrue();
         }
 
         [Test]
-        public static void Material_IsAssignableFrom_EmissiveMaterial()
+        public async Task Material_IsAssignableFrom_EmissiveMaterial()
         {
             // Arrange
             EmissiveMaterial emissiveMaterial = new EmissiveMaterial();
 
             // Act & Assert
-            Assert.That(emissiveMaterial, Is.InstanceOf<Material>());
+            await Assert.That(emissiveMaterial is Material).IsTrue();
         }
 
         [Test]
-        public static void Material_IsAssignableFrom_SpecularMaterial()
+        public async Task Material_IsAssignableFrom_SpecularMaterial()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.White);
@@ -88,17 +88,17 @@ namespace Node.Net.Test
             }
 
             // Act & Assert
-            Assert.That(specularMaterial, Is.InstanceOf<Material>());
+            await Assert.That(specularMaterial is Material).IsTrue();
         }
 
         [Test]
-        public static void Material_IsAssignableFrom_MaterialGroup()
+        public async Task Material_IsAssignableFrom_MaterialGroup()
         {
             // Arrange
             MaterialGroup materialGroup = new MaterialGroup();
 
             // Act & Assert
-            Assert.That(materialGroup, Is.InstanceOf<Material>());
+            await Assert.That(materialGroup is Material).IsTrue();
         }
     }
 }

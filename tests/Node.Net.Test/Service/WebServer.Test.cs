@@ -1,42 +1,45 @@
-﻿using NUnit.Framework;
 using Node.Net.Service;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Node.Net.Service
 {
-    [TestFixture, Category(nameof(WebServer))]
     internal class WebServerTest
     {
-        [Test, Explicit]
-        public void Default_Usage()
+        [Test]
+        public async Task Default_Usage()
         {
 			using WebServer server = new WebServer(Protocol.HTTP, 5000);
 			int port = server.Port;
 			server.Start();
-			Assert.That(server.Listener,Is.Not.Null, "server.Listener");
+			await Assert.That(server.Listener).IsNotNull();
 
 			System.Uri uri = server.Uri;
-			Assert.That(uri.ToString(),Is.EqualTo($"http://localhost:{port}/"));
+			await Assert.That(uri.ToString()).IsEqualTo($"http://localhost:{port}/");
 			using (WebClient client = new WebClient())
 			{
 				string response = client.DownloadString(uri.ToString());
-				Assert.That(response.Contains("html"),Is.True);
+				await Assert.That(response.Contains("html")).IsTrue();
 
 				response = client.UploadString(uri.ToString(), "please post");
-				Assert.That(response.Contains("thanks"), Is.True);
+				await Assert.That(response.Contains("thanks")).IsTrue();
 			}
+			// Give background threads time to complete before stopping
+			await Task.Delay(100);
 			server.Stop();
+			// Give time for cleanup
+			await Task.Delay(100);
 		}
 
-        //[Test, Explicit]
-        public void Run_30_seconds()
+        //[Test] - Commented out test
+        public async Task Run_30_seconds()
         {
 			using WebServer server = new WebServer(Protocol.HTTP, 5000);
 			int port = server.Port;
 			server.Start();
 
 			System.Uri uri = server.Uri;
-			Assert.That( uri.ToString(),Is.EqualTo($"http://localhost:{port}/"));
+			await Assert.That( uri.ToString()).IsEqualTo($"http://localhost:{port}/");
 
 			Thread.Sleep(30000);
 			server.Stop();

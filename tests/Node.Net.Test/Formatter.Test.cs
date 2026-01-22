@@ -3,30 +3,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using System.Threading.Tasks;
 using Node.Net;
 
 namespace Node.Net
 {
-	[TestFixture]
 	internal class FormatterTest
 	{
 		[Test]
-		[TestCase("States.json",typeof(IDictionary))]
-		[TestCase("Node.Net.png",typeof(System.Windows.Media.Imaging.BitmapFrame))]
-		public void Deserialize_Type(string name,Type expected_type)
+		[Arguments("States.json", typeof(IDictionary))]
+		[Arguments("Node.Net.png", typeof(System.Windows.Media.Imaging.BitmapFrame))]
+		public async Task Deserialize_Type(string name, Type expected_type)
 		{
 			var stream = typeof(FormatterTest).Assembly.FindManifestResourceStream(name);
 			
 			// Skip PNG test on non-Windows targets where image support isn't available
 			if (name.EndsWith(".png") && !FormatterSupportsPng())
 			{
-				Assert.Pass("PNG deserialization not supported on this target framework");
+				// TUnit doesn't have Assert.Pass - just return early
+				return;
 			}
 			
 			var instance = new Formatter().Deserialize(stream);
-			Assert.That(expected_type.IsAssignableFrom(instance.GetType()),Is.True, "instance type " +
-				expected_type.FullName + "was not assignable from " + instance.GetType().FullName);
+			await Assert.That(expected_type.IsAssignableFrom(instance.GetType())).IsTrue();
 		}
 		
 		private bool FormatterSupportsPng()

@@ -1,10 +1,9 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
-    internal static class MeshGeometry3DTests
+    internal class MeshGeometry3DTests
     {
         private static bool CanCreateMeshGeometry3D()
         {
@@ -23,11 +22,11 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void MeshGeometry3D_Constructor_Default_InitializesCorrectly()
+        public async Task MeshGeometry3D_Constructor_Default_InitializesCorrectly()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -36,24 +35,24 @@ namespace Node.Net.Test
             MeshGeometry3D mesh = new MeshGeometry3D();
 
             // Assert
-            Assert.That(mesh, Is.Not.Null);
-            Assert.That(mesh.Positions, Is.Not.Null);
-            Assert.That(mesh.TriangleIndices, Is.Not.Null);
-            Assert.That(mesh.Normals, Is.Not.Null);
-            Assert.That(mesh.TextureCoordinates, Is.Not.Null);
-            Assert.That(mesh.Positions.Count, Is.EqualTo(0));
-            Assert.That(mesh.TriangleIndices.Count, Is.EqualTo(0));
-            Assert.That(mesh.Normals.Count, Is.EqualTo(0));
-            Assert.That(mesh.TextureCoordinates.Count, Is.EqualTo(0));
+            await Assert.That(mesh).IsNotNull();
+            await Assert.That(mesh.Positions).IsNotNull();
+            await Assert.That(mesh.TriangleIndices).IsNotNull();
+            await Assert.That(mesh.Normals).IsNotNull();
+            await Assert.That(mesh.TextureCoordinates).IsNotNull();
+            await Assert.That(mesh.Positions.Count).IsEqualTo(0);
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(0);
+            await Assert.That(mesh.Normals.Count).IsEqualTo(0);
+            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_Positions_CanBeSet()
+        public async Task MeshGeometry3D_Positions_CanBeSet()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -71,17 +70,17 @@ namespace Node.Net.Test
             mesh.Positions = positions;
 
             // Assert
-            Assert.That(mesh.Positions, Is.EqualTo(positions));
-            Assert.That(mesh.Positions.Count, Is.EqualTo(3));
+            await Assert.That(mesh.Positions).IsEqualTo(positions);
+            await Assert.That(mesh.Positions.Count).IsEqualTo(3);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_Positions_CanBeSetToNull()
+        public async Task MeshGeometry3D_Positions_CanBeSetToNull()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -94,17 +93,17 @@ namespace Node.Net.Test
             mesh.Positions = null;
 
             // Assert
-            Assert.That(mesh.Positions, Is.Not.Null);
-            Assert.That(mesh.Positions.Count, Is.EqualTo(0));
+            await Assert.That(mesh.Positions).IsNotNull();
+            await Assert.That(mesh.Positions.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_Positions_CanBeModified()
+        public async Task MeshGeometry3D_Positions_CanBeModified()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -118,19 +117,19 @@ namespace Node.Net.Test
             mesh.Positions.Add(new Point3D(1, 1, 0));
 
             // Assert
-            Assert.That(mesh.Positions.Count, Is.EqualTo(3));
-            Assert.That(mesh.Positions[0], Is.EqualTo(new Point3D(0, 0, 0)));
-            Assert.That(mesh.Positions[1], Is.EqualTo(new Point3D(1, 0, 0)));
-            Assert.That(mesh.Positions[2], Is.EqualTo(new Point3D(1, 1, 0)));
+            await Assert.That(mesh.Positions.Count).IsEqualTo(3);
+            await Assert.That(mesh.Positions[0]).IsEqualTo(new Point3D(0, 0, 0));
+            await Assert.That(mesh.Positions[1]).IsEqualTo(new Point3D(1, 0, 0));
+            await Assert.That(mesh.Positions[2]).IsEqualTo(new Point3D(1, 1, 0));
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_TriangleIndices_CanBeSet()
+        public async Task MeshGeometry3D_TriangleIndices_CanBeSet()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -143,17 +142,17 @@ namespace Node.Net.Test
             mesh.TriangleIndices = indices;
 
             // Assert
-            Assert.That(mesh.TriangleIndices, Is.EqualTo(indices));
-            Assert.That(mesh.TriangleIndices.Count, Is.EqualTo(6));
+            await Assert.That(mesh.TriangleIndices).IsEqualTo(indices);
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(6);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_TriangleIndices_CanBeSetToNull()
+        public async Task MeshGeometry3D_TriangleIndices_CanBeSetToNull()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -168,17 +167,17 @@ namespace Node.Net.Test
             mesh.TriangleIndices = null;
 
             // Assert
-            Assert.That(mesh.TriangleIndices, Is.Not.Null);
-            Assert.That(mesh.TriangleIndices.Count, Is.EqualTo(0));
+            await Assert.That(mesh.TriangleIndices).IsNotNull();
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_TriangleIndices_CanBeModified()
+        public async Task MeshGeometry3D_TriangleIndices_CanBeModified()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -192,19 +191,19 @@ namespace Node.Net.Test
             mesh.TriangleIndices.Add(2);
 
             // Assert
-            Assert.That(mesh.TriangleIndices.Count, Is.EqualTo(3));
-            Assert.That(mesh.TriangleIndices[0], Is.EqualTo(0));
-            Assert.That(mesh.TriangleIndices[1], Is.EqualTo(1));
-            Assert.That(mesh.TriangleIndices[2], Is.EqualTo(2));
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(3);
+            await Assert.That(mesh.TriangleIndices[0]).IsEqualTo(0);
+            await Assert.That(mesh.TriangleIndices[1]).IsEqualTo(1);
+            await Assert.That(mesh.TriangleIndices[2]).IsEqualTo(2);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_Normals_CanBeSet()
+        public async Task MeshGeometry3D_Normals_CanBeSet()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -222,17 +221,17 @@ namespace Node.Net.Test
             mesh.Normals = normals;
 
             // Assert
-            Assert.That(mesh.Normals, Is.EqualTo(normals));
-            Assert.That(mesh.Normals.Count, Is.EqualTo(3));
+            await Assert.That(mesh.Normals).IsEqualTo(normals);
+            await Assert.That(mesh.Normals.Count).IsEqualTo(3);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_Normals_CanBeSetToNull()
+        public async Task MeshGeometry3D_Normals_CanBeSetToNull()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -245,17 +244,17 @@ namespace Node.Net.Test
             mesh.Normals = null;
 
             // Assert
-            Assert.That(mesh.Normals, Is.Not.Null);
-            Assert.That(mesh.Normals.Count, Is.EqualTo(0));
+            await Assert.That(mesh.Normals).IsNotNull();
+            await Assert.That(mesh.Normals.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_Normals_CanBeModified()
+        public async Task MeshGeometry3D_Normals_CanBeModified()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -269,19 +268,19 @@ namespace Node.Net.Test
             mesh.Normals.Add(new Vector3D(0, 1, 0));
 
             // Assert
-            Assert.That(mesh.Normals.Count, Is.EqualTo(3));
-            Assert.That(mesh.Normals[0], Is.EqualTo(new Vector3D(0, 0, 1)));
-            Assert.That(mesh.Normals[1], Is.EqualTo(new Vector3D(1, 0, 0)));
-            Assert.That(mesh.Normals[2], Is.EqualTo(new Vector3D(0, 1, 0)));
+            await Assert.That(mesh.Normals.Count).IsEqualTo(3);
+            await Assert.That(mesh.Normals[0]).IsEqualTo(new Vector3D(0, 0, 1));
+            await Assert.That(mesh.Normals[1]).IsEqualTo(new Vector3D(1, 0, 0));
+            await Assert.That(mesh.Normals[2]).IsEqualTo(new Vector3D(0, 1, 0));
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_TextureCoordinates_CanBeSet()
+        public async Task MeshGeometry3D_TextureCoordinates_CanBeSet()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -300,17 +299,17 @@ namespace Node.Net.Test
             mesh.TextureCoordinates = textureCoords;
 
             // Assert
-            Assert.That(mesh.TextureCoordinates, Is.EqualTo(textureCoords));
-            Assert.That(mesh.TextureCoordinates.Count, Is.EqualTo(4));
+            await Assert.That(mesh.TextureCoordinates).IsEqualTo(textureCoords);
+            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(4);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_TextureCoordinates_CanBeSetToNull()
+        public async Task MeshGeometry3D_TextureCoordinates_CanBeSetToNull()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -323,17 +322,17 @@ namespace Node.Net.Test
             mesh.TextureCoordinates = null;
 
             // Assert
-            Assert.That(mesh.TextureCoordinates, Is.Not.Null);
-            Assert.That(mesh.TextureCoordinates.Count, Is.EqualTo(0));
+            await Assert.That(mesh.TextureCoordinates).IsNotNull();
+            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_TextureCoordinates_CanBeModified()
+        public async Task MeshGeometry3D_TextureCoordinates_CanBeModified()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -347,19 +346,19 @@ namespace Node.Net.Test
             mesh.TextureCoordinates.Add(new Point(1, 1));
 
             // Assert
-            Assert.That(mesh.TextureCoordinates.Count, Is.EqualTo(3));
-            Assert.That(mesh.TextureCoordinates[0], Is.EqualTo(new Point(0, 0)));
-            Assert.That(mesh.TextureCoordinates[1], Is.EqualTo(new Point(1, 0)));
-            Assert.That(mesh.TextureCoordinates[2], Is.EqualTo(new Point(1, 1)));
+            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(3);
+            await Assert.That(mesh.TextureCoordinates[0]).IsEqualTo(new Point(0, 0));
+            await Assert.That(mesh.TextureCoordinates[1]).IsEqualTo(new Point(1, 0));
+            await Assert.That(mesh.TextureCoordinates[2]).IsEqualTo(new Point(1, 1));
 #endif
         }
 
         [Test]
-        public static void MeshGeometry3D_CanCreateSimpleTriangle()
+        public async Task MeshGeometry3D_CanCreateSimpleTriangle()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("MeshGeometry3D only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -374,20 +373,21 @@ namespace Node.Net.Test
             mesh.TriangleIndices.Add(2);
 
             // Assert
-            Assert.That(mesh.Positions.Count, Is.EqualTo(3));
-            Assert.That(mesh.TriangleIndices.Count, Is.EqualTo(3));
-            Assert.That(mesh.TriangleIndices[0], Is.EqualTo(0));
-            Assert.That(mesh.TriangleIndices[1], Is.EqualTo(1));
-            Assert.That(mesh.TriangleIndices[2], Is.EqualTo(2));
+            await Assert.That(mesh.Positions.Count).IsEqualTo(3);
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(3);
+            await Assert.That(mesh.TriangleIndices[0]).IsEqualTo(0);
+            await Assert.That(mesh.TriangleIndices[1]).IsEqualTo(1);
+            await Assert.That(mesh.TriangleIndices[2]).IsEqualTo(2);
 #endif
         }
 
         [Test]
-        public static void Point3DCollection_CanBeCreated()
+        public async Task Point3DCollection_CanBeCreated()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("Point3DCollection only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -396,17 +396,17 @@ namespace Node.Net.Test
             Point3DCollection collection = new Point3DCollection();
 
             // Assert
-            Assert.That(collection, Is.Not.Null);
-            Assert.That(collection.Count, Is.EqualTo(0));
+            await Assert.That(collection).IsNotNull();
+            await Assert.That(collection.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void Int32Collection_CanBeCreated()
+        public async Task Int32Collection_CanBeCreated()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("Int32Collection only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -415,17 +415,17 @@ namespace Node.Net.Test
             Int32Collection collection = new Int32Collection();
 
             // Assert
-            Assert.That(collection, Is.Not.Null);
-            Assert.That(collection.Count, Is.EqualTo(0));
+            await Assert.That(collection).IsNotNull();
+            await Assert.That(collection.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void Vector3DCollection_CanBeCreated()
+        public async Task Vector3DCollection_CanBeCreated()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("Vector3DCollection only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -434,17 +434,18 @@ namespace Node.Net.Test
             Vector3DCollection collection = new Vector3DCollection();
 
             // Assert
-            Assert.That(collection, Is.Not.Null);
-            Assert.That(collection.Count, Is.EqualTo(0));
+            await Assert.That(collection).IsNotNull();
+            await Assert.That(collection.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void PointCollection_CanBeCreated()
+        public async Task PointCollection_CanBeCreated()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("PointCollection only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -453,8 +454,8 @@ namespace Node.Net.Test
             PointCollection collection = new PointCollection();
 
             // Assert
-            Assert.That(collection, Is.Not.Null);
-            Assert.That(collection.Count, Is.EqualTo(0));
+            await Assert.That(collection).IsNotNull();
+            await Assert.That(collection.Count).IsEqualTo(0);
 #endif
         }
     }

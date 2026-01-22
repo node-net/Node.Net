@@ -3,7 +3,8 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using TUnit;
+using TUnit.Core;
+using TUnit.Assertions;
 using System;
 using System.IO;
 using Node.Net.Components;

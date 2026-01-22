@@ -1,24 +1,23 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
-    internal static class DiffuseMaterialTests
+    internal class DiffuseMaterialTests
     {
         [Test]
-        public static void DiffuseMaterial_Constructor_Default_InitializesCorrectly()
+        public async Task DiffuseMaterial_Constructor_Default_InitializesCorrectly()
         {
             // Arrange & Act
             DiffuseMaterial material = new DiffuseMaterial();
 
             // Assert
-            Assert.That(material, Is.Not.Null);
-            Assert.That(material.Brush, Is.Null);
+            await Assert.That(material).IsNotNull();
+            await Assert.That(material.Brush).IsNull();
         }
 
         [Test]
-        public static void DiffuseMaterial_Constructor_WithBrush_InitializesCorrectly()
+        public async Task DiffuseMaterial_Constructor_WithBrush_InitializesCorrectly()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.Red);
@@ -27,12 +26,12 @@ namespace Node.Net.Test
             DiffuseMaterial material = new DiffuseMaterial(brush);
 
             // Assert
-            Assert.That(material, Is.Not.Null);
-            Assert.That(material.Brush, Is.EqualTo(brush));
+            await Assert.That(material).IsNotNull();
+            await Assert.That(material.Brush).IsEqualTo(brush);
         }
 
         [Test]
-        public static void DiffuseMaterial_Brush_CanBeSet()
+        public async Task DiffuseMaterial_Brush_CanBeSet()
         {
             // Arrange
             DiffuseMaterial material = new DiffuseMaterial();
@@ -42,11 +41,11 @@ namespace Node.Net.Test
             material.Brush = brush;
 
             // Assert
-            Assert.That(material.Brush, Is.EqualTo(brush));
+            await Assert.That(material.Brush).IsEqualTo(brush);
         }
 
         [Test]
-        public static void DiffuseMaterial_Brush_CanBeSetToNull()
+        public async Task DiffuseMaterial_Brush_CanBeSetToNull()
         {
             // Arrange
             DiffuseMaterial material = new DiffuseMaterial(new SolidColorBrush(Colors.Red));
@@ -55,11 +54,11 @@ namespace Node.Net.Test
             material.Brush = null;
 
             // Assert
-            Assert.That(material.Brush, Is.Null);
+            await Assert.That(material.Brush).IsNull();
         }
 
         [Test]
-        public static void DiffuseMaterial_Brush_CanBeChanged()
+        public async Task DiffuseMaterial_Brush_CanBeChanged()
         {
             // Arrange
             DiffuseMaterial material = new DiffuseMaterial(new SolidColorBrush(Colors.Red));
@@ -69,8 +68,8 @@ namespace Node.Net.Test
             material.Brush = newBrush;
 
             // Assert
-            Assert.That(material.Brush, Is.EqualTo(newBrush));
-            Assert.That(material.Brush, Is.Not.EqualTo(new SolidColorBrush(Colors.Red)));
+            await Assert.That(material.Brush).IsEqualTo(newBrush);
+            await Assert.That(material.Brush).IsNotEqualTo(new SolidColorBrush(Colors.Red));
         }
     }
 }

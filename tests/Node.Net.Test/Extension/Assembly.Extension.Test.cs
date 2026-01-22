@@ -1,18 +1,17 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
 using Node.Net; // Extension methods are in Node.Net namespace
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal class AssemblyExtensionTest
     {
         [Test]
-        public void FindManifestResourceStream()
+        public async Task FindManifestResourceStream()
         {
             global::System.Reflection.Assembly assembly = typeof(AssemblyExtensionTest).Assembly;
-            Assert.That(assembly.FindManifestResourceStream("?"),Is.Null);
-            Assert.That(assembly.FindManifestResourceStream("Object.Coverage.json"),Is.Not.Null);
-            Assert.That(assembly.FindManifestResourceStream("Node.Net.Test.Resources.Object.Coverage.json"),Is.Not.Null);
+            await Assert.That(assembly.FindManifestResourceStream("?")).IsNull();
+            await Assert.That(assembly.FindManifestResourceStream("Object.Coverage.json")).IsNotNull();
+            await Assert.That(assembly.FindManifestResourceStream("Node.Net.Test.Resources.Object.Coverage.json")).IsNotNull();
         }
     }
 }

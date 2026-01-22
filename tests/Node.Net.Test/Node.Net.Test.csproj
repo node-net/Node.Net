@@ -41,13 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="JsonRPC\Responder.Test.Data.json" />
-    <None Remove="Resources\Node.Net.png" />
-    <None Remove="Resources\Object.Coverage.json" />
-    <None Remove="Resources\States.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="JsonRPC\Responder.Test.Data.json" />
     <EmbeddedResource Include="Resources\Node.Net.png" />
     <EmbeddedResource Include="Resources\Object.Coverage.json" />
@@ -55,14 +48,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="4.1.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="TUnit" Version="1.6.20" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageReference Include="bunit" Version="1.35.3" />
-    <PackageReference Include="Microsoft.Playwright" Version="1.48.0" />
   </ItemGroup>
 
   <ItemGroup>

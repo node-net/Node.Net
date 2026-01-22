@@ -1,18 +1,17 @@
-using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 using Node.Net.Diagnostic;
 using Node.Net.Service.Application;
 
 namespace Node.Net.Test.Service.Application;
 
-[TestFixture]
 internal class ApplicationInfoTests : TestHarness
 {
     public ApplicationInfoTests() : base(typeof(ApplicationInfo))
     {
     }
     [Test]
-    public void ApplicationInfo_PropertiesAreReadOnly()
+    public async Task ApplicationInfo_PropertiesAreReadOnly()
     {
         // Arrange
         var info = new ApplicationInfo(
@@ -41,20 +40,20 @@ internal class ApplicationInfoTests : TestHarness
         var operatingSystem = info.OperatingSystem;
         var machine = info.Machine;
 
-        Assert.That(name, Is.EqualTo("TestApp"));
-        Assert.That(company, Is.EqualTo("TestCompany"));
-        Assert.That(dataDirectory, Is.EqualTo("C:\\Test\\Data"));
-        Assert.That(targetFramework, Is.EqualTo("net8.0"));
-        Assert.That(executingAssemblyFilename, Is.EqualTo("C:\\Test\\App.exe"));
-        Assert.That(version, Is.EqualTo("1.0.0"));
-        Assert.That(user, Is.EqualTo("TestUser"));
-        Assert.That(domain, Is.EqualTo("TestDomain"));
-        Assert.That(operatingSystem, Is.EqualTo("Windows 10"));
-        Assert.That(machine, Is.EqualTo("TestMachine"));
+        await Assert.That(name).IsEqualTo("TestApp");
+        await Assert.That(company).IsEqualTo("TestCompany");
+        await Assert.That(dataDirectory).IsEqualTo("C:\\Test\\Data");
+        await Assert.That(targetFramework).IsEqualTo("net8.0");
+        await Assert.That(executingAssemblyFilename).IsEqualTo("C:\\Test\\App.exe");
+        await Assert.That(version).IsEqualTo("1.0.0");
+        await Assert.That(user).IsEqualTo("TestUser");
+        await Assert.That(domain).IsEqualTo("TestDomain");
+        await Assert.That(operatingSystem).IsEqualTo("Windows 10");
+        await Assert.That(machine).IsEqualTo("TestMachine");
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorAcceptsAllProperties()
+    public async Task ApplicationInfo_ConstructorAcceptsAllProperties()
     {
         // Arrange & Act
         var info = new ApplicationInfo(
@@ -71,24 +70,24 @@ internal class ApplicationInfoTests : TestHarness
         );
 
         // Assert
-        Assert.That(info, Is.Not.Null);
-        Assert.That(info.Name, Is.EqualTo("TestApp"));
-        Assert.That(info.Company, Is.EqualTo("TestCompany"));
-        Assert.That(info.DataDirectory, Is.EqualTo("C:\\Test\\Data"));
-        Assert.That(info.TargetFramework, Is.EqualTo("net8.0"));
-        Assert.That(info.ExecutingAssemblyFilename, Is.EqualTo("C:\\Test\\App.exe"));
-        Assert.That(info.Version, Is.EqualTo("1.0.0"));
-        Assert.That(info.User, Is.EqualTo("TestUser"));
-        Assert.That(info.Domain, Is.EqualTo("TestDomain"));
-        Assert.That(info.OperatingSystem, Is.EqualTo("Windows 10"));
-        Assert.That(info.Machine, Is.EqualTo("TestMachine"));
+        await Assert.That(info).IsNotNull();
+        await Assert.That(info.Name).IsEqualTo("TestApp");
+        await Assert.That(info.Company).IsEqualTo("TestCompany");
+        await Assert.That(info.DataDirectory).IsEqualTo("C:\\Test\\Data");
+        await Assert.That(info.TargetFramework).IsEqualTo("net8.0");
+        await Assert.That(info.ExecutingAssemblyFilename).IsEqualTo("C:\\Test\\App.exe");
+        await Assert.That(info.Version).IsEqualTo("1.0.0");
+        await Assert.That(info.User).IsEqualTo("TestUser");
+        await Assert.That(info.Domain).IsEqualTo("TestDomain");
+        await Assert.That(info.OperatingSystem).IsEqualTo("Windows 10");
+        await Assert.That(info.Machine).IsEqualTo("TestMachine");
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullName()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullName()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             null!,
             "TestCompany",
             "C:\\Test\\Data",
@@ -99,14 +98,14 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullCompany()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullCompany()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             null!,
             "C:\\Test\\Data",
@@ -117,14 +116,14 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullDataDirectory()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullDataDirectory()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             "TestCompany",
             null!,
@@ -135,14 +134,14 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullTargetFramework()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullTargetFramework()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             "TestCompany",
             "C:\\Test\\Data",
@@ -153,14 +152,14 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullExecutingAssemblyFilename()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullExecutingAssemblyFilename()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             "TestCompany",
             "C:\\Test\\Data",
@@ -171,14 +170,14 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullVersion()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullVersion()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             "TestCompany",
             "C:\\Test\\Data",
@@ -189,11 +188,11 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_PropertiesMatchConstructorValues()
+    public async Task ApplicationInfo_PropertiesMatchConstructorValues()
     {
         // Arrange
         var name = "TestApp";
@@ -222,20 +221,20 @@ internal class ApplicationInfoTests : TestHarness
         );
 
         // Assert
-        Assert.That(info.Name, Is.EqualTo(name));
-        Assert.That(info.Company, Is.EqualTo(company));
-        Assert.That(info.DataDirectory, Is.EqualTo(dataDirectory));
-        Assert.That(info.TargetFramework, Is.EqualTo(targetFramework));
-        Assert.That(info.ExecutingAssemblyFilename, Is.EqualTo(executingAssemblyFilename));
-        Assert.That(info.Version, Is.EqualTo(version));
-        Assert.That(info.User, Is.EqualTo(user));
-        Assert.That(info.Domain, Is.EqualTo(domain));
-        Assert.That(info.OperatingSystem, Is.EqualTo(operatingSystem));
-        Assert.That(info.Machine, Is.EqualTo(machine));
+        await Assert.That(info.Name).IsEqualTo(name);
+        await Assert.That(info.Company).IsEqualTo(company);
+        await Assert.That(info.DataDirectory).IsEqualTo(dataDirectory);
+        await Assert.That(info.TargetFramework).IsEqualTo(targetFramework);
+        await Assert.That(info.ExecutingAssemblyFilename).IsEqualTo(executingAssemblyFilename);
+        await Assert.That(info.Version).IsEqualTo(version);
+        await Assert.That(info.User).IsEqualTo(user);
+        await Assert.That(info.Domain).IsEqualTo(domain);
+        await Assert.That(info.OperatingSystem).IsEqualTo(operatingSystem);
+        await Assert.That(info.Machine).IsEqualTo(machine);
     }
 
     [Test]
-    public void ApplicationInfo_IsImmutable()
+    public async Task ApplicationInfo_IsImmutable()
     {
         // Arrange
         var info = new ApplicationInfo(
@@ -254,7 +253,7 @@ internal class ApplicationInfoTests : TestHarness
         // Assert - Properties cannot be modified after construction
         // This is a compile-time check - if setters exist, this test will fail to compile
         // If this compiles and runs, the class is immutable
-        Assert.That(info.Name, Is.EqualTo("TestApp"));
+        await Assert.That(info.Name).IsEqualTo("TestApp");
         
         // Note: We cannot test immutability at runtime if properties are truly read-only
         // The compiler will prevent assignment if properties are get-only
@@ -262,10 +261,10 @@ internal class ApplicationInfoTests : TestHarness
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullUser()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullUser()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             "TestCompany",
             "C:\\Test\\Data",
@@ -276,14 +275,14 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullDomain()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullDomain()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             "TestCompany",
             "C:\\Test\\Data",
@@ -294,14 +293,14 @@ internal class ApplicationInfoTests : TestHarness
             null!,
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullOperatingSystem()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullOperatingSystem()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             "TestCompany",
             "C:\\Test\\Data",
@@ -312,14 +311,14 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             null!,
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]
-    public void ApplicationInfo_ConstructorThrowsOnNullMachine()
+    public async Task ApplicationInfo_ConstructorThrowsOnNullMachine()
     {
         // Arrange, Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new ApplicationInfo(
+        await Assert.That(() => new ApplicationInfo(
             "TestApp",
             "TestCompany",
             "C:\\Test\\Data",
@@ -330,6 +329,6 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             null!
-        ));
+        )).Throws<ArgumentNullException>();
     }
 }

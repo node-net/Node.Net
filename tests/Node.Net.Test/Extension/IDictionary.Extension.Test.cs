@@ -1,34 +1,34 @@
 ﻿#if IS_WINDOWS
-using NUnit.Framework;
-using Node.Net; // For extension methods and Reader
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static System.Math;
+using Node.Net; // For extension methods and Reader
 
 namespace Node.Net.Test.Extension
 {
-    [TestFixture]
     internal class IDictionaryExtensionTest
     {
         [Test]
-        public void GetRotations()
+        public async Task GetRotations()
         {
             Vector3D rotations = new Dictionary<string, string>().GetRotations();
-            Assert.That(rotations.Z,Is.EqualTo(0), "rotations.Z");
+            await Assert.That(rotations.Z).IsEqualTo(0);
 
             rotations = new Dictionary<string, string>
             {
                 { "Orientation","-180 deg" }
             }.GetRotations();
-            Assert.That(rotations.Z, Is.EqualTo(-180.0), "rotations.Z");
+            await Assert.That(rotations.Z).IsEqualTo(-180.0);
         }
 
         [Test]
-        public void Find()
+        public async Task Find()
         {
             System.Reflection.Assembly assembly = typeof(IDictionaryExtensionTest).Assembly;
             IDictionary data = new Reader().Read<IDictionary>(assembly.FindManifestResourceStream("Object.Coverage.json"));
             IDictionary a = data.Find<IDictionary>("objectA");
+            await Task.CompletedTask;
         }
 
         private bool Filter(object v)
@@ -37,7 +37,7 @@ namespace Node.Net.Test.Extension
         }
 
         [Test]
-        public void Collect()
+        public async Task Collect()
         {
             System.Reflection.Assembly assembly = typeof(IDictionaryExtensionTest).Assembly;
             IDictionary data = new Reader().Read<IDictionary>(assembly.FindManifestResourceStream("Object.Coverage.json"));
@@ -46,32 +46,34 @@ namespace Node.Net.Test.Extension
             data.Collect<IDictionary>("");
             data.Collect<IDictionary>("test");
             data.CollectKeys();
+            await Task.CompletedTask;
         }
 
         [Test]
-        public void DeepUpdateParents()
+        public async Task DeepUpdateParents()
         {
             System.Reflection.Assembly assembly = typeof(IDictionaryExtensionTest).Assembly;
             IDictionary data = new Reader().Read<IDictionary>(assembly.FindManifestResourceStream("Object.Coverage.json"));
             data.DeepUpdateParents();
             IDictionaryExtension.DeepUpdateParents(null);
             data.ComputeHashCode();
+            await Task.CompletedTask;
         }
 
         [Test]
-        public void GetLengthMeters()
+        public async Task GetLengthMeters()
         {
             Dictionary<string, object> data = new Dictionary<string, object>
             {
                 {"X" ,"2 m" },
                 {"Offset","-nan(ind) ft" }
             };
-            Assert.That(data.GetLengthMeters("X"),Is.EqualTo(2.0));
-            Assert.That(data.GetLengthMeters("Offset"), Is.EqualTo(0.0), "Offset"); 
+            await Assert.That(data.GetLengthMeters("X")).IsEqualTo(2.0);
+            await Assert.That(data.GetLengthMeters("Offset")).IsEqualTo(0.0);
         }
 
         [Test]
-        public void GetLocalToParent()
+        public async Task GetLocalToParent()
         {
             Dictionary<string, object> data = new Dictionary<string, object>
             {
@@ -80,116 +82,120 @@ namespace Node.Net.Test.Extension
             };
 
             Matrix3D localToParent = data.GetLocalToParent();
-            Assert.That(localToParent, Is.Not.SameAs(data.GetLocalToParent()));
+            await Assert.That(ReferenceEquals(localToParent, data.GetLocalToParent())).IsFalse();
             Matrix3D localToWorld = data.GetLocalToWorld();
-            Assert.That(localToWorld, Is.Not.SameAs(data.GetLocalToWorld()));
+            await Assert.That(ReferenceEquals(localToWorld, data.GetLocalToWorld())).IsFalse();
             // Use Node.Net types for consistency with extension methods
             Point3D origin = localToParent.Transform(new Point3D(0, 0, 0));
-            Assert.That(origin.X,Is.EqualTo(10));
-            Assert.That(origin.Y,Is.EqualTo(1));
+            await Assert.That(origin.X).IsEqualTo(10);
+            await Assert.That(origin.Y).IsEqualTo(1);
 
             string mstring = localToParent.ToString();
-            Assert.That(mstring.Length,Is.EqualTo(32));
+            await Assert.That(mstring.Length).IsEqualTo(32);
 
             // Matrix3D.Parse is an extension method, use it via reflection or extension method call
             var matrix3DExtensionType = typeof(Factory).Assembly.GetType("Node.Net.Matrix3DExtension");
             if (matrix3DExtensionType == null)
             {
-                Assert.Pass("Matrix3DExtension type not found - skipping test on non-Windows target");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
             }
             var parseMethod = matrix3DExtensionType.GetMethod("Parse", new[] { typeof(string) });
             if (parseMethod == null)
             {
-                Assert.Pass("Matrix3D.Parse method not found - skipping test on non-Windows target");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
             }
             Matrix3D m = (Matrix3D)parseMethod.Invoke(null, new object[] { mstring });
             Point3D origin2 = m.Transform(new Point3D(0, 0, 0));
-            Assert.That(origin2.X, Is.EqualTo(10));
-            Assert.That(origin2.Y, Is.EqualTo(1));
+            await Assert.That(origin2.X).IsEqualTo(10);
+            await Assert.That(origin2.Y).IsEqualTo(1);
 
             // Matrix3D.Parse is an extension method, use it via reflection
             var matrix3DExtensionType2 = typeof(Factory).Assembly.GetType("Node.Net.Matrix3DExtension");
             if (matrix3DExtensionType2 == null)
             {
-                Assert.Pass("Matrix3DExtension type not found - skipping test on non-Windows target");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
             }
             var parseMethod2 = matrix3DExtensionType2.GetMethod("Parse", new[] { typeof(string) });
             if (parseMethod2 == null)
             {
-                Assert.Pass("Matrix3D.Parse method not found - skipping test on non-Windows target");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
             }
             Matrix3D i = (Matrix3D)parseMethod2.Invoke(null, new object[] { "Identity" });
-            Assert.That(i.IsIdentity,Is.True);
+            await Assert.That(i.IsIdentity).IsTrue();
 
-            Assert.That(Round(localToParent.GetOrientation(), 3), Is.EqualTo(0), "orientation");
-            Assert.That(Round(localToParent.GetTilt(), 3), Is.EqualTo(0), "Tilt");
-            Assert.That(Round(localToParent.GetSpin(), 3), Is.EqualTo(0), "Spin");
+            await Assert.That(Round(localToParent.GetOrientation(), 3)).IsEqualTo(0);
+            await Assert.That(Round(localToParent.GetTilt(), 3)).IsEqualTo(0);
+            await Assert.That(Round(localToParent.GetSpin(), 3)).IsEqualTo(0);
 
             data["Orientation"] = "135.0 deg";
             data["Tilt"] = "55 deg";
             localToParent = data.GetLocalToParent();
-            Assert.That(Round(localToParent.GetOrientation(), 3), Is.EqualTo(135.0), "orientation");
-            Assert.That(Round(localToParent.GetTilt(), 3), Is.EqualTo(55.0), "tilt");
+            await Assert.That(Round(localToParent.GetOrientation(), 3)).IsEqualTo(135.0);
+            await Assert.That(Round(localToParent.GetTilt(), 3)).IsEqualTo(55.0);
 
             localToWorld = data.GetLocalToWorld();
-            Assert.That(Round(localToWorld.GetOrientation(), 3), Is.EqualTo(135.0), "orientation");
-            Assert.That(Round(localToWorld.GetTilt(), 3), Is.EqualTo(55.0), "tilt");
+            await Assert.That(Round(localToWorld.GetOrientation(), 3)).IsEqualTo(135.0);
+            await Assert.That(Round(localToWorld.GetTilt(), 3)).IsEqualTo(55.0);
         }
 
         [Test]
-        public void Get()
+        public async Task Get()
         {
             Dictionary<string, object> data = new Dictionary<string, object>
             {
                 {"Name","test" }
             };
 
-            Assert.That(data.Get<string>("Name"),Is.EqualTo("test"), "Name");
-            Assert.That(data.Get<string>("Name,Description"), Is.EqualTo("test"), "Name,Description");
-            Assert.That(data.Get<string>("Description,Name"), Is.EqualTo("test"), "Description,Name");
+            await Assert.That(data.Get<string>("Name")).IsEqualTo("test");
+            await Assert.That(data.Get<string>("Name,Description")).IsEqualTo("test");
+            await Assert.That(data.Get<string>("Description,Name")).IsEqualTo("test");
 
             Dictionary<string, object> data2 = new Dictionary<string, object>
             {
                 {"Description","example" }
             };
 
-            Assert.That(data2.Get<string>("Description"), Is.EqualTo("example"), "Description");
-            Assert.That(data2.Get<string>("Name,Description"), Is.EqualTo("example"), "Name,Description");
-            Assert.That(data2.Get<string>("Description,Name"), Is.EqualTo("example"), "Description,Name");
+            await Assert.That(data2.Get<string>("Description")).IsEqualTo("example");
+            await Assert.That(data2.Get<string>("Name,Description")).IsEqualTo("example");
+            await Assert.That(data2.Get<string>("Description,Name")).IsEqualTo("example");
         }
 
         [Test]
-        public void SettingRotationsXYZ()
+        public async Task SettingRotationsXYZ()
         {
             Dictionary<string, object> data = new Dictionary<string, object>();
             data.SetRotations(new Vector3D(0, 0, 45));
 
             Matrix3D localToWorld = data.GetLocalToWorld();
             Point3D point = localToWorld.Transform(new Point3D(1, 0, 0));
-            Assert.That(Round(point.X, 2), Is.EqualTo(0.71), "point.X");
-            Assert.That(Round(point.Y, 2), Is.EqualTo(0.71), "point.Y");
+            await Assert.That(Round(point.X, 2)).IsEqualTo(0.71);
+            await Assert.That(Round(point.Y, 2)).IsEqualTo(0.71);
         }
 
         [Test]
-        public void SettingRotationsOTS()
+        public async Task SettingRotationsOTS()
         {
             Dictionary<string, object> data = new Dictionary<string, object>();
             data.SetRotationsOTS(new Vector3D(45, 0, 0));
 
             Matrix3D localToWorld = data.GetLocalToWorld();
             Point3D point = localToWorld.Transform(new Point3D(1, 0, 0));
-            Assert.That(Round(point.X, 2), Is.EqualTo(0.71), "point.X");
-            Assert.That(Round(point.Y, 2), Is.EqualTo(0.71), "point.Y");
+            await Assert.That(Round(point.X, 2)).IsEqualTo(0.71);
+            await Assert.That(Round(point.Y, 2)).IsEqualTo(0.71);
 
             data.SetRotationsOTS(new Vector3D(45, 30, 0));
             localToWorld = data.GetLocalToWorld();
             point = localToWorld.Transform(new Point3D(1, 0, 0));
-            Assert.That(Round(point.X, 2), Is.EqualTo(0.71), "point.X");
-            Assert.That(Round(point.Y, 2), Is.EqualTo(0.71), "point.Y");
+            await Assert.That(Round(point.X, 2)).IsEqualTo(0.71);
+            await Assert.That(Round(point.Y, 2)).IsEqualTo(0.71);
         }
 
         [Test]
-        public void Rotate()    // See Matrix3D.Test.Rotate
+        public async Task Rotate()    // See Matrix3D.Test.Rotate
         {
             Dictionary<string, object> d1 = new Dictionary<string, object>
             {
@@ -197,13 +203,13 @@ namespace Node.Net.Test.Extension
             };
             Matrix3D m1 = d1.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
             Vector3D xvec1 = m1.Transform(new Vector3D(1, 0, 0));
-            Assert.That(Round(xvec1.X, 3), Is.EqualTo(0.966), "xvec1.X");
-            Assert.That(Round(xvec1.Y, 3), Is.EqualTo(0.259), "xvec1.Y");
-            Assert.That(Round(xvec1.Z, 3), Is.EqualTo(0.000), "xvec1.Z");
+            await Assert.That(Round(xvec1.X, 3)).IsEqualTo(0.966);
+            await Assert.That(Round(xvec1.Y, 3)).IsEqualTo(0.259);
+            await Assert.That(Round(xvec1.Z, 3)).IsEqualTo(0.000);
             Vector3D rotXYZ1 = m1.GetRotationsXYZ();
-            Assert.That(Round(rotXYZ1.X, 3), Is.EqualTo(0.0), "rotXYZ1.X");
-            Assert.That(Round(rotXYZ1.Y, 3), Is.EqualTo(0.0), "rotXYZ1.Y");
-            Assert.That(Round(rotXYZ1.Z, 3), Is.EqualTo(15.0), "rotXYZ1.Z");
+            await Assert.That(Round(rotXYZ1.X, 3)).IsEqualTo(0.0);
+            await Assert.That(Round(rotXYZ1.Y, 3)).IsEqualTo(0.0);
+            await Assert.That(Round(rotXYZ1.Z, 3)).IsEqualTo(15.0);
 
             Dictionary<string, object> d2 = new Dictionary<string, object>
             {
@@ -212,17 +218,17 @@ namespace Node.Net.Test.Extension
             };
             Matrix3D m2 = d2.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, -60, 0));
             Vector3D zvec2 = m2.Transform(new Vector3D(0, 0, 1));
-            Assert.That(Round(zvec2.X, 3),Is.EqualTo(-0.224), "zvec2.X");
-            Assert.That(Round(zvec2.Y, 3), Is.EqualTo(0.837), "zvec2.Y");
-            Assert.That(Round(zvec2.Z, 3), Is.EqualTo(0.500), "zvec2.Z");
+            await Assert.That(Round(zvec2.X, 3)).IsEqualTo(-0.224);
+            await Assert.That(Round(zvec2.Y, 3)).IsEqualTo(0.837);
+            await Assert.That(Round(zvec2.Z, 3)).IsEqualTo(0.500);
             Vector3D yvec2 = m2.Transform(new Vector3D(0, 1, 0));
-            Assert.That(Round(yvec2.X, 3),Is.EqualTo(-0.129), "yvec2.X");
-            Assert.That(Round(yvec2.Y, 3), Is.EqualTo(0.483), "yvec2.Y");
-            Assert.That(Round(yvec2.Z, 3), Is.EqualTo(-0.866),"yvec2.Z");
+            await Assert.That(Round(yvec2.X, 3)).IsEqualTo(-0.129);
+            await Assert.That(Round(yvec2.Y, 3)).IsEqualTo(0.483);
+            await Assert.That(Round(yvec2.Z, 3)).IsEqualTo(-0.866);
             Vector3D rotXYZ2 = m2.GetRotationsXYZ();
-            Assert.That(Round(rotXYZ2.X, 3), Is.EqualTo(-60), "rotXYZ2.X");
-            Assert.That(Round(rotXYZ2.Y, 3), Is.EqualTo(0.0), "rotXYZ2.Y");
-            Assert.That(Round(rotXYZ2.Z, 3), Is.EqualTo(15.0), "rotXYZ2.Z");
+            await Assert.That(Round(rotXYZ2.X, 3)).IsEqualTo(-60);
+            await Assert.That(Round(rotXYZ2.Y, 3)).IsEqualTo(0.0);
+            await Assert.That(Round(rotXYZ2.Z, 3)).IsEqualTo(15.0);
 
             Dictionary<string, object> d3 = new Dictionary<string, object>
             {
@@ -242,10 +248,11 @@ namespace Node.Net.Test.Extension
             Assert.AreEqual(0.459, Round(yvec3.Y, 3), "yvec3.Y");
             Assert.AreEqual(-0.863, Round(yvec3.Z, 3), "yvec3.Z");
             */
+            await Task.CompletedTask;
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS()
+        public async Task ConvertRotationsXYZtoOTS()
         {
             Dictionary<string, object> d1 = new Dictionary<string, object>
             {
@@ -253,14 +260,14 @@ namespace Node.Net.Test.Extension
             };
             Matrix3D m1 = d1.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, 0, 0));
             Vector3D xvec1 = m1.Transform(new Vector3D(1, 0, 0));
-            Assert.That(Round(xvec1.X, 3), Is.EqualTo(0.966), "xvec1.X");
-            Assert.That(Round(xvec1.Y, 3), Is.EqualTo(0.259), "xvec1.Y");
-            Assert.That(Round(xvec1.Z, 3), Is.EqualTo(0.000), "xvec1.Z");
+            await Assert.That(Round(xvec1.X, 3)).IsEqualTo(0.966);
+            await Assert.That(Round(xvec1.Y, 3)).IsEqualTo(0.259);
+            await Assert.That(Round(xvec1.Z, 3)).IsEqualTo(0.000);
 
             IDictionary d1c = d1.ConvertRotationsXYZtoOTS() as IDictionary;
             //Assert.AreEqual(d1.Count, d1c.Count);
-            Assert.That(d1c.Contains("XDirection"), Is.False,"d1c.Contains(\"XDirection\"");
-            Assert.That(Round(d1c.GetAngleDegrees("Orientation"), 3), Is.EqualTo(15.0), "d1c Orientation");
+            await Assert.That(d1c.Contains("XDirection")).IsFalse();
+            await Assert.That(Round(d1c.GetAngleDegrees("Orientation"), 3)).IsEqualTo(15.0);
 
             Dictionary<string, object> d2 = new Dictionary<string, object>
             {
@@ -269,43 +276,43 @@ namespace Node.Net.Test.Extension
             };
             Matrix3D m2 = d2.GetLocalToWorld();// new Matrix3D().RotateOTS(new Vector3D(15, -60, 0));
             Vector3D zvec2 = m2.Transform(new Vector3D(0, 0, 1));
-            Assert.That(Round(zvec2.X, 3),Is.EqualTo(-0.224), "zvec2.X");
-            Assert.That(Round(zvec2.Y, 3), Is.EqualTo(0.837), "zvec2.Y");
-            Assert.That(Round(zvec2.Z, 3), Is.EqualTo(0.500), "zvec2.Z");
+            await Assert.That(Round(zvec2.X, 3)).IsEqualTo(-0.224);
+            await Assert.That(Round(zvec2.Y, 3)).IsEqualTo(0.837);
+            await Assert.That(Round(zvec2.Z, 3)).IsEqualTo(0.500);
             Vector3D yvec2 = m2.Transform(new Vector3D(0, 1, 0));
-            Assert.That(Round(yvec2.X, 3), Is.EqualTo(-0.129), "yvec2.X");
-            Assert.That(Round(yvec2.Y, 3), Is.EqualTo(0.483), "yvec2.Y");
-            Assert.That(Round(yvec2.Z, 3), Is.EqualTo(-0.866), "yvec2.Z");
+            await Assert.That(Round(yvec2.X, 3)).IsEqualTo(-0.129);
+            await Assert.That(Round(yvec2.Y, 3)).IsEqualTo(0.483);
+            await Assert.That(Round(yvec2.Z, 3)).IsEqualTo(-0.866);
 
             IDictionary d2c = d2.ConvertRotationsXYZtoOTS() as IDictionary;
-            Assert.That(d2.Count, Is.EqualTo(d2c.Count));
-            Assert.That(Round(d2c.GetAngleDegrees("Orientation"), 3), Is.EqualTo(15.0), "d2c Orientation");
+            await Assert.That(d2.Count).IsEqualTo(d2c.Count);
+            await Assert.That(Round(d2c.GetAngleDegrees("Orientation"), 3)).IsEqualTo(15.0);
             //Assert.AreEqual(-60.0, Round(d2c.GetAngleDegrees("Tilt"), 3), "d2c Tilt");
         }
 
         [Test]
-        public void SetRotationsOTS()
+        public async Task SetRotationsOTS()
         {
             Dictionary<string, object> d1 = new Dictionary<string, object> { };
             d1.SetRotationsOTS(new Vector3D(45.0, 124.0, 0.0));
             Matrix3D m1 = d1.GetLocalToWorld();
-            Assert.That(Round(m1.GetOrientation(), 3), Is.EqualTo(45.0), "Orientation");
-            Assert.That(Round(m1.GetTilt(), 3), Is.EqualTo(124.0), "Tilt");
+            await Assert.That(Round(m1.GetOrientation(), 3)).IsEqualTo(45.0);
+            await Assert.That(Round(m1.GetTilt(), 3)).IsEqualTo(124.0);
 
             Vector3D ots = d1.GetRotationsOTS();
-            Assert.That(Round(ots.X, 3), Is.EqualTo(45.0), "ots.X");
-            Assert.That(Round(ots.Y, 3), Is.EqualTo(124.0), "ots.Y");
-            Assert.That(Round(ots.Z, 3), Is.EqualTo(0.0), "ots.Z");
+            await Assert.That(Round(ots.X, 3)).IsEqualTo(45.0);
+            await Assert.That(Round(ots.Y, 3)).IsEqualTo(124.0);
+            await Assert.That(Round(ots.Z, 3)).IsEqualTo(0.0);
 
             d1.SetRotationsOTS(new Vector3D(60.0, 15, 0));
             m1 = d1.GetLocalToWorld();
-            Assert.That(Round(m1.GetOrientation(), 3), Is.EqualTo(60.0), "Orientation");
-            Assert.That(Round(m1.GetTilt(), 3), Is.EqualTo(15.0), "Tilt");
+            await Assert.That(Round(m1.GetOrientation(), 3)).IsEqualTo(60.0);
+            await Assert.That(Round(m1.GetTilt(), 3)).IsEqualTo(15.0);
         }
 
 
         [Test]
-        public void ToJson()
+        public async Task ToJson()
         {
             double verySmallNumber = 1e-45;
             Dictionary<string, object> data = new Dictionary<string, object>
@@ -320,7 +327,7 @@ namespace Node.Net.Test.Extension
             IDictionary data2 = new Reader().Read<IDictionary>(json);
 
             string json2 = IDictionaryExtension.ToJson(data2);
-            Assert.That(json2, Is.EqualTo(json), "json2");
+            await Assert.That(json2).IsEqualTo(json);
         }
     }
 }

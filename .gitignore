@@ -6,8 +6,6 @@
 packages/
 *.nupkg
 
-# Speckit
-specs/
 
 # User-specific files
 *.suo
@@ -30,7 +28,6 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Aa]rtifacts/
-specs/
 
 # Visual Studio 2015 cache/options directory
 .vs/

@@ -1,16 +1,15 @@
 ﻿#if IS_WINDOWS
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Node.Net.View
 {
-	[TestFixture]
 	public class SDIViewTest
 	{
-		//[Test,Explicit,Apartment(ApartmentState.STA)]
-		public void ShowDialog()
+		[Test]
+		public async Task ShowDialog()
 		{
 			var filename = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Node.Net.View.SDIViewTest.json";
 			var vm = new SDIViewVM

@@ -1,20 +1,19 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
 using Node.Net; // Extension methods are in Node.Net namespace
 
 namespace Node.Net.Test.Extension
 {
-    [TestFixture]
     internal class Point3DExtensionTest
     {
         [Test]
-        public void ParsePoints()
+        public async Task ParsePoints()
         {
             Point3D[] points = Point3DExtension.ParsePoints("0,0,0 0,0,1");
-            Assert.That(points.Length, Is.EqualTo(2));
+            await Assert.That(points.Length).IsEqualTo(2);
             Point[] points2D = points.Get2DPoints();
-            Assert.That(points2D.Length, Is.EqualTo(2));
+            await Assert.That(points2D.Length).IsEqualTo(2);
             Point3D[] tpoints = points.Transform(new Matrix3D());
-            Assert.That(tpoints.Length, Is.EqualTo(2));
+            await Assert.That(tpoints.Length).IsEqualTo(2);
         }
     }
 }

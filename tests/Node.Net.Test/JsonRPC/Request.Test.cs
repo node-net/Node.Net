@@ -1,13 +1,12 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
 using Node.Net.JsonRPC;
 
 namespace Node.Net.JsonRPC
 {
-    [TestFixture, Category(nameof(Request))]
-    internal static class RequestTest
+    internal class RequestTest
     {
         [Test]
-        public static void StreamConstructor()
+        public async Task StreamConstructor()
         {
             Request request = new Request("SayHello");
             request.Parameters.Add("name", "test");
@@ -16,7 +15,7 @@ namespace Node.Net.JsonRPC
             Request request1 = new Request(rs);
 
             object name = request1.Parameters["name"];
-            Assert.That(name, Is.EqualTo("test"));
+            await Assert.That(name).IsEqualTo("test");
         }
     }
 }

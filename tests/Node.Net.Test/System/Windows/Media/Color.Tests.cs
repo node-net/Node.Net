@@ -1,259 +1,258 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
-    internal static class ColorTests
+    internal class ColorTests
     {
         [Test]
-        public static void Constructor_Default_InitializesToZero()
+        public async Task Constructor_Default_InitializesToZero()
         {
             Color color = new Color();
-            Assert.That(color.A, Is.EqualTo(0));
-            Assert.That(color.R, Is.EqualTo(0));
-            Assert.That(color.G, Is.EqualTo(0));
-            Assert.That(color.B, Is.EqualTo(0));
+            await Assert.That((int)color.A).IsEqualTo(0);
+            await Assert.That((int)color.R).IsEqualTo(0);
+            await Assert.That((int)color.G).IsEqualTo(0);
+            await Assert.That((int)color.B).IsEqualTo(0);
         }
 
         [Test]
-        public static void Properties_CanBeSet()
+        public async Task Properties_CanBeSet()
         {
             Color color = new Color();
             color.A = 255;
             color.R = 100;
             color.G = 150;
             color.B = 200;
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(100));
-            Assert.That(color.G, Is.EqualTo(150));
-            Assert.That(color.B, Is.EqualTo(200));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(100);
+            await Assert.That((int)color.G).IsEqualTo(150);
+            await Assert.That((int)color.B).IsEqualTo(200);
         }
 
         [Test]
-        public static void FromRgb_WithParameters_SetsCorrectValues()
+        public async Task FromRgb_WithParameters_SetsCorrectValues()
         {
             // Arrange & Act
             Color color = Color.FromRgb(100, 150, 200);
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255), "Alpha should be 255 for FromRgb");
-            Assert.That(color.R, Is.EqualTo(100), "Red should be 100");
-            Assert.That(color.G, Is.EqualTo(150), "Green should be 150");
-            Assert.That(color.B, Is.EqualTo(200), "Blue should be 200");
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(100);
+            await Assert.That((int)color.G).IsEqualTo(150);
+            await Assert.That((int)color.B).IsEqualTo(200);
         }
 
         [Test]
-        public static void FromRgb_WithZeroValues_SetsCorrectValues()
+        public async Task FromRgb_WithZeroValues_SetsCorrectValues()
         {
             // Arrange & Act
             Color color = Color.FromRgb(0, 0, 0);
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(0));
-            Assert.That(color.G, Is.EqualTo(0));
-            Assert.That(color.B, Is.EqualTo(0));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(0);
+            await Assert.That((int)color.G).IsEqualTo(0);
+            await Assert.That((int)color.B).IsEqualTo(0);
         }
 
         [Test]
-        public static void FromRgb_WithMaxValues_SetsCorrectValues()
+        public async Task FromRgb_WithMaxValues_SetsCorrectValues()
         {
             // Arrange & Act
             Color color = Color.FromRgb(255, 255, 255);
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(255));
-            Assert.That(color.G, Is.EqualTo(255));
-            Assert.That(color.B, Is.EqualTo(255));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(255);
+            await Assert.That((int)color.G).IsEqualTo(255);
+            await Assert.That((int)color.B).IsEqualTo(255);
         }
 
         [Test]
-        public static void FromArgb_WithParameters_SetsCorrectValues()
+        public async Task FromArgb_WithParameters_SetsCorrectValues()
         {
             // Arrange & Act
             Color color = Color.FromArgb(128, 100, 150, 200);
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(128), "Alpha should be 128");
-            Assert.That(color.R, Is.EqualTo(100), "Red should be 100");
-            Assert.That(color.G, Is.EqualTo(150), "Green should be 150");
-            Assert.That(color.B, Is.EqualTo(200), "Blue should be 200");
+            await Assert.That((int)color.A).IsEqualTo(128);
+            await Assert.That((int)color.R).IsEqualTo(100);
+            await Assert.That((int)color.G).IsEqualTo(150);
+            await Assert.That((int)color.B).IsEqualTo(200);
         }
 
         [Test]
-        public static void FromArgb_WithZeroAlpha_CreatesTransparentColor()
+        public async Task FromArgb_WithZeroAlpha_CreatesTransparentColor()
         {
             // Arrange & Act
             Color color = Color.FromArgb(0, 255, 255, 255);
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(0), "Alpha should be 0");
-            Assert.That(color.R, Is.EqualTo(255));
-            Assert.That(color.G, Is.EqualTo(255));
-            Assert.That(color.B, Is.EqualTo(255));
+            await Assert.That((int)color.A).IsEqualTo(0);
+            await Assert.That((int)color.R).IsEqualTo(255);
+            await Assert.That((int)color.G).IsEqualTo(255);
+            await Assert.That((int)color.B).IsEqualTo(255);
         }
 
         [Test]
-        public static void FromArgb_WithAllZeroValues_SetsCorrectValues()
+        public async Task FromArgb_WithAllZeroValues_SetsCorrectValues()
         {
             // Arrange & Act
             Color color = Color.FromArgb(0, 0, 0, 0);
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(0));
-            Assert.That(color.R, Is.EqualTo(0));
-            Assert.That(color.G, Is.EqualTo(0));
-            Assert.That(color.B, Is.EqualTo(0));
+            await Assert.That((int)color.A).IsEqualTo(0);
+            await Assert.That((int)color.R).IsEqualTo(0);
+            await Assert.That((int)color.G).IsEqualTo(0);
+            await Assert.That((int)color.B).IsEqualTo(0);
         }
 
         [Test]
-        public static void FromArgb_WithAllMaxValues_SetsCorrectValues()
+        public async Task FromArgb_WithAllMaxValues_SetsCorrectValues()
         {
             // Arrange & Act
             Color color = Color.FromArgb(255, 255, 255, 255);
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(255));
-            Assert.That(color.G, Is.EqualTo(255));
-            Assert.That(color.B, Is.EqualTo(255));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(255);
+            await Assert.That((int)color.G).IsEqualTo(255);
+            await Assert.That((int)color.B).IsEqualTo(255);
         }
 
         [Test]
-        public static void EqualityOperator_WithSameValues_ReturnsTrue()
+        public async Task EqualityOperator_WithSameValues_ReturnsTrue()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(255, 100, 150, 200);
 
             // Act & Assert
-            Assert.That(color1 == color2, Is.True);
+            await Assert.That(color1 == color2).IsTrue();
         }
 
         [Test]
-        public static void EqualityOperator_WithDifferentValues_ReturnsFalse()
+        public async Task EqualityOperator_WithDifferentValues_ReturnsFalse()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(255, 101, 150, 200);
 
             // Act & Assert
-            Assert.That(color1 == color2, Is.False);
+            await Assert.That(color1 == color2).IsFalse();
         }
 
         [Test]
-        public static void EqualityOperator_WithDifferentAlpha_ReturnsFalse()
+        public async Task EqualityOperator_WithDifferentAlpha_ReturnsFalse()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(128, 100, 150, 200);
 
             // Act & Assert
-            Assert.That(color1 == color2, Is.False);
+            await Assert.That(color1 == color2).IsFalse();
         }
 
         [Test]
-        public static void InequalityOperator_WithSameValues_ReturnsFalse()
+        public async Task InequalityOperator_WithSameValues_ReturnsFalse()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(255, 100, 150, 200);
 
             // Act & Assert
-            Assert.That(color1 != color2, Is.False);
+            await Assert.That(color1 != color2).IsFalse();
         }
 
         [Test]
-        public static void InequalityOperator_WithDifferentValues_ReturnsTrue()
+        public async Task InequalityOperator_WithDifferentValues_ReturnsTrue()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(255, 101, 150, 200);
 
             // Act & Assert
-            Assert.That(color1 != color2, Is.True);
+            await Assert.That(color1 != color2).IsTrue();
         }
 
         [Test]
-        public static void Equals_WithSameColor_ReturnsTrue()
+        public async Task Equals_WithSameColor_ReturnsTrue()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(255, 100, 150, 200);
 
             // Act & Assert
-            Assert.That(color1.Equals(color2), Is.True);
+            await Assert.That(color1.Equals(color2)).IsTrue();
         }
 
         [Test]
-        public static void Equals_WithDifferentColor_ReturnsFalse()
+        public async Task Equals_WithDifferentColor_ReturnsFalse()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(255, 101, 150, 200);
 
             // Act & Assert
-            Assert.That(color1.Equals(color2), Is.False);
+            await Assert.That(color1.Equals(color2)).IsFalse();
         }
 
         [Test]
-        public static void Equals_WithObject_ReturnsTrue()
+        public async Task Equals_WithObject_ReturnsTrue()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             object color2 = Color.FromArgb(255, 100, 150, 200);
 
             // Act & Assert
-            Assert.That(color1.Equals(color2), Is.True);
+            await Assert.That(color1.Equals(color2)).IsTrue();
         }
 
         [Test]
-        public static void Equals_WithNull_ReturnsFalse()
+        public async Task Equals_WithNull_ReturnsFalse()
         {
             // Arrange
             Color color = Color.FromArgb(255, 100, 150, 200);
 
             // Act & Assert
-            Assert.That(color.Equals(null), Is.False);
+            await Assert.That(color.Equals(null)).IsFalse();
         }
 
         [Test]
-        public static void Equals_WithNonColorObject_ReturnsFalse()
+        public async Task Equals_WithNonColorObject_ReturnsFalse()
         {
             // Arrange
             Color color = Color.FromArgb(255, 100, 150, 200);
             object obj = "not a color";
 
             // Act & Assert
-            Assert.That(color.Equals(obj), Is.False);
+            await Assert.That(color.Equals(obj)).IsFalse();
         }
 
         [Test]
-        public static void GetHashCode_WithSameValues_ReturnsSameHashCode()
+        public async Task GetHashCode_WithSameValues_ReturnsSameHashCode()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(255, 100, 150, 200);
 
             // Act & Assert
-            Assert.That(color1.GetHashCode(), Is.EqualTo(color2.GetHashCode()));
+            await Assert.That(color1.GetHashCode()).IsEqualTo(color2.GetHashCode());
         }
 
         [Test]
-        public static void GetHashCode_WithDifferentValues_ReturnsDifferentHashCode()
+        public async Task GetHashCode_WithDifferentValues_ReturnsDifferentHashCode()
         {
             // Arrange
             Color color1 = Color.FromArgb(255, 100, 150, 200);
             Color color2 = Color.FromArgb(255, 101, 150, 200);
 
             // Act & Assert
-            Assert.That(color1.GetHashCode(), Is.Not.EqualTo(color2.GetHashCode()));
+            await Assert.That(color1.GetHashCode()).IsNotEqualTo(color2.GetHashCode());
         }
 
         [Test]
-        public static void ToString_ReturnsCorrectFormat()
+        public async Task ToString_ReturnsCorrectFormat()
         {
             // Arrange
             Color color = Color.FromArgb(255, 170, 187, 204);
@@ -262,11 +261,11 @@ namespace Node.Net.Test
             string result = color.ToString();
 
             // Assert
-            Assert.That(result, Is.EqualTo("#FFAABBCC"));
+            await Assert.That(result).IsEqualTo("#FFAABBCC");
         }
 
         [Test]
-        public static void ToString_WithZeroValues_ReturnsCorrectFormat()
+        public async Task ToString_WithZeroValues_ReturnsCorrectFormat()
         {
             // Arrange
             Color color = Color.FromArgb(0, 0, 0, 0);
@@ -275,11 +274,11 @@ namespace Node.Net.Test
             string result = color.ToString();
 
             // Assert
-            Assert.That(result, Is.EqualTo("#00000000"));
+            await Assert.That(result).IsEqualTo("#00000000");
         }
 
         [Test]
-        public static void ToString_WithMaxValues_ReturnsCorrectFormat()
+        public async Task ToString_WithMaxValues_ReturnsCorrectFormat()
         {
             // Arrange
             Color color = Color.FromArgb(255, 255, 255, 255);
@@ -288,7 +287,7 @@ namespace Node.Net.Test
             string result = color.ToString();
 
             // Assert
-            Assert.That(result, Is.EqualTo("#FFFFFFFF"));
+            await Assert.That(result).IsEqualTo("#FFFFFFFF");
         }
 
         private static bool ColorsClassExists()
@@ -305,11 +304,11 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void Colors_Black_ReturnsCorrectColor()
+        public async Task Colors_Black_ReturnsCorrectColor()
         {
             if (!ColorsClassExists())
             {
-                Assert.Pass("Colors class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -317,18 +316,18 @@ namespace Node.Net.Test
             Color color = Colors.Black;
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(0));
-            Assert.That(color.G, Is.EqualTo(0));
-            Assert.That(color.B, Is.EqualTo(0));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(0);
+            await Assert.That((int)color.G).IsEqualTo(0);
+            await Assert.That((int)color.B).IsEqualTo(0);
         }
 
         [Test]
-        public static void Colors_White_ReturnsCorrectColor()
+        public async Task Colors_White_ReturnsCorrectColor()
         {
             if (!ColorsClassExists())
             {
-                Assert.Pass("Colors class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -336,18 +335,18 @@ namespace Node.Net.Test
             Color color = Colors.White;
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(255));
-            Assert.That(color.G, Is.EqualTo(255));
-            Assert.That(color.B, Is.EqualTo(255));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(255);
+            await Assert.That((int)color.G).IsEqualTo(255);
+            await Assert.That((int)color.B).IsEqualTo(255);
         }
 
         [Test]
-        public static void Colors_Red_ReturnsCorrectColor()
+        public async Task Colors_Red_ReturnsCorrectColor()
         {
             if (!ColorsClassExists())
             {
-                Assert.Pass("Colors class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -355,18 +354,18 @@ namespace Node.Net.Test
             Color color = Colors.Red;
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(255));
-            Assert.That(color.G, Is.EqualTo(0));
-            Assert.That(color.B, Is.EqualTo(0));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(255);
+            await Assert.That((int)color.G).IsEqualTo(0);
+            await Assert.That((int)color.B).IsEqualTo(0);
         }
 
         [Test]
-        public static void Colors_Green_ReturnsCorrectColor()
+        public async Task Colors_Green_ReturnsCorrectColor()
         {
             if (!ColorsClassExists())
             {
-                Assert.Pass("Colors class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -374,25 +373,25 @@ namespace Node.Net.Test
             Color color = Colors.Green;
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(0));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(0);
 #if IS_WINDOWS
             // On Windows, Colors.Green may have different RGB values due to system color definitions
             // Just verify it's a valid Color object
-            Assert.That(color.G, Is.GreaterThan(0));
-            Assert.That(color.B, Is.EqualTo(0));
+            await Assert.That(color.G).IsGreaterThan(0);
+            await Assert.That((int)color.B).IsEqualTo(0);
 #else
-            Assert.That(color.G, Is.EqualTo(255));
-            Assert.That(color.B, Is.EqualTo(0));
+            await Assert.That((int)color.G).IsEqualTo(255);
+            await Assert.That((int)color.B).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static void Colors_Blue_ReturnsCorrectColor()
+        public async Task Colors_Blue_ReturnsCorrectColor()
         {
             if (!ColorsClassExists())
             {
-                Assert.Pass("Colors class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -400,18 +399,18 @@ namespace Node.Net.Test
             Color color = Colors.Blue;
 
             // Assert
-            Assert.That(color.A, Is.EqualTo(255));
-            Assert.That(color.R, Is.EqualTo(0));
-            Assert.That(color.G, Is.EqualTo(0));
-            Assert.That(color.B, Is.EqualTo(255));
+            await Assert.That((int)color.A).IsEqualTo(255);
+            await Assert.That((int)color.R).IsEqualTo(0);
+            await Assert.That((int)color.G).IsEqualTo(0);
+            await Assert.That((int)color.B).IsEqualTo(255);
         }
 
         [Test]
-        public static void Colors_Transparent_ReturnsCorrectColor()
+        public async Task Colors_Transparent_ReturnsCorrectColor()
         {
             if (!ColorsClassExists())
             {
-                Assert.Pass("Colors class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -422,12 +421,12 @@ namespace Node.Net.Test
 #if IS_WINDOWS
             // On Windows, Colors.Transparent may have different RGB values
             // Just verify it's a valid Color object with alpha = 0
-            Assert.That(color.A, Is.EqualTo(0));
+            await Assert.That((int)color.A).IsEqualTo(0);
 #else
-            Assert.That(color.A, Is.EqualTo(0));
-            Assert.That(color.R, Is.EqualTo(0));
-            Assert.That(color.G, Is.EqualTo(0));
-            Assert.That(color.B, Is.EqualTo(0));
+            await Assert.That((int)color.A).IsEqualTo(0);
+            await Assert.That((int)color.R).IsEqualTo(0);
+            await Assert.That((int)color.G).IsEqualTo(0);
+            await Assert.That((int)color.B).IsEqualTo(0);
 #endif
         }
     }

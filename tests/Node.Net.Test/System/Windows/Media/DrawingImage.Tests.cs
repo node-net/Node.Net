@@ -1,10 +1,9 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
-    internal static class DrawingImageTests
+    internal class DrawingImageTests
     {
         private static bool CanCreateDrawingImage()
         {
@@ -43,11 +42,14 @@ namespace Node.Net.Test
 #endif
 
         [Test]
-        public static void DrawingImage_Constructor_Default_InitializesCorrectly()
+        public async Task DrawingImage_Constructor_Default_InitializesCorrectly()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -55,16 +57,19 @@ namespace Node.Net.Test
             DrawingImage drawingImage = new DrawingImage();
 
             // Assert
-            Assert.That(drawingImage, Is.Not.Null);
-            Assert.That(drawingImage.Drawing, Is.Null);
+            await Assert.That(drawingImage).IsNotNull();
+            await Assert.That(drawingImage.Drawing).IsNull();
         }
 
         [Test]
-        public static void DrawingImage_Constructor_WithDrawing_InitializesCorrectly()
+        public async Task DrawingImage_Constructor_WithDrawing_InitializesCorrectly()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -75,16 +80,19 @@ namespace Node.Net.Test
             DrawingImage drawingImage = new DrawingImage(drawing);
 
             // Assert
-            Assert.That(drawingImage, Is.Not.Null);
-            Assert.That(drawingImage.Drawing, Is.EqualTo(drawing));
+            await Assert.That(drawingImage).IsNotNull();
+            await Assert.That(drawingImage.Drawing).IsEqualTo(drawing);
         }
 
         [Test]
-        public static void DrawingImage_Drawing_CanBeSet()
+        public async Task DrawingImage_Drawing_CanBeSet()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -96,15 +104,18 @@ namespace Node.Net.Test
             drawingImage.Drawing = drawing;
 
             // Assert
-            Assert.That(drawingImage.Drawing, Is.EqualTo(drawing));
+            await Assert.That(drawingImage.Drawing).IsEqualTo(drawing);
         }
 
         [Test]
-        public static void DrawingImage_Width_WithNullDrawing_ReturnsZero()
+        public async Task DrawingImage_Width_WithNullDrawing_ReturnsZero()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -112,15 +123,18 @@ namespace Node.Net.Test
             DrawingImage drawingImage = new DrawingImage();
 
             // Act & Assert
-            Assert.That(drawingImage.Width, Is.EqualTo(0.0));
+            await Assert.That(drawingImage.Width).IsEqualTo(0.0);
         }
 
         [Test]
-        public static void DrawingImage_Height_WithNullDrawing_ReturnsZero()
+        public async Task DrawingImage_Height_WithNullDrawing_ReturnsZero()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -128,15 +142,18 @@ namespace Node.Net.Test
             DrawingImage drawingImage = new DrawingImage();
 
             // Act & Assert
-            Assert.That(drawingImage.Height, Is.EqualTo(0.0));
+            await Assert.That(drawingImage.Height).IsEqualTo(0.0);
         }
 
         [Test]
-        public static void DrawingImage_Width_WithGeometryDrawing_ReturnsBoundsWidth()
+        public async Task DrawingImage_Width_WithGeometryDrawing_ReturnsBoundsWidth()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -148,16 +165,19 @@ namespace Node.Net.Test
             DrawingImage drawingImage = new DrawingImage(drawing);
 
             // Act & Assert
-            Assert.That(drawingImage.Width, Is.EqualTo(100.0));
+            await Assert.That(drawingImage.Width).IsEqualTo(100.0);
 #endif
         }
 
         [Test]
-        public static void DrawingImage_Height_WithGeometryDrawing_ReturnsBoundsHeight()
+        public async Task DrawingImage_Height_WithGeometryDrawing_ReturnsBoundsHeight()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -169,16 +189,19 @@ namespace Node.Net.Test
             DrawingImage drawingImage = new DrawingImage(drawing);
 
             // Act & Assert
-            Assert.That(drawingImage.Height, Is.EqualTo(200.0));
+            await Assert.That(drawingImage.Height).IsEqualTo(200.0);
 #endif
         }
 
         [Test]
-        public static void DrawingImage_Width_WithNonGeometryDrawing_ReturnsZero()
+        public async Task DrawingImage_Width_WithNonGeometryDrawing_ReturnsZero()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -188,16 +211,19 @@ namespace Node.Net.Test
             DrawingImage drawingImage = new DrawingImage(drawing);
 
             // Act & Assert
-            Assert.That(drawingImage.Width, Is.EqualTo(0.0));
+            await Assert.That(drawingImage.Width).IsEqualTo(0.0);
 #endif
         }
 
         [Test]
-        public static void DrawingImage_Height_WithNonGeometryDrawing_ReturnsZero()
+        public async Task DrawingImage_Height_WithNonGeometryDrawing_ReturnsZero()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("DrawingImage only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -207,16 +233,19 @@ namespace Node.Net.Test
             DrawingImage drawingImage = new DrawingImage(drawing);
 
             // Act & Assert
-            Assert.That(drawingImage.Height, Is.EqualTo(0.0));
+            await Assert.That(drawingImage.Height).IsEqualTo(0.0);
 #endif
         }
 
         [Test]
-        public static void GeometryDrawing_Geometry_CanBeSet()
+        public async Task GeometryDrawing_Geometry_CanBeSet()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("GeometryDrawing only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -230,16 +259,19 @@ namespace Node.Net.Test
             drawing.Geometry = geometry;
 
             // Assert
-            Assert.That(drawing.Geometry, Is.EqualTo(geometry));
+            await Assert.That(drawing.Geometry).IsEqualTo(geometry);
 #endif
         }
 
         [Test]
-        public static void GeometryDrawing_Brush_CanBeSet()
+        public async Task GeometryDrawing_Brush_CanBeSet()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("GeometryDrawing only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -251,15 +283,18 @@ namespace Node.Net.Test
             drawing.Brush = brush;
 
             // Assert
-            Assert.That(drawing.Brush, Is.EqualTo(brush));
+            await Assert.That(drawing.Brush).IsEqualTo(brush);
         }
 
         [Test]
-        public static void GeometryDrawing_Pen_CanBeSet()
+        public async Task GeometryDrawing_Pen_CanBeSet()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("GeometryDrawing only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -271,15 +306,18 @@ namespace Node.Net.Test
             drawing.Pen = pen;
 
             // Assert
-            Assert.That(drawing.Pen, Is.EqualTo(pen));
+            await Assert.That(drawing.Pen).IsEqualTo(pen);
         }
 
         [Test]
-        public static void Rect_Properties_CanBeSet()
+        public async Task Rect_Properties_CanBeSet()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("Rect only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -294,19 +332,22 @@ namespace Node.Net.Test
             rect.Height = 200.0;
 
             // Assert
-            Assert.That(rect.X, Is.EqualTo(10.0));
-            Assert.That(rect.Y, Is.EqualTo(20.0));
-            Assert.That(rect.Width, Is.EqualTo(100.0));
-            Assert.That(rect.Height, Is.EqualTo(200.0));
+            await Assert.That(rect.X).IsEqualTo(10.0);
+            await Assert.That(rect.Y).IsEqualTo(20.0);
+            await Assert.That(rect.Width).IsEqualTo(100.0);
+            await Assert.That(rect.Height).IsEqualTo(200.0);
 #endif
         }
 
         [Test]
-        public static void Rect_Constructor_WithParameters_SetsProperties()
+        public async Task Rect_Constructor_WithParameters_SetsProperties()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("Rect only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -315,19 +356,22 @@ namespace Node.Net.Test
             Rect rect = new Rect(10.0, 20.0, 100.0, 200.0);
 
             // Assert
-            Assert.That(rect.X, Is.EqualTo(10.0));
-            Assert.That(rect.Y, Is.EqualTo(20.0));
-            Assert.That(rect.Width, Is.EqualTo(100.0));
-            Assert.That(rect.Height, Is.EqualTo(200.0));
+            await Assert.That(rect.X).IsEqualTo(10.0);
+            await Assert.That(rect.Y).IsEqualTo(20.0);
+            await Assert.That(rect.Width).IsEqualTo(100.0);
+            await Assert.That(rect.Height).IsEqualTo(200.0);
 #endif
         }
 
         [Test]
-        public static void Pen_Brush_CanBeSet()
+        public async Task Pen_Brush_CanBeSet()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("Pen only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -339,15 +383,18 @@ namespace Node.Net.Test
             pen.Brush = brush;
 
             // Assert
-            Assert.That(pen.Brush, Is.EqualTo(brush));
+            await Assert.That(pen.Brush).IsEqualTo(brush);
         }
 
         [Test]
-        public static void Pen_Thickness_CanBeSet()
+        public async Task Pen_Thickness_CanBeSet()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("Pen only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -358,15 +405,18 @@ namespace Node.Net.Test
             pen.Thickness = 2.5;
 
             // Assert
-            Assert.That(pen.Thickness, Is.EqualTo(2.5));
+            await Assert.That(pen.Thickness).IsEqualTo(2.5);
         }
 
         [Test]
-        public static void Pen_Thickness_DefaultsToOne()
+        public async Task Pen_Thickness_DefaultsToOne()
         {
             if (!CanCreateDrawingImage())
             {
-                Assert.Pass("Pen only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -374,7 +424,7 @@ namespace Node.Net.Test
             Pen pen = new Pen();
 
             // Assert
-            Assert.That(pen.Thickness, Is.EqualTo(1.0));
+            await Assert.That(pen.Thickness).IsEqualTo(1.0);
         }
     }
 }

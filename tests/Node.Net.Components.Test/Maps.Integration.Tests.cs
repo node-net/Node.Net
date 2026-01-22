@@ -2,7 +2,8 @@
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
-using TUnit;
+using TUnit.Core;
+using TUnit.Assertions;
 using Node.Net.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
 
