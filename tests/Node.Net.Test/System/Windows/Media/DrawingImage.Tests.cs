@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
+#pragma warning disable CS0162 // Unreachable code detected - expected on non-Windows platforms
     internal class DrawingImageTests
     {
         private static bool CanCreateDrawingImage()
@@ -427,5 +428,6 @@ namespace Node.Net.Test
             await Assert.That(pen.Thickness).IsEqualTo(1.0);
         }
     }
+#pragma warning restore CS0162
 }
 

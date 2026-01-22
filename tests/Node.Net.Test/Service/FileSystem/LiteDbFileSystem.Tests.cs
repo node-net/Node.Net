@@ -220,7 +220,9 @@ internal class LiteDbFileSystemTests : TestHarness
 
             // Act & Assert
             var ex = await Assert.That(() => _fileSystem!.ReadAllBytes(path)).Throws<FileNotFoundException>();
+#pragma warning disable CS8602 // Exception.Message is never null in practice
             await Assert.That(ex.Message.Contains(path)).IsTrue();
+#pragma warning restore CS8602
         }
         finally
         {
@@ -602,7 +604,9 @@ internal class LiteDbFileSystemTests : TestHarness
 
             // Act & Assert
             var ex = await Assert.That(() => _fileSystem!.Delete(path)).Throws<FileNotFoundException>();
+#pragma warning disable CS8602 // Exception.Message is never null in practice
             await Assert.That(ex.Message.Contains(path)).IsTrue();
+#pragma warning restore CS8602
         }
         finally
         {
@@ -922,6 +926,7 @@ internal class LiteDbFileSystemTests : TestHarness
             // Act & Assert - Should not throw
             fileSystem.Dispose();
             fileSystem.Dispose();
+            await Task.CompletedTask;
         }
         finally
         {

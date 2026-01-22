@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
+#pragma warning disable CS0162 // Unreachable code detected - expected on non-Windows platforms
     internal class BitmapSourceTests
     {
         private static bool CanCreateTestBitmapSource()
@@ -536,5 +537,6 @@ namespace Node.Net.Test
             }
         }
     }
+#pragma warning restore CS0162
 }
 

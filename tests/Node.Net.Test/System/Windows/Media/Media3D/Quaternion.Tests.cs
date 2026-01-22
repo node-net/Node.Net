@@ -273,11 +273,8 @@ namespace Node.Net.Test
             Quaternion q2 = new Quaternion(1.0, 2.0, 3.0, 5.0);
             
             // Hash codes may or may not be different, but if they're equal, the quaternions should be equal
-            if (q1.GetHashCode() == q2.GetHashCode())
-            {
-                // This is acceptable - hash collisions can happen
-                await Assert.That(true).IsTrue();
-            }
+            // Hash collisions can happen, which is acceptable
+            await Task.CompletedTask;
         }
 
         [Test]

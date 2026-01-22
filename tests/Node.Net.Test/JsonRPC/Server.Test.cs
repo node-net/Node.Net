@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -52,7 +52,7 @@ namespace Node.Net.JsonRPC
 
         // https://stackoverflow.com/questions/11403333/httplistener-with-https-support
         //[Test]
-        public async Task Default_Usage_Https()
+        private async Task Default_Usage_Https()
         {
             if (IsAdministrator())
             {

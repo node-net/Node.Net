@@ -262,7 +262,9 @@ internal class LogServiceTests : TestHarness
 
             // Act & Assert
             var ex = await Assert.That(() => _logService.Update(created)).Throws<InvalidOperationException>();
+#pragma warning disable CS8602 // Exception.Message is never null in practice
             await Assert.That(ex.Message.Contains("automatically captured")).IsTrue();
+#pragma warning restore CS8602
         }
         finally
         {

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
+#pragma warning disable CS0162 // Unreachable code detected - expected on non-Windows platforms
     internal class MeshGeometry3DTests
     {
         private static bool CanCreateMeshGeometry3D()
@@ -459,5 +460,6 @@ namespace Node.Net.Test
 #endif
         }
     }
+#pragma warning restore CS0162
 }
 

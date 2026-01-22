@@ -188,7 +188,10 @@ internal class UserSecretProviderTests : TestHarness
             // Assert
             foreach (var identifier in machineIdentifiers)
             {
-                await Assert.That(secretString.Contains(identifier)).IsFalse();
+                if (identifier != null)
+                {
+                    await Assert.That(secretString.Contains(identifier)).IsFalse();
+                }
             }
         }
         finally

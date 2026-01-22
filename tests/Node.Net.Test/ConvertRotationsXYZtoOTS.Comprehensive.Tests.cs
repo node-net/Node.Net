@@ -125,9 +125,9 @@ namespace Node.Net.Test
             double tilt = resultDict.GetAngleDegrees("Tilt");
             double spin = resultDict.GetAngleDegrees("Spin");
             
-            await Assert.That(Abs(orientation)).IsLessThan(0.1, "Orientation should be near zero");
-            await Assert.That(Abs(tilt)).IsLessThan(0.1, "Tilt should be near zero");
-            await Assert.That(Abs(spin)).IsLessThan(0.1, "Spin should be near zero");
+            await Assert.That(Abs(orientation)).IsLessThan(0.1);
+            await Assert.That(Abs(tilt)).IsLessThan(0.1);
+            await Assert.That(Abs(spin)).IsLessThan(0.1);
         }
 
         [Test]
@@ -151,9 +151,9 @@ namespace Node.Net.Test
             double spin = resultDict.GetAngleDegrees("Spin");
             
             // RotationZ should map to Orientation
-            await Assert.That(Round(orientation, 1)).IsEqualTo(15.0, "Orientation should equal RotationZ");
-            await Assert.That(Abs(tilt)).IsLessThan(0.1, "Tilt should be near zero");
-            await Assert.That(Abs(spin)).IsLessThan(0.1, "Spin should be near zero");
+            await Assert.That(Round(orientation, 1)).IsEqualTo(15.0);
+            await Assert.That(Abs(tilt)).IsLessThan(0.1);
+            await Assert.That(Abs(spin)).IsLessThan(0.1);
         }
 
         [Test]
@@ -177,8 +177,8 @@ namespace Node.Net.Test
             double spin = resultDict.GetAngleDegrees("Spin");
             
             // RotationX should affect Tilt (though not necessarily 1:1)
-            await Assert.That(Abs(tilt)).IsGreaterThan(0.1, "Tilt should be non-zero");
-            await Assert.That(Abs(orientation)).IsLessThan(0.1, "Orientation should be near zero for pure X rotation");
+            await Assert.That(Abs(tilt)).IsGreaterThan(0.1);
+            await Assert.That(Abs(orientation)).IsLessThan(0.1);
         }
 
         [Test]
@@ -202,7 +202,7 @@ namespace Node.Net.Test
             double spin = resultDict.GetAngleDegrees("Spin");
             
             // RotationY should affect Tilt
-            await Assert.That(Abs(tilt)).IsGreaterThan(0.1, "Tilt should be non-zero");
+            await Assert.That(Abs(tilt)).IsGreaterThan(0.1);
         }
 
         [Test]
@@ -648,7 +648,7 @@ namespace Node.Net.Test
             double orientation2 = dict2.GetAngleDegrees("Orientation");
             
             // Results should be consistent (within floating point precision)
-            await Assert.That(Abs(orientation1 - orientation2)).IsLessThan(0.0001, "Multiple calls should produce consistent results");
+            await Assert.That(Abs(orientation1 - orientation2)).IsLessThan(0.0001);
         }
 
         [Test]
