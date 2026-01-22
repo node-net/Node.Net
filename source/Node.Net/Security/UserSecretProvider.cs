@@ -154,7 +154,7 @@ public abstract class UserSecretProvider : IUserSecretProvider
     protected virtual byte[] GenerateSecretBytes()
     {
         var bytes = new byte[SecretByteLength];
-#if IS_FRAMEWORK
+#if IS_FRAMEWORK || NETSTANDARD2_0
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(bytes);

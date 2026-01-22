@@ -41,8 +41,8 @@ public class UserSecretProvider : Node.Net.Security.UserSecretProvider
                     new FormatException("Invalid data format in stored secret."));
             }
 
-#if IS_FRAMEWORK
-            // .NET Framework 4.8: Use AES-CBC with HMAC
+#if IS_FRAMEWORK || NETSTANDARD2_0
+            // .NET Framework 4.8 / .NET Standard 2.0: Use AES-CBC with HMAC
             return new ValueTask<UserSecret?>(DecryptAesCbc(encryptedData, key));
 #else
             // .NET Core/8.0: Use AES-GCM
@@ -109,8 +109,8 @@ public class UserSecretProvider : Node.Net.Security.UserSecretProvider
             // Derive key from user credentials
             var keyBytes = DeriveKey(key);
 
-#if IS_FRAMEWORK
-            // .NET Framework 4.8: Use AES-CBC with HMAC
+#if IS_FRAMEWORK || NETSTANDARD2_0
+            // .NET Framework 4.8 / .NET Standard 2.0: Use AES-CBC with HMAC
             var encryptedData = EncryptAesCbc(dataBytes, keyBytes);
 #else
             // .NET Core/8.0: Use AES-GCM
@@ -191,9 +191,9 @@ public class UserSecretProvider : Node.Net.Security.UserSecretProvider
         }
     }
 
-#if IS_FRAMEWORK
+#if IS_FRAMEWORK || NETSTANDARD2_0
     /// <summary>
-    /// Encrypts data using AES-256-CBC with HMAC-SHA256 (for .NET Framework 4.8 compatibility).
+    /// Encrypts data using AES-256-CBC with HMAC-SHA256 (for .NET Framework 4.8 and .NET Standard 2.0 compatibility).
     /// </summary>
     private byte[] EncryptAesCbc(byte[] data, byte[] key)
     {
@@ -246,7 +246,7 @@ public class UserSecretProvider : Node.Net.Security.UserSecretProvider
     }
 
     /// <summary>
-    /// Decrypts data using AES-256-CBC with HMAC-SHA256 (for .NET Framework 4.8 compatibility).
+    /// Decrypts data using AES-256-CBC with HMAC-SHA256 (for .NET Framework 4.8 and .NET Standard 2.0 compatibility).
     /// </summary>
     private UserSecret DecryptAesCbc(byte[] encryptedData, UserSecretKey key)
     {
@@ -348,14 +348,23 @@ public class UserSecretProvider : Node.Net.Security.UserSecretProvider
         var salt = Encoding.UTF8.GetBytes($"Node.Net.UserSecretProvider:{key.Value}:{Environment.UserName}@{Environment.UserDomainName}");
         var password = $"{Environment.UserName}@{Environment.UserDomainName}:{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}";
 
+#if NETSTANDARD2_0
+        // .NET Standard 2.0: Rfc2898DeriveBytes constructor with HashAlgorithmName not available
+        // Use 3-parameter constructor (uses SHA1 by default)
+        using var pbkdf2 = new Rfc2898DeriveBytes(
+            Encoding.UTF8.GetBytes(password),
+            salt,
+            KeyDerivationIterations);
+#else
         using var pbkdf2 = new Rfc2898DeriveBytes(
             Encoding.UTF8.GetBytes(password),
             salt,
             KeyDerivationIterations,
             HashAlgorithmName.SHA256);
+#endif
 
-#if IS_FRAMEWORK
-        // For .NET Framework, derive 64 bytes (32 for AES, 32 for HMAC)
+#if IS_FRAMEWORK || NETSTANDARD2_0
+        // For .NET Framework / .NET Standard 2.0, derive 64 bytes (32 for AES, 32 for HMAC)
         return pbkdf2.GetBytes(64);
 #else
         // For .NET Core/8.0, derive 32 bytes (AES-256-GCM uses single key)

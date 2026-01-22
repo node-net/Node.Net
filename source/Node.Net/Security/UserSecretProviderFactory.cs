@@ -53,7 +53,7 @@ public static class UserSecretProviderFactory
         // Android detection: Check for Android-specific environment variables or system properties
         // This is a simplified check - in production, you might want more robust detection
         var osDescription = RuntimeInformation.OSDescription;
-#if IS_FRAMEWORK
+#if IS_FRAMEWORK || NETSTANDARD2_0
         return osDescription.IndexOf("Android", System.StringComparison.OrdinalIgnoreCase) >= 0;
 #else
         return osDescription.Contains("Android", System.StringComparison.OrdinalIgnoreCase);

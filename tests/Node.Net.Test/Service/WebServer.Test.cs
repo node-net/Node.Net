@@ -1,6 +1,5 @@
-﻿extern alias NodeNet;
-using NUnit.Framework;
-using NodeNet::Node.Net.Service;
+﻿using NUnit.Framework;
+using Node.Net.Service;
 using System.Threading;
 
 namespace Node.Net.Service

@@ -1,0 +1,631 @@
+@namespace Node.Net.Components
+@using System.Linq
+@using LiteDB
+@using Microsoft.FluentUI.AspNetCore.Components
+@using Node.Net.Service.Logging
+@using Microsoft.Extensions.Logging
+@inject ILogService? LogService
+@implements IDisposable
+
+@*
+    Logs Component
+    
+    A reusable Razor component that displays application log entries with:
+    - Chronological display (newest first by default)
+    - Search and filter capabilities
+    - Pagination support
+    - Visual distinction between log levels
+    
+    The component uses ILogService for data access, injected via dependency injection
+    or provided as a parameter.
+*@
+
+<FluentCard Style="padding: 1rem;">
+    <FluentStack Orientation="Orientation.Vertical" Gap="1rem">
+        <h3>Application Logs</h3>
+        
+        @* Header with Create Button *@
+        <FluentStack Orientation="Orientation.Horizontal" Gap="1rem" JustifyContent="JustifyContent.SpaceBetween" Style="align-items: center;">
+            <FluentStack Orientation="Orientation.Horizontal" Gap="1rem" Style="align-items: center; flex: 1;">
+                <FluentSearch @bind-Value="@_searchTerm" 
+                             Placeholder="Search logs..." 
+                             Style="flex: 1; max-width: 400px;"
+                             OnInput="@(() => OnSearchInput())" />
+                <FluentSelect TOption="string" @bind-Value="@_selectedLevelFilter" 
+                            OnChange="@(() => OnLevelFilterChanged())"
+                            Style="width: 150px;">
+                    <FluentOption TOption="string" Value="">All Levels</FluentOption>
+                    <FluentOption TOption="string" Value="Debug">Debug</FluentOption>
+                    <FluentOption TOption="string" Value="Info">Info</FluentOption>
+                    <FluentOption TOption="string" Value="Warn">Warn</FluentOption>
+                    <FluentOption TOption="string" Value="Error">Error</FluentOption>
+                    <FluentOption TOption="string" Value="Fatal">Fatal</FluentOption>
+                </FluentSelect>
+                @if (!string.IsNullOrWhiteSpace(_searchTerm) || !string.IsNullOrWhiteSpace(_selectedLevelFilter))
+                {
+                    <FluentButton Appearance="Appearance.Neutral" 
+                                 OnClick="@ClearFilters">
+                        Clear
+                    </FluentButton>
+                }
+            </FluentStack>
+            <FluentButton Appearance="Appearance.Accent" 
+                         OnClick="@OpenCreateDialog">
+                Create
+            </FluentButton>
+        </FluentStack>
+        
+        @if (_errorMessage != null)
+        {
+            <FluentMessageBar Intent="MessageIntent.Error" RemoveButtonAriaLabel="Close">
+                @_errorMessage
+            </FluentMessageBar>
+        }
+        
+        @if (_logEntries == null || !_logEntries.Any())
+        {
+            <FluentMessageBar Intent="MessageIntent.Info">
+                @if (_isLoading)
+                {
+                    <text>Loading log entries...</text>
+                }
+                else if (!string.IsNullOrWhiteSpace(_searchTerm) || !string.IsNullOrWhiteSpace(_selectedLevelFilter))
+                {
+                    <text>No log entries match your search criteria.</text>
+                }
+                else
+                {
+                    <text>No log entries found.</text>
+                }
+            </FluentMessageBar>
+        }
+        else
+        {
+            <FluentDataGrid Items="@(_logEntries?.AsQueryable() ?? Enumerable.Empty<LogEntry>().AsQueryable())" 
+                           TGridItem="LogEntry"
+                           GridTemplateColumns="1fr 0.8fr 3fr 1.5fr 1fr"
+                           Loading="@_isLoading"
+                           Style="height: 600px;">
+                <PropertyColumn Title="Timestamp" 
+                               Property="@(x => x.Timestamp)" 
+                               Format="g"
+                               Align="Align.Start" />
+                <TemplateColumn Title="Level" Align="Align.Start">
+                    <span class="log-level log-level-@(GetLevelClass(context.Level))">
+                        @context.Level
+                    </span>
+                </TemplateColumn>
+                <TemplateColumn Title="Message" Align="Align.Start">
+                    @if (context.Message != null && context.Message.Length > 100)
+                    {
+                        @if (_expandedMessages.Contains(context.Id))
+                        {
+                            <div>
+                                @context.Message
+                                <FluentButton Appearance="Appearance.Neutral" 
+                                            OnClick="@(() => CollapseMessage(context.Id))">
+                                    Collapse
+                                </FluentButton>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                @context.Message.Substring(0, 100)...
+                                <FluentButton Appearance="Appearance.Neutral" 
+                                            OnClick="@(() => ExpandMessage(context.Id))">
+                                    Expand
+                                </FluentButton>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        @context.Message
+                    }
+                </TemplateColumn>
+                <PropertyColumn Title="Source" 
+                               Property="@(x => x.SourceContext)" 
+                               Align="Align.Start" />
+                <TemplateColumn Title="Actions" Align="Align.Start">
+                    <FluentStack Orientation="Orientation.Horizontal" Gap="0.5rem">
+                        <FluentButton Appearance="Appearance.Neutral" 
+                                    Size="Size.Small"
+                                    Disabled="@(!context.IsManualEntry)"
+                                    OnClick="@(() => OpenEditDialog(context))"
+                                    data-entry-id="@context.Id">
+                            Edit
+                        </FluentButton>
+                        <FluentButton Appearance="Appearance.Neutral" 
+                                    Size="Size.Small"
+                                    OnClick="@(() => OpenDeleteDialog(context))"
+                                    data-entry-id="@context.Id">
+                            Delete
+                        </FluentButton>
+                    </FluentStack>
+                </TemplateColumn>
+            </FluentDataGrid>
+            
+            @* Pagination and Sort Controls *@
+            <FluentStack Orientation="Orientation.Horizontal" Gap="1rem" JustifyContent="JustifyContent.SpaceBetween">
+                <FluentStack Orientation="Orientation.Horizontal" Gap="0.5rem" Style="align-items: center;">
+                    <FluentButton Appearance="Appearance.Neutral" 
+                                 OnClick="@(() => ChangePage(-1))"
+                                 Disabled="@(_currentPage == 0)">
+                        Previous
+                    </FluentButton>
+                    <span>Page @(_currentPage + 1) of @(_totalPages)</span>
+                    <FluentButton Appearance="Appearance.Neutral" 
+                                 OnClick="@(() => ChangePage(1))"
+                                 Disabled="@(_currentPage >= _totalPages - 1)">
+                        Next
+                    </FluentButton>
+                </FluentStack>
+                <FluentStack Orientation="Orientation.Horizontal" Gap="1rem" Style="align-items: center;">
+                    <FluentButton Appearance="Appearance.Neutral" 
+                                 OnClick="@ToggleSortOrder"
+                                 Title="@(_sortNewestFirst ? "Sort: Newest First" : "Sort: Oldest First")">
+                        @if (_sortNewestFirst)
+                        {
+                            <text>↓ Newest First</text>
+                        }
+                        else
+                        {
+                            <text>↑ Oldest First</text>
+                        }
+                    </FluentButton>
+                    <FluentSelect TOption="string" @bind-Value="@_selectedPageSizeString" 
+                                OnChange="@(() => OnPageSizeChanged())"
+                                Style="width: 120px;">
+                        <FluentOption TOption="string" Value="25">25 per page</FluentOption>
+                        <FluentOption TOption="string" Value="50">50 per page</FluentOption>
+                        <FluentOption TOption="string" Value="100">100 per page</FluentOption>
+                    </FluentSelect>
+                </FluentStack>
+            </FluentStack>
+        }
+    </FluentStack>
+</FluentCard>
+
+@* Create/Edit Log Entry Dialog *@
+<FluentDialog @bind-Hidden="@_isCreateEditDialogHidden" Modal="true" Title="@(_isEditing ? "Edit Log Entry" : "Create Log Entry")">
+    <FluentStack Orientation="Orientation.Vertical" Gap="1rem" Style="padding: 1rem;">
+        <FluentTextField @bind-Value="@_editingEntry.Message" 
+                        Label="Message" 
+                        Placeholder="Enter log message"
+                        Required="true" />
+        <FluentSelect TOption="string" @bind-Value="@_editingEntry.Level" 
+                    Label="Level"
+                    Required="true">
+            <FluentOption TOption="string" Value="Debug">Debug</FluentOption>
+            <FluentOption TOption="string" Value="Info">Info</FluentOption>
+            <FluentOption TOption="string" Value="Warn">Warn</FluentOption>
+            <FluentOption TOption="string" Value="Error">Error</FluentOption>
+            <FluentOption TOption="string" Value="Fatal">Fatal</FluentOption>
+        </FluentSelect>
+        <FluentTextField @bind-Value="@_editingEntry.SourceContext" 
+                        Label="Source Context" 
+                        Placeholder="Optional source context" />
+        <FluentStack Orientation="Orientation.Horizontal" Gap="1rem" JustifyContent="JustifyContent.End">
+            <FluentButton Appearance="Appearance.Neutral" 
+                        OnClick="@CloseCreateEditDialog">
+                Cancel
+            </FluentButton>
+            <FluentButton Appearance="Appearance.Accent" 
+                        OnClick="@SaveLogEntry">
+                Save
+            </FluentButton>
+        </FluentStack>
+    </FluentStack>
+</FluentDialog>
+
+@* Delete Confirmation Dialog *@
+<FluentDialog @bind-Hidden="@_isDeleteDialogHidden" Modal="true" Title="Delete Log Entry">
+    <FluentStack Orientation="Orientation.Vertical" Gap="1rem" Style="padding: 1rem;">
+        <p>Are you sure you want to delete this log entry?</p>
+        @if (_entryToDelete != null)
+        {
+            <div style="padding: 0.5rem; background-color: #f5f5f5; border-radius: 4px;">
+                <strong>@_entryToDelete.Level</strong>: @_entryToDelete.Message
+            </div>
+        }
+        <FluentStack Orientation="Orientation.Horizontal" Gap="1rem" JustifyContent="JustifyContent.End">
+            <FluentButton Appearance="Appearance.Neutral" 
+                        OnClick="@CloseDeleteDialog">
+                Cancel
+            </FluentButton>
+            <FluentButton Appearance="Appearance.Accent" 
+                        OnClick="@ConfirmDelete">
+                Delete
+            </FluentButton>
+        </FluentStack>
+    </FluentStack>
+</FluentDialog>
+
+<style>
+    .log-level {
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+    
+    .log-level-debug {
+        background-color: #e3f2fd;
+        color: #1976d2;
+    }
+    
+    .log-level-info {
+        background-color: #e8f5e9;
+        color: #388e3c;
+    }
+    
+    .log-level-warn {
+        background-color: #fff3e0;
+        color: #f57c00;
+    }
+    
+    .log-level-error {
+        background-color: #ffebee;
+        color: #d32f2f;
+    }
+    
+    .log-level-fatal {
+        background-color: #f3e5f5;
+        color: #7b1fa2;
+    }
+</style>
+
+@code {
+    /// <summary>
+    /// Optional ILogService instance. If not provided, uses dependency injection.
+    /// </summary>
+    [Parameter]
+    public ILogService? LogServiceInstance { get; set; }
+    
+    /// <summary>
+    /// Optional page size for pagination (default: 25).
+    /// </summary>
+    [Parameter]
+    public int PageSize { get; set; } = 25;
+    
+    private ILogService? _effectiveLogService;
+    private List<LogEntry>? _logEntries;
+    private bool _isLoading = false;
+    private string? _errorMessage;
+    private int _currentPage = 0;
+    private int _selectedPageSize = 25;
+    private string _selectedPageSizeString = "25";
+    private int _totalPages = 1;
+    private HashSet<LiteDB.ObjectId> _expandedMessages = new();
+    private string _searchTerm = string.Empty;
+    private string _selectedLevelFilter = string.Empty;
+    private System.Threading.Timer? _searchDebounceTimer;
+    private bool _isCreateEditDialogHidden = true;
+    private bool _isDeleteDialogHidden = true;
+    private bool _isEditing = false;
+    private LogEntry _editingEntry = new();
+    private LogEntry? _entryToDelete;
+    private bool _sortNewestFirst = true; // Default to newest first per FR-003
+    
+    protected override void OnInitialized()
+    {
+        _effectiveLogService = LogServiceInstance ?? LogService;
+        _selectedPageSize = PageSize;
+        _selectedPageSizeString = PageSize.ToString();
+        LoadLogs();
+    }
+    
+    /// <summary>
+    /// Loads log entries from the log service with newest-first ordering, applying search and filter.
+    /// </summary>
+    private void LoadLogs()
+    {
+        if (_effectiveLogService == null)
+        {
+            _errorMessage = "Log service is not available. Please configure ILogService.";
+            return;
+        }
+        
+        try
+        {
+            _isLoading = true;
+            _errorMessage = null;
+            
+            // Normalize search term and level filter (empty string for "all")
+            var searchTerm = string.IsNullOrWhiteSpace(_searchTerm) ? null : _searchTerm.Trim();
+            var levelFilter = string.IsNullOrWhiteSpace(_selectedLevelFilter) ? null : _selectedLevelFilter;
+            
+            var totalCount = _effectiveLogService.GetCount(searchTerm, levelFilter);
+            _totalPages = (int)Math.Ceiling((double)totalCount / _selectedPageSize);
+            if (_totalPages == 0) _totalPages = 1;
+            
+            var entries = _effectiveLogService.Search(
+                searchTerm: searchTerm,
+                levelFilter: levelFilter,
+                skip: _currentPage * _selectedPageSize,
+                take: _selectedPageSize,
+                orderByNewestFirst: _sortNewestFirst
+            );
+            
+            _logEntries = entries.ToList();
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Error loading log entries: {ex.Message}";
+            _logEntries = new List<LogEntry>();
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+    
+    /// <summary>
+    /// Changes the current page.
+    /// </summary>
+    private void ChangePage(int delta)
+    {
+        var newPage = _currentPage + delta;
+        if (newPage >= 0 && newPage < _totalPages)
+        {
+            _currentPage = newPage;
+            LoadLogs();
+        }
+    }
+    
+    /// <summary>
+    /// Handles page size change.
+    /// </summary>
+    private void OnPageSizeChanged()
+    {
+        if (int.TryParse(_selectedPageSizeString, out var newPageSize))
+        {
+            _selectedPageSize = newPageSize;
+        }
+        _currentPage = 0; // Reset to first page
+        LoadLogs();
+    }
+    
+    /// <summary>
+    /// Toggles sort order between newest first and oldest first.
+    /// </summary>
+    private void ToggleSortOrder()
+    {
+        _sortNewestFirst = !_sortNewestFirst;
+        _currentPage = 0; // Reset to first page when changing sort order
+        LoadLogs();
+    }
+    
+    /// <summary>
+    /// Handles search input with debouncing (1 second delay per SC-002).
+    /// </summary>
+    private void OnSearchInput()
+    {
+        // Cancel existing timer
+        _searchDebounceTimer?.Dispose();
+        
+        // Reset to first page when searching
+        _currentPage = 0;
+        
+        // Create new timer to debounce search (1 second = 1000ms)
+        _searchDebounceTimer = new System.Threading.Timer(_ =>
+        {
+            InvokeAsync(() =>
+            {
+                LoadLogs();
+                StateHasChanged();
+            });
+        }, null, 1000, System.Threading.Timeout.Infinite);
+    }
+    
+    /// <summary>
+    /// Handles log level filter change.
+    /// </summary>
+    private void OnLevelFilterChanged()
+    {
+        _currentPage = 0; // Reset to first page
+        LoadLogs();
+    }
+    
+    /// <summary>
+    /// Clears search term and level filter, showing all entries.
+    /// </summary>
+    private void ClearFilters()
+    {
+        _searchTerm = string.Empty;
+        _selectedLevelFilter = string.Empty;
+        _currentPage = 0;
+        _searchDebounceTimer?.Dispose();
+        _searchDebounceTimer = null;
+        LoadLogs();
+    }
+    
+    /// <summary>
+    /// Opens the create log entry dialog.
+    /// </summary>
+    private void OpenCreateDialog()
+    {
+        _isEditing = false;
+        _editingEntry = new LogEntry
+        {
+            Timestamp = DateTimeOffset.UtcNow,
+            Level = "Info",
+            Message = string.Empty,
+            SourceContext = string.Empty,
+            IsManualEntry = true
+        };
+        _isCreateEditDialogHidden = false;
+    }
+    
+    /// <summary>
+    /// Opens the edit log entry dialog for the specified entry.
+    /// </summary>
+    private void OpenEditDialog(LogEntry entry)
+    {
+        if (!entry.IsManualEntry)
+        {
+            _errorMessage = "Cannot edit automatically captured log entries. Only manually created entries can be edited.";
+            return;
+        }
+        
+        _isEditing = true;
+        _editingEntry = new LogEntry
+        {
+            Id = entry.Id,
+            Timestamp = entry.Timestamp,
+            Level = entry.Level,
+            Message = entry.Message ?? string.Empty,
+            MessageTemplate = entry.MessageTemplate,
+            Properties = entry.Properties,
+            Exception = entry.Exception,
+            SourceContext = entry.SourceContext ?? string.Empty,
+            IsManualEntry = true
+        };
+        _isCreateEditDialogHidden = false;
+    }
+    
+    /// <summary>
+    /// Closes the create/edit dialog.
+    /// </summary>
+    private void CloseCreateEditDialog()
+    {
+        _isCreateEditDialogHidden = true;
+        _editingEntry = new LogEntry();
+    }
+    
+    /// <summary>
+    /// Saves the log entry (create or update).
+    /// </summary>
+    private void SaveLogEntry()
+    {
+        if (_effectiveLogService == null)
+        {
+            _errorMessage = "Log service is not available.";
+            return;
+        }
+        
+        if (string.IsNullOrWhiteSpace(_editingEntry.Message))
+        {
+            _errorMessage = "Message is required.";
+            return;
+        }
+        
+        if (string.IsNullOrWhiteSpace(_editingEntry.Level))
+        {
+            _errorMessage = "Level is required.";
+            return;
+        }
+        
+        try
+        {
+            if (_isEditing)
+            {
+                // Update existing entry
+                _effectiveLogService.Update(_editingEntry);
+            }
+            else
+            {
+                // Create new entry
+                _editingEntry.Timestamp = DateTimeOffset.UtcNow;
+                _editingEntry.IsManualEntry = true;
+                _effectiveLogService.Create(_editingEntry);
+            }
+            
+            CloseCreateEditDialog();
+            LoadLogs();
+            _errorMessage = null;
+        }
+        catch (InvalidOperationException ex)
+        {
+            _errorMessage = $"Cannot update entry: {ex.Message}";
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Error saving log entry: {ex.Message}";
+        }
+    }
+    
+    /// <summary>
+    /// Opens the delete confirmation dialog.
+    /// </summary>
+    private void OpenDeleteDialog(LogEntry entry)
+    {
+        _entryToDelete = entry;
+        _isDeleteDialogHidden = false;
+    }
+    
+    /// <summary>
+    /// Closes the delete dialog.
+    /// </summary>
+    private void CloseDeleteDialog()
+    {
+        _isDeleteDialogHidden = true;
+        _entryToDelete = null;
+    }
+    
+    /// <summary>
+    /// Confirms and executes the delete operation.
+    /// </summary>
+    private void ConfirmDelete()
+    {
+        if (_effectiveLogService == null || _entryToDelete == null)
+        {
+            return;
+        }
+        
+        try
+        {
+            _effectiveLogService.Delete(_entryToDelete.Id);
+            CloseDeleteDialog();
+            LoadLogs();
+            _errorMessage = null;
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Error deleting log entry: {ex.Message}";
+        }
+    }
+    
+    /// <summary>
+    /// Cleanup timer on component disposal.
+    /// </summary>
+    public void Dispose()
+    {
+        _searchDebounceTimer?.Dispose();
+    }
+    
+    /// <summary>
+    /// Gets CSS class name for log level styling.
+    /// </summary>
+    private string GetLevelClass(string level)
+    {
+        return level?.ToLowerInvariant() switch
+        {
+            "debug" => "debug",
+            "info" => "info",
+            "warn" => "warn",
+            "error" => "error",
+            "fatal" => "fatal",
+            _ => "info"
+        };
+    }
+    
+    /// <summary>
+    /// Expands a truncated message.
+    /// </summary>
+    private void ExpandMessage(LiteDB.ObjectId id)
+    {
+        _expandedMessages.Add(id);
+        StateHasChanged();
+    }
+    
+    /// <summary>
+    /// Collapses an expanded message.
+    /// </summary>
+    private void CollapseMessage(LiteDB.ObjectId id)
+    {
+        _expandedMessages.Remove(id);
+        StateHasChanged();
+    }
+}

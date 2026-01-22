@@ -1,5 +1,4 @@
 ﻿#if IS_WINDOWS
-extern alias NodeNet;
 using NUnit.Framework;
 using System;
 
@@ -12,7 +11,7 @@ namespace Node.Net.Test.Converters
         public void Usage()
         {
             // Use reflection to access conditionally compiled type
-            var assembly = typeof(NodeNet::Node.Net.Factory).Assembly;
+            var assembly = typeof(Factory).Assembly;
             var converterType = assembly.GetType("Node.Net.Converters.HiddenWhenNull");
             if (converterType == null)
             {

@@ -35,7 +35,7 @@ public class LiteDbFileSystem : IFileSystem, IDisposable
         else
         {
             // Validate path characters
-            if (databasePath.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
+            if (databasePath!.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
             {
                 throw new ArgumentException("Database path contains invalid characters.", nameof(databasePath));
             }
@@ -92,7 +92,7 @@ public class LiteDbFileSystem : IFileSystem, IDisposable
         var normalized = path.Replace('\\', '/').Trim('/');
         
         // Remove any ".." or "." segments for security
-        var parts = normalized.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        var parts = normalized.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
         var result = new System.Collections.Generic.List<string>();
         
         foreach (var part in parts)

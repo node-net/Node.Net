@@ -1,8 +1,7 @@
 ﻿#if IS_WINDOWS
-extern alias NodeNet;
 using System;
 using NUnit.Framework;
-using NodeNet::Node.Net;
+using Node.Net;
 
 namespace Node.Net.Test
 {
@@ -13,7 +12,7 @@ namespace Node.Net.Test
         public void Usage()
         {
             // Use reflection to access conditionally compiled type
-            var assembly = typeof(NodeNet::Node.Net.Factory).Assembly;
+            var assembly = typeof(Factory).Assembly;
             var delegateCommandType = assembly.GetType("Node.Net.DelegateCommand");
             if (delegateCommandType == null)
             {

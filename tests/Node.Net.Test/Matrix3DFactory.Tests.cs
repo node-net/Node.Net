@@ -1,10 +1,8 @@
-extern alias NodeNet;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using NodeNet::System.Windows.Media.Media3D;
-using NodeNet::Node.Net;
+using Node.Net;
 
 namespace Node.Net.Test
 {

@@ -122,7 +122,11 @@ namespace System.Windows.Media
         /// <returns>A hash code for this Color structure.</returns>
         public override int GetHashCode()
         {
+#if NETSTANDARD2_0
+            return ((((_a.GetHashCode() * 397) ^ _r.GetHashCode()) * 397) ^ _g.GetHashCode()) * 397 ^ _b.GetHashCode();
+#else
             return HashCode.Combine(_a, _r, _g, _b);
+#endif
         }
 
         /// <summary>

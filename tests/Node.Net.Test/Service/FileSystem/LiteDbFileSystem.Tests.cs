@@ -1,13 +1,12 @@
 #nullable enable
-extern alias NodeNet;
 using NUnit.Framework;
 using System;
 using System.IO;
 using System.Text;
 using LiteDB;
-using NodeNet::Node.Net.Diagnostic;
-using NodeNet::Node.Net.Service.FileSystem;
-using NodeNet::Node.Net.Service.FileSystem.FileSystem;
+using Node.Net.Diagnostic;
+using Node.Net.Service.FileSystem;
+using Node.Net.Service.FileSystem.FileSystem;
 
 namespace Node.Net.Test.Service.FileSystem;
 

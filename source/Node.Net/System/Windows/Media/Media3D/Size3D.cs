@@ -85,7 +85,11 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public override int GetHashCode()
         {
+#if NETSTANDARD2_0
+            return (((_x.GetHashCode() * 397) ^ _y.GetHashCode()) * 397) ^ _z.GetHashCode();
+#else
             return HashCode.Combine(_x, _y, _z);
+#endif
         }
 
         /// <summary>

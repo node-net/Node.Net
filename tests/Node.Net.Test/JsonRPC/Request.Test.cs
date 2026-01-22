@@ -1,6 +1,5 @@
-﻿extern alias NodeNet;
-using NUnit.Framework;
-using NodeNet::Node.Net.JsonRPC;
+﻿using NUnit.Framework;
+using Node.Net.JsonRPC;
 
 namespace Node.Net.JsonRPC
 {

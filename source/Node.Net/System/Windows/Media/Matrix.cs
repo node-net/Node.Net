@@ -164,7 +164,11 @@ namespace System.Windows.Media
         /// </summary>
         public override int GetHashCode()
         {
+#if NETSTANDARD2_0
+            return ((((((_m11.GetHashCode() * 397) ^ _m12.GetHashCode()) * 397) ^ _m21.GetHashCode()) * 397) ^ _m22.GetHashCode()) * 397 ^ _offsetX.GetHashCode() * 397 ^ _offsetY.GetHashCode();
+#else
             return HashCode.Combine(_m11, _m12, _m21, _m22, _offsetX, _offsetY);
+#endif
         }
 
         /// <summary>

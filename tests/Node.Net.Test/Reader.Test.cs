@@ -1,6 +1,5 @@
-﻿extern alias NodeNet;
-using NUnit.Framework;
-using NodeNet::Node.Net;
+﻿using NUnit.Framework;
+using Node.Net;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;

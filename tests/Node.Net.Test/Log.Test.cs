@@ -1,6 +1,5 @@
-﻿extern alias NodeNet;
-using NUnit.Framework;
-using NodeNet::Node.Net;
+﻿using NUnit.Framework;
+using Node.Net;
 
 namespace Node.Net.Test
 {

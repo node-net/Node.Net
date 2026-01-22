@@ -19,6 +19,27 @@
     <None Remove="View\**" />
   </ItemGroup>
 
+  <!-- Exclude System.Windows test files from net8.0-windows build (they test Node.Net's own implementations which only exist when !IS_WINDOWS) -->
+  <!-- Also exclude Extension test files and other test files that have type conflicts with WPF types -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+    <Compile Remove="System\Windows\**" />
+    <Compile Remove="Extension\Matrix3D.Extension.Test.cs" />
+    <Compile Remove="Extension\Point.Extension.Test.cs" />
+    <Compile Remove="Extension\Point3D.Extension.Test.cs" />
+    <Compile Remove="Extension\Rect3D.Extension.Test.cs" />
+    <Compile Remove="Extension\PerspectiveCamera.Extension.Test.cs" />
+    <Compile Remove="Extension\IDictionary.Extension.Test.cs" />
+    <Compile Remove="Vector3D.Test.cs" />
+    <Compile Remove="Matrix3D.Test.cs" />
+    <Compile Remove="Matrix3D_Compare_Test.cs" />
+    <Compile Remove="Matrix3D_Diagnostic_Test.cs" />
+    <Compile Remove="Matrix3DFactory.Tests.cs" />
+    <Compile Remove="ConvertRotationsXYZtoOTS.Comprehensive.Tests.cs" />
+    <Compile Remove="ConvertTest.cs" />
+    <Compile Remove="Factory.Test.cs" />
+    <Compile Remove="Dictionary.Test.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="JsonRPC\Responder.Test.Data.json" />
     <None Remove="Resources\Node.Net.png" />
@@ -45,8 +66,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\Node.Net\Node.Net.csproj">
-      <Aliases>NodeNet</Aliases>
-    </ProjectReference>
+    <ProjectReference Include="..\..\source\Node.Net\Node.Net.csproj" />
   </ItemGroup>
 </Project>

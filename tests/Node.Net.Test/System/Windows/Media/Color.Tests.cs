@@ -1,7 +1,5 @@
-extern alias NodeNet;
 using System;
 using NUnit.Framework;
-using NodeNet::System.Windows.Media;
 
 namespace Node.Net.Test
 {

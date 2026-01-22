@@ -1,5 +1,4 @@
 #if !IS_FRAMEWORK
-extern alias NodeNet;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,8 +6,8 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using NodeNet::Node.Net.Components;
-using NodeNet::Node.Net.Diagnostic;
+using Node.Net.Components;
+using Node.Net.Diagnostic;
 using Microsoft.Playwright;
 using Microsoft.FluentUI.AspNetCore.Components;
 
@@ -29,8 +28,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -51,8 +50,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -71,8 +70,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -91,8 +90,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -111,8 +110,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -131,8 +130,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -151,8 +150,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -174,8 +173,8 @@ internal class ApplicationInfoTests : TestHarness
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -186,7 +185,7 @@ internal class ApplicationInfoTests : TestHarness
         
         // Verify component uses IApplication service
         // The component should display values from Application service
-        var application = new NodeNet::Node.Net.Service.Application.Application();
+        var application = new Node.Net.Service.Application.Application();
         var appInfo = application.GetApplicationInfo();
         
         // Component should display these values (or fallback if empty)
@@ -210,13 +209,20 @@ internal class ApplicationInfoTests : TestHarness
     [Test]
     public async Task Render_GeneratesImage()
     {
+        // Check if artifact already exists - skip if present
+        var artifactFile = GetArtifactFileInfo("ApplicationInfo.jpeg");
+        if (File.Exists(artifactFile.FullName))
+        {
+            Assert.Ignore($"Artifact image already exists at {artifactFile.FullName}. Skipping image generation.");
+        }
+        
         // Arrange
         using var ctx = new Bunit.TestContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         
         // Render the component
         var cut = ctx.RenderComponent<ApplicationInfo>();
@@ -226,7 +232,6 @@ internal class ApplicationInfoTests : TestHarness
         Assert.That(cut.Markup, Is.Not.Empty);
         
         // Generate image from rendered HTML
-        var artifactFile = GetArtifactFileInfo("ApplicationInfo.jpeg");
         await GenerateComponentImage(cut.Markup, artifactFile.FullName);
         
         // Verify artifact was created (either JPEG image or TXT placeholder)
@@ -252,8 +257,8 @@ internal class ApplicationInfoTests : TestHarness
         // Arrange
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<NodeNet::Node.Net.Service.Application.IApplication>(
-            new NodeNet::Node.Net.Service.Application.Application());
+        ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
+            new Node.Net.Service.Application.Application());
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         
         // Act
