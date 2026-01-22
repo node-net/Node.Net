@@ -1,28 +1,27 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Node.Net;
-using System.IO;
 
 namespace Node.Net.Test.Extension
 {
-    [TestFixture]
     internal class StringExtensionTest
     {
         [Test]
-        public void GetStream()
+        public async Task GetStream()
         {
             string text = new StreamReader("test".GetStream()).ReadToEnd();
-            Assert.That(text, Is.EqualTo("test"));
+            await Assert.That(text).IsEqualTo("test");
 
             text = new StreamReader("Object.Coverage.json".GetStream()).ReadToEnd();
-            Assert.That(text.Contains("array_empty"), Is.True,"array_empty not found in Object.Coverage.json");
+            await Assert.That(text.Contains("array_empty")).IsTrue();
         }
 
         [Test]
-        public void GetRawValue()
+        public async Task GetRawValue()
         {
-            Assert.That("10'".GetRawValue(), Is.EqualTo(10.0));
-            Assert.That("10 ft".GetRawValue(), Is.EqualTo(10.0));
-            Assert.That("10 m".GetRawValue(), Is.EqualTo(10.0));
+            await Assert.That("10'".GetRawValue()).IsEqualTo(10.0);
+            await Assert.That("10 ft".GetRawValue()).IsEqualTo(10.0);
+            await Assert.That("10 m".GetRawValue()).IsEqualTo(10.0);
         }
     }
 }

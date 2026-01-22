@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Linq;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal static class ResourceDictionaryTests
     {
         private static bool CanCreateResourceDictionary()
@@ -25,11 +24,11 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void ResourceDictionary_Constructor_Default_InitializesCorrectly()
+        public static async Task ResourceDictionary_Constructor_Default_InitializesCorrectly()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -38,19 +37,19 @@ namespace Node.Net.Test
             ResourceDictionary dictionary = new ResourceDictionary();
 
             // Assert
-            Assert.That(dictionary, Is.Not.Null);
-            Assert.That(dictionary.Count, Is.EqualTo(0));
-            Assert.That(dictionary.IsReadOnly, Is.False);
-            Assert.That(dictionary.IsFixedSize, Is.False);
+            await Assert.That(dictionary).IsNotNull();
+            await Assert.That(dictionary.Count).IsEqualTo(0);
+            await Assert.That(dictionary.IsReadOnly).IsFalse();
+            await Assert.That(dictionary.IsFixedSize).IsFalse();
 #endif
         }
 
         [Test]
-        public static void ResourceDictionary_Add_AddsKeyValuePair()
+        public static async Task ResourceDictionary_Add_AddsKeyValuePair()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -64,18 +63,19 @@ namespace Node.Net.Test
             dictionary.Add(key, value);
 
             // Assert
-            Assert.That(dictionary.Count, Is.EqualTo(1));
-            Assert.That(dictionary.Contains(key), Is.True);
-            Assert.That(dictionary[key], Is.EqualTo(value));
+            await Assert.That(dictionary.Count).IsEqualTo(1);
+            await Assert.That(dictionary.Contains(key)).IsTrue();
+            await Assert.That(dictionary[key]).IsEqualTo(value);
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Add_WithNullKey_ThrowsArgumentNullException()
+        public static async Task ResourceDictionary_Add_WithNullKey_ThrowsArgumentNullException()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -84,16 +84,17 @@ namespace Node.Net.Test
             ResourceDictionary dictionary = new ResourceDictionary();
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => dictionary.Add(null, "value"));
+            await Assert.That(() => dictionary.Add(null, "value")).Throws<ArgumentNullException>();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Add_WithNullValue_ThrowsArgumentNullException()
+        public static async Task ResourceDictionary_Add_WithNullValue_ThrowsArgumentNullException()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -102,16 +103,17 @@ namespace Node.Net.Test
             ResourceDictionary dictionary = new ResourceDictionary();
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => dictionary.Add("key", null));
+            await Assert.That(() => dictionary.Add("key", null)).Throws<ArgumentNullException>();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Indexer_Set_AddsOrUpdatesValue()
+        public static async Task ResourceDictionary_Indexer_Set_AddsOrUpdatesValue()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -127,17 +129,18 @@ namespace Node.Net.Test
             dictionary[key] = value2;
 
             // Assert
-            Assert.That(dictionary.Count, Is.EqualTo(1));
-            Assert.That(dictionary[key], Is.EqualTo(value2));
+            await Assert.That(dictionary.Count).IsEqualTo(1);
+            await Assert.That(dictionary[key]).IsEqualTo(value2);
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Indexer_Set_WithNullValue_RemovesKey()
+        public static async Task ResourceDictionary_Indexer_Set_WithNullValue_RemovesKey()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -151,17 +154,18 @@ namespace Node.Net.Test
             dictionary[key] = null;
 
             // Assert
-            Assert.That(dictionary.Count, Is.EqualTo(0));
-            Assert.That(dictionary.Contains(key), Is.False);
+            await Assert.That(dictionary.Count).IsEqualTo(0);
+            await Assert.That(dictionary.Contains(key)).IsFalse();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Indexer_Get_WithNonExistentKey_ReturnsNull()
+        public static async Task ResourceDictionary_Indexer_Get_WithNonExistentKey_ReturnsNull()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -173,16 +177,17 @@ namespace Node.Net.Test
             object value = dictionary["NonExistentKey"];
 
             // Assert
-            Assert.That(value, Is.Null);
+            await Assert.That(value).IsNull();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Indexer_Get_WithNullKey_ThrowsArgumentNullException()
+        public static async Task ResourceDictionary_Indexer_Get_WithNullKey_ThrowsArgumentNullException()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -191,16 +196,17 @@ namespace Node.Net.Test
             ResourceDictionary dictionary = new ResourceDictionary();
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => { var _ = dictionary[null]; });
+            await Assert.That(() => { var _ = dictionary[null]; }).Throws<ArgumentNullException>();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Contains_ReturnsTrueForExistingKey()
+        public static async Task ResourceDictionary_Contains_ReturnsTrueForExistingKey()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -214,16 +220,17 @@ namespace Node.Net.Test
             bool contains = dictionary.Contains(key);
 
             // Assert
-            Assert.That(contains, Is.True);
+            await Assert.That(contains).IsTrue();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Contains_ReturnsFalseForNonExistentKey()
+        public static async Task ResourceDictionary_Contains_ReturnsFalseForNonExistentKey()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -235,16 +242,17 @@ namespace Node.Net.Test
             bool contains = dictionary.Contains("NonExistentKey");
 
             // Assert
-            Assert.That(contains, Is.False);
+            await Assert.That(contains).IsFalse();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Contains_WithNullKey_ReturnsFalse()
+        public static async Task ResourceDictionary_Contains_WithNullKey_ReturnsFalse()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -256,16 +264,17 @@ namespace Node.Net.Test
             bool contains = dictionary.Contains(null);
 
             // Assert
-            Assert.That(contains, Is.False);
+            await Assert.That(contains).IsFalse();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Remove_RemovesKey()
+        public static async Task ResourceDictionary_Remove_RemovesKey()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -279,17 +288,18 @@ namespace Node.Net.Test
             dictionary.Remove(key);
 
             // Assert
-            Assert.That(dictionary.Count, Is.EqualTo(0));
-            Assert.That(dictionary.Contains(key), Is.False);
+            await Assert.That(dictionary.Count).IsEqualTo(0);
+            await Assert.That(dictionary.Contains(key)).IsFalse();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Remove_WithNonExistentKey_DoesNothing()
+        public static async Task ResourceDictionary_Remove_WithNonExistentKey_DoesNothing()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -301,16 +311,17 @@ namespace Node.Net.Test
             dictionary.Remove("NonExistentKey");
 
             // Assert
-            Assert.That(dictionary.Count, Is.EqualTo(0));
+            await Assert.That(dictionary.Count).IsEqualTo(0);
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Remove_WithNullKey_DoesNothing()
+        public static async Task ResourceDictionary_Remove_WithNullKey_DoesNothing()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -322,16 +333,17 @@ namespace Node.Net.Test
             dictionary.Remove(null);
 
             // Assert
-            Assert.That(dictionary.Count, Is.EqualTo(0));
+            await Assert.That(dictionary.Count).IsEqualTo(0);
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Clear_RemovesAllItems()
+        public static async Task ResourceDictionary_Clear_RemovesAllItems()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -346,19 +358,20 @@ namespace Node.Net.Test
             dictionary.Clear();
 
             // Assert
-            Assert.That(dictionary.Count, Is.EqualTo(0));
-            Assert.That(dictionary.Contains("Key1"), Is.False);
-            Assert.That(dictionary.Contains("Key2"), Is.False);
-            Assert.That(dictionary.Contains("Key3"), Is.False);
+            await Assert.That(dictionary.Count).IsEqualTo(0);
+            await Assert.That(dictionary.Contains("Key1")).IsFalse();
+            await Assert.That(dictionary.Contains("Key2")).IsFalse();
+            await Assert.That(dictionary.Contains("Key3")).IsFalse();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Keys_ReturnsAllKeys()
+        public static async Task ResourceDictionary_Keys_ReturnsAllKeys()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -372,18 +385,19 @@ namespace Node.Net.Test
             ICollection keys = dictionary.Keys;
 
             // Assert
-            Assert.That(keys.Count, Is.EqualTo(2));
-            Assert.That(keys.Cast<object>().Contains("Key1"), Is.True);
-            Assert.That(keys.Cast<object>().Contains("Key2"), Is.True);
+            await Assert.That(keys.Count).IsEqualTo(2);
+            await Assert.That(keys.Cast<object>().Contains("Key1")).IsTrue();
+            await Assert.That(keys.Cast<object>().Contains("Key2")).IsTrue();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_Values_ReturnsAllValues()
+        public static async Task ResourceDictionary_Values_ReturnsAllValues()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -397,18 +411,19 @@ namespace Node.Net.Test
             ICollection values = dictionary.Values;
 
             // Assert
-            Assert.That(values.Count, Is.EqualTo(2));
-            Assert.That(values.Cast<object>().Contains("Value1"), Is.True);
-            Assert.That(values.Cast<object>().Contains("Value2"), Is.True);
+            await Assert.That(values.Count).IsEqualTo(2);
+            await Assert.That(values.Cast<object>().Contains("Value1")).IsTrue();
+            await Assert.That(values.Cast<object>().Contains("Value2")).IsTrue();
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_GetEnumerator_IteratesThroughItems()
+        public static async Task ResourceDictionary_GetEnumerator_IteratesThroughItems()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -426,16 +441,17 @@ namespace Node.Net.Test
             }
 
             // Assert
-            Assert.That(count, Is.EqualTo(2));
+            await Assert.That(count).IsEqualTo(2);
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_MergedDictionaries_CanBeAccessed()
+        public static async Task ResourceDictionary_MergedDictionaries_CanBeAccessed()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -447,17 +463,18 @@ namespace Node.Net.Test
             var mergedDictionaries = dictionary.MergedDictionaries;
 
             // Assert
-            Assert.That(mergedDictionaries, Is.Not.Null);
-            Assert.That(mergedDictionaries.Count, Is.EqualTo(0));
+            await Assert.That(mergedDictionaries).IsNotNull();
+            await Assert.That(mergedDictionaries.Count).IsEqualTo(0);
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_MergedDictionaries_CanAddDictionary()
+        public static async Task ResourceDictionary_MergedDictionaries_CanAddDictionary()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -471,18 +488,19 @@ namespace Node.Net.Test
             dictionary.MergedDictionaries.Add(mergedDict);
 
             // Assert
-            Assert.That(dictionary.MergedDictionaries.Count, Is.EqualTo(1));
-            Assert.That(dictionary.Contains("MergedKey"), Is.True);
-            Assert.That(dictionary["MergedKey"], Is.EqualTo("MergedValue"));
+            await Assert.That(dictionary.MergedDictionaries.Count).IsEqualTo(1);
+            await Assert.That(dictionary.Contains("MergedKey")).IsTrue();
+            await Assert.That(dictionary["MergedKey"]).IsEqualTo("MergedValue");
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_MergedDictionaries_ValueFromMergedDictionaryTakesPrecedence()
+        public static async Task ResourceDictionary_MergedDictionaries_ValueFromMergedDictionaryTakesPrecedence()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -499,16 +517,17 @@ namespace Node.Net.Test
             // Assert
             // In our implementation, merged dictionaries are checked after the main dictionary
             // So the original value should be returned first
-            Assert.That(dictionary["Key"], Is.EqualTo("OriginalValue"));
+            await Assert.That(dictionary["Key"]).IsEqualTo("OriginalValue");
 #endif
+            await Task.CompletedTask;
         }
 
         [Test]
-        public static void ResourceDictionary_MergedDictionaries_ValueFromFirstMergedDictionary()
+        public static async Task ResourceDictionary_MergedDictionaries_ValueFromFirstMergedDictionary()
         {
             if (!CanCreateResourceDictionary())
             {
-                Assert.Pass("ResourceDictionary only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -526,8 +545,9 @@ namespace Node.Net.Test
 
             // Assert
             // First merged dictionary should be checked first
-            Assert.That(dictionary["Key"], Is.EqualTo("Value1"));
+            await Assert.That(dictionary["Key"]).IsEqualTo("Value1");
 #endif
+            await Task.CompletedTask;
         }
     }
 }

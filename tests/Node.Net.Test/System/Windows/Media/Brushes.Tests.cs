@@ -1,9 +1,8 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal static class BrushesTests
     {
         private static bool BrushesClassExists()
@@ -20,11 +19,11 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void Brushes_Black_ReturnsCorrectBrush()
+        public static async Task Brushes_Black_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
-                Assert.Pass("Brushes class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -32,16 +31,16 @@ namespace Node.Net.Test
             SolidColorBrush brush = Brushes.Black;
 
             // Assert
-            Assert.That(brush, Is.Not.Null);
-            Assert.That(brush.Color, Is.EqualTo(Colors.Black));
+            await Assert.That(brush).IsNotNull();
+            await Assert.That(brush.Color).IsEqualTo(Colors.Black);
         }
 
         [Test]
-        public static void Brushes_White_ReturnsCorrectBrush()
+        public static async Task Brushes_White_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
-                Assert.Pass("Brushes class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -49,16 +48,16 @@ namespace Node.Net.Test
             SolidColorBrush brush = Brushes.White;
 
             // Assert
-            Assert.That(brush, Is.Not.Null);
-            Assert.That(brush.Color, Is.EqualTo(Colors.White));
+            await Assert.That(brush).IsNotNull();
+            await Assert.That(brush.Color).IsEqualTo(Colors.White);
         }
 
         [Test]
-        public static void Brushes_Red_ReturnsCorrectBrush()
+        public static async Task Brushes_Red_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
-                Assert.Pass("Brushes class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -66,16 +65,16 @@ namespace Node.Net.Test
             SolidColorBrush brush = Brushes.Red;
 
             // Assert
-            Assert.That(brush, Is.Not.Null);
-            Assert.That(brush.Color, Is.EqualTo(Colors.Red));
+            await Assert.That(brush).IsNotNull();
+            await Assert.That(brush.Color).IsEqualTo(Colors.Red);
         }
 
         [Test]
-        public static void Brushes_Green_ReturnsCorrectBrush()
+        public static async Task Brushes_Green_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
-                Assert.Pass("Brushes class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -83,16 +82,16 @@ namespace Node.Net.Test
             SolidColorBrush brush = Brushes.Green;
 
             // Assert
-            Assert.That(brush, Is.Not.Null);
-            Assert.That(brush.Color, Is.EqualTo(Colors.Green));
+            await Assert.That(brush).IsNotNull();
+            await Assert.That(brush.Color).IsEqualTo(Colors.Green);
         }
 
         [Test]
-        public static void Brushes_Blue_ReturnsCorrectBrush()
+        public static async Task Brushes_Blue_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
-                Assert.Pass("Brushes class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -100,16 +99,16 @@ namespace Node.Net.Test
             SolidColorBrush brush = Brushes.Blue;
 
             // Assert
-            Assert.That(brush, Is.Not.Null);
-            Assert.That(brush.Color, Is.EqualTo(Colors.Blue));
+            await Assert.That(brush).IsNotNull();
+            await Assert.That(brush.Color).IsEqualTo(Colors.Blue);
         }
 
         [Test]
-        public static void Brushes_Yellow_ReturnsCorrectBrush()
+        public static async Task Brushes_Yellow_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
-                Assert.Pass("Brushes class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -117,16 +116,16 @@ namespace Node.Net.Test
             SolidColorBrush brush = Brushes.Yellow;
 
             // Assert
-            Assert.That(brush, Is.Not.Null);
-            Assert.That(brush.Color, Is.EqualTo(Colors.Yellow));
+            await Assert.That(brush).IsNotNull();
+            await Assert.That(brush.Color).IsEqualTo(Colors.Yellow);
         }
 
         [Test]
-        public static void Brushes_Transparent_ReturnsCorrectBrush()
+        public static async Task Brushes_Transparent_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
-                Assert.Pass("Brushes class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -134,16 +133,16 @@ namespace Node.Net.Test
             SolidColorBrush brush = Brushes.Transparent;
 
             // Assert
-            Assert.That(brush, Is.Not.Null);
-            Assert.That(brush.Color, Is.EqualTo(Colors.Transparent));
+            await Assert.That(brush).IsNotNull();
+            await Assert.That(brush.Color).IsEqualTo(Colors.Transparent);
         }
 
         [Test]
-        public static void Brushes_Properties_ReturnNewInstances()
+        public static async Task Brushes_Properties_ReturnNewInstances()
         {
             if (!BrushesClassExists())
             {
-                Assert.Pass("Brushes class only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -152,7 +151,7 @@ namespace Node.Net.Test
             SolidColorBrush brush2 = Brushes.Blue;
 
             // Assert - Each call should return a new instance (or at least test that they're equivalent)
-            Assert.That(brush1.Color, Is.EqualTo(brush2.Color));
+            await Assert.That(brush1.Color).IsEqualTo(brush2.Color);
         }
     }
 }

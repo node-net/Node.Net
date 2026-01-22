@@ -1,30 +1,30 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal static class SpecularMaterialTests
     {
         [Test]
-        public static void SpecularMaterial_Constructor_Default_InitializesCorrectly()
+        public static async Task SpecularMaterial_Constructor_Default_InitializesCorrectly()
         {
 #if IS_WINDOWS
             // On Windows, SpecularMaterial doesn't have a default constructor
-            Assert.Pass("SpecularMaterial default constructor not available on Windows");
+            // TUnit doesn't have Assert.Pass - just return early
+            return;
 #else
             // Arrange & Act
             SpecularMaterial material = new SpecularMaterial();
 
             // Assert
-            Assert.That(material, Is.Not.Null);
-            Assert.That(material.Brush, Is.Null);
-            Assert.That(material.SpecularPower, Is.EqualTo(20.0));
+            await Assert.That(material).IsNotNull();
+            await Assert.That(material.Brush).IsNull();
+            await Assert.That(material.SpecularPower).IsEqualTo(20.0));
 #endif
         }
 
         [Test]
-        public static void SpecularMaterial_Constructor_WithBrush_InitializesCorrectly()
+        public static async Task SpecularMaterial_Constructor_WithBrush_InitializesCorrectly()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.White);
@@ -40,13 +40,13 @@ namespace Node.Net.Test
 #endif
 
             // Assert
-            Assert.That(material, Is.Not.Null);
-            Assert.That(material.Brush, Is.EqualTo(brush));
-            Assert.That(material.SpecularPower, Is.EqualTo(20.0));
+            await Assert.That(material, Is.Not.Null);
+            await Assert.That(material.Brush).IsEqualTo(brush));
+            await Assert.That(material.SpecularPower).IsEqualTo(20.0));
         }
 
         [Test]
-        public static void SpecularMaterial_Constructor_WithBrushAndSpecularPower_InitializesCorrectly()
+        public static async Task SpecularMaterial_Constructor_WithBrushAndSpecularPower_InitializesCorrectly()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.White);
@@ -56,13 +56,13 @@ namespace Node.Net.Test
             SpecularMaterial material = new SpecularMaterial(brush, specularPower);
 
             // Assert
-            Assert.That(material, Is.Not.Null);
-            Assert.That(material.Brush, Is.EqualTo(brush));
-            Assert.That(material.SpecularPower, Is.EqualTo(specularPower));
+            await Assert.That(material, Is.Not.Null);
+            await Assert.That(material.Brush).IsEqualTo(brush));
+            await Assert.That(material.SpecularPower).IsEqualTo(specularPower));
         }
 
         [Test]
-        public static void SpecularMaterial_Brush_CanBeSet()
+        public static async Task SpecularMaterial_Brush_CanBeSet()
         {
             // Arrange
             SpecularMaterial material;
@@ -80,11 +80,11 @@ namespace Node.Net.Test
             material.Brush = brush;
 
             // Assert
-            Assert.That(material.Brush, Is.EqualTo(brush));
+            await Assert.That(material.Brush).IsEqualTo(brush));
         }
 
         [Test]
-        public static void SpecularMaterial_Brush_CanBeSetToNull()
+        public static async Task SpecularMaterial_Brush_CanBeSetToNull()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.White);
@@ -101,11 +101,11 @@ namespace Node.Net.Test
             material.Brush = null;
 
             // Assert
-            Assert.That(material.Brush, Is.Null);
+            await Assert.That(material.Brush, Is.Null);
         }
 
         [Test]
-        public static void SpecularMaterial_SpecularPower_CanBeSet()
+        public static async Task SpecularMaterial_SpecularPower_CanBeSet()
         {
             // Arrange
             SpecularMaterial material;
@@ -124,11 +124,11 @@ namespace Node.Net.Test
             material.SpecularPower = specularPower;
 
             // Assert
-            Assert.That(material.SpecularPower, Is.EqualTo(specularPower));
+            await Assert.That(material.SpecularPower).IsEqualTo(specularPower));
         }
 
         [Test]
-        public static void SpecularMaterial_SpecularPower_DefaultsToTwenty()
+        public static async Task SpecularMaterial_SpecularPower_DefaultsToTwenty()
         {
             // Arrange & Act
 #if IS_WINDOWS
@@ -141,11 +141,11 @@ namespace Node.Net.Test
 #endif
 
             // Assert
-            Assert.That(material.SpecularPower, Is.EqualTo(20.0));
+            await Assert.That(material.SpecularPower).IsEqualTo(20.0));
         }
 
         [Test]
-        public static void SpecularMaterial_SpecularPower_CanBeSetToZero()
+        public static async Task SpecularMaterial_SpecularPower_CanBeSetToZero()
         {
             // Arrange
             SpecularMaterial material;
@@ -162,11 +162,11 @@ namespace Node.Net.Test
             material.SpecularPower = 0.0;
 
             // Assert
-            Assert.That(material.SpecularPower, Is.EqualTo(0.0));
+            await Assert.That(material.SpecularPower).IsEqualTo(0.0));
         }
 
         [Test]
-        public static void SpecularMaterial_SpecularPower_CanBeSetToLargeValue()
+        public static async Task SpecularMaterial_SpecularPower_CanBeSetToLargeValue()
         {
             // Arrange
             SpecularMaterial material;
@@ -184,11 +184,11 @@ namespace Node.Net.Test
             material.SpecularPower = largeValue;
 
             // Assert
-            Assert.That(material.SpecularPower, Is.EqualTo(largeValue));
+            await Assert.That(material.SpecularPower).IsEqualTo(largeValue));
         }
 
         [Test]
-        public static void SpecularMaterial_SpecularPower_CanBeSetToNegativeValue()
+        public static async Task SpecularMaterial_SpecularPower_CanBeSetToNegativeValue()
         {
             // Arrange
             SpecularMaterial material;
@@ -206,7 +206,7 @@ namespace Node.Net.Test
             material.SpecularPower = negativeValue;
 
             // Assert
-            Assert.That(material.SpecularPower, Is.EqualTo(negativeValue));
+            await Assert.That(material.SpecularPower).IsEqualTo(negativeValue));
         }
     }
 }

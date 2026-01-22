@@ -1,14 +1,13 @@
-using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 using Node.Net.Service.Logging;
 
 namespace Node.Net.Service.Logging;
 
-[TestFixture]
 internal class LogEntryTests
 {
     [Test]
-    public void Validate_WithValidEntry_DoesNotThrow()
+    public async Task Validate_WithValidEntry_DoesNotThrow()
     {
         // Arrange
         var entry = new LogEntry
@@ -19,12 +18,13 @@ internal class LogEntryTests
             IsManualEntry = false
         };
 
-        // Act & Assert
-        Assert.DoesNotThrow(() => entry.Validate());
+        // Act & Assert - TUnit doesn't have Assert.DoesNotThrow, just call the method
+        entry.Validate();
+        await Task.CompletedTask;
     }
 
     [Test]
-    public void Validate_WithFutureTimestamp_ThrowsArgumentException()
+    public async Task Validate_WithFutureTimestamp_ThrowsArgumentException()
     {
         // Arrange
         var entry = new LogEntry
@@ -36,12 +36,12 @@ internal class LogEntryTests
         };
 
         // Act & Assert
-        var ex = Assert.Throws<ArgumentException>(() => entry.Validate());
-        Assert.That(ex?.ParamName, Is.EqualTo("Timestamp"));
+        var ex = await Assert.That(() => entry.Validate()).Throws<ArgumentException>();
+        await Assert.That(ex.ParamName).IsEqualTo("Timestamp");
     }
 
     [Test]
-    public void Validate_WithNullLevel_ThrowsArgumentException()
+    public async Task Validate_WithNullLevel_ThrowsArgumentException()
     {
         // Arrange
         var entry = new LogEntry
@@ -53,12 +53,12 @@ internal class LogEntryTests
         };
 
         // Act & Assert
-        var ex = Assert.Throws<ArgumentException>(() => entry.Validate());
-        Assert.That(ex?.ParamName, Is.EqualTo("Level"));
+        var ex = await Assert.That(() => entry.Validate()).Throws<ArgumentException>();
+        await Assert.That(ex.ParamName).IsEqualTo("Level");
     }
 
     [Test]
-    public void Validate_WithEmptyLevel_ThrowsArgumentException()
+    public async Task Validate_WithEmptyLevel_ThrowsArgumentException()
     {
         // Arrange
         var entry = new LogEntry
@@ -70,12 +70,12 @@ internal class LogEntryTests
         };
 
         // Act & Assert
-        var ex = Assert.Throws<ArgumentException>(() => entry.Validate());
-        Assert.That(ex?.ParamName, Is.EqualTo("Level"));
+        var ex = await Assert.That(() => entry.Validate()).Throws<ArgumentException>();
+        await Assert.That(ex.ParamName).IsEqualTo("Level");
     }
 
     [Test]
-    public void Validate_WithInvalidLevel_ThrowsArgumentException()
+    public async Task Validate_WithInvalidLevel_ThrowsArgumentException()
     {
         // Arrange
         var entry = new LogEntry
@@ -87,19 +87,19 @@ internal class LogEntryTests
         };
 
         // Act & Assert
-        var ex = Assert.Throws<ArgumentException>(() => entry.Validate());
-        Assert.That(ex?.ParamName, Is.EqualTo("Level"));
+        var ex = await Assert.That(() => entry.Validate()).Throws<ArgumentException>();
+        await Assert.That(ex.ParamName).IsEqualTo("Level");
     }
 
     [Test]
-    [TestCase("Debug")]
-    [TestCase("Info")]
-    [TestCase("Warn")]
-    [TestCase("Error")]
-    [TestCase("Fatal")]
-    [TestCase("debug")] // Case-insensitive
-    [TestCase("INFO")] // Case-insensitive
-    public void Validate_WithValidLevel_DoesNotThrow(string level)
+    [Arguments("Debug")]
+    [Arguments("Info")]
+    [Arguments("Warn")]
+    [Arguments("Error")]
+    [Arguments("Fatal")]
+    [Arguments("debug")] // Case-insensitive
+    [Arguments("INFO")] // Case-insensitive
+    public async Task Validate_WithValidLevel_DoesNotThrow(string level)
     {
         // Arrange
         var entry = new LogEntry
@@ -110,12 +110,13 @@ internal class LogEntryTests
             IsManualEntry = false
         };
 
-        // Act & Assert
-        Assert.DoesNotThrow(() => entry.Validate());
+        // Act & Assert - TUnit doesn't have Assert.DoesNotThrow, just call the method
+        entry.Validate();
+        await Task.CompletedTask;
     }
 
     [Test]
-    public void Validate_WithNullMessage_ThrowsArgumentException()
+    public async Task Validate_WithNullMessage_ThrowsArgumentException()
     {
         // Arrange
         var entry = new LogEntry
@@ -127,12 +128,12 @@ internal class LogEntryTests
         };
 
         // Act & Assert
-        var ex = Assert.Throws<ArgumentException>(() => entry.Validate());
-        Assert.That(ex?.ParamName, Is.EqualTo("Message"));
+        var ex = await Assert.That(() => entry.Validate()).Throws<ArgumentException>();
+        await Assert.That(ex.ParamName).IsEqualTo("Message");
     }
 
     [Test]
-    public void Validate_WithEmptyMessage_ThrowsArgumentException()
+    public async Task Validate_WithEmptyMessage_ThrowsArgumentException()
     {
         // Arrange
         var entry = new LogEntry
@@ -144,12 +145,12 @@ internal class LogEntryTests
         };
 
         // Act & Assert
-        var ex = Assert.Throws<ArgumentException>(() => entry.Validate());
-        Assert.That(ex?.ParamName, Is.EqualTo("Message"));
+        var ex = await Assert.That(() => entry.Validate()).Throws<ArgumentException>();
+        await Assert.That(ex.ParamName).IsEqualTo("Message");
     }
 
     [Test]
-    public void Properties_CanStoreStructuredData()
+    public async Task Properties_CanStoreStructuredData()
     {
         // Arrange
         var entry = new LogEntry
@@ -167,8 +168,8 @@ internal class LogEntryTests
         };
 
         // Act & Assert
-        Assert.That(entry.Properties, Is.Not.Null);
-        Assert.That(entry.Properties.Count, Is.EqualTo(3));
-        Assert.That(entry.Properties["UserId"], Is.EqualTo(12345));
+        await Assert.That(entry.Properties).IsNotNull();
+        await Assert.That(entry.Properties.Count).IsEqualTo(3);
+        await Assert.That(entry.Properties["UserId"]).IsEqualTo(12345);
     }
 }

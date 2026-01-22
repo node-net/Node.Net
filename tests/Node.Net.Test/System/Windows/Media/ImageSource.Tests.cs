@@ -1,9 +1,8 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal static class ImageSourceTests
     {
         private static bool CanCreateTestImageSource()
@@ -43,11 +42,11 @@ namespace Node.Net.Test
 #endif
 
         [Test]
-        public static void ImageSource_Width_ReturnsCorrectValue()
+        public static async Task ImageSource_Width_ReturnsCorrectValue()
         {
             if (!CanCreateTestImageSource())
             {
-                Assert.Pass("TestImageSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -56,16 +55,16 @@ namespace Node.Net.Test
             ImageSource imageSource = new TestImageSource(100.0, 200.0);
 
             // Act & Assert
-            Assert.That(imageSource.Width, Is.EqualTo(100.0));
+            await Assert.That(imageSource.Width).IsEqualTo(100.0));
 #endif
         }
 
         [Test]
-        public static void ImageSource_Height_ReturnsCorrectValue()
+        public static async Task ImageSource_Height_ReturnsCorrectValue()
         {
             if (!CanCreateTestImageSource())
             {
-                Assert.Pass("TestImageSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -74,16 +73,16 @@ namespace Node.Net.Test
             ImageSource imageSource = new TestImageSource(100.0, 200.0);
 
             // Act & Assert
-            Assert.That(imageSource.Height, Is.EqualTo(200.0));
+            await Assert.That(imageSource.Height).IsEqualTo(200.0));
 #endif
         }
 
         [Test]
-        public static void ImageSource_ToString_ReturnsFormattedString()
+        public static async Task ImageSource_ToString_ReturnsFormattedString()
         {
             if (!CanCreateTestImageSource())
             {
-                Assert.Pass("TestImageSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -95,18 +94,18 @@ namespace Node.Net.Test
             string result = imageSource.ToString();
 
             // Assert
-            Assert.That(result, Does.Contain("TestImageSource"));
-            Assert.That(result, Does.Contain("Width=100"));
-            Assert.That(result, Does.Contain("Height=200"));
+            await Assert.That(result, Does.Contain("TestImageSource"));
+            await Assert.That(result, Does.Contain("Width=100"));
+            await Assert.That(result, Does.Contain("Height=200"));
 #endif
         }
 
         [Test]
-        public static void ImageSource_Metadata_ReturnsNullByDefault()
+        public static async Task ImageSource_Metadata_ReturnsNullByDefault()
         {
             if (!CanCreateTestImageSource())
             {
-                Assert.Pass("TestImageSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -115,7 +114,7 @@ namespace Node.Net.Test
             ImageSource imageSource = new TestImageSource(100.0, 200.0);
 
             // Act & Assert
-            Assert.That(imageSource.Metadata, Is.Null);
+            await Assert.That(imageSource.Metadata).IsNull();
 #endif
         }
     }

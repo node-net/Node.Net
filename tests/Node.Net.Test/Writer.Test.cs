@@ -1,16 +1,15 @@
-﻿using NUnit.Framework;
-using Node.Net;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
+using Node.Net;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal static class WriterTest
     {
         [Test]
-        public static void WriteJson()
+        public static async Task WriteJson()
         {
             Dictionary<string, object> data = new Dictionary<string, object>
             {
@@ -22,7 +21,7 @@ namespace Node.Net.Test
             {
                 writer.Write(memory, data);
                 string json = Encoding.UTF8.GetString(memory.ToArray());
-                Assert.That( json,Is.EqualTo("{\"name\":\"test\"}"));
+                await Assert.That(json).IsEqualTo("{\"name\":\"test\"}");
             }
 
             writer = new Writer { JsonFormat = JsonFormat.Pretty };
@@ -32,12 +31,12 @@ namespace Node.Net.Test
                 string json = Encoding.UTF8.GetString(memory.ToArray());
                 // Normalize line endings for cross-platform compatibility
                 json = json.Replace("\r\n", "\n").Replace("\r", "\n");
-                Assert.That(json, Is.EqualTo("{\n  \"name\":\"test\"\n}"));
+                await Assert.That(json).IsEqualTo("{\n  \"name\":\"test\"\n}");
             }
         }
 
         [Test]
-        public static void WriteISerializableJson()
+        public static async Task WriteISerializableJson()
         {
             Widget widget = new Widget
             {
@@ -49,8 +48,8 @@ namespace Node.Net.Test
             new Writer().Write(memory, widget);
             memory.Seek(0, SeekOrigin.Begin);
             string json = new StreamReader(memory).ReadToEnd();
-            Assert.That(json.Contains("abc"),Is.True);
-            Assert.That(json.Contains("test"), Is.True);
+            await Assert.That(json.Contains("abc")).IsTrue();
+            await Assert.That(json.Contains("test")).IsTrue();
         }
     }
 }

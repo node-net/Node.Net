@@ -1,20 +1,19 @@
-﻿using NUnit.Framework;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Node.Net.JsonRPC;
 using Node.Net;
 
 namespace Node.Net.JsonRPC
 {
-    [TestFixture]
     internal class ResponderTest
     {
         [Test]
-        public void Respond()
+        public async Task Respond()
         {
             Responder responder = GetTestResponder();
             Response response = responder.Respond(new Request("say_hello"));
-            Assert.That(response.Result.ToString(), Is.EqualTo("hello"));
+            await Assert.That(response.Result.ToString()).IsEqualTo("hello");
 
             System.IO.Stream stream = typeof(ResponderTest).Assembly.GetManifestResourceStream(
                 "Node.Net.Test.JsonRPC.Responder.Test.Data.json");
@@ -37,7 +36,7 @@ namespace Node.Net.JsonRPC
                         if (test_data.Contains(key.Replace("_request", "_response")))
                         {
                             string response_json = (test_data[key.Replace("_request", "_response")] as IDictionary)?.ToJson();
-                            Assert.That(response_json, Is.EqualTo(response_text), key);
+                            await Assert.That(response_json).IsEqualTo(response_text);
                         }
                     }
                     catch (System.Exception e)

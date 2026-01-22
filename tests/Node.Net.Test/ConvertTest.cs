@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Node.Net;
 
 namespace Node.Net.Test
@@ -29,7 +28,6 @@ namespace Node.Net.Test
     /// NOTE: These tests are expected to fail until Node.Net fixes the Matrix3DFactory to handle
     /// direction vector strings with parentheses or strip them before parsing.
     /// </summary>
-    [TestFixture]
     internal class ConvertRotationsXYZtoOTSTests
     {
         /// <summary>
@@ -77,7 +75,7 @@ namespace Node.Net.Test
                 var result = dictionary.ConvertRotationsXYZtoOTS();
 
                 // If we get here, the test passes (Node.Net has fixed the issue)
-                Assert.That(result, Is.Not.Null);
+                await Assert.That(result).IsNotNull();
             }
             catch (InvalidOperationException ex) when (
                 ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
@@ -148,7 +146,7 @@ namespace Node.Net.Test
             {
                 var result = dictionary.ConvertRotationsXYZtoOTS();
                 // Test passes if no exception thrown
-                Assert.That(result, Is.Not.Null);
+                await Assert.That(result).IsNotNull();
             }
             catch (InvalidOperationException ex) when (
                 ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
@@ -228,10 +226,10 @@ EXPECTED FIX: Strip parentheses before parsing.
         /// when ConvertRotationsXYZtoOTS is called.
         /// </summary>
         [Test]
-        [TestCase("(1.0,0.0,0.0)", "(0.0,1.0,0.0)", "(0.0,0.0,1.0)")]
-        [TestCase("(1.0000002742460514,4.982079117255012E-06,0)", "(-4.982079117255012E-06,1.0000002742460514,0)", "(0,0,1)")]
-        [TestCase("(1.0,1e-10,0.0)", "(-1e-10,1.0,0.0)", "(0.0,0.0,1.0)")]
-        [TestCase("(0.9999999999,0.0000000001,0.0)", "(-0.0000000001,0.9999999999,0.0)", "(0.0,0.0,1.0)")]
+        [Arguments("(1.0,0.0,0.0)", "(0.0,1.0,0.0)", "(0.0,0.0,1.0)")]
+        [Arguments("(1.0000002742460514,4.982079117255012E-06,0)", "(-4.982079117255012E-06,1.0000002742460514,0)", "(0,0,1)")]
+        [Arguments("(1.0,1e-10,0.0)", "(-1e-10,1.0,0.0)", "(0.0,0.0,1.0)")]
+        [Arguments("(0.9999999999,0.0000000001,0.0)", "(-0.0000000001,0.9999999999,0.0)", "(0.0,0.0,1.0)")]
         public async Task ConvertRotationsXYZtoOTS_HandlesVariousDirectionVectorFormats(
             string xDirection,
             string yDirection,
@@ -254,7 +252,7 @@ EXPECTED FIX: Strip parentheses before parsing.
             {
                 var result = dictionary.ConvertRotationsXYZtoOTS();
                 // Test passes if no exception thrown
-                Assert.That(result, Is.Not.Null);
+                await Assert.That(result).IsNotNull();
             }
             catch (InvalidOperationException ex) when (
                 ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||

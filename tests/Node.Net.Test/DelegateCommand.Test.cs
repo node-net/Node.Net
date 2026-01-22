@@ -1,22 +1,22 @@
 ﻿#if IS_WINDOWS
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 using Node.Net;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal class DelegateCommandTest
     {
         [Test]
-        public void Usage()
+        public async Task Usage()
         {
             // Use reflection to access conditionally compiled type
             var assembly = typeof(Factory).Assembly;
             var delegateCommandType = assembly.GetType("Node.Net.DelegateCommand");
             if (delegateCommandType == null)
             {
-                Assert.Pass("DelegateCommand type not found - skipping test on non-Windows target");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
             }
             
             var command = System.Activator.CreateInstance(delegateCommandType, new Action<object>(TestCommand));
@@ -25,15 +25,16 @@ namespace Node.Net.Test
             var canExecuteChangedEvent = delegateCommandType.GetEvent("CanExecuteChanged");
             
             executeMethod.Invoke(command, new object[] { null });
-            Assert.That((bool)canExecuteMethod.Invoke(command, new object[] { null }), Is.True);
+            await Assert.That((bool)canExecuteMethod.Invoke(command, new object[] { null })).IsTrue();
 
             command = System.Activator.CreateInstance(delegateCommandType, new Action<object>(TestCommand), new Func<object, bool>(TestCanExecute));
-            Assert.That((bool)canExecuteMethod.Invoke(command, new object[] { null }), Is.True);
+            await Assert.That((bool)canExecuteMethod.Invoke(command, new object[] { null })).IsTrue();
             executeMethod.Invoke(command, new object[] { null });
 
             command = System.Activator.CreateInstance(delegateCommandType, new object[] { null });
             executeMethod.Invoke(command, new object[] { null });
             canExecuteChangedEvent.AddEventHandler(command, new EventHandler(Command_CanExecuteChanged));
+            await Task.CompletedTask;
         }
 
         private void Command_CanExecuteChanged(object sender, System.EventArgs e)

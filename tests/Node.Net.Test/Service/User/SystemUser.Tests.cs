@@ -1,14 +1,13 @@
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Node.Net.Diagnostic.Generic;
 using Node.Net.Service.User;
 
 namespace Node.Net.Service.User;
 
-[TestFixture]
 internal class SystemUserTests : TestHarness<SystemUser>
 {
     /// <summary>
@@ -52,7 +51,7 @@ internal class SystemUserTests : TestHarness<SystemUser>
         return false;
     }
     [Test]
-    public void GetProfilePicture_ReturnsImageAtSpecifiedSize()
+    public async Task GetProfilePicture_ReturnsImageAtSpecifiedSize()
     {
         // Arrange
         var systemUser = new SystemUser();
@@ -63,21 +62,22 @@ internal class SystemUserTests : TestHarness<SystemUser>
         var result = systemUser.GetProfilePicture(targetWidth, targetHeight);
 
         // Assert - Should always return a valid JPEG (either real profile picture or anonymous)
-        Assert.That(result, Is.Not.Null, "GetProfilePicture should always return a valid JPEG (real or anonymous)");
-        Assert.That(result!.Length, Is.GreaterThan(0), "Image bytes should not be empty");
+        await Assert.That(result).IsNotNull();
+        await Assert.That(result!.Length).IsGreaterThan(0);
         
         // Verify it's a valid JPEG (starts with FF D8)
-        Assert.That(result[0], Is.EqualTo(0xFF), "JPEG should start with 0xFF");
-        Assert.That(result[1], Is.EqualTo(0xD8), "JPEG should have 0xD8 after 0xFF");
+        await Assert.That(result[0]).IsEqualTo(0xFF);
+        await Assert.That(result[1]).IsEqualTo(0xD8);
     }
 
     [Test]
-    public void GetProfilePicture_MaintainsAspectRatio()
+    public async Task GetProfilePicture_MaintainsAspectRatio()
     {
         // Skip on macOS where System.Drawing.Common is not available in .NET 8.0
         if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX))
         {
-            Assert.Ignore("System.Drawing.Common is not available on macOS in .NET 8.0");
+            // TUnit doesn't have Assert.Ignore, so we'll skip by returning early
+            return;
         }
         
         // Arrange
@@ -89,7 +89,7 @@ internal class SystemUserTests : TestHarness<SystemUser>
         var result = systemUser.GetProfilePicture(targetWidth, targetHeight);
 
         // Assert - Should always return a valid JPEG (either real profile picture or anonymous)
-        Assert.That(result, Is.Not.Null, "GetProfilePicture should always return a valid JPEG (real or anonymous)");
+        await Assert.That(result).IsNotNull();
         
         // Load the resized image to verify dimensions
         using var imageStream = new MemoryStream(result!);
@@ -97,8 +97,8 @@ internal class SystemUserTests : TestHarness<SystemUser>
         using var image = System.Drawing.Image.FromStream(imageStream);
         
         // Image should fit within target dimensions
-        Assert.That(image.Width, Is.LessThanOrEqualTo(targetWidth), "Width should fit within target");
-        Assert.That(image.Height, Is.LessThanOrEqualTo(targetHeight), "Height should fit within target");
+        await Assert.That(image.Width).IsLessThanOrEqualTo(targetWidth);
+        await Assert.That(image.Height).IsLessThanOrEqualTo(targetHeight);
 #pragma warning restore CA1416
         
         // Aspect ratio should be maintained (width/height ratio should match original or fit within)
@@ -106,7 +106,7 @@ internal class SystemUserTests : TestHarness<SystemUser>
     }
 
     [Test]
-    public void GetProfilePicture_ReturnsJpegFormat()
+    public async Task GetProfilePicture_ReturnsJpegFormat()
     {
         // Arrange
         var systemUser = new SystemUser();
@@ -117,16 +117,16 @@ internal class SystemUserTests : TestHarness<SystemUser>
         var result = systemUser.GetProfilePicture(targetWidth, targetHeight);
 
         // Assert - Should always return a valid JPEG (either real profile picture or anonymous)
-        Assert.That(result, Is.Not.Null, "GetProfilePicture should always return a valid JPEG (real or anonymous)");
+        await Assert.That(result).IsNotNull();
         
         // JPEG files start with FF D8
-        Assert.That(result!.Length, Is.GreaterThanOrEqualTo(2), "Image should have at least 2 bytes");
-        Assert.That(result[0], Is.EqualTo(0xFF), "First byte should be 0xFF (JPEG SOI marker)");
-        Assert.That(result[1], Is.EqualTo(0xD8), "Second byte should be 0xD8 (JPEG SOI marker)");
+        await Assert.That(result!.Length).IsGreaterThanOrEqualTo(2);
+        await Assert.That(result[0]).IsEqualTo(0xFF);
+        await Assert.That(result[1]).IsEqualTo(0xD8);
     }
 
     [Test]
-    public void GetProfilePicture_GeneratesArtifact()
+    public async Task GetProfilePicture_GeneratesArtifact()
     {
         // Arrange
         var systemUser = new SystemUser();
@@ -137,8 +137,8 @@ internal class SystemUserTests : TestHarness<SystemUser>
         var result = systemUser.GetProfilePicture(targetWidth, targetHeight);
         
         // Assert - Should always return a valid JPEG (either real profile picture or anonymous)
-        Assert.That(result, Is.Not.Null, "GetProfilePicture should always return a valid JPEG (real or anonymous)");
-        Assert.That(result!.Length, Is.GreaterThan(0), "Profile picture bytes must not be empty");
+        await Assert.That(result).IsNotNull();
+        await Assert.That(result!.Length).IsGreaterThan(0);
         
         // Assert - Generate artifact (always a valid JPEG now)
         if (result != null)
@@ -146,23 +146,23 @@ internal class SystemUserTests : TestHarness<SystemUser>
             // Profile picture is available - generate valid JPEG file
             var artifactFile = GetArtifactFileInfo("user.jpeg");
             
-            // Write image bytes to artifact file
+            // Write image bytes to artifact file (File.WriteAllBytes doesn't have async version)
             File.WriteAllBytes(artifactFile.FullName, result);
             
             // Verify file exists
-            Assert.That(File.Exists(artifactFile.FullName), Is.True, $"Artifact file should exist at {artifactFile.FullName}");
+            await Assert.That(File.Exists(artifactFile.FullName)).IsTrue();
             
             // Verify file is not empty
             var fileInfo = new FileInfo(artifactFile.FullName);
-            Assert.That(fileInfo.Length, Is.GreaterThan(0), "Artifact file should not be empty");
+            await Assert.That(fileInfo.Length).IsGreaterThan(0);
             
-            // Verify it's a valid JPEG file
+            // Verify it's a valid JPEG file (File.ReadAllBytes doesn't have async version)
             var fileBytes = File.ReadAllBytes(artifactFile.FullName);
             
             // JPEG files must start with SOI marker: 0xFF 0xD8
-            Assert.That(fileBytes.Length, Is.GreaterThanOrEqualTo(2), "JPEG file should have at least 2 bytes");
-            Assert.That(fileBytes[0], Is.EqualTo(0xFF), "JPEG file should start with 0xFF (SOI marker)");
-            Assert.That(fileBytes[1], Is.EqualTo(0xD8), "JPEG file should have 0xD8 after 0xFF (SOI marker)");
+            await Assert.That(fileBytes.Length).IsGreaterThanOrEqualTo(2);
+            await Assert.That(fileBytes[0]).IsEqualTo(0xFF);
+            await Assert.That(fileBytes[1]).IsEqualTo(0xD8);
             
             // Verify JPEG structure: should have valid JPEG markers after SOI
             // JPEG files typically have: SOI (FF D8) followed by APP markers (FF E0-E7), DQT (FF DB), SOF (FF C0-C3), etc.
@@ -200,13 +200,13 @@ internal class SystemUserTests : TestHarness<SystemUser>
                         }
                     }
                 }
-                Assert.That(hasValidMarker, Is.True, "JPEG file should contain valid JPEG markers (APP/DQT/SOF/DHT/SOS) after SOI");
+                await Assert.That(hasValidMarker).IsTrue();
             }
             
             // Verify file ends with JPEG EOI marker (0xFF 0xD9) - required for valid JPEG
-            Assert.That(fileBytes.Length, Is.GreaterThanOrEqualTo(4), "JPEG file should have at least 4 bytes (SOI + EOI)");
+            await Assert.That(fileBytes.Length).IsGreaterThanOrEqualTo(4);
             var endsWithEOI = fileBytes[fileBytes.Length - 2] == 0xFF && fileBytes[fileBytes.Length - 1] == 0xD9;
-            Assert.That(endsWithEOI, Is.True, "JPEG file should end with EOI marker (0xFF 0xD9)");
+            await Assert.That(endsWithEOI).IsTrue();
             
             // Additional validation: Try to load as System.Drawing.Image to ensure it's a valid image
             // Skip on macOS where System.Drawing.Common is not available in .NET 8.0
@@ -217,21 +217,21 @@ internal class SystemUserTests : TestHarness<SystemUser>
                     using var imageStream = new MemoryStream(fileBytes);
 #pragma warning disable CA1416 // System.Drawing.Common is cross-platform, analyzer warning is false positive
                     using var image = System.Drawing.Image.FromStream(imageStream);
-                    Assert.That(image.Width, Is.GreaterThan(0), "JPEG image should have valid width");
-                    Assert.That(image.Height, Is.GreaterThan(0), "JPEG image should have valid height");
-                    Assert.That(image.RawFormat, Is.EqualTo(System.Drawing.Imaging.ImageFormat.Jpeg), "Image format should be JPEG");
+                    await Assert.That(image.Width).IsGreaterThan(0);
+                    await Assert.That(image.Height).IsGreaterThan(0);
+                    await Assert.That(image.RawFormat).IsEqualTo(System.Drawing.Imaging.ImageFormat.Jpeg);
 #pragma warning restore CA1416
                 }
                 catch (Exception ex)
                 {
-                    Assert.Fail($"JPEG file failed to load as System.Drawing.Image: {ex.Message}");
+                    throw new InvalidOperationException($"JPEG file failed to load as System.Drawing.Image: {ex.Message}");
                 }
             }
         }
     }
 
     [Test]
-    public void GetProfilePicture_ReturnsNullWhenUnavailable()
+    public async Task GetProfilePicture_ReturnsNullWhenUnavailable()
     {
         // Arrange
         var systemUser = new SystemUser();
@@ -246,28 +246,28 @@ internal class SystemUserTests : TestHarness<SystemUser>
         // Assert
         // Result can be null (if unavailable) or byte array (if available)
         // Both are valid per specification
-        Assert.That(result == null || result.Length > 0, Is.True, "Result should be null or valid image bytes");
+        await Assert.That(result == null || result.Length > 0).IsTrue();
     }
 
     [Test]
-    public void GetProfilePicture_HandlesInvalidDimensions()
+    public async Task GetProfilePicture_HandlesInvalidDimensions()
     {
         // Arrange
         var systemUser = new SystemUser();
 
         // Act & Assert - Invalid dimensions should return null
         var resultZero = systemUser.GetProfilePicture(0, 64);
-        Assert.That(resultZero, Is.Null, "Zero width should return null");
+        await Assert.That(resultZero).IsNull();
 
         var resultNegative = systemUser.GetProfilePicture(-1, 64);
-        Assert.That(resultNegative, Is.Null, "Negative width should return null");
+        await Assert.That(resultNegative).IsNull();
 
         var resultBothZero = systemUser.GetProfilePicture(0, 0);
-        Assert.That(resultBothZero, Is.Null, "Both dimensions zero should return null");
+        await Assert.That(resultBothZero).IsNull();
     }
 
     [Test]
-    public void GetProfilePicture_DiagnosticOutput()
+    public async Task GetProfilePicture_DiagnosticOutput()
     {
         // Arrange
         var profileService = new OsUserProfileService();
@@ -295,6 +295,6 @@ internal class SystemUserTests : TestHarness<SystemUser>
         }
         
         // Test passes regardless - this is for diagnostic purposes
-        Assert.That(result, Is.Not.Null, "Diagnostic result should not be null");
+        await Assert.That(result).IsNotNull();
     }
 }

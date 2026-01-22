@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Node.Net;
 
 namespace Node.Net.Test
@@ -22,7 +21,6 @@ namespace Node.Net.Test
     /// NOTE: These tests are expected to fail until Node.Net fixes the Matrix3DFactory to handle
     /// direction vector strings with parentheses or strip them before parsing.
     /// </summary>
-    [TestFixture]
     internal class Matrix3DFactoryTests
     {
         /// <summary>
@@ -107,10 +105,10 @@ namespace Node.Net.Test
         /// Test case with various edge cases for direction vectors that might cause issues.
         /// </summary>
         [Test]
-        [TestCase("(1.0,0.0,0.0)", "(0.0,1.0,0.0)", "(0.0,0.0,1.0)")]
-        [TestCase("(1.0000002742460514,4.982079117255012E-06,0)", "(-4.982079117255012E-06,1.0000002742460514,0)", "(0,0,1)")]
-        [TestCase("(1.0,1e-10,0.0)", "(-1e-10,1.0,0.0)", "(0.0,0.0,1.0)")]
-        [TestCase("(0.9999999999,0.0000000001,0.0)", "(-0.0000000001,0.9999999999,0.0)", "(0.0,0.0,1.0)")]
+        [Arguments("(1.0,0.0,0.0)", "(0.0,1.0,0.0)", "(0.0,0.0,1.0)")]
+        [Arguments("(1.0000002742460514,4.982079117255012E-06,0)", "(-4.982079117255012E-06,1.0000002742460514,0)", "(0,0,1)")]
+        [Arguments("(1.0,1e-10,0.0)", "(-1e-10,1.0,0.0)", "(0.0,0.0,1.0)")]
+        [Arguments("(0.9999999999,0.0000000001,0.0)", "(-0.0000000001,0.9999999999,0.0)", "(0.0,0.0,1.0)")]
         public async Task CreateFromIDictionary_HandlesVariousDirectionVectorFormats(
             string xDirection,
             string yDirection,

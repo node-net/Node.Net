@@ -1,13 +1,12 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
 using Node.Net;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal class FactoryTest
     {
         [Test]
-        public void ClearCache()
+        public async Task ClearCache()
         {
             Factory factory = new Factory();
             factory.Cache = true;
@@ -17,12 +16,14 @@ namespace Node.Net.Test
             Matrix3D matrix = factory.Create<Matrix3D>();
             factory.ClearCache(matrix);
             factory.ClearCache();
+            await Task.CompletedTask;
         }
 
         [Test]
-        public void Coverage()
+        public async Task Coverage()
         {
             Factory factory = new Factory();
+            await Task.CompletedTask;
         }
     }
 }

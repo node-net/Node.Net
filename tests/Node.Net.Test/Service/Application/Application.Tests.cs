@@ -1,15 +1,14 @@
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Node.Net.Diagnostic.Generic;
 using Node.Net.Service.Application;
 using ApplicationService = Node.Net.Service.Application.Application;
 
 namespace Node.Net.Test.Service.Application;
 
-[TestFixture]
 internal class ApplicationTests : TestHarness<ApplicationService>
 {
     // NOTE: The following tests are for the OLD interface methods that have been removed.
@@ -44,7 +43,7 @@ internal class ApplicationTests : TestHarness<ApplicationService>
 
     // Phase 4: Tests for GetApplicationInfo() method
     [Test]
-    public void GetApplicationInfo_ReturnsApplicationInfo()
+    public async Task GetApplicationInfo_ReturnsApplicationInfo()
     {
         // Arrange
         var app = new ApplicationService();
@@ -53,12 +52,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info, Is.Not.Null);
-        Assert.That(info, Is.InstanceOf<ApplicationInfo>());
+        await Assert.That(info).IsNotNull();
+        await Assert.That(info is ApplicationInfo).IsTrue();
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidName()
+    public async Task GetApplicationInfo_ReturnsValidName()
     {
         // Arrange
         var app = new ApplicationService();
@@ -67,13 +66,13 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.Name, Is.Not.Null);
-        Assert.That(info.Name, Is.Not.Empty);
+        await Assert.That(info.Name).IsNotNull();
+        await Assert.That(info.Name).IsNotEmpty();
         // Verify it's a valid application name (not "Unknown" unless assembly name is truly null)
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidCompany()
+    public async Task GetApplicationInfo_ReturnsValidCompany()
     {
         // Arrange
         var app = new ApplicationService();
@@ -82,12 +81,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.Company, Is.Not.Null);
+        await Assert.That(info.Company).IsNotNull();
         // Company can be empty string if not available, which is valid
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidDataDirectory()
+    public async Task GetApplicationInfo_ReturnsValidDataDirectory()
     {
         // Arrange
         var app = new ApplicationService();
@@ -96,12 +95,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.DataDirectory, Is.Not.Null);
+        await Assert.That(info.DataDirectory).IsNotNull();
         // DataDirectory can be empty string if creation fails, which is valid per spec
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidTargetFramework()
+    public async Task GetApplicationInfo_ReturnsValidTargetFramework()
     {
         // Arrange
         var app = new ApplicationService();
@@ -110,13 +109,13 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.TargetFramework, Is.Not.Null);
-        Assert.That(info.TargetFramework, Is.Not.Empty);
+        await Assert.That(info.TargetFramework).IsNotNull();
+        await Assert.That(info.TargetFramework).IsNotEmpty();
         // Should be "net8.0", "net8.0-windows", "net48", or "unknown"
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidExecutingAssemblyFilename()
+    public async Task GetApplicationInfo_ReturnsValidExecutingAssemblyFilename()
     {
         // Arrange
         var app = new ApplicationService();
@@ -125,12 +124,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.ExecutingAssemblyFilename, Is.Not.Null);
+        await Assert.That(info.ExecutingAssemblyFilename).IsNotNull();
         // Can be empty string if not available, which is valid
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidVersion()
+    public async Task GetApplicationInfo_ReturnsValidVersion()
     {
         // Arrange
         var app = new ApplicationService();
@@ -139,12 +138,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.Version, Is.Not.Null);
+        await Assert.That(info.Version).IsNotNull();
         // Can be empty string if not available, which is valid
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidUser()
+    public async Task GetApplicationInfo_ReturnsValidUser()
     {
         // Arrange
         var app = new ApplicationService();
@@ -153,12 +152,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.User, Is.Not.Null);
+        await Assert.That(info.User).IsNotNull();
         // Can be empty string if not available, which is valid
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidDomain()
+    public async Task GetApplicationInfo_ReturnsValidDomain()
     {
         // Arrange
         var app = new ApplicationService();
@@ -167,12 +166,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.Domain, Is.Not.Null);
+        await Assert.That(info.Domain).IsNotNull();
         // Can be empty string if not available, which is valid
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidOperatingSystem()
+    public async Task GetApplicationInfo_ReturnsValidOperatingSystem()
     {
         // Arrange
         var app = new ApplicationService();
@@ -181,12 +180,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.OperatingSystem, Is.Not.Null);
+        await Assert.That(info.OperatingSystem).IsNotNull();
         // Can be empty string if not available, which is valid
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsValidMachine()
+    public async Task GetApplicationInfo_ReturnsValidMachine()
     {
         // Arrange
         var app = new ApplicationService();
@@ -195,12 +194,12 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert
-        Assert.That(info.Machine, Is.Not.Null);
+        await Assert.That(info.Machine).IsNotNull();
         // Can be empty string if not available, which is valid
     }
 
     [Test]
-    public void GetApplicationInfo_HandlesDataDirectoryFailure()
+    public async Task GetApplicationInfo_HandlesDataDirectoryFailure()
     {
         // Arrange
         var app = new ApplicationService();
@@ -209,13 +208,13 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info = app.GetApplicationInfo();
 
         // Assert - Should not throw, DataDirectory should be empty string if creation failed
-        Assert.That(info.DataDirectory, Is.Not.Null);
+        await Assert.That(info.DataDirectory).IsNotNull();
         // Note: We can't easily simulate directory creation failure in a unit test,
         // but we verify that the method doesn't throw and returns a valid ApplicationInfo
     }
 
     [Test]
-    public void GetApplicationInfo_IsIdempotent()
+    public async Task GetApplicationInfo_IsIdempotent()
     {
         // Arrange
         var app = new ApplicationService();
@@ -225,16 +224,16 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info2 = app.GetApplicationInfo();
 
         // Assert - Properties should be equivalent (may be different instances)
-        Assert.That(info1.Name, Is.EqualTo(info2.Name));
-        Assert.That(info1.Company, Is.EqualTo(info2.Company));
-        Assert.That(info1.DataDirectory, Is.EqualTo(info2.DataDirectory));
-        Assert.That(info1.TargetFramework, Is.EqualTo(info2.TargetFramework));
-        Assert.That(info1.ExecutingAssemblyFilename, Is.EqualTo(info2.ExecutingAssemblyFilename));
-        Assert.That(info1.Version, Is.EqualTo(info2.Version));
+        await Assert.That(info1.Name).IsEqualTo(info2.Name);
+        await Assert.That(info1.Company).IsEqualTo(info2.Company);
+        await Assert.That(info1.DataDirectory).IsEqualTo(info2.DataDirectory);
+        await Assert.That(info1.TargetFramework).IsEqualTo(info2.TargetFramework);
+        await Assert.That(info1.ExecutingAssemblyFilename).IsEqualTo(info2.ExecutingAssemblyFilename);
+        await Assert.That(info1.Version).IsEqualTo(info2.Version);
     }
 
     [Test]
-    public void GetApplicationInfo_ReturnsNewInstanceEachCall()
+    public async Task GetApplicationInfo_ReturnsNewInstanceEachCall()
     {
         // Arrange
         var app = new ApplicationService();
@@ -244,11 +243,11 @@ internal class ApplicationTests : TestHarness<ApplicationService>
         var info2 = app.GetApplicationInfo();
 
         // Assert - Should be different instances (not cached)
-        Assert.That(info1, Is.Not.SameAs(info2));
+        await Assert.That(ReferenceEquals(info1, info2)).IsFalse();
     }
 
     [Test]
-    public void GetApplicationInfo_PerformanceUnder10ms()
+    public async Task GetApplicationInfo_PerformanceUnder10ms()
     {
         // Arrange
         var app = new ApplicationService();
@@ -266,7 +265,6 @@ internal class ApplicationTests : TestHarness<ApplicationService>
 
         // Assert
         var averageMs = elapsed / (double)iterations;
-        Assert.That(averageMs, Is.LessThan(10),
-            $"GetApplicationInfo should be fast (average {averageMs:F2}ms per call)");
+        await Assert.That(averageMs).IsLessThan(10);
     }
 }

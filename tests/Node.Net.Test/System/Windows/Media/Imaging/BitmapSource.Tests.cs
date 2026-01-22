@@ -1,9 +1,8 @@
 using System;
-using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    [TestFixture]
     internal static class BitmapSourceTests
     {
         private static bool CanCreateTestBitmapSource()
@@ -38,11 +37,13 @@ namespace Node.Net.Test
 #endif
 
         [Test]
-        public static void BitmapSource_PixelWidth_ReturnsCorrectValue()
+        public static async Task BitmapSource_PixelWidth_ReturnsCorrectValue()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -51,16 +52,18 @@ namespace Node.Net.Test
             BitmapSource bitmapSource = new TestBitmapSource(200, 300);
 
             // Act & Assert
-            Assert.That(bitmapSource.PixelWidth, Is.EqualTo(200));
+            await Assert.That(bitmapSource.PixelWidth).IsEqualTo(200));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_PixelHeight_ReturnsCorrectValue()
+        public static async Task BitmapSource_PixelHeight_ReturnsCorrectValue()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -69,16 +72,18 @@ namespace Node.Net.Test
             BitmapSource bitmapSource = new TestBitmapSource(200, 300);
 
             // Act & Assert
-            Assert.That(bitmapSource.PixelHeight, Is.EqualTo(300));
+            await Assert.That(bitmapSource.PixelHeight).IsEqualTo(300));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_DpiX_ReturnsDefaultValue()
+        public static async Task BitmapSource_DpiX_ReturnsDefaultValue()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -87,16 +92,18 @@ namespace Node.Net.Test
             BitmapSource bitmapSource = new TestBitmapSource(200, 300);
 
             // Act & Assert
-            Assert.That(bitmapSource.DpiX, Is.EqualTo(96.0));
+            await Assert.That(bitmapSource.DpiX).IsEqualTo(96.0));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_DpiY_ReturnsDefaultValue()
+        public static async Task BitmapSource_DpiY_ReturnsDefaultValue()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -105,16 +112,18 @@ namespace Node.Net.Test
             BitmapSource bitmapSource = new TestBitmapSource(200, 300);
 
             // Act & Assert
-            Assert.That(bitmapSource.DpiY, Is.EqualTo(96.0));
+            await Assert.That(bitmapSource.DpiY).IsEqualTo(96.0));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_DpiX_CanBeSet()
+        public static async Task BitmapSource_DpiX_CanBeSet()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -123,16 +132,18 @@ namespace Node.Net.Test
             BitmapSource bitmapSource = new TestBitmapSource(200, 300, 120.0, 96.0);
 
             // Act & Assert
-            Assert.That(bitmapSource.DpiX, Is.EqualTo(120.0));
+            await Assert.That(bitmapSource.DpiX).IsEqualTo(120.0));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_DpiY_CanBeSet()
+        public static async Task BitmapSource_DpiY_CanBeSet()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -141,16 +152,18 @@ namespace Node.Net.Test
             BitmapSource bitmapSource = new TestBitmapSource(200, 300, 96.0, 120.0);
 
             // Act & Assert
-            Assert.That(bitmapSource.DpiY, Is.EqualTo(120.0));
+            await Assert.That(bitmapSource.DpiY).IsEqualTo(120.0));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_Width_CalculatesFromPixelWidthAndDpiX()
+        public static async Task BitmapSource_Width_CalculatesFromPixelWidthAndDpiX()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -160,16 +173,18 @@ namespace Node.Net.Test
 
             // Act & Assert
             // Width = PixelWidth * 96 / DpiX = 200 * 96 / 96 = 200
-            Assert.That(bitmapSource.Width, Is.EqualTo(200.0));
+            await Assert.That(bitmapSource.Width).IsEqualTo(200.0));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_Height_CalculatesFromPixelHeightAndDpiY()
+        public static async Task BitmapSource_Height_CalculatesFromPixelHeightAndDpiY()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -179,16 +194,18 @@ namespace Node.Net.Test
 
             // Act & Assert
             // Height = PixelHeight * 96 / DpiY = 300 * 96 / 96 = 300
-            Assert.That(bitmapSource.Height, Is.EqualTo(300.0));
+            await Assert.That(bitmapSource.Height).IsEqualTo(300.0));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_Width_WithCustomDpi_CalculatesCorrectly()
+        public static async Task BitmapSource_Width_WithCustomDpi_CalculatesCorrectly()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -198,16 +215,18 @@ namespace Node.Net.Test
 
             // Act & Assert
             // Width = PixelWidth * 96 / DpiX = 200 * 96 / 192 = 100
-            Assert.That(bitmapSource.Width, Is.EqualTo(100.0));
+            await Assert.That(bitmapSource.Width).IsEqualTo(100.0));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_Height_WithCustomDpi_CalculatesCorrectly()
+        public static async Task BitmapSource_Height_WithCustomDpi_CalculatesCorrectly()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -217,16 +236,18 @@ namespace Node.Net.Test
 
             // Act & Assert
             // Height = PixelHeight * 96 / DpiY = 300 * 96 / 192 = 150
-            Assert.That(bitmapSource.Height, Is.EqualTo(150.0));
+            await Assert.That(bitmapSource.Height).IsEqualTo(150.0));
 #endif
         }
 
         [Test]
-        public static void BitmapSource_Clone_ReturnsReference()
+        public static async Task BitmapSource_Clone_ReturnsReference()
         {
             if (!CanCreateTestBitmapSource())
             {
-                Assert.Pass("TestBitmapSource only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("TestBitmapSource only available on non-Windows platforms");
                 return;
             }
 
@@ -238,20 +259,20 @@ namespace Node.Net.Test
             BitmapSource cloned = bitmapSource.Clone();
 
             // Assert
-            Assert.That(cloned, Is.Not.Null);
-            Assert.That(cloned.PixelWidth, Is.EqualTo(bitmapSource.PixelWidth));
-            Assert.That(cloned.PixelHeight, Is.EqualTo(bitmapSource.PixelHeight));
+            await Assert.That(cloned, Is.Not.Null);
+            await Assert.That(cloned.PixelWidth).IsEqualTo(bitmapSource.PixelWidth));
+            await Assert.That(cloned.PixelHeight).IsEqualTo(bitmapSource.PixelHeight));
 #endif
         }
 
         [Test]
-        public static void BitmapImage_Constructor_InitializesCorrectly()
+        public static async Task BitmapImage_Constructor_InitializesCorrectly()
         {
             // Arrange & Act
             BitmapImage bitmapImage = new BitmapImage();
 
             // Assert
-            Assert.That(bitmapImage, Is.Not.Null);
+            await Assert.That(bitmapImage, Is.Not.Null);
         }
 
         private static bool BitmapImageHasBeginInit()
@@ -289,11 +310,13 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static void BitmapImage_BeginInit_AllowsSettingStreamSource()
+        public static async Task BitmapImage_BeginInit_AllowsSettingStreamSource()
         {
             if (!BitmapImageHasBeginInit())
             {
-                Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
                 return;
             }
 
@@ -309,21 +332,25 @@ namespace Node.Net.Test
                 bitmapImage.EndInit();
 
                 // Assert
-                Assert.That(bitmapImage.StreamSource, Is.EqualTo(stream));
+                await Assert.That(bitmapImage.StreamSource).IsEqualTo(stream));
             }
             catch (System.NotSupportedException)
             {
                 // On Windows, BeginInit may exist but fail with MemoryStream due to missing image decoders
-                Assert.Pass("BitmapImage.BeginInit requires image decoders on Windows");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.BeginInit requires image decoders on Windows");
             }
         }
 
         [Test]
-        public static void BitmapImage_BeginInit_AllowsSettingUriSource()
+        public static async Task BitmapImage_BeginInit_AllowsSettingUriSource()
         {
             if (!BitmapImageHasBeginInit())
             {
-                Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
                 return;
             }
 
@@ -339,21 +366,25 @@ namespace Node.Net.Test
                 bitmapImage.EndInit();
 
                 // Assert
-                Assert.That(bitmapImage.UriSource, Is.EqualTo(uri));
+                await Assert.That(bitmapImage.UriSource).IsEqualTo(uri));
             }
             catch (System.NotSupportedException)
             {
                 // On Windows, BeginInit may exist but fail due to missing image decoders
-                Assert.Pass("BitmapImage.BeginInit requires image decoders on Windows");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.BeginInit requires image decoders on Windows");
             }
         }
 
         [Test]
-        public static void BitmapImage_SetStreamSource_OutsideBeginInit_ThrowsException()
+        public static async Task BitmapImage_SetStreamSource_OutsideBeginInit_ThrowsException()
         {
             if (!BitmapImageHasBeginInit())
             {
-                Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
                 return;
             }
 
@@ -368,7 +399,9 @@ namespace Node.Net.Test
             try
             {
                 bitmapImage.StreamSource = stream;
-                Assert.Pass("BitmapImage.StreamSource can be set outside BeginInit on Windows");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.StreamSource can be set outside BeginInit on Windows");
             }
             catch (InvalidOperationException)
             {
@@ -376,19 +409,23 @@ namespace Node.Net.Test
             }
             catch (System.NotSupportedException)
             {
-                Assert.Pass("BitmapImage.StreamSource requires image decoders on Windows");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.StreamSource requires image decoders on Windows");
             }
 #else
-            Assert.Throws<InvalidOperationException>(() => bitmapImage.StreamSource = stream);
+            await Assert.That(() => bitmapImage.StreamSource = stream).Throws<InvalidOperationException>();
 #endif
         }
 
         [Test]
-        public static void BitmapImage_SetUriSource_OutsideBeginInit_ThrowsException()
+        public static async Task BitmapImage_SetUriSource_OutsideBeginInit_ThrowsException()
         {
             if (!BitmapImageHasBeginInit())
             {
-                Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
                 return;
             }
 
@@ -402,7 +439,9 @@ namespace Node.Net.Test
             try
             {
                 bitmapImage.UriSource = uri;
-                Assert.Pass("BitmapImage.UriSource can be set outside BeginInit on Windows");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.UriSource can be set outside BeginInit on Windows");
             }
             catch (InvalidOperationException)
             {
@@ -410,19 +449,23 @@ namespace Node.Net.Test
             }
             catch (System.NotSupportedException)
             {
-                Assert.Pass("BitmapImage.UriSource requires image decoders on Windows");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.UriSource requires image decoders on Windows");
             }
 #else
-            Assert.Throws<InvalidOperationException>(() => bitmapImage.UriSource = uri);
+            await Assert.That(() => bitmapImage.UriSource = uri).Throws<InvalidOperationException>();
 #endif
         }
 
         [Test]
-        public static void BitmapImage_Constructor_WithUri_InitializesCorrectly()
+        public static async Task BitmapImage_Constructor_WithUri_InitializesCorrectly()
         {
             if (!BitmapImageHasBeginInit())
             {
-                Assert.Pass("BitmapImage constructor with Uri only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage constructor with Uri only available on non-Windows platforms");
                 return;
             }
 
@@ -433,15 +476,17 @@ namespace Node.Net.Test
             BitmapImage bitmapImage = new BitmapImage(uri);
 
             // Assert
-            Assert.That(bitmapImage.UriSource, Is.EqualTo(uri));
+            await Assert.That(bitmapImage.UriSource).IsEqualTo(uri));
         }
 
         [Test]
-        public static void BitmapImage_EndInit_SetsDefaultDimensions()
+        public static async Task BitmapImage_EndInit_SetsDefaultDimensions()
         {
             if (!BitmapImageHasBeginInit())
             {
-                Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.BeginInit only available on non-Windows platforms");
                 return;
             }
 
@@ -455,13 +500,15 @@ namespace Node.Net.Test
                 bitmapImage.EndInit();
 
                 // Assert
-                Assert.That(bitmapImage.PixelWidth, Is.GreaterThan(0));
-                Assert.That(bitmapImage.PixelHeight, Is.GreaterThan(0));
+                await Assert.That(bitmapImage.PixelWidth, Is.GreaterThan(0));
+                await Assert.That(bitmapImage.PixelHeight, Is.GreaterThan(0));
             }
             catch (System.NotSupportedException)
             {
                 // On Windows, EndInit may fail due to missing image decoders
-                Assert.Pass("BitmapImage.EndInit requires image decoders on Windows");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
+                // Assert.Pass("BitmapImage.EndInit requires image decoders on Windows");
             }
         }
     }
