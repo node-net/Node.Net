@@ -35,7 +35,7 @@ public class LiteDbFileSystem : IFileSystem, IDisposable
         else
         {
             // Validate path characters
-            if (databasePath.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
+            if (databasePath!.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
             {
                 throw new ArgumentException("Database path contains invalid characters.", nameof(databasePath));
             }

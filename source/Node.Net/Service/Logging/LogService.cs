@@ -33,7 +33,7 @@ public class LogService : ILogService, IDisposable
         }
         else
         {
-            if (databasePath.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
+            if (databasePath!.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
             {
                 throw new ArgumentException("Database path contains invalid characters.", nameof(databasePath));
             }
@@ -195,7 +195,7 @@ public class LogService : ILogService, IDisposable
         // Apply search term filter (searches message and properties) in memory
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
-            var searchLower = searchTerm.ToLowerInvariant();
+            var searchLower = searchTerm!.ToLowerInvariant();
             entries = entries.Where(x =>
             {
                 var messageMatch = x.Message != null && x.Message.ToLowerInvariant().Contains(searchLower);
@@ -240,7 +240,7 @@ public class LogService : ILogService, IDisposable
         // Apply search term filter (same logic as Search method) in memory
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
-            var searchLower = searchTerm.ToLowerInvariant();
+            var searchLower = searchTerm!.ToLowerInvariant();
             entries = entries.Where(x =>
             {
                 var messageMatch = x.Message != null && x.Message.ToLowerInvariant().Contains(searchLower);

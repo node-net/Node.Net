@@ -24,7 +24,7 @@ public interface IFileSystem
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> is null.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="path"/> is empty or contains invalid characters.</exception>
     /// <exception cref="UnauthorizedAccessException">Thrown when <paramref name="path"/> is outside the allowed directory.</exception>
-    new bool Exists(string path);
+    bool Exists(string path);
 
     /// <summary>
     /// Opens a binary file, reads all contents into a byte array, and then closes the file.
@@ -36,7 +36,7 @@ public interface IFileSystem
     /// <exception cref="ArgumentException">Thrown when <paramref name="path"/> is empty or contains invalid characters.</exception>
     /// <exception cref="FileNotFoundException">Thrown when the file specified by <paramref name="path"/> does not exist.</exception>
     /// <exception cref="UnauthorizedAccessException">Thrown when <paramref name="path"/> is outside the allowed directory.</exception>
-    new byte[] ReadAllBytes(string path);
+    byte[] ReadAllBytes(string path);
 
     // Methods inherited from IMutableFileSystem
 
@@ -49,7 +49,7 @@ public interface IFileSystem
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="path"/> or <paramref name="data"/> is null.</exception>
     /// <exception cref="ArgumentException">Thrown when <paramref name="path"/> is empty or contains invalid characters.</exception>
     /// <exception cref="UnauthorizedAccessException">Thrown when <paramref name="path"/> is outside the allowed directory.</exception>
-    new void WriteAllBytes(string path, byte[] data);
+    void WriteAllBytes(string path, byte[] data);
 
     /// <summary>
     /// Deletes the specified file.
@@ -60,5 +60,5 @@ public interface IFileSystem
     /// <exception cref="ArgumentException">Thrown when <paramref name="path"/> is empty or contains invalid characters.</exception>
     /// <exception cref="FileNotFoundException">Thrown when the file specified by <paramref name="path"/> does not exist.</exception>
     /// <exception cref="UnauthorizedAccessException">Thrown when <paramref name="path"/> is outside the allowed directory.</exception>
-    new void Delete(string path);
+    void Delete(string path);
 }

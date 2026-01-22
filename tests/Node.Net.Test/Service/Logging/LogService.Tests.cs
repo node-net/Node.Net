@@ -335,7 +335,7 @@ internal class LogServiceTests : TestHarness
         }
 
         // Act
-        var results = _logService.Search(skip: 2, take: 3).ToList();
+        var results = _logService!.Search(skip: 2, take: 3).ToList();
 
         // Assert
         Assert.That(results.Count, Is.EqualTo(3));

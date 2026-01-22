@@ -48,7 +48,11 @@ task :publish => [:build, :tag] do
     package = "source/Node.Net/bin/Release/#{PROJECT.name}.#{PROJECT.version}.nupkg"
 
     if (Makit::Secrets.has_key?("nuget_api_key"))
+<<<<<<< HEAD
       Makit::NuGet::publish(package, Makit::Secrets::get_key("nuget_api_key"), "https://api.nuget.org/v3/index.json")
+=======
+      Makit::NuGetExt::publish(package, Makit::Secrets::get("nuget_api_key"), "https://api.nuget.org/v3/index.json")
+>>>>>>> c91e7180b9b0de8a749dcff76081ce64f980dab5
     else
       puts "nuget_api_key SECRET not available"
     end

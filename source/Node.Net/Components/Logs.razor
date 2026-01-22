@@ -30,9 +30,9 @@
                 <FluentSearch @bind-Value="@_searchTerm" 
                              Placeholder="Search logs..." 
                              Style="flex: 1; max-width: 400px;"
-                             OnInput="@OnSearchInput" />
+                             OnInput="@(() => OnSearchInput())" />
                 <FluentSelect TOption="string" @bind-Value="@_selectedLevelFilter" 
-                            OnChange="@OnLevelFilterChanged"
+                            OnChange="@(() => OnLevelFilterChanged())"
                             Style="width: 150px;">
                     <FluentOption TOption="string" Value="">All Levels</FluentOption>
                     <FluentOption TOption="string" Value="Debug">Debug</FluentOption>
@@ -175,7 +175,7 @@
                         }
                     </FluentButton>
                     <FluentSelect TOption="string" @bind-Value="@_selectedPageSizeString" 
-                                OnChange="@OnPageSizeChanged"
+                                OnChange="@(() => OnPageSizeChanged())"
                                 Style="width: 120px;">
                         <FluentOption TOption="string" Value="25">25 per page</FluentOption>
                         <FluentOption TOption="string" Value="50">50 per page</FluentOption>

@@ -1,4 +1,5 @@
 #if !IS_FRAMEWORK
+#nullable enable
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -97,7 +98,7 @@ internal class LogsIntegrationTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
         FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
         // Act
