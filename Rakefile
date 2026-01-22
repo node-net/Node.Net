@@ -1,6 +1,7 @@
 VERSION = "2.0.11"
 #require "raykit"
 require "makit"
+require_relative "scripts/ruby/makit/github_actions"
 #require_relative "scripts/ruby/makit/nuget_ext"
 
 task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
@@ -95,5 +96,69 @@ def compatible_targets
   else
     # On Mac/Linux, only build non-Windows targets
     "/p:TargetFrameworks=net8.0"
+  end
+end
+
+def get_github_repo_info
+  remote_url = `git config --get remote.origin.url`.strip
+  if remote_url.empty?
+    raise "Could not determine git remote URL. Make sure you're in a git repository with a remote configured."
+  end
+
+  # Handle both https:// and git@ formats
+  match = remote_url.match(%r{github\.com[:/]([^/]+)/([^/]+)(?:\.git)?$})
+  if match
+    owner = match[1]
+    repo = match[2].gsub(/\.git$/, "")
+    return [owner, repo]
+  else
+    raise "Could not parse GitHub repository from remote URL: #{remote_url}"
+  end
+end
+
+desc "Query GitHub Actions workflow status"
+task :actions_status do
+  begin
+    owner, repo = get_github_repo_info
+    branch = `git rev-parse --abbrev-ref HEAD`.strip
+    branch = "main" if branch.empty?
+
+    puts "Querying GitHub Actions status for #{owner}/#{repo} (branch: #{branch})..."
+
+    if (Makit::Secrets.has_key?("github_token"))
+      token = Makit::Secrets::get_key("github_token")
+      result = Makit::GitHubActions::workflow_status(owner, repo, branch: branch, token: token)
+    else
+      puts "github_token SECRET not available"
+      result = Makit::GitHubActions::workflow_status(owner, repo, branch: branch)
+    end
+
+    if result[:status] == "not_found"
+      puts "⚠️  #{result[:message]}"
+    else
+      status_emoji = case result[:conclusion]
+        when "success"
+          "✅"
+        when "failure"
+          "❌"
+        when "cancelled"
+          "🚫"
+        when nil
+          result[:status] == "completed" ? "⏸️" : "🔄"
+        else
+          "❓"
+        end
+
+      puts "\n#{status_emoji} Workflow Status: #{result[:workflow_name] || "Unknown"}"
+      puts "   Status: #{result[:status]}"
+      puts "   Conclusion: #{result[:conclusion] || "N/A"}" if result[:conclusion]
+      puts "   Run Number: ##{result[:run_number]}" if result[:run_number]
+      puts "   Created: #{result[:created_at]}" if result[:created_at]
+      puts "   Updated: #{result[:updated_at]}" if result[:updated_at]
+      puts "   URL: #{result[:html_url]}" if result[:html_url]
+    end
+  rescue => e
+    puts "❌ Error: #{e.message}"
+    exit 1
   end
 end
