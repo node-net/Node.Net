@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    internal static class ResourceDictionaryTests
+    internal class ResourceDictionaryTests
     {
         private static bool CanCreateResourceDictionary()
         {
@@ -24,7 +24,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Constructor_Default_InitializesCorrectly()
+        public async Task ResourceDictionary_Constructor_Default_InitializesCorrectly()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -45,7 +45,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Add_AddsKeyValuePair()
+        public async Task ResourceDictionary_Add_AddsKeyValuePair()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -71,7 +71,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Add_WithNullKey_ThrowsArgumentNullException()
+        public async Task ResourceDictionary_Add_WithNullKey_ThrowsArgumentNullException()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -90,7 +90,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Add_WithNullValue_ThrowsArgumentNullException()
+        public async Task ResourceDictionary_Add_WithNullValue_ThrowsArgumentNullException()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -109,7 +109,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Indexer_Set_AddsOrUpdatesValue()
+        public async Task ResourceDictionary_Indexer_Set_AddsOrUpdatesValue()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -136,7 +136,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Indexer_Set_WithNullValue_RemovesKey()
+        public async Task ResourceDictionary_Indexer_Set_WithNullValue_RemovesKey()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -161,7 +161,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Indexer_Get_WithNonExistentKey_ReturnsNull()
+        public async Task ResourceDictionary_Indexer_Get_WithNonExistentKey_ReturnsNull()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -183,7 +183,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Indexer_Get_WithNullKey_ThrowsArgumentNullException()
+        public async Task ResourceDictionary_Indexer_Get_WithNullKey_ThrowsArgumentNullException()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -202,7 +202,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Contains_ReturnsTrueForExistingKey()
+        public async Task ResourceDictionary_Contains_ReturnsTrueForExistingKey()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -226,7 +226,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Contains_ReturnsFalseForNonExistentKey()
+        public async Task ResourceDictionary_Contains_ReturnsFalseForNonExistentKey()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -248,7 +248,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Contains_WithNullKey_ReturnsFalse()
+        public async Task ResourceDictionary_Contains_WithNullKey_ReturnsFalse()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -270,7 +270,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Remove_RemovesKey()
+        public async Task ResourceDictionary_Remove_RemovesKey()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -295,7 +295,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Remove_WithNonExistentKey_DoesNothing()
+        public async Task ResourceDictionary_Remove_WithNonExistentKey_DoesNothing()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -317,7 +317,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Remove_WithNullKey_DoesNothing()
+        public async Task ResourceDictionary_Remove_WithNullKey_DoesNothing()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -339,7 +339,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Clear_RemovesAllItems()
+        public async Task ResourceDictionary_Clear_RemovesAllItems()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -367,7 +367,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Keys_ReturnsAllKeys()
+        public async Task ResourceDictionary_Keys_ReturnsAllKeys()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -393,7 +393,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_Values_ReturnsAllValues()
+        public async Task ResourceDictionary_Values_ReturnsAllValues()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -419,7 +419,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_GetEnumerator_IteratesThroughItems()
+        public async Task ResourceDictionary_GetEnumerator_IteratesThroughItems()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -447,7 +447,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_MergedDictionaries_CanBeAccessed()
+        public async Task ResourceDictionary_MergedDictionaries_CanBeAccessed()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -470,7 +470,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_MergedDictionaries_CanAddDictionary()
+        public async Task ResourceDictionary_MergedDictionaries_CanAddDictionary()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -496,7 +496,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_MergedDictionaries_ValueFromMergedDictionaryTakesPrecedence()
+        public async Task ResourceDictionary_MergedDictionaries_ValueFromMergedDictionaryTakesPrecedence()
         {
             if (!CanCreateResourceDictionary())
             {
@@ -523,7 +523,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ResourceDictionary_MergedDictionaries_ValueFromFirstMergedDictionary()
+        public async Task ResourceDictionary_MergedDictionaries_ValueFromFirstMergedDictionary()
         {
             if (!CanCreateResourceDictionary())
             {

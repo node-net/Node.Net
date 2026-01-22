@@ -1,3 +1,4 @@
+global using System;
 global using System.Windows;
 global using System.Windows.Media;
 global using System.Windows.Media.Imaging;

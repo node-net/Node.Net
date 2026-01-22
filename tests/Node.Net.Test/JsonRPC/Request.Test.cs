@@ -3,10 +3,10 @@ using Node.Net.JsonRPC;
 
 namespace Node.Net.JsonRPC
 {
-    internal static class RequestTest
+    internal class RequestTest
     {
         [Test]
-        public static async Task StreamConstructor()
+        public async Task StreamConstructor()
         {
             Request request = new Request("SayHello");
             request.Parameters.Add("name", "test");

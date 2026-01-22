@@ -4,13 +4,13 @@ using Node.Net; // This brings the extension methods into scope (they're in Node
 
 namespace Node.Net.Extension
 {
-    internal static class Matrix3DExtensionTest
+    internal class Matrix3DExtensionTest
     {
         [Test]
         [Arguments(0, 0, 0)]
         [Arguments(45, 30, 0)]
         [Arguments(45, 30, 0)]
-        public static async Task RotateOTS(double orientation, double tilt, double spin)
+        public async Task RotateOTS(double orientation, double tilt, double spin)
         {
             System.Windows.Media.Media3D.Matrix3D matrix = new System.Windows.Media.Media3D.Matrix3D();
             matrix = matrix.RotateOTS(new System.Windows.Media.Media3D.Vector3D(orientation, tilt, spin)); // Extension method from Node.Net.Extension

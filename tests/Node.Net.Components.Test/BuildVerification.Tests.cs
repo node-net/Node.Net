@@ -1,5 +1,6 @@
 #nullable enable
-using TUnit;
+using TUnit.Core;
+using TUnit.Assertions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

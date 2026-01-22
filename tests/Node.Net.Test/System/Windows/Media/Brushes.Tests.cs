@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    internal static class BrushesTests
+    internal class BrushesTests
     {
         private static bool BrushesClassExists()
         {
@@ -19,7 +19,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Brushes_Black_ReturnsCorrectBrush()
+        public async Task Brushes_Black_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
@@ -36,7 +36,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Brushes_White_ReturnsCorrectBrush()
+        public async Task Brushes_White_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
@@ -53,7 +53,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Brushes_Red_ReturnsCorrectBrush()
+        public async Task Brushes_Red_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
@@ -70,7 +70,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Brushes_Green_ReturnsCorrectBrush()
+        public async Task Brushes_Green_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
@@ -87,7 +87,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Brushes_Blue_ReturnsCorrectBrush()
+        public async Task Brushes_Blue_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
@@ -104,7 +104,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Brushes_Yellow_ReturnsCorrectBrush()
+        public async Task Brushes_Yellow_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
@@ -121,7 +121,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Brushes_Transparent_ReturnsCorrectBrush()
+        public async Task Brushes_Transparent_ReturnsCorrectBrush()
         {
             if (!BrushesClassExists())
             {
@@ -138,7 +138,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Brushes_Properties_ReturnNewInstances()
+        public async Task Brushes_Properties_ReturnNewInstances()
         {
             if (!BrushesClassExists())
             {

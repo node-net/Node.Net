@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    internal static class EmissiveMaterialTests
+    internal class EmissiveMaterialTests
     {
         [Test]
-        public static async Task EmissiveMaterial_Constructor_Default_InitializesCorrectly()
+        public async Task EmissiveMaterial_Constructor_Default_InitializesCorrectly()
         {
             // Arrange & Act
             EmissiveMaterial material = new EmissiveMaterial();
@@ -17,7 +17,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task EmissiveMaterial_Constructor_WithBrush_InitializesCorrectly()
+        public async Task EmissiveMaterial_Constructor_WithBrush_InitializesCorrectly()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.Yellow);
@@ -31,7 +31,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task EmissiveMaterial_Brush_CanBeSet()
+        public async Task EmissiveMaterial_Brush_CanBeSet()
         {
             // Arrange
             EmissiveMaterial material = new EmissiveMaterial();
@@ -45,7 +45,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task EmissiveMaterial_Brush_CanBeSetToNull()
+        public async Task EmissiveMaterial_Brush_CanBeSetToNull()
         {
             // Arrange
             EmissiveMaterial material = new EmissiveMaterial(new SolidColorBrush(Colors.Yellow));
@@ -58,7 +58,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task EmissiveMaterial_Brush_CanBeChanged()
+        public async Task EmissiveMaterial_Brush_CanBeChanged()
         {
             // Arrange
             EmissiveMaterial material = new EmissiveMaterial(new SolidColorBrush(Colors.Yellow));

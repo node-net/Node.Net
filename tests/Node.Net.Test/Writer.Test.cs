@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -6,10 +6,10 @@ using Node.Net;
 
 namespace Node.Net.Test
 {
-    internal static class WriterTest
+    internal class WriterTest
     {
         [Test]
-        public static async Task WriteJson()
+        public async Task WriteJson()
         {
             Dictionary<string, object> data = new Dictionary<string, object>
             {
@@ -36,7 +36,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task WriteISerializableJson()
+        public async Task WriteISerializableJson()
         {
             Widget widget = new Widget
             {

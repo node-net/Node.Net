@@ -17,7 +17,7 @@ internal class SystemUserTests : TestHarness<SystemUser>
     {
         try
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             var assemblyLocation = assembly.Location;
             if (!string.IsNullOrEmpty(assemblyLocation))
             {
@@ -66,8 +66,8 @@ internal class SystemUserTests : TestHarness<SystemUser>
         await Assert.That(result!.Length).IsGreaterThan(0);
         
         // Verify it's a valid JPEG (starts with FF D8)
-        await Assert.That(result[0]).IsEqualTo(0xFF);
-        await Assert.That(result[1]).IsEqualTo(0xD8);
+        await Assert.That((int)result[0]).IsEqualTo(0xFF);
+        await Assert.That((int)result[1]).IsEqualTo(0xD8);
     }
 
     [Test]
@@ -121,8 +121,8 @@ internal class SystemUserTests : TestHarness<SystemUser>
         
         // JPEG files start with FF D8
         await Assert.That(result!.Length).IsGreaterThanOrEqualTo(2);
-        await Assert.That(result[0]).IsEqualTo(0xFF);
-        await Assert.That(result[1]).IsEqualTo(0xD8);
+        await Assert.That((int)result[0]).IsEqualTo(0xFF);
+        await Assert.That((int)result[1]).IsEqualTo(0xD8);
     }
 
     [Test]
@@ -161,8 +161,8 @@ internal class SystemUserTests : TestHarness<SystemUser>
             
             // JPEG files must start with SOI marker: 0xFF 0xD8
             await Assert.That(fileBytes.Length).IsGreaterThanOrEqualTo(2);
-            await Assert.That(fileBytes[0]).IsEqualTo(0xFF);
-            await Assert.That(fileBytes[1]).IsEqualTo(0xD8);
+            await Assert.That((int)fileBytes[0]).IsEqualTo(0xFF);
+            await Assert.That((int)fileBytes[1]).IsEqualTo(0xD8);
             
             // Verify JPEG structure: should have valid JPEG markers after SOI
             // JPEG files typically have: SOI (FF D8) followed by APP markers (FF E0-E7), DQT (FF DB), SOF (FF C0-C3), etc.

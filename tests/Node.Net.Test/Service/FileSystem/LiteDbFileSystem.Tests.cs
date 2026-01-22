@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LiteDB;
@@ -200,7 +201,7 @@ internal class LiteDbFileSystemTests : TestHarness
             var result = _fileSystem.ReadAllBytes(path);
 
             // Assert
-            await Assert.That(result).IsEqualTo(expectedData);
+            await Assert.That(result.SequenceEqual(expectedData)).IsTrue();
         }
         finally
         {
@@ -273,7 +274,7 @@ internal class LiteDbFileSystemTests : TestHarness
             var result = _fileSystem.ReadAllBytes(path);
 
             // Assert
-            await Assert.That(result).IsEqualTo(largeData);
+            await Assert.That(result.SequenceEqual(largeData)).IsTrue();
         }
         finally
         {
@@ -321,8 +322,8 @@ internal class LiteDbFileSystemTests : TestHarness
             var result = _fileSystem.ReadAllBytes(path);
 
             // Assert
-            await Assert.That(result).IsEqualTo(newData);
-            await Assert.That(result).IsNotEqualTo(originalData);
+            await Assert.That(result.SequenceEqual(newData)).IsTrue();
+            await Assert.That(result.SequenceEqual(originalData)).IsFalse();
         }
         finally
         {
@@ -350,7 +351,7 @@ internal class LiteDbFileSystemTests : TestHarness
             // Assert
             await Assert.That(_fileSystem.Exists(path)).IsTrue();
             var result = _fileSystem.ReadAllBytes(path);
-            await Assert.That(result).IsEqualTo(data);
+            await Assert.That(result.SequenceEqual(data)).IsTrue();
         }
         finally
         {
@@ -375,8 +376,8 @@ internal class LiteDbFileSystemTests : TestHarness
 
             // Assert
             var result = _fileSystem.ReadAllBytes(path);
-            await Assert.That(result).IsEqualTo(newData);
-            await Assert.That(result).IsNotEqualTo(originalData);
+            await Assert.That(result.SequenceEqual(newData)).IsTrue();
+            await Assert.That(result.SequenceEqual(originalData)).IsFalse();
         }
         finally
         {
@@ -454,7 +455,7 @@ internal class LiteDbFileSystemTests : TestHarness
 
             // Assert
             var result = _fileSystem.ReadAllBytes(path);
-            await Assert.That(result).IsEqualTo(largeData);
+            await Assert.That(result.SequenceEqual(largeData)).IsTrue();
         }
         finally
         {
@@ -502,7 +503,7 @@ internal class LiteDbFileSystemTests : TestHarness
             // Assert
             await Assert.That(_fileSystem.Exists(path)).IsTrue();
             var result = _fileSystem.ReadAllBytes(path);
-            await Assert.That(result).IsEqualTo(data);
+            await Assert.That(result.SequenceEqual(data)).IsTrue();
         }
         finally
         {
@@ -529,7 +530,7 @@ internal class LiteDbFileSystemTests : TestHarness
             await Assert.That(_fileSystem.Exists(path2)).IsTrue();
             var result1 = _fileSystem.ReadAllBytes(path1);
             var result2 = _fileSystem.ReadAllBytes(path2);
-            await Assert.That(result1).IsEqualTo(result2);
+            await Assert.That(result1.SequenceEqual(result2)).IsTrue();
         }
         finally
         {
@@ -554,7 +555,7 @@ internal class LiteDbFileSystemTests : TestHarness
             // Assert - Both paths should refer to the same file
             await Assert.That(_fileSystem.Exists(path2)).IsTrue();
             var result = _fileSystem.ReadAllBytes(path2);
-            await Assert.That(result).IsEqualTo(data);
+            await Assert.That(result.SequenceEqual(data)).IsTrue();
         }
         finally
         {
@@ -706,7 +707,7 @@ internal class LiteDbFileSystemTests : TestHarness
 
             // Act & Assert - Read
             var readData = _fileSystem.ReadAllBytes(path);
-            await Assert.That(readData).IsEqualTo(data);
+            await Assert.That(readData.SequenceEqual(data)).IsTrue();
 
             // Act & Assert - Delete
             _fileSystem.Delete(path);
@@ -751,8 +752,8 @@ internal class LiteDbFileSystemTests : TestHarness
             await Assert.That(_fileSystem.Exists(path3)).IsTrue();
 
             // Assert - Can still read other files
-            await Assert.That(_fileSystem.ReadAllBytes(path1)).IsEqualTo(data1);
-            await Assert.That(_fileSystem.ReadAllBytes(path3)).IsEqualTo(data3);
+            await Assert.That(_fileSystem.ReadAllBytes(path1).SequenceEqual(data1)).IsTrue();
+            await Assert.That(_fileSystem.ReadAllBytes(path3).SequenceEqual(data3)).IsTrue();
         }
         finally
         {
@@ -779,7 +780,7 @@ internal class LiteDbFileSystemTests : TestHarness
 
             // Assert
             var result = _fileSystem.ReadAllBytes(path);
-            await Assert.That(result).IsEqualTo(data3);
+            await Assert.That(result.SequenceEqual(data3)).IsTrue();
         }
         finally
         {
@@ -805,7 +806,7 @@ internal class LiteDbFileSystemTests : TestHarness
         // Assert
         await Assert.That(inMemoryFileSystem.Exists(path)).IsTrue();
         var result = inMemoryFileSystem.ReadAllBytes(path);
-        await Assert.That(result).IsEqualTo(data);
+        await Assert.That(result.SequenceEqual(data)).IsTrue();
     }
 
     [Test]
@@ -892,7 +893,7 @@ internal class LiteDbFileSystemTests : TestHarness
             await Assert.That(_fileSystem.Exists(path2)).IsTrue();
             // The normalized path should also work (path normalization makes both equivalent)
             var result1 = _fileSystem.ReadAllBytes(path2);
-            await Assert.That(result1).IsEqualTo(data);
+            await Assert.That(result1.SequenceEqual(data)).IsTrue();
         }
         finally
         {

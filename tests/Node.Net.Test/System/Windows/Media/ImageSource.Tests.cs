@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    internal static class ImageSourceTests
+    internal class ImageSourceTests
     {
         private static bool CanCreateTestImageSource()
         {
@@ -42,7 +42,7 @@ namespace Node.Net.Test
 #endif
 
         [Test]
-        public static async Task ImageSource_Width_ReturnsCorrectValue()
+        public async Task ImageSource_Width_ReturnsCorrectValue()
         {
             if (!CanCreateTestImageSource())
             {
@@ -55,12 +55,12 @@ namespace Node.Net.Test
             ImageSource imageSource = new TestImageSource(100.0, 200.0);
 
             // Act & Assert
-            await Assert.That(imageSource.Width).IsEqualTo(100.0));
+            await Assert.That(imageSource.Width).IsEqualTo(100.0);
 #endif
         }
 
         [Test]
-        public static async Task ImageSource_Height_ReturnsCorrectValue()
+        public async Task ImageSource_Height_ReturnsCorrectValue()
         {
             if (!CanCreateTestImageSource())
             {
@@ -73,12 +73,12 @@ namespace Node.Net.Test
             ImageSource imageSource = new TestImageSource(100.0, 200.0);
 
             // Act & Assert
-            await Assert.That(imageSource.Height).IsEqualTo(200.0));
+            await Assert.That(imageSource.Height).IsEqualTo(200.0);
 #endif
         }
 
         [Test]
-        public static async Task ImageSource_ToString_ReturnsFormattedString()
+        public async Task ImageSource_ToString_ReturnsFormattedString()
         {
             if (!CanCreateTestImageSource())
             {
@@ -101,7 +101,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ImageSource_Metadata_ReturnsNullByDefault()
+        public async Task ImageSource_Metadata_ReturnsNullByDefault()
         {
             if (!CanCreateTestImageSource())
             {

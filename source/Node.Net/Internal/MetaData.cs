@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,7 +20,10 @@ namespace Node.Net.Internal
         public MetaData()
         {
             data = new Dictionary<WeakReference, IDictionary>(new WeakReferenceComparer());
+            _lock = new object();
         }
+
+        private readonly object _lock;
 
         /// <summary>
         /// Test if an object has been assigned any metadata
@@ -29,9 +32,12 @@ namespace Node.Net.Internal
         /// <returns></returns>
         public bool HasMetaData(object item)
         {
+            lock (_lock)
+            {
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-            return data.ContainsKey(new WeakReference(item));
+                return data.ContainsKey(new WeakReference(item));
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
+            }
         }
 
         public IDictionary GetMetaData(object item)
@@ -41,15 +47,23 @@ namespace Node.Net.Internal
                 return new Dictionary<string, object>();
             }
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            if (data.ContainsKey(new WeakReference(item)))
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            WeakReference searchKey = new WeakReference(item);
+            
+            lock (_lock)
             {
-                return data[new WeakReference(item)];
+                // Use TryGetValue which works correctly with the WeakReferenceComparer
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                if (data.TryGetValue(searchKey, out IDictionary? existingMetaData))
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                {
+                    return existingMetaData;
+                }
+
+                // If not found, create new metadata
+                Dictionary<string, dynamic>? metaData = new Dictionary<string, dynamic>();
+                data.Add(searchKey, metaData);
+                return metaData;
             }
-            Dictionary<string, dynamic>? metaData = new Dictionary<string, dynamic>();
-            data.Add(new WeakReference(item), metaData);
-            return metaData;
         }
 
         /// <summary>
@@ -117,14 +131,17 @@ namespace Node.Net.Internal
 
         public void ClearMetaData(object item)
         {
-            if (item != null)
+            lock (_lock)
             {
-                WeakReference? wr = new WeakReference(item);
+                if (item != null)
+                {
+                    WeakReference? wr = new WeakReference(item);
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                data.Remove(wr);
+                    data.Remove(wr);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
+                }
+                Clean();
             }
-            Clean();
         }
 
         /// <summary>
@@ -132,6 +149,7 @@ namespace Node.Net.Internal
         /// </summary>
         public void Clean()
         {
+            // Note: This method should only be called from within a lock
             try
             {
                 List<WeakReference>? deadKeys = new List<WeakReference>();

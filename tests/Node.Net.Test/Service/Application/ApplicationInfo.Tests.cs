@@ -98,7 +98,7 @@ internal class ApplicationInfoTests : TestHarness
             "TestDomain",
             "Windows 10",
             "TestMachine"
-        ));
+        )).Throws<ArgumentNullException>();
     }
 
     [Test]

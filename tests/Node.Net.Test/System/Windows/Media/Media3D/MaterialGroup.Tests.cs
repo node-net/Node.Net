@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    internal static class MaterialGroupTests
+    internal class MaterialGroupTests
     {
         [Test]
-        public static async Task MaterialGroup_Constructor_InitializesChildren()
+        public async Task MaterialGroup_Constructor_InitializesChildren()
         {
             // Arrange & Act
             MaterialGroup materialGroup = new MaterialGroup();
@@ -14,11 +14,11 @@ namespace Node.Net.Test
             // Assert
             await Assert.That(materialGroup).IsNotNull();
             await Assert.That(materialGroup.Children).IsNotNull();
-            await Assert.That(materialGroup.Children.Count).IsEqualTo(0));
+            await Assert.That(materialGroup.Children.Count).IsEqualTo(0);
         }
 
         [Test]
-        public static async Task MaterialGroup_Children_CanAddMaterial()
+        public async Task MaterialGroup_Children_CanAddMaterial()
         {
             // Arrange
             MaterialGroup materialGroup = new MaterialGroup();
@@ -28,12 +28,12 @@ namespace Node.Net.Test
             materialGroup.Children.Add(material);
 
             // Assert
-            await Assert.That(materialGroup.Children.Count).IsEqualTo(1));
-            await Assert.That(materialGroup.Children[0]).IsEqualTo(material));
+            await Assert.That(materialGroup.Children.Count).IsEqualTo(1);
+            await Assert.That(materialGroup.Children[0]).IsEqualTo(material);
         }
 
         [Test]
-        public static async Task MaterialGroup_Children_CanAddMultipleMaterials()
+        public async Task MaterialGroup_Children_CanAddMultipleMaterials()
         {
             // Arrange
             MaterialGroup materialGroup = new MaterialGroup();
@@ -47,14 +47,14 @@ namespace Node.Net.Test
             materialGroup.Children.Add(emissiveMaterial);
 
             // Assert
-            await Assert.That(materialGroup.Children.Count).IsEqualTo(3));
-            await Assert.That(materialGroup.Children[0]).IsEqualTo(diffuseMaterial));
-            await Assert.That(materialGroup.Children[1]).IsEqualTo(specularMaterial));
-            await Assert.That(materialGroup.Children[2]).IsEqualTo(emissiveMaterial));
+            await Assert.That(materialGroup.Children.Count).IsEqualTo(3);
+            await Assert.That(materialGroup.Children[0]).IsEqualTo(diffuseMaterial);
+            await Assert.That(materialGroup.Children[1]).IsEqualTo(specularMaterial);
+            await Assert.That(materialGroup.Children[2]).IsEqualTo(emissiveMaterial);
         }
 
         [Test]
-        public static async Task MaterialGroup_Children_CanRemoveMaterial()
+        public async Task MaterialGroup_Children_CanRemoveMaterial()
         {
             // Arrange
             MaterialGroup materialGroup = new MaterialGroup();
@@ -65,12 +65,12 @@ namespace Node.Net.Test
             bool removed = materialGroup.Children.Remove(material);
 
             // Assert
-            await Assert.That(removed, Is.True);
-            await Assert.That(materialGroup.Children.Count).IsEqualTo(0));
+            await Assert.That(removed).IsTrue();
+            await Assert.That(materialGroup.Children.Count).IsEqualTo(0);
         }
 
         [Test]
-        public static async Task MaterialGroup_Children_CanClear()
+        public async Task MaterialGroup_Children_CanClear()
         {
             // Arrange
             MaterialGroup materialGroup = new MaterialGroup();
@@ -88,11 +88,11 @@ namespace Node.Net.Test
             materialGroup.Children.Clear();
 
             // Assert
-            await Assert.That(materialGroup.Children.Count).IsEqualTo(0));
+            await Assert.That(materialGroup.Children.Count).IsEqualTo(0);
         }
 
         [Test]
-        public static async Task MaterialGroup_Children_CanBeSet()
+        public async Task MaterialGroup_Children_CanBeSet()
         {
             // Arrange
             MaterialGroup materialGroup = new MaterialGroup();
@@ -103,12 +103,12 @@ namespace Node.Net.Test
             materialGroup.Children = newCollection;
 
             // Assert
-            await Assert.That(materialGroup.Children).IsEqualTo(newCollection));
-            await Assert.That(materialGroup.Children.Count).IsEqualTo(1));
+            await Assert.That(materialGroup.Children).IsEqualTo(newCollection);
+            await Assert.That(materialGroup.Children.Count).IsEqualTo(1);
         }
 
         [Test]
-        public static async Task MaterialGroup_Children_SetToNull_InitializesNewCollection()
+        public async Task MaterialGroup_Children_SetToNull_InitializesNewCollection()
         {
             // Arrange
             MaterialGroup materialGroup = new MaterialGroup();
@@ -137,11 +137,11 @@ namespace Node.Net.Test
             }
 #endif
             await Assert.That(materialGroup.Children).IsNotNull();
-            await Assert.That(materialGroup.Children.Count).IsEqualTo(0));
+            await Assert.That(materialGroup.Children.Count).IsEqualTo(0);
         }
 
         [Test]
-        public static async Task MaterialCollection_CanContainDifferentMaterialTypes()
+        public async Task MaterialCollection_CanContainDifferentMaterialTypes()
         {
             // Arrange
             MaterialCollection collection = new MaterialCollection();
@@ -163,15 +163,15 @@ namespace Node.Net.Test
             collection.Add(group);
 
             // Assert
-            await Assert.That(collection.Count).IsEqualTo(4));
-            await Assert.That(collection[0] is DiffuseMaterial>());
-            await Assert.That(collection[1] is EmissiveMaterial>());
-            await Assert.That(collection[2] is SpecularMaterial>());
-            await Assert.That(collection[3] is MaterialGroup>());
+            await Assert.That(collection.Count).IsEqualTo(4);
+            await Assert.That(collection[0] is DiffuseMaterial).IsTrue();
+            await Assert.That(collection[1] is EmissiveMaterial).IsTrue();
+            await Assert.That(collection[2] is SpecularMaterial).IsTrue();
+            await Assert.That(collection[3] is MaterialGroup).IsTrue();
         }
 
         [Test]
-        public static async Task MaterialCollection_CanInsertMaterial()
+        public async Task MaterialCollection_CanInsertMaterial()
         {
             // Arrange
             MaterialCollection collection = new MaterialCollection();
@@ -183,13 +183,13 @@ namespace Node.Net.Test
             collection.Insert(0, material2);
 
             // Assert
-            await Assert.That(collection.Count).IsEqualTo(2));
-            await Assert.That(collection[0]).IsEqualTo(material2));
-            await Assert.That(collection[1]).IsEqualTo(material1));
+            await Assert.That(collection.Count).IsEqualTo(2);
+            await Assert.That(collection[0]).IsEqualTo(material2);
+            await Assert.That(collection[1]).IsEqualTo(material1);
         }
 
         [Test]
-        public static async Task MaterialCollection_CanGetMaterialByIndex()
+        public async Task MaterialCollection_CanGetMaterialByIndex()
         {
             // Arrange
             MaterialCollection collection = new MaterialCollection();
@@ -197,11 +197,11 @@ namespace Node.Net.Test
             collection.Add(material);
 
             // Act & Assert
-            await Assert.That(collection[0]).IsEqualTo(material));
+            await Assert.That(collection[0]).IsEqualTo(material);
         }
 
         [Test]
-        public static async Task MaterialCollection_CanSetMaterialByIndex()
+        public async Task MaterialCollection_CanSetMaterialByIndex()
         {
             // Arrange
             MaterialCollection collection = new MaterialCollection();
@@ -213,8 +213,8 @@ namespace Node.Net.Test
             collection[0] = material2;
 
             // Assert
-            await Assert.That(collection[0]).IsEqualTo(material2));
-            await Assert.That(collection[0]).IsNotEqualTo(material1));
+            await Assert.That(collection[0]).IsEqualTo(material2);
+            await Assert.That(collection[0]).IsNotEqualTo(material1);
         }
     }
 }

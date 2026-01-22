@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    internal static class DiffuseMaterialTests
+    internal class DiffuseMaterialTests
     {
         [Test]
-        public static async Task DiffuseMaterial_Constructor_Default_InitializesCorrectly()
+        public async Task DiffuseMaterial_Constructor_Default_InitializesCorrectly()
         {
             // Arrange & Act
             DiffuseMaterial material = new DiffuseMaterial();
@@ -17,7 +17,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task DiffuseMaterial_Constructor_WithBrush_InitializesCorrectly()
+        public async Task DiffuseMaterial_Constructor_WithBrush_InitializesCorrectly()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.Red);
@@ -31,7 +31,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task DiffuseMaterial_Brush_CanBeSet()
+        public async Task DiffuseMaterial_Brush_CanBeSet()
         {
             // Arrange
             DiffuseMaterial material = new DiffuseMaterial();
@@ -45,7 +45,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task DiffuseMaterial_Brush_CanBeSetToNull()
+        public async Task DiffuseMaterial_Brush_CanBeSetToNull()
         {
             // Arrange
             DiffuseMaterial material = new DiffuseMaterial(new SolidColorBrush(Colors.Red));
@@ -58,7 +58,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task DiffuseMaterial_Brush_CanBeChanged()
+        public async Task DiffuseMaterial_Brush_CanBeChanged()
         {
             // Arrange
             DiffuseMaterial material = new DiffuseMaterial(new SolidColorBrush(Colors.Red));

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    internal static class MaterialTests
+    internal class MaterialTests
     {
         private static bool CanCreateTestMaterial()
         {
@@ -31,7 +31,7 @@ namespace Node.Net.Test
 #endif
 
         [Test]
-        public static async Task Material_CanBeInstantiated()
+        public async Task Material_CanBeInstantiated()
         {
             if (!CanCreateTestMaterial())
             {
@@ -51,7 +51,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Material_IsAssignableFrom_DiffuseMaterial()
+        public async Task Material_IsAssignableFrom_DiffuseMaterial()
         {
             // Arrange
             DiffuseMaterial diffuseMaterial = new DiffuseMaterial();
@@ -61,7 +61,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Material_IsAssignableFrom_EmissiveMaterial()
+        public async Task Material_IsAssignableFrom_EmissiveMaterial()
         {
             // Arrange
             EmissiveMaterial emissiveMaterial = new EmissiveMaterial();
@@ -71,7 +71,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Material_IsAssignableFrom_SpecularMaterial()
+        public async Task Material_IsAssignableFrom_SpecularMaterial()
         {
             // Arrange
             SolidColorBrush brush = new SolidColorBrush(Colors.White);
@@ -92,7 +92,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Material_IsAssignableFrom_MaterialGroup()
+        public async Task Material_IsAssignableFrom_MaterialGroup()
         {
             // Arrange
             MaterialGroup materialGroup = new MaterialGroup();

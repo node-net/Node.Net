@@ -4,10 +4,10 @@ using Node.Net; // Extension methods are in Node.Net namespace
 
 namespace Node.Net.Test.Extension
 {
-    internal static class ActionExtensionTest
+    internal class ActionExtensionTest
     {
         [Test]
-        public static async Task Invoke()
+        public async Task Invoke()
         {
             Action<int> a1 = Invoke1;
             a1.Invoke(new object[] { 5 });

@@ -4,10 +4,10 @@ using static System.Math;
 
 namespace Node.Net.Test
 {
-    internal static class Point3DTests
+    internal class Point3DTests
     {
         [Test]
-        public static async Task Constructor_WithParameters_SetsProperties()
+        public async Task Constructor_WithParameters_SetsProperties()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             await Assert.That(point.X).IsEqualTo(1.0);
@@ -16,7 +16,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Constructor_Default_InitializesToZero()
+        public async Task Constructor_Default_InitializesToZero()
         {
             Point3D point = new Point3D();
             await Assert.That(point.X).IsEqualTo(0.0);
@@ -25,7 +25,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Properties_CanBeSet()
+        public async Task Properties_CanBeSet()
         {
             Point3D point = new Point3D();
             point.X = 5.0;
@@ -37,7 +37,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Offset_WithDoubles_ModifiesPoint()
+        public async Task Offset_WithDoubles_ModifiesPoint()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             point.Offset(10.0, 20.0, 30.0);
@@ -48,7 +48,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Add_PointAndVector_ReturnsNewPoint()
+        public async Task Add_PointAndVector_ReturnsNewPoint()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             Vector3D vector = new Vector3D(10.0, 20.0, 30.0);
@@ -62,7 +62,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Subtract_PointAndVector_ReturnsNewPoint()
+        public async Task Subtract_PointAndVector_ReturnsNewPoint()
         {
             Point3D point = new Point3D(11.0, 22.0, 33.0);
             Vector3D vector = new Vector3D(10.0, 20.0, 30.0);
@@ -74,7 +74,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Subtract_TwoPoints_ReturnsVector()
+        public async Task Subtract_TwoPoints_ReturnsVector()
         {
             Point3D point1 = new Point3D(11.0, 22.0, 33.0);
             Point3D point2 = new Point3D(1.0, 2.0, 3.0);
@@ -86,7 +86,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Multiply_PointAndMatrix_ReturnsTransformedPoint()
+        public async Task Multiply_PointAndMatrix_ReturnsTransformedPoint()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             Matrix3D matrix = new Matrix3D();
@@ -99,7 +99,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorAdd_PointAndVector_ReturnsNewPoint()
+        public async Task OperatorAdd_PointAndVector_ReturnsNewPoint()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             Vector3D vector = new Vector3D(10.0, 20.0, 30.0);
@@ -111,7 +111,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorSubtract_PointAndVector_ReturnsNewPoint()
+        public async Task OperatorSubtract_PointAndVector_ReturnsNewPoint()
         {
             Point3D point = new Point3D(11.0, 22.0, 33.0);
             Vector3D vector = new Vector3D(10.0, 20.0, 30.0);
@@ -123,7 +123,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorSubtract_TwoPoints_ReturnsVector()
+        public async Task OperatorSubtract_TwoPoints_ReturnsVector()
         {
             Point3D point1 = new Point3D(11.0, 22.0, 33.0);
             Point3D point2 = new Point3D(1.0, 2.0, 3.0);
@@ -135,7 +135,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorMultiply_PointAndMatrix_ReturnsTransformedPoint()
+        public async Task OperatorMultiply_PointAndMatrix_ReturnsTransformedPoint()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             Matrix3D matrix = new Matrix3D();
@@ -148,7 +148,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorEquality_EqualPoints_ReturnsTrue()
+        public async Task OperatorEquality_EqualPoints_ReturnsTrue()
         {
             Point3D point1 = new Point3D(1.0, 2.0, 3.0);
             Point3D point2 = new Point3D(1.0, 2.0, 3.0);
@@ -157,7 +157,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorEquality_DifferentPoints_ReturnsFalse()
+        public async Task OperatorEquality_DifferentPoints_ReturnsFalse()
         {
             Point3D point1 = new Point3D(1.0, 2.0, 3.0);
             Point3D point2 = new Point3D(1.0, 2.0, 4.0);
@@ -166,7 +166,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorInequality_EqualPoints_ReturnsFalse()
+        public async Task OperatorInequality_EqualPoints_ReturnsFalse()
         {
             Point3D point1 = new Point3D(1.0, 2.0, 3.0);
             Point3D point2 = new Point3D(1.0, 2.0, 3.0);
@@ -175,7 +175,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorInequality_DifferentPoints_ReturnsTrue()
+        public async Task OperatorInequality_DifferentPoints_ReturnsTrue()
         {
             Point3D point1 = new Point3D(1.0, 2.0, 3.0);
             Point3D point2 = new Point3D(1.0, 2.0, 4.0);
@@ -184,7 +184,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Equals_WithSameValues_ReturnsTrue()
+        public async Task Equals_WithSameValues_ReturnsTrue()
         {
             Point3D point1 = new Point3D(1.0, 2.0, 3.0);
             Point3D point2 = new Point3D(1.0, 2.0, 3.0);
@@ -193,7 +193,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Equals_WithDifferentValues_ReturnsFalse()
+        public async Task Equals_WithDifferentValues_ReturnsFalse()
         {
             Point3D point1 = new Point3D(1.0, 2.0, 3.0);
             Point3D point2 = new Point3D(1.0, 2.0, 4.0);
@@ -202,7 +202,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Equals_WithNull_ReturnsFalse()
+        public async Task Equals_WithNull_ReturnsFalse()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             
@@ -210,7 +210,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Equals_WithNonPoint3D_ReturnsFalse()
+        public async Task Equals_WithNonPoint3D_ReturnsFalse()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             
@@ -218,7 +218,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task GetHashCode_SameValues_ReturnsSameHashCode()
+        public async Task GetHashCode_SameValues_ReturnsSameHashCode()
         {
             Point3D point1 = new Point3D(1.0, 2.0, 3.0);
             Point3D point2 = new Point3D(1.0, 2.0, 3.0);
@@ -227,7 +227,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ToString_ReturnsFormattedString()
+        public async Task ToString_ReturnsFormattedString()
         {
             Point3D point = new Point3D(1.5, 2.5, 3.5);
             // Windows Point3D only supports ToString() without parameters
@@ -238,7 +238,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Offset_MultipleTimes_Accumulates()
+        public async Task Offset_MultipleTimes_Accumulates()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             point.Offset(10.0, 20.0, 30.0);
@@ -250,7 +250,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Subtract_PointFromItself_ReturnsZeroVector()
+        public async Task Subtract_PointFromItself_ReturnsZeroVector()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             Vector3D result = Point3D.Subtract(point, point);
@@ -261,7 +261,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Multiply_WithIdentityMatrix_ReturnsSamePoint()
+        public async Task Multiply_WithIdentityMatrix_ReturnsSamePoint()
         {
             Point3D point = new Point3D(1.0, 2.0, 3.0);
             Matrix3D matrix = new Matrix3D(); // Identity matrix
@@ -273,7 +273,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Multiply_WithRotationMatrix_RotatesPoint()
+        public async Task Multiply_WithRotationMatrix_RotatesPoint()
         {
             Point3D point = new Point3D(1.0, 0.0, 0.0);
             Matrix3D matrix = new Matrix3D();
@@ -287,7 +287,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Parse_ValidInput_ReturnsExpectedPoint()
+        public async Task Parse_ValidInput_ReturnsExpectedPoint()
         {
             string input = "1.5,2.5,3.5";
             Point3D expected = new Point3D(1.5, 2.5, 3.5);
@@ -300,7 +300,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Parse_WithWhitespace_ReturnsExpectedPoint()
+        public async Task Parse_WithWhitespace_ReturnsExpectedPoint()
         {
             string input = " 1.5 , 2.5 , 3.5 ";
             Point3D result = Point3D.Parse(input);
@@ -311,7 +311,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Parse_NullInput_ThrowsException()
+        public async Task Parse_NullInput_ThrowsException()
         {
             // Windows Point3D.Parse throws ArgumentException for null (our implementation)
             // Windows native throws from TokenizerHelper (different exception type)
@@ -320,7 +320,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Parse_EmptyInput_ThrowsException()
+        public async Task Parse_EmptyInput_ThrowsException()
         {
             // Windows Point3D.Parse throws FormatException for empty string (our implementation)
             // Windows native throws from TokenizerHelper (different exception type)
@@ -329,7 +329,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Parse_InvalidFormat_ThrowsException()
+        public async Task Parse_InvalidFormat_ThrowsException()
         {
             // Windows Point3D.Parse throws FormatException for invalid formats (our implementation)
             // Windows native throws from TokenizerHelper (different exception type)
@@ -340,7 +340,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Parse_InvalidNumbers_ThrowsFormatException()
+        public async Task Parse_InvalidNumbers_ThrowsFormatException()
         {
             // Windows Point3D.Parse throws FormatException for invalid numbers (our implementation)
             // Windows native throws from TokenizerHelper (different exception type)

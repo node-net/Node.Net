@@ -3,10 +3,10 @@ using static System.Math;
 
 namespace Node.Net.Test
 {
-    internal static class VectorTests
+    internal class VectorTests
     {
         [Test]
-        public static async Task Constructor_WithParameters_SetsProperties()
+        public async Task Constructor_WithParameters_SetsProperties()
         {
             Vector vector = new Vector(1.0, 2.0);
             await Assert.That(vector.X).IsEqualTo(1.0);
@@ -14,7 +14,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Constructor_Default_InitializesToZero()
+        public async Task Constructor_Default_InitializesToZero()
         {
             Vector vector = new Vector();
             await Assert.That(vector.X).IsEqualTo(0.0);
@@ -22,7 +22,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Properties_CanBeSet()
+        public async Task Properties_CanBeSet()
         {
             Vector vector = new Vector();
             vector.X = 5.0;
@@ -32,21 +32,21 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Length_CalculatesCorrectly()
+        public async Task Length_CalculatesCorrectly()
         {
             Vector vector = new Vector(3.0, 4.0);
             await Assert.That(vector.Length).IsEqualTo(5.0);
         }
 
         [Test]
-        public static async Task LengthSquared_CalculatesCorrectly()
+        public async Task LengthSquared_CalculatesCorrectly()
         {
             Vector vector = new Vector(3.0, 4.0);
             await Assert.That(vector.LengthSquared).IsEqualTo(25.0);
         }
 
         [Test]
-        public static async Task Add_ReturnsSum()
+        public async Task Add_ReturnsSum()
         {
             Vector v1 = new Vector(1.0, 2.0);
             Vector v2 = new Vector(3.0, 4.0);
@@ -57,7 +57,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Subtract_ReturnsDifference()
+        public async Task Subtract_ReturnsDifference()
         {
             Vector v1 = new Vector(5.0, 6.0);
             Vector v2 = new Vector(1.0, 2.0);
@@ -68,7 +68,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Multiply_ByScalar_ReturnsScaledVector()
+        public async Task Multiply_ByScalar_ReturnsScaledVector()
         {
             Vector vector = new Vector(2.0, 3.0);
             Vector result = Vector.Multiply(vector, 2.0);
@@ -78,7 +78,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Divide_ByScalar_ReturnsDividedVector()
+        public async Task Divide_ByScalar_ReturnsDividedVector()
         {
             Vector vector = new Vector(4.0, 6.0);
             Vector result = Vector.Divide(vector, 2.0);
@@ -88,7 +88,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Divide_ByZero_ReturnsInfinityOrNaN()
+        public async Task Divide_ByZero_ReturnsInfinityOrNaN()
         {
             Vector vector = new Vector(1.0, 2.0);
             // Windows Vector returns Infinity/NaN on divide by zero, doesn't throw
@@ -100,7 +100,7 @@ namespace Node.Net.Test
         // This test is skipped to match Windows API exactly
 
         [Test]
-        public static async Task CrossProduct_CalculatesCorrectly()
+        public async Task CrossProduct_CalculatesCorrectly()
         {
             Vector v1 = new Vector(1.0, 0.0);
             Vector v2 = new Vector(0.0, 1.0);
@@ -110,7 +110,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task AngleBetween_CalculatesCorrectly()
+        public async Task AngleBetween_CalculatesCorrectly()
         {
             Vector v1 = new Vector(1.0, 0.0);
             Vector v2 = new Vector(0.0, 1.0);
@@ -120,7 +120,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task AngleBetween_ZeroVector_ReturnsNaN()
+        public async Task AngleBetween_ZeroVector_ReturnsNaN()
         {
             Vector v1 = new Vector(1.0, 0.0);
             Vector v2 = new Vector(0.0, 0.0);
@@ -130,7 +130,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Normalize_ModifiesVectorToUnitLength()
+        public async Task Normalize_ModifiesVectorToUnitLength()
         {
             Vector vector = new Vector(3.0, 4.0);
             vector.Normalize();
@@ -138,7 +138,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Normalize_ZeroVector_SetsToNaN()
+        public async Task Normalize_ZeroVector_SetsToNaN()
         {
             Vector vector = new Vector(0.0, 0.0);
             // Windows Vector doesn't throw on normalize of zero vector, it sets components to NaN
@@ -147,7 +147,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Negate_ReversesAllComponents()
+        public async Task Negate_ReversesAllComponents()
         {
             Vector vector = new Vector(1.0, 2.0);
             vector.Negate();
@@ -157,7 +157,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorAdd_ReturnsSum()
+        public async Task OperatorAdd_ReturnsSum()
         {
             Vector v1 = new Vector(1.0, 2.0);
             Vector v2 = new Vector(3.0, 4.0);
@@ -168,7 +168,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorSubtract_ReturnsDifference()
+        public async Task OperatorSubtract_ReturnsDifference()
         {
             Vector v1 = new Vector(5.0, 6.0);
             Vector v2 = new Vector(1.0, 2.0);
@@ -179,7 +179,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorMultiply_ByScalar_ReturnsScaledVector()
+        public async Task OperatorMultiply_ByScalar_ReturnsScaledVector()
         {
             Vector vector = new Vector(2.0, 3.0);
             Vector result = vector * 2.0;
@@ -189,7 +189,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorDivide_ByScalar_ReturnsDividedVector()
+        public async Task OperatorDivide_ByScalar_ReturnsDividedVector()
         {
             Vector vector = new Vector(4.0, 6.0);
             Vector result = vector / 2.0;
@@ -199,7 +199,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorUnaryMinus_NegatesVector()
+        public async Task OperatorUnaryMinus_NegatesVector()
         {
             Vector vector = new Vector(1.0, 2.0);
             Vector result = -vector;
@@ -209,7 +209,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorEquals_EqualVectors_ReturnsTrue()
+        public async Task OperatorEquals_EqualVectors_ReturnsTrue()
         {
             Vector v1 = new Vector(1.0, 2.0);
             Vector v2 = new Vector(1.0, 2.0);
@@ -218,7 +218,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorNotEquals_DifferentVectors_ReturnsTrue()
+        public async Task OperatorNotEquals_DifferentVectors_ReturnsTrue()
         {
             Vector v1 = new Vector(1.0, 2.0);
             Vector v2 = new Vector(3.0, 4.0);
@@ -227,7 +227,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Equals_SameValues_ReturnsTrue()
+        public async Task Equals_SameValues_ReturnsTrue()
         {
             Vector v1 = new Vector(1.0, 2.0);
             Vector v2 = new Vector(1.0, 2.0);
@@ -236,7 +236,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task GetHashCode_EqualVectors_ReturnSameHashCode()
+        public async Task GetHashCode_EqualVectors_ReturnSameHashCode()
         {
             Vector v1 = new Vector(1.0, 2.0);
             Vector v2 = new Vector(1.0, 2.0);
@@ -244,7 +244,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ToString_ReturnsFormattedString()
+        public async Task ToString_ReturnsFormattedString()
         {
             Vector vector = new Vector(1.5, 2.5);
             // Windows Vector only supports ToString() without parameters

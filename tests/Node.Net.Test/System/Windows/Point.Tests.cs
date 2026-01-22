@@ -3,10 +3,10 @@ using static System.Math;
 
 namespace Node.Net.Test
 {
-    internal static class PointTests
+    internal class PointTests
     {
         [Test]
-        public static async Task Constructor_WithParameters_SetsProperties()
+        public async Task Constructor_WithParameters_SetsProperties()
         {
             Point point = new Point(1.0, 2.0);
             await Assert.That(point.X).IsEqualTo(1.0);
@@ -14,7 +14,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Constructor_Default_InitializesToZero()
+        public async Task Constructor_Default_InitializesToZero()
         {
             Point point = new Point();
             await Assert.That(point.X).IsEqualTo(0.0);
@@ -22,7 +22,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Properties_CanBeSet()
+        public async Task Properties_CanBeSet()
         {
             Point point = new Point();
             point.X = 5.0;
@@ -32,7 +32,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Offset_WithDoubles_ModifiesPoint()
+        public async Task Offset_WithDoubles_ModifiesPoint()
         {
             Point point = new Point(1.0, 2.0);
             point.Offset(10.0, 20.0);
@@ -42,7 +42,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Add_PointAndVector_ReturnsNewPoint()
+        public async Task Add_PointAndVector_ReturnsNewPoint()
         {
             Point point = new Point(1.0, 2.0);
             Vector vector = new Vector(3.0, 4.0);
@@ -53,7 +53,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Subtract_PointFromPoint_ReturnsVector()
+        public async Task Subtract_PointFromPoint_ReturnsVector()
         {
             Point point1 = new Point(5.0, 6.0);
             Point point2 = new Point(1.0, 2.0);
@@ -64,7 +64,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Subtract_VectorFromPoint_ReturnsPoint()
+        public async Task Subtract_VectorFromPoint_ReturnsPoint()
         {
             Point point = new Point(5.0, 6.0);
             Vector vector = new Vector(1.0, 2.0);
@@ -78,7 +78,7 @@ namespace Node.Net.Test
         // These tests are skipped to match Windows API exactly
 
         [Test]
-        public static async Task OperatorAdd_PointAndVector_ReturnsPoint()
+        public async Task OperatorAdd_PointAndVector_ReturnsPoint()
         {
             Point point = new Point(1.0, 2.0);
             Vector vector = new Vector(3.0, 4.0);
@@ -89,7 +89,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorSubtract_PointFromPoint_ReturnsVector()
+        public async Task OperatorSubtract_PointFromPoint_ReturnsVector()
         {
             Point point1 = new Point(5.0, 6.0);
             Point point2 = new Point(1.0, 2.0);
@@ -100,7 +100,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorSubtract_VectorFromPoint_ReturnsPoint()
+        public async Task OperatorSubtract_VectorFromPoint_ReturnsPoint()
         {
             Point point = new Point(5.0, 6.0);
             Vector vector = new Vector(1.0, 2.0);
@@ -114,7 +114,7 @@ namespace Node.Net.Test
         // This test is skipped to match Windows API exactly
 
         [Test]
-        public static async Task OperatorEquals_EqualPoints_ReturnsTrue()
+        public async Task OperatorEquals_EqualPoints_ReturnsTrue()
         {
             Point p1 = new Point(1.0, 2.0);
             Point p2 = new Point(1.0, 2.0);
@@ -123,7 +123,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorNotEquals_DifferentPoints_ReturnsTrue()
+        public async Task OperatorNotEquals_DifferentPoints_ReturnsTrue()
         {
             Point p1 = new Point(1.0, 2.0);
             Point p2 = new Point(3.0, 4.0);
@@ -132,7 +132,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Equals_SameValues_ReturnsTrue()
+        public async Task Equals_SameValues_ReturnsTrue()
         {
             Point p1 = new Point(1.0, 2.0);
             Point p2 = new Point(1.0, 2.0);
@@ -141,7 +141,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task GetHashCode_EqualPoints_ReturnSameHashCode()
+        public async Task GetHashCode_EqualPoints_ReturnSameHashCode()
         {
             Point p1 = new Point(1.0, 2.0);
             Point p2 = new Point(1.0, 2.0);
@@ -149,7 +149,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ToString_ReturnsFormattedString()
+        public async Task ToString_ReturnsFormattedString()
         {
             Point point = new Point(1.5, 2.5);
             // Windows Point only supports ToString() without parameters

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Node.Net.Test
 {
-    internal static class MeshGeometry3DTests
+    internal class MeshGeometry3DTests
     {
         private static bool CanCreateMeshGeometry3D()
         {
@@ -22,7 +22,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task MeshGeometry3D_Constructor_Default_InitializesCorrectly()
+        public async Task MeshGeometry3D_Constructor_Default_InitializesCorrectly()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -40,15 +40,15 @@ namespace Node.Net.Test
             await Assert.That(mesh.TriangleIndices).IsNotNull();
             await Assert.That(mesh.Normals).IsNotNull();
             await Assert.That(mesh.TextureCoordinates).IsNotNull();
-            await Assert.That(mesh.Positions.Count).IsEqualTo(0));
-            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(0));
-            await Assert.That(mesh.Normals.Count).IsEqualTo(0));
-            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(0));
+            await Assert.That(mesh.Positions.Count).IsEqualTo(0);
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(0);
+            await Assert.That(mesh.Normals.Count).IsEqualTo(0);
+            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_Positions_CanBeSet()
+        public async Task MeshGeometry3D_Positions_CanBeSet()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -70,13 +70,13 @@ namespace Node.Net.Test
             mesh.Positions = positions;
 
             // Assert
-            await Assert.That(mesh.Positions).IsEqualTo(positions));
-            await Assert.That(mesh.Positions.Count).IsEqualTo(3));
+            await Assert.That(mesh.Positions).IsEqualTo(positions);
+            await Assert.That(mesh.Positions.Count).IsEqualTo(3);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_Positions_CanBeSetToNull()
+        public async Task MeshGeometry3D_Positions_CanBeSetToNull()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -94,12 +94,12 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(mesh.Positions).IsNotNull();
-            await Assert.That(mesh.Positions.Count).IsEqualTo(0));
+            await Assert.That(mesh.Positions.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_Positions_CanBeModified()
+        public async Task MeshGeometry3D_Positions_CanBeModified()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -117,15 +117,15 @@ namespace Node.Net.Test
             mesh.Positions.Add(new Point3D(1, 1, 0));
 
             // Assert
-            await Assert.That(mesh.Positions.Count).IsEqualTo(3));
-            await Assert.That(mesh.Positions[0]).IsEqualTo(new Point3D(0, 0, 0)));
-            await Assert.That(mesh.Positions[1]).IsEqualTo(new Point3D(1, 0, 0)));
-            await Assert.That(mesh.Positions[2]).IsEqualTo(new Point3D(1, 1, 0)));
+            await Assert.That(mesh.Positions.Count).IsEqualTo(3);
+            await Assert.That(mesh.Positions[0]).IsEqualTo(new Point3D(0, 0, 0));
+            await Assert.That(mesh.Positions[1]).IsEqualTo(new Point3D(1, 0, 0));
+            await Assert.That(mesh.Positions[2]).IsEqualTo(new Point3D(1, 1, 0));
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_TriangleIndices_CanBeSet()
+        public async Task MeshGeometry3D_TriangleIndices_CanBeSet()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -142,13 +142,13 @@ namespace Node.Net.Test
             mesh.TriangleIndices = indices;
 
             // Assert
-            await Assert.That(mesh.TriangleIndices).IsEqualTo(indices));
-            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(6));
+            await Assert.That(mesh.TriangleIndices).IsEqualTo(indices);
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(6);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_TriangleIndices_CanBeSetToNull()
+        public async Task MeshGeometry3D_TriangleIndices_CanBeSetToNull()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -168,12 +168,12 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(mesh.TriangleIndices).IsNotNull();
-            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(0));
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_TriangleIndices_CanBeModified()
+        public async Task MeshGeometry3D_TriangleIndices_CanBeModified()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -191,15 +191,15 @@ namespace Node.Net.Test
             mesh.TriangleIndices.Add(2);
 
             // Assert
-            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(3));
-            await Assert.That(mesh.TriangleIndices[0]).IsEqualTo(0));
-            await Assert.That(mesh.TriangleIndices[1]).IsEqualTo(1));
-            await Assert.That(mesh.TriangleIndices[2]).IsEqualTo(2));
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(3);
+            await Assert.That(mesh.TriangleIndices[0]).IsEqualTo(0);
+            await Assert.That(mesh.TriangleIndices[1]).IsEqualTo(1);
+            await Assert.That(mesh.TriangleIndices[2]).IsEqualTo(2);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_Normals_CanBeSet()
+        public async Task MeshGeometry3D_Normals_CanBeSet()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -221,13 +221,13 @@ namespace Node.Net.Test
             mesh.Normals = normals;
 
             // Assert
-            await Assert.That(mesh.Normals).IsEqualTo(normals));
-            await Assert.That(mesh.Normals.Count).IsEqualTo(3));
+            await Assert.That(mesh.Normals).IsEqualTo(normals);
+            await Assert.That(mesh.Normals.Count).IsEqualTo(3);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_Normals_CanBeSetToNull()
+        public async Task MeshGeometry3D_Normals_CanBeSetToNull()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -245,12 +245,12 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(mesh.Normals).IsNotNull();
-            await Assert.That(mesh.Normals.Count).IsEqualTo(0));
+            await Assert.That(mesh.Normals.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_Normals_CanBeModified()
+        public async Task MeshGeometry3D_Normals_CanBeModified()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -268,15 +268,15 @@ namespace Node.Net.Test
             mesh.Normals.Add(new Vector3D(0, 1, 0));
 
             // Assert
-            await Assert.That(mesh.Normals.Count).IsEqualTo(3));
-            await Assert.That(mesh.Normals[0]).IsEqualTo(new Vector3D(0, 0, 1)));
-            await Assert.That(mesh.Normals[1]).IsEqualTo(new Vector3D(1, 0, 0)));
-            await Assert.That(mesh.Normals[2]).IsEqualTo(new Vector3D(0, 1, 0)));
+            await Assert.That(mesh.Normals.Count).IsEqualTo(3);
+            await Assert.That(mesh.Normals[0]).IsEqualTo(new Vector3D(0, 0, 1));
+            await Assert.That(mesh.Normals[1]).IsEqualTo(new Vector3D(1, 0, 0));
+            await Assert.That(mesh.Normals[2]).IsEqualTo(new Vector3D(0, 1, 0));
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_TextureCoordinates_CanBeSet()
+        public async Task MeshGeometry3D_TextureCoordinates_CanBeSet()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -299,13 +299,13 @@ namespace Node.Net.Test
             mesh.TextureCoordinates = textureCoords;
 
             // Assert
-            await Assert.That(mesh.TextureCoordinates).IsEqualTo(textureCoords));
-            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(4));
+            await Assert.That(mesh.TextureCoordinates).IsEqualTo(textureCoords);
+            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(4);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_TextureCoordinates_CanBeSetToNull()
+        public async Task MeshGeometry3D_TextureCoordinates_CanBeSetToNull()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -323,12 +323,12 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(mesh.TextureCoordinates).IsNotNull();
-            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(0));
+            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_TextureCoordinates_CanBeModified()
+        public async Task MeshGeometry3D_TextureCoordinates_CanBeModified()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -346,15 +346,15 @@ namespace Node.Net.Test
             mesh.TextureCoordinates.Add(new Point(1, 1));
 
             // Assert
-            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(3));
-            await Assert.That(mesh.TextureCoordinates[0]).IsEqualTo(new Point(0, 0)));
-            await Assert.That(mesh.TextureCoordinates[1]).IsEqualTo(new Point(1, 0)));
-            await Assert.That(mesh.TextureCoordinates[2]).IsEqualTo(new Point(1, 1)));
+            await Assert.That(mesh.TextureCoordinates.Count).IsEqualTo(3);
+            await Assert.That(mesh.TextureCoordinates[0]).IsEqualTo(new Point(0, 0));
+            await Assert.That(mesh.TextureCoordinates[1]).IsEqualTo(new Point(1, 0));
+            await Assert.That(mesh.TextureCoordinates[2]).IsEqualTo(new Point(1, 1));
 #endif
         }
 
         [Test]
-        public static async Task MeshGeometry3D_CanCreateSimpleTriangle()
+        public async Task MeshGeometry3D_CanCreateSimpleTriangle()
         {
             if (!CanCreateMeshGeometry3D())
             {
@@ -373,20 +373,21 @@ namespace Node.Net.Test
             mesh.TriangleIndices.Add(2);
 
             // Assert
-            await Assert.That(mesh.Positions.Count).IsEqualTo(3));
-            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(3));
-            await Assert.That(mesh.TriangleIndices[0]).IsEqualTo(0));
-            await Assert.That(mesh.TriangleIndices[1]).IsEqualTo(1));
-            await Assert.That(mesh.TriangleIndices[2]).IsEqualTo(2));
+            await Assert.That(mesh.Positions.Count).IsEqualTo(3);
+            await Assert.That(mesh.TriangleIndices.Count).IsEqualTo(3);
+            await Assert.That(mesh.TriangleIndices[0]).IsEqualTo(0);
+            await Assert.That(mesh.TriangleIndices[1]).IsEqualTo(1);
+            await Assert.That(mesh.TriangleIndices[2]).IsEqualTo(2);
 #endif
         }
 
         [Test]
-        public static async Task Point3DCollection_CanBeCreated()
+        public async Task Point3DCollection_CanBeCreated()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("Point3DCollection only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -396,16 +397,16 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(collection).IsNotNull();
-            await Assert.That(collection.Count).IsEqualTo(0));
+            await Assert.That(collection.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static async Task Int32Collection_CanBeCreated()
+        public async Task Int32Collection_CanBeCreated()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("Int32Collection only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -415,16 +416,16 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(collection).IsNotNull();
-            await Assert.That(collection.Count).IsEqualTo(0));
+            await Assert.That(collection.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static async Task Vector3DCollection_CanBeCreated()
+        public async Task Vector3DCollection_CanBeCreated()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("Vector3DCollection only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
                 return;
             }
 
@@ -434,16 +435,17 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(collection).IsNotNull();
-            await Assert.That(collection.Count).IsEqualTo(0));
+            await Assert.That(collection.Count).IsEqualTo(0);
 #endif
         }
 
         [Test]
-        public static async Task PointCollection_CanBeCreated()
+        public async Task PointCollection_CanBeCreated()
         {
             if (!CanCreateMeshGeometry3D())
             {
-                Assert.Pass("PointCollection only available on non-Windows platforms");
+                // TUnit doesn't have Assert.Pass - just return early
+                return;
                 return;
             }
 
@@ -453,7 +455,7 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(collection).IsNotNull();
-            await Assert.That(collection.Count).IsEqualTo(0));
+            await Assert.That(collection.Count).IsEqualTo(0);
 #endif
         }
     }

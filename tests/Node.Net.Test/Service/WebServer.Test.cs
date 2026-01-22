@@ -1,4 +1,4 @@
-﻿using Node.Net.Service;
+using Node.Net.Service;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,7 +24,11 @@ namespace Node.Net.Service
 				response = client.UploadString(uri.ToString(), "please post");
 				await Assert.That(response.Contains("thanks")).IsTrue();
 			}
+			// Give background threads time to complete before stopping
+			await Task.Delay(100);
 			server.Stop();
+			// Give time for cleanup
+			await Task.Delay(100);
 		}
 
         //[Test] - Commented out test

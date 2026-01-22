@@ -4,10 +4,10 @@ using static System.Math;
 
 namespace Node.Net.Test
 {
-    internal static class Rect3DTests
+    internal class Rect3DTests
     {
         [Test]
-        public static async Task Constructor_WithPointAndSize_SetsProperties()
+        public async Task Constructor_WithPointAndSize_SetsProperties()
         {
             Point3D location = new Point3D(1.0, 2.0, 3.0);
             Size3D size = new Size3D(10.0, 20.0, 30.0);
@@ -22,7 +22,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Constructor_WithDoubles_SetsProperties()
+        public async Task Constructor_WithDoubles_SetsProperties()
         {
             Rect3D rect = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
             
@@ -35,7 +35,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Constructor_Default_InitializesToZero()
+        public async Task Constructor_Default_InitializesToZero()
         {
             Rect3D rect = new Rect3D();
             await Assert.That(rect.X).IsEqualTo(0.0);
@@ -47,7 +47,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Properties_CanBeSet()
+        public async Task Properties_CanBeSet()
         {
             Rect3D rect = new Rect3D();
             rect.X = 5.0;
@@ -66,7 +66,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Location_Property_GetAndSet()
+        public async Task Location_Property_GetAndSet()
         {
             Rect3D rect = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
             Point3D location = rect.Location;
@@ -82,7 +82,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Size_Property_GetAndSet()
+        public async Task Size_Property_GetAndSet()
         {
             Rect3D rect = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
             Size3D size = rect.Size;
@@ -98,42 +98,42 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task IsEmpty_WithPositiveSizes_ReturnsFalse()
+        public async Task IsEmpty_WithPositiveSizes_ReturnsFalse()
         {
             Rect3D rect = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
             await Assert.That(rect.IsEmpty).IsFalse();
         }
 
         [Test]
-        public static async Task Constructor_WithNegativeSizeX_ThrowsArgumentException()
+        public async Task Constructor_WithNegativeSizeX_ThrowsArgumentException()
         {
             // Windows Rect3D throws ArgumentException for negative dimensions
             await Assert.That(() => new Rect3D(1.0, 2.0, 3.0, -10.0, 20.0, 30.0)).Throws<ArgumentException>();
         }
 
         [Test]
-        public static async Task Constructor_WithNegativeSizeY_ThrowsArgumentException()
+        public async Task Constructor_WithNegativeSizeY_ThrowsArgumentException()
         {
             // Windows Rect3D throws ArgumentException for negative dimensions
             await Assert.That(() => new Rect3D(1.0, 2.0, 3.0, 10.0, -20.0, 30.0)).Throws<ArgumentException>();
         }
 
         [Test]
-        public static async Task Constructor_WithNegativeSizeZ_ThrowsArgumentException()
+        public async Task Constructor_WithNegativeSizeZ_ThrowsArgumentException()
         {
             // Windows Rect3D throws ArgumentException for negative dimensions
             await Assert.That(() => new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, -30.0)).Throws<ArgumentException>();
         }
 
         [Test]
-        public static async Task Empty_StaticProperty_IsEmpty()
+        public async Task Empty_StaticProperty_IsEmpty()
         {
             Rect3D empty = Rect3D.Empty;
             await Assert.That(empty.IsEmpty).IsTrue();
         }
 
         [Test]
-        public static async Task OperatorEquals_EqualRects_ReturnsTrue()
+        public async Task OperatorEquals_EqualRects_ReturnsTrue()
         {
             Rect3D r1 = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
             Rect3D r2 = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
@@ -142,7 +142,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task OperatorNotEquals_DifferentRects_ReturnsTrue()
+        public async Task OperatorNotEquals_DifferentRects_ReturnsTrue()
         {
             Rect3D r1 = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
             Rect3D r2 = new Rect3D(5.0, 6.0, 7.0, 15.0, 25.0, 35.0);
@@ -151,7 +151,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task Equals_SameValues_ReturnsTrue()
+        public async Task Equals_SameValues_ReturnsTrue()
         {
             Rect3D r1 = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
             Rect3D r2 = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
@@ -160,7 +160,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task GetHashCode_EqualRects_ReturnSameHashCode()
+        public async Task GetHashCode_EqualRects_ReturnSameHashCode()
         {
             Rect3D r1 = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
             Rect3D r2 = new Rect3D(1.0, 2.0, 3.0, 10.0, 20.0, 30.0);
@@ -168,7 +168,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public static async Task ToString_ReturnsFormattedString()
+        public async Task ToString_ReturnsFormattedString()
         {
             Rect3D rect = new Rect3D(1.5, 2.5, 3.5, 10.5, 20.5, 30.5);
             // Windows Rect3D only supports ToString() without parameters

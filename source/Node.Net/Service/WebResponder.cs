@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -28,19 +28,44 @@ namespace Node.Net.Service
                     }
                     catch (Exception e)
                     {
-                        context.Response.StatusCode = 500;
-                        byte[]? bytes = Encoding.UTF8.GetBytes(e.ToString());
-                        context.Response.OutputStream.Write(bytes, 0, bytes.Length);
+                        try
+                        {
+                            context.Response.StatusCode = 500;
+                            byte[]? bytes = Encoding.UTF8.GetBytes(e.ToString());
+                            context.Response.OutputStream.Write(bytes, 0, bytes.Length);
+                        }
+                        catch (ObjectDisposedException)
+                        {
+                            // Context was disposed (e.g., server stopped), ignore
+                        }
                     }
                 }
             }
+            catch (ObjectDisposedException)
+            {
+                // Context was disposed (e.g., server stopped), ignore
+            }
             catch
             {
-                context.Response.StatusCode = 500;
+                try
+                {
+                    context.Response.StatusCode = 500;
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Context was disposed (e.g., server stopped), ignore
+                }
             }
             finally
             {
-                context.Response.OutputStream.Close();
+                try
+                {
+                    context.Response.OutputStream.Close();
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Context was disposed (e.g., server stopped), ignore
+                }
             }
         }
 
