@@ -39,8 +39,8 @@
   </ItemGroup>
 
   <!-- Package references for non-net46 targets -->
-  <!-- System.Drawing.Common 8.0.2 requires .NET 6.0+, so exclude from netstandard2.0 -->
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net46' And '$(TargetFramework)' != 'netstandard2.0' ">
+  <!-- System.Drawing.Common 8.0.2 requires .NET 6.0+, so exclude from netstandard2.0 and net48 -->
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net46' And '$(TargetFramework)' != 'netstandard2.0' And '$(TargetFramework)' != 'net48' ">
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
     <PackageReference Include="LiteDB" Version="5.0.17" />
   </ItemGroup>

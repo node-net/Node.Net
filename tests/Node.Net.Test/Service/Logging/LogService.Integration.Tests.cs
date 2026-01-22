@@ -122,9 +122,9 @@ internal class LogServiceIntegrationTests : TestHarness
         Assert.That(entries.Count, Is.EqualTo(1));
         Assert.That(entries[0].Properties, Is.Not.Null);
         Assert.That(entries[0].Properties!.ContainsKey("UserId"), Is.True);
-        Assert.That(entries[0].Properties["UserId"], Is.EqualTo(12345));
-        Assert.That(entries[0].Properties.ContainsKey("Action"), Is.True);
-        Assert.That(entries[0].Properties["Action"], Is.EqualTo("Login"));
+        Assert.That(entries[0].Properties!["UserId"], Is.EqualTo(12345));
+        Assert.That(entries[0].Properties!.ContainsKey("Action"), Is.True);
+        Assert.That(entries[0].Properties!["Action"], Is.EqualTo("Login"));
     }
 
     [Test]

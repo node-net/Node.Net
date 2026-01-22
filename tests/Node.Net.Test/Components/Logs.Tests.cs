@@ -1,4 +1,5 @@
 #if !IS_FRAMEWORK
+#nullable enable
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -80,7 +81,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
         FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
         // Act
@@ -139,7 +140,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         // Act
         var cut = ctx.RenderComponent<Logs>();
@@ -174,7 +175,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         // Act
         var cut = ctx.RenderComponent<Logs>();
@@ -208,7 +209,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -244,7 +245,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -278,7 +279,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -319,7 +320,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -354,7 +355,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -384,7 +385,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -447,7 +448,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -486,7 +487,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -521,7 +522,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -561,7 +562,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -594,7 +595,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -642,7 +643,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -685,7 +686,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -716,7 +717,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
@@ -755,7 +756,7 @@ internal class LogsTests : TestHarness
 
         using var ctx = new Bunit.TestContext();
         ctx.Services.AddFluentUIComponents();
-        ctx.Services.AddSingleton<ILogService>(_logService);
+        ctx.Services.AddSingleton<ILogService>(_logService!);
 
         var cut = ctx.RenderComponent<Logs>();
 
