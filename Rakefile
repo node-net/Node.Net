@@ -80,6 +80,12 @@ task :setup do
     Makit::Secrets.set("nuget_api_key") # prompt for the key
   end
 
+  if (!Makit::Secrets.has_key?("github_token"))
+    puts "github_token SECRET not available (optional - for GitHub Actions status queries)"
+    # Optionally prompt for it, or leave it to be set manually
+    Makit::Secrets.set("github_token") # prompt for the key
+  end
+
   sh "dotnet new razorclasslib -n Node.Net.Components -o source/Node.Net.Components" unless Dir.exist?("source/Node.Net.Components")
   sh "dotnet new TUnit -n Node.Net.Components.Test -o tests/Node.Net.Components.Test" unless Dir.exist?("tests/Node.Net.Components.Test")
 end
