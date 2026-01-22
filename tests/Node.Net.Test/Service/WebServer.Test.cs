@@ -32,7 +32,7 @@ namespace Node.Net.Service
 		}
 
         //[Test] - Commented out test
-        public async Task Run_30_seconds()
+        private async Task Run_30_seconds()
         {
 			using WebServer server = new WebServer(Protocol.HTTP, 5000);
 			int port = server.Port;

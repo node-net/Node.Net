@@ -66,8 +66,8 @@ namespace Node.Net.Test
                 var _ = matrix3D.M11; // Access property to verify matrix was created
             }
             catch (InvalidOperationException ex) when (
-                ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
-                (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
+                (ex.Message?.Contains("Matrix3DFactory.CreateFromIDictionary") ?? false) ||
+                (ex.InnerException is FormatException fe && (fe.Message?.Contains("Invalid Vector3D format") ?? false)))
             {
                 // This is the expected failure mode that needs to be fixed by Node.Net
                 // Document the failure for Node.Net developers
@@ -88,7 +88,7 @@ namespace Node.Net.Test
                 // Uncomment the throw below once Node.Net is ready to fix this
                 // throw;
             }
-            catch (FormatException fex) when (fex.Message.Contains("Invalid Vector3D format"))
+            catch (FormatException fex) when (fex.Message?.Contains("Invalid Vector3D format") ?? false)
             {
                 // Handle case where FormatException is not wrapped
                 Console.WriteLine("REPRODUCED ISSUE FOR NODE.NET:");
@@ -99,6 +99,7 @@ namespace Node.Net.Test
                 // Mark as known issue
                 // throw;
             }
+            await Task.CompletedTask;
         }
 
         /// <summary>
@@ -131,8 +132,8 @@ namespace Node.Net.Test
                 var _ = matrix3D.M11; // Access property to verify matrix was created
             }
             catch (InvalidOperationException ex) when (
-                ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
-                (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
+                (ex.Message?.Contains("Matrix3DFactory.CreateFromIDictionary") ?? false) ||
+                (ex.InnerException is FormatException fe && (fe.Message?.Contains("Invalid Vector3D format") ?? false)))
             {
                 // Known issue: Vector3D.Parse doesn't support parentheses format
                 Console.WriteLine($"KNOWN ISSUE - XDirection={xDirection}, YDirection={yDirection}, ZDirection={zDirection}");
@@ -142,9 +143,10 @@ namespace Node.Net.Test
                     Console.WriteLine($"Inner Error: {ex.InnerException.Message}");
                 }
                 // Document but don't fail - this is expected until Node.Net fixes it
+                await Task.CompletedTask;
                 // throw;
             }
-            catch (FormatException fex) when (fex.Message.Contains("Invalid Vector3D format"))
+            catch (FormatException fex) when (fex.Message?.Contains("Invalid Vector3D format") ?? false)
             {
                 // Handle unwrapped FormatException
                 Console.WriteLine($"KNOWN ISSUE - FormatException: {fex.Message}");
@@ -182,8 +184,8 @@ namespace Node.Net.Test
                 var _ = matrix3D.M11; // Access property to verify matrix was created
             }
             catch (InvalidOperationException ex) when (
-                ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
-                (ex.InnerException is FormatException fe && fe.Message.Contains("Invalid Vector3D format")))
+                (ex.Message?.Contains("Matrix3DFactory.CreateFromIDictionary") ?? false) ||
+                (ex.InnerException is FormatException fe && (fe.Message?.Contains("Invalid Vector3D format") ?? false)))
             {
                 // Document the exact failure for Node.Net developers
                 var innerEx = ex.InnerException;
@@ -218,7 +220,7 @@ This error occurs when converting rochambeau.2.2.17.aim to core JSON format.
                 // Document but don't fail - this is a known issue until Node.Net fixes it
                 // throw;
             }
-            catch (FormatException fex) when (fex.Message.Contains("Invalid Vector3D format"))
+            catch (FormatException fex) when (fex.Message?.Contains("Invalid Vector3D format") ?? false)
             {
                 var errorDetails = $@"
 REPRODUCED ISSUE FROM ROCHAMBEAU FILE CONVERSION FOR NODE.NET:
@@ -238,6 +240,7 @@ EXPECTED FIX: Strip parentheses before parsing.
                 // Document but don't fail
                 // throw;
             }
+            await Task.CompletedTask;
         }
     }
 }
