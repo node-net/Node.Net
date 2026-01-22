@@ -23,7 +23,7 @@ namespace Node.Net.Test
         #region Basic Functionality Tests
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_EmptyDictionary_ReturnsEmptyWithOTS()
+        public async Task ConvertRotationsXYZtoOTS_EmptyDictionary_ReturnsEmptyWithOTS()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>();
@@ -32,20 +32,20 @@ namespace Node.Net.Test
             var result = dictionary.ConvertRotationsXYZtoOTS();
 
             // Assert
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result, Is.InstanceOf<IDictionary<string, object>>());
+            await Assert.That(result).IsNotNull();
+            await Assert.That(result is IDictionary<string, object>).IsTrue();
             // Empty dictionary should result in identity matrix, which has zero OTS rotations
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             // OTS should be set even if zero (SetRotationsOTS only sets if > 0.001, so may not be present)
             // For empty dictionary, OTS should be zero or not present
             bool hasOTS = resultDict.Contains("Orientation") || resultDict.Contains("Tilt") || resultDict.Contains("Spin");
             // Either OTS is set, or all values are near zero (which means they won't be set due to 0.001 tolerance)
-            Assert.That(hasOTS || (!hasOTS && resultDict.Count == 0), Is.True, "OTS rotations should be handled correctly");
+            await Assert.That(hasOTS || (!hasOTS && resultDict.Count == 0)).IsTrue(), "OTS rotations should be handled correctly");
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_NoRotationKeys_ReturnsAllKeysWithOTS()
+        public async Task ConvertRotationsXYZtoOTS_NoRotationKeys_ReturnsAllKeysWithOTS()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -61,23 +61,23 @@ namespace Node.Net.Test
             var result = dictionary.ConvertRotationsXYZtoOTS();
 
             // Assert
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.ContainsKey("Name"), Is.True);
-            Assert.That(result.ContainsKey("Type"), Is.True);
-            Assert.That(result.ContainsKey("X"), Is.True);
-            Assert.That(result.ContainsKey("Y"), Is.True);
-            Assert.That(result.ContainsKey("Z"), Is.True);
-            Assert.That(result.ContainsKey("RotationX"), Is.False, "RotationX should be removed");
-            Assert.That(result.ContainsKey("RotationY"), Is.False, "RotationY should be removed");
-            Assert.That(result.ContainsKey("RotationZ"), Is.False, "RotationZ should be removed");
+            await Assert.That(result).IsNotNull();
+            await Assert.That(result.ContainsKey("Name")).IsTrue());
+            await Assert.That(result.ContainsKey("Type")).IsTrue());
+            await Assert.That(result.ContainsKey("X")).IsTrue());
+            await Assert.That(result.ContainsKey("Y")).IsTrue());
+            await Assert.That(result.ContainsKey("Z")).IsTrue());
+            await Assert.That(result.ContainsKey("RotationX")).IsFalse(), "RotationX should be removed");
+            await Assert.That(result.ContainsKey("RotationY")).IsFalse(), "RotationY should be removed");
+            await Assert.That(result.ContainsKey("RotationZ")).IsFalse(), "RotationZ should be removed");
             
             // Values should be preserved
-            Assert.That(result["Name"], Is.EqualTo("TestFixture"));
-            Assert.That(result["Type"], Is.EqualTo("Fixture"));
+            await Assert.That(result["Name"]).IsEqualTo("TestFixture"));
+            await Assert.That(result["Type"]).IsEqualTo("Fixture"));
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_RemovesRotationKeys()
+        public async Task ConvertRotationsXYZtoOTS_RemovesRotationKeys()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -92,10 +92,10 @@ namespace Node.Net.Test
             var result = dictionary.ConvertRotationsXYZtoOTS();
 
             // Assert
-            Assert.That(result.ContainsKey("RotationX"), Is.False, "RotationX should be removed");
-            Assert.That(result.ContainsKey("RotationY"), Is.False, "RotationY should be removed");
-            Assert.That(result.ContainsKey("RotationZ"), Is.False, "RotationZ should be removed");
-            Assert.That(result.ContainsKey("Name"), Is.True, "Other keys should be preserved");
+            await Assert.That(result.ContainsKey("RotationX")).IsFalse(), "RotationX should be removed");
+            await Assert.That(result.ContainsKey("RotationY")).IsFalse(), "RotationY should be removed");
+            await Assert.That(result.ContainsKey("RotationZ")).IsFalse(), "RotationZ should be removed");
+            await Assert.That(result.ContainsKey("Name")).IsTrue(), "Other keys should be preserved");
         }
 
         #endregion
@@ -103,7 +103,7 @@ namespace Node.Net.Test
         #region Rotation Conversion Tests
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_ZeroRotations_ReturnsZeroOTS()
+        public async Task ConvertRotationsXYZtoOTS_ZeroRotations_ReturnsZeroOTS()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -118,20 +118,20 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             // Zero rotations should result in zero OTS (or very close to zero)
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
             double spin = resultDict.GetAngleDegrees("Spin");
             
-            Assert.That(Abs(orientation), Is.LessThan(0.1), "Orientation should be near zero");
-            Assert.That(Abs(tilt), Is.LessThan(0.1), "Tilt should be near zero");
-            Assert.That(Abs(spin), Is.LessThan(0.1), "Spin should be near zero");
+            await Assert.That(Abs(orientation)).IsLessThan(0.1), "Orientation should be near zero");
+            await Assert.That(Abs(tilt)).IsLessThan(0.1), "Tilt should be near zero");
+            await Assert.That(Abs(spin)).IsLessThan(0.1), "Spin should be near zero");
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_RotationZOnly_ConvertsToOrientation()
+        public async Task ConvertRotationsXYZtoOTS_RotationZOnly_ConvertsToOrientation()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -144,20 +144,20 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
             double spin = resultDict.GetAngleDegrees("Spin");
             
             // RotationZ should map to Orientation
-            Assert.That(Round(orientation, 1), Is.EqualTo(15.0), "Orientation should equal RotationZ");
-            Assert.That(Abs(tilt), Is.LessThan(0.1), "Tilt should be near zero");
-            Assert.That(Abs(spin), Is.LessThan(0.1), "Spin should be near zero");
+            await Assert.That(Round(orientation, 1)).IsEqualTo(15.0), "Orientation should equal RotationZ");
+            await Assert.That(Abs(tilt)).IsLessThan(0.1), "Tilt should be near zero");
+            await Assert.That(Abs(spin)).IsLessThan(0.1), "Spin should be near zero");
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_RotationXOnly_ConvertsToTilt()
+        public async Task ConvertRotationsXYZtoOTS_RotationXOnly_ConvertsToTilt()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -170,19 +170,19 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
             double spin = resultDict.GetAngleDegrees("Spin");
             
             // RotationX should affect Tilt (though not necessarily 1:1)
-            Assert.That(Abs(tilt), Is.GreaterThan(0.1), "Tilt should be non-zero");
-            Assert.That(Abs(orientation), Is.LessThan(0.1), "Orientation should be near zero for pure X rotation");
+            await Assert.That(Abs(tilt), Is.GreaterThan(0.1), "Tilt should be non-zero");
+            await Assert.That(Abs(orientation)).IsLessThan(0.1), "Orientation should be near zero for pure X rotation");
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_RotationYOnly_ConvertsToTilt()
+        public async Task ConvertRotationsXYZtoOTS_RotationYOnly_ConvertsToTilt()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -195,14 +195,14 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
             double spin = resultDict.GetAngleDegrees("Spin");
             
             // RotationY should affect Tilt
-            Assert.That(Abs(tilt), Is.GreaterThan(0.1), "Tilt should be non-zero");
+            await Assert.That(Abs(tilt), Is.GreaterThan(0.1), "Tilt should be non-zero");
         }
 
         [Test]
@@ -213,7 +213,7 @@ namespace Node.Net.Test
         [TestCase("15.0 deg", "0.0 deg", "45.0 deg", 15.0, 0.0, 45.0)]
         [TestCase("0.0 deg", "30.0 deg", "45.0 deg", 0.0, 30.0, 45.0)]
         [TestCase("15.0 deg", "30.0 deg", "45.0 deg", 15.0, 30.0, 45.0)]
-        public void ConvertRotationsXYZtoOTS_VariousRotations_ConvertsCorrectly(
+        public async Task ConvertRotationsXYZtoOTS_VariousRotations_ConvertsCorrectly(
             string rotX, string rotY, string rotZ,
             double expectedOrientation, double expectedTilt, double expectedSpin)
         {
@@ -230,7 +230,7 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
@@ -241,9 +241,9 @@ namespace Node.Net.Test
             bool hasOrientation = resultDict.Contains("Orientation");
             bool hasTilt = resultDict.Contains("Tilt");
             bool hasSpin = resultDict.Contains("Spin");
-            Assert.That(hasOrientation || Abs(orientation) < 0.01, Is.True, "Orientation should be set or near zero");
-            Assert.That(hasTilt || Abs(tilt) < 0.01, Is.True, "Tilt should be set or near zero");
-            Assert.That(hasSpin || Abs(spin) < 0.01, Is.True, "Spin should be set or near zero");
+            await Assert.That(hasOrientation || Abs(orientation) < 0.01).IsTrue(), "Orientation should be set or near zero");
+            await Assert.That(hasTilt || Abs(tilt) < 0.01).IsTrue(), "Tilt should be set or near zero");
+            await Assert.That(hasSpin || Abs(spin) < 0.01).IsTrue(), "Spin should be set or near zero");
         }
 
         #endregion
@@ -251,7 +251,7 @@ namespace Node.Net.Test
         #region Round-Trip Tests
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_RoundTrip_Consistent()
+        public async Task ConvertRotationsXYZtoOTS_RoundTrip_Consistent()
         {
             // Arrange - Start with XYZ rotations
             var original = new Dictionary<string, object>
@@ -267,14 +267,14 @@ namespace Node.Net.Test
 
             // Assert - Verify the conversion
             var convertedDict = converted as IDictionary;
-            Assert.That(convertedDict, Is.Not.Null);
-            Assert.That(convertedDict.Contains("Orientation"), Is.True);
-            Assert.That(convertedDict.Contains("Tilt"), Is.True);
-            Assert.That(convertedDict.Contains("Spin"), Is.True);
-            Assert.That(converted.ContainsKey("Name"), Is.True);
-            Assert.That(converted.ContainsKey("RotationX"), Is.False);
-            Assert.That(converted.ContainsKey("RotationY"), Is.False);
-            Assert.That(converted.ContainsKey("RotationZ"), Is.False);
+            await Assert.That(convertedDict).IsNotNull();
+            await Assert.That(convertedDict.Contains("Orientation")).IsTrue());
+            await Assert.That(convertedDict.Contains("Tilt")).IsTrue());
+            await Assert.That(convertedDict.Contains("Spin")).IsTrue());
+            await Assert.That(converted.ContainsKey("Name")).IsTrue());
+            await Assert.That(converted.ContainsKey("RotationX")).IsFalse());
+            await Assert.That(converted.ContainsKey("RotationY")).IsFalse());
+            await Assert.That(converted.ContainsKey("RotationZ")).IsFalse());
         }
 
         #endregion
@@ -282,7 +282,7 @@ namespace Node.Net.Test
         #region Edge Cases
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_NegativeRotations_HandlesCorrectly()
+        public async Task ConvertRotationsXYZtoOTS_NegativeRotations_HandlesCorrectly()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -297,7 +297,7 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
@@ -307,13 +307,13 @@ namespace Node.Net.Test
             bool orientationValid = Abs(orientation) < 0.1 || (orientation > -360 && orientation < 360);
             bool tiltValid = Abs(tilt) < 0.1 || (tilt > -360 && tilt < 360);
             bool spinValid = Abs(spin) < 0.1 || (spin > -360 && spin < 360);
-            Assert.That(orientationValid, Is.True, "Orientation should be valid");
-            Assert.That(tiltValid, Is.True, "Tilt should be valid");
-            Assert.That(spinValid, Is.True, "Spin should be valid");
+            await Assert.That(orientationValid).IsTrue(), "Orientation should be valid");
+            await Assert.That(tiltValid).IsTrue(), "Tilt should be valid");
+            await Assert.That(spinValid).IsTrue(), "Spin should be valid");
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_LargeRotations_HandlesCorrectly()
+        public async Task ConvertRotationsXYZtoOTS_LargeRotations_HandlesCorrectly()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -328,20 +328,20 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             // Should not throw and should produce valid OTS values
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
             double spin = resultDict.GetAngleDegrees("Spin");
             
-            Assert.That(double.IsFinite(orientation), Is.True, "Orientation should be finite");
-            Assert.That(double.IsFinite(tilt), Is.True, "Tilt should be finite");
-            Assert.That(double.IsFinite(spin), Is.True, "Spin should be finite");
+            await Assert.That(double.IsFinite(orientation)).IsTrue(), "Orientation should be finite");
+            await Assert.That(double.IsFinite(tilt)).IsTrue(), "Tilt should be finite");
+            await Assert.That(double.IsFinite(spin)).IsTrue(), "Spin should be finite");
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_VerySmallRotations_HandlesCorrectly()
+        public async Task ConvertRotationsXYZtoOTS_VerySmallRotations_HandlesCorrectly()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -356,20 +356,20 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             // Very small rotations should still produce valid results
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
             double spin = resultDict.GetAngleDegrees("Spin");
             
-            Assert.That(double.IsFinite(orientation), Is.True);
-            Assert.That(double.IsFinite(tilt), Is.True);
-            Assert.That(double.IsFinite(spin), Is.True);
+            await Assert.That(double.IsFinite(orientation)).IsTrue());
+            await Assert.That(double.IsFinite(tilt)).IsTrue());
+            await Assert.That(double.IsFinite(spin)).IsTrue());
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_MissingRotationKeys_HandlesGracefully()
+        public async Task ConvertRotationsXYZtoOTS_MissingRotationKeys_HandlesGracefully()
         {
             // Arrange - Only some rotation keys present
             var dictionary = new Dictionary<string, object>
@@ -382,13 +382,13 @@ namespace Node.Net.Test
             var result = dictionary.ConvertRotationsXYZtoOTS();
 
             // Assert
-            Assert.That(result, Is.Not.Null);
+            await Assert.That(result).IsNotNull();
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             // Should still produce valid OTS values
             double orientation = resultDict.GetAngleDegrees("Orientation");
-            Assert.That(double.IsFinite(orientation), Is.True);
+            await Assert.That(double.IsFinite(orientation)).IsTrue());
         }
 
         #endregion
@@ -396,7 +396,7 @@ namespace Node.Net.Test
         #region Dictionary Preservation Tests
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_PreservesAllNonRotationKeys()
+        public async Task ConvertRotationsXYZtoOTS_PreservesAllNonRotationKeys()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -418,23 +418,23 @@ namespace Node.Net.Test
             var result = dictionary.ConvertRotationsXYZtoOTS();
 
             // Assert
-            Assert.That(result.ContainsKey("Name"), Is.True);
-            Assert.That(result.ContainsKey("Type"), Is.True);
-            Assert.That(result.ContainsKey("X"), Is.True);
-            Assert.That(result.ContainsKey("Y"), Is.True);
-            Assert.That(result.ContainsKey("Z"), Is.True);
-            Assert.That(result.ContainsKey("FullName"), Is.True);
-            Assert.That(result.ContainsKey("CustomKey"), Is.True);
-            Assert.That(result.ContainsKey("Nested"), Is.True);
+            await Assert.That(result.ContainsKey("Name")).IsTrue());
+            await Assert.That(result.ContainsKey("Type")).IsTrue());
+            await Assert.That(result.ContainsKey("X")).IsTrue());
+            await Assert.That(result.ContainsKey("Y")).IsTrue());
+            await Assert.That(result.ContainsKey("Z")).IsTrue());
+            await Assert.That(result.ContainsKey("FullName")).IsTrue());
+            await Assert.That(result.ContainsKey("CustomKey")).IsTrue());
+            await Assert.That(result.ContainsKey("Nested")).IsTrue());
             
             // Values should be preserved
-            Assert.That(result["Name"], Is.EqualTo("TestFixture"));
-            Assert.That(result["Type"], Is.EqualTo("Fixture"));
-            Assert.That(result["CustomKey"], Is.EqualTo("CustomValue"));
+            await Assert.That(result["Name"]).IsEqualTo("TestFixture"));
+            await Assert.That(result["Type"]).IsEqualTo("Fixture"));
+            await Assert.That(result["CustomKey"]).IsEqualTo("CustomValue"));
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_PreservesDictionaryStructure()
+        public async Task ConvertRotationsXYZtoOTS_PreservesDictionaryStructure()
         {
             // Arrange
             var nestedDict = new Dictionary<string, object>
@@ -451,8 +451,8 @@ namespace Node.Net.Test
             var result = dictionary.ConvertRotationsXYZtoOTS();
 
             // Assert
-            Assert.That(result.ContainsKey("Nested"), Is.True);
-            Assert.That(result["Nested"], Is.SameAs(nestedDict), "Nested dictionary should be preserved by reference");
+            await Assert.That(result.ContainsKey("Nested")).IsTrue());
+            await Assert.That(result["Nested"], Is.SameAs(nestedDict), "Nested dictionary should be preserved by reference");
         }
 
         #endregion
@@ -460,7 +460,7 @@ namespace Node.Net.Test
         #region Integration with GetLocalToParent Tests
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_WithDirectionVectors_UsesGetLocalToParent()
+        public async Task ConvertRotationsXYZtoOTS_WithDirectionVectors_UsesGetLocalToParent()
         {
             // Arrange - Dictionary with direction vectors (if supported)
             var dictionary = new Dictionary<string, object>
@@ -477,14 +477,14 @@ namespace Node.Net.Test
                 var result = dictionary.ConvertRotationsXYZtoOTS();
 
                 // Assert
-                Assert.That(result, Is.Not.Null);
+                await Assert.That(result).IsNotNull();
                 var resultDict = result as IDictionary;
-                Assert.That(resultDict, Is.Not.Null);
+                await Assert.That(resultDict).IsNotNull();
                 
                 // Should have OTS values
                 bool hasOrientation = resultDict.Contains("Orientation");
                 double orientation = hasOrientation ? resultDict.GetAngleDegrees("Orientation") : 0.0;
-                Assert.That(hasOrientation || Abs(orientation) < 0.01, Is.True, "Orientation should be set or near zero");
+                await Assert.That(hasOrientation || Abs(orientation) < 0.01).IsTrue(), "Orientation should be set or near zero");
             }
             catch (Exception ex) when (
                 ex.Message.Contains("Matrix3DFactory.CreateFromIDictionary") ||
@@ -496,7 +496,7 @@ namespace Node.Net.Test
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_WithTranslation_PreservesTranslation()
+        public async Task ConvertRotationsXYZtoOTS_WithTranslation_PreservesTranslation()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -511,12 +511,12 @@ namespace Node.Net.Test
             var result = dictionary.ConvertRotationsXYZtoOTS();
 
             // Assert
-            Assert.That(result.ContainsKey("X"), Is.True);
-            Assert.That(result.ContainsKey("Y"), Is.True);
-            Assert.That(result.ContainsKey("Z"), Is.True);
-            Assert.That(result["X"], Is.EqualTo("10.0 m"));
-            Assert.That(result["Y"], Is.EqualTo("20.0 m"));
-            Assert.That(result["Z"], Is.EqualTo("30.0 m"));
+            await Assert.That(result.ContainsKey("X")).IsTrue());
+            await Assert.That(result.ContainsKey("Y")).IsTrue());
+            await Assert.That(result.ContainsKey("Z")).IsTrue());
+            await Assert.That(result["X"]).IsEqualTo("10.0 m"));
+            await Assert.That(result["Y"]).IsEqualTo("20.0 m"));
+            await Assert.That(result["Z"]).IsEqualTo("30.0 m"));
         }
 
         #endregion
@@ -524,7 +524,7 @@ namespace Node.Net.Test
         #region OTS Value Validation Tests
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_SetsOTSValues()
+        public async Task ConvertRotationsXYZtoOTS_SetsOTSValues()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -537,7 +537,7 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             // OTS values should be set via SetRotationsOTS (only if > 0.001 tolerance)
             bool hasOrientation = resultDict.Contains("Orientation");
@@ -546,13 +546,13 @@ namespace Node.Net.Test
             double orientation = hasOrientation ? resultDict.GetAngleDegrees("Orientation") : 0.0;
             double tilt = hasTilt ? resultDict.GetAngleDegrees("Tilt") : 0.0;
             double spin = hasSpin ? resultDict.GetAngleDegrees("Spin") : 0.0;
-            Assert.That(hasOrientation || Abs(orientation) < 0.01, Is.True, "Orientation should be set or near zero");
-            Assert.That(hasTilt || Abs(tilt) < 0.01, Is.True, "Tilt should be set or near zero");
-            Assert.That(hasSpin || Abs(spin) < 0.01, Is.True, "Spin should be set or near zero");
+            await Assert.That(hasOrientation || Abs(orientation) < 0.01).IsTrue(), "Orientation should be set or near zero");
+            await Assert.That(hasTilt || Abs(tilt) < 0.01).IsTrue(), "Tilt should be set or near zero");
+            await Assert.That(hasSpin || Abs(spin) < 0.01).IsTrue(), "Spin should be set or near zero");
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_OTSValuesAreFinite()
+        public async Task ConvertRotationsXYZtoOTS_OTSValuesAreFinite()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -567,19 +567,19 @@ namespace Node.Net.Test
 
             // Assert
             var resultDict = result as IDictionary;
-            Assert.That(resultDict, Is.Not.Null);
+            await Assert.That(resultDict).IsNotNull();
             
             double orientation = resultDict.GetAngleDegrees("Orientation");
             double tilt = resultDict.GetAngleDegrees("Tilt");
             double spin = resultDict.GetAngleDegrees("Spin");
             
-            Assert.That(double.IsFinite(orientation), Is.True, "Orientation should be finite");
-            Assert.That(double.IsFinite(tilt), Is.True, "Tilt should be finite");
-            Assert.That(double.IsFinite(spin), Is.True, "Spin should be finite");
+            await Assert.That(double.IsFinite(orientation)).IsTrue(), "Orientation should be finite");
+            await Assert.That(double.IsFinite(tilt)).IsTrue(), "Tilt should be finite");
+            await Assert.That(double.IsFinite(spin)).IsTrue(), "Spin should be finite");
             
-            Assert.That(double.IsNaN(orientation), Is.False, "Orientation should not be NaN");
-            Assert.That(double.IsNaN(tilt), Is.False, "Tilt should not be NaN");
-            Assert.That(double.IsNaN(spin), Is.False, "Spin should not be NaN");
+            await Assert.That(double.IsNaN(orientation)).IsFalse(), "Orientation should not be NaN");
+            await Assert.That(double.IsNaN(tilt)).IsFalse(), "Tilt should not be NaN");
+            await Assert.That(double.IsNaN(spin)).IsFalse(), "Spin should not be NaN");
         }
 
         #endregion
@@ -587,7 +587,7 @@ namespace Node.Net.Test
         #region Error Handling Tests
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_InvalidRotationFormat_HandlesGracefully()
+        public async Task ConvertRotationsXYZtoOTS_InvalidRotationFormat_HandlesGracefully()
         {
             // Arrange - Invalid rotation format
             var dictionary = new Dictionary<string, object>
@@ -601,25 +601,25 @@ namespace Node.Net.Test
             {
                 var result = dictionary.ConvertRotationsXYZtoOTS();
                 // If it doesn't throw, result should still be valid
-                Assert.That(result, Is.Not.Null);
+                await Assert.That(result).IsNotNull();
             }
             catch (Exception ex)
             {
                 // If it throws, should be a meaningful exception
-                Assert.That(ex, Is.Not.Null);
-                Assert.That(ex.Message, Is.Not.Empty);
+                await Assert.That(ex).IsNotNull();
+                await Assert.That(ex.Message, Is.Not.Empty);
             }
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_NullDictionary_ThrowsNullReferenceException()
+        public async Task ConvertRotationsXYZtoOTS_NullDictionary_ThrowsNullReferenceException()
         {
             // Arrange
             IDictionary<string, object> dictionary = null;
 
             // Act & Assert
             // The method doesn't explicitly check for null, so it will throw NullReferenceException
-            Assert.Throws<NullReferenceException>(() => dictionary.ConvertRotationsXYZtoOTS());
+            await Assert.That(() => dictionary.ConvertRotationsXYZtoOTS()).Throws<NullReferenceException>();
         }
 
         #endregion
@@ -627,7 +627,7 @@ namespace Node.Net.Test
         #region Performance and Consistency Tests
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_MultipleCalls_ConsistentResults()
+        public async Task ConvertRotationsXYZtoOTS_MultipleCalls_ConsistentResults()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -647,12 +647,12 @@ namespace Node.Net.Test
             double orientation2 = dict2.GetAngleDegrees("Orientation");
             
             // Results should be consistent (within floating point precision)
-            Assert.That(Abs(orientation1 - orientation2), Is.LessThan(0.0001), 
+            await Assert.That(Abs(orientation1 - orientation2)).IsLessThan(0.0001), 
                 "Multiple calls should produce consistent results");
         }
 
         [Test]
-        public void ConvertRotationsXYZtoOTS_DoesNotModifyOriginalDictionary()
+        public async Task ConvertRotationsXYZtoOTS_DoesNotModifyOriginalDictionary()
         {
             // Arrange
             var dictionary = new Dictionary<string, object>
@@ -670,12 +670,12 @@ namespace Node.Net.Test
 
             // Assert
             // Original dictionary should be unchanged
-            Assert.That(dictionary.Count, Is.EqualTo(originalCount));
-            Assert.That(dictionary.ContainsKey("RotationX"), Is.True);
-            Assert.That(dictionary.ContainsKey("RotationY"), Is.True);
-            Assert.That(dictionary.ContainsKey("RotationZ"), Is.True);
-            Assert.That(dictionary.ContainsKey("Name"), Is.True);
-            Assert.That(dictionary["Name"], Is.EqualTo("TestFixture"));
+            await Assert.That(dictionary.Count).IsEqualTo(originalCount));
+            await Assert.That(dictionary.ContainsKey("RotationX")).IsTrue());
+            await Assert.That(dictionary.ContainsKey("RotationY")).IsTrue());
+            await Assert.That(dictionary.ContainsKey("RotationZ")).IsTrue());
+            await Assert.That(dictionary.ContainsKey("Name")).IsTrue());
+            await Assert.That(dictionary["Name"]).IsEqualTo("TestFixture"));
         }
 
         #endregion
