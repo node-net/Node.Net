@@ -13,4 +13,4 @@ ethod to configure Microsoft.Extension.Logging to route message to ILogService
 
 ## User interface
 
-Node.Net/Components/Logs a component that leverage ILogService to display log entries
+Node.Net.Components.Logs a component that leverage ILogService to display log entries

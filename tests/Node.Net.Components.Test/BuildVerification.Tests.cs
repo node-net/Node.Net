@@ -1,5 +1,5 @@
 #nullable enable
-using NUnit.Framework;
+using TUnit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,12 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Node.Net.Diagnostic;
 
-namespace Node.Net.Test.Components;
+namespace Node.Net.Components.Test;
 
 /// <summary>
 /// Build verification tests for .NET Standard 2.0 target framework support.
 /// </summary>
-[TestFixture]
 internal class BuildVerificationTests : TestHarness
 {
     public BuildVerificationTests() : base("BuildVerification")
@@ -94,7 +93,7 @@ internal class BuildVerificationTests : TestHarness
     }
 
     [Test]
-    public void Build_NetStandard2_0_Succeeds()
+    public async Task Build_NetStandard2_0_Succeeds()
     {
         // Arrange
         // GetProjectDirectoryInfo() returns the repo root directory
@@ -102,8 +101,7 @@ internal class BuildVerificationTests : TestHarness
         var projectPath = Path.GetFullPath(Path.Combine(
             repoRoot.FullName, "source", "Node.Net", "Node.Net.csproj"));
         
-        Assert.That(File.Exists(projectPath), Is.True, 
-            $"Project file not found at: {projectPath}. Repo root: {repoRoot.FullName}");
+        await Assert.That(File.Exists(projectPath)).IsTrue();
 
         // Act
         var (exitCode, output, error) = ExecuteBuild(projectPath, "netstandard2.0", "Release");
@@ -112,17 +110,16 @@ internal class BuildVerificationTests : TestHarness
         if (exitCode != 0)
         {
             var filteredErrors = FilterErrors(output, error);
-            Assert.Fail(
+            throw new Exception(
                 $"Build failed for netstandard2.0. Exit code: {exitCode}. " +
                 $"Filtered errors:\n{filteredErrors}");
         }
         
-        Assert.That(exitCode, Is.EqualTo(0), 
-            $"Build succeeded for netstandard2.0");
+        await Assert.That(exitCode).IsEqualTo(0);
     }
 
     [Test]
-    public void Build_AllTargetFrameworks_Succeeds()
+    public async Task Build_AllTargetFrameworks_Succeeds()
     {
         // Arrange
         // GetProjectDirectoryInfo() returns the repo root directory
@@ -130,8 +127,7 @@ internal class BuildVerificationTests : TestHarness
         var projectPath = Path.GetFullPath(Path.Combine(
             repoRoot.FullName, "source", "Node.Net", "Node.Net.csproj"));
         
-        Assert.That(File.Exists(projectPath), Is.True, 
-            $"Project file not found at: {projectPath}. Repo root: {repoRoot.FullName}");
+        await Assert.That(File.Exists(projectPath)).IsTrue();
 
         // Act
         var (exitCode, output, error) = ExecuteBuild(projectPath, configuration: "Release");
@@ -140,21 +136,19 @@ internal class BuildVerificationTests : TestHarness
         if (exitCode != 0)
         {
             var filteredErrors = FilterErrors(output, error);
-            Assert.Fail(
+            throw new Exception(
                 $"Build failed for all target frameworks. Exit code: {exitCode}. " +
                 $"Filtered errors:\n{filteredErrors}");
         }
         
-        Assert.That(exitCode, Is.EqualTo(0), 
-            $"Build succeeded for all target frameworks");
+        await Assert.That(exitCode).IsEqualTo(0);
         
         // Verify netstandard2.0 is mentioned in output (only check if build succeeded)
-        Assert.That(output + error, Does.Contain("netstandard2.0"), 
-            "Build output should mention netstandard2.0 target framework");
+        await Assert.That(output + error).Contains("netstandard2.0");
     }
 
     [Test]
-    public void Build_ExistingTargetFrameworks_StillSucceeds()
+    public async Task Build_ExistingTargetFrameworks_StillSucceeds()
     {
         // Arrange
         // GetProjectDirectoryInfo() returns the repo root directory
@@ -162,8 +156,7 @@ internal class BuildVerificationTests : TestHarness
         var projectPath = Path.GetFullPath(Path.Combine(
             repoRoot.FullName, "source", "Node.Net", "Node.Net.csproj"));
         
-        Assert.That(File.Exists(projectPath), Is.True, 
-            $"Project file not found at: {projectPath}. Repo root: {repoRoot.FullName}");
+        await Assert.That(File.Exists(projectPath)).IsTrue();
 
         // net48 requires Windows/.NET Framework SDK, so skip on non-Windows platforms
         var frameworks = new List<string> { "net8.0" };
@@ -187,18 +180,17 @@ internal class BuildVerificationTests : TestHarness
             if (exitCode != 0)
             {
                 var filteredErrors = FilterErrors(output, error);
-                Assert.Fail(
+                throw new Exception(
                     $"Build failed for {framework}. Exit code: {exitCode}. " +
                     $"Filtered errors:\n{filteredErrors}");
             }
             
-            Assert.That(exitCode, Is.EqualTo(0), 
-                $"Build succeeded for {framework}");
+            await Assert.That(exitCode).IsEqualTo(0);
         }
     }
 
     [Test]
-    public void PackageReference_NetStandard2_0_CanReferenceLibrary()
+    public async Task PackageReference_NetStandard2_0_CanReferenceLibrary()
     {
         // This test verifies that a project targeting .NET Standard 2.0 can reference Node.Net
         // Note: This is a placeholder test - actual package reference test should be done manually
@@ -210,17 +202,14 @@ internal class BuildVerificationTests : TestHarness
         var projectPath = Path.GetFullPath(Path.Combine(
             repoRoot.FullName, "source", "Node.Net", "Node.Net.csproj"));
         
-        Assert.That(File.Exists(projectPath), Is.True, 
-            $"Project file not found at: {projectPath}. Repo root: {repoRoot.FullName}");
+        await Assert.That(File.Exists(projectPath)).IsTrue();
 
         // Act & Assert
         // Verify the project file includes netstandard2.0 in TargetFrameworks
         var projectContent = File.ReadAllText(projectPath);
-        Assert.That(projectContent, Does.Contain("netstandard2.0"), 
-            "Project file should include netstandard2.0 in TargetFrameworks");
+        await Assert.That(projectContent).Contains("netstandard2.0");
         
         // Verify System.Drawing.Common 7.0.0 is referenced for netstandard2.0
-        Assert.That(projectContent, Does.Contain("System.Drawing.Common\" Version=\"7.0.0\""), 
-            "Project file should reference System.Drawing.Common 7.0.0 for netstandard2.0");
+        await Assert.That(projectContent).Contains("System.Drawing.Common\" Version=\"7.0.0\"");
     }
 }

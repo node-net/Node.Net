@@ -2,7 +2,7 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
+using TUnit;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,9 +11,8 @@ using Node.Net.Diagnostic;
 using Microsoft.Playwright;
 using Microsoft.FluentUI.AspNetCore.Components;
 
-namespace Node.Net.Test.Components;
+namespace Node.Net.Components.Test;
 
-[TestFixture]
 internal class SystemInfoTests : TestHarness
 {
     public SystemInfoTests() : base(typeof(SystemInfo))
@@ -27,7 +26,8 @@ internal class SystemInfoTests : TestHarness
         var artifactFile = GetArtifactFileInfo("SystemInfo.jpeg");
         if (File.Exists(artifactFile.FullName))
         {
-            Assert.Ignore($"Artifact image already exists at {artifactFile.FullName}. Skipping image generation.");
+            // TUnit doesn't have Assert.Ignore - just return early
+            return;
         }
         
         // Arrange
@@ -40,8 +40,8 @@ internal class SystemInfoTests : TestHarness
         var cut = ctx.RenderComponent<SystemInfo>();
         
         // Assert component rendered
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
         
         // Generate image from rendered HTML
         await GenerateComponentImage(cut.Markup, artifactFile.FullName);
@@ -51,15 +51,15 @@ internal class SystemInfoTests : TestHarness
         var txtFile = GetArtifactFileInfo("SystemInfo.txt");
         var txtExists = File.Exists(txtFile.FullName);
         
-        Assert.That(jpegExists || txtExists, Is.True, $"Artifact should be created at {artifactFile.FullName} or {txtFile.FullName}");
+        await Assert.That(jpegExists || txtExists).IsTrue();
         
         if (jpegExists)
         {
-            Assert.That(new FileInfo(artifactFile.FullName).Length, Is.GreaterThan(0), "Image file should not be empty");
+            await Assert.That(new FileInfo(artifactFile.FullName).Length).IsGreaterThan(0);
         }
         else if (txtExists)
         {
-            Assert.That(new FileInfo(txtFile.FullName).Length, Is.GreaterThan(0), "Text file should not be empty");
+            await Assert.That(new FileInfo(txtFile.FullName).Length).IsGreaterThan(0);
         }
     }
 

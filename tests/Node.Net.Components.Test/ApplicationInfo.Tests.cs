@@ -2,7 +2,7 @@
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
+using TUnit;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,9 +11,8 @@ using Node.Net.Diagnostic;
 using Microsoft.Playwright;
 using Microsoft.FluentUI.AspNetCore.Components;
 
-namespace Node.Net.Test.Components;
+namespace Node.Net.Components.Test;
 
-[TestFixture]
 internal class ApplicationInfoTests : TestHarness
 {
     public ApplicationInfoTests() : base(typeof(ApplicationInfo))
@@ -21,7 +20,7 @@ internal class ApplicationInfoTests : TestHarness
     }
 
     [Test]
-    public void Render_DisplaysApplicationName()
+    public async Task Render_DisplaysApplicationName()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -35,15 +34,15 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Markup, Does.Contain("Application:"), "Component should display application name label");
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
+        await Assert.That(cut.Markup).Contains("Application:");
         // Should contain application name (either from assembly or "Unknown")
-        Assert.That(cut.Markup, Does.Contain("Application Information"), "Component should have heading");
+        await Assert.That(cut.Markup).Contains("Application Information");
     }
 
     [Test]
-    public void Render_DisplaysCompanyName()
+    public async Task Render_DisplaysCompanyName()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -57,13 +56,13 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Markup, Does.Contain("Company:"), "Component should display company name label");
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
+        await Assert.That(cut.Markup).Contains("Company:");
     }
 
     [Test]
-    public void Render_DisplaysDataDirectory()
+    public async Task Render_DisplaysDataDirectory()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -77,13 +76,13 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Markup, Does.Contain("Data Directory:"), "Component should display data directory label");
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
+        await Assert.That(cut.Markup).Contains("Data Directory:");
     }
 
     [Test]
-    public void Render_DisplaysTargetFramework()
+    public async Task Render_DisplaysTargetFramework()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -97,13 +96,13 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Markup, Does.Contain("Target Framework:"), "Component should display target framework label");
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
+        await Assert.That(cut.Markup).Contains("Target Framework:");
     }
 
     [Test]
-    public void Render_DisplaysExecutingAssemblyFilename()
+    public async Task Render_DisplaysExecutingAssemblyFilename()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -117,13 +116,13 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Markup, Does.Contain("Executing Assembly:"), "Component should display executing assembly filename label");
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
+        await Assert.That(cut.Markup).Contains("Executing Assembly:");
     }
 
     [Test]
-    public void Render_DisplaysVersion()
+    public async Task Render_DisplaysVersion()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -137,13 +136,13 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Markup, Does.Contain("Version:"), "Component should display version label");
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
+        await Assert.That(cut.Markup).Contains("Version:");
     }
 
     [Test]
-    public void Render_DisplaysFallbackWhenMetadataMissing()
+    public async Task Render_DisplaysFallbackWhenMetadataMissing()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -157,16 +156,16 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
         // Component should handle missing metadata gracefully
         // Either display actual values or fallback text ("Unknown", "Not available")
-        Assert.That(cut.Markup, Does.Contain("Application:"), "Component should display application label");
-        Assert.That(cut.Markup, Does.Contain("Company:"), "Component should display company label");
+        await Assert.That(cut.Markup).Contains("Application:");
+        await Assert.That(cut.Markup).Contains("Company:");
     }
 
     [Test]
-    public void Render_MatchesApplicationServiceValues()
+    public async Task Render_MatchesApplicationServiceValues()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -180,8 +179,8 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
         
         // Verify component uses IApplication service
         // The component should display values from Application service
@@ -191,19 +190,19 @@ internal class ApplicationInfoTests : TestHarness
         // Component should display these values (or fallback if empty)
         if (!string.IsNullOrEmpty(appInfo.Name))
         {
-            Assert.That(cut.Markup, Does.Contain(appInfo.Name), "Component should display application name from service");
+            await Assert.That(cut.Markup).Contains(appInfo.Name);
         }
         
         if (!string.IsNullOrEmpty(appInfo.Company))
         {
-            Assert.That(cut.Markup, Does.Contain(appInfo.Company), "Component should display company name from service");
+            await Assert.That(cut.Markup).Contains(appInfo.Company);
         }
         
         // Verify new properties are displayed
-        Assert.That(cut.Markup, Does.Contain("User:"), "Component should display user label");
-        Assert.That(cut.Markup, Does.Contain("Domain:"), "Component should display domain label");
-        Assert.That(cut.Markup, Does.Contain("Operating System:"), "Component should display operating system label");
-        Assert.That(cut.Markup, Does.Contain("Machine:"), "Component should display machine label");
+        await Assert.That(cut.Markup).Contains("User:");
+        await Assert.That(cut.Markup).Contains("Domain:");
+        await Assert.That(cut.Markup).Contains("Operating System:");
+        await Assert.That(cut.Markup).Contains("Machine:");
     }
 
     [Test]
@@ -213,7 +212,8 @@ internal class ApplicationInfoTests : TestHarness
         var artifactFile = GetArtifactFileInfo("ApplicationInfo.jpeg");
         if (File.Exists(artifactFile.FullName))
         {
-            Assert.Ignore($"Artifact image already exists at {artifactFile.FullName}. Skipping image generation.");
+            // TUnit doesn't have Assert.Ignore - just return early
+            return;
         }
         
         // Arrange
@@ -228,8 +228,8 @@ internal class ApplicationInfoTests : TestHarness
         var cut = ctx.RenderComponent<ApplicationInfo>();
         
         // Assert component rendered
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
         
         // Generate image from rendered HTML
         await GenerateComponentImage(cut.Markup, artifactFile.FullName);
@@ -239,20 +239,20 @@ internal class ApplicationInfoTests : TestHarness
         var txtFile = GetArtifactFileInfo("ApplicationInfo.txt");
         var txtExists = File.Exists(txtFile.FullName);
         
-        Assert.That(jpegExists || txtExists, Is.True, $"Artifact should be created at {artifactFile.FullName} or {txtFile.FullName}");
+        await Assert.That(jpegExists || txtExists).IsTrue();
         
         if (jpegExists)
         {
-            Assert.That(new FileInfo(artifactFile.FullName).Length, Is.GreaterThan(0), "Image file should not be empty");
+            await Assert.That(new FileInfo(artifactFile.FullName).Length).IsGreaterThan(0);
         }
         else if (txtExists)
         {
-            Assert.That(new FileInfo(txtFile.FullName).Length, Is.GreaterThan(0), "Text file should not be empty");
+            await Assert.That(new FileInfo(txtFile.FullName).Length).IsGreaterThan(0);
         }
     }
 
     [Test]
-    public void Render_PerformanceUnder500ms()
+    public async Task Render_PerformanceUnder500ms()
     {
         // Arrange
         using var ctx = new Bunit.TestContext();
@@ -266,8 +266,8 @@ internal class ApplicationInfoTests : TestHarness
         stopwatch.Stop();
         
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(stopwatch.ElapsedMilliseconds, Is.LessThan(500), $"Component render time {stopwatch.ElapsedMilliseconds}ms exceeds 500ms threshold");
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(stopwatch.ElapsedMilliseconds).IsLessThan(500);
     }
 
     private async Task GenerateComponentImage(string html, string outputPath)

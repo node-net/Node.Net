@@ -2,7 +2,7 @@
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
-using NUnit.Framework;
+using TUnit;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,9 +11,8 @@ using Node.Net.Diagnostic;
 using Microsoft.Playwright;
 using Microsoft.FluentUI.AspNetCore.Components;
 
-namespace Node.Net.Test.Components;
+namespace Node.Net.Components.Test;
 
-[TestFixture]
 internal class MapsTests : TestHarness
 {
     public MapsTests() : base(typeof(Maps))
@@ -22,61 +21,59 @@ internal class MapsTests : TestHarness
 
     private Bunit.TestContext _ctx = null!;
 
-    [SetUp]
-    public void Setup()
+    private void Setup()
     {
         _ctx = new Bunit.TestContext();
         _ctx.Services.AddFluentUIComponents();
     }
 
-    [TearDown]
-    public void TearDown()
+    private void TearDown()
     {
         _ctx?.Dispose();
     }
 
     [Test]
-    public void ValidateLatitude_ValidRange_ReturnsTrue()
+    public async Task ValidateLatitude_ValidRange_ReturnsTrue()
     {
         // Arrange & Act & Assert
-        Assert.That(MapsComponentHelper.ValidateLatitude(-90.0), Is.True, "Minimum latitude should be valid");
-        Assert.That(MapsComponentHelper.ValidateLatitude(0.0), Is.True, "Zero latitude should be valid");
-        Assert.That(MapsComponentHelper.ValidateLatitude(90.0), Is.True, "Maximum latitude should be valid");
-        Assert.That(MapsComponentHelper.ValidateLatitude(45.5), Is.True, "Mid-range latitude should be valid");
+        await Assert.That(MapsComponentHelper.ValidateLatitude(-90.0)).IsTrue();
+        await Assert.That(MapsComponentHelper.ValidateLatitude(0.0)).IsTrue();
+        await Assert.That(MapsComponentHelper.ValidateLatitude(90.0)).IsTrue();
+        await Assert.That(MapsComponentHelper.ValidateLatitude(45.5)).IsTrue();
     }
 
     [Test]
-    public void ValidateLatitude_InvalidRange_ReturnsFalse()
+    public async Task ValidateLatitude_InvalidRange_ReturnsFalse()
     {
         // Arrange & Act & Assert
-        Assert.That(MapsComponentHelper.ValidateLatitude(-90.1), Is.False, "Latitude below -90 should be invalid");
-        Assert.That(MapsComponentHelper.ValidateLatitude(90.1), Is.False, "Latitude above 90 should be invalid");
-        Assert.That(MapsComponentHelper.ValidateLatitude(-100.0), Is.False, "Latitude -100 should be invalid");
-        Assert.That(MapsComponentHelper.ValidateLatitude(100.0), Is.False, "Latitude 100 should be invalid");
+        await Assert.That(MapsComponentHelper.ValidateLatitude(-90.1)).IsFalse();
+        await Assert.That(MapsComponentHelper.ValidateLatitude(90.1)).IsFalse();
+        await Assert.That(MapsComponentHelper.ValidateLatitude(-100.0)).IsFalse();
+        await Assert.That(MapsComponentHelper.ValidateLatitude(100.0)).IsFalse();
     }
 
     [Test]
-    public void ValidateLongitude_ValidRange_ReturnsTrue()
+    public async Task ValidateLongitude_ValidRange_ReturnsTrue()
     {
         // Arrange & Act & Assert
-        Assert.That(MapsComponentHelper.ValidateLongitude(-180.0), Is.True, "Minimum longitude should be valid");
-        Assert.That(MapsComponentHelper.ValidateLongitude(0.0), Is.True, "Zero longitude should be valid");
-        Assert.That(MapsComponentHelper.ValidateLongitude(180.0), Is.True, "Maximum longitude should be valid");
-        Assert.That(MapsComponentHelper.ValidateLongitude(120.5), Is.True, "Mid-range longitude should be valid");
+        await Assert.That(MapsComponentHelper.ValidateLongitude(-180.0)).IsTrue();
+        await Assert.That(MapsComponentHelper.ValidateLongitude(0.0)).IsTrue();
+        await Assert.That(MapsComponentHelper.ValidateLongitude(180.0)).IsTrue();
+        await Assert.That(MapsComponentHelper.ValidateLongitude(120.5)).IsTrue();
     }
 
     [Test]
-    public void ValidateLongitude_InvalidRange_ReturnsFalse()
+    public async Task ValidateLongitude_InvalidRange_ReturnsFalse()
     {
         // Arrange & Act & Assert
-        Assert.That(MapsComponentHelper.ValidateLongitude(-180.1), Is.False, "Longitude below -180 should be invalid");
-        Assert.That(MapsComponentHelper.ValidateLongitude(180.1), Is.False, "Longitude above 180 should be invalid");
-        Assert.That(MapsComponentHelper.ValidateLongitude(-200.0), Is.False, "Longitude -200 should be invalid");
-        Assert.That(MapsComponentHelper.ValidateLongitude(200.0), Is.False, "Longitude 200 should be invalid");
+        await Assert.That(MapsComponentHelper.ValidateLongitude(-180.1)).IsFalse();
+        await Assert.That(MapsComponentHelper.ValidateLongitude(180.1)).IsFalse();
+        await Assert.That(MapsComponentHelper.ValidateLongitude(-200.0)).IsFalse();
+        await Assert.That(MapsComponentHelper.ValidateLongitude(200.0)).IsFalse();
     }
 
     [Test]
-    public void NormalizeCoordinates_ValidCoordinates_ReturnsOriginal()
+    public async Task NormalizeCoordinates_ValidCoordinates_ReturnsOriginal()
     {
         // Arrange
         var latitude = 45.5;
@@ -86,12 +83,12 @@ internal class MapsTests : TestHarness
         var (normalizedLat, normalizedLon) = MapsComponentHelper.NormalizeCoordinates(latitude, longitude);
 
         // Assert
-        Assert.That(normalizedLat, Is.EqualTo(latitude), "Valid latitude should remain unchanged");
-        Assert.That(normalizedLon, Is.EqualTo(longitude), "Valid longitude should remain unchanged");
+        await Assert.That(normalizedLat).IsEqualTo(latitude);
+        await Assert.That(normalizedLon).IsEqualTo(longitude);
     }
 
     [Test]
-    public void NormalizeCoordinates_InvalidLatitude_DefaultsToZero()
+    public async Task NormalizeCoordinates_InvalidLatitude_DefaultsToZero()
     {
         // Arrange
         var invalidLatitude = 95.0; // Out of range
@@ -101,12 +98,12 @@ internal class MapsTests : TestHarness
         var (normalizedLat, normalizedLon) = MapsComponentHelper.NormalizeCoordinates(invalidLatitude, validLongitude);
 
         // Assert
-        Assert.That(normalizedLat, Is.EqualTo(0.0), "Invalid latitude should default to 0.0");
-        Assert.That(normalizedLon, Is.EqualTo(validLongitude), "Valid longitude should remain unchanged");
+        await Assert.That(normalizedLat).IsEqualTo(0.0);
+        await Assert.That(normalizedLon).IsEqualTo(validLongitude);
     }
 
     [Test]
-    public void NormalizeCoordinates_InvalidLongitude_DefaultsToZero()
+    public async Task NormalizeCoordinates_InvalidLongitude_DefaultsToZero()
     {
         // Arrange
         var validLatitude = 45.5;
@@ -116,12 +113,12 @@ internal class MapsTests : TestHarness
         var (normalizedLat, normalizedLon) = MapsComponentHelper.NormalizeCoordinates(validLatitude, invalidLongitude);
 
         // Assert
-        Assert.That(normalizedLat, Is.EqualTo(validLatitude), "Valid latitude should remain unchanged");
-        Assert.That(normalizedLon, Is.EqualTo(0.0), "Invalid longitude should default to 0.0");
+        await Assert.That(normalizedLat).IsEqualTo(validLatitude);
+        await Assert.That(normalizedLon).IsEqualTo(0.0);
     }
 
     [Test]
-    public void NormalizeCoordinates_BothInvalid_DefaultsBothToZero()
+    public async Task NormalizeCoordinates_BothInvalid_DefaultsBothToZero()
     {
         // Arrange
         var invalidLatitude = -100.0; // Out of range
@@ -131,28 +128,29 @@ internal class MapsTests : TestHarness
         var (normalizedLat, normalizedLon) = MapsComponentHelper.NormalizeCoordinates(invalidLatitude, invalidLongitude);
 
         // Assert
-        Assert.That(normalizedLat, Is.EqualTo(0.0), "Invalid latitude should default to 0.0");
-        Assert.That(normalizedLon, Is.EqualTo(0.0), "Invalid longitude should default to 0.0");
+        await Assert.That(normalizedLat).IsEqualTo(0.0);
+        await Assert.That(normalizedLon).IsEqualTo(0.0);
     }
 
     [Test]
-    public void NormalizeCoordinates_BoundaryValues_HandlesCorrectly()
+    public async Task NormalizeCoordinates_BoundaryValues_HandlesCorrectly()
     {
         // Arrange & Act & Assert - Test boundary values
         var (lat1, lon1) = MapsComponentHelper.NormalizeCoordinates(-90.0, -180.0);
-        Assert.That(lat1, Is.EqualTo(-90.0), "Minimum latitude boundary should be valid");
-        Assert.That(lon1, Is.EqualTo(-180.0), "Minimum longitude boundary should be valid");
+        await Assert.That(lat1).IsEqualTo(-90.0);
+        await Assert.That(lon1).IsEqualTo(-180.0);
 
         var (lat2, lon2) = MapsComponentHelper.NormalizeCoordinates(90.0, 180.0);
-        Assert.That(lat2, Is.EqualTo(90.0), "Maximum latitude boundary should be valid");
-        Assert.That(lon2, Is.EqualTo(180.0), "Maximum longitude boundary should be valid");
+        await Assert.That(lat2).IsEqualTo(90.0);
+        await Assert.That(lon2).IsEqualTo(180.0);
     }
 
     [Test]
-    public void Render_WithValidCoordinates_RendersComponent()
+    public async Task Render_WithValidCoordinates_RendersComponent()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act
@@ -161,16 +159,17 @@ internal class MapsTests : TestHarness
             .Add(p => p.Longitude, -120.3));
 
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Markup, Does.Contain("map-"), "Component should contain map element ID");
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
+        await Assert.That(cut.Markup).Contains("map-");
     }
 
     [Test]
-    public void Render_WithValidCoordinates_ContainsMapElement()
+    public async Task Render_WithValidCoordinates_ContainsMapElement()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act
@@ -180,17 +179,18 @@ internal class MapsTests : TestHarness
 
         // Assert
         var mapElement = cut.Find("div[id^='map-']");
-        Assert.That(mapElement, Is.Not.Null, "Component should contain a div with map element ID");
+        await Assert.That(mapElement).IsNotNull();
         var style = mapElement.GetAttribute("style");
-        Assert.That(style, Does.Contain("width: 100%"), "Map element should have 100% width");
-        Assert.That(style, Does.Contain("height: 100%"), "Map element should have 100% height");
+        await Assert.That(style).Contains("width: 100%");
+        await Assert.That(style).Contains("height: 100%");
     }
 
     [Test]
-    public void Render_WithInvalidCoordinates_UsesDefaultLocation()
+    public async Task Render_WithInvalidCoordinates_UsesDefaultLocation()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act - Invalid coordinates should be normalized to (0, 0)
@@ -199,15 +199,16 @@ internal class MapsTests : TestHarness
             .Add(p => p.Longitude, 200.0)); // Invalid longitude
 
         // Assert - Component should still render (coordinates normalized internally)
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
     }
 
     [Test]
-    public void Render_WithDefaultParameters_UsesDefaults()
+    public async Task Render_WithDefaultParameters_UsesDefaults()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act - Only provide required parameters, optional should use defaults
@@ -216,15 +217,16 @@ internal class MapsTests : TestHarness
             .Add(p => p.Longitude, -120.3));
 
         // Assert
-        Assert.That(cut.Instance.ZoomLevel, Is.EqualTo(13), "Default zoom level should be 13");
-        Assert.That(cut.Instance.MapType, Is.EqualTo("satellite"), "Default map type should be satellite");
+        await Assert.That(cut.Instance.ZoomLevel).IsEqualTo(13);
+        await Assert.That(cut.Instance.MapType).IsEqualTo("satellite");
     }
 
     [Test]
-    public void Render_WithCustomZoomLevel_UsesCustomValue()
+    public async Task Render_WithCustomZoomLevel_UsesCustomValue()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act
@@ -234,14 +236,15 @@ internal class MapsTests : TestHarness
             .Add(p => p.ZoomLevel, 10));
 
         // Assert
-        Assert.That(cut.Instance.ZoomLevel, Is.EqualTo(10), "Component should use custom zoom level");
+        await Assert.That(cut.Instance.ZoomLevel).IsEqualTo(10);
     }
 
     [Test]
-    public void Render_WithCustomMapType_UsesCustomValue()
+    public async Task Render_WithCustomMapType_UsesCustomValue()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act
@@ -251,14 +254,15 @@ internal class MapsTests : TestHarness
             .Add(p => p.MapType, "roadmap"));
 
         // Assert
-        Assert.That(cut.Instance.MapType, Is.EqualTo("roadmap"), "Component should use custom map type");
+        await Assert.That(cut.Instance.MapType).IsEqualTo("roadmap");
     }
 
     [Test]
-    public void Render_WithoutRequiredParameters_ThrowsException()
+    public async Task Render_WithoutRequiredParameters_ThrowsException()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act & Assert - EditorRequired attribute should cause validation error
@@ -268,14 +272,15 @@ internal class MapsTests : TestHarness
 
         // The component should still render, but parameters will have default values
         // EditorRequired is enforced at runtime by Blazor, not at compile time
-        Assert.That(cut, Is.Not.Null);
+        await Assert.That(cut).IsNotNull();
     }
 
     [Test]
-    public void SetParameters_WithCoordinateChanges_UpdatesComponent()
+    public async Task SetParameters_WithCoordinateChanges_UpdatesComponent()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         var cut = ctx.RenderComponent<Maps>(parameters => parameters
@@ -288,15 +293,16 @@ internal class MapsTests : TestHarness
             .Add(p => p.Longitude, -125.0));
 
         // Assert
-        Assert.That(cut.Instance.Latitude, Is.EqualTo(50.0), "Latitude should be updated");
-        Assert.That(cut.Instance.Longitude, Is.EqualTo(-125.0), "Longitude should be updated");
+        await Assert.That(cut.Instance.Latitude).IsEqualTo(50.0);
+        await Assert.That(cut.Instance.Longitude).IsEqualTo(-125.0);
     }
 
     [Test]
-    public void SetParameters_WithZoomLevelChange_UpdatesComponent()
+    public async Task SetParameters_WithZoomLevelChange_UpdatesComponent()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         var cut = ctx.RenderComponent<Maps>(parameters => parameters
@@ -311,14 +317,15 @@ internal class MapsTests : TestHarness
             .Add(p => p.ZoomLevel, 15));
 
         // Assert
-        Assert.That(cut.Instance.ZoomLevel, Is.EqualTo(15), "Zoom level should be updated");
+        await Assert.That(cut.Instance.ZoomLevel).IsEqualTo(15);
     }
 
     [Test]
-    public void SetParameters_WithMapTypeChange_UpdatesComponent()
+    public async Task SetParameters_WithMapTypeChange_UpdatesComponent()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        Setup();
+        using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
         var cut = ctx.RenderComponent<Maps>(parameters => parameters
@@ -333,7 +340,7 @@ internal class MapsTests : TestHarness
             .Add(p => p.MapType, "terrain"));
 
         // Assert
-        Assert.That(cut.Instance.MapType, Is.EqualTo("terrain"), "Map type should be updated");
+        await Assert.That(cut.Instance.MapType).IsEqualTo("terrain");
     }
 
     [Test]
@@ -343,7 +350,8 @@ internal class MapsTests : TestHarness
         var artifactFile = GetArtifactFileInfo("Maps.jpeg");
         if (File.Exists(artifactFile.FullName))
         {
-            Assert.Ignore($"Artifact image already exists at {artifactFile.FullName}. Skipping image generation.");
+            // TUnit doesn't have Assert.Ignore - just return early
+            return;
         }
         
         // Arrange
@@ -361,8 +369,8 @@ internal class MapsTests : TestHarness
             .Add(p => p.MapType, "roadmap"));
         
         // Assert component rendered
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
         
         // Generate image from rendered HTML
         await GenerateComponentImage(cut.Markup, artifactFile.FullName);
@@ -372,15 +380,15 @@ internal class MapsTests : TestHarness
         var txtFile = GetArtifactFileInfo("Maps.txt");
         var txtExists = File.Exists(txtFile.FullName);
         
-        Assert.That(jpegExists || txtExists, Is.True, $"Artifact should be created at {artifactFile.FullName} or {txtFile.FullName}");
+        await Assert.That(jpegExists || txtExists).IsTrue();
         
         if (jpegExists)
         {
-            Assert.That(new FileInfo(artifactFile.FullName).Length, Is.GreaterThan(0), "Image file should not be empty");
+            await Assert.That(new FileInfo(artifactFile.FullName).Length).IsGreaterThan(0);
         }
         else if (txtExists)
         {
-            Assert.That(new FileInfo(txtFile.FullName).Length, Is.GreaterThan(0), "Text file should not be empty");
+            await Assert.That(new FileInfo(txtFile.FullName).Length).IsGreaterThan(0);
         }
     }
 

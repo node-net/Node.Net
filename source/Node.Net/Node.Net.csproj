@@ -32,11 +32,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
   
-  <!-- Exclude Razor components from net48 and netstandard2.0 builds (Razor components require .NET 6+) -->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' Or '$(TargetFramework)' == 'netstandard2.0' ">
-    <Content Remove="Components\*.razor" />
-    <None Include="Components\*.razor" />
-  </ItemGroup>
+  <!-- Components have been moved to Node.Net.Components project -->
 
   <!-- Package references for non-net46 targets -->
   <!-- System.Drawing.Common 8.0.2 requires .NET 6.0+, so exclude from netstandard2.0 and net48 -->
@@ -74,11 +70,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
   </ItemGroup>
 
-  <!-- Fluent UI Blazor components (excluded from net48 and netstandard2.0 as Fluent UI requires .NET 6+) -->
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net48' And '$(TargetFramework)' != 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.2" />
-    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.13.2" />
-  </ItemGroup>
+  <!-- Fluent UI Blazor components have been moved to Node.Net.Components project -->
 
   <!-- Windows Runtime support for .NET 8.0+ (for WinRT APIs like UserInformation) -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0-windows' ">
@@ -116,16 +108,7 @@
     <Page Remove="View\**" />
   </ItemGroup>
 
-  <!-- Include JavaScript modules for Razor components -->
-  <!-- .razor.js files are automatically included as static web assets by the Razor SDK -->
-  <!-- But we need to ensure they're accessible at _content/Node.Net/Components/*.razor.js -->
-  <!-- The Razor SDK places them at Components/*.razor.js, so we need to map them correctly -->
-  <!-- Only include for Blazor-compatible frameworks (net8.0, net8.0-windows) - exclude netstandard2.0 -->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows' ">
-    <Content Include="Components\*.razor.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  <!-- JavaScript modules for Razor components have been moved to Node.Net.Components project -->
   
   <!-- Ensure static web assets are configured correctly -->
   <!-- Only configure for Blazor-compatible frameworks (net8.0, net8.0-windows) - exclude netstandard2.0 -->

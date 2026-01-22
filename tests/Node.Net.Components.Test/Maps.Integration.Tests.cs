@@ -2,52 +2,58 @@
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
-using NUnit.Framework;
+using TUnit;
 using Node.Net.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
 
-namespace Node.Net.Test.Components;
+namespace Node.Net.Components.Test;
 
 /// <summary>
 /// Integration tests for Maps component in example applications.
 /// These tests verify that the Maps component can be used in both Blazor Server and WebAssembly hosting models.
 /// </summary>
-[TestFixture]
 internal class MapsIntegrationTests
 {
     private Bunit.TestContext _ctx = null!;
 
-    [SetUp]
-    public void Setup()
+    private void Setup()
     {
         _ctx = new Bunit.TestContext();
         _ctx.Services.AddFluentUIComponents();
         ConfigureJSInteropForLeaflet(_ctx);
     }
 
-    [TearDown]
-    public void TearDown()
+    private void TearDown()
     {
         _ctx?.Dispose();
     }
 
     [Test]
-    public void MapsComponent_CanBeRenderedInBlazorServerContext()
+    public async Task MapsComponent_CanBeRenderedInBlazorServerContext()
     {
-        // Arrange & Act
-        var cut = _ctx.RenderComponent<Maps>(parameters => parameters
-            .Add(p => p.Latitude, 45.5)
-            .Add(p => p.Longitude, -120.3));
+        Setup();
+        try
+        {
+            // Arrange & Act
+            var cut = _ctx.RenderComponent<Maps>(parameters => parameters
+                .Add(p => p.Latitude, 45.5)
+                .Add(p => p.Longitude, -120.3));
 
-        // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Markup, Does.Contain("map-"), "Component should contain map element");
+            // Assert
+            await Assert.That(cut).IsNotNull();
+            await Assert.That(cut.Markup).IsNotEmpty();
+            await Assert.That(cut.Markup).Contains("map-");
+        }
+        finally
+        {
+            TearDown();
+        }
     }
 
     [Test]
-    public void MapsComponent_CanBeRenderedInWebAssemblyContext()
+    public async Task MapsComponent_CanBeRenderedInWebAssemblyContext()
     {
+        Setup();
         // Arrange & Act - Same component works in both contexts
         var cut = _ctx.RenderComponent<Maps>(parameters => parameters
             .Add(p => p.Latitude, 37.7749)
@@ -56,17 +62,18 @@ internal class MapsIntegrationTests
             .Add(p => p.MapType, "roadmap"));
 
         // Assert
-        Assert.That(cut, Is.Not.Null);
-        Assert.That(cut.Markup, Is.Not.Empty);
-        Assert.That(cut.Instance.Latitude, Is.EqualTo(37.7749));
-        Assert.That(cut.Instance.Longitude, Is.EqualTo(-122.4194));
-        Assert.That(cut.Instance.ZoomLevel, Is.EqualTo(13));
-        Assert.That(cut.Instance.MapType, Is.EqualTo("roadmap"));
+        await Assert.That(cut).IsNotNull();
+        await Assert.That(cut.Markup).IsNotEmpty();
+        await Assert.That(cut.Instance.Latitude).IsEqualTo(37.7749);
+        await Assert.That(cut.Instance.Longitude).IsEqualTo(-122.4194);
+        await Assert.That(cut.Instance.ZoomLevel).IsEqualTo(13);
+        await Assert.That(cut.Instance.MapType).IsEqualTo("roadmap");
     }
 
     [Test]
-    public void MapsComponent_HandlesMultipleInstances()
+    public async Task MapsComponent_HandlesMultipleInstances()
     {
+        Setup();
         // Arrange & Act - Render multiple map instances (simulating multiple maps on a page)
         var cut1 = _ctx.RenderComponent<Maps>(parameters => parameters
             .Add(p => p.Latitude, 40.7128)
@@ -77,29 +84,30 @@ internal class MapsIntegrationTests
             .Add(p => p.Longitude, -0.1278));
 
         // Assert - Both should render independently
-        Assert.That(cut1, Is.Not.Null);
-        Assert.That(cut2, Is.Not.Null);
-        Assert.That(cut1.Markup, Is.Not.EqualTo(cut2.Markup), "Each map instance should have unique markup");
+        await Assert.That(cut1).IsNotNull();
+        await Assert.That(cut2).IsNotNull();
+        await Assert.That(cut1.Markup).IsNotEqualTo(cut2.Markup);
     }
 
     [Test]
-    public void MapsComponent_WorksWithDefaultParameters()
+    public async Task MapsComponent_WorksWithDefaultParameters()
     {
+        Setup();
         // Arrange & Act - Use only required parameters, defaults should apply
         var cut = _ctx.RenderComponent<Maps>(parameters => parameters
             .Add(p => p.Latitude, 0.0)
             .Add(p => p.Longitude, 0.0));
 
         // Assert
-        Assert.That(cut.Instance.ZoomLevel, Is.EqualTo(13), "Default zoom should be 13");
-        Assert.That(cut.Instance.MapType, Is.EqualTo("satellite"), "Default map type should be satellite");
+        await Assert.That(cut.Instance.ZoomLevel).IsEqualTo(13);
+        await Assert.That(cut.Instance.MapType).IsEqualTo("satellite");
     }
 
     private static void ConfigureJSInteropForLeaflet(Bunit.TestContext ctx)
     {
         // Configure JSInterop for Leaflet map operations
         // The Maps component imports a JavaScript module, so we need to set that up first
-        var modulePath = "./_content/Node.Net/Components/Maps.razor.js";
+        var modulePath = "./_content/Node.Net.Components/Maps.razor.js";
         
         // Setup the module import - SetupModule handles the "import" call
         var moduleInterop = ctx.JSInterop.SetupModule(modulePath);

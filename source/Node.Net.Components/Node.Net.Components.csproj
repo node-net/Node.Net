@@ -1,18 +1,48 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <!-- Multi-target list: keep both windows and non-windows TFMs -->
+    <!-- On Windows, build all targets; on other platforms, exclude Windows-only targets -->
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net8.0;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">net8.0</TargetFrameworks>
+
+    <!-- Common properties -->
+    <OutputType>Library</OutputType>
+    <Version>2.0.11</Version>
+    <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PackageProjectUrl>https://github.com/node-net/Node.Net</PackageProjectUrl>
+    <PackageLicense>LICENSE.txt</PackageLicense>
+    <Authors>Lou Parslow</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <!-- Enable WPF only for windows TFMs -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+    <UseWPF>true</UseWPF>
+    <DefineConstants>IS_WINDOWS</DefineConstants>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.22000.0</TargetPlatformVersion>
+  </PropertyGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.20" />
+  </ItemGroup>
+
+  <!-- Fluent UI Blazor components -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.2" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.13.2" />
+  </ItemGroup>
+
+  <!-- Project reference to Node.Net for service dependencies -->
+  <ItemGroup>
+    <ProjectReference Include="..\Node.Net\Node.Net.csproj" />
   </ItemGroup>
 
 </Project>

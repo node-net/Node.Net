@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\source\Node.Net\Node.Net.csproj" />
+    <ProjectReference Include="..\..\source\Node.Net.Components\Node.Net.Components.csproj" />
   </ItemGroup>
 
 </Project>
