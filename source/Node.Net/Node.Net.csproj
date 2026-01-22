@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <!-- Multi-target list: keep both windows and non-windows TFMs -->
@@ -29,7 +29,6 @@
   <!-- Define IS_WINDOWS for all Windows targets (legacy frameworks are Windows-only) -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net46' Or '$(TargetFramework)' == 'net48'">
     <DefineConstants>IS_WINDOWS;IS_FRAMEWORK</DefineConstants>
-    <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
   
   <!-- Components have been moved to Node.Net.Components project -->
@@ -109,12 +108,6 @@
   </ItemGroup>
 
   <!-- JavaScript modules for Razor components have been moved to Node.Net.Components project -->
-  
-  <!-- Ensure static web assets are configured correctly -->
-  <!-- Only configure for Blazor-compatible frameworks (net8.0, net8.0-windows) - exclude netstandard2.0 -->
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows' ">
-    <StaticWebAssetBasePath>_content/Node.Net</StaticWebAssetBasePath>
-  </PropertyGroup>
 
   <ItemGroup>
     <None Include="Node.Net.256.png">
