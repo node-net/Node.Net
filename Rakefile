@@ -1,5 +1,5 @@
 VERSION = "2.0.11"
-require "raykit"
+#require "raykit"
 require "makit"
 #require_relative "scripts/ruby/makit/nuget_ext"
 
