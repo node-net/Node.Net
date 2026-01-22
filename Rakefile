@@ -35,7 +35,8 @@ task :test => [:build] do
     # Test only compatible targets (Mac/Linux)
     sh "dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}"
   end
-end
+endrake
+
 
 desc "run the examples/Node.Net.AspNet.Host project"
 task :run => [:test] do
