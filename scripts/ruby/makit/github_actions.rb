@@ -4,7 +4,64 @@ require "uri"
 
 module Makit
   module GitHubActions
-    def self.workflow_status(owner, repo, workflow_id: nil, branch: "main", token: nil)
+    # Extracts GitHub repository owner and name from a URL or git remote URL
+    #
+    # @param url [String] GitHub repository URL (https://github.com/owner/repo or git@github.com:owner/repo)
+    # @return [Array<String>] Array containing [owner, repo_name]
+    # @raise [ArgumentError] If URL cannot be parsed
+    #
+    # @example HTTPS URL format
+    #   parse_repo_url("https://github.com/node-net/Node.Net.git")
+    #   # => ["node-net", "Node.Net"]
+    #
+    # @example SSH URL format
+    #   parse_repo_url("git@github.com:node-net/Node.Net.git")
+    #   # => ["node-net", "Node.Net"]
+    #
+    # @example URL without .git extension
+    #   parse_repo_url("https://github.com/microsoft/dotnet")
+    #   # => ["microsoft", "dotnet"]
+    def self.parse_repo_url(url)
+      match = url.match(%r{github\.com[:/]([^/]+)/([^/]+)(?:\.git)?$})
+      if match
+        owner = match[1]
+        repo = match[2].gsub(/\.git$/, "")
+        return [owner, repo]
+      else
+        raise ArgumentError, "Could not parse GitHub repository from URL: #{url}"
+      end
+    end
+
+    # Gets GitHub repository info from git remote origin
+    #
+    # @return [Array<String>] Array containing [owner, repo_name]
+    # @raise [RuntimeError] If git remote URL cannot be determined or parsed
+    def self.get_repo_from_git
+      remote_url = `git config --get remote.origin.url`.strip
+      if remote_url.empty?
+        raise "Could not determine git remote URL. Make sure you're in a git repository with a remote configured."
+      end
+      parse_repo_url(remote_url)
+    end
+
+    # Queries GitHub Actions API for workflow run status
+    #
+    # @param owner [String, nil] Repository owner (required if repo_url is nil)
+    # @param repo [String, nil] Repository name (required if repo_url is nil)
+    # @param repo_url [String, nil] GitHub repository URL or git remote URL (alternative to owner/repo)
+    # @param workflow_id [String, nil] Specific workflow ID to query (optional)
+    # @param branch [String] Branch name to query (default: "main")
+    # @param token [String, nil] GitHub Personal Access Token (optional, will use GITHUB_TOKEN env var if not provided)
+    # @return [Hash] Workflow status information
+    # @raise [RuntimeError] If authentication fails or API error occurs
+    def self.workflow_status(owner: nil, repo: nil, repo_url: nil, workflow_id: nil, branch: "main", token: nil)
+      # Determine owner and repo from URL if provided
+      if repo_url
+        owner, repo = parse_repo_url(repo_url)
+      elsif owner.nil? || repo.nil?
+        # Try to get from git if not provided
+        owner, repo = get_repo_from_git
+      end
       # Token should be provided by caller, but fallback to environment variable if not provided
       token ||= ENV["GITHUB_TOKEN"]
 

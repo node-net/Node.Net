@@ -4,7 +4,7 @@ require "makit"
 require_relative "scripts/ruby/makit/github_actions"
 #require_relative "scripts/ruby/makit/nuget_ext"
 
-task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
+task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync,:actions_status]
 
 task :build do
   puts `rufo .`
@@ -106,39 +106,22 @@ def compatible_targets
   end
 end
 
-def get_github_repo_info
-  remote_url = `git config --get remote.origin.url`.strip
-  if remote_url.empty?
-    raise "Could not determine git remote URL. Make sure you're in a git repository with a remote configured."
-  end
-
-  # Handle both https:// and git@ formats
-  match = remote_url.match(%r{github\.com[:/]([^/]+)/([^/]+)(?:\.git)?$})
-  if match
-    owner = match[1]
-    repo = match[2].gsub(/\.git$/, "")
-    return [owner, repo]
-  else
-    raise "Could not parse GitHub repository from remote URL: #{remote_url}"
-  end
-end
-
 desc "Query GitHub Actions workflow status"
 task :actions_status do
   begin
-    owner, repo = get_github_repo_info
     branch = `git rev-parse --abbrev-ref HEAD`.strip
     branch = "main" if branch.empty?
 
+    # Get owner and repo for display (workflow_status will get it internally if not provided)
+    owner, repo = Makit::GitHubActions.get_repo_from_git
     puts "Querying GitHub Actions status for #{owner}/#{repo} (branch: #{branch})..."
 
     if (Makit::Secrets.has_key?("github_token"))
       token = Makit::Secrets.get("github_token")
-      puts "token: #{token}"
-      result = Makit::GitHubActions::workflow_status(owner, repo, branch: branch, token: token)
+      result = Makit::GitHubActions::workflow_status(branch: branch, token: token)
     else
       puts "github_token SECRET not available"
-      result = Makit::GitHubActions::workflow_status(owner, repo, branch: branch)
+      result = Makit::GitHubActions::workflow_status(branch: branch)
     end
 
     if result[:status] == "not_found"
