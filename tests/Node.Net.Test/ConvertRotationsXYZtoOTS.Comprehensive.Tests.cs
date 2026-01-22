@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
+using System.Threading.Tasks;
 using Node.Net;
 using static System.Math;
 
@@ -18,7 +18,6 @@ namespace Node.Net.Test
     /// 3. Extracts OTS rotations from the matrix
     /// 4. Sets the OTS rotations in the result dictionary
     /// </summary>
-    [TestFixture]
     internal class ConvertRotationsXYZtoOTSComprehensiveTests
     {
         #region Basic Functionality Tests

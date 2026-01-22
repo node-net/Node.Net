@@ -94,9 +94,9 @@ namespace Node.Net.Test
             string result = imageSource.ToString();
 
             // Assert
-            await Assert.That(result, Does.Contain("TestImageSource"));
-            await Assert.That(result, Does.Contain("Width=100"));
-            await Assert.That(result, Does.Contain("Height=200"));
+            await Assert.That(result.Contains("TestImageSource")).IsTrue();
+            await Assert.That(result.Contains("Width=100")).IsTrue();
+            await Assert.That(result.Contains("Height=200")).IsTrue();
 #endif
         }
 

@@ -57,7 +57,7 @@ namespace Node.Net.Test
 
             // Assert
             await Assert.That(drawingImage, Is.Not.Null);
-            await Assert.That(drawingImage.Drawing, Is.Null);
+            await Assert.That(drawingImage.Drawing).IsNull();
         }
 
         [Test]

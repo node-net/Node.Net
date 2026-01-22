@@ -6,8 +6,6 @@
 packages/
 *.nupkg
 
-# Speckit
-specs/
 
 # User-specific files
 *.suo

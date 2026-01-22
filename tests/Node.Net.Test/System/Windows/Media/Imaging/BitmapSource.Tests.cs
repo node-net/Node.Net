@@ -500,8 +500,8 @@ namespace Node.Net.Test
                 bitmapImage.EndInit();
 
                 // Assert
-                await Assert.That(bitmapImage.PixelWidth, Is.GreaterThan(0));
-                await Assert.That(bitmapImage.PixelHeight, Is.GreaterThan(0));
+                await Assert.That(bitmapImage.PixelWidth).IsGreaterThan(0);
+                await Assert.That(bitmapImage.PixelHeight).IsGreaterThan(0);
             }
             catch (System.NotSupportedException)
             {
