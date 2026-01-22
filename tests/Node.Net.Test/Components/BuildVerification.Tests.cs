@@ -23,11 +23,17 @@ internal class BuildVerificationTests : TestHarness
     /// <summary>
     /// Executes a build command and returns the result with improved error handling.
     /// </summary>
-    private (int ExitCode, string Output, string Error) ExecuteBuild(string projectPath, string? framework = null, int timeoutMs = 60000)
+    private (int ExitCode, string Output, string Error) ExecuteBuild(string projectPath, string? framework = null, string? configuration = null, int timeoutMs = 60000)
     {
-        var arguments = framework != null 
-            ? $"build \"{projectPath}\" --framework {framework}"
-            : $"build \"{projectPath}\"";
+        var arguments = $"build \"{projectPath}\"";
+        if (configuration != null)
+        {
+            arguments += $" --configuration {configuration}";
+        }
+        if (framework != null)
+        {
+            arguments += $" --framework {framework}";
+        }
             
         var processStartInfo = new ProcessStartInfo
         {
@@ -100,7 +106,7 @@ internal class BuildVerificationTests : TestHarness
             $"Project file not found at: {projectPath}. Repo root: {repoRoot.FullName}");
 
         // Act
-        var (exitCode, output, error) = ExecuteBuild(projectPath, "netstandard2.0");
+        var (exitCode, output, error) = ExecuteBuild(projectPath, "netstandard2.0", "Release");
 
         // Assert
         if (exitCode != 0)
@@ -128,13 +134,9 @@ internal class BuildVerificationTests : TestHarness
             $"Project file not found at: {projectPath}. Repo root: {repoRoot.FullName}");
 
         // Act
-        var (exitCode, output, error) = ExecuteBuild(projectPath);
+        var (exitCode, output, error) = ExecuteBuild(projectPath, configuration: "Release");
 
         // Assert
-        // Verify netstandard2.0 is mentioned in output
-        Assert.That(output, Does.Contain("netstandard2.0"), 
-            "Build output should mention netstandard2.0 target framework");
-        
         if (exitCode != 0)
         {
             var filteredErrors = FilterErrors(output, error);
@@ -145,6 +147,10 @@ internal class BuildVerificationTests : TestHarness
         
         Assert.That(exitCode, Is.EqualTo(0), 
             $"Build succeeded for all target frameworks");
+        
+        // Verify netstandard2.0 is mentioned in output (only check if build succeeded)
+        Assert.That(output + error, Does.Contain("netstandard2.0"), 
+            "Build output should mention netstandard2.0 target framework");
     }
 
     [Test]
@@ -175,7 +181,7 @@ internal class BuildVerificationTests : TestHarness
         foreach (var framework in frameworks)
         {
             // Act
-            var (exitCode, output, error) = ExecuteBuild(projectPath, framework);
+            var (exitCode, output, error) = ExecuteBuild(projectPath, framework, "Release");
 
             // Assert
             if (exitCode != 0)
