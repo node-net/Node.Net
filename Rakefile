@@ -72,6 +72,7 @@ task :publish => [:build, :tag] do
 end
 
 task :setup do
+
   # secrets management
   #if (SECRETS.has_key?("nuget_api_key"))
   #  Makit::Secrets.set("nuget_api_key", SECRETS["nuget_api_key"])
@@ -133,6 +134,7 @@ task :actions_status do
 
     if (Makit::Secrets.has_key?("github_token"))
       token = Makit::Secrets.get("github_token")
+      puts "token: #{token}"
       result = Makit::GitHubActions::workflow_status(owner, repo, branch: branch, token: token)
     else
       puts "github_token SECRET not available"
