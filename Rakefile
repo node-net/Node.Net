@@ -4,7 +4,7 @@ require "makit"
 require_relative "scripts/ruby/makit/github_actions"
 #require_relative "scripts/ruby/makit/nuget_ext"
 
-task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync,:actions_status]
+task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync, :actions_status]
 
 task :build do
   puts `rufo .`
@@ -35,8 +35,7 @@ task :test => [:build] do
     # Test only compatible targets (Mac/Linux)
     sh "dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}"
   end
-endrake
-
+end
 
 desc "run the examples/Node.Net.AspNet.Host project"
 task :run => [:test] do
@@ -109,48 +108,7 @@ end
 
 desc "Query GitHub Actions workflow status"
 task :actions_status do
-  begin
-    branch = `git rev-parse --abbrev-ref HEAD`.strip
-    branch = "main" if branch.empty?
-
-    # Get owner and repo for display (workflow_status will get it internally if not provided)
-    owner, repo = Makit::GitHubActions.get_repo_from_git
-    puts "Querying GitHub Actions status for #{owner}/#{repo} (branch: #{branch})..."
-
-    if (Makit::Secrets.has_key?("github_token"))
-      token = Makit::Secrets.get("github_token")
-      result = Makit::GitHubActions::workflow_status(branch: branch, token: token)
-    else
-      puts "github_token SECRET not available"
-      result = Makit::GitHubActions::workflow_status(branch: branch)
-    end
-
-    if result[:status] == "not_found"
-      puts "⚠️  #{result[:message]}"
-    else
-      status_emoji = case result[:conclusion]
-        when "success"
-          "✅"
-        when "failure"
-          "❌"
-        when "cancelled"
-          "🚫"
-        when nil
-          result[:status] == "completed" ? "⏸️" : "🔄"
-        else
-          "❓"
-        end
-
-      puts "\n#{status_emoji} Workflow Status: #{result[:workflow_name] || "Unknown"}"
-      puts "   Status: #{result[:status]}"
-      puts "   Conclusion: #{result[:conclusion] || "N/A"}" if result[:conclusion]
-      puts "   Run Number: ##{result[:run_number]}" if result[:run_number]
-      puts "   Created: #{result[:created_at]}" if result[:created_at]
-      puts "   Updated: #{result[:updated_at]}" if result[:updated_at]
-      puts "   URL: #{result[:html_url]}" if result[:html_url]
-    end
-  rescue => e
-    puts "❌ Error: #{e.message}"
-    exit 1
-  end
+  Makit::GitHubActions.query_and_display_status
+rescue => e
+  exit 1
 end

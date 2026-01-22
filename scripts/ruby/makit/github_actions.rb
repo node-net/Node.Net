@@ -4,6 +4,82 @@ require "uri"
 
 module Makit
   module GitHubActions
+    # Gets the current git branch, defaulting to "main" if not available
+    #
+    # @return [String] Current branch name
+    def self.get_current_branch
+      branch = `git rev-parse --abbrev-ref HEAD`.strip
+      branch.empty? ? "main" : branch
+    end
+
+    # Gets GitHub token from secrets or environment variable
+    #
+    # @return [String, nil] GitHub token if available
+    def self.get_token
+      if defined?(Makit::Secrets) && Makit::Secrets.has_key?("github_token")
+        Makit::Secrets.get("github_token")
+      else
+        ENV["GITHUB_TOKEN"]
+      end
+    end
+
+    # Formats and displays workflow status information
+    #
+    # @param result [Hash] Workflow status result from workflow_status
+    # @param owner [String] Repository owner (for display)
+    # @param repo [String] Repository name (for display)
+    # @param branch [String] Branch name (for display)
+    def self.display_status(result, owner, repo, branch)
+      if result[:status] == "not_found"
+        puts "⚠️  #{result[:message]}"
+      else
+        status_emoji = case result[:conclusion]
+          when "success"
+            "✅"
+          when "failure"
+            "❌"
+          when "cancelled"
+            "🚫"
+          when nil
+            result[:status] == "completed" ? "⏸️" : "🔄"
+          else
+            "❓"
+          end
+
+        puts "\n#{status_emoji} Workflow Status: #{result[:workflow_name] || "Unknown"}"
+        puts "   Status: #{result[:status]}"
+        puts "   Conclusion: #{result[:conclusion] || "N/A"}" if result[:conclusion]
+        puts "   Run Number: ##{result[:run_number]}" if result[:run_number]
+        puts "   Created: #{result[:created_at]}" if result[:created_at]
+        puts "   Updated: #{result[:updated_at]}" if result[:updated_at]
+        puts "   URL: #{result[:html_url]}" if result[:html_url]
+      end
+    end
+
+    # Queries and displays GitHub Actions workflow status
+    # Handles all logic including branch detection, token retrieval, and output formatting
+    #
+    # @param branch [String, nil] Branch name to query (default: auto-detect from git)
+    # @param workflow_id [String, nil] Specific workflow ID to query (optional)
+    # @param token [String, nil] GitHub Personal Access Token (optional, will try secrets/env if not provided)
+    # @raise [RuntimeError] If authentication fails or API error occurs
+    def self.query_and_display_status(branch: nil, workflow_id: nil, token: nil)
+      branch ||= get_current_branch
+      owner, repo = get_repo_from_git
+
+      puts "Querying GitHub Actions status for #{owner}/#{repo} (branch: #{branch})..."
+
+      token ||= get_token
+      if token.nil? || token.empty?
+        puts "github_token SECRET not available"
+      end
+
+      result = workflow_status(branch: branch, workflow_id: workflow_id, token: token)
+      display_status(result, owner, repo, branch)
+    rescue => e
+      puts "❌ Error: #{e.message}"
+      raise
+    end
     # Extracts GitHub repository owner and name from a URL or git remote URL
     #
     # @param url [String] GitHub repository URL (https://github.com/owner/repo or git@github.com:owner/repo)
