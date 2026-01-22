@@ -54,14 +54,14 @@ task :publish => [:build, :tag] do
     end
     #if ENV["CI_SERVER"].nil?
 
-    if (!File.exist?("#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg"))
-      FileUtils.cp(package, "#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
-    end
-    if (SECRETS.has_key?("nuget_api_key"))
-      Makit::NuGet::publish(package, SECRETS["nuget_api_key"], "https://api.nuget.org/v3/index.json")
-    else
-      puts "nuget_api_key SECRET not available"
-    end
+    #if (!File.exist?("#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg"))
+    #  FileUtils.cp(package, "#{nuget}/#{PROJECT.name}.#{PROJECT.version}.nupkg")
+    #end
+    #if (SECRETS.has_key?("nuget_api_key"))
+    #  Makit::NuGet::publish(package, SECRETS["nuget_api_key"], "https://api.nuget.org/v3/index.json")
+    #else
+    #  puts "nuget_api_key SECRET not available"
+   # end
     #else
     #puts "CI_SERVER, skipping publish command"
     #end
