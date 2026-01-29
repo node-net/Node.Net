@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-#if IS_WINDOWS || USE_POLYFILL
+#if IS_WINDOWS
 using System.Windows.Media.Media3D;
 #endif
 using static System.Math;
