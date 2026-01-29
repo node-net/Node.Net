@@ -864,7 +864,7 @@ namespace Node.Net
             return info;
         }
 
-#if IS_WINDOWS || USE_POLYFILL
+#if IS_WINDOWS
         public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             Matrix3D matrix3D = new Matrix3D();
