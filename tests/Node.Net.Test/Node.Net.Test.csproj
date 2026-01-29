@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- On Windows, build both targets; on other platforms, exclude Windows-only targets -->
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net8.0;net8.0-windows</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">net8.0</TargetFrameworks>
+    <!-- Match Node.Net: net8.0-windows only for tests (Node.Net supports net48 and net8.0-windows) -->
+    <TargetFrameworks>net8.0-windows</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <!-- Enable WPF only for windows TFMs -->
+  <!-- Enable WPF for net8.0-windows -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
     <UseWPF>true</UseWPF>
     <DefineConstants>IS_WINDOWS</DefineConstants>
@@ -40,26 +39,6 @@
     <Compile Remove="Dictionary.Test.cs" />
   </ItemGroup>
 
-  <!-- Exclude polyfill tests from net8.0 when USE_POLYFILL is not defined (polyfill types are not compiled in Node.Net) -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <Compile Remove="System\Windows\**" />
-    <Compile Remove="Extension\Matrix3D.Extension.Test.cs" />
-    <Compile Remove="Extension\Point.Extension.Test.cs" />
-    <Compile Remove="Extension\Point3D.Extension.Test.cs" />
-    <Compile Remove="Extension\Rect3D.Extension.Test.cs" />
-    <Compile Remove="Extension\PerspectiveCamera.Extension.Test.cs" />
-    <Compile Remove="Extension\IDictionary.Extension.Test.cs" />
-    <Compile Remove="Vector3D.Test.cs" />
-    <Compile Remove="Matrix3D.Test.cs" />
-    <Compile Remove="Matrix3D_Compare_Test.cs" />
-    <Compile Remove="Matrix3D_Diagnostic_Test.cs" />
-    <Compile Remove="Matrix3DFactory.Tests.cs" />
-    <Compile Remove="ConvertRotationsXYZtoOTS.Comprehensive.Tests.cs" />
-    <Compile Remove="ConvertTest.cs" />
-    <Compile Remove="Factory.Test.cs" />
-    <Compile Remove="Dictionary.Test.cs" />
-  </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="JsonRPC\Responder.Test.Data.json" />
     <EmbeddedResource Include="Resources\Node.Net.png" />
@@ -70,6 +49,10 @@
   <ItemGroup>
     <PackageReference Include="TUnit" Version="1.6.20" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <!-- Force same version as Node.Net to avoid CS1705 (TUnit/Test.Sdk can pull 8.0.0.0) -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
+    <!-- Required for SystemUser.Tests: System.Drawing.Image and System.Drawing.Imaging.ImageFormat (type-forwarded from framework) -->
+    <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>

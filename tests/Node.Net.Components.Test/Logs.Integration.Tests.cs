@@ -70,13 +70,13 @@ internal class LogsIntegrationTests : TestHarness
                 IsManualEntry = false
             });
 
-            using var ctx = new Bunit.TestContext();
+            using var ctx = new Bunit.BunitContext();
             ctx.Services.AddFluentUIComponents();
             ctx.Services.AddSingleton<ILogService>(_logService);
             FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
             // Act
-            var cut = ctx.RenderComponent<Logs>();
+            var cut = ctx.Render<Logs>();
 
             // Assert
             await Assert.That(cut).IsNotNull();
@@ -106,13 +106,13 @@ internal class LogsIntegrationTests : TestHarness
                 });
             }
 
-            using var ctx = new Bunit.TestContext();
+            using var ctx = new Bunit.BunitContext();
             ctx.Services.AddFluentUIComponents();
             ctx.Services.AddSingleton<ILogService>(_logService!);
             FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
             // Act
-            var cut = ctx.RenderComponent<Logs>();
+            var cut = ctx.Render<Logs>();
 
             // Assert
             await Assert.That(cut).IsNotNull();

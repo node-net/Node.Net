@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TUnit" Version="1.6.20" />
-    <PackageReference Include="bunit" Version="1.35.3" />
+    <PackageReference Include="TUnit" Version="1.12.82" />
+    <PackageReference Include="bunit" Version="2.5.3" />
     <PackageReference Include="Microsoft.Playwright" Version="1.48.0" />
   </ItemGroup>
 

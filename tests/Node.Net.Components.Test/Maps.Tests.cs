@@ -20,11 +20,11 @@ internal class MapsTests : TestHarness
     {
     }
 
-    private Bunit.TestContext _ctx = null!;
+    private Bunit.BunitContext _ctx = null!;
 
     private void Setup()
     {
-        _ctx = new Bunit.TestContext();
+        _ctx = new Bunit.BunitContext();
         _ctx.Services.AddFluentUIComponents();
     }
 
@@ -155,7 +155,7 @@ internal class MapsTests : TestHarness
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3));
 
@@ -174,7 +174,7 @@ internal class MapsTests : TestHarness
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3));
 
@@ -195,7 +195,7 @@ internal class MapsTests : TestHarness
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act - Invalid coordinates should be normalized to (0, 0)
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 95.0)  // Invalid latitude
             .Add(p => p.Longitude, 200.0)); // Invalid longitude
 
@@ -213,7 +213,7 @@ internal class MapsTests : TestHarness
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act - Only provide required parameters, optional should use defaults
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3));
 
@@ -231,7 +231,7 @@ internal class MapsTests : TestHarness
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3)
             .Add(p => p.ZoomLevel, 10));
@@ -249,7 +249,7 @@ internal class MapsTests : TestHarness
         ConfigureJSInteropForLeaflet(ctx);
 
         // Act
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3)
             .Add(p => p.MapType, "roadmap"));
@@ -269,7 +269,7 @@ internal class MapsTests : TestHarness
         // Act & Assert - EditorRequired attribute should cause validation error
         // Note: bUnit may not enforce EditorRequired in tests, but the component should handle this
         // We'll verify the component structure is correct
-        var cut = ctx.RenderComponent<Maps>();
+        var cut = ctx.Render<Maps>();
 
         // The component should still render, but parameters will have default values
         // EditorRequired is enforced at runtime by Blazor, not at compile time
@@ -284,12 +284,12 @@ internal class MapsTests : TestHarness
         using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3));
 
         // Act - Change coordinates
-        cut.SetParametersAndRender(parameters => parameters
+        cut.Render(parameters => parameters
             .Add(p => p.Latitude, 50.0)
             .Add(p => p.Longitude, -125.0));
 
@@ -306,13 +306,13 @@ internal class MapsTests : TestHarness
         using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3)
             .Add(p => p.ZoomLevel, 10));
 
         // Act - Change zoom level
-        cut.SetParametersAndRender(parameters => parameters
+        cut.Render(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3)
             .Add(p => p.ZoomLevel, 15));
@@ -329,13 +329,13 @@ internal class MapsTests : TestHarness
         using var ctx = _ctx;
         ConfigureJSInteropForLeaflet(ctx);
 
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3)
             .Add(p => p.MapType, "roadmap"));
 
         // Act - Change map type
-        cut.SetParametersAndRender(parameters => parameters
+        cut.Render(parameters => parameters
             .Add(p => p.Latitude, 45.5)
             .Add(p => p.Longitude, -120.3)
             .Add(p => p.MapType, "terrain"));
@@ -356,14 +356,14 @@ internal class MapsTests : TestHarness
         }
         
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         ConfigureJSInteropForLeaflet(ctx);
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
         
         // Render the component
-        var cut = ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 37.7749)
             .Add(p => p.Longitude, -122.4194)
             .Add(p => p.ZoomLevel, 13)
@@ -636,7 +636,7 @@ Original HTML:
         }
     }
 
-    private static void ConfigureJSInteropForLeaflet(Bunit.TestContext ctx)
+    private static void ConfigureJSInteropForLeaflet(Bunit.BunitContext ctx)
     {
         // Configure JSInterop for Leaflet map operations
         // Leaflet uses window.L for the global object

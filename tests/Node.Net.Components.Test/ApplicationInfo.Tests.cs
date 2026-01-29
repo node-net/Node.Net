@@ -24,7 +24,7 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_DisplaysApplicationName()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -32,7 +32,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert
         await Assert.That(cut).IsNotNull();
@@ -46,7 +46,7 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_DisplaysCompanyName()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -54,7 +54,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert
         await Assert.That(cut).IsNotNull();
@@ -66,7 +66,7 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_DisplaysDataDirectory()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -74,7 +74,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert
         await Assert.That(cut).IsNotNull();
@@ -86,7 +86,7 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_DisplaysTargetFramework()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -94,7 +94,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert
         await Assert.That(cut).IsNotNull();
@@ -106,7 +106,7 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_DisplaysExecutingAssemblyFilename()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -114,7 +114,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert
         await Assert.That(cut).IsNotNull();
@@ -126,7 +126,7 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_DisplaysVersion()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -134,7 +134,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert
         await Assert.That(cut).IsNotNull();
@@ -146,7 +146,7 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_DisplaysFallbackWhenMetadataMissing()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -154,7 +154,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert
         await Assert.That(cut).IsNotNull();
@@ -169,7 +169,7 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_MatchesApplicationServiceValues()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -177,7 +177,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert
         await Assert.That(cut).IsNotNull();
@@ -218,7 +218,7 @@ internal class ApplicationInfoTests : TestHarness
         }
         
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
@@ -226,7 +226,7 @@ internal class ApplicationInfoTests : TestHarness
             new Node.Net.Service.Application.Application());
         
         // Render the component
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         
         // Assert component rendered
         await Assert.That(cut).IsNotNull();
@@ -256,14 +256,14 @@ internal class ApplicationInfoTests : TestHarness
     public async Task Render_PerformanceUnder500ms()
     {
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         ctx.Services.AddFluentUIComponents();
         ctx.Services.AddSingleton<Node.Net.Service.Application.IApplication>(
             new Node.Net.Service.Application.Application());
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         
         // Act
-        var cut = ctx.RenderComponent<ApplicationInfo>();
+        var cut = ctx.Render<ApplicationInfo>();
         stopwatch.Stop();
         
         // Assert

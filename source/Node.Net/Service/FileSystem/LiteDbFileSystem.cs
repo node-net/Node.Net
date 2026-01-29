@@ -77,6 +77,16 @@ public class LiteDbFileSystem : IFileSystem, IDisposable
     private ILiteCollection<FileDocument> Files => Database.GetCollection<FileDocument>(FilesCollectionName);
 
     /// <summary>
+    /// Finds a file document by normalized path using BsonExpression (avoids BsonMapper member resolution across assemblies).
+    /// </summary>
+    private FileDocument? FindOneByPath(string normalizedPath)
+    {
+        // Escape single quotes for BsonExpression string literal (double the quote)
+        var pathEscaped = normalizedPath.Replace("'", "''");
+        return Files.FindOne("$.Path = '" + pathEscaped + "'");
+    }
+
+    /// <summary>
     /// Normalizes the file path for use as a key in the database.
     /// </summary>
     /// <param name="path">The file path to normalize.</param>
@@ -151,7 +161,7 @@ public class LiteDbFileSystem : IFileSystem, IDisposable
     {
         ValidatePath(path);
         var normalizedPath = NormalizePath(path);
-        return Files.Exists(f => f.Path == normalizedPath);
+        return FindOneByPath(normalizedPath) != null;
     }
 
     /// <summary>
@@ -167,7 +177,7 @@ public class LiteDbFileSystem : IFileSystem, IDisposable
         ValidatePath(path);
         var normalizedPath = NormalizePath(path);
         
-        var fileDoc = Files.FindOne(f => f.Path == normalizedPath);
+        var fileDoc = FindOneByPath(normalizedPath);
         if (fileDoc == null)
         {
             throw new FileNotFoundException($"File not found: {path}", path);
@@ -203,7 +213,7 @@ public class LiteDbFileSystem : IFileSystem, IDisposable
         };
 
         // Check if file exists and update, otherwise insert
-        var existing = Files.FindOne(f => f.Path == normalizedPath);
+        var existing = FindOneByPath(normalizedPath);
         if (existing != null)
         {
             fileDoc.Id = existing.Id;
@@ -229,7 +239,7 @@ public class LiteDbFileSystem : IFileSystem, IDisposable
         ValidatePath(path);
         var normalizedPath = NormalizePath(path);
         
-        var fileDoc = Files.FindOne(f => f.Path == normalizedPath);
+        var fileDoc = FindOneByPath(normalizedPath);
         if (fileDoc == null)
         {
             throw new FileNotFoundException($"File not found: {path}", path);

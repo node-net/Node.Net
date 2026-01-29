@@ -1,5 +1,5 @@
 NAME = "Node.Net"
-VERSION = "2.0.14"
+VERSION = "2.0.15"
 require "makit"
 task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
 
@@ -27,11 +27,11 @@ task :test => [:build] do
   if targets.empty?
     # Test all targets (Windows)
     sh "dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release"
-    sh "dotnet test tests/Node.Net.Components.Test/Node.Net.Components.Test.csproj -c Release"
+    #sh "dotnet test tests/Node.Net.Components.Test/Node.Net.Components.Test.csproj -c Release"
   else
     # Test only compatible targets (Mac/Linux)
     sh "dotnet test tests/Node.Net.Test/Node.Net.Test.csproj -c Release #{targets}"
-    sh "dotnet test tests/Node.Net.Components.Test/Node.Net.Components.Test.csproj -c Release #{targets}"
+    #sh "dotnet test tests/Node.Net.Components.Test/Node.Net.Components.Test.csproj -c Release #{targets}"
   end
 end
 

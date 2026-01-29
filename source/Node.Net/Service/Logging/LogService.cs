@@ -66,12 +66,12 @@ public class LogService : ILogService, IDisposable
             db = new LiteDatabase(_databasePath);
         }
 
-        // Create indexes for performance
+        // Create indexes for performance (use BsonExpression strings to avoid BsonMapper member resolution across assemblies)
         var collection = db.GetCollection<LogEntry>(LogEntriesCollectionName);
-        collection.EnsureIndex(x => x.Timestamp);
-        collection.EnsureIndex(x => x.Level);
-        collection.EnsureIndex(x => x.Message);
-        collection.EnsureIndex(x => x.IsManualEntry);
+        collection.EnsureIndex("Timestamp");
+        collection.EnsureIndex("Level");
+        collection.EnsureIndex("Message");
+        collection.EnsureIndex("IsManualEntry");
 
         return db;
     }

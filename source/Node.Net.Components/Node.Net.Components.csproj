@@ -8,7 +8,7 @@
 
     <!-- Common properties -->
     <OutputType>Library</OutputType>
-    <Version>2.0.14</Version>
+    <Version>2.0.15</Version>
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.23" />
   </ItemGroup>
 
   <!-- Fluent UI Blazor components -->

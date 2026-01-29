@@ -32,13 +32,13 @@ internal class SystemInfoTests : TestHarness
         }
         
         // Arrange
-        using var ctx = new Bunit.TestContext();
+        using var ctx = new Bunit.BunitContext();
         
         // Add required services for Fluent UI components
         ctx.Services.AddFluentUIComponents();
         
         // Render the component
-        var cut = ctx.RenderComponent<SystemInfo>();
+        var cut = ctx.Render<SystemInfo>();
         
         // Assert component rendered
         await Assert.That(cut).IsNotNull();

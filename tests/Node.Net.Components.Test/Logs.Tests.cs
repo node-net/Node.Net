@@ -80,13 +80,13 @@ internal class LogsTests : TestHarness
                 IsManualEntry = false
             });
 
-            using var ctx = new Bunit.TestContext();
+            using var ctx = new Bunit.BunitContext();
             ctx.Services.AddFluentUIComponents();
             ctx.Services.AddSingleton<ILogService>(_logService!);
             FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
             // Act
-            var cut = ctx.RenderComponent<Logs>();
+            var cut = ctx.Render<Logs>();
 
             // Assert
             await Assert.That(cut).IsNotNull();
@@ -106,13 +106,13 @@ internal class LogsTests : TestHarness
         try
         {
             // Arrange
-            using var ctx = new Bunit.TestContext();
+            using var ctx = new Bunit.BunitContext();
             ctx.Services.AddFluentUIComponents();
             ctx.Services.AddSingleton<ILogService>(_logService!);
             FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
             // Act
-            var cut = ctx.RenderComponent<Logs>();
+            var cut = ctx.Render<Logs>();
 
             // Assert
             await Assert.That(cut).IsNotNull();
@@ -155,13 +155,13 @@ internal class LogsTests : TestHarness
                 IsManualEntry = false
             });
 
-            using var ctx = new Bunit.TestContext();
+            using var ctx = new Bunit.BunitContext();
             ctx.Services.AddFluentUIComponents();
             ctx.Services.AddSingleton<ILogService>(_logService!);
             FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
             // Act
-            var cut = ctx.RenderComponent<Logs>();
+            var cut = ctx.Render<Logs>();
 
             // Assert
             await Assert.That(cut).IsNotNull();
@@ -199,13 +199,13 @@ internal class LogsTests : TestHarness
                 IsManualEntry = false
             });
 
-            using var ctx = new Bunit.TestContext();
+            using var ctx = new Bunit.BunitContext();
             ctx.Services.AddFluentUIComponents();
             ctx.Services.AddSingleton<ILogService>(_logService!);
             FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
             // Act
-            var cut = ctx.RenderComponent<Logs>();
+            var cut = ctx.Render<Logs>();
 
             // Assert
             await Assert.That(cut).IsNotNull();
@@ -235,12 +235,12 @@ internal class LogsTests : TestHarness
                 IsManualEntry = false
             });
 
-            using var ctx = new Bunit.TestContext();
+            using var ctx = new Bunit.BunitContext();
             ctx.Services.AddFluentUIComponents();
             ctx.Services.AddSingleton<ILogService>(_logService!);
             FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
-            var cut = ctx.RenderComponent<Logs>();
+            var cut = ctx.Render<Logs>();
 
             // Act & Assert - Edit button should be disabled or not present for automatic entries
             var allButtons = cut.FindAll("button");
@@ -281,12 +281,12 @@ internal class LogsTests : TestHarness
                 IsManualEntry = false
             });
 
-            using var ctx = new Bunit.TestContext();
+            using var ctx = new Bunit.BunitContext();
             ctx.Services.AddFluentUIComponents();
             ctx.Services.AddSingleton<ILogService>(_logService!);
             FluentUIJSInteropHelper.ConfigureJSInterop(ctx);
 
-            var cut = ctx.RenderComponent<Logs>();
+            var cut = ctx.Render<Logs>();
 
             // Assert - No truncation or expand button for short messages
             await Assert.That(cut.Markup).Contains("Short message");

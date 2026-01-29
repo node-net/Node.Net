@@ -1,4 +1,4 @@
-﻿#if IS_WINDOWS
+#if IS_WINDOWS
 using System;
 using System.Threading.Tasks;
 
@@ -23,7 +23,8 @@ namespace Node.Net.Test.Converters
             
             convertMethod.Invoke(c, new object[] { null, typeof(object), null, null });
             convertMethod.Invoke(c, new object[] { 1, typeof(object), null, null });
-            await Assert.That(() => convertBackMethod.Invoke(c, new object[] { null, typeof(object), null, null })).Throws<NotImplementedException>();
+            // MethodInfo.Invoke wraps thrown exceptions in TargetInvocationException (InnerException = NotImplementedException)
+            await Assert.That(() => convertBackMethod.Invoke(c, new object[] { null, typeof(object), null, null })).Throws<System.Reflection.TargetInvocationException>();
         }
     }
 }

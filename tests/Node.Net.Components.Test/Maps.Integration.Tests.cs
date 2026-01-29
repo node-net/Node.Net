@@ -15,11 +15,11 @@ namespace Node.Net.Components.Test;
 /// </summary>
 internal class MapsIntegrationTests
 {
-    private Bunit.TestContext _ctx = null!;
+    private Bunit.BunitContext _ctx = null!;
 
     private void Setup()
     {
-        _ctx = new Bunit.TestContext();
+        _ctx = new Bunit.BunitContext();
         _ctx.Services.AddFluentUIComponents();
         ConfigureJSInteropForLeaflet(_ctx);
     }
@@ -36,7 +36,7 @@ internal class MapsIntegrationTests
         try
         {
             // Arrange & Act
-            var cut = _ctx.RenderComponent<Maps>(parameters => parameters
+            var cut = _ctx.Render<Maps>(parameters => parameters
                 .Add(p => p.Latitude, 45.5)
                 .Add(p => p.Longitude, -120.3));
 
@@ -56,7 +56,7 @@ internal class MapsIntegrationTests
     {
         Setup();
         // Arrange & Act - Same component works in both contexts
-        var cut = _ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = _ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 37.7749)
             .Add(p => p.Longitude, -122.4194)
             .Add(p => p.ZoomLevel, 13)
@@ -76,11 +76,11 @@ internal class MapsIntegrationTests
     {
         Setup();
         // Arrange & Act - Render multiple map instances (simulating multiple maps on a page)
-        var cut1 = _ctx.RenderComponent<Maps>(parameters => parameters
+        var cut1 = _ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 40.7128)
             .Add(p => p.Longitude, -74.0060));
 
-        var cut2 = _ctx.RenderComponent<Maps>(parameters => parameters
+        var cut2 = _ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 51.5074)
             .Add(p => p.Longitude, -0.1278));
 
@@ -95,7 +95,7 @@ internal class MapsIntegrationTests
     {
         Setup();
         // Arrange & Act - Use only required parameters, defaults should apply
-        var cut = _ctx.RenderComponent<Maps>(parameters => parameters
+        var cut = _ctx.Render<Maps>(parameters => parameters
             .Add(p => p.Latitude, 0.0)
             .Add(p => p.Longitude, 0.0));
 
@@ -104,7 +104,7 @@ internal class MapsIntegrationTests
         await Assert.That(cut.Instance.MapType).IsEqualTo("satellite");
     }
 
-    private static void ConfigureJSInteropForLeaflet(Bunit.TestContext ctx)
+    private static void ConfigureJSInteropForLeaflet(Bunit.BunitContext ctx)
     {
         // Configure JSInterop for Leaflet map operations
         // The Maps component imports a JavaScript module, so we need to set that up first

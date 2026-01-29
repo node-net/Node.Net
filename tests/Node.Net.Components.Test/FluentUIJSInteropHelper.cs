@@ -17,7 +17,7 @@ internal static class FluentUIJSInteropHelper
     /// This sets up all the necessary module imports and method calls that Fluent UI components require.
     /// </summary>
     /// <param name="ctx">The bUnit test context to configure.</param>
-    public static void ConfigureJSInterop(Bunit.TestContext ctx)
+    public static void ConfigureJSInterop(Bunit.BunitContext ctx)
     {
         // Fluent UI components require JSInterop for module imports and method calls
         // When components call InvokeAsync<IJSObjectReference>("import", modulePath),
