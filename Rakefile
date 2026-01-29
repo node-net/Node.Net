@@ -1,5 +1,5 @@
 NAME = "Node.Net"
-VERSION = "2.0.13"
+VERSION = "2.0.14"
 require "makit"
 task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
 
