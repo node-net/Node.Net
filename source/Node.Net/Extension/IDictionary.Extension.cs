@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 //using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+#if IS_WINDOWS || USE_POLYFILL
 using System.Windows.Media.Media3D;
+#endif
 using static System.Math;
 
 namespace Node.Net
@@ -862,6 +864,7 @@ namespace Node.Net
             return info;
         }
 
+#if IS_WINDOWS || USE_POLYFILL
         public static Matrix3D GetLocalToParent(this IDictionary dictionary)
         {
             Matrix3D matrix3D = new Matrix3D();
@@ -1294,6 +1297,7 @@ namespace Node.Net
             }
             return results;
         }
+#endif
 
         /*
         public static IDictionary<string, string> GetLocalToWorldTransforms(this IDictionary idictionary, string type)

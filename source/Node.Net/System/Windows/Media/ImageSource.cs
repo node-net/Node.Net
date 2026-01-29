@@ -2,7 +2,7 @@ using System;
 
 namespace System.Windows.Media
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// Abstract class that provides object representation of an image.
     /// </summary>

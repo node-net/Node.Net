@@ -1,4 +1,5 @@
-﻿using System;
+#if IS_WINDOWS || USE_POLYFILL
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
@@ -103,3 +104,4 @@ namespace Node.Net
         }
     }
 }
+#endif

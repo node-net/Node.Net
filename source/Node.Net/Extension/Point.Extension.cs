@@ -1,4 +1,5 @@
-﻿using System;
+#if IS_WINDOWS || USE_POLYFILL
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -652,3 +653,4 @@ namespace Node.Net
         }
     }
 }
+#endif

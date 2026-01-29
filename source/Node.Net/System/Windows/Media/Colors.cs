@@ -1,6 +1,6 @@
 namespace System.Windows.Media
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// Implements a set of predefined colors.
     /// </summary>

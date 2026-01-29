@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace System.Windows.Media.Imaging
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// Represents a single, constant set of pixels at a certain size and resolution.
     /// </summary>

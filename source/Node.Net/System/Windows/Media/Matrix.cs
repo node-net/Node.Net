@@ -1,4 +1,4 @@
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
 using System;
 
 namespace System.Windows.Media

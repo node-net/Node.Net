@@ -1,7 +1,7 @@
 NAME = "Node.Net"
-VERSION = "2.0.12"
+VERSION = "2.0.13"
 require "makit"
-task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync, :actions_status]
+task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
 
 task :build do
   puts `rufo .`

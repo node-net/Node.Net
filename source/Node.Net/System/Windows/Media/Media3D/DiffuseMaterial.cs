@@ -2,7 +2,7 @@ using System.Windows.Media;
 
 namespace System.Windows.Media.Media3D
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// Allows the application of a 2-D brush, like a SolidColorBrush or TileBrush, to a diffusely lit 3-D model.
     /// </summary>

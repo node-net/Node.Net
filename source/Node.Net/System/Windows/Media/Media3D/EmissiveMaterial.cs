@@ -2,7 +2,7 @@ using System.Windows.Media;
 
 namespace System.Windows.Media.Media3D
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// Allows the application of a Brush to a 3-D model so that it participates in lighting calculations as if the Brush were emitting light.
     /// </summary>

@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace System.Windows.Media.Media3D
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// Represents a collection of Material objects.
     /// </summary>

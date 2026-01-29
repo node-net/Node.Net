@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace System.Windows.Media.Imaging
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// Provides a BitmapSource that is optimized for loading XAML content.
     /// </summary>

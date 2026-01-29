@@ -2,7 +2,7 @@ using System;
 
 namespace System.Windows.Media
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// Describes a color in terms of alpha, red, green, and blue channels.
     /// </summary>

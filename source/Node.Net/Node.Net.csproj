@@ -8,7 +8,7 @@
 
     <!-- Common properties -->
     <OutputType>Library</OutputType>
-    <Version>2.0.12</Version>
+    <Version>2.0.13</Version>
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
     <PackageProjectUrl>https://github.com/node-net/Node.Net</PackageProjectUrl>
@@ -18,7 +18,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <!-- Enable WPF only for windows TFMs -->
+  <!-- USE_POLYFILL: not defined (false) by default. Polyfill code is gated by #if !IS_WINDOWS && USE_POLYFILL.
+       To enable System.Windows polyfills for non-Windows builds in future, add USE_POLYFILL to DefineConstants
+       for the desired TFMs (e.g. net8.0, netstandard2.0). -->
+  <!-- Enable WPF only for windows TFMs. IS_WINDOWS ensures System.Windows polyfill classes
+       (in System/Windows/*.cs, wrapped in #if !IS_WINDOWS && USE_POLYFILL) are NOT compiled for Windows clients. -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows' Or '$(TargetFramework)' == 'net8.0-windows'">
     <UseWPF>true</UseWPF>
     <DefineConstants>IS_WINDOWS</DefineConstants>

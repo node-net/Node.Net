@@ -1,6 +1,6 @@
 using System;
 
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
 namespace System.Windows.Media.Media3D
 {
     /// <summary>

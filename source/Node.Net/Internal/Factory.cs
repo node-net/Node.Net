@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -37,8 +37,10 @@ namespace Node.Net.Internal
                 {typeof(Model3D),Model3DFactory.Create },
                 {typeof(Visual3D), new Visual3DFactory {ParentFactory = this }.Create },
                 {typeof(object), AbstractFactory.Create }
-#else
+#elif USE_POLYFILL
                 {typeof(Matrix3D), new Matrix3DFactory().Create },
+                {typeof(object), CollectionsFactory.Create }
+#else
                 {typeof(object), CollectionsFactory.Create }
 #endif
             };

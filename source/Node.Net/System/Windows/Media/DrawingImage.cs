@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace System.Windows.Media
 {
-#if !IS_WINDOWS
+#if !IS_WINDOWS && USE_POLYFILL
     /// <summary>
     /// An ImageSource that uses a Drawing as its content.
     /// </summary>
