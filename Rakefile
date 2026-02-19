@@ -1,7 +1,7 @@
 NAME = "Node.Net"
 VERSION = "2.0.16"
 require "makit"
-task :default => [:setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
+task :default => [:cake, :setup, :build, :test, :integrate, :tag, :publish, :pull_incoming, :sync]
 
 task :build do
   puts `rufo .`
@@ -92,4 +92,29 @@ task :actions_status do
   Makit::GitHubActions.query_and_display_status
 rescue => e
   exit 1
+end
+
+desc "Run Cake build script (default: Build and Test)"
+task :cake do
+  target = ENV["CAKE_TARGET"] || "Default"
+  configuration = ENV["CAKE_CONFIGURATION"] || "Release"
+  sh "dotnet cake build.cake --target=#{target} --configuration=#{configuration}"
+end
+
+desc "Run Cake build only"
+task :cake_build do
+  configuration = ENV["CAKE_CONFIGURATION"] || "Release"
+  sh "dotnet cake build.cake --target=Build --configuration=#{configuration}"
+end
+
+desc "Run Cake tests only"
+task :cake_test do
+  configuration = ENV["CAKE_CONFIGURATION"] || "Release"
+  sh "dotnet cake build.cake --target=Test --configuration=#{configuration}"
+end
+
+desc "Run Cake CI pipeline (Clean → Build → Test → Pack)"
+task :cake_ci do
+  configuration = ENV["CAKE_CONFIGURATION"] || "Release"
+  sh "dotnet cake build.cake --target=CI --configuration=#{configuration}"
 end
