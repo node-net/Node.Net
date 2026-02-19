@@ -14,6 +14,14 @@ Node.Net is a framework library to support IDictionary data operations, includin
 
 The latest release of Node.Net is [available on NuGet](https://www.nuget.org/packages/Node.Net/).
 
+## Building and Testing ##
+
+Node.Net can be built and tested using multiple methods:
+
+- **Cake (Recommended)**: `dotnet cake build.cake` - See [docs/CAKE_BUILD.md](docs/CAKE_BUILD.md) for details
+- **Rake**: `rake` - Ruby-based build script (see `Rakefile`)
+- **Direct .NET CLI**: `dotnet build` and `dotnet test`
+
 ## Cross-Platform Compatibility ##
 
 Node.Net supports multiple target frameworks:
